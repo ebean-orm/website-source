@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta name="layout" content="_layout/main.html" />
+<#assign documentation="active">
+</head>
+<body>
+  <div class="jumbotron mini">
+    <div class="container">
+      <h1><a href="/documentation.html">Documentation</a> / Transactions</h1>
+    </div>
+  </div>
+
+  <div class="container">
+  <div class="row">
+    <div class="col-md-3">
+
+    <div class="sidebar-nav">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="visible-xs navbar-brand">Sidebar menu</span>
+        </div>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li <#if tx_implicit??>class="active"</#if>><a href="/docs/transactions/implicit.html">Implicit Transactions</a></li>
+            <li <#if tx_begincommit??>class="active"</#if>><a href="/docs/transactions/begincommit.html">Programmatic</a></li>
+            <li <#if tx_transactional??>class="active"</#if>><a href="/docs/transactions/transactional.html">@Transactional</a></li>
+            <li <#if tx_txrunnable??>class="active"</#if>><a href="/docs/transactions/txrunnable.html">TxRunnable, TxCallable</a></li>
+            <li <#if tx_spring??>class="active"</#if>><a href="/docs/transactions/spring.html">Spring Transaction Manager</a></li>
+            <li <#if tx_jta??>class="active"</#if>><a href="/docs/transactions/jta.html">JTA Transactions</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+
+    </div>  
+    <div class="col-md-9">
+
+<div id="layout-body"></div> 
+
+   </div>
+
+    </div> <!-- /.row -->
+  </div>  <!-- /.container -->
+
+</body>
+</html>
