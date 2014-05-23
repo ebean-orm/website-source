@@ -45,6 +45,49 @@ Ebean is designed for performance. Fetch only what you need using 'partial objec
 </div>
 
 
+<h2>Use JPA Mapping</h2>
+<p>
+Use standard JPA Mapping annotations - @Entity, @Table, @Id etc.
+</p>
+
+```java
+
+/**
+ * Use standard JPA Mapping annotations.
+ */
+@Entity
+@Table(name = "o_customer")
+public class Customer {
+
+  @Id
+  Long id;
+
+  @Version
+  Long version;
+
+  String name;
+
+  @ManyToOne
+  Address address;
+
+  @OneToMany(mappedBy = "customer")
+  List<Order> orders;
+
+  // getters and setters
+  
+}
+
+
+
+```
+
+<h2>Use JPA Mapping</h2>
+<p>
+Use standard JPA Mapping annotations.
+</p>
+
+
+
 <h2>Dependency Injection style</h2>
 ```java
 
