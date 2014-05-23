@@ -87,31 +87,37 @@ Ebean provides a simple query language. It will determine what joins are require
 so that the developer can concentrate on  by doing some of the work for you.
 </p>
 
-
+<h4>Example - find by id:</h4>
 ```java
-
 @Inject
 EbeanServer server;
-
 ...
-
-
-  // find order
-  List<Order> orders = 
-         server.find(Order.class)
-         .where()
-           .eq("customer.id", customerId)
-           .gt("shipDate", lastWeek)
-         .findList();
-  
-  // eq = equal to
-  // gt = greater than
-
 
   // find customer by id  
   Customer customer = server.find(Customer.class, customerId); 
+```
 
+<h4>Example:</h4>
+```java
+@Inject
+EbeanServer server;
+...
 
+  // find orders for a customer
+  // shipped since last week
+  List<Order> orders = 
+       server.find(Order.class)
+       .where()
+         .eq("customer.id", customerId)   // eq = equal to
+         .gt("shipDate", lastWeek)        // gt = greater than
+       .findList(); 
+
+```
+
+<h4>Example:</h4>
+```java
+  // find new customers with a name like rob%
+  // .. only fetch their name and status
   List<Customer> customers = 
       server.find(Customer.class)
        // just fetch the properties you need
@@ -122,7 +128,6 @@ EbeanServer server;
       .orderBy("name")
       .findList(); 
 
-}
 
 ```
 
@@ -132,8 +137,8 @@ Ebean is architected to make insert, update, delete simple to use and understand
 </p>
 
 
+<h4>Example insert:</h4>
 ```java
-
 @Inject
 EbeanServer server;
 ...
@@ -148,8 +153,8 @@ EbeanServer server;
 ```
 
 
+<h4>Example update/delete:</h4>
 ```java
-
 @Inject
 EbeanServer server;
 ...
