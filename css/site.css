@@ -139,4 +139,15 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 15px;
 }
 
-
+.syntax {
+  font-weight:700;
+}
+.syntax.java pre {
+  background: #F0F0F0;
+}
+.syntax.sql pre {
+  background: #F1E4CD;
+}
+.syntax.properties pre {
+  background: #F1E4CD;
+}

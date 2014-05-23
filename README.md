@@ -1,4 +1,4 @@
 avaje-ebeanorm-website
 ======================
 
-Website
+Website for Ebean ORM.

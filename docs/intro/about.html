@@ -1,0 +1,88 @@
+<html>
+<head>
+<meta name="layout" content="_layout/intro.html" />
+<#assign about="active">
+</head>
+<body>
+
+<h1>Introduction</h1>
+<h4>Ebean ORM - simple, elegent, fun</h4>
+
+<h5>Simple to learn:</h5>
+<p>
+Ebean's goal is to be simple to use and understand. Developers should be able to be productive quickly and get stuff done without fuss or worry.
+</p>
+
+<h5>Performant:</h5>
+<p>
+Ebean is designed for performance. You only need to fetch what you need using 'partial objects'. You have good control over the SQL used.
+</p>
+
+<h5>Elegent:</h5>
+<p>
+Ebean has good support for using raw SQL, processing large queries, batch processing and allows you to do things 'relationally' when it makes sense.
+</p>
+
+
+<h2>Dependency Injection style</h2>
+```java
+
+@Inject
+EbeanServer server;
+
+...
+public void processOrder(Customer customer, long orderId) {
+
+  // find the order
+  Order order = server.find(Order.class, orderId);
+    
+  order.setShipTo(customer);
+  order.setStatus(Status.SHIPPING);
+  
+  // save the order
+  server.save(order);
+}
+
+```
+
+<h2>Use the Transaction</h2>
+<p>
+You can use the Transaction to explicitly control behaviour.
+</p>
+
+
+```java
+
+
+Transaction transaction = ebeanServer.beginTransaction();  
+try {  
+  // turn of cascade persist
+  transaction.setCascadePersist(false);
+
+  // control the jdbc batch mode and size
+  transaction.setBatchMode(true);
+  transaction.setBatchSize(30);
+  
+  // for a large batch insert if you want to skip 
+  // getting the generated keys
+  transaction.setBatchGetGeneratedKeys(false);
+
+  // for batch processing via raw SQL you can inform
+  // Ebean what tables were modified so that it can 
+  // clear the appropriate L2 caches
+  String tableName = "o_customer";
+  boolean inserts = true;
+  boolean upates = true;
+  boolean deletes = false;
+  transaction.addModification(tableName, inserts, updates, deletes);
+
+  ...
+} finally {
+  transaction.end();
+}  
+      
+
+```
+
+</body>
+</html>
