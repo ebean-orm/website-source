@@ -94,7 +94,7 @@ so that the developer can concentrate on  by doing some of the work for you.
 EbeanServer server;
 
 ...
-public void processOrder() {
+
 
   // find order
   List<Order> orders = 
@@ -106,6 +106,7 @@ public void processOrder() {
   
   // eq = equal to
   // gt = greater than
+
 
   // find customer by id  
   Customer customer = server.find(Customer.class, customerId); 
@@ -125,42 +126,42 @@ public void processOrder() {
 
 ```
 
-<h2>Use the Transaction</h2>
+<h2>Save and Delete</h2>
 <p>
-You can use the Transaction to explicitly control behaviour.
+Ebean is architected to make insert, update, delete simple to use and understand. 
 </p>
 
 
 ```java
 
+@Inject
+EbeanServer server;
+...
 
-Transaction transaction = ebeanServer.beginTransaction();  
-try {  
-  // turn of cascade persist
-  transaction.setCascadePersist(false);
+  Customer customer = new Customer();
+  customer.setName("Rob");
+  customer.setStatus(Status.NEW);
+ 
+  // inserts the customer
+  server.save(customer);  
 
-  // control the jdbc batch mode and size
-  transaction.setBatchMode(true);
-  transaction.setBatchSize(30);
-  
-  // for a large batch insert if you want to skip 
-  // getting the generated keys
-  transaction.setBatchGetGeneratedKeys(false);
+```
 
-  // for batch processing via raw SQL you can inform
-  // Ebean what tables were modified so that it can 
-  // clear the appropriate L2 caches
-  String tableName = "o_customer";
-  boolean inserts = true;
-  boolean upates = true;
-  boolean deletes = false;
-  transaction.addModification(tableName, inserts, updates, deletes);
 
-  ...
-} finally {
-  transaction.end();
-}  
-      
+```java
+
+@Inject
+EbeanServer server;
+...
+
+  Customer customer = server.find(Customer.class, customerId);
+  customer.setName("Person formally known as Rob");
+ 
+  // update 
+  server.save(customer);  
+
+  // delete 
+  server.delete(customer);
 
 ```
 
