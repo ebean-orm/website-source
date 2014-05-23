@@ -81,30 +81,46 @@ public class Customer {
 
 ```
 
-<h2>Use JPA Mapping</h2>
+<h2>Simple query language</h2>
 <p>
-Use standard JPA Mapping annotations.
+Ebean provides a simple query language. It will determine what joins are required to support your WHERE clause and add them as appropriate
+so that the developer can concentrate on  by doing some of the work for you.
 </p>
 
 
-
-<h2>Dependency Injection style</h2>
 ```java
 
 @Inject
 EbeanServer server;
 
 ...
-public void processOrder(Customer customer, long orderId) {
+public void processOrder() {
 
-  // find the order
-  Order order = server.find(Order.class, orderId);
-    
-  order.setShipTo(customer);
-  order.setStatus(Status.SHIPPING);
+  // find order
+  List<Order> orders = 
+         server.find(Order.class)
+         .where()
+           .eq("customer.id", customerId)
+           .gt("shipDate", lastWeek)
+         .findList();
   
-  // save the order
-  server.save(order);
+  // eq = equal to
+  // gt = greater than
+
+  // find customer by id  
+  Customer customer = server.find(Customer.class, customerId); 
+
+
+  List<Customer> customers = 
+      server.find(Customer.class)
+       // just fetch the properties you need
+      .select("name, status")
+      .where()
+        .eq("status", Status.NEW)
+        .ilike("name", "rob%")
+      .orderBy("name")
+      .findList(); 
+
 }
 
 ```
