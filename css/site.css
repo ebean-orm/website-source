@@ -139,6 +139,27 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 15px;
 }
 
+footer {
+  margin:30px 0;
+  padding:15px;
+  border-top:1px solid #ccc;
+}
+.doc-footer-links li {
+ display: inline;
+ padding: 0 2px;
+}
+
+.doc-footer-links {
+  margin-top: 20px;
+  padding-left: 0;
+  color: #999;
+}
+.doc-footer {
+  color: #777;
+  text-align: center;
+}
+
+
 .syntax {
   font-weight:700;
 }

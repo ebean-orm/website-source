@@ -1,0 +1,178 @@
+<html>
+<head>
+<meta name="layout" content="_layout/intro.html" />
+<#assign programmingstyles="active">
+</head>
+<body>
+
+<h1>Programming Styles</h1>
+<h4>Choice of Dependency Injection, Play/Active Record styles</h4>
+
+
+<div class="container">
+
+  <div class="row">
+
+
+<div class="col-md-4">
+  <div class="well">
+  <h4>Simple to learn</h4>
+```java
+
+
+// Use DI to inject an EbeanServer
+@Inject
+EbeanServer server;
+
+...
+
+// use it to fetch and save etc
+
+Customer customer = server.find(Customer.class, customerId);
+
+
+```
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="well">
+  <h4>Elegant</h4>
+  <p>
+Large queries, batch processing, need to use raw SQL  - Ebean will elegantly handle your more difficult requirements.
+  </p>
+  </div>
+</div>
+
+
+  </div> <!-- ./row -->
+</div>
+
+
+<h2>Use JPA Mapping</h2>
+<p>
+Use standard JPA Mapping annotations - @Entity, @Table, @Id etc.
+</p>
+
+```java
+
+/**
+ * Use standard JPA Mapping annotations.
+ */
+@Entity
+@Table(name = "o_customer")
+public class Customer {
+
+  @Id
+  Long id;
+
+  @Version
+  Long version;
+
+  String name;
+
+  @ManyToOne
+  Address address;
+
+  @OneToMany(mappedBy = "customer")
+  List<Order> orders;
+
+  // getters and setters
+  
+}
+
+
+
+```
+
+<h2>Simple query language</h2>
+<p>
+Ebean provides a simple query language. It will determine what joins are required to support your WHERE clause and add them as appropriate
+so that the developer can concentrate on  by doing some of the work for you.
+</p>
+
+<h4>Example - find by id:</h4>
+```java
+@Inject
+EbeanServer server;
+...
+
+  // find customer by id  
+  Customer customer = server.find(Customer.class, customerId); 
+```
+
+<h4>Example:</h4>
+```java
+@Inject
+EbeanServer server;
+...
+
+  // find orders for a customer
+  // shipped since last week
+  List<Order> orders = 
+       server.find(Order.class)
+       .where()
+         .eq("customer.id", customerId)   // eq = equal to
+         .gt("shipDate", lastWeek)        // gt = greater than
+       .findList(); 
+
+```
+
+<h4>Example:</h4>
+```java
+  // find new customers with a name like rob%
+  // .. only fetch their name and status
+  List<Customer> customers = 
+      server.find(Customer.class)
+       // just fetch the properties you need
+      .select("name, status")
+      .where()
+        .eq("status", Status.NEW)
+        .ilike("name", "rob%")
+      .orderBy("name")
+      .findList(); 
+
+
+```
+
+<h2>Save and Delete</h2>
+<p>
+Ebean is architected to make insert, update, delete simple to use and understand. 
+</p>
+
+
+<h4>Example insert:</h4>
+```java
+@Inject
+EbeanServer server;
+...
+
+  Customer customer = new Customer();
+  customer.setName("Rob");
+  customer.setStatus(Status.NEW);
+ 
+  // inserts the customer
+  server.save(customer);  
+
+```
+
+
+<h4>Example update/delete:</h4>
+```java
+@Inject
+EbeanServer server;
+...
+
+  Customer customer = server.find(Customer.class, customerId);
+  customer.setName("Person formally known as Rob");
+ 
+  // https://www.youtube.com/watch?v=wLkjMLdLf3supdate 
+  server.save(customer);  
+
+  // delete 
+  server.delete(customer);
+
+```
+
+</body>
+</html>

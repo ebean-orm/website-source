@@ -1,0 +1,178 @@
+<html>
+<head>
+<meta name="layout" content="_layout/otherproject.html" />
+<#assign otherProject = "Website Generator">
+</head>
+<body>
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Website Generator v1.0.1</h1>
+      <h2>A fun small Java project for offline automatic website generation  <a class="btn btn-warning" href="https://github.com/avaje-common/avaje-website-generator"><b>Github</b></a></h2>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+
+    <div class="sidebar-nav">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="visible-xs navbar-brand">Sidebar menu</span>
+        </div>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+          <p>
+
+	  </p>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+
+    </div>  
+
+    <div class="col-md-10">
+
+        <div class="feature">
+        <h3>Offline generation of web pages</h3>
+        <p>
+Uses Java7 file watch service to monitor a directory structure that has freemarker templates.
+When changes are detected it generates a html page including support for syntax highlighting for Java, SQL, XML, Javascript.
+</p>
+        <p>
+Typically you install and run this application on a server and setup a cron job that pulls website changes from git or svn. 
+This application detects changes and updates the pages in a destination directory and you use Nginx or Apache to serve the content.
+        </p>
+      </div>
+
+
+      <div class="">
+        <h3>Using it</h3>
+        <p>
+          Download the runnable jar from <a>maven central</a>. 
+        </p>
+        <p>
+          Run it specifying a source directory (that has the freemarker templates etc) and a destination directory (where the
+resulting html is generated to).  Note that the source directory can have an other files (css, js, images, fonts etc) - if the
+file extension ends with <emphasis>.html</emphasis> then it is processed assuming it is a freemarker template - otherwise the files
+are just copied to the destination directory.
+        </p>
+```sh
+java -jar target/avaje-website-generator-1.0.1.jar \n
+  -source /home/rob/website/source \n
+  -dest /home/rob/website/destination
+
+# edit the templates etc in the source directory
+# the final pages etc are automatically generated 
+# into the destination directoy
+
+``` 
+       <h4>Notes:</h4>
+        <p>
+          The source directory can have an other files (css, js, images, fonts etc). If the
+file extension ends with <emphasis>.html</emphasis> then it is processed assuming it is a freemarker template - otherwise the files
+are just copied to the destination directory.  Files and directories are also deleted from the destination directory.
+        </p>
+        <p>
+          On a server typically this program is running and there is a cron job that pulls updates into the source directory
+via git pull or similar. Nginx or similar is configured to serve the pages from the destination directory.
+        </p>
+
+      </div>
+
+      <div class="">
+        <h3>Maven</h3>
+
+```xml
+    <dependency>
+      <groupId>org.avaje</groupId>
+      <artifactId>avaje-website-generator</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+```
+	<p>
+           <a href="" class="btn btn-large">Download Jar</a>
+	</p>
+      </div>
+
+      <div class="">
+        <h3>Implementation</h3>
+        <p>
+	  This uses Freemarker for templating and Jyphon / Pygments for syntax hightlighting.
+        </p>
+      </div>
+
+
+<div>
+
+<div class="bs-callout">
+  <h3>Secret Sauce</h3>
+  <p>
+  The Java7 file watch service uses OS level file watching events so it is fast and efficient. http://pygments.org/ provides the
+nice server side syntax highlighting and we are using Jyphon to execute this - its slow for the first syntax highlight but then is decent 
+performance. 
+  </p>
+</div>
+
+
+<div>
+<h3>Example execution logs:</h3>
+```sql
+
+java -jar avaje-website-generator-1.0.1.jar -s /home/rob/avaje-ebeanorm-website -d /home/rob/site
+
+Website Generator... args:[-s, /home/rob/avaje-ebeanorm-website, -d, /home/rob/work-avaje/site]
+ArgMap: source=/home/rob/work-avaje/avaje-ebeanorm-website, dest=/home/rob/work-avaje/site
+running: source[/home/rob/work-avaje/avaje-ebeanorm-website] dest[/home/rob/work-avaje/site] ...
+
+--
+-- walks the source directory tree and generates html and copies files into destination directory
+--
+
+16:33:26.341 [main] DEBUG o.a.w.generator.SiteWatchRender - ... render template: websitegenerator/index.html
+16:33:31.648 [main] DEBUG o.a.w.generator.SiteWatchRender - ... render template: index.html
+16:33:31.663 [main] DEBUG o.a.w.generator.SiteWatchRender - ... render template: docs/transactions/begincommit.html
+...
+16:33:34.409 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... copy file: css/bootstrap.min.css
+16:33:34.421 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... copy file: images/favicon.ico
+16:33:34.422 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... copy file: README.md
+16:33:34.422 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... render template: metrics/index.html
+16:33:34.439 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... copy file: js/bootstrap.js
+16:33:34.440 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... copy file: js/bootstrap.min.js
+
+--
+-- After the source directory walk the watcher service is registered on all the directories 
+--
+16:33:34.443 [MainThread] INFO  org.avaje.website.generator.WatchDir - Scanning /home/rob/avaje-ebeanorm-website ...
+16:33:34.476 [MainThread] INFO  org.avaje.website.generator.WatchDir - Watching...
+
+--
+-- file change events are detected and template regenerated or files/directories copied/deleted
+--
+16:34:18.315 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... render template: websitegenerator/index.html
+16:56:56.423 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... deleted file /home/rob/site/websitegenerator/hellorob.html
+16:57:10.528 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... copy file: websitegenerator/docs.css
+16:57:32.913 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... deleted directory /home/rob/work-avaje/site/websitegenerator/morecss
+
+
+```
+
+</div>
+
+
+   </div>
+
+    </div> <!-- /.row -->
+  </div>  <!-- /.container -->
+
+
+
+
+</body>
+</html>
