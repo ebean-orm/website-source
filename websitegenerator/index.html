@@ -2,7 +2,8 @@
 <head>
 <title>Avaje Website Generator</title>
 <meta name="layout" content="_layout/otherproject.html" />
-<#assign otherProject = "Website Generator">
+<#assign otherProject = "<i class='fa fa-cog'></i>  Website Generator">
+<#assign websitegenerator = "active">
 </head>
 <body>
   <div class="jumbotron">
@@ -62,7 +63,8 @@ This application detects changes and updates the pages in a destination director
         <a class="anchor" name="usingit"></a>
         <h2>Using it</h2>
         <p>
-          Download the runnable jar from <a href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22avaje-website-generator%22">maven central</a>. 
+          <a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22avaje-website-generator%22" class="btn btn-large btn-primary">
+<span class="glyphicon glyphicon-save"></span> Download</a> the runnable jar from maven central. 
         </p>
         <p>
           Run it specifying a source directory (that has the freemarker templates etc) and a destination directory (where the
@@ -103,9 +105,6 @@ via git pull or similar. Nginx or similar is configured to serve the pages from 
       <version>1.0.1</version>
     </dependency>
 ```
-	<p>
-           <a href="" class="btn btn-large">Download Jar</a>
-	</p>
       </div>
 
 
@@ -134,7 +133,7 @@ performance.
   <h3>Layout inheritance</h3>
 ```xml
 <!-- In the 'child' page -->
-<meta name="layout" content="_layout/otherproject.html" />
+<meta name="layout" content="_layout/parent-layout.html" />
 ```
   <p>
 The <code>meta layout</code> tag defines a parent template to inherit.   
