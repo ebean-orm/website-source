@@ -64,7 +64,7 @@ file extension ends with <emphasis>.html</emphasis> then it is processed assumin
 are just copied to the destination directory.
         </p>
 ```sh
-java -jar target/avaje-website-generator-1.0.1.jar \n
+java -jar avaje-website-generator-1.0.1.jar \n
   -source /home/rob/website/source \n
   -dest /home/rob/website/destination
 
@@ -124,12 +124,7 @@ performance.
 <div>
 <h3>Example execution logs:</h3>
 ```sql
-
 java -jar avaje-website-generator-1.0.1.jar -s /home/rob/avaje-ebeanorm-website -d /home/rob/site
-
-Website Generator... args:[-s, /home/rob/avaje-ebeanorm-website, -d, /home/rob/work-avaje/site]
-ArgMap: source=/home/rob/work-avaje/avaje-ebeanorm-website, dest=/home/rob/work-avaje/site
-running: source[/home/rob/work-avaje/avaje-ebeanorm-website] dest[/home/rob/work-avaje/site] ...
 
 --
 -- walks the source directory tree and generates html and copies files into destination directory
@@ -153,7 +148,8 @@ running: source[/home/rob/work-avaje/avaje-ebeanorm-website] dest[/home/rob/work
 16:33:34.476 [MainThread] INFO  org.avaje.website.generator.WatchDir - Watching...
 
 --
--- file change events are detected and template regenerated or files/directories copied/deleted
+-- The watch service detects file change events and pages are regenerated 
+-- or files/directories copied/deleted as required
 --
 16:34:18.315 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... render template: websitegenerator/index.html
 16:56:56.423 [MainThread] DEBUG o.a.w.generator.SiteWatchRender - ... deleted file /home/rob/site/websitegenerator/hellorob.html
