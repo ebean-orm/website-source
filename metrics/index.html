@@ -28,12 +28,6 @@
           <span class="visible-xs navbar-brand">Sidebar menu</span>
         </div>
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
-          <div class="well">
-          <p><a href="">github</a></p>
-          </div>
-          <div class="well">
-          <p><a href="">github</a></p>
-          </div>
 
         </div><!--/.nav-collapse -->
       </div>
@@ -44,7 +38,13 @@
 
     <div class="col-md-10">
 
-  
+  <div class="bs-callout bs-callout-danger">
+    <h4>Currently refactoring API for 2.x</h4>
+    <p>
+The 2.x API is currently unstable. Please check back in July 2014 or watch for changes.
+    </p>
+  </div>
+
 
 
     <div class="row">
@@ -99,8 +99,8 @@
 
 <div>
 
-<div class="bs-callout">
-  <h3>Secret Sauce</h3>
+<div class="bs-callout bs-callout-info">
+  <h4>Secret Sauce</h4>
   <p>
   Use LongAdder, Simple metrics (count/total/average/maximum) are not only relatively cheap to collect
   even on busy highly concurrent applications they also are easy to 'roll up' afterwards.  Metrics can be collected every 1 minute and
@@ -111,7 +111,7 @@
 <a name="why"></a>
 <h3>Why not use codahale/metrics?</h3>
 
-<div class="col-md-7 bs-callout bs-callout-warning">
+<div class="col-md-7">
 
 <p>
 For "Timed Events" codehale/metrics is orientated towards using Moving Averages and Histograms and these are relatively heavy weight collectors.
@@ -136,22 +136,6 @@ In summary avaje-metric has moved away from Moving Averages and Histograms in fa
 
     </div> <!-- /.row -->
   </div>  <!-- /.container -->
-
-
-<footer>
- <div class="doc-footer container">
-  <p class="center-block">hello</p>
-  <ul class="doc-footer-links">
-    <li><a href="/">Ebean ORM</a></li>
-    <li> | </li>
-    <li><a href="/metrics/index.html">Metrics</a></li>
-    <li> | </li>
-    <li><a href="/websitegeneration/index.html">Website Generation</a></li>
-    <li> | </li>
-    <li><a href="/jetty/index.html">Jetty Runnable War</a></li>
-  </ul>
- </div>
-</footer>
 
 </body>
 </html>

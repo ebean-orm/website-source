@@ -23,6 +23,8 @@
   src: local('PT Sans Bold Italic'), local('PTSans-BoldItalic'), url(http://themes.googleusercontent.com/static/fonts/ptsans/v6/lILlYDvubYemzYzN7GbLkHhCUOGz7vYGh680lGh-uXM.woff) format('woff');
 }
 
+a.anchor{display: block; position: relative; top: -60px; visibility: hidden;}
+
 html {
   overflow-y: scroll;
 }
@@ -140,9 +142,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 footer {
-  margin:30px 0;
+  margin-top:30px;
   padding:15px;
   border-top:1px solid #ccc;
+  background: #eee;
 }
 .doc-footer-links li {
  display: inline;
@@ -158,6 +161,31 @@ footer {
   color: #777;
   text-align: center;
 }
+
+.bs-callout-info {
+  background-color: #f4f8fa;
+  border-color: #5bc0de;
+}
+.bs-callout {
+  margin: 20px 0;
+  padding: 20px;
+  border-left: 3px solid #eee;
+}
+.bs-callout h4 {
+ margin-top: 0;
+ margin-bottom: 5px;
+}
+
+.bs-callout-danger {
+ background-color: #fdf7f7; 
+ border-color: #d9534f;
+}
+.bs-callout-info {
+ background-color: #f4f8fa;
+ border-color: #5bc0de;
+}
+.bs-callout-info h4 { color: #5bc0de;}
+.bs-callout-danger h4 { color: #d9534f;}
 
 
 .syntax {

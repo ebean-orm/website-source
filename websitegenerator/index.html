@@ -1,5 +1,6 @@
 <html>
 <head>
+<title>Avaje Website Generator</title>
 <meta name="layout" content="_layout/otherproject.html" />
 <#assign otherProject = "Website Generator">
 </head>
@@ -27,9 +28,13 @@
           <span class="visible-xs navbar-brand">Sidebar menu</span>
         </div>
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
-          <p>
-
-	  </p>
+          <ul>
+            <li><a href="#offline">Offline Generation</a></li>
+            <li><a href="#usingit">Using it</a></li>
+            <li><a href="#secretsauce">Secret Sauce</a></li>
+            <li><a href="#templating">Templating</a></li>
+            <li><a href="#logs">Example logs</a></li>
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
@@ -40,7 +45,8 @@
     <div class="col-md-10">
 
         <div class="feature">
-        <h3>Offline generation of web pages</h3>
+	<a class="anchor" name="offline"></a>
+        <h2>Offline generation of web pages</h2>
         <p>
 Uses Java7 file watch service to monitor a directory structure that has freemarker templates.
 When changes are detected it generates a html page including support for syntax highlighting for Java, SQL, XML, Javascript.
@@ -53,9 +59,10 @@ This application detects changes and updates the pages in a destination director
 
 
       <div class="">
-        <h3>Using it</h3>
+        <a class="anchor" name="usingit"></a>
+        <h2>Using it</h2>
         <p>
-          Download the runnable jar from <a>maven central</a>. 
+          Download the runnable jar from <a href="http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22avaje-website-generator%22">maven central</a>. 
         </p>
         <p>
           Run it specifying a source directory (that has the freemarker templates etc) and a destination directory (where the
@@ -69,7 +76,7 @@ java -jar avaje-website-generator-1.0.1.jar \n
   -dest /home/rob/website/destination
 
 # edit the templates etc in the source directory
-# the final pages etc are automatically generated 
+# the pages etc are automatically generated 
 # into the destination directoy
 
 ``` 
@@ -101,28 +108,102 @@ via git pull or similar. Nginx or similar is configured to serve the pages from 
 	</p>
       </div>
 
-      <div class="">
-        <h3>Implementation</h3>
-        <p>
-	  This uses Freemarker for templating and Jyphon / Pygments for syntax hightlighting.
-        </p>
-      </div>
 
 
 <div>
 
-<div class="bs-callout">
-  <h3>Secret Sauce</h3>
+<div class="">
+  <a class="anchor" name="secretsauce"></a>
+  <h2>Secret Sauce</h2>
   <p>
-  The Java7 file watch service uses OS level file watching events so it is fast and efficient. http://pygments.org/ provides the
+  The Java7 file watch service uses OS level file watching events so it is fast and efficient. <a href="http://pygments.org">pygments.org</a> provides the
 nice server side syntax highlighting and we are using Jyphon to execute this - its slow for the first syntax highlight but then is decent 
 performance. 
   </p>
 </div>
 
 
-<div>
-<h3>Example execution logs:</h3>
+<div class="">
+  <a class="anchor" name="templating"></a>
+  <h2>Templating</h2>
+  <p>
+  Uses Freemarker for templating and Jyphon / <a href="http://pygments.org">Pygments</a> for syntax hightlighting.
+  Has a simple template layout inheritance mechanism as described below.
+  </p>
+
+  <h3>Layout inheritance</h3>
+```xml
+<!-- In the 'child' page -->
+<meta name="layout" content="_layout/otherproject.html" />
+```
+  <p>
+The <code>meta layout</code> tag defines a parent template to inherit.   
+  </p>
+```xml
+<!-- In the parent page -->
+<div id="layout-body"></div>
+```
+  <p>
+In the parent page a <code>div</code> with an  <code>id</code> of <code>layout-body</code> defines where in the parent the child page content goes.   
+  </p>
+
+
+<h3>Title</h3>
+```xml
+<head>
+<!-- In the 'child' page -->
+<title>The page title</title>
+...
+```
+<p>
+If you have a <code>title</code> tag in the head of the page then this title is used in the final generated page.
+</p>
+
+
+
+<h3>Head content</h3>
+```xml
+<head>
+<!-- tags in the head section of the 'child' page -->
+</head>
+```
+<p>
+Any content you have in the <code>head</code> section of the page will be incorporated into the final page layout as 
+long as the parent layout includes a <code>meta</code> tag with an <code>id</code> of <code>layout-head</code>.
+</p>
+```xml
+<!-- In the parent page -->
+<meta id="layout-head" />
+```
+
+<a class="anchor" name="syntax"></a>
+<h3>Syntax Highlighting</h3>
+<p><a href="http://pygments.org">Pygments</a> provides the syntax highlighting and Jython is used to execute it.</p>
+<h4>Supported languages</h4>
+<p>
+  The supported languages for syntax highlighting is: <code>java, groovy, scala, javascript, sql, sh, and properties </code>
+</p>
+<p>
+To use the syntax highlighting you prefix the code with <strong>3 backticks</strong> followed by the language and terminate it with 3 backticks.
+
+<pre>
+``java
+
+// only 2 backticks above ...
+
+
+``
+</pre>
+</p>
+
+</div> <!-- ./templating -->
+
+
+<a class="anchor" name="logs"></a>
+<h2>Example execution logs:</h2>
+<p>
+Example logs from running the application are shown below:
+</p>
 ```sql
 java -jar avaje-website-generator-1.0.1.jar -s /home/rob/avaje-ebeanorm-website -d /home/rob/site
 
@@ -159,16 +240,13 @@ java -jar avaje-website-generator-1.0.1.jar -s /home/rob/avaje-ebeanorm-website 
 
 ```
 
-</div>
 
 
    </div>
 
     </div> <!-- /.row -->
-  </div>  <!-- /.container -->
-
-
-
+  </div>  <!-- /.row -->
+</div>  <!-- /.container -->
 
 </body>
 </html>
