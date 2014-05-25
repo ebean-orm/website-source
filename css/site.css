@@ -181,12 +181,15 @@ footer {
  border-color: #d9534f;
 }
 .bs-callout-info {
- background-color: #f4f8fa;
- border-color: #5bc0de;
+ background-color: #f4f8fa ;
+ border-color: #69B3C9;
 }
-.bs-callout-info h4 { color: #5bc0de;}
+.bs-callout-info h4 { color: #417888;}
 .bs-callout-danger h4 { color: #d9534f;}
 
+.icon-info .glyphicon {
+ color: #417888;
+}
 
 .syntax {
   font-weight:700;

@@ -1,0 +1,341 @@
+<html>
+<head>
+<meta name="layout" content="_layout/intro.html" />
+<#assign programmingstyles="active">
+</head>
+<body>
+
+<h1>Programming Styles</h1>
+<h4>Choice of Dependency Injection, Play/Active Record styles</h4>
+
+
+<div class="container">
+
+  <div class="row icon-info">
+
+
+<div class="col-md-3">
+  <div class="well">
+  <h4><span class="glyphicon glyphicon-chevron-right"></span> Dependency Injection</h4>
+  <p>
+Use Spring or Guice etc to inject EbeanServer.
+  </p>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="well">
+  <h4><span class="glyphicon glyphicon-chevron-right"></span> Play / Active Record style</h4>
+  <p>
+Use the Model MappedSuperclass to add insert(), update(), delete() etc convenience methods to your entity beans.
+This results in a clean programming style made popular by use in the Play framework. The Model and Finder objects
+have now been incorporated into Ebean to support this programming style.
+  </p>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="well">
+  <h4><span class="glyphicon glyphicon-chevron-right"></span> Ebean singleton</h4>
+  <p>
+Use the Ebean singleton object. Similar to the Play / Active record style but you don't use the Ebean specific
+Model and Finder objects in your model.
+  </p>
+  </div>
+</div>
+
+  </div> <!-- ./row -->
+</div>
+
+
+<div class="bs-callout bs-callout-info">
+<h4>Mocking the Ebean singleton</h4>
+<p>
+<code>MockiEbean</code> from <code>avaje-ebeanorm-mocker</code> project provides a helper object to support mocking the EbeanServer using tools like
+<a href="http://code.google.com/p/mockito/">Mockito</a>. If you like the Play/Active record style or Ebean singleton style you can add a test
+dependency on avaje-ebeanorm-mocker and use MockiEbean to enable use of Mockito and similar tools.
+</p>
+</div>
+
+
+
+
+<h2>Dependency Injection style</h2>
+<p>
+In this style Spring or Guice etc is used to inject an EbeanServer into your service objects.
+Use a Spring FactoryBean or similar to create a EbeanServer instance in the DI context.
+</p>
+
+<h4>ServerConfig and EbeanServerFactory</h4>
+<p>
+You can programmatically create an EbeanServer instance using <code>ServerConfig</code> and <code>EbeanServerFactory</code>.
+
+</p>
+
+```java
+
+  /**
+   * Example creating a EbeanServer instance programmatically using 
+   * ServerConfig and EbeanServerFactory.
+   */
+  private EbeanServer createEbeanServer() {
+
+    ServerConfig c = new ServerConfig();
+    c.setName("pgtest");
+
+    // programmatically configure a DataSource
+    DataSourceConfig postgresDb = new DataSourceConfig();
+    postgresDb.setDriver("org.postgresql.Driver");
+    postgresDb.setUsername("test");
+    postgresDb.setPassword("test");
+    postgresDb.setUrl("jdbc:postgresql://127.0.0.1:5432/test");
+    postgresDb.setHeartbeatSql("select count(*) from t_one");
+
+    // load some configuration from ebean.properties
+    c.loadFromProperties();
+
+    // set some configuration 
+    c.setDdlGenerate(true);
+    c.setDdlRun(true);
+    c.setDefaultServer(false);
+    c.setRegister(false);
+    c.setDataSourceConfig(postgresDb);
+    c.setDatabasePlatform(new PostgresPlatform());
+
+    // explicitly register entity beans, listeners, adpaters etc
+    c.addClass(Customer.class);
+    c.addClass(Contact.class);
+
+    // create the EbeanServer instance
+    return EbeanServerFactory.create(c);
+  }	
+```
+
+
+<h4>Example - Spring FactoryBean</h4>
+<p>
+You can write your own Spring FactoryBean like below:
+</p>
+```java
+/**
+ * Simple Spring bean factory for creating the EbeanServer (Database access).
+ */
+public class MyEbeanServerFactory implements FactoryBean<EbeanServer> {
+
+
+  public EbeanServer getObject() throws Exception {
+    
+    return createEbeanServer();
+  }
+
+  public Class<?> getObjectType() {
+    return EbeanServer.class;
+  }
+
+  public boolean isSingleton() {
+    return true;
+  }
+
+  /**
+   * Create a EbeanServer instance.
+   */
+  private EbeanServer createEbeanServer() {
+
+    // programmatically create a EbeanServer instance
+    ...
+  }
+}
+
+```
+<h4>Ebean Spring</h4>
+<p>
+Alternatively you can use the avaje-ebeanorm-spring.  TODO: more info here 
+</p>
+
+
+<h4>Example - Typical @Inject use</h4>
+<p>
+In your service objects you <code>@Inject</code> or <code>@Autowire</code> a EbeanServer instance.
+</p>
+```java
+...
+public class MyService {
+
+  final EbeanServer ebeanServer;
+
+  /**
+   * Constructor injection example ...
+   */
+  @Inject
+  public MyService(EbeanServer ebeanServer) {
+    this.ebeanServer = ebeanServer;
+  }
+
+  /**
+   * Some example ... using the EbeanServer instance.
+   */
+  public void processOrders(Date since) {
+    
+    // fetch ...
+    List<Order> newOrders = ebeanServer.find(Order.class)
+       .where()
+         .eq("status", Order.Status.NEW)
+         .gt("orderDate", since)
+       .findList();
+
+    ...
+
+    // save ...
+    ebeanServer.save(order);
+
+  }
+
+}
+
+
+```
+
+
+<h2>Play / Active Record style</h2>
+<p>
+When you create your entity beans extend the Model object and add a Finder. When your entity beans extend the Model object they
+inherit some convenience methods save(), delete() etc. Adding a Finder as a public static field provides a nice way to get 
+query functionality.
+</p>
+
+<h4>Extend Model, add Finder:</h4>
+```java
+@Entity
+@Table(name="be_customer")
+public class Customer extends Model {
+
+  /**
+   * Finder uses the 'default' EbeanServer.
+   */
+  public static Finder<Long,Customer> find = new Finder<Long,Customer>(Long.class, Customer.class);
+  
+  @Id
+  Long id;
+
+  String name;
+
+  Date registered;
+  
+  String comments;
+
+  ...
+
+```
+<p>
+NOTE: Model is annotated with JPA @MappedSuperclass.  It internally makes use of the Ebean singleton in order to 
+provide the save, delete etc methods. View the source code for <a href='https://github.com/ebean-orm/avaje-ebeanorm/blob/play/src/main/java/com/avaje/ebean/Model.java'>Model here</a>.
+<p>
+
+
+<h4>Example: save</h4>
+```java
+    Customer customer = new Customer();
+    customer.setName("Rob");
+    
+    customer.save();
+```
+
+<h4>Example: find.byId</h4>
+```java
+    Customer customer = Customer.find.byId(customer.getId());
+```
+
+<h4>Example: find.where</h4>
+```java
+    List<Customer> customers = 
+        Customer.find.
+          where().ilike("name", "rob%")
+          .findList();
+```
+
+
+
+<h2>Ebean singleton</h2>
+<p>
+The core API is provided by EbeanServer.  The Ebean singleton provides a convienience for using the 'default' or 'primary'
+EbeanServer.
+</p>
+<p>
+A <code>ebean.properties</code> file is used to control how the EbeanServer instance is configured.
+</p>
+
+<h4>Example:</h4>
+```java
+// get the 'default' or 'primary' EbeanServer instance
+EbeanServer defaultServer = Ebean.getServer(null);
+
+
+// get an EbeanServer instance that uses a different database
+EbeanServer defaultServer = Ebean.getServer("humanresources");
+
+```
+
+<p>
+The Ebean singleton provides convienience methods:  
+</p>
+
+<h4>Example:</h4>
+```java
+Ebean.save(customer);
+
+// is the same as ...
+
+EbeanServer defaultServer = Ebean.getServer(null);
+defaultServer.save(customer);
+```
+
+<h2>MockiEbean - Mocking with Ebean singleton</h2>
+<p>
+<code>MockiEbean</code> from avaje-ebeanorm-mocker provides a mechanism for using a tool like Mockito and
+replacing the default EbeanServer instance with a mock.  
+</p>
+
+```java
+...
+import com.avaje.ebeaninternal.server.core.DefaultServer;
+...
+
+  @Test
+  public void testWithMockito() {
+
+    EbeanServer defaultServer = Ebean.getServer(null);
+    assertTrue("is a real EbeanServer", defaultServer instanceof DefaultServer);
+
+    Long someBeanId = Long.valueOf(47L);
+
+    // Use Mockito to create a mock for the EbeanServer interface
+    EbeanServer mock = Mockito.mock(EbeanServer.class);
+
+    // setup some required behaviour 
+    when(mock.getBeanId(null)).thenReturn(someBeanId);
+
+    MockiEbean mockiEbean = MockiEbean.start(mock);
+    try {
+
+      // Ebean singleton 'default server' now returns the mock instance
+      EbeanServer server = Ebean.getServer(null);
+
+      // always returns the someBeanId setup by Mockito
+      Object beanId = server.getBeanId(null);
+
+      assertEquals(someBeanId, beanId);
+
+    } finally {
+      // restore the original defaultServer instance
+      mockiEbean.restoreOriginal();
+    }
+
+    EbeanServer restoredServer = Ebean.getServer(null);
+    assertTrue("is a real EbeanServer", restoredServer instanceof DefaultServer);
+  }
+
+```
+
+
+</body>
+</html>
