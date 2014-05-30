@@ -195,7 +195,7 @@ public class MyService {
 
 ```
 
-
+<hr/>
 <h2>Play / Active Record style</h2>
 <p>
 When you create your entity beans extend the Model object and add a Finder. When your entity beans extend the Model object they
@@ -205,6 +205,10 @@ query functionality.
 
 <h4>Extend Model, add Finder:</h4>
 ```java
+/**
+ * Extend Model to get the save(), delete() etc
+ * methods on the bean itself (active record style).
+ */
 @Entity
 @Table(name="be_customer")
 public class Customer extends Model {
@@ -254,10 +258,10 @@ provide the save, delete etc methods. View the source code for <a href='https://
 ```
 
 
-
+<hr/>
 <h2>Ebean singleton</h2>
 <p>
-The core API is provided by EbeanServer.  The Ebean singleton provides a convienience for using the 'default' or 'primary'
+The core API is provided by <code>EbeanServer</code>.  The <code>Ebean</code> singleton provides a convienience for using the 'default' or 'primary'
 EbeanServer.
 </p>
 <p>
@@ -313,7 +317,12 @@ import com.avaje.ebeaninternal.server.core.DefaultServer;
 
     // setup some required behaviour 
     when(mock.getBeanId(null)).thenReturn(someBeanId);
-
+ 
+    // ---------------
+    // 'register' the mock instance into Ebean
+    // this becomes the 'default EbeanServer' until 
+    // mockiEbean.restoreOriginal() is called
+    // ---------------
     MockiEbean mockiEbean = MockiEbean.start(mock);
     try {
 
@@ -326,7 +335,9 @@ import com.avaje.ebeaninternal.server.core.DefaultServer;
       assertEquals(someBeanId, beanId);
 
     } finally {
+      // ---------------
       // restore the original defaultServer instance
+      // ---------------
       mockiEbean.restoreOriginal();
     }
 
@@ -335,7 +346,19 @@ import com.avaje.ebeaninternal.server.core.DefaultServer;
   }
 
 ```
+<h4>MoickiEbean Maven dependency</h4>
+```xml
+<dependency>
+  <groupId>org.avaje.ebeanorm</groupId>
+  <artifactId>avaje-ebeanorm-mocker</artifactId>
+  <version>1.0.1</version>
+  <scope>test</scope>
+</dependency>
+```
 
+<div class="pull-right">
+<a class="btn btn-large btn-warning" href="programmingstyles.html">Next: Compare to JPA</a>
+</div>
 
 </body>
 </html>

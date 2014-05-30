@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta name="layout" content="_layout/intro.html" />
+<#assign programmingstyles="active">
+</head>
+<body>
+
+<h1>Comparison to JPA</h1>
+<h4>How is Ebean different</h4>
+
+
+<div class="container">
+
+  <div class="row icon-info">
+
+
+<div class="col-md-3">
+  <div class="well">
+  <h4><span class="glyphicon glyphicon-chevron-right"></span> Persistence by reachablity</h4>
+  <p>
+Use Spring or Guice etc to inject EbeanServer.
+  </p>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="well">
+  <h4><span class="glyphicon glyphicon-chevron-right"></span> Play / Active Record style</h4>
+  <p>
+Use the Model MappedSuperclass to add insert(), update(), delete() etc convenience methods to your entity beans.
+This results in a clean programming style made popular by use in the Play framework. The Model and Finder objects
+have now been incorporated into Ebean to support this programming style.
+  </p>
+  </div>
+</div>
+
+<div class="col-md-3">
+  <div class="well">
+  <h4><span class="glyphicon glyphicon-chevron-right"></span> Ebean singleton</h4>
+  <p>
+Use the Ebean singleton object. Similar to the Play / Active record style but you don't use the Ebean specific
+Model and Finder objects in your model.
+  </p>
+  </div>
+</div>
+
+  </div> <!-- ./row -->
+</div>
+
+
+<div class="bs-callout bs-callout-info">
+<h4>Mocking the Ebean singleton</h4>
+<p>
+<code>MockiEbean</code> from <code>avaje-ebeanorm-mocker</code> project provides a helper object to support mocking the EbeanServer using tools like
+<a href="http://code.google.com/p/mockito/">Mockito</a>. If you like the Play/Active record style or Ebean singleton style you can add a test
+dependency on avaje-ebeanorm-mocker and use MockiEbean to enable use of Mockito and similar tools.
+</p>
+</div>
+
+
+
+<h2>Dependency Injection style</h2>
+<p>
+In this style Spring or Guice etc is used to inject an EbeanServer into your service objects.
+Use a Spring FactoryBean or similar to create a EbeanServer instance in the DI context.
+</p>
+
+
+<div class="pull-right">
+<a class="btn btn-large btn-warning" href="">Next: Enhancement</a>
+</div>
+
+</body>
+</html>
