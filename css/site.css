@@ -35,7 +35,7 @@ body {
   text-align: left;
 }
 .navbar-nav>li.active {
-  border-bottom: 3px solid rgb(182, 47, 182);
+  border-bottom: 3px solid #417888;//428bca; //rgb(182, 47, 182);
 }
 .navbar-nav>li.active>a {
   padding-bottom:12px;
@@ -203,3 +203,13 @@ footer {
 .syntax.properties pre {
   background: #F1E4CD;
 }
+
+.support h2 i.fa {
+  color:#417888;//#428bca;//orange;//#85198A;
+}
+.support h4 i.fa {
+  color:#417888;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
