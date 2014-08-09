@@ -4,6 +4,7 @@
 <#assign documentation="active">
 </head>
 <body>
+
   <div class="jumbotron mini">
     <div class="container">
       <h1><a href="/documentation">Documentation</a> / Query <#if subtitle??>/ ${subtitle!''}</#if> </h1>
@@ -11,51 +12,35 @@
   </div>
 
   <div class="container">
-  <div class="row">
-    <div class="col-md-3">
+    <div class="row">
 
-    <div class="sidebar-nav">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="visible-xs navbar-brand">Sidebar menu</span>
-        </div>
-        <div class="navbar-collapse collapse sidebar-navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li <#if intro??>class="active"</#if>><a href="/docs/query/intro">Introduction</a></li>
-            <li <#if whereclause??>class="active"</#if>><a href="/docs/query/whereclause">Where Clause</a></li>
-            <li <#if partialobjects??>class="active"</#if>><a href="/docs/query/partialobjects">Partial Objects</a></li>
-            <li <#if queryjoins??>class="active"</#if>><a href="/docs/query/queryjoins">Query Joins</a></li>
-            <li <#if lazyloading??>class="active"</#if>><a href="/docs/query/lazyloading">Lazy Loading</a></li>
-            <li <#if largequeries??>class="active"</#if>><a href="/docs/query/largequeries">Large Queries</a></li>
-            <li <#if rowcount??>class="active"</#if>><a href="/docs/query/rowcount">Row Count</a></li>
-            <li <#if paging??>class="active"</#if>><a href="/docs/query/paging">Paging</a></li>
-            <li <#if findids??>class="active"</#if>><a href="/docs/query/findids">Find Ids</a></li>
-            <li <#if rawsql??>class="active"</#if>><a href="/docs/query/rawsql">RawSql</a></li>
-            <li <#if sqlquery??>class="active"</#if>><a href="/docs/query/sqlquery">SqlQuery</a></li>
-            <li <#if l2cache??>class="active"</#if>><a href="/docs/query/l2cache">L2 Cache</a></li>
-            <li <#if autofetch??>class="active"</#if>><a href="/docs/query/autofetch">Autofetch</a></li>
-            <li <#if otherbits??>class="active"</#if>><a href="/docs/query/otherbits">Other bits</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+      <div class="page-content col-md-9">
+          <div id="layout-body"></div>
       </div>
-    </div>
 
-<!--
-
--->
-
-    </div>  
-    <div class="col-md-9">
-
-<div id="layout-body"></div> 
-
-   </div>
+      <div class="col-md-3 hidden-xs">
+          <div class="side-bar">
+              <h5>
+                  <a href="/docs/query/intro">QUERY</a>
+              </h5>
+              <ul class="side-nav">
+                <@navlink activeCheck="${intro!''}" url="/docs/query/intro" title="Introduction"/>
+                <@navlink activeCheck="${whereclause!''}" url="/docs/query/whereclause" title="Where Clause"/>
+                <@navlink activeCheck="${partialobjects!''}" url="/docs/query/partialobjects" title="Partial Objects"/>
+                <@navlink activeCheck="${queryjoins!''}" url="/docs/query/queryjoins" title="Query Joins"/>
+                <@navlink activeCheck="${lazyloading!''}" url="/docs/query/lazyloading" title="Lazy Loading"/>
+                <@navlink activeCheck="${largequeries!''}" url="/docs/query/largequeries" title="Large Queries"/>
+                <@navlink activeCheck="${rowcount!''}" url="/docs/query/rowcount" title="Row Count"/>
+                <@navlink activeCheck="${paging!''}" url="/docs/query/paging" title="Paging"/>
+                <@navlink activeCheck="${findids!''}" url="/docs/query/findids" title="Find Ids"/>
+                <@navlink activeCheck="${rawsql!''}" url="/docs/query/rawsql" title="RawSql"/>
+                <@navlink activeCheck="${sqlquery!''}" url="/docs/query/sqlquery" title="SqlQuery"/>
+                <@navlink activeCheck="${l2cache!''}" url="/docs/query/l2cache" title="L2 Cache"/>
+                <@navlink activeCheck="${autofetch!''}" url="/docs/query/autofetch" title="Autofetch"/>
+                <@navlink activeCheck="${otherbits!''}" url="/docs/query/otherbits" title="Other bits"/>
+              </ul>
+          </div>
+      </div>
 
     </div> <!-- /.row -->
   </div>  <!-- /.container -->

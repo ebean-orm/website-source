@@ -1,16 +1,58 @@
 <html>
 <head>
-<meta name="layout" content="_layout/query.html" />
+    <meta name="layout" content="_layout/query.html"/>
 <#assign queryjoins="active">
 <#assign subtitle="Query Joins">
 </head>
 <body>
 
-  <h1>Query Joins</h1>
-  <h4>
-  Controlling eager loading of the object graph using query joins.
-  </h4>
+<h1>Query Joins</h1>
+<h4>
+    Controlling eager loading of the object graph using query joins.
+</h4>
+<p>
+  When more than 1 OneToMany or ManyToMany relationship is eagerly fetched
+    then Ebean will automatically convert one of those into a 'Query Join'. Ebean does this so that it avoids
+    generating a cartesian product query.
+</p>
+<h4>Example 1</h4>
+<p>
+    It this example both "customer.contacts" and "details" are OneToMany relationships.
+</p>
+```java
+List<Order> orders = Order.find
+    .select("status")
+    .fetch("customer")
+    .fetch("customer.contacts") -- @OneToMany
+    .fetch("details") -- @OneToMany
+    .orderBy("customer.name")
+    .findList();
+```
 
+```sql
+-- This first query includes the customer contacts
+-- but does not include the order details
+select t0.id c0, t0.status c1,
+       t1.id c2, t1.inactive c3, t1.name c4, ... // truncated
+       t2.id c12, t2.first_name c13, t2.last_name c14, ... // truncated
+       t2.when_updated c19, t2.customer_id c20
+ from o_order t0
+ join o_customer t1 on t1.id = t0.customer_id
+ left outer join o_contact t2 on t2.customer_id = t1.id
+order by t1.name;
+```
+
+<h4>The 'Query Join' query ...</h4>
+```sql
+-- This second query fetchs the order details associated
+-- with the orders that were returned by the first query
+select t0.order_id c0, t0.id c1, t0.order_qty c2, t0.ship_qty c3, t0.unit_price c4, t0.version c5,
+       t0.when_created c6, t0.when_updated c7, t0.order_id c8, t0.product_id c9
+ from o_order_detail t0
+where (t0.order_id) in (?,?,?,?,?,?,?,?,?,?)
+order by t0.order_id, t0.id;
+--bind(2,1,1,1,3,3,3,4,4,4)
+```
 
 </body>
 </html>

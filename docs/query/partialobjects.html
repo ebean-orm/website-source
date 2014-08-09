@@ -7,9 +7,60 @@
 <body>
 
   <h1>Partial Objects</h1>
-  <h4>
+  <p>
+      The Query object has select() and fetch() methods and these allow you to specify
+      the properties that should be fetched.
+  </p>
+  <h4>Select</h4>
+  <p>
+      With select you specify the properties that should be fetched on the root level type.
+  </p>
+  <h4>Fetch</h4>
+  <p>
+      With fetch you specify the properties that should be fetched on the associated beans.
+  </p>
+
+  <h2>Select example</h2>
+  <p>
   Partially loading a bean or object graph using select() and fetch().
-  </h4>
+  </p>
+```java
+  Customer customer = Customer.find
+    .select("name")
+    .where().idEq(1L)
+    .findUnique();
+```
+
+```sql
+select t0.id c0, t0.name c1
+  from o_customer t0
+ where t0.id = ?  ; --bind(1)
+```
+
+<h2>Select and fetch example</h2>
+```java
+  Order order = Order.find
+    .select("status, orderDate, shipDate")
+    .fetch("customer", "name")
+    .fetch("details")
+    .fetch("details.product", "sku")
+    .where().idEq(1L)
+    .findUnique();
+```
+```sql
+
+  select t0.id c0, t0.status c1, t0.order_date c2, t0.ship_date c3,
+         t1.id c4, t1.name c5, -- customer name
+         t2.id c6, t2.order_qty c7, t2.ship_qty c8, t2.unit_price c9, t2.version c10,
+         t2.when_created c11, t2.when_updated c12, t2.order_id c13,
+         t3.id c14, t3.sku c15 -- product sku
+  from o_order t0
+  join o_customer t1 on t1.id = t0.customer_id
+  left outer join o_order_detail t2 on t2.order_id = t0.id
+  left outer join o_product t3 on t3.id = t2.product_id
+  where t0.id = ?
+  order by t0.id, t2.id asc; --bind(1)
+```
 
 </body>
 </html>

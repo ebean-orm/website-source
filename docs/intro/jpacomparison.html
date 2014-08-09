@@ -1,74 +1,91 @@
 <html>
 <head>
 <meta name="layout" content="_layout/intro.html" />
-<#assign programmingstyles="active">
+<#assign jpacomparison="active">
 </head>
 <body>
 
 <h1>Comparison to JPA</h1>
-<h4>How is Ebean different</h4>
 
 
-<div class="container">
-
-  <div class="row icon-info">
-
-
-<div class="col-md-3">
-  <div class="well">
-  <h4><span class="glyphicon glyphicon-chevron-right"></span> Architecture</h4>
-  <p>
-Use Spring or Guice etc to inject EbeanServer.
-  </p>
-  </div>
-</div>
-
-<div class="col-md-3">
-  <div class="well">
-  <h4><span class="glyphicon glyphicon-chevron-right"></span> Query Language Design</h4>
-  <p>
-Use the Model MappedSuperclass to add insert(), update(), delete() etc convenience methods to your entity beans.
-This results in a clean programming style made popular by use in the Play framework. The Model and Finder objects
-have now been incorporated into Ebean to support this programming style.
-  </p>
-  </div>
-</div>
-
-<div class="col-md-3">
-  <div class="well">
-  <h4><span class="glyphicon glyphicon-chevron-right"></span> Ebean singleton</h4>
-  <p>
-Use the Ebean singleton object. Similar to the Play / Active record style but you don't use the Ebean specific
-Model and Finder objects in your model.
-  </p>
-  </div>
-</div>
-
-  </div> <!-- ./row -->
-</div>
-
-
-<div class="bs-callout bs-callout-info">
-<h4>Mocking the Ebean singleton</h4>
+<h2>Dirty state on the bean</h2>
 <p>
-<code>MockiEbean</code> from <code>avaje-ebeanorm-mocker</code> project provides a helper object to support mocking the EbeanServer using tools like
-<a href="http://code.google.com/p/mockito/">Mockito</a>. If you like the Play/Active record style or Ebean singleton style you can add a test
-dependency on avaje-ebeanorm-mocker and use MockiEbean to enable use of Mockito and similar tools.
+  The core architectural difference is that Ebean stores the 'dirty state' on
+  the bean itself. All knowledge required to persist a bean is on the bean itself and beans
+  are explicited saved or deleted.
 </p>
-</div>
-
-
-
-<h2>Dependency Injection style</h2>
 <p>
-In this style Spring or Guice etc is used to inject an EbeanServer into your service objects.
-Use a Spring FactoryBean or similar to create a EbeanServer instance in the DI context.
+  With Hibernate the Session holds the 'original state' and this along with the bean are used to
+  persist the beans. Beans need to be 'attached' to the Session in order to persist them.
+</p>
+<p class="bs-callout bs-callout-info">
+    This architectural difference means that there is no EntityManager with the associated bean lifecycle
+    and flush mechanism. This is what makes Ebean easier to use and understand.
 </p>
 
+<h3>Lifecycle - EntityManager</h3>
+<p>
+  With Hibernate, JPA and JDO the beans have a lifecycle where the beans are attached/detached/merged/flushed
+  using a JPA EntityManager (and similarly with JDO PersistenceManager).
+  Developers need to be aware of this lifecycle and now not only have to manage
+  the DB Transaction demarcation but they additionally have to manage the JPA EntityManager (or JDO PersistenceManager).
+  Some containers and frameworks provide assistence to developers to help manage the EntityManager like 'Transaction scoped Persistence Context'
+  but architecturally with JPA and JDO there are 2 things demarcate/scope. When developers want to use
+  multiple transactions with the same persistence context and have to deal with the failure cases they now
+  need to have a good understanding of the underlying EntityManager/Session and throw it away or ponder what
+  is needed to make the EntityManager/Session usable.
+</p>
+<p class="bs-callout bs-callout-info">
+  With Ebean you only need to demarcate/scope the transaction - no EntityManager/Session to manage.
+</p>
 
-<div class="pull-right">
-<a class="btn btn-large btn-warning" href="">Next: Enhancement</a>
-</div>
+<h3>Explicit save rather than flush</h3>
+<p>
+  With Ebean the developer explicitly controls which beans are persisted. With JPA/JDO you don't have that
+    control and instead use flush() and the dirty beans that are 'attached' to the Session/EntityManager are persisted.
+    When the EntityManager is used by various blocks of code it is not always obvious what beans will be included in the flush() - an
+    attached bean might have subtly been made dirty or an additional dirty bean attached. This lack of explicit
+    control can make these issues occur and are not always easy to resolve.
+</p>
+<p class="bs-callout bs-callout-info">
+  With Ebean the developer explicitly controls which beans are persisted.
+</p>
+
+<h2>Partial Objects</h2>
+<p>
+  Back in 1995 I worked for Oracle Tech Support and was a trained Oracle DBA. If your query (or part of
+  the query execution) could be resolved by just hitting 'index blocks' and didn't have to read 'data blocks'
+  that was great for performance. Any decent ORM query language almost 20 years later would surely support
+  the ability to only select the properties you need in order to support this fundamental performance
+  optimisation?
+</p>
+<p class="bs-callout bs-callout-info">
+  Ebean makes partial object queries easy.
+</p>
+<p>
+  JPA has added 'FetchGroups' to support Partial Objects but to me it is not easy to use and should instead
+  have become part of the query language.
+</p>
+<p>
+  It is unsurprising that DBA's and SQL orientated developers have looked at the SQL that their ORM
+  has generated and had a feeling of disappointment and maybe even dispair. I suspect there wasn't
+  a DBA in the room when JPQL was designed or perhaps they didn't get a strong vote.
+</p>
+<p>
+  Ebean's query language has be designed from the perspective of making is easy to specify the parts
+    of the object graph you wish to fetch (Partial Objects). Additionally Ebean has made it easier
+    to use by automatically determining the joins that are required to support the select, where and
+    order by.
+</p>
+
+<h4>Autofetch - Query optimisation</h4>
+<p>
+  The extension to supporting 'Partial Objects' is to provide a mechanism that profiles what parts of
+    the object graph are used for any given query. This profiling information can then be used to
+    actively tune the query or provide performance improvement suggestions.
+</p>
+
+
 
 </body>
 </html>

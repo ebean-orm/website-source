@@ -234,3 +234,67 @@ footer {
   margin-left: 5px;
 }
 
+.page-content h2 {
+    margin-top:60px;
+}
+.page-content h3 {
+    margin-top:50px;
+}
+.page-content p, .page-content li {
+    max-width:700px;
+}
+.side-bar {
+    margin-left: 30px;
+}
+.side-bar h5 {
+    padding-top: 50px;
+    font-size: 18px;
+}
+.side-bar ul {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+.side-nav li {
+    font-size: 16px;
+    padding-left: 5px;
+    margin-top: 10px;
+}
+
+.side-nav li.active {
+}
+.side-nav li i {
+    font-size: 13px;
+}
+.side-nav li.active a {
+    color: black;
+}
+a.nav-link {
+    font-weight: bold;
+}
+.mtl {
+    margin-top: 60px;
+}
+.mvm {
+    margin-top:25px;
+}
+.mtl {
+    margin-top: 50px;
+}
+.intro p {
+    margin-left:20px;
+}
+pre.console {
+    background: #111;
+    color:#eee;
+    font-weight: 600;
+}
+.index-page ul {
+    padding-left:20px;
+}
+.page-components .syntax.xml {
+    max-width: 700px;
+}
+.max-700 {
+    max-width: 700px;
+}
