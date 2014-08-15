@@ -85,7 +85,22 @@
     actively tune the query or provide performance improvement suggestions.
 </p>
 
-
+<h2>Raw SQL</h2>
+<p>
+  ORM's do some SQL generation well but there are many things that you can do with SQL that are <em>not</em>
+    a natural fit for an ORM especially around aggregation, reporting and bulk updates. With Ebean the expectation
+    is that developers will use raw SQL building some object graphs as well as for bulk updates. Ebean does
+    have quite a nice wide sweet spot with it's great support for Partial Objects but it is never
+    going to exhaustively support all the capabilities in SQL.
+</p>
+<p>
+  With Ebean using raw SQL is well supported and beans any beans loaded via RawSql are fully functional with
+    further lazy loading, query joins, insert, update and delete all supported.
+</p>
+<p>
+  Bulk updates should not be shunned or avoided - some problems are much more effeciently solved by using a 'relational approach'
+    and perhaps an issue when developing with an ORM is to forget to consider 'relational approaches' and especially bulk update.
+</p>
 
 </body>
 </html>
