@@ -11,10 +11,367 @@
     </div>
   </div>
 
-  <div class="container">
+<div class="container">
 
-  </div>
-  <!-- /.container -->
+  <ul>
+    <li><a class="page-scroll" href="#get-ebean">Get Ebean</a></li>
+    <li><a class="page-scroll" href="#setup-enhancement">Setup Enhancement</a></li>
+    <li><a class="page-scroll" href="#create-model">Create Model</a></li>
+    <li><a class="page-scroll" href="#configure-ebean">Configure Ebean</a></li>
+    <li><a class="page-scroll" href="#db-operations">ORM / Database Operations</a></li>
+  </ul>
+
+  <section id="get-ebean">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <h3>Get Ebean</h3>
+<p>For examples you can see the <a href="https://github.com/ebean-orm/example-java8">Ebean Java 8 example</a>. You can also see the <a href="https://github.com/ebean-orm/avaje-ebeanorm-examples">Basic, EventAdapter, Groovy, Kotlin, JSON, and Postgres examples</a>.</p>
+
+<p>You'll need to add Ebean as dependency in you pom.xml.  This will transitively bring in <a href="http://docs.oracle.com/javaee/6/api/javax/persistence/package-summary.html">JPA</a> persistence-api that has the annotations you use in your Ebean model beans.  It also transitively brings in <a href="http://www.slf4j.org/">SLF4J</a> slf4j-api and <a href="https://github.com/FasterXML/jackson-core">Jackson</a> jackson-core.
+
+Optionally (and probably recommended), you can include <a href="http://beanvalidation.org/">Bean Validation</a> validation-api. Ebean will read any validation annotations like @size to determine column lengths etc
+
+<@maven "org.avaje.ebeanorm" "avaje-ebeanorm" "auto" "1" />
+</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section id="setup-enhancement">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-12">
+                  <h3>Setup Enhancement</h3>
+<p>Ebean requires that model beans to be enhanced by Ebean's enhancer.  This can be done with at build time with your build tool or it can be done at runtime using a Java Agent.</p>
+
+<p>The simplest method is to use the Java Agent. With this option, you start by including the enhancer agent dependencies.  Please see the <a href="/docs/enhancement/enhancement">enhancement docs</a> for other options.
+
+<@maven "org.avaje" "avaje-agentloader" "auto" "3" />
+<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-agent" "auto" "4" />
+
+Next, you need to start the enhancer agent.  You can start the enhancer agent programmatically:
+```java
+import org.avaje.agentloader;
+...
+public void someApplicationBootupMethod() {
+  // Load the agent into the running JVM process
+  if (!AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent","debug=1;packages=org.example.model.**")) {
+    logger.info("avaje-ebeanorm-agent not found in classpath - not dynamically loaded");
+  }
+}
+```
+
+Alternatively, you can start the enhancer agent from the command line, examples:
+```xml
+java -javaagent:avaje-ebeanorm-agent.jar MyApplication
+java -javaagent:avaje-ebeanorm-agent.jar=debug=3 MyApplication
+java -javaagent:avaje-ebeanorm-agent.jar=packages=org.example.model.** MyApplication
+java -javaagent:avaje-ebeanorm-agent.jar=debug=3;packages=org.example.model.**,org.example.model2.** MyApplication
+```
+For deploying in a JEE web or application server, it may be best to enhance the model classes at build time.  Please see the <a href="/docs/enhancement/enhancement">enhancement docs</a> for other build time options.
+</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
+    <section id="create-model">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Create Model</h3>
+  <p>
+    Use JPA Mapping annotations.  If you included Bean Validation API, use those annotations also.
+
+```java
+package org.example.model;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.sql.Timestamp;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.CreatedTimestamp;
+import com.avaje.ebean.annotation.UpdatedTimestamp;
+
+/**
+ * Customer entity bean.
+ */
+@Entity
+@Table(name="eg_customer")
+public class Customer extends Model {
+
+  /**
+   * Convenience Finder for 'active record' style.  Finder is public static class in com.avaje.ebean.Model
+   */
+  public static final Finder<Long,Customer> find = new Finder<>(Long.class, Customer.class);
+
+  @Id
+  Long id;
+
+  @Version
+  Long version;
+
+  @CreatedTimestamp
+  Timestamp whenCreated;
+
+  @UpdatedTimestamp
+  Timestamp whenUpdated
+
+  @Column(length=100)
+  String name;
+
+  boolean inactive;
+
+  LocalDate registered;
+
+  @Column(length=1000)
+  String comments;
+
+  @ManyToOne(cascade=CascadeType.ALL)
+  Address billingAddress;
+
+  @ManyToOne(cascade=CascadeType.ALL)
+  Address shippingAddress;
+
+  @OneToMany(mappedBy="customer", cascade=CascadeType.PERSIST)
+  List<Contact> contacts;
+
+  ...
+
+  /**
+   * Helper method to add a contact to the customer.
+   */
+  public void addContact(Contact contact) {
+    if (contacts == null) {
+      contacts = new ArrayList<>();
+    }
+    // setting the customer is automatically done when Ebean does
+    // a cascade save from customer to contacts.
+    contact.setCustomer(this);
+    contacts.add(contact);
+  }
+
+}
+```
+
+  </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="configure-ebean">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Configure Ebean and Database</h3>
+  <p>
+    You can either manually by create/register EbeanServers via EbeanServerFactory.create(ServerConfig) or automatically during the first use of the Ebean singleton, eg Ebean.getServer();
+    When EbeanServers are created automatically they are configured using information in the ebean.properties file.
+  </p>
+  <p>
+    For an example how to configure programmatically, see the <a target="_blank" href="/apidocs/com/avaje/ebean/config/ServerConfig.html">ServerConfig Javadocs</a>
+  </p>
+
+```java
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.EbeanServer;
+
+...
+
+// configure automatically using ebean.properties file:
+private static EbeanServer server = Ebean.getServer("h2"); // could also pass null since h2 is default db in ebean.properties
+```
+
+ebean.properties
+
+```properties
+ebean.ddl.generate=true
+ebean.ddl.run=true
+
+ebean.uuidStoreAsBinary=true
+ebean.databaseSequenceBatchSize=1
+
+datasource.default=h2
+
+datasource.h2.username=sa
+datasource.h2.password=
+datasource.h2.databaseUrl=jdbc:h2:mem:tests
+datasource.h2.databaseDriver=org.h2.Driver
+```
+
+In this ebean.properties, it is using H2 database, so you would need to add H2 to your maven dependencies:
+
+<@maven "com.h2database" "h2" "1.4.186" "5" />
+
+  </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="db-operations">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>ORM / Database Operations</h3>
+  <p>
+
+    For more information on transactions, see the <a href="/docs/transactions/implicit">Transaction documentation</a>.
+
+<h4>Insert</h4>
+```java
+    Ebean.execute(new TxRunnable() {
+      public void run() {
+
+        Contact john = new Contact();
+        john.setFirstName("John");
+        john.setLastName("Doe");
+        john.setEmail("john.doe"@example.com");
+
+        Contact jane = new Contact();
+        jane.setFirstName("Jane");
+        jane.setLastName("Doe");
+        jane.setEmail("jane.doe"@example.com");
+
+        Customer customer = new Customer();
+        customer.setName("Example Corp");
+        customer.addContact(john);
+        customer.addContact(jane);
+
+        Ebean.save(customer);
+      }
+    }
+```
+
+
+<h4>Update</h4>
+```java
+    Ebean.execute(new TxRunnable() {
+      public void run() {
+
+        Customer customer = Ebean.find(Customer.class, 4);
+        customer.setName("New updated name");
+        Ebean.save(customer);
+
+      }
+    }
+```
+
+<h4>Delete</h4>
+```java
+    Ebean.execute(new TxRunnable() {
+      public void run() {
+
+        // delete
+        Customer customer = Ebean.find(Customer.class, 4);
+        Ebean.delete(customer);
+
+        // orm bulk delete use bean name and bean properties
+        server.createUpdate(OrderDetail.class, "delete from orderDetail").execute();
+
+        // sql bulk update uses table and column names
+        server.createSqlUpdate("delete from o_country").execute();
+      }
+    }
+```
+
+
+<h4>Query</h4>
+
+For more information on queries, see the <a href="/docs/query/intro">Query docs</a> and <a target="_blank" href="/apidocs/com/avaje/ebean/Query.html">Query Javadocs</a>.
+
+```java
+// find by id
+Customer customer1 = Ebean.find(Customer.class, 4);
+Customer customer2 = Customer.find.find(4);
+
+// find list
+List<Customer> customers1 = Ebean.find(Customer.class)
+  .where().like("name", "Rob%") // where name like 'Rob%'
+  .orderBy("name desc")
+  .findList();
+
+// find list, returning partially populated objects
+List<Customer> customers2 =
+  Customer.find
+    .select("name") // retrieve only name on Customer
+    .fetch(contact, "firstname", "lastname") // fetch contact collection, retrieve only firstname, lastname
+    .where()
+      .eq("inactive", false)
+      .like("contact.name", "Rob%")
+      .orderBy("contact.name desc");
+      .findList();
+
+// find list, returning partially populated objects based on PathProperties
+Query<Customer> query = Customer.find.query();
+String pathProps = "(id,version,name,contacts(id,email,version))";
+PathProperties pathProperties = PathProperties.parse(pathProps);
+pathProperties.apply(query);
+List<Customer> customers3 = query.where().gt("id", 1).findList();  // where id>1
+
+
+// find single item by Ebean query
+String q = "find Customer where id=:id";
+Customer order = Ebean.createQuery(Customer.class, q)
+  .setParameter("id", 1)
+  .findUnique();
+
+```
+  </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <#-- I couldn't figure out a way to get the below scripts to run after main.html brought in jquery near the end of the html, so I just included jquery here redundantly. -->
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+  <script>
+  (function($) {
+   function getVersions(url) {
+    $.ajax({
+       type: 'GET',
+        url: url,
+        async: true,
+        contentType: "application/json",
+        dataType: 'jsonp'
+      }).then(function(data){
+        var projs = data.response.docs;
+
+        for(var i = 0; i < projs.length; i++) {
+            var p = projs[i];
+            var artifactid = p.a;
+            $("span."+artifactid+"-version").text(p.latestVersion);
+
+        }
+      });
+    }
+
+    getVersions('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje.ebeanorm%22&wt=json');
+    getVersions('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje%22AND%20a:%22avaje-agentloader%22&wt=json');
+
+
+    })(jQuery);
+
+  </script>
+
+</div>
+<!-- /.container -->
 
 
 </body>

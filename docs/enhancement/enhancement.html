@@ -6,13 +6,13 @@
 <body>
 
 <h1>Enhancement</h1>
-<h4>How to enhance entity beans etc</h4>
+<p>All Ebean model beans need to be enhanced. Ebean provides several options to accomplish that.</p>
 
+<br>
+<br>
 
 <div class="container">
-
   <div class="row icon-info">
-
 
 <div class="col-md-3">
   <div class="well">
@@ -46,29 +46,134 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
 </div>
 
 
-<div class="bs-callout bs-callout-info">
-<h4></h4>
-<p>
+<h4 id="maven">Maven Enhancement</h4>
+<p>A Maven plugin for build time enhancement</p>
+```xml
+<plugin>
+  <groupId>org.avaje.ebeanorm</groupId>
+  <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
+  <version>/ver:avaje-ebeanorm-mavenenhancer:ver/</version>
+  <executions>
+     <execution>
+      <id>main</id>
+      <phase>process-classes</phase>
+      <configuration>
+        <classSource>target/classes</classSource>
+        <classDestination>target/classes</classDestination>
+        <packages>org.example.domain.**,org.example.anotherdomain.**</packages>
+        <transformArgs>debug=1</transformArgs>
+      </configuration>
+      <goals>
+        <goal>enhance</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+```
+
+<h4 id="maven_eclipse">Maven/Eclipse Enhancement</h4>
+<p>Eclipse can be configured to enhance the classes during build using maven configuration</p>
+
+```xml
+<build>
+    <plugins>
+        <!-- plugins here -->
+    </plugins>
+    <pluginManagement>
+        <plugins>
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+            <plugin>
+                <groupId>org.eclipse.m2e</groupId>
+                <artifactId>lifecycle-mapping</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <lifecycleMappingMetadata>
+                        <pluginExecutions>
+                            <pluginExecution>
+                                <pluginExecutionFilter>
+                                    <groupId>org.avaje.ebeanorm</groupId>
+                                    <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
+                                    <versionRange>[/ver:avaje-ebeanorm-mavenenhancer:ver/,)</versionRange>
+                                    <goals>
+                                        <goal>enhance</goal>
+                                    </goals>
+                                </pluginExecutionFilter>
+                                <action>
+                                    <execute>
+                                        <runOnConfiguration>true</runOnConfiguration>
+                                        <runOnIncremental>true</runOnIncremental>
+                                    </execute>
+                                </action>
+                            </pluginExecution>
+                        </pluginExecutions>
+                    </lifecycleMappingMetadata>
+                </configuration>
+            </plugin>
+        </plugins>
+    </pluginManagement>
+</build>
+```
+<h4 id="ant">Ant Enhancement</h4>
+<p>Modify your ant build.xml file to:
+  <ol>
+    <li>Define the AntEnhanceTask.</li>
+    <li>Create a target that uses the AntEnhanceTask to enhance the entity classes.</li>
+  </ol>
 </p>
-</div>
 
+```xml
+<taskdef
+    name="ebeanEnhance"
+    classname="com.avaje.ebean.enhance.ant.AntEnhanceTask"
+    classpath="your_path_to/ebean-x.x.x.jar" />
 
+<target name="ormEnhance" depends="clean,compile">
+ <!--
+ classSource: This is the directory that contains your class files. That is, the directory where your IDE will compile your java class files to, or the directory where a previous ant task will compile your java class files to.
 
-<h2>Maven, Ant</h2>
-<p>
-Use Maven or Ant to enhance your beans at build compile time.
+ classDest: The directory where the enhanced classes are written to. If not specified this defaults to the classSource effectively replacing the original class file with the enhanced class file.
+
+ packages: a comma delimited list of packages that contain entity classes. All the classes in these packages are searched for entity classes to be enhanced. transformArgs: This contains a debug level (0 - 10) .
+ -->
+ <ebeanEnhance
+    classSource="your_classes_directory"
+    packages="app.entity*"
+    transformArgs="debug=5" />
+</target>
+```
 </p>
 
-<h2>Agent, AgentLoader</h2>
-<p>
-Use Maven or Ant to enhance your beans at build compile time.
+<h4 id="agent">Agent Enhancement</h4>
+<p>JVM javaagent for runtime enhancement - you will usually start the JVM with an -javaagent:lib/avaje-ebeanorm-agent.jar command line option.  Ebean will automatically enhance the beans and use the resulting subclasses instead</p>
+<@maven "org.avaje" "avaje-agentloader" "auto" "3" />
+
+<p>Enables programmatic loading of the java agent instead of starting the jvm with the -javaagent command line option</p>
+<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-agent" "auto" "4" />
+
+Next, you need to start the enhancer agent.  You can start the enhancer agent programmatically:
+```java
+import org.avaje.agentloader;
+...
+public void someApplicationBootupMethod() {
+  // Load the agent into the running JVM process
+  if (!AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent","debug=1;packages=org.example.model.**")) {
+    logger.info("avaje-ebeanorm-agent not found in classpath - not dynamically loaded");
+  }
+}
+```
+
+Alternatively, you can start the enhancer agent from the command line, examples:
+```xml
+java -javaagent:avaje-ebeanorm-agent.jar MyApplication
+java -javaagent:avaje-ebeanorm-agent.jar=debug=3 MyApplication
+java -javaagent:avaje-ebeanorm-agent.jar=packages=org.example.model.** MyApplication
+java -javaagent:avaje-ebeanorm-agent.jar=debug=3;packages=org.example.model.**,org.example.model2.** MyApplication
+```
 </p>
 
-<h2>Idea, Eclipse IDE</h2>
-<p>
-Use Maven or Ant to enhance your beans at build compile time.
-</p>
 
+<h4 id="ide">IDE Enhancement</h4>
+<p>Under Construction</p>
 
 
 <div class="pull-right">

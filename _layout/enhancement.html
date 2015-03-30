@@ -27,9 +27,11 @@
         </div>
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
           <ul class="nav navbar-nav">
-            <li <#if maven??>class="active"</#if>><a href="/docs/enhancement#maven">Maven</a></li>
-            <li <#if agent??>class="active"</#if>><a href="/docs/enhancement#agent">Agent</a></li>
-            <li <#if ide??>class="active"</#if>><a href="/docs/enhancement#ide">IntelliJ, Eclipse</a></li>
+            <li <#if maven??>class="active"</#if>><a class="page-scroll" href="#maven">Maven</a></li>
+            <li <#if maven_eclipse??>class="active"</#if>><a class="page-scroll" href="#maven_eclipse">Maven/Eclipse</a></li>
+            <li <#if ant??>class="active"</#if>><a class="page-scroll" href="#ant">Ant</a></li>
+            <li <#if agent??>class="active"</#if>><a class="page-scroll" href="#agent">Agent</a></li>
+            <li <#if ide??>class="active"</#if>><a class="page-scroll" href="#ide">IntelliJ, Eclipse</a></li>
 
           </ul>
         </div><!--/.nav-collapse -->
@@ -40,10 +42,10 @@
 
 -->
 
-    </div>  
+    </div>
     <div class="col-md-9">
 
-<div id="layout-body"></div> 
+<div id="layout-body"></div>
 
    </div>
 

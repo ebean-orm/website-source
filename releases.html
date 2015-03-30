@@ -14,162 +14,54 @@
 
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
 
-    <h2>Maven</h2>
+        <h3>Source Code / Release Notes</h3>
+        <p>Please see the <a target="_blank" href="https://github.com/ebean-orm/avaje-ebeanorm/releases">project's github release page</a> for details of the releases.</p>
 
-<h4>Ebean main artifact</h4>
-<p>Core artifact of Ebean ORM</p>
-```xml
-<dependency>
-  <groupId>org.avaje.ebeanorm</groupId>
-  <artifactId>avaje-ebeanorm</artifactId>
-  <version>4.0.4</version>
-</dependency>
-```
+        <h3>Binaries</h3>
+        <p>You can see latest and past versions for the project at <a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.avaje.ebeanorm%22%20OR%20(g%3A%22org.avaje%22%20AND%20a%3A%22avaje-agentloader%22)">maven's search site</a>.</p>
 
-<h4>Agent</h4>
-<p>Enhancement agent for Ebean ORM</p>
-```xml
-<dependency>
-  <groupId>org.avaje.ebeanorm</groupId>
-  <artifactId>avaje-ebeanorm-agent</artifactId>
-  <version>4.1.2</version>
-</dependency>
-```
+        <h3>Maven</h3>
+        <@maven "org.avaje.ebeanorm" "avaje-ebeanorm" "auto" "1" />
 
-<h4>Maven Enhancement</h4>
-<p>Maven Enhancement plugin</p>
-```xml
-<plugin>
-  <groupId>org.avaje.ebeanorm</groupId>
-  <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
-  <version>4.1.2</version>
-  <executions>
-     <execution>
-      <id>main</id>
-      <phase>process-classes</phase>
-      <configuration>
-        <classSource>target/classes</classSource>
-        <packages>org.example.domain.**</packages>
-        <transformArgs>debug=1</transformArgs>
-      </configuration>
-      <goals>
-        <goal>enhance</goal>
-      </goals>
-    </execution>
-  </executions>
-</plugin>
-```
-
-<h4>Agent loader</h4>
-<p>Provides programmatic loading of the java agent</p>
-```xml
-<dependency>
-  <groupId>org.avaje</groupId>
-  <artifactId>avaje-agentloader</artifactId>
-  <version>1.1.1</version>
-</dependency>
-```
-
-<h4>IntelliJ Idea Plugin</h4>
-<p>
-TODO: Reference what the latest version is
-</p>
-
-<h4>Eclipse IDE Plugin</h4>
-<p>
-TODO: Reference what the latest version is
-</p>
-
-      </div>
-
-      <div class="col-md-6">
-
-  
-  <h2>Releases</h2>
-  <h4><a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?milestone=12&page=1&state=closed">4.0.4 / 29 May 2014</a></h4>
-  <ul>
-  <li>API - Model and Finder changes</li>
-  <li>BUG - Issue with lazy loading after a findIterate query</li>
-  <li>BUG - transaction.setBatchFlushOnQuery(false) not working for some queries</li>
-  <li>ENH - Minor - not log extra SQL into log when using jdbc batch mode </li>
-  </ul>
-
-  <h4><a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?milestone=10&page=1&state=closed">4.0.3 / 27 May 2014</a></h4>
-  <ul>
-  <li>API - Add Play Model and Finder to Ebean </li>
-  <li>BUG - Memory issue (Hard refs) when using findIterate</li>
-  <li>BUG - Backport to JDK 6 (aka fix for issue #129 in 4.x) </li>
-  <li>ENH - Add support for mocking EbeanServer in the Ebean singleton (to use Mockito or similar)  </li>
-  </ul>
-
-  <h4><a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?milestone=6&page=1&state=closed">4.0.2 / 18 May 2014</a></h4>
-<ul>
-
-<li>API - Deprecating findPagingList(), will provide a replacement without fetch ahead etc </li>
-<li>API - Deprecating - Query findFutureList() and SqlQuery findFutureList() </li>
-<li>API - Breaking API Change - Stateless updates no longer need explicit Set updateProps. </li>
-<li>API - Breaking API Change - remove BeanState.setReference() </li>
-<li>API - Removed Feature - Remove support for multiple @Id properties (use EmbeddedId instead). Remove support for saving an entity bean that does not have an @Id property </li>
-<li>API - Breaking API Change - BeanPersistRequest.getOldValues() replaced with ... Map&lt;String,ValuePair&gt; getUpdatedValues() </li>
-<li>API - Breaking API Change - Remove Query setBackgroundFetchAfter() feature </li>
-<li>API - Breaking API Change - Remove deprecated QueryListener. You must convert to findIterate() or findVisit() </li>
-
-<li>BUG - Exception using findIds() with inheritance SINGLE_TABLE </li>
-<li>BUG - L2 Cache not working for embedded beans </li>
-<li>BUG - On save @OneToOne does not cascade parent IDs to child node </li>
-<li>BUG - Ebean doesn't honor @Transient for non-primitive array properties</li>
-<li>BUG - DDL creation doesn't handle nullable attribute of @JoinColumn </li>
-<li>BUG - When using @Transient along with @Formula I'm not seeing any values in the field. </li>
-<li>BUG - Invalid query when ORDER BY with DISTINCT </li>
-<li>BUG - Stateless update cascading to OneToOne or ManyToOne incorrectly tries to INSERT rather than UPDATE </li>
-<li>BUG - @AttributeOverrides annotation for attribute definition in entity does not work for embedded primary keys </li>
-<li>BUG - Embedded Entities with Autofetch Exception </li>
-<li>BUG - Using findIterate with MySQL streams the entire result set at once </li>
-<li>BUG - issue when deleting an Entity with relationship which is using @EmbeddedId as a composite keys </li>
-<li>BUG - disjunction expression should not produce inner join - left outer join instead </li>
-<li>BUG - Stateless recursive updates for entities with version field will create Inserts instead of Updates </li>
-<li>BUG - Many relations are deleted when accessing many field in BeanPersistAdapter on stateless updates bug</li>
-
-<li>ENH - Ability to store UUID as binary(16) rather than varchar(40)</li>
-<li>ENH - Allow the global row limit for queries to be configurable ( CQuery.GLOBAL_ROW_LIMIT)</li>
-<li>ENH - Add support for @PrePersist, @PostPersist, @PostLoad,... </li>
-<li>ENH - RawSql to support discriminator column mapping. enhancement </li>
-<li>ENH - Additional API - added update(Collection beans); and insert(Collection beans); to EbeanServer </li>
-<li>ENH - Enhancement changed - Must use 4.1.0 of agent and mavenenhancer etc </li>
-
-</ul>
-
-<h4><a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?milestone=7&page=1&state=closed">3.4.1 / 28 May 2014</a></h4>
-<p>
-Backport of - Memory issue (Hard refs) when using findIterate.
-</p>
-
-<h4><a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?milestone=7&page=1&state=closed">3.3.4 / 22 May 2014</a></h4>
-<p>
-Backport of - JDK6 support
-</p>
-
-<h4><a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?milestone=7&page=1&state=closed">3.3.3 / 19 Apr 2014</a></h4>
-<p>
-2 bugs fixed.
-</p>
-
-<h4><a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?milestone=7&page=1&state=closed">3.3.2 / 3 Apr 2014</a></h4>
-<p>
-2 bugs fixed.
-</p>
-
-<h4><a href="https://github.com/ebean-orm/avaje-ebeanorm/issues?milestone=2&state=closed">3.3.1 / 2 Apr 2014</a></h4>
-<p>
-12 bugs fixed, 1 enhancement request.
-</p>
 
       </div>
 
     </div> <!-- ./row -->
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <#-- I couldn't figure out a way to get the below scripts to run after main.html brought in jquery near the end of the html, so I just included jquery here redundantly. -->
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+  <script>
+  (function($) {
+   function getVersions(url) {
+    $.ajax({
+       type: 'GET',
+        url: url,
+        async: true,
+        contentType: "application/json",
+        dataType: 'jsonp'
+      }).then(function(data){
+        var projs = data.response.docs;
+
+        for(var i = 0; i < projs.length; i++) {
+            var p = projs[i];
+            var artifactid = p.a;
+            $("span."+artifactid+"-version").text(p.latestVersion);
+
+        }
+      });
+    }
+
+    getVersions('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje.ebeanorm%22&wt=json');
+    getVersions('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje%22AND%20a:%22avaje-agentloader%22&wt=json');
+
+
+    })(jQuery);
+
+  </script>
+  
   </div> <!-- /.container -->
 
 </body>
