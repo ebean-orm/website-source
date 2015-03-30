@@ -2,7 +2,6 @@
 
 <#macro maven groupid artifactid version uq >
 
-
 <#if version == "auto">
   <#assign version_auto = true />
   <#assign version_str = "/ver:${artifactid}:ver/" />
@@ -76,4 +75,9 @@ ${dep_block}
 </#if>
 
   </div>
+</#macro>
+
+<#macro maven_replace_version placeholder artifactid>
+<#local dep_block><#nested></#local>
+${dep_block?replace(placeholder, "<span class='"+artifactid+"-version'>$"+"{version}</span>" )}
 </#macro>

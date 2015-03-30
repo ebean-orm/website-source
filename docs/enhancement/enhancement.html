@@ -48,11 +48,13 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
 
 <h4 id="maven">Maven Enhancement</h4>
 <p>A Maven plugin for build time enhancement</p>
+
+<@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
 ```xml
 <plugin>
   <groupId>org.avaje.ebeanorm</groupId>
   <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
-  <version>/ver:avaje-ebeanorm-mavenenhancer:ver/</version>
+  <version>::version::</version>
   <executions>
      <execution>
       <id>main</id>
@@ -70,10 +72,12 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
   </executions>
 </plugin>
 ```
+</@maven_replace_version>
 
 <h4 id="maven_eclipse">Maven/Eclipse Enhancement</h4>
 <p>Eclipse can be configured to enhance the classes during build using maven configuration</p>
 
+<@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
 ```xml
 <build>
     <plugins>
@@ -93,7 +97,7 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
                                 <pluginExecutionFilter>
                                     <groupId>org.avaje.ebeanorm</groupId>
                                     <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
-                                    <versionRange>[/ver:avaje-ebeanorm-mavenenhancer:ver/,)</versionRange>
+                                    <versionRange>[::version::,)</versionRange>
                                     <goals>
                                         <goal>enhance</goal>
                                     </goals>
@@ -113,6 +117,8 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
     </pluginManagement>
 </build>
 ```
+</@maven_replace_version>
+
 <h4 id="ant">Ant Enhancement</h4>
 <p>Modify your ant build.xml file to:
   <ol>
@@ -163,12 +169,14 @@ public void someApplicationBootupMethod() {
 ```
 
 Alternatively, you can start the enhancer agent from the command line, examples:
+<@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
 ```xml
-java -javaagent:avaje-ebeanorm-agent.jar MyApplication
-java -javaagent:avaje-ebeanorm-agent.jar=debug=3 MyApplication
-java -javaagent:avaje-ebeanorm-agent.jar=packages=org.example.model.** MyApplication
-java -javaagent:avaje-ebeanorm-agent.jar=debug=3;packages=org.example.model.**,org.example.model2.** MyApplication
+java -javaagent:avaje-ebeanorm-agent-::version::.jar MyApplication
+java -javaagent:avaje-ebeanorm-agent-::version::.jar=debug=3 MyApplication
+java -javaagent:avaje-ebeanorm-agent-::version::.jar=packages=org.example.model.** MyApplication
+java -javaagent:avaje-ebeanorm-agent-::version::.jar=debug=3;packages=org.example.model.**,org.example.model2.** MyApplication
 ```
+</@maven_replace_version>
 </p>
 
 

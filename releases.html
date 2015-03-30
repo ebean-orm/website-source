@@ -12,7 +12,6 @@
 
   <div class="container">
 
-
     <div class="row">
       <div class="col-md-12">
 
@@ -25,44 +24,9 @@
         <h3>Maven</h3>
         <@maven "org.avaje.ebeanorm" "avaje-ebeanorm" "auto" "1" />
 
-
       </div>
 
     </div> <!-- ./row -->
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <#-- I couldn't figure out a way to get the below scripts to run after main.html brought in jquery near the end of the html, so I just included jquery here redundantly. -->
-  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
-  <script>
-  (function($) {
-   function getVersions(url) {
-    $.ajax({
-       type: 'GET',
-        url: url,
-        async: true,
-        contentType: "application/json",
-        dataType: 'jsonp'
-      }).then(function(data){
-        var projs = data.response.docs;
-
-        for(var i = 0; i < projs.length; i++) {
-            var p = projs[i];
-            var artifactid = p.a;
-            $("span."+artifactid+"-version").text(p.latestVersion);
-
-        }
-      });
-    }
-
-    getVersions('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje.ebeanorm%22&wt=json');
-    getVersions('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje%22AND%20a:%22avaje-agentloader%22&wt=json');
-
-
-    })(jQuery);
-
-  </script>
-  
   </div> <!-- /.container -->
-
 </body>
 </html>
