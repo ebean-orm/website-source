@@ -1,10 +1,3 @@
-<html>
-<head>
-<meta name="layout" content="_layout/intro.html" />
-<#assign genesis="active">
-</head>
-<body>
-
 <h1>Where does Ebean come from?</h1>
 
 <p>
@@ -163,6 +156,3 @@
   Ebean is not 'done' yet - slowly but surely we will get there.  For those people who want to use an ORM without the
     crazy Session/EntityManager/PersistenceManager - well, you can try it out.
 </p>
-
-</body>
-</html>

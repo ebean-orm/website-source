@@ -1,0 +1,129 @@
+<html>
+<head>
+<meta name="layout" content="_layout/main.html" />
+<#assign documentation="active">
+</head>
+<body>
+  <div class="jumbotron mini">
+    <div class="container">
+      <h1>Documentation</h1>
+    </div>
+  </div>
+
+<div class="container doc-index bs-docs-container">
+
+<div class="row">
+
+  <div class="col-md-9" role="main">
+
+    <#include "/_docs/introduction.ftl">
+    <#include "/_docs/enhancement.ftl">
+    <#include "/_docs/bootstrap.ftl">
+    <#include "/_docs/ebean_access_patterns.ftl">
+    <#include "/_docs/queries.ftl">
+    <#include "/_docs/updates.ftl">
+    <#include "/_docs/mapping.ftl">
+    <#include "/_docs/transactions.ftl">
+    <#include "/_docs/json.ftl">
+    <#include "/_docs/adapters.ftl">
+    <#include "/_docs/l2caching.ftl">
+    <#include "/_docs/testing.ftl">
+    <#include "/_docs/clustering.ftl">
+    <#include "/_docs/monitoring.ftl">
+    <#include "/_docs/architecture.ftl">
+
+  </div>
+
+  <div class="col-md-3" role="complementary">
+    <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+      <ul class="nav bs-docs-sidenav">
+        <li>
+          <a href="#introduction">Introduction</a>
+          <ul class="nav">
+            <li><a href="#use_jpa_mapping">Use JPA mappings</a></li>
+            <li><a href="#simple_query_language">Simple query language</a></li>
+            <li><a href="#save_and_delete">Save and delete</a></li>
+            <li><a href="#jpa_comparison">Comparison to JPA</a></li>
+            <li><a href="#ebean_does_not">Ebean does not...</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#enhancement">Enhancement</a>
+          <ul class="nav">
+            <li><a href="#enhance_maven">Maven</a></li>
+            <li><a href="#enhance_maven_eclipse">Eclipse + Maven</a></li>
+            <li><a href="#enhance_ant">Ant</a></li>
+            <li><a href="#enhance_agent">Agent</a></li>
+            <li><a href="#enhance_ide">IDE enhancement</a></li>
+          </ul>
+
+        </li>
+        <li>
+          <a href="#bootstrap">Bootstrap</a>
+        </li>
+        <li>
+          <a href="#ebean_access_patterns">Ebean access patterns</a>
+          <ul class="nav">
+            <li><a href="#dependency_injection">Dependency injection</a></li>
+            <li><a href="#play_active_record">Active Record</a></li>
+            <li><a href="#ebean_singleton">Ebean singleton</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#queries">Queries</a>
+          <ul class="nav">
+            <li><a href="#where_clause">Where clause</a></li>
+            <li><a href="#partial_objects">Partial objects</a></li>
+            <li><a href="#query_joins">Query joins</a></li>
+            <li><a href="#loading">Loading</a></li>
+            <li><a href="#lazy_oading">Lazy loading</a></li>
+            <li><a href="#large_queries">Large queries</a></li>
+            <li><a href="#row_count">Row count</a></li>
+            <li><a href="#paging">Paging</a></li>
+            <li><a href="#find_ids">Find ids</a></li>
+            <li><a href="#rawsql">RawSql</a></li>
+            <li><a href="#sqlquery">SqlQuery</a></li>
+            <li><a href="#query_l2">L2 cache</a></li>
+            <li><a href="#autofetch">Autofetch</a></li>
+            <li><a href="#other_bits">Other bits</a></li>
+          </ul>
+        </li>
+        <li><a href="#updates">Updates</a></li>
+        <li><a href="#mapping">Mapping</a></li>
+        <li>
+          <a href="#transactions">Transactions</a>
+          <ul class="nav">
+            <li><a href="#implicit_transactions">Implicit</a></li>
+            <li><a href="#programmatic_transactions">Programmatic</a></li>
+            <li><a href="#transactional">@Transactional</a></li>
+            <li><a href="#tx_runnable">TxRunnable / TxCallable</a></li>
+            <li><a href="#spring">Spring</a></li>
+            <li><a href="#jta">JTA</a></li>
+          </ul>
+        </li>
+        <li><a href="#json">JSON</a></li>
+        <li><a href="#adapters">Adapters</a></li>
+        <li><a href="#l2caching">L2 caching</a></li>
+        <li>
+          <a href="#testing">Testing</a>
+          <ul class="nav">
+            <li><a href="#mockibean">MockiEbean</a></li>
+          </ul>
+        </li>
+        <li><a href="#clustering">Clustering</a></li>
+        <li><a href="#monitoring">Monitoring</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+
+      </ul>
+      <a class="back-to-top" href="#top">
+        Back to top
+      </a>
+    </nav>
+  </div>
+</div>
+
+</div> <!-- /.row -->
+</div>  <!-- /.container -->
+
+</body>
+</html>

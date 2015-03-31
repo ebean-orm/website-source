@@ -1,19 +1,7 @@
-<html>
-<head>
-<meta name="layout" content="_layout/enhancement.html" />
-<#assign enhancement="active">
-</head>
-<body>
+<div class="bs-docs-section">
+<h1 id="enhancement" class="page-header">Enhancement</h1>
 
-<h1>Enhancement</h1>
-<p>All Ebean model beans need to be enhanced. Ebean provides several options to accomplish that.</p>
-
-<br>
-<br>
-
-<div class="container">
-  <div class="row icon-info">
-
+<div class="row icon-info">
 <div class="col-md-3">
   <div class="well">
   <h4><span class="glyphicon glyphicon-chevron-right"></span> Maven, Ant</h4>
@@ -41,12 +29,13 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
   </p>
   </div>
 </div>
+</div> <!-- ./row -->
 
-  </div> <!-- ./row -->
-</div>
+<div class="row">
+<div class="col-md-12">
 
-
-<h4 id="maven">Maven Enhancement</h4>
+<#-------------------------------------------------------------------------------------------------->
+<h2 id="enhance_maven">Maven enhancement</h2>
 <p>A Maven plugin for build time enhancement</p>
 
 <@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
@@ -74,7 +63,9 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
 ```
 </@maven_replace_version>
 
-<h4 id="maven_eclipse">Maven/Eclipse Enhancement</h4>
+
+<#-------------------------------------------------------------------------------------------------->
+<h2 id="enhance_maven_eclipse">Eclipse + Maven enhancement</h2>
 <p>Eclipse can be configured to enhance the classes during build using maven configuration</p>
 
 <@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
@@ -118,8 +109,9 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
 </build>
 ```
 </@maven_replace_version>
+<#-------------------------------------------------------------------------------------------------->
 
-<h4 id="ant">Ant Enhancement</h4>
+<h2 id="enhance_ant">Ant enhancement</h2>
 <p>Modify your ant build.xml file to:
   <ol>
     <li>Define the AntEnhanceTask.</li>
@@ -149,7 +141,8 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
 ```
 </p>
 
-<h4 id="agent">Agent Enhancement</h4>
+<#-------------------------------------------------------------------------------------------------->
+<h2 id="enhance_agent">Agent enhancement</h2>
 <p>JVM javaagent for runtime enhancement - you will usually start the JVM with an -javaagent:lib/avaje-ebeanorm-agent.jar command line option.  Ebean will automatically enhance the beans and use the resulting subclasses instead</p>
 <@maven "org.avaje" "avaje-agentloader" "auto" "3" />
 
@@ -179,14 +172,10 @@ java -javaagent:avaje-ebeanorm-agent-::version::.jar=debug=3;packages=org.exampl
 </@maven_replace_version>
 </p>
 
-
-<h4 id="ide">IDE Enhancement</h4>
+<#-------------------------------------------------------------------------------------------------->
+<h2 id="enhance_ide">IDE enhancement</h2>
 <p>Under Construction</p>
-
-
-<div class="pull-right">
-<a class="btn btn-large btn-warning" href="">Next: ???</a>
 </div>
+</div> <!-- ./row -->
 
-</body>
-</html>
+</div>
