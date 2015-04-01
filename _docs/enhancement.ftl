@@ -123,8 +123,9 @@ Use IDE plugin to run the enhancement as part of the IDE compile/save.
 </build>
 ```
 </@maven_replace_version>
-<#-------------------------------------------------------------------------------------------------->
 
+
+<#-------------------------------------------------------------------------------------------------->
 <h2 id="enhance_ant">Ant enhancement</h2>
 <p>Modify your ant build.xml file to:
   <ol>
@@ -184,6 +185,27 @@ java -javaagent:avaje-ebeanorm-agent-::version::.jar=packages=org.example.model.
 java -javaagent:avaje-ebeanorm-agent-::version::.jar=debug=3;packages=org.example.model.**,org.example.model2.** MyApplication
 ```
 </@maven_replace_version>
+
+
+And as a final alternative, you can enhance your entities yourself programmatically with the agent:
+
+```java
+Transformer transformer = new Transformer("", "debug=" + EBEAN_TRANSFORM_LOG_LEVEL);//0-9 -> none - all
+InputStreamTransform streamTransform = new InputStreamTransform(transformer, Ebean.class.getClassLoader());
+InputStream in = new URL("your.class.file.class").openStream();//Or use ASM or Javassist get bytecode and new InputSream eg. in = new ByteArrayInputStream(ctClass.toBytecode());
+byte[] result = null;
+try {
+    result = streamTransform.transform("your.class.name", in);//class must be not loaded by classLoader
+} finally {
+    in.close();
+}
+if (result == null) {
+    throw new CannotCompileException("ebean enhance model fail!");
+}
+defineClass("your.class.name", result, 0, result.length);
+```
+
+
 </p>
 
 <#-------------------------------------------------------------------------------------------------->

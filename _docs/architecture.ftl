@@ -151,4 +151,9 @@ for a given identity (so that the object graphs are constructed in a consistent 
 fact that it sometimes looks/acts like a cache is more of a side effect.</p>
 
 
+<h2 id="internals">Internals</h1>
+<p>
+  The 4.0.1 release changed enhancement and how each bean knows which properties are loaded/changed. This is now held in a boolean. This change effected pretty much every part of the internals (lots of work) but has simplified a lot of those internals as the bean itself does the work of knowing what is loaded. It also has the effect of making embedded beans much better and paves the way for some JPA2 features for embedded beans like collections off embedded beans.
+</p>
+
 </div>

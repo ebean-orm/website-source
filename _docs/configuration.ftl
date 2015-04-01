@@ -150,5 +150,24 @@ config.addJar("someJarThatContainsEntityBeans.jar");
 EbeanServer server = EbeanServerFactory.create(config);
 ```
 
+<h2 id="logging">Logging</h2>
+
+<p>Ebean uses <a href="http://www.slf4j.org/">SLF4J</a> for logging.</p>
+
+```xml
+<!-- SQL and bind values -->
+<logger name="org.avaje.ebean.SQL" level="TRACE"/>
+<!-- Transaction Commit and Rollback events -->
+<logger name="org.avaje.ebean.TXN" level="TRACE"/>
+<!-- Summary level details -->
+<logger name="org.avaje.ebean.SUM" level="TRACE"/>
+```
+
+<p>
+In your early stages of using Ebean you should find where the transaction logs are going
+so that you can see exactly what Ebean is doing.
+</p>
+
+<p>...(under construction)... would be good to give full details on how to setup logging</p>
 
 </div>

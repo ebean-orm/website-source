@@ -819,78 +819,38 @@ Use setFirstRow() and setMaxRows() to control what rows are returned for the Que
 
 </p>
 
-<h4>PagingList</h4>
-<p>
-  For Stateful applications PagingList provides some benefits:
-  <ul>
-    <li>Fetch ahead (background fetching of the next page via a FutureList query)</li>
-    <li>Automatic propagation of the persistence context</li>
-    <li>Automatically getting the total row count (via a FutureRowCount query)</li>
-  </ul>
-</p>
-<p>
-The benefit of using PagedList over just using the normal Query with Query.setFirstRow(int) and Query.setMaxRows(int) is that it additionally wraps functionality that can call Query.findFutureRowCount() to determine total row count, total page count etc.
-</p><p>
-Internally this works using Query.setFirstRow(int) and Query.setMaxRows(int) on the query. This translates into SQL that uses limit offset, rownum or row_number function to limit the result set.
-</p><p>
+<h4>PagedList</h4>
 
-Example: typical use including total row count
+<p>The benefit of using PagedList over just using the normal Query with Query.setFirstRow(int) and Query.setMaxRows(int) is that it additionally wraps functionality that can call Query.findFutureRowCount() to determine total row count, total page count etc.</p>
+
+<p>Internally this works using Query.setFirstRow(int) and Query.setMaxRows(int) on the query. This translates into SQL that uses limit offset, rownum or row_number function to limit the result set.</p>
+
+<p>
+  Example: typical use including total row count
 
 ```java
-    // We want to find the first 100 new orders
-    //  ... 0 means first page
-    //  ... page size is 100
+// We want to find the first 100 new orders
+//  ... 0 means first page
+//  ... page size is 100
 
-    PagedList<Order> pagedList = ebeanServer.find(Order.class)
-        .where().eq("status", Order.Status.NEW)
-        .order().asc("id")
-        .findPagedList(0, 100);
+PagedList<Order> pagedList
+      = ebeanServer.find(Order.class)
+      .where().eq("status", Order.Status.NEW)
+      .order().asc("id")
+      .findPagedList(0, 100);
 
-    // Optional: initiate the loading of the total
-    // row count in a background thread
-    pagedList.loadRowCount();
+// Optional: initiate the loading of the total
+// row count in a background thread
+pagedList.loadRowCount();
 
-    // fetch and return the list in the foreground thread
-    List<Order> orders = pagedList.getList();
+// fetch and return the list in the foreground thread
+List<Order> orders = pagedList.getList();
 
-    // get the total row count (from the future)
-    int totalRowCount = pagedList.getTotalRowCount();
+// get the total row count (from the future)
+int totalRowCount = pagedList.getTotalRowCount();
 ```
-
-With PagingList when you use Page 2 it will automatically fetch Page 3 data in the background (using a FutureList query). The persistence context is automatically propagated meaning that all the paging queries use the same persistence context.
-```java
-int pageSize = 10;
-
-PagingList<TOne> pagingList =
-    Ebean.find(TOne.class)
-        .where().gt("name", "b")
-        .findPagedList(pageSize);
-
-
-// get the row count in the background...
-// ... otherwise it is fetched on demand
-// ... when getTotalRowCount() or getTotalPageCount()
-// ... is called
-pagingList.getFutureRowCount();
-
-// get the first page
-Page<TOne> page = pagingList.getPage(0);
-
-// get the beans from the page as a list
-List<TOne> list = page.getList();
-
-
-int totalRows = page.getTotalRowCount();
-
-if (page.hasNext()) {
-    Page<TOne> nextPage = page.next();
-    ...
-}
-```
-
 
 Example: No total row count required
-
 ```java
     // If you are not getting the 'first page' often
     // you do not bother getting the total row count again
@@ -898,19 +858,6 @@ Example: No total row count required
 
     // fetch and return the list in the foreground thread
     List<Order> orders = pagedList.getList();
-```
-
-
-For Stateless application, you should set fetch ahead to false since you are not going to benefit from it.
-
-```java
-PagingList<TOne> pagingList = Ebean.find(TOne.class)
-  .where().gt("name", "2")
-  .findPagedList(10);
-
-// fetchAhead not useful in a stateless application
-pagingList.setFetchAhead(false);
-Page<TOne> firstPage = pagingList.getPage(0);
 ```
 </p>
 
