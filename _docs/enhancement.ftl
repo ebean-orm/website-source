@@ -1,14 +1,14 @@
 <div class="bs-docs-section">
 <h1 id="enhancement" class="page-header">Enhancement</h1>
 
-<p>The term “Enhancement” covesr all the ways (javaagent, ant, maven,IDE plugin, etc)
+<p>The term "Enhancement" covesr all the ways (javaagent, ant, maven,IDE plugin, etc)
 that are used to modify the entity beans.<p>
 
 <p>Other similar terms to Enhancement that are used  include Weaving,
 Transformation and byte code manipulation.</p>
 
-<p>LTW – Load time weaving is used to refer to when the class manipulation occurs at “load
-time” typically via javaagent compared with class manipulation occuring at “build time”
+<p>LTW – Load time weaving is used to refer to when the class manipulation occurs at "load
+time" typically via javaagent compared with class manipulation occuring at "build time"
 typically via Maven, Ant or IDE plugin.</p>
 
 <p>In raw terms a class is just a byte[] and Ebean is simply manipulating those bytes prior to

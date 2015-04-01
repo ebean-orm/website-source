@@ -4,7 +4,6 @@
 <div class="row icon-info">
 <div class="col-md-12">
 
-
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="dependency_injection">Dependency Injection</h2>
 <p>
@@ -139,7 +138,7 @@ public class MyService {
 ```
 
 <#-------------------------------------------------------------------------------------------------->
-<h2 id="play_active_record">Active Record</h2>
+<h2 id="play_active_record">Ebean Model / Active Record</h2>
 
 <p>
 When you create your entity beans extend the Model object and add a Finder. When your entity beans extend the Model object they
@@ -155,6 +154,38 @@ query functionality.
 </p>
 
 <h4>Extend Model, add Finder:</h4>
+
+<p>Ebean provides <a href="http://127.0.0.1:4000/apidocs/com/avaje/ebean/Model.html">Model</a> that provides convenience methods for inserting, updating and deleting beans.</p>
+
+<p>It is a @MappedSuperclass base class.  To use it, you have your entity beans extend it, and it provides am 'Active Record' style programming model for you entities.</p>
+
+<p>There is a avaje-ebeanorm-mocker project that enables you to use Mockito or similar tools to still mock out the underlying 'default EbeanServer' for testing purposes.</p>
+
+<p>You may choose not use this Model mapped superclass if you don't like the 'Active Record' style or if you believe it 'pollutes' your entity beans.</p>
+
+ <p>If you choose to use the Model mapped superclass you will probably also chose to additionally add a Finder as a public static field to complete the active record pattern and provide a relatively nice clean way to write queries.</p>
+
+
+<p>
+NOTE: Model is annotated with JPA @MappedSuperclass.  It internally makes use of the Ebean singleton in order to
+provide the save, delete etc methods. View the source code for <a href='https://github.com/ebean-orm/avaje-ebeanorm/blob/play/src/main/java/com/avaje/ebean/Model.java'>Model here</a>.
+<p>
+
+<p>
+  Ebean Model provides convenience methods related to the entity. Here is a subset of them:
+  <ul>
+    <li>save() - Saves the entity</li>
+    <li>update() - Update the entity</li>
+    <li>insert() - Insert the entity</li>
+    <li>delete() - Delete the entity</li>
+    <li>refresh() - Refreshes the entity from the database</li>
+    <li>markAsDirty() - this is used so that when a bean that is otherwise unmodified is updated the version property is updated</li>
+    <li>update(String server) - Update the entity using the specified Ebean server</li>
+    <li>insert(String server)- Insert the entity using the specified server</li>
+    <li>delete(String server)- Delete the entity using the specified server</li>
+  </ul>
+
+  The Ebean Model also makes it easy for you to define a Finder in your extended class. See the example:
 ```java
 /**
  * Extend Model to get the save(), delete() etc
@@ -164,9 +195,8 @@ query functionality.
 @Table(name="be_customer")
 public class Customer extends Model {
 
-  /**
-   * Finder uses the 'default' EbeanServer.
-   */
+
+  // Create a static Finder
   public static Finder<Long,Customer> find = new Finder<Long,Customer>(Long.class, Customer.class);
 
   @Id
@@ -181,11 +211,9 @@ public class Customer extends Model {
   ...
 
 ```
-<p>
-NOTE: Model is annotated with JPA @MappedSuperclass.  It internally makes use of the Ebean singleton in order to
-provide the save, delete etc methods. View the source code for <a href='https://github.com/ebean-orm/avaje-ebeanorm/blob/play/src/main/java/com/avaje/ebean/Model.java'>Model here</a>.
-<p>
-
+</p><p>
+The Finder provides convenience methods querying.
+</p>
 
 <h4>Example: save</h4>
 ```java
@@ -207,6 +235,12 @@ provide the save, delete etc methods. View the source code for <a href='https://
           where().ilike("name", "rob%")
           .findList();
 ```
+
+Use code completion in your favorite ide or see <a href="/apidocs/com/avaje/ebean/Model.html">Model</a> and <a href="/apidocs/com/avaje/ebean/Model.Finder.html">Model.Finder</a> classes for more details.
+
+
+
+</p>
 
 
 <#-------------------------------------------------------------------------------------------------->
@@ -242,7 +276,7 @@ The Ebean singleton provides convienience methods:
 ```java
 Ebean.save(customer);
 
-// is the same as ...
+// is the Similar to ...
 
 EbeanServer defaultServer = Ebean.getServer(null);
 defaultServer.save(customer);

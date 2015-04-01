@@ -258,7 +258,13 @@ EbeanServer server;
 </p>
 
 <h2 id="ebean_does_not">Ebean does not...</h2>
-...
+<p>...(under construction)... list any missing features</a>
+
+<p>Ebean supports JPA annotations, not JPA2.</p>
+
+<p>Ebean does not provide functionality to DDl that can be used to update an existing database. Ebean does generate DDL that lets you drop and recreate your tables.
+  There are a few database schema evolution tools such as <a href="http://flywaydb.org/">Flyway</a> and <a href="http://www.liquibase.org/">Liquibase</a></p>
+
 
 </div>
 </div> <#-- ./row -->

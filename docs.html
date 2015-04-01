@@ -20,13 +20,13 @@
     <#include "/_docs/enhancement.ftl">
     <#include "/_docs/configuration.ftl">
     <#include "/_docs/ebean_access_patterns.ftl">
-    <#include "/_docs/field_and_property_access.ftl">
+    <#include "/_docs/field_property_access.ftl">
     <#include "/_docs/queries.ftl">
     <#include "/_docs/updates.ftl">
     <#include "/_docs/mapping.ftl">
     <#include "/_docs/transactions.ftl">
     <#include "/_docs/json.ftl">
-    <#include "/_docs/adapters.ftl">
+    <#include "/_docs/event_listeners.ftl">
     <#include "/_docs/l2caching.ftl">
     <#include "/_docs/testing.ftl">
     <#include "/_docs/language_support.ftl">
@@ -113,6 +113,7 @@
               <li><a href="#bulksqlupdate">Bulk SQL updates</a></li>
               <li><a href="#callablesql">CallableSql</a></li>
               <li><a href="#rawjdbc">Raw JDBC</a></li>
+              <li><a href="#batch_processing">Batch processing</a></li>              
             </ul>
         </li>
         <li>
@@ -123,7 +124,7 @@
             <li><a href="#naming_convention">Naming convention</a></li>
             <li><a href="#mapping_annotations">Mapping annotations</a></li>
             <li><a href="#relationships">Relationships</a></li>
-            <li><a href="#id_generation">Id generation</li>
+            <li><a href="#id_generation">Id generation</a></li>
             <li><a href="#formula">Formula</a></li>
             <li><a href="#enummapping">EnumMapping</a></li>
             <li><a href="#encryption">Encryption</a></li>
@@ -134,6 +135,7 @@
           <ul class="nav">
             <li><a href="#implicit_transactions">Implicit</a></li>
             <li><a href="#programmatic_transactions">Programmatic</a></li>
+            <li><a href="#tx_control_behaviour">Controlling behaviour in a transaction</a></li>
             <li><a href="#transactional">@Transactional</a></li>
             <li><a href="#tx_runnable">TxRunnable / TxCallable</a></li>
             <li><a href="#spring">Spring</a></li>
@@ -142,7 +144,7 @@
           </ul>
         </li>
         <li><a href="#json">JSON</a></li>
-        <li><a href="#adapters">Adapters</a></li>
+        <li><a href="#event_listeners">Event listeners</a></li>
         <li>
             <a href="#l2caching">L2 caching</a>
             <ul class="nav">
@@ -163,7 +165,7 @@
           </ul>
         </li>
         <li>
-          <a href="#testing">Language Support</a>
+          <a href="#language_support  ">Language Support</a>
           <ul class="nav">
             <li><a href="#groovy">Groovy</a></li>
             <li><a href="#scala">Scala</a></li>

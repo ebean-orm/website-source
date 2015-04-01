@@ -1,7 +1,7 @@
 <div class="bs-docs-section">
 <h1 id="mapping">Mapping</h1>
 
-<p>The main goal of “Mapping” is to isolate the application code from the Database Schema.</p>
+<p>The main goal of "Mapping" is to isolate the application code from the Database Schema.</p>
 <p>This means that some changes can occur to the schema without breaking the application.
 The application code can be written without reference to the specific table names, view
 names and column names. This means that your application can more easily withstand
@@ -12,6 +12,7 @@ some unforseen changes.</p>
 <p>Ebean uses the same mapping as per the JPA specification. You can learn and use the
 same mapping annotations. This is generally a very good part of the specification and I'd
 expect this part of the specification to mostly stand the test of time.</p>
+
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="ddl_generation">DDL generation</h2>
@@ -33,7 +34,7 @@ required.</p>
 
 <p>Refer to: com.avaje.ebean.config.NamingConvention</p>
 <p>The default UnderscoreNamingConvention converts column names with underscores into
-normal java camel case property names (e.g. “first_name” maps to “firstName”).</p>
+normal java camel case property names (e.g. "first_name" maps to "firstName").</p>
 
 
 <p>You can also use the MatchingNamingConvention or implement your own.</p>
@@ -52,7 +53,7 @@ normal java camel case property names (e.g. “first_name” maps to “firstNam
     beans conventions (with getter and setter names).
   </li><li>
     @Table - Here you can specify the table name that the entity bean will use. More specifically this is
-    the “base table” as an entity bean could have a number of “secondary” tables as well.
+    the "base table" as an entity bean could have a number of "secondary" tables as well.
   </li><li>
     @Id and @EmbeddedId -Use one of these to mark the property that is the id property. You should use @Id if the id
     property is a simple scalar type (like Integer, String etc) and you should use @EmbeddedId if the id type is complex (an embedded bean).
@@ -63,7 +64,14 @@ normal java camel case property names (e.g. “first_name” maps to “firstNam
     @Lob - This marks a property that is mapped to a Clob/Blob/Longvarchar or Longvarbinary.
   </li><li>
     @Transient -This marks a property that is not persistent.
+  </li><li>
+    @CreatedTimestamp - Sets a timestamp property to current datetie when the entity is created/inserted. An alternative to using this annotation would be to use @Column(insertable = false, updateable = false) and then have the DB insert the current time (set the default value on the DB column is SYSTIME etc).  The downside to this alternative approach is that the inserted entity does not have the timestamp value after the insert has occurred. You need to fetch the entity back to get the inserted timestamp if you want to used it.
+    <br>
+    @UpdatedTimestamp - Set a timestamp property that is set to the datetime when the entity was last updated.
+
   </li>
+
+
 </ul>
 
 
@@ -78,7 +86,7 @@ topics (a quick trip to wikipedia) since it will help you a lot in this area of 
 
 <h4>DB Foreign Keys and ORM Relationships</h4>
 <p>Assuming your DB has foreign keys and has been well designed then the ORM mapping
-should follow quite naturally. If you DB has a more “interesting” design then the ORM
+should follow quite naturally. If you DB has a more "interesting" design then the ORM
 mapping can be a lot more painful with more compromises.</p>
 
 <h4>One-to-Many relationship</h4>
@@ -88,14 +96,14 @@ relationship. This relationship typically maps directly to a Database Foreign Ke
 constraint...</p>
 
 <h4>Database Foreign Key constraint</h4>
-<p>A typical database design is full of “One to Many/Many to One” relationships implemented
-using a Foreign Key constraint. A foreign key constraint has an “imported” side and an
-“exported” side.</p>
+<p>A typical database design is full of "One to Many/Many to One" relationships implemented
+using a Foreign Key constraint. A foreign key constraint has an "imported" side and an
+"exported" side.</p>
 <ul>
-  <li>“A Customer has many Orders”</li>
-  <li>“An Order belongs to a Customer”<li>
-  <li>The customer table “exports” its primary key to the order table</li>
-  <li>The order table “imports/references” the customer table's primary key.</li>
+  <li>"A Customer has many Orders"</li>
+  <li>"An Order belongs to a Customer"<li>
+  <li>The customer table "exports" its primary key to the order table</li>
+  <li>The order table "imports/references" the customer table's primary key.</li>
 </ul>
 
 <div class="bs-callout bs-callout-primary">
@@ -129,7 +137,7 @@ public class Order {
 </p>
 <p>
 Because the @OneToMany and @ManyToOne are both mapped this is a
-“Bidirectional” relationship. You can navigate the object graph in either
+"Bidirectional" relationship. You can navigate the object graph in either
 direction.
 </p>
 
@@ -170,7 +178,7 @@ Lets say you remove the Order property from the OrderDetail bean. Now lets say y
 want to write some code to add a OrderDetail to an Order (insert). How do you specify
 which Order it should go to?
 </p><p>
-“Turn on” cascade save on the @OneToMany side
+"Turn on" cascade save on the @OneToMany side
 ```java
 @Entity
 @Table(name="or_order")
@@ -203,8 +211,8 @@ the save is cascaded to all the order details.
 Note that you can update OrderDetails individually (without relying on cascade save) but
 to insert a new OrderDetail we are relying on the cascading save.
 <div class="bs-callout bs-callout-primary">
-<p>Removing a ManyToOne typically reflects a strong “ownership”
-relationship. The Order “owns” the OrderDetails, they are persisted as
+<p>Removing a ManyToOne typically reflects a strong "ownership"
+relationship. The Order "owns" the OrderDetails, they are persisted as
 one via cascade save.</p>
 </div>
 
@@ -225,7 +233,7 @@ you save the Order and that cascades down to the details.
 <h4>@OneToMany Notes</h4>
 <p>
 When you assign a @OneToMany you typically specify a mappedBy attribute. This is for
-Bi-directional relationships and in this case the “join” information is read from the other
+Bi-directional relationships and in this case the "join" information is read from the other
 side of the relationship (meaning you don't specify any @JoinColumn etc on this side).
 </p><p>
 If you don't have a mappedBy attribute (there is no matching property on the other related
@@ -239,7 +247,7 @@ public class User implements Serializable {
   // unidirectional …
   // … can explicitly specify the join column if needed
   @OneToMany
-  @JoinColumn(name=”pref_id”)
+  @JoinColumn(name="pref_id")
   List<Preference> preferences;
 
   // bi-directional
@@ -261,7 +269,7 @@ So you put the mappedBy on the 'exported side' – as if it was a @OneToMany.
 </p><p>
 From a Database perspective a One to One relationship is implemented with a foreign key
 constraint (like one to many) and adding a unique constraint on the foreign key column.
-This has the effect of limiting the “many” side to a maximum of one (has to be unique).
+This has the effect of limiting the "many" side to a maximum of one (has to be unique).
 
 <h4>Many-to-Many relationship</h4>
 <p>
@@ -290,7 +298,7 @@ table in the model.
 </p><p>
 
 One way to think of this is that each @ManyToMany operates just like it was a
-@OneToMany. The relationship must be “managed” meaning Ebean must take care of
+@OneToMany. The relationship must be "managed" meaning Ebean must take care of
 inserting into and deleting from the intersection table.
 </p><p>
 The way this works is that any additions or removables from the many list/set/map are
@@ -334,8 +342,7 @@ the intersection table.
 </p>
 
 
-<h1 id="id_generation">Id generation</h1>
-
+<h2 id="id_generation">Id generation</h2>
 <ul>
   <li>DB Identity / Autoincrement</li>
   <li>DB Sequences</li>
@@ -344,7 +351,7 @@ the intersection table.
 </ul>
 
 <p>There are 4 ways that ID's can be automatically generated for new Entities. This occurs
-when a entity is going to be inserted and it does not already have an Id value.</o>
+when a entity is going to be inserted and it does not already have an Id value.</p>
 
 <p>The first 3 options are highly recommended for 2 reasons.</p>
 <ol>
@@ -414,7 +421,7 @@ ServerConfig.setUsePersistBatching() … or you can turn it on for a specific Tr
 </p><p>
 With a Formula the $\{ta} is a special token to represent the table alias. The table alias is
 dynamically determined by Ebean and you can put the $\{ta} in the select or join attributes.
-</p><p>
+</p>
 <h4>A SQL Expression</h4>
 <p>
 Example: The caseForm field using a SQL case expression
@@ -463,7 +470,7 @@ from s_user u
 </sql>
 ```
 </p><p>
-Note the “u” in the sql has replaced the $\{ta} [table alias placeholder] specified in the
+Note the "u" in the sql has replaced the $\{ta} [table alias placeholder] specified in the
 select attribute of the formula.
 </p><p>
 <b>It is also worth noting that this is potentially not great SQL!!!</b> You should check SQL
@@ -576,7 +583,7 @@ public class TestStatus {
       String str1 = UserStatus.INACTIVE.name();
       String str2 = UserStatus.NEW.name();
 
-      // “ACTIVE”, “INACTIVE”, “NEW”
+      // "ACTIVE", "INACTIVE", "NEW"
       System.out.println("str 0:"+str0+" 1:"+str1+" 2:"+str2);
   }
 }
@@ -604,7 +611,7 @@ real disaster has occured.
 
 <h4>Enum String mapping is limited</h4>
 <p>It is more likely that your DBA would prefer to save space by mapping this to a
-VARCHAR(1) column and use “A”, “I”, “N” and “D” as codes to represent ACTIVE,
+VARCHAR(1) column and use "A", "I", "N" and "D" as codes to represent ACTIVE,
 INACTIVE, NEW and DELETED.
 </p><p>
 The issue with the String mapping is that more frequently than not the names of the
@@ -615,10 +622,10 @@ map into DB values or your DBA will be unhappy with long wasteful values.
 <h4>@EnumValue</h4>
 ```java
 public enum UserStatus {
-  @EnumValue(“D”) DELETED,
-  @EnumValue(“A”) ACTIVE,
-  @EnumValue(“I”) INACTIVE,
-  @EnumValue(“N”) NEW
+  @EnumValue("D") DELETED,
+  @EnumValue("A") ACTIVE,
+  @EnumValue("I") INACTIVE,
+  @EnumValue("N") NEW
 }
 ```
 <p>

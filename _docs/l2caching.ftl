@@ -2,9 +2,9 @@
 <h1 id="l2caching">L2 caching</h1>
 
 <p>
-When we want to talk about caching for performance we are talking about the “Level 2”
-cache or the “server cache”. It is called the “Level 2 cache” because the persistence
-context is often referred to as the “Level 1 cache”.
+When we want to talk about caching for performance we are talking about the "Level 2"
+cache or the "server cache". It is called the "Level 2 cache" because the persistence
+context is often referred to as the "Level 1 cache".
 </p>
 <p>
 The goal of the L2 server cache is to gain very significant performance improvement by
@@ -24,7 +24,7 @@ Query caches hold the results of queries (Lists, Sets, Maps of entity beans) and
 by the query hash value (effectively a hash of the query and its bind values).
 The entries in a query cache are invalidated by ANY change to the underlying table –
 insert, update or delete. This means that the query cache is only useful on entities that are
-infrequently modified (typically “lookup tables” such as countries, currencies, status codes
+infrequently modified (typically "lookup tables" such as countries, currencies, status codes
 etc).
 </p>
 
@@ -32,7 +32,7 @@ etc).
 <h2 id="read_only_instances">Read only instances</h2>
 <p>
 For a performance optimisation when using the cache you can inform Ebean that you
-want “read only” entities. If you ask for “read only” entities Ebean can give you the
+want "read only" entities. If you ask for "read only" entities Ebean can give you the
 instance that is in the cache rather than creating a new copy (creating a new instance and
 copying the data from the cached instance).
 </p>
@@ -192,7 +192,7 @@ should return the same instance from the cache (instances in the cache are readO
 effectively immutable) or whether Ebean should create a new instance and copy the data
 from the cached bean onto the new instance.</p>
 
-<p>The readOnly attribute of @CacheStrategy is the “default” Ebean will use unless you
+<p>The readOnly attribute of @CacheStrategy is the "default" Ebean will use unless you
 explicitly specify the readOnly attribute of the query.</p>
 
 ```java
@@ -247,7 +247,7 @@ List<Country> list = Ebean.find(Country.class)
 <p>The query cache is generally useful for returning lists that are very infrequently changed. These lists would often be used to populate drop down lists / combo boxes in user
 interfaces.</p>
 
-<p>If you are familiar with the term “Lookup Tables” or “Reference Tables” these are typical candidates for using cached queries. Some examples of lookup/reference tables could be,
+<p>If you are familiar with the term "Lookup Tables" or "Reference Tables" these are typical candidates for using cached queries. Some examples of lookup/reference tables could be,
 countries, currencies and order status.</p>
 
 <p>Query cache lists are readOnly by default

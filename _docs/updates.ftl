@@ -115,7 +115,7 @@ public class Order {
 <p>Update provides a way on issuing a insert, update or delete statement.</p>
 <p>
 This is useful for updating or deleting multiple rows (or a single row) with a single
-statement (often described as a “bulk” update).</p>
+statement (often described as a "bulk" update).</p>
 <p>This is also useful if you want to perform an update or delete without having to execute a
 query first. This is a typical approach for performing an update in a stateless web
 application.</p>
@@ -148,9 +148,9 @@ int rows = update.execute();
 <p>CallableSql provides a way to call a database stored procedure.</p>
 
 ```java
-String sql = “{call sp_order_mod(?,?)}”;
+String sql = "{call sp_order_mod(?,?)}";
 CallableSql cs = Ebean.createCallableSql(sql);
-cs.setParameter(1, “turbo”);
+cs.setParameter(1, "turbo");
 cs.registerOut(2, Types.INTEGER);
 Ebean.execute(cs);
 
@@ -178,9 +178,9 @@ try {
   Connection connection = transaction.getConnection();
   // use raw JDBC
   ...
-  // assuming we updated the “o_shipping_details” table
+  // assuming we updated the "o_shipping_details" table
   // inform Ebean so it can maintain it's 'L2' cache
-  transaction.addModification(“o_shipping_details”,false,true,false);
+  transaction.addModification("o_shipping_details",false,true,false);
   Ebean.commitTransaction();
 } finally {
   Ebean.endTransaction();
@@ -189,5 +189,68 @@ try {
 
 <p>The <b>transaction.addModification()</b> in the code above informs Ebean that your jdbc code
 updated the o_shipping_details table. Ebean uses this information to automatically
-manage its “L2” cache as well as maintain Lucene text indexes.</p>
+manage its "L2" cache as well as maintain Lucene text indexes.</p>
+
+<h2 id="batch_processing">Batch processing</h2>
+<p>
+  Ebean provides support for JDBC batch processing.  Batch processing groups related SQL statements into a batch and submits them with one call to the database.
+</p>
+<p>
+  Batch settings can be configured through <a href="properties_config">ebean.properties</a> or through <a href="programmatic_config">ServerConfig</a>, and can be overridden per transaction.
+</p>
+
+<p>
+  You can set the batch mode for the entity being saved through setBatch() and for its child collections through setCascadeBatch().
+</p>
+
+<p>
+  ...(under construction)... need to provide better guidance on how to determine batch mode, child batch mode, and batch size
+</p>
+
+```java
+Transaction transaction = ebeanServer.beginTransaction();
+try {
+  // turn of cascade persist
+  transaction.setCascadePersist(false);
+
+  // control the jdbc batch mode and size
+  // transaction.setBatchMode(true); // equivalent to transaction.setBatch(PersistBatch.ALL);
+  // transaction.setBatchMode(false); // equivalent to transaction.setBatch(PersistBatch.NONE);
+  transaction.setBatch(PersistBatch.ALL); // PersistBatch: NONE, INSERT, ALL
+  transaction.setCascadeBatch(PersistBatch.INSERT); // PersistBatch: NONE, INSERT, ALL
+  transaction.setBatchSize(30);
+
+
+  // for a large batch insert if you want to skip
+  // getting the generated keys
+  transaction.setBatchGetGeneratedKeys(false);
+
+  // for batch processing via raw SQL you can inform
+  // Ebean what tables were modified so that it can
+  // clear the appropriate L2 caches
+  String tableName = "o_customer";
+  boolean inserts = true;
+  boolean upates = true;
+  boolean deletes = false;
+  transaction.addModification(tableName, inserts, updates, deletes);
+
+  ...
+} finally {
+  transaction.end();
+}
+
+```
+
+example using @Transactional
+```java
+@Transactional(batch = PersistBatch.ALL, batchOnCascade = PersistBatch.ALL, batchSize = 99)
+  public void doWithBatchOptionsSet() {
+
+    Transaction txn = Ebean.currentTransaction();
+    assertEquals(PersistBatch.ALL, txn.getBatch());
+    assertEquals(PersistBatch.ALL, txn.getBatchOnCascade());
+    assertEquals(99, txn.getBatchSize());
+}
+```
+
 </div>

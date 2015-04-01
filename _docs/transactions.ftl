@@ -7,7 +7,7 @@ transaction logging, and turn on/off cascading of save and delete. ...(under con
 
 
 <#-------------------------------------------------------------------------------------------------->
-<h2 class="implicit_transactions">Implicit</h2>
+<h2 id="implicit_transactions">Implicit</h2>
 <h4>Transactions are created implicitly for you</h4>
 
 <p>
@@ -96,23 +96,23 @@ try {
 
 ```
 
-<h2>Use the Transaction</h2>
+<h2 id="tx_control_behaviour">Controlling behaviour in a transaction</h2>
 <p>
 You can use the Transaction to explicitly control behaviour.
-</p>
-
 
 ```java
-
-
 Transaction transaction = ebeanServer.beginTransaction();
 try {
   // turn of cascade persist
   transaction.setCascadePersist(false);
 
   // control the jdbc batch mode and size
-  transaction.setBatchMode(true);
+  // transaction.setBatchMode(true); // equivalent to transaction.setBatch(PersistBatch.ALL);
+  // transaction.setBatchMode(false); // equivalent to transaction.setBatch(PersistBatch.NONE);
+  transaction.setBatch(PersistBatch.ALL); // PersistBatch: NONE, INSERT, ALL
+  transaction.setCascadeBatch(PersistBatch.INSERT); // PersistBatch: NONE, INSERT, ALL
   transaction.setBatchSize(30);
+
 
   // for a large batch insert if you want to skip
   // getting the generated keys
@@ -133,7 +133,7 @@ try {
 }
 
 ```
-
+</p>
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="transactional">@Transactional</h2>
@@ -215,7 +215,7 @@ implement those interfaces will get the transactional enhancement.
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="tx_runnable">TxRunnable / TxCallable</h2>
 <p>
-TxRunnable & TxCallable are the programmatic equivalent to @Transactional.
+TxRunnable and TxCallable are the programmatic equivalent to @Transactional.
 </p>
 <p>
 You can mix @Transaction with TxRunnable and TxCallable if you like, they
@@ -257,7 +257,7 @@ The code inside the run() will execute inside a transactional scope with Ebean
 handling the transaction propagation for you (just like @Transactional).
 </p>
 
-```
+```java
 // programmatic control over the scope such as
 // ... isolation level
 // ... and to rollback or not for specific exceptions

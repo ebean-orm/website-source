@@ -45,12 +45,31 @@ List<Order> list = Ebean.find(Order.class)
     .findList();
 ```
 
-<h4>Predicates</h4>
+<h4>Example Predicates</h4>
 <ul>
-  <li>eq() = equals</li>
-  <li>gt() = greater than</li>
-  <li>...(under construction)...</li>
+  <li>eq(...) = equals</li>
+  <li>ne(...) = not equals<li>
+  <li>ieq(...) = case insensitve equals</li>
+  <li>between(...) = between</li>
+  <li>gt(...) = greater than</li>
+  <li>ge(...) = greater than or equals</li>
+  <li>lt(...) = less than or equals</li>
+  <li>le(...) = less than or equals</li>
+  <li>isNull(...) = is null</li>
+  <li>isNotNull(...) = is not null</li>
+  <li>like(...) = like</li>
+  <li>startsWith(...) = string starts with</li>
+  <li>endswith(...) = string ends with</li>
+  <li>contains(...) = string conains </li>
+  <li>in(...) = in a subquery, collection or array</li>
+  <li>exists(...) = at least one row exists in a subquery</li>
+  <li>notExists(...) = no row exists in a subquery</li>
+  <li>more...</li>
 </ul>
+<p>
+Use code completion in your favorite ide or see <a href="/apidocs/com/avaje/ebean/ExpressionList.html">ExpressionList</a> class for more details.
+</p>
+
 
 <p>
 Ebean will automatically add SQL joins if they are required for the where clause or order by clause (and the matching joins are not explicitly included).
@@ -78,10 +97,10 @@ where lower(c.name) like ?
 <h2 id="query_language">Ebean query language</h2>
 <p>Ebean has it's own query language. Prior to this decision JPQL (the JPA query language)
 was investigated to see if it would meet the desired goals of Ebean and it did not.
-Specifically the desire for Ebean is to support “Partial Objects” via the query language and it is difficult to
+Specifically the desire for Ebean is to support "Partial Objects" via the query language and it is difficult to
 see how JPQL will evolve to support this (specifically difficulties around its select clause).
 </p><p>
-Apart from “Partial Object” support there was also a desire to simplify the join syntax,
+Apart from "Partial Object" support there was also a desire to simplify the join syntax,
 specifically Ebean will automatically determine the type of join (outer join etc) for you and
 also automatically add joins to support predicates and order by clauses.
 </p><p>
@@ -90,10 +109,10 @@ Object[]. However, this feature also could be a major stumbling block for it to 
 support for partial objects for any node in the object graph.
 </p><p>
 In summary you could say the Ebean query language is much simplier that JPQL with the
-benefit of proper support for “Partial Objects” for any node in the object graph (this is not
+benefit of proper support for "Partial Objects" for any node in the object graph (this is not
 possible with JPQL in it's current form).
 </p><p>
-“Partial Object” support in Ebean is important for design reasons and performance
+"Partial Object" support in Ebean is important for design reasons and performance
 reasons. From a performance perspective your queries are more performant if they fetch
 less data back from the database. From a design perspective you do not need to model
 using secondary tables but instead use partial objects at any depth in the query.
@@ -112,7 +131,7 @@ find order
 find order (*)
 
 // find all the orders fetching the id, orderDate and shipDate
-// ... This is described as a “partial object query”
+// ... This is described as a "partial object query"
 // ... the ID property is *ALWAYS* fetched
 find order (orderDate, shipDate)
 
@@ -353,12 +372,12 @@ select t0.contact_id c0, t0.id c1, t0.contact_id c2, t0.title c3, ...
 you want explicit control over this (what the secondary queries are, batch size used, eager
 or lazily invoked)</p>
 
-<p>FetchConfig gives you the ability to specify these “secondary queries” and let them
+<p>FetchConfig gives you the ability to specify these "secondary queries" and let them
 executed lazily ("lazy loading join") or eagerly ("query join").</p>
 
 
 <p>Note that explicitly using FetchConfig is not a requirement.  Ebean is able to automatically convert some joins
-  to “query joins” when it is needed such as when building object graphs with multiple *ToMany relationships or when limit offset
+  to "query joins" when it is needed such as when building object graphs with multiple *ToMany relationships or when limit offset
 is used with a *ToMany relationship.</p>
 
 
@@ -375,10 +394,10 @@ is used with a *ToMany relationship.</p>
 There can also be cases loading across a single OneToMany where 2 SQL queries using Ebean FetchConfig.query() can be more efficient than one SQL query. When the "One" side is wide (lots of columns) and the cardinality difference is high (a lot of "Many" beans per "One" bean) then this can be more efficient loaded as 2 SQL queries.
 </p>
 
-<p>The reason for using “Query Joins” as opposed to “Fetch joins” is that there are some
+<p>The reason for using "Query Joins" as opposed to "Fetch joins" is that there are some
 cases where using multiple queries is more efficient that a single query.<p>
 
-An<p>y time you want to load multiple OneToMany associations it will likely be more
+<p>Any time you want to load multiple OneToMany associations it will likely be more
 performant as multiple SQL queries. If a single SQL query was used that would result in a
 Cartesian product.</p>
 
@@ -416,7 +435,7 @@ queries:
 <p>
 Example: Using 2 "query joins"
 
-```
+```java
 // This will use 3 SQL queries to build this object graph
 List<Order> list =
     Ebean.find(Order.class)
@@ -498,7 +517,7 @@ Note: when the laxy loading of customers is performed, it perform like:
 ```
 
 
-<p>Example of wo “Query Joins” results in 3 SQL queries used to build an object graph
+<p>Example of wo "Query Joins" results in 3 SQL queries used to build an object graph
 ```java
 // A more advanced example with multiple query joins
 List<Order> l0 = Ebean.find(Order.class)
@@ -555,7 +574,7 @@ order by o.id
 </sql>
 ```
 
-<h4>FetchConfig.lazy() - “Lazy Joins”</h4>
+<h4>FetchConfig.lazy() - "Lazy Joins"</h4>
 
 <p>If a join is not defined at all (neither a fetch join or a query join) – then lazy loading will by
 default just fetch all the properties for that entity.
@@ -563,7 +582,7 @@ default just fetch all the properties for that entity.
 FetchConfig.lazy() allows you to control that lazy loading query – define the batch size,
 properties to select and also fetch paths to include on the lazy load query.
 </p><p>
-This is very similar to a “query join” except that the loading occurs on demand (when the
+This is very similar to a "query join" except that the loading occurs on demand (when the
 property is requested and not already loaded).
 </p><p>
 The reason you would want to control the lazy loading query is to optimise performance
@@ -610,6 +629,7 @@ The resulting lazy loading query is …
   where c.id in (?,?,?,?,?)
   order by c.id
 </sql>
+```
 
 <h4>Using both</h4>
 
@@ -619,13 +639,13 @@ the batch size of the lazy loading that occurs after than (if there is any).
 
 ```java
 new FetchQuery.queryFirst(100).lazy(10);
-````
+```
 
 </p>
 
 <h4>+query and +lazy – query language syntax</h4>
 <p>
-To define “query joins” and “lazy joins” in the query language you can use +query and
+To define "query joins" and "lazy joins" in the query language you can use +query and
 +lazy. Optionally you can specify the batch size for both.
 
 ```groovy
@@ -712,8 +732,8 @@ User u = Ebean.createNamedQuery(User.class, "bugsSummary")
 modify. This means that you can get a named query and then modify the query by adding
 to the where clause, setting the order by, limits etc.</p>
 
-<p>This is an intentional feature and means that you can use Named Queries as a “starting
-point” to then modify via code and execute.</p>
+<p>This is an intentional feature and means that you can use Named Queries as a "starting
+point" to then modify via code and execute.</p>
 ```java
 // you can treat namedQueries as starting points...
 // ... in that you can modify them via code
@@ -735,44 +755,116 @@ Set<User> users = Ebean.createQuery(User.class, "bugStatus")
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="large_queries">Large queries</h2>
-<h4>
-Processing large query results using findIterate() and findVisit().
-</h4>
-...(under construction)...
 
+<p>Large query results can take up a lot of memory if using findList() since loads all the results in memory at once.
+  Ebean provides functionality for streaming the results.  With this functionality, you process the results rows one at a time.</p>
+
+<p><b>Query.findIterate()</b> - Execute the query iterating over the results. Requires calling QueryIterator.close(), typically in a finally block, to prevent resource leakage.
+
+<p><b>Query.findEach(QueryEachConsumer<T> consumer)</b> - Execute the query consuming each bean one at a time. </p>
+<o>
+This method is appropriate to process very large query results as the beans are consumed one at a time and do not need to be held in memory (unlike #findList #findSet etc)
+</p><p>Note that internally Ebean can inform the JDBC driver that it is expecting larger resultSet and specifically for MySQL this hint is required to stop it's JDBC driver from buffering the entire resultSet. As such, for smaller resultSets findList() is generally preferable.
+</p><p>
+Compared with findEachWhile() this will always process all the beans where as findEachWhile() provides a way to stop processing the query result early before all the beans have been read.
+</p><p>
+This method is functionally equivalent to findIterate() but instead of using an iterator uses the QueryEachConsumer (SAM) interface which is better suited to use with Java8 closures.
+</p><p>
+```java
+ ebeanServer.find(Customer.class)
+    .where().eq("status", Status.NEW)
+    .order().asc("id")
+    .findEach((Customer customer) -> {
+
+      // do something with customer
+      System.out.println("-- visit " + customer);
+    });
+```
+
+<p><b>Query.findEachWhile(QueryEachWhileConsumer<T> consumer)</b> - >Execute the query using callbacks to a visitor to process the resulting beans one at a time.</p>
+<p>
+   This is similar to .findEach(...) except that you return boolean true to continue processing beans and return false to stop processing early.
+</p><p>
+This method is functionally equivalent to findIterate() but instead of using an iterator uses the QueryEachWhileConsumer (SAM) interface which is better suited to use with Java8 closures.
+</p>
+```java
+ ebeanServer.find(Customer.class)
+    .fetch("contacts", new FetchConfig().query(2))
+    .where().eq("status", Status.NEW)
+    .order().asc("id")
+    .setMaxRows(2000)
+    .findEachWhile((Customer customer) -> {
+
+      // do something with customer
+      System.out.println("-- visit " + customer);
+
+      // return true to continue processing or false to stop
+      return (customer.getId() < 40);
+    });
+```
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="paging">Paging</h2>
+
+<p>Paging through the results means that instead of all the results are not fetched in a single query Ebean will use SQL to limit the results (limit/offset, rownum, row_number() etc).</p>
+
 <h4>
 Using firstRows and maxRows or findPagedList to fetch a 'page' of results.
 </h4>
-
 <p>
-PagingList is used to make it easy to page through a query result. Paging through the results means that instead of all the results are not fetched in a single query Ebean will use SQL to limit the results (limit/offset, rownum, row_number() etc).
+If you are building a stateless application (not holding the PagingList over multiple requests) then this approach is a good option.
+</p><p>
+Use setFirstRow() and setMaxRows() to control what rows are returned for the Query..
+</p><p>
+
 </p>
 
+<h4>PagingList</h4>
 <p>
-Instead of using PagingList you could just use setFirstRow() setMaxRows() on the query yourself. If you are building a stateless application (not holding the PagingList over multiple requests) then this approach is a good option.
+  For Stateful applications PagingList provides some benefits:
+  <ul>
+    <li>Fetch ahead (background fetching of the next page via a FutureList query)</li>
+    <li>Automatic propagation of the persistence context</li>
+    <li>Automatically getting the total row count (via a FutureRowCount query)</li>
+  </ul>
 </p>
-
 <p>
-For Stateful applications PagingList provides some benefits:
-<ul>
-  <li>Fetch ahead (background fetching of the next page via a FutureList query)</li>
-  <li>Automatic propagation of the persistence context</li>
-  <li>Automatically getting the total row count (via a FutureRowCount query)</li>
-</ul>
+The benefit of using PagedList over just using the normal Query with Query.setFirstRow(int) and Query.setMaxRows(int) is that it additionally wraps functionality that can call Query.findFutureRowCount() to determine total row count, total page count etc.
+</p><p>
+Internally this works using Query.setFirstRow(int) and Query.setMaxRows(int) on the query. This translates into SQL that uses limit offset, rownum or row_number function to limit the result set.
+</p><p>
 
-So with PagingList when you use Page 2 it will automatically fetch Page 3 data in the background (using a FutureList query). The persistence context is automatically propagated meaning that all the paging queries use the same persistence context.
-</>
+Example: typical use including total row count
 
+```java
+    // We want to find the first 100 new orders
+    //  ... 0 means first page
+    //  ... page size is 100
+
+    PagedList<Order> pagedList = ebeanServer.find(Order.class)
+        .where().eq("status", Order.Status.NEW)
+        .order().asc("id")
+        .findPagedList(0, 100);
+
+    // Optional: initiate the loading of the total
+    // row count in a background thread
+    pagedList.loadRowCount();
+
+    // fetch and return the list in the foreground thread
+    List<Order> orders = pagedList.getList();
+
+    // get the total row count (from the future)
+    int totalRowCount = pagedList.getTotalRowCount();
+```
+
+With PagingList when you use Page 2 it will automatically fetch Page 3 data in the background (using a FutureList query). The persistence context is automatically propagated meaning that all the paging queries use the same persistence context.
 ```java
 int pageSize = 10;
 
 PagingList<TOne> pagingList =
     Ebean.find(TOne.class)
         .where().gt("name", "b")
-        .findPagingList(pageSize);
+        .findPagedList(pageSize);
 
 
 // get the row count in the background...
@@ -795,20 +887,33 @@ if (page.hasNext()) {
     ...
 }
 ```
-</p>
 
-<p>
-For Stateless application, you should set fetch ahead to false as you are not going to benefit from it.
+
+Example: No total row count required
+
+```java
+    // If you are not getting the 'first page' often
+    // you do not bother getting the total row count again
+    // so instead just get the page list of data
+
+    // fetch and return the list in the foreground thread
+    List<Order> orders = pagedList.getList();
+```
+
+
+For Stateless application, you should set fetch ahead to false since you are not going to benefit from it.
 
 ```java
 PagingList<TOne> pagingList = Ebean.find(TOne.class)
   .where().gt("name", "2")
-  .findPagingList(10);
+  .findPagedList(10);
 
 // fetchAhead not useful in a stateless application
 pagingList.setFetchAhead(false);
 Page<TOne> firstPage = pagingList.getPage(0);
 ```
+</p>
+
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="async_queries">Asynchronous queries</h2>
@@ -864,7 +969,7 @@ Using RawSql to fully control the SQL used to load an object graph.
 You can explicitly specify the SQL to use and have that mapped into Objects. You may want to do this so use aggregate functions like sum() max() etc or in cases where you just need exact control over the SQL.
 </p>
 <p>
-  This is useful for “Reporting” type requirements where you want to use aggregate functions such as sum(), count(), max(), etc.  It is also useful if you need to use Database specific SQL for whatever reason.</p>
+  This is useful for "Reporting" type requirements where you want to use aggregate functions such as sum(), count(), max(), etc.  It is also useful if you need to use Database specific SQL for whatever reason.</p>
 
 <p>
 You can programmatically use raw SQL like the following examples or put the Raw SQL and column mappings into ebean-orm.xml file and reference them as 'named queries' - see ebeanServer.createNamedQuery().
@@ -1003,6 +1108,48 @@ public class OrderAggregate {
 ```
 </p>
 
+<h4>tableAliasMapping()</h4>
+tableAliasMapping() will automatically map columns from the query results to the associated object based on its path.  It does this using the query alias.  This is a convenience mathod so that you don't have to map each column individually.
+
+<p>So a test case looks like:
+
+```java
+String rs = "select o.id, o.status, c.id, c.name, "+
+        " d.id, d.order_qty, p.id, p.name " +
+        "from o_order o join o_customer c on c.id = o.kcustomer_id " +
+        "join o_order_detail d on d.order_id = o.id  " +
+        "join o_product p on p.id = d.product_id  " +
+        "where o.id <= :maxOrderId  and p.id = :productId "+
+        "order by o.id, d.id asc";
+
+
+RawSql rawSql = RawSqlBuilder.parse(rs)
+        .tableAliasMapping("c", "customer")
+        .tableAliasMapping("d", "details")
+        .tableAliasMapping("p", "details.product")
+        .create();
+
+List<Order> ordersFromRaw = Ebean.find(Order.class)
+        .setRawSql(rawSql)
+        .setParameter("maxOrderId", 2)
+        .setParameter("productId", 1)
+        .findList();
+```
+
+Rather than using columnMapping like:
+
+```java
+RawSql rawSql = RawSqlBuilder.parse(rs)
+        .columnMapping("t0.id", "id")
+        .columnMapping("t0.status", "status")
+        .columnMapping("t1.id", "customer.id")
+        .columnMapping("t1.name", "customer.name")
+        .columnMapping("t2.id", "details.id")
+        .columnMapping("t2.order_qty", "details.orderQty")
+        .columnMapping("t3.id", "details.product.id")
+        .columnMapping("t3.name", "details.product.name")
+        .create();
+```
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="sqlquery">SqlQuery</h2>
@@ -1025,7 +1172,7 @@ SqlRow bug = Ebean.createSqlQuery(sql)
 String prodName = bug.getString("product_name");
 String title = bug.getString("title");
 ```
-<p>Note that you can use “Named” queries and put the sql statements in orm.xml rather than having it in your code.</p>
+<p>Note that you can use "Named" queries and put the sql statements in orm.xml rather than having it in your code.</p>
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="l2cache">L2 Cache</h2>
