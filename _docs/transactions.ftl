@@ -281,38 +281,4 @@ Ebean.execute(txScope, new TxRunnable() {
 <h2 id="jta">JTA</h2>
 (under construction)
 
-<#-------------------------------------------------------------------------------------------------->
-<h2 id="transaction_logging">Transaction logging</h2>
-
-<p>You can control what is logged and the level of detail via ebean.properties.</p>
-```properties
-## Use java util logging to log transaction details
-#ebean.loggingToJavaLogger=true
-
-## General logging level: (none, explicit, all)
-ebean.logging=all
-
-## location of transaction logs
-ebean.logging.directory=logs
-#ebean.logging.directory=$\{catalina.base}/logs/trans
-
-## Specific Log levels (none, summary, binding, sql)
-ebean.logging.iud=sql
-ebean.logging.query=sql
-ebean.logging.sqlquery=sql
-```
-<p>
-In your early stages of using Ebean you should find where the transaction logs are going
-so that you can see exactly what Ebean is doing.
-</p><p>
-When Ebean starts it will output to the log the directory where the transaction logs will get
-written to.
-</p>
-<pre>
-...
-INFO: Entities enhanced[0] subclassed[38]
-INFO: Transaction logs in: C:/apps/tomcat6/logs/trans
-...
-</pre>
-
 </div>

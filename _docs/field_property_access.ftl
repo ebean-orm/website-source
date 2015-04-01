@@ -142,6 +142,8 @@ will behave as expected (ORM interception occuring as and how you would expect).
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="field_vs_property_access">Ebean – Field vs Property access</h2>
 
+<p>...(under construction)... this documentation needs reworked due to ebean no longer supporting subclassing</p>
+
 <p>
 With JPA you choose between field or property access on a per field / property basis. If
 you put the annotation on the field this implies that you want field access and if you put
