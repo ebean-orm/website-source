@@ -1,54 +1,74 @@
 
 $(function() {
 
-  // setup page scrolling feature - uses jquery.easing
-  $('a.page-scroll').bind('click', function(event) {
-    var $anchor = $(this);
-    $('html, body').stop().animate({
-        scrollTop: $($anchor.attr('href')).offset().top - $(".navbar").height()
-    }, 1500, 'easeInOutExpo');
-    event.preventDefault();
-  });
-
   // update pages with artifact versions from ajax call to search.maven.org
   retrieveAndReplaceVersionsInPage();
 
 
-    // Scrollspy
-    var $window = $(window)
-    var $body   = $(document.body)
+  // Adjust scrolling in pages for fixed header
+  var offset = 50;
 
-    $body.scrollspy({
-      target: '.bs-docs-sidebar'
-    })
-    $window.on('load', function () {
-      $body.scrollspy('refresh')
-    })
 
-    // Kill links
-    $('.bs-docs-container [href=#]').click(function (e) {
-      e.preventDefault()
-    })
+  // handle clicks on website, if link starts with #, handle here
+  $('a').bind ('click', function(event) {
+      var $anchor = $(this);
 
-    // Sidenav affixing
-    setTimeout(function () {
-      var $sideBar = $('.bs-docs-sidebar')
+      var href = $anchor.attr("href");
 
-      $sideBar.affix({
-        offset: {
-          top: function () {
-            var offsetTop      = $sideBar.offset().top
-            var sideBarMargin  = parseInt($sideBar.children(0).css('margin-top'), 10)
-            var navOuterHeight = $('.bs-docs-nav').height()
+      if (href.slice(0, 1) === "#") {
+        event.preventDefault();
 
-            return (this.top = offsetTop - navOuterHeight - sideBarMargin)
-          },
-          bottom: function () {
-            return (this.bottom = $('.bs-docs-footer').outerHeight(true))
-          }
+        if ($anchor.hasClass("page-scroll")) {
+          //  uses jquery.easing to animate scrolling
+          $('html, body').stop().animate({
+              scrollTop: $(href).offset().top - offset
+          }, 1500, 'easeInOutExpo');
+        } else {
+          // go to location quickly
+          $(href)[0].scrollIntoView();
+          scrollBy(0, -offset);
         }
-      })
-    }, 100)
+      }
+  });
+
+
+  // Scrollspy
+  var $window = $(window)
+  var $body   = $(document.body)
+
+  $body.scrollspy({
+    offset: 60,
+    target: '.bs-docs-sidebar'
+  })
+  $window.on('load', function () {
+    $body.scrollspy('refresh')
+  })
+
+
+  // Kill links
+  $('.bs-docs-container [href=#]').click(function (e) {
+    e.preventDefault()
+  })
+
+  // Sidenav affixing
+  setTimeout(function () {
+    var $sideBar = $('.bs-docs-sidebar')
+
+    $sideBar.affix({
+      offset: {
+        top: function () {
+          var offsetTop      = $sideBar.offset().top
+          var sideBarMargin  = parseInt($sideBar.children(0).css('margin-top'), 10)
+          var navOuterHeight = $('.navbar-fixed-top').height()
+
+          return (this.top = offsetTop - navOuterHeight - sideBarMargin)
+        },
+        bottom: function () {
+          return (this.bottom = $('#footer').outerHeight(true))
+        }
+      }
+    })
+  }, 100)
 
 });
 

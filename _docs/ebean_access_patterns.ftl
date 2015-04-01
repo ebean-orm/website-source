@@ -4,6 +4,8 @@
 <div class="row icon-info">
 <div class="col-md-12">
 
+
+<#-------------------------------------------------------------------------------------------------->
 <h2 id="dependency_injection">Dependency Injection</h2>
 <p>
 In this style Spring or Guice etc is used to inject an EbeanServer into your service objects.
@@ -136,7 +138,7 @@ public class MyService {
 }
 ```
 
-<hr/>
+<#-------------------------------------------------------------------------------------------------->
 <h2 id="play_active_record">Active Record</h2>
 
 <p>
@@ -207,7 +209,7 @@ provide the save, delete etc methods. View the source code for <a href='https://
 ```
 
 
-<hr/>
+<#-------------------------------------------------------------------------------------------------->
 <h2 id="ebean_singleton">Ebean singleton</h2>
 <p>
 Use the Ebean singleton object. Similar to the Play / Active record style but you don't use the Ebean specific

@@ -121,7 +121,7 @@ EbeanServer server;
 ```
 
 <#-------------------------------------------------------------------------------------------------->
-<h2 id="save_and_delete">Save and delete</h2>
+<h2 id="intro_save_and_delete">Save and delete</h2>
 <p>
 Ebean is architected to make insert, update, delete simple to use and understand.
 </p>

@@ -1,6 +1,11 @@
 <div class="bs-docs-section">
 <h1 id="transactions">Transactions</h1>
 
+
+<p>Within a Transaction, you can also control JDBC batching (batch size, flushing), turn on/off
+transaction logging, and turn on/off cascading of save and delete. ...(under construction)... how?</p>
+
+
 <#-------------------------------------------------------------------------------------------------->
 <h2 class="implicit_transactions">Implicit</h2>
 <h4>Transactions are created implicitly for you</h4>
@@ -129,21 +134,185 @@ try {
 
 ```
 
+
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="transactional">@Transactional</h2>
+<p>
+You must be using <em>ENHANCEMENT</em> for @Transactional to work. That means you
+must be enhancing the classes via IDE Plugin, Ant Task or javaagent. Refer to the
+user guide for more details on enhancement.
+</p>
+
+<p>
+Ebean can enhance your pojos to add transactional support. To do so put the
+@Transaction annotation on a method or class. Ebean enhancement will then add
+the supporting transactional logic (begin transaction, commit, rollback, suspend and resuming transactions etc).
+</p>
+
+```java
 ...
+// any old pojo
+public class MyService {
+
+	@Transactional
+	public void runFirst() throws IOException {
+
+		// run in a Transaction (REQUIRED is the default)
+
+		// find a customer
+		Customer customer = Ebean.find(Customer.class, 1);
+
+		// call another "transactional" method
+		runInTrans();
+	}
+
+	@Transactional(type=TxType.REQUIRES_NEW)
+	public void runInTrans() throws IOException {
+
+		// run in its own NEW transaction
+		// ... suspend an existing transaction if required
+		// ... and resume it when this method ends
+
+		// find new orders
+		List&lt;Order&gt; orders = Ebean.find(Order.class)
+									.where().eq("status",OrderStatus.NEW)
+									.findList();
+		...
+```
+
+<p>
+Put the @Transactional annotation on you methods and Ebean
+can enhance the classes adding the Transactional management.
+</p>
+
+<h4 class="plain">Standard transaction scope types</h4>
+<p>
+This supports the standard propagation rules of
+REQUIRED (the default), REQUIRES_NEW, MANDATORY, SUPPORTS, NOT_SUPPORTS, NEVER.
+These are an exact match of the EJB TransactionAttributeTypes.
+</p>
+
+<h4 class="plain">Nested Transactions</h4>
+<p>
+Transactional methods can be nested as in the above example where
+runFirst() calls runInTrans().
+</p>
+
+<h4 class="plain">Isolation level and specific exception support</h4>
+<p>
+@Transactional (like Spring) supports isolation levels and explicit
+handling of Exceptions (to rollback or not for specific exceptions).
+Please refer to the User Guide for a more detailed explanation.
+</p>
+
+<h4 class="plain">Interfaces</h4>
+<p>
+You can put @Transactional on interfaces and classes that
+implement those interfaces will get the transactional enhancement.
+</p>
+
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="tx_runnable">TxRunnable / TxCallable</h2>
-...
+<p>
+TxRunnable & TxCallable are the programmatic equivalent to @Transactional.
+</p>
+<p>
+You can mix @Transaction with TxRunnable and TxCallable if you like, they
+will behave correctly together.
+</p>
+
+```java
+public void myMethod() {
+  ...
+  System.out.println(" Some code in myMethod...");
+
+  // run in Transactional scope...
+  Ebean.execute(new TxRunnable() {
+	public void run() {
+
+		// code running in "REQUIRED" transactional scope
+		// ... as "REQUIRED" is the default TxType
+		System.out.println(Ebean.currentTransaction());
+
+		// find stuff...
+		User user = Ebean.find(User.class, 1);
+		...
+
+		// save and delete stuff...
+		Ebean.save(user);
+		Ebean.delete(order);
+		...
+	}
+  });
+
+  System.out.println(" more code in myMethod...");
+}
+```
+<p>
+Generally you will use TxRunnable like the above as anonymous inner classes.
+</p>
+<p>
+The code inside the run() will execute inside a transactional scope with Ebean
+handling the transaction propagation for you (just like @Transactional).
+</p>
+
+```
+// programmatic control over the scope such as
+// ... isolation level
+// ... and to rollback or not for specific exceptions
+
+TxScope txScope = TxScope
+			.requiresNew()
+			.setIsolation(TxIsolation.SERIALIZABLE)
+			.setNoRollbackFor(IOException.class);
+
+Ebean.execute(txScope, new TxRunnable() {
+	public void run() {
+		...
+}
+```
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="Spring">Spring</h2>
-...
+(under construction)
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="jta">JTA</h2>
-...
+(under construction)
 
+<#-------------------------------------------------------------------------------------------------->
+<h2 id="transaction_logging">Transaction logging</h2>
+
+<p>You can control what is logged and the level of detail via ebean.properties.</p>
+```properties
+## Use java util logging to log transaction details
+#ebean.loggingToJavaLogger=true
+
+## General logging level: (none, explicit, all)
+ebean.logging=all
+
+## location of transaction logs
+ebean.logging.directory=logs
+#ebean.logging.directory=$\{catalina.base}/logs/trans
+
+## Specific Log levels (none, summary, binding, sql)
+ebean.logging.iud=sql
+ebean.logging.query=sql
+ebean.logging.sqlquery=sql
+```
+<p>
+In your early stages of using Ebean you should find where the transaction logs are going
+so that you can see exactly what Ebean is doing.
+</p><p>
+When Ebean starts it will output to the log the directory where the transaction logs will get
+written to.
+</p>
+<pre>
+...
+INFO: Entities enhanced[0] subclassed[38]
+INFO: Transaction logs in: C:/apps/tomcat6/logs/trans
+...
+</pre>
 
 </div>

@@ -200,11 +200,18 @@ private static EbeanServer server = Ebean.getServer("h2"); // could also pass nu
 ebean.properties
 
 ```properties
+
+# generate DDL files
 ebean.ddl.generate=true
+
+# run ddl drops and recreates tables
 ebean.ddl.run=true
 
 ebean.uuidStoreAsBinary=true
 ebean.databaseSequenceBatchSize=1
+
+ebean.debug.sql=true
+ebean.debug.lazyload=false
 
 datasource.default=h2
 
