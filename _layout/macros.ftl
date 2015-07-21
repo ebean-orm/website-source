@@ -81,3 +81,24 @@ ${dep_block}
 <#local dep_block><#nested></#local>
 ${dep_block?replace(placeholder, "<span class='"+artifactid+"-version'>$"+"{version}</span>" )}
 </#macro>
+
+
+<#macro video_item id title body cls="">
+<div class="media ${cls}">
+  <div class="media-left">
+    <div class="media-left">
+  <#if id == "">
+    <img src="/images/movies-64-grey.png" width="64" height="64" >
+  <#else>
+    <a href="https://youtu.be/${id}">
+      <img src="/images/movies-64.png" width="64" height="64" >
+    </a>
+  </#if>
+    </div>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">${title}</h4>
+  ${body}
+  </div>
+</div>
+</#macro>

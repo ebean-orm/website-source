@@ -1,0 +1,55 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/main.html"/>
+  <#assign videos = "active">
+</head>
+<body>
+<div class="jumbotron mini">
+  <div class="container">
+    <h1>Videos</h1>
+  </div>
+</div>
+
+<div class="container row-space">
+
+    <h2>Architecture</h2>
+    <#include "/_vids/architecture_1.ftl">
+
+    <h2>Enhancement</h2>
+    <#include "/_vids/enhancement_1.ftl">
+
+    <h2>Testing</h2>
+    <h4>avaje-ebeanorm-mocker</h4>
+    <#include "/_vids/testing_1.ftl">
+    <#include "/_vids/testing_2.ftl">
+
+
+    <h2>Models</h2>
+    <h4>Place holder</h4>
+
+    <h2>Query</h2>
+    <h4>Place holder - large queries</h4>
+
+    <h2>Persisting</h2>
+    <h4>Place holder - Various options, JDBC batch etc</h4>
+
+     <h2>Events</h2>
+      <h4>Place holder - BeanPersistController etc</h4>
+
+      <h2>Transactions</h2>
+    <h4>Place holder - Nesting, exception handling ... </h4>
+
+      <h2>JSON</h2>
+      <h4>Place holder - JSON Support, JSON in DB, Jackson</h4>
+
+      <h2>L2 Cache</h2>
+    <h4>Place holder</h4>
+
+
+      <h2>Elastic Search</h2>
+    <h4>Place holder</h4>
+
+</div>
+<!-- /.container -->
+</body>
+</html>

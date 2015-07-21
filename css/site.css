@@ -432,3 +432,18 @@ pre.console {
     width: 263px;
   }
 }
+
+.row-space .row {
+    padding-bottom: 20px;
+}
+.media.todo .media-heading {
+    color:grey;
+    /*text-decoration: line-through;*/
+}
+.media.todo .media-body {
+    color:grey;
+    /*text-decoration: line-through;*/
+}
+.header-links h3 a {
+    color: rgb(51, 51, 51);
+}
