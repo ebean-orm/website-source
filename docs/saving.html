@@ -1,9 +1,16 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs.html"/>
+<#assign subtitle = "Saving">
+<#assign saving = "true">
+</head>
+<body>
 <div class="bs-docs-section">
-<h1 id="updates">Updates</h1>
+<h1 id="updates">Saving</h1>
 
 
 <#-------------------------------------------------------------------------------------------------->
-<h2 id="saves">Saves</h2>
+<h2 id="saves">Save</h2>
 <p>
 Save will either insert or update the bean depending on its state.
 </p>
@@ -18,7 +25,7 @@ Ebean.save(order);
 If the bean was fetched it will be updated...
 </p>
 
-```
+```java
 Order order = Ebean.find(Order.class, 12);
 order.setStatus("SHIPPED");
 ...
@@ -35,7 +42,7 @@ specify a cascade type (such as the one on details below) for
 save() or delete() to cascade.
 </p>
 
-```
+```java
 ...
 // the Entity bean with its Mapping Annotations
 ...
@@ -50,7 +57,7 @@ public class Order {
 
 	// save and delete cascaded
     @OneToMany(cascade=CascadeType.ALL)
-    List&lt;OrderDetail&gt; details;
+    List<OrderDetail> details;
 
 	...
 ```
@@ -61,19 +68,19 @@ the details property. This means save() and delete() will
 both casade from order to its order details.
 </p>
 
-```
+```java
 ...
 // save the order ...  will cascade also saving the order details
 Ebean.save(order);
 ```
 
 <#-------------------------------------------------------------------------------------------------->
-<h2 id="deletes">Deletes</h2>
+<h2 id="deletes">Delete</h2>
 <p>
 Delete is very similar to save. Just call Ebean.delete();
 </p>
 
-```
+```java
 ...
 Order order = Ebean.find(Order.class, 12);
 
@@ -97,18 +104,18 @@ an Order the details will be saved as well but the associated customer will not 
 there is no cascade atttribute and the default is to not cascade.</p>
 
 ```java
-...
-@Entity
-@Table(name="or_order")
-public class Order {
   ...
-  // no cascading
-  @ManyToOne
-  Customer customer;
+  @Entity
+  @Table(name="or_order")
+  public class Order {
+    ...
+    // no cascading
+    @ManyToOne
+    Customer customer;
 
-  // save and delete cascaded
-  @OneToMany(cascade=CascadeType.ALL)
-  List<OrderDetail> details;
+    // save and delete cascaded
+    @OneToMany(cascade=CascadeType.ALL)
+    List<OrderDetail> details;
 ```
 
 <h2 id="bulkupdate">Bulk updates</h2>
@@ -191,7 +198,7 @@ try {
 updated the o_shipping_details table. Ebean uses this information to automatically
 manage its "L2" cache as well as maintain Lucene text indexes.</p>
 
-<h2 id="batch_processing">Batch processing</h2>
+<h2 id="batch_processing">JDBC Batch</h2>
 <p>
   Ebean provides support for JDBC batch processing.  Batch processing groups related SQL statements into a batch and submits them with one call to the database.
 </p>
@@ -254,3 +261,5 @@ example using @Transactional
 ```
 
 </div>
+</body>
+</html>

@@ -1,8 +1,16 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs.html"/>
+<#assign subtitle = "Architecture">
+<#assign architecture = "true">
+</head>
+<body>
+
 <div class="bs-docs-section">
 <h1 id="architecture">Architecture</h1>
 
 
-<h2 id="persistence_context">Persistence context</h1>
+<h2 id="persistence_context">Persistence context</h2>
 
 <p>Although Ebean doesn't have an "Entity Manager" it does have a "persistence context". In
 fact, you could go as far to say that any ORM worth using needs a "persistence context".</p>
@@ -151,9 +159,11 @@ for a given identity (so that the object graphs are constructed in a consistent 
 fact that it sometimes looks/acts like a cache is more of a side effect.</p>
 
 
-<h2 id="internals">Internals</h1>
+<h2 id="internals">Internals</h2>
 <p>
   The 4.0.1 release changed enhancement and how each bean knows which properties are loaded/changed. This is now held in a boolean. This change effected pretty much every part of the internals (lots of work) but has simplified a lot of those internals as the bean itself does the work of knowing what is loaded. It also has the effect of making embedded beans much better and paves the way for some JPA2 features for embedded beans like collections off embedded beans.
 </p>
 
 </div>
+</body>
+</html>

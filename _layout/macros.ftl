@@ -1,4 +1,22 @@
+<#macro smallnav activeCheck url title>
+<li <#if activeCheck?has_content>class="active"</#if>>
+  <a href="${url}">${title}</a>
+  <#if activeCheck?has_content>
+    <#nested >
+  </#if>
+</li>
+</#macro>
 
+<#--<li>-->
+  <#--<a href="#introduction">Introduction</a>-->
+  <#--<ul class="nav">-->
+    <#--<li><a href="#use_jpa_mapping">Use JPA mappings</a></li>-->
+    <#--<li><a href="#simple_query_language">Simple query language</a></li>-->
+    <#--<li><a href="#intro_save_and_delete">Save and delete</a></li>-->
+    <#--<li><a href="#jpa_comparison">Comparison to JPA</a></li>-->
+    <#--<li><a href="#ebean_does_not">Ebean does not...</a></li>-->
+  <#--</ul>-->
+<#--</li>-->
 
 <#macro maven groupid artifactid version uq >
 
