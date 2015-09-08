@@ -1,4 +1,3 @@
-
 <@smallnav activeCheck="${introduction!''}" url="/docs/introduction" title="Introduction">
 <ul class="nav">
   <li><a href="#use_jpa_mapping">Use JPA mappings</a></li>
@@ -50,6 +49,11 @@
   <li><a href="#benefits">Benefits</a></li>
   <li><a href="#model">Model</a></li>
   <li><a href="#finder">Finder</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${testing!''}" url="/docs/testing" title="Testing">
+<ul class="nav">
+  <li><a href="#mockibean">MockiEbean</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${queries!''}" url="/docs/queries" title="Queries">
@@ -111,6 +115,17 @@
 <@smallnav activeCheck="${eventlisteners!''}" url="/docs/eventlisteners" title="Event listeners"/>
 <@smallnav activeCheck="${readaudit!''}" url="/docs/readaudit" title="Read Audit"/>
 <@smallnav activeCheck="${changelog!''}" url="/docs/changelog" title="Change Log"/>
+<@smallnav activeCheck="${history!''}" url="/docs/history" title="History">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#history">@History</a></li>
+  <li><a href="#as-of-query">As of query</a></li>
+  <li><a href="#versions-between-query">Versions between query</a></li>
+  <li><a href="#postgres">Postgres</a></li>
+  <li><a href="#mysql">MySql</a></li>
+  <li><a href="#oracle">Oracle</a></li>
+</ul>
+</@smallnav>
 <@smallnav activeCheck="${l2caching!''}" url="/docs/l2caching" title="L2 caching">
 <ul class="nav">
   <li><a href="#bean_and_query_caches">Bean and query caches</a></li>
@@ -121,11 +136,6 @@
   <li><a href="#cachestrategy">@CacheStrategy</a></li>
   <li><a href="#manual_cache_use">Manually specifying to use the bean cache</a></li>
   <li><a href="#using_query_cache">Using the Query Cache</a></li>
-</ul>
-</@smallnav>
-<@smallnav activeCheck="${testing!''}" url="/docs/testing" title="Testing">
-<ul class="nav">
-  <li><a href="#mockibean">MockiEbean</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${jvmlanguages!''}" url="/docs/jvmlanguages" title="JVM Languages">

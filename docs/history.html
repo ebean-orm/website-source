@@ -1,0 +1,121 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs.html"/>
+<#assign subtitle = "History">
+<#assign history = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2 id="overview">Overview</h2>
+  <p>
+    <a href="https://en.wikipedia.org/wiki/SQL:2011">SQL2011</a> introduced temporal extensions to SQL
+    including <code>AS OF SYSTEM TIME</code> and <code>VERSIONS BETWEEN SYSTEM TIME</code>.
+  </p>
+  <p>
+    Ebean has support for this extension to SQL. The support for this falls into 2 general cases where some
+    databases have SQL2011 support built in (Oracle, DB2, MS SQL Server 2016) or where it is not built
+    in (Postgres, MySql) and Ebean generates history tables/triggers/views to support the feature.
+  </p>
+
+  <h4>Current support in Ebean</h4>
+  <ul>
+    <li>Oracle via Total recall</li>
+    <li>Postgres via Triggers/history table</li>
+    <li>MySql via Triggers/history table</li>
+  </ul>
+
+  <h2 id="history">@History</h2>
+  <p>
+    Add the <code>@History</code> annotation to the entity beans that you want history support on. In the
+    case of Postgres and MySql this means that Ebean will generate DDL (triggers, views etc) to support
+    history on the underlying tables. For Oracle adding @History implies that the table has had flashback
+    archive already assigned to the table.
+  </p>
+
+  <h2 id="as-of-query">As of query</h2>
+  <p>
+    A Timestamp can be used with <code>Query.asOf(Timestamp)</code> and Ebean will generate the query
+    such that the returning object graph represents the state as of the given timestamp. More accurately
+    for tables with history the query returns rows representing the table as of the given timestamp and for
+    other tables included in the query the rows returned represent 'current values'.
+  </p>
+
+  ```java
+
+  // asOf some time in the past like 1 hour ago, 1 week ago, 1 month ago etc
+  Timestamp asOf = ...;
+
+  Customer customer =
+      Customer.find.query()
+          .asOf(asOf)
+          .fetch("billingAddress")
+          .where().eq("name", "jim")
+          .findUnique();
+
+  ```
+
+  <h3>Lazy loading</h3>
+  <p>
+    The <code>AS OF</code> timestamp is propagated to all secondary queries including lazy loading queries.
+    That is, the <code>AS OF</code> timestamp applies to the entire object graph loaded by and not just the
+    "origin query".
+  </p>
+
+
+  <h2 id="versions-between-query">Versions between query</h2>
+  <p>
+    <code>Query.findVersionsBetween()</code> is used to return a list of versions for a given object
+    over time. The version beans returned contain a "diff" to the prior version as well as the
+    effective start and effective end timestamps.
+  </p>
+
+  ```java
+  Timestamp start = ...;
+  Timestamp end = ...;
+
+  List<Version<Customer>> customerVersions =
+      Customer.find.query()
+        .where()
+        .idEq(42)
+        .findVersionsBetween(start, end);
+
+  for (Version<Customer> customerVersion : customerVersions) {
+    Customer bean = customerVersion.getBean();
+    Map<String, ValuePair> diff = customerVersion.getDiff();
+    Timestamp effectiveStart = customerVersion.getStart();
+    Timestamp effectiveEnd = customerVersion.getEnd();
+  }
+
+  ```
+
+
+  <h2 id="postgres">Postgres</h2>
+  <p>
+
+  </p>
+
+  <h2 id="mysql">MySql</h2>
+  <p>
+
+  </p>
+
+
+  <h2 id="oracle">Oracle</h2>
+  <p>
+    Robs View: Oracle Total recall has some nice advantages over the explicit trigger/history table approach.
+    The main ones being:
+  </p>
+    <ul>
+      <li><b>Performance : low foreground impact</b> - History table population occurs in the background and results in a much lower overhead/impact
+        on foreground response time</li>
+      <li><b>Performance : batch processing</b> - History table population can be processed in batch reducing the overhead/impact for many small updates</li>
+      <li><b>Admin : reduced DDL</b> - Table alterations (add columns etc) are handled automatically reducing the admin costs of maintaining
+       triggers/views/history tables.
+      </li>
+
+    </ul>
+
+
+</div>
+</body>
+</html>
