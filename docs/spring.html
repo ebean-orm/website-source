@@ -1,0 +1,83 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs.html"/>
+<#assign subtitle = "Spring">
+<#assign spring = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+
+  <h2 id="avaje-ebeanorm-spring">avaje-ebeanorm-spring</h2>
+  <p>
+    The avaje-ebeanorm-spring provides a FactoryBean as well as integration with Spring transactions.
+  </p>
+
+<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-spring" "auto" "4" />
+
+  <h5>EbeanServerFactoryBean</h5>
+  <p>
+    <code>EbeanServerFactoryBean</code> is a spring FactoryBean that also holds a serverConfig.
+    It is expected to be used in conjunction with <code>default-ebean-server.xml</code> which specifically
+    registers <code>SpringAwareJdbcTransactionManager</code> as the external transaction manager on the ServerConfig.
+  </p>
+
+  <h5>SpringAwareJdbcTransactionManager</h5>
+  <p>
+    <code>SpringAwareJdbcTransactionManager</code> implements Ebean's ExternalTransactionManager API and provides the
+    integration into Spring transaction management.
+  </p>
+
+  <h5>SpringJdbcTransaction</h5>
+  <p>
+    <code>SpringJdbcTransaction</code> extends Ebean's <code>ExternalJdbcTransaction</code> and
+    is used by SpringAwareJdbcTransactionManager.
+  </p>
+
+
+  <h2 id="factorybean">FactoryBean</h2>
+  <p>
+    Rather than use the implementation provided in <code>avaje-ebeanorm-spring</code> you can write your
+    own Spring FactoryBean like the code below.
+  </p>
+  ```java
+  /**
+   * Simple Spring bean factory for creating the EbeanServer.
+   */
+  public class MyEbeanServerFactory implements FactoryBean<EbeanServer> {
+
+    public EbeanServer getObject() throws Exception {
+
+      return createEbeanServer();
+    }
+
+    public Class<?> getObjectType() {
+      return EbeanServer.class;
+    }
+
+    public boolean isSingleton() {
+      return true;
+    }
+
+    /**
+    * Create a EbeanServer instance.
+    */
+    private EbeanServer createEbeanServer() {
+
+      ServerConfig config = new ServerConfig();
+      config.setName("pg");
+
+      // load configuration from ebean.properties
+      config.loadFromProperties();
+      config.setDefaultServer(true);
+      ...
+      // other programmatic configuration
+
+      return EbeanServerFactory.create(config);
+    }
+  }
+
+  ```
+
+</div>
+</body>
+</html>

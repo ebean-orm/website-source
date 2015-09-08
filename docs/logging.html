@@ -1,0 +1,74 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs.html"/>
+<#assign subtitle = "Logging">
+<#assign logging = "true">
+</head>
+<body>
+
+<div class="bs-docs-section">
+  <h1 id="logging" class="page-header">Logging</h1>
+
+  <p>Ebean uses <a href="http://www.slf4j.org/">SLF4J</a> for logging.</p>
+
+  <h2 id="sql">SQL and Transaction logging</h2>
+  <p>
+    During development it is expected that you include logging of
+    <code>org.avaje.ebean.SQL</code> and <code>org.avaje.ebean.TXN</code>.
+    These log the sql statements executed, bind values for statement execution
+    and transaction demarcation.
+  </p>
+
+
+  ```xml
+
+  <!-- LOGBACK configuration -->
+
+  <!-- SQL and bind values -->
+  <logger name="org.avaje.ebean.SQL" level="TRACE"/>
+
+  <!-- Transaction Commit and Rollback events -->
+  <logger name="org.avaje.ebean.TXN" level="TRACE"/>
+
+  ```
+
+  <h2 id="summary">Summary logging</h2>
+
+  <p>
+    The summary logging is useful for showing lazy loading queries and how they relate
+    back to origin queries. This is useful when looking at more complex object graphs are
+    built. In tuning queries for N+1 etc.
+  </p>
+
+  ```xml
+
+  <!-- LOGBACK configuration -->
+
+  <!-- Summary level details -->
+  <logger name="org.avaje.ebean.SUM" level="TRACE"/>
+
+  ```
+
+  <h2 id="l2cache">L2 Cache logging</h2>
+
+  <p>The L2 cache events can be logged using the logger entries below.
+    This is useful when you are starting out using the L2 cache and looking
+    at the behaviour with L2 caching.
+  </p>
+
+
+  ```xml
+
+  <!-- LOGBACK configuration -->
+
+   <!-- L2 logging -->
+  <logger name="org.avaje.ebean.cache.QUERY" level="TRACE"/>
+  <logger name="org.avaje.ebean.cache.BEAN" level="TRACE"/>
+  <logger name="org.avaje.ebean.cache.COLL" level="TRACE"/>
+  <logger name="org.avaje.ebean.cache.NATKEY" level="TRACE"/>
+
+  ```
+
+</div>
+</body>
+</html>

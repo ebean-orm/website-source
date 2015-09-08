@@ -6,7 +6,9 @@
   </#if>
 </li>
 </#macro>
-
+<#macro homePlace>
+  {asd}
+</#macro>
 <#--<li>-->
   <#--<a href="#introduction">Introduction</a>-->
   <#--<ul class="nav">-->

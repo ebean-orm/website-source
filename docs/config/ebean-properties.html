@@ -1,0 +1,57 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs.html"/>
+<#assign subtitle = "Configuration">
+<#assign xsubtitle = "ebean.properties">
+<#assign configuration = "true">
+<#--<#assign homePlaceHolder = "$HOME">-->
+</head>
+<body>
+
+<div class="bs-docs-section">
+<h1 class="page-header">ebean.properties</h1>
+
+<#-------------------------------------------------------------------------------------------------->
+<h2 id="properties_config">ebean.properties configuration</h2>
+
+<p>Create an ebean.properties file and put it in your classpath or working directory. You can use the example below as a starting point.</p>
+
+<p>
+You need to change the DataSource parameters to suite your own environment.
+</p>
+
+```properties
+# -------------------------------------------------------------
+# Load (Dev/Test/Prod) properties external to your war/jar
+# -------------------------------------------------------------
+# You can use load.properties to load the properties from a
+# file external to your war/jar.
+#load.properties=$\{HOME}/conf/myapp.ebean.properties
+
+
+# -------------------------------------------------------------
+# DDL generate / run ...
+# -------------------------------------------------------------
+
+ebean.ddl.generate=false
+ebean.ddl.run=false
+
+# -------------------------------------------------------------
+# DataSources (If using default Ebean DataSourceFactory)
+# -------------------------------------------------------------
+# You can specify many DataSources (one per EbeanServer)  and
+# one of them is defined as the default/primary DataSource
+
+# specify the default/primary DataSource
+datasource.default=h2
+
+datasource.h2.username=sa
+datasource.h2.password=
+datasource.h2.databaseUrl=jdbc:h2:mem:tests;DB_CLOSE_DELAY=-1
+datasource.h2.databaseDriver=org.h2.Driver
+
+```
+
+</div>
+</body>
+</html>

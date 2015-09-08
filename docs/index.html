@@ -6,7 +6,7 @@
 <body>
 <div class="jumbotron mini">
   <div class="container">
-    <h1><a href="/docs">Documentation</a> <#if subtitle??>/ ${subtitle!''}</#if> </h1>
+    <h1>Documentation</h1>
   </div>
 </div>
 
@@ -14,19 +14,19 @@
 
   <div class="row">
 
-    <div class="col-md-9" role="main">
+    <div class="col-md-12" role="main">
 
-      <div id="layout-body"></div>
+      <div class="bs-docs-section">
 
-    </div>
-
-    <div class="col-md-3" role="complementary">
-      <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
-        <ul class="nav bs-docs-sidenav">
+        <h1 class="page-header">Index</h1>
+        <ul>
         <#include "/_layout/_docs_nav.html">
         </ul>
-      </nav>
+
+      </div>
+
     </div>
+
   </div>
 
 </div>
