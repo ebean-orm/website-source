@@ -11,16 +11,16 @@
 
   <p>
     Active record is a pattern originally named by
-    <a href="https://en.wikipedia.org/wiki/Active_record_pattern">Martin Fowler</a and is not specific to Ebean.
-      It is a pattern common in many persistence frameworks.
+    <a href="https://en.wikipedia.org/wiki/Active_record_pattern">Martin Fowler</a> and is not specific to Ebean but
+      instead a a pattern common in many persistence frameworks.
   </p>
   <p>
-    In general terms it means the beans themselves have the capability to <code>save()</code> and <code>delete()</code>
-    by themselves. You can contrast this to a traditional <code>DAO</code> approach where the beans are instead passed
-    to a DAO for saving and deleting.
+    In general terms it means the entity beans have the capability to <code>save()</code> and <code>delete()</code>
+    by themselves. You can contrast this to a traditional <code>DAO</code> approach where the entity beans are
+    instead passed to a DAO for saving and deleting.
   </p>
 
-  <h5>Play framework</h5>
+  <h4>Play framework</h4>
   <p>
     For Ebean the active record pattern has been inherited from the Play framework. The original Model and Finder implementations
     found in Ebean to implement the active record pattern originated from Play framework and that code has migrated over into Ebean.
@@ -65,7 +65,7 @@
     That is, there is no need to change style in complex cases.
   </p>
 
-  <h2>Testing</h2>
+  <h2 id="testing">Testing</h2>
 
   <p>
     Ebean provides the <code>avaje-ebeanorm-mocker</code> project and that supports the testing requirements
@@ -81,19 +81,19 @@
     <li>SQL capture</li>
   </ul>
 
-  <h2>Rob's view: Active record benefits</h2>
+  <h2 id="benefits">Rob's view: Active record benefits</h2>
   <p>
     For some people active record combines concerns and that ends the conversation and that is fine.
   </p>
 
-  <h5>Not missing out on testability</h5>
+  <h4>Not missing out on testability</h4>
   <p>
     Personally when I compare what I call the traditional DAO/Inject approach with active record
     I note firstly that I don't lose out on testability - Active record with Ebean can be just as
     testable as the DAO/Inject style.
   </p>
 
-  <h5>Simple things kept simple</h5>
+  <h4>Simple things kept simple</h4>
   <p>
     Secondly the major plus to active record is that "simple things" are kept simple. What I mean
     by that is save(), delete(), get reference, find by id and find by unique key are all very
@@ -104,7 +104,7 @@
   </p>
   <blockquote>The simple things are kept simple</blockquote>
 
-  <h5>In balance I'd choose active record</h5>
+  <h4>In balance I'd choose active record</h4>
   <p>
     If someone asks me whether to choose between active record style or traditional DAO/Inject style
     I would suggest the active record style due to the very nice clean simple code that results.
@@ -113,45 +113,22 @@
   </p>
 
 
-  <h2 id="play_active_record">Ebean Model / Active Record</h2>
+  <h2 id="model">Model</h2>
 
-<p>
-When you create your entity beans extend the Model object and add a Finder. When your entity beans extend the Model object they
-inherit some convenience methods save(), delete() etc. Adding a Finder as a public static field provides a nice way to get
-query functionality.
-</p>
+  <p>
+    When your entity beans extend the
+    <a href="https://github.com/ebean-orm/avaje-ebeanorm/blob/master/src/main/java/com/avaje/ebean/Model.java"><code>com.avaje.ebean.Model</code></a> object they
+    inherit some convenience methods save(), delete() etc. When these methods are called internally
+    the default EbeanServer is used to perform the save() and delete().
+  </p>
 
-
-<p>
-  Use the Model MappedSuperclass to add insert(), update(), delete() etc convenience methods to your entity beans.
-  This results in a clean programming style made popular by use in the Play framework. The Model and Finder objects
-  have now been incorporated into Ebean to support this programming style.
-</p>
-
-<h4>Extend Model, add Finder:</h4>
-
-<p>Ebean provides <a href="http://127.0.0.1:4000/apidocs/com/avaje/ebean/Model.html">Model</a> that provides convenience methods for inserting, updating and deleting beans.</p>
-
-<p>It is a @MappedSuperclass base class.  To use it, you have your entity beans extend it, and it provides am 'Active Record' style programming model for you entities.</p>
-
-<p>There is a avaje-ebeanorm-mocker project that enables you to use Mockito or similar tools to still mock out the underlying 'default EbeanServer' for testing purposes.</p>
-
-<p>You may choose not use this Model mapped superclass if you don't like the 'Active Record' style or if you believe it 'pollutes' your entity beans.</p>
-
- <p>If you choose to use the Model mapped superclass you will probably also chose to additionally add a Finder as a public static field to complete the active record pattern and provide a relatively nice clean way to write queries.</p>
-
-
-<p>
-NOTE: Model is annotated with JPA @MappedSuperclass.  It internally makes use of the Ebean singleton in order to
-provide the save, delete etc methods. View the source code for <a href='https://github.com/ebean-orm/avaje-ebeanorm/blob/play/src/main/java/com/avaje/ebean/Model.java'>Model here</a>.
-<p>
-
-<p>
-  Ebean Model provides convenience methods related to the entity. Here is a subset of them:
+  <p>
+    Ebean Model provides the following convenience methods:
+  </p>
   <ul>
     <li>save() - Saves the entity</li>
-    <li>update() - Update the entity</li>
-    <li>insert() - Insert the entity</li>
+    <li>update() - Explicitly update the entity</li>
+    <li>insert() - Explicitly insert the entity</li>
     <li>delete() - Delete the entity</li>
     <li>refresh() - Refreshes the entity from the database</li>
     <li>markAsDirty() - this is used so that when a bean that is otherwise unmodified is updated the version property is updated</li>
@@ -160,19 +137,16 @@ provide the save, delete etc methods. View the source code for <a href='https://
     <li>delete(String server)- Delete the entity using the specified server</li>
   </ul>
 
-  The Ebean Model also makes it easy for you to define a Finder in your extended class. See the example:
+
+  <h4>Example: extend Model</h4>
 ```java
 /**
  * Extend Model to get the save(), delete() etc
  * methods on the bean itself (active record style).
  */
 @Entity
-@Table(name="be_customer")
+@Table(name="o_customer")
 public class Customer extends Model {
-
-
-  // Create a static Finder
-  public static Finder<Long,Customer> find = new Finder<Long,Customer>(Long.class, Customer.class);
 
   @Id
   Long id;
@@ -186,37 +160,47 @@ public class Customer extends Model {
   ...
 
 ```
-</p><p>
-The Finder provides convenience methods querying.
-</p>
 
-<h4>Example: save</h4>
-```java
-    Customer customer = new Customer();
-    customer.setName("Rob");
+  <h4>Example: save()</h4>
+  ```java
+  Customer customer = new Customer();
+  customer.setName("Rob");
 
-    customer.save();
-```
+  customer.save();
+  ```
 
-<h4>Example: find.byId</h4>
-```java
-    Customer customer = Customer.find.byId(customer.getId());
-```
+  <h2 id="finder">Finder</h2>
+  <p>
+    Finder provides some convenience query methods but also it suggests a way to
+    organise 'finder' code.
+  </p>
+  <p>
 
-<h4>Example: find.where</h4>
-```java
-    List<Customer> customers =
-        Customer.find.
-          where().ilike("name", "rob%")
+  </p>
+
+
+  <h4>Example: find by id</h4>
+  ```java
+  Customer customer = Customer.find.byId(42);
+  ```
+
+  <h4>Example: get reference</h4>
+  ```java
+  Customer customer = Customer.find.ref(42);
+  ```
+
+  <h4>Example: delete by id</h4>
+  ```java
+  Customer.find.deleteById(42);
+  ```
+
+  <h4>Example: find where</h4>
+  ```java
+  List<Customer> customers =
+      Customer.find
+          .where().ilike("name", "rob%")
           .findList();
-```
-
-Use code completion in your favorite ide or see <a href="/apidocs/com/avaje/ebean/Model.html">Model</a> and <a href="/apidocs/com/avaje/ebean/Model.Finder.html">Model.Finder</a> classes for more details.
-
-
-
-</p>
-
+  ```
 
 </div>
 </body>
