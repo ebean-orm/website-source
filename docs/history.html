@@ -24,12 +24,80 @@
     <li>MySql via Triggers/history table</li>
   </ul>
 
+  <h2>History tables</h2>
+  <p>
+    For Postgres and MySql (and in general databases that don't have SQL2011 support built in) Ebean generates
+    DDL for History tables and associated triggers and views. This is a common "Temporal database design" approach
+    that has been used for some time and not specific to Ebean. For example, this approach is already implemented
+    as a Postgres extension - <a href="https://github.com/arkhipov/temporal_tables/">arkhipov/temporal_tables</a>.
+  </p>
+
+  <p>
+    In general the history table approach results in:
+  </p>
+  <ul>
+    <li>A "history" table created that has the same (or very similar) structure as the "base table"</li>
+    <li>The "history" table does not have constraints by default (no primary key, foreign key or indexes)</li>
+    <li>2 extra columns added to the base table and history table for "effective start" and "effective end" timestamp range.
+      Postgres has a timestamp range type so that is preferred to 2 separate columns for the Postgres implementation.
+      Note another approach uses 4 extra columns instead of 2 but we are not doing that.
+    </li>
+    <li>A view is used to <code>union all</code> combine the "base table" and the "history table" to simplify history queries</li>
+    <li>Triggers are used on update and delete to copy the existing row data from the "base table" to the associated
+      "history table"
+    </li>
+    <li>Schema changes to the "base table" (add column etc) result in mirrored changes to the "history table" and
+      potentially updates to the associated triggers
+    </li>
+  </ul>
+
+  <h2>Compared to Change Log</h2>
+
+  <h4>Transactional</h4>
+  <p>
+    With @History changes are transactional and have the associated guarantees - changes can't be missed or lost.
+  </p>
+
+  <h4>Not bypassed</h4>
+  <p>
+    With @History the database handles all changes. If other frameworks (not Ebean) or stored procedures or raw JDBC
+    is used to update the database all these changes are captured by the database triggers. Although Ebean makes it
+    easier to query and generate the appropriate DDL the capturing of changes is a database function and not strictly
+    tied to Ebean or the application.
+  </p>
+
+  <h4>Easy to query</h4>
+  <p>
+    With @History it is easy to query and view the data "As of" a given timestamp and view the versions and historic
+    changes for a given bean/row. This is also possible with Change log but requires more work (loading the change log
+    into say ElasticSearch and creating appropriate queries to return as of and version type data).
+  </p>
+
   <h2 id="history">@History</h2>
   <p>
     Add the <code>@History</code> annotation to the entity beans that you want history support on. In the
     case of Postgres and MySql this means that Ebean will generate DDL (triggers, views etc) to support
     history on the underlying tables. For Oracle adding @History implies that the table has had flashback
     archive already assigned to the table.
+  </p>
+
+  <h2 id="history-exclude">@HistoryExclude</h2>
+  <p>
+    Add the <code>@HistoryExclude</code> annotation on entity bean properties that should be excluded from
+    history. This is expected to be used on large text or blob columns where there can be a relatively high
+    storage cost associated with keeping the history values and excluding these columns is desired.
+  </p>
+
+  <h2 id="manytomany">ManyToMany intersection tables</h2>
+  <p>
+    In the case of intersection (bridge) tables for ManyToMany relationships by default the intersection
+    tables also have history. That is, if <code>@History</code> is put on an entity bean then by default
+    the intersection tables for <code>@ManyToMany</code> properties have history support (associated history
+    tables, views and triggers).
+  </p>
+  <p>
+    To exclude history from intersection tables <code>@HistoryExclude</code> should be put on the <code>@ManyToMany</code>
+    property.
   </p>
 
   <h2 id="as-of-query">As of query</h2>
@@ -54,13 +122,25 @@
 
   ```
 
-  <h3>Lazy loading</h3>
+  <h4>Scenario: Customer and Address both have history</h4>
+  <p>
+    In the above query if both Customer Address have history then both the customer data and
+    address data will be returned 'As of' the given timestamp.
+  </p>
+
+  <h4>Scenario: Customer has history but Address does not</h4>
+  <p>
+    In the above query if Customer has history but Address does not then the customer data will be returned
+    'As of' the given timestamp but the address data will be returned using 'current data'.
+  </p>
+
+  <h4>Scenario: Address lazy loaded</h4>
   <p>
     The <code>AS OF</code> timestamp is propagated to all secondary queries including lazy loading queries.
     That is, the <code>AS OF</code> timestamp applies to the entire object graph loaded by and not just the
-    "origin query".
+    "origin query". If Address is lazy loaded and Address has history the address data will also be 'as of'
+    the original timestamp.
   </p>
-
 
   <h2 id="versions-between-query">Versions between query</h2>
   <p>
@@ -88,33 +168,91 @@
 
   ```
 
+  <h2 id="who-when">Who, When, Created, Modified</h2>
+  <p>
+    It is generally expected that the entity beans should contain <code>@WhoCreated</code>, <code>@WhoModified</code>,
+    <code>@WhenCreated</code> and <code>@WhenModified</code> properties.
+  </p>
+```java
+
+  /**
+   * Common properties used by many entity beans.
+   */
+  @MappedSuperclass
+  public class BaseModel {
+
+    @Id
+    Long id;
+
+    @Version
+    Long version;
+
+    @WhenCreated
+    Timestamp whenCreated;
+
+    @WhenModified
+    Timestamp whenModified;
+
+    @WhoCreated
+    String whoCreated;
+
+    @WhoModified
+    String whoModified;
+    ...
+
+```
+
+```java
+  @History
+  @Entity
+  @Table(name="customer")
+  public class Customer extends BaseModel {
+
+    @Size(max = 100)
+    String name;
+    ...
+
+```
+
 
   <h2 id="postgres">Postgres</h2>
   <p>
-
+    Postgres has an existing <a href="https://github.com/arkhipov/temporal_tables/">arkhipov/temporal_tables</a> extension
+    and Postgres/Ebean users could use this extension. By default Ebean does not use this extension but instead generates
+    similar triggers. The difference between using arkhipov/temporal_tables or not comes down to DDL generation.
+    Ultimately it would be good for Ebean to support DDL generation for arkhipov/temporal_tables but that
+    isn't built into Ebean yet.
+  </p>
+  <p>
+    The other notable aspect of history support in Postgres is that we can make use of the timestamp range type with
+    expected benefits in terms on indexing performance relative to using 2 separate timestamp columns.
   </p>
 
   <h2 id="mysql">MySql</h2>
   <p>
-
+    There is a concern with MySql in the case where DDL changes need to be applied to a production database.
+    In the case where Triggers need to change due to a schema change (like add column) MySql has no
+    'create or replace trigger' and instead a table lock needs to be held to drop and create the trigger.
+    Holding a table lock in a production database might be a problem and restrict schema changes.
   </p>
 
 
   <h2 id="oracle">Oracle</h2>
   <p>
     Robs View: Oracle Total recall has some nice advantages over the explicit trigger/history table approach.
-    The main ones being:
+    The main advantages being:
   </p>
-    <ul>
-      <li><b>Performance : low foreground impact</b> - History table population occurs in the background and results in a much lower overhead/impact
-        on foreground response time</li>
-      <li><b>Performance : batch processing</b> - History table population can be processed in batch reducing the overhead/impact for many small updates</li>
-      <li><b>Admin : reduced DDL</b> - Table alterations (add columns etc) are handled automatically reducing the admin costs of maintaining
-       triggers/views/history tables.
-      </li>
-
-    </ul>
-
+  <ul>
+    <li><b>Performance : low foreground cost</b>
+      - History table population occurs in the background and results in a much lower overhead/impact
+      on foreground response time</li>
+    <li><b>Performance : batch processing</b>
+      - History table population can be processed in batch reducing the overhead/impact for many small updates</li>
+    <li><b>Admin : reduced DDL</b>
+      - Table alterations (add columns etc) are handled automatically reducing the admin costs of maintaining
+     triggers/views/history tables.
+    </li>
+  </ul>
 
 </div>
 </body>

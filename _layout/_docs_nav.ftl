@@ -118,9 +118,14 @@
 <@smallnav activeCheck="${history!''}" url="/docs/history" title="History">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
+  <li><a href="#history-tables">History tables</a></li>
+  <li><a href="#change-log">Compared to Change Log</a></li>
   <li><a href="#history">@History</a></li>
+  <li><a href="#history-exclude">@HistoryExclude</a></li>
+  <li><a href="#manytomany">ManyToMany intersection</a></li>
   <li><a href="#as-of-query">As of query</a></li>
-  <li><a href="#versions-between-query">Versions between query</a></li>
+  <li><a href="#versions-between-query">Versions between</a></li>
+  <li><a href="#who-when">Who and When</a></li>
   <li><a href="#postgres">Postgres</a></li>
   <li><a href="#mysql">MySql</a></li>
   <li><a href="#oracle">Oracle</a></li>
