@@ -51,6 +51,11 @@
   <li><a href="#finder">Finder</a></li>
 </ul>
 </@smallnav>
+<@smallnav activeCheck="${dbmigration!''}" url="/docs/dbmigration" title="DB Migration">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+</ul>
+</@smallnav>
 <@smallnav activeCheck="${testing!''}" url="/docs/testing" title="Testing">
 <ul class="nav">
   <li><a href="#mockibean">MockiEbean</a></li>
@@ -113,8 +118,21 @@
 </@smallnav>
 <@smallnav activeCheck="${json!''}" url="/docs/json" title="JSON"/>
 <@smallnav activeCheck="${eventlisteners!''}" url="/docs/eventlisteners" title="Event listeners"/>
-<@smallnav activeCheck="${readaudit!''}" url="/docs/readaudit" title="Read Audit"/>
-<@smallnav activeCheck="${changelog!''}" url="/docs/changelog" title="Change Log"/>
+<@smallnav activeCheck="${readaudit!''}" url="/docs/readauditing" title="Read Auditing">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#caveats">Caveats</a></li>
+  <li><a href="#getting-started">Getting started</a></li>
+  <li><a href="#query">Query setDisableReadAuditing()</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${changelog!''}" url="/docs/changelog" title="Change Log">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#caveats">Caveats</a></li>
+  <li><a href="#getting-started">Getting started</a></li>
+</ul>
+</@smallnav>
 <@smallnav activeCheck="${history!''}" url="/docs/history" title="History">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>

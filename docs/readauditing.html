@@ -6,9 +6,7 @@
 </head>
 <body>
 <div class="bs-docs-section">
-  <h1 id="readaudit">Read Auditing - @ReadAudit</h1>
-
-  <h3>Overview</h3>
+  <h2 id="overview">Overview</h2>
   <p>
     ReadAudit is a feature where read access is logged for auditing purposes. You can annotation entity
     beans with @ReadAudit and then read events on these beans (queries and hits in L2 cache) are logged.
@@ -19,13 +17,13 @@
     method is expected to populate the ReadEvent with user context information (user id, user ip address etc).
   </p>
 
-  <h3>Caveats</h3>
+  <h2 id="caveats">Caveats</h2>
 
   <p>
     SqlQuery queries are currently not logged to the read audit log (RawSql queries are included in read auditing).
   </p>
 
-  <h2>Getting started</h2>
+  <h2 id="getting-started">Getting started</h2>
 
   <h4>Step 1: Add @ReadAudit</h4>
 
@@ -162,12 +160,13 @@
     events are logged. Log to a message queue, direct to a data store etc.
   </p>
 
-  <h2>Query.setDisableReadAuditing()</h2>
+  <h2 id="query">Query.setDisableReadAuditing()</h2>
   <p>
     For a specific query you can explicitly exclude it from the read auditing. The typically
     use case for this is where the query is used internally in the application to populate a
     cache or process bulk data and where you don't want that to go into the read audit log.
   </p>
+
 
 </div>
 </body>

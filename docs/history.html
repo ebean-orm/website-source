@@ -73,6 +73,25 @@
     into say ElasticSearch and creating appropriate queries to return as of and version type data).
   </p>
 
+  <h4>DB Overhead</h4>
+  <p>
+    A downside to @History relative to using Change log is that it does introduce extra costs to the database in terms
+    of storage (history tables taking storage space) and in terms of impact to response time as updates and deletes
+    now also copy data into the history tables.
+  </p>
+  <p>
+    The approach with Oracle Total Recall reduces the impact to response time by processing the copy of data from redo
+    into the history tables in the background and in batch and that probably means it can generally be used more widely
+    (on more base tables) than the traditional trigger based approach.
+  </p>
+
+  <h4>Schema changes</h4>
+  <p>
+    A downside to @History relative to using Change log is that schema changes (like adding a column) can mean more
+    work / complexity as changes need to also be reflected in associated history tables and triggers. The DB migration
+    support in Ebean mitigates this by generating all the appropriate changes to history tables and triggers etc.
+  </p>
+
   <h2 id="history">@History</h2>
   <p>
     Add the <code>@History</code> annotation to the entity beans that you want history support on. In the
@@ -88,7 +107,7 @@
     storage cost associated with keeping the history values and excluding these columns is desired.
   </p>
 
-  <h2 id="manytomany">ManyToMany intersection tables</h2>
+  <h2 id="manytomany">ManyToMany intersection</h2>
   <p>
     In the case of intersection (bridge) tables for ManyToMany relationships by default the intersection
     tables also have history. That is, if <code>@History</code> is put on an entity bean then by default
@@ -142,7 +161,7 @@
     the original timestamp.
   </p>
 
-  <h2 id="versions-between-query">Versions between query</h2>
+  <h2 id="versions-between-query">Versions between</h2>
   <p>
     <code>Query.findVersionsBetween()</code> is used to return a list of versions for a given object
     over time. The version beans returned contain a "diff" to the prior version as well as the
@@ -168,7 +187,7 @@
 
   ```
 
-  <h2 id="who-when">Who, When, Created, Modified</h2>
+  <h2 id="who-when">Who and When</h2>
   <p>
     It is generally expected that the entity beans should contain <code>@WhoCreated</code>, <code>@WhoModified</code>,
     <code>@WhenCreated</code> and <code>@WhenModified</code> properties.
@@ -239,7 +258,7 @@
 
   <h2 id="oracle">Oracle</h2>
   <p>
-    Robs View: Oracle Total recall has some nice advantages over the explicit trigger/history table approach.
+    Rob's View: Oracle Total recall has some nice advantages over the explicit trigger/history table approach.
     The main advantages being:
   </p>
   <ul>
