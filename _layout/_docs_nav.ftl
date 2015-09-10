@@ -61,6 +61,33 @@
   <li><a href="#mockibean">MockiEbean</a></li>
 </ul>
 </@smallnav>
+<@smallnav activeCheck="${queryoverview!''}" url="/docs/query-overview" title="Query Overview">
+<ul class="nav">
+  <li><a href="#notsqlreplacement">Not a SQL replacement</a></li>
+  <li><a href="#construction">Object graph construction</a></li>
+  <li><a href="#loading">Loading</a></li>
+  <li><a href="#predicates">Predicates</a></li>
+  <li><a href="#automatic-joins">Automatic joins</a></li>
+  <li><a href="#cartesian-product">Avoiding Cartesian product</a></li>
+  <li><a href="#firstRows-maxRows">FirstRows MaxRows</a></li>
+  <li><a href="#complex-graphs">Arbitrarily complex graphs</a></li>
+  <li><a href="#n-plus-1">N + 1</a></li>
+  <li><a href="#terminology">TERMINOLOGY</a></li>
+  <li><a href="#load-context">Load Context</a></li>
+  <li><a href="#origin-queries">Origin queries</a></li>
+  <li><a href="#secondary-queries">Secondary queries</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${queryautotune!''}" url="/docs/query-autotune" title="Query Automatic Tuning">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${querytypesafe!''}" url="/docs/query-typesafe" title="Query Type Safe">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+</ul>
+</@smallnav>
 <@smallnav activeCheck="${queries!''}" url="/docs/queries" title="Queries">
 <ul class="nav">
   <li><a href="#where_clause">Where clause</a></li>

@@ -1,0 +1,184 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs.html"/>
+<#assign subtitle = "Query Overview">
+<#assign queryoverview = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2 id="notsqlreplacement">Not a SQL replacement</h2>
+  <p>
+    Ebean ORM queries are good for typical OLTP query use cases but there are many queries that
+    can be written in SQL that ORM is not well suited to, especially in the reporting and OLAP area.
+    Recursive SQL queries are also not currently well supported.
+  </p>
+  <blockquote>Ebean ORM queries are focused to OLTP. Don't forget about using SQL where appropriate.</blockquote>
+  <p>
+    For Ebean the focus is to use ORM queries for OLTP use cases. The plan is not to expand the ORM
+    query language but to instead have good integration with SQL via <code>RawSql</code>, <code>SqlQuery</code>
+    and upcoming/desired integration into <code>JOOQ</code>.
+  </p>
+
+  <h2 id="construction">Object graph construction</h2>
+  <p>
+    It can be useful to think of ORM queries as Object graph construction. That is, when you are
+    creating an ORM Query it is a definition on what part of the object graph to load and
+    what filters/predicates need to be applied.
+  </p>
+
+  <h2 id="loading">Loading</h2>
+  <p>
+    For Ebean the <code>select()</code> and <code>fetch()</code> control what part of the object graph to
+    load. The <code>select()</code> is for the root level of the object graph and fetch() is for the
+    object graph leaves. In more advanced cases <code>FetchConfig</code> can be used to control what
+    parts of the graph are loaded eagerly/lazily and if that part of the graph is loaded from the
+    database or L2 cache or L3 cache/document store.
+  </p>
+  <blockquote>Some parts of the object graph can be loaded from L2 cache or L3/document store</blockquote>
+
+  <h4>Loading - Query tuning</h4>
+  <p>
+    Tuning an ORM query for optimal performance comes down to:
+  </p>
+  <ul>
+    <li>What properties to load (only load what you need for the given use case)</li>
+    <li>What parts of the object graph to load Eagerly or Lazily</li>
+    <li>What parts of the object graph to load from Database or L2 cache or L3 document store</li>
+    <li>Not executing the query at all and using L2 Query cache</li>
+    <li>Not executing the query at all and using L3 document store</li>
+  </ul>
+
+  <h4>Loading - AutoTune</h4>
+  <p>
+    Ebean's AutoTune feature has the ability to profile what parts of the object graph are used by the
+    application and then provide automatic tuning of the "what to load" part of an ORM query. That is,
+    AutoTune can suggest what the <code>select()</code> and <code>fetch()</code> part of the ORM query should
+    be in order to fetch only what is needed from the database (reducing network and databases costs of the query)
+    and minimise lazy loading.
+  </p>
+  <blockquote>Ebean can automatically tune "What to load"</blockquote>
+
+  <h2 id="predicates">Predicates</h2>
+  <p>
+    The <code>where()</code> clause is where you define predicates for the query. This is
+    effectively 'application logic' and does not change for 'tuning' purposes etc.
+  </p>
+
+  <h4>Predicates - Type safety</h4>
+  <p>
+    The Type Safe query extension for Ebean is designed to provide a type safe way of building query
+    predicates. As such it does not have a focus on providing type safety on "What to fetch" via the
+    select() and fetch() clauses (which are instead expected to be largely defined by AutoTune).
+  </p>
+
+  <h2 id="automatic-joins">Automatic joins</h2>
+  <p>
+    Ebean's query language is designed such that for a query you do not explicitly specify joins but
+    instead define "What to load" and "Predicates". Ebean works out what joins are required
+    to support both the load and predicate aspects of the query. Some of the SQL joins can be shared
+    by both loading and predicates and some joins can not be, outer joins are 'inherited' down a given
+    object path etc. Ebean works the joins and join types to add based on the cardinality and optionality
+    of the relationships/paths involved in both loading and predicates.
+  </p>
+  <p>
+    The downside of this approach is that predicates using "self joins" can not be easily specified
+    currently but this issue will be addressed and there are some very significant benefits to this
+    approach where Ebean determines the joins automatically.
+  </p>
+
+  <h2 id="cartesian-product">Avoiding Cartesian product</h2>
+  <p>
+    Ebean will never generate a SQL cartesian product. No matter how complex or big you ORM query gets
+    Ebean will not generate a SQL cartesian product but instead break the query up into multiple SQL
+    queries.
+  </p>
+
+  <h2 id="firstrows-maxrows">FirstRows MaxRows</h2>
+  <p>
+    <code>FirstRows</code> and <code>MaxRows</code> will always work in your ORM query. That is, firstRows/maxRows work on relational
+    rows (and not objects) and Ebean will automatically break the ORM query up into multiple SQL queries as needed in
+    order for firstRows/maxRows to work as intended.
+  </p>
+
+  <h2 id="complex-graphs">Arbitrarily complex graphs</h2>
+  <p>
+    No matter how complex or nested your object graph is for your ORM query Ebean can build it in a
+    pretty efficient manor. More specifically, a single SQL query can contain at most one OneToMany or ManyToMany
+    relationship "path" (without producing a SQL cartesian product which is what we really want to avoid).
+    Ebean will break up the ORM query into multiple SQL queries with each SQL query having
+    a single OneToMany/ManyToMany relationship in its fetch (each SQL query is as eager/big as it
+    can be without becoming a cartesian product).
+  </p>
+  <p>
+    Ebean processes all the fetch paths determining which paths contain a OneToMany or ManyToMany relationship.
+    The query 'breakup' may be manually controlled by using <code>FetchConfig</code> but if this has not been done
+    or has not covered all the required relationships then Ebean will automatically break up the query based
+    on these 'paths containing a many relationship'.
+  </p>
+
+  <h2 id="n-plus-1">N + 1</h2>
+  <p>
+
+  </p>
+
+  <hr/>
+  <h3 id="terminology">TERMINOLOGY</h3>
+
+  <h2 id="load-context">Load Context</h2>
+  <p>
+    The "Load Context" is an internal Ebean feature with a very important job. Is supports executing secondary queries
+    and provides:
+  </p>
+  <ul>
+    <li>Batch lazy loading</li>
+    <li>Query joins (Eager secondary queries)</li>
+    <li>Propagation of key query state from the origin query to any/all secondary queries.</li>
+  </ul>
+  <p>
+    In essence the Load Context provides the mechanism for batch loading complex graphs.
+  </p>
+
+
+  <h2 id="origin-queries">Origin queries</h2>
+  <p>
+    "Origin query" is an Ebean term to refer to the original SQL query executed when building an object graph.
+    Further SQL "secondary queries" can execute and relate back to the "origin query".
+  </p>
+  <h4>Summary logging</h4>
+  <p>
+    In summary logging there is an <code>origin</code> attribute and this is a key that can be used to link
+    origin and secondary queries.
+  </p>
+  
+```xml
+  txn[1012] FindBean type[Order] origin[B0dP9E.DWeHD4.5WUnB] exeMicros[318] rows[1] bind[3]
+```
+
+  <h2 id="secondary-queries">Secondary queries</h2>
+  <p>
+    "Secondary queries" is an Ebean term for SQL queries that relate back to a previously executed "origin query".
+    These secondary queries can be executed due to lazy loading or because a single ORM query is broken up manually
+    or automatically into multiple SQL queries (in order to avoid cartesian product and support firstRows/maxRows).
+  </p>
+  <h4>Summary logging</h4>
+  <p>
+    In summary logging there is a <code>mode</code>, <code>origin</code>, <code>lazyLoadProp</code> and <code>load</code> attributes.
+  </p>
+  <ul>
+    <li><code>mode</code> : <b>+lazy</b> for lazy loading query and <b>+query</b> for a query join/eager loading</li>
+    <li><code>origin</code> : this key links the secondary query back to the origin</li>
+  </ul>
+
+  ```xml
+txn[1012] FindBean type[Order] origin[B0dP9E.DWeHD4.5WUnB] exeMicros[318] rows[1] bind[3]
+...
+txn[1016] FindMany mode[+lazy] type[Customer] origin[B0dP9E.DWeHD4.5WUnB] lazyLoadProp[name] ...
+...
+txn[1017] FindMany mode[+lazy] type[Address] origin[B0dP9E.DWeHD4.5WUnB] lazyLoadProp[city] ...
+
+  ```
+
+
+</div>
+</body>
+</html>
