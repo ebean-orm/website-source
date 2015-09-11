@@ -149,7 +149,7 @@
     In summary logging there is an <code>origin</code> attribute and this is a key that can be used to link
     origin and secondary queries.
   </p>
-  
+
 ```xml
   txn[1012] FindBean type[Order] origin[B0dP9E.DWeHD4.5WUnB] exeMicros[318] rows[1] bind[3]
 ```
@@ -169,15 +169,13 @@
     <li><code>origin</code> : this key links the secondary query back to the origin</li>
   </ul>
 
-  ```xml
+```xml
 txn[1012] FindBean type[Order] origin[B0dP9E.DWeHD4.5WUnB] exeMicros[318] rows[1] bind[3]
 ...
 txn[1016] FindMany mode[+lazy] type[Customer] origin[B0dP9E.DWeHD4.5WUnB] lazyLoadProp[name] ...
 ...
 txn[1017] FindMany mode[+lazy] type[Address] origin[B0dP9E.DWeHD4.5WUnB] lazyLoadProp[city] ...
-
-  ```
-
+```
 
 </div>
 </body>

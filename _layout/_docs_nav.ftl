@@ -78,6 +78,16 @@
   <li><a href="#secondary-queries">Secondary queries</a></li>
 </ul>
 </@smallnav>
+<@smallnav activeCheck="${querynplus1!''}" url="/docs/query-nplus1" title="Query N + 1">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${querypartialobjects!''}" url="/docs/query-partialobjects" title="Query Partial Objects">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+</ul>
+</@smallnav>
 <@smallnav activeCheck="${queryautotune!''}" url="/docs/query-autotune" title="Query Automatic Tuning">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
@@ -197,9 +207,11 @@
 
 <@smallnav activeCheck="${clustering!''}" url="/docs/clustering" title="Clustering"/>
 <@smallnav activeCheck="${monitoring!''}" url="/docs/monitoring" title="Monitoring"/>
-<@smallnav activeCheck="${architecture!''}" url="/docs/architecture" title="Architecture">
+<@smallnav activeCheck="${architecture!''}" url="/docs/architecture/persistence-context" title="Architecture">
 <ul class="nav">
-  <li><a href="#persistence_context">Persistence context</a></li>
-  <li><a href="#internals">Internals</a></li>
+  <li><a href="/docs/architecture/persistence-context">Persistence context</a></li>
+  <li><a href="/docs/architecture/load-context">Load context</a></li>
+  <li><a href="/docs/architecture/jdbc-batch-buffer">JDBC batch buffer</a></li>
+  <li><a href="/docs/architecture/entity-enhancement">Entity Enhancement</a></li>
 </ul>
 </@smallnav>
