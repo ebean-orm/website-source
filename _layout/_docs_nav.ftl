@@ -115,6 +115,9 @@
 <@smallnav activeCheck="${queryautotune!''}" url="/docs/query-autotune" title="Query Automatic Tuning">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
+  <li><a href="#origin">Origin point</a></li>
+  <li><a href="#profiling">Profiling</a></li>
+  <li><a href="#tuning">Tuning</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${querytypesafe!''}" url="/docs/query-typesafe" title="Query Type Safety">
