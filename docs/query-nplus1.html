@@ -8,7 +8,214 @@
 <div class="bs-docs-section">
   <h2 id="overview">Overview</h2>
   <p>
+    <code>N + 1</code> is a general term used in ORM to describe a situation where loading a single object graph
+    takes N + 1 SQL queries. When the database is remote over a network (the most common situation) then
+    this situation can lead to very bad performance. A good ORM provides good mechanisms to mitigate or avoid this
+    scenario.
   </p>
+  <p>
+    By default Ebean ORM applies batch lazy loading with a batch size of 10 so by default for an completely un-tuned
+    query you would instead observe <code>1 + N/10</code> SQL queries.
+  </p>
+
+  <h2 id="what-is-n">What is N?</h2>
+  <p>
+    When lazy loading is invoked on a OneToMany or ManyToMany relationship then N is the number of distinct parent Ids.
+    For example, if you query for 100 orders and lazy load the order details (a OneToMany) then N is the number of
+    distinct order ids.
+  </p>
+  <p>
+    When lazy loading a ManyToOne or OneToOne relationship then N is the number of distinct Id's for that bean type.
+    For example, if you query for 100 orders and lazy load customers then N is the number of distinct customer Id's
+    that relate to those orders.
+  </p>
+
+  <h2 id="per-path">N is per "path"</h2>
+  <p>
+    The lazy loading is invoked depending on which "paths" of the object graph are traversed. If you fetch orders and
+    traverse from order to both "customer" and "details" that is actually 2 distinct paths and 2 distinct lazy loading
+    queries will fire.
+  </p>
+  <p>
+    For example, fetching 100 orders and then traversing from each order to the "customer" and the "details" could
+    results in between 3 and 201 SQL queries depending on the lazy loading batch size.
+  </p>
+  <p>
+    <code>1 + (# of customers)/batchSize + (# of orders)/batchSize</code> SQL queries.
+  </p>
+  <ul>
+    <li>batch size 1   results in up to : 1 + 100/1 + 100/1      = Up to 201 SQL queries</li>
+    <li>batch size 10  results in up to : 1 + 100/10 + 100/10    = Up to  21 SQL queries</li>
+    <li>batch size 100 results in up to : 1 + 100/100 + 100/100  = Up to 3 SQL queries</li>
+  </ul>
+
+  <blockquote>
+    The N + 1 issue depends on the paths traversed / which parts of the object graph are used.
+  </blockquote>
+
+  <h2 id="lazy-batch-size">Lazy load batch size</h2>
+  <p>
+    With Ebean the <code>default lazy load batch size is 10</code>. You can change the lazy load batch size:
+  </p>
+  <ul>
+    <li>Globally via ServerConfig.setLazyLoadBatchSize()</li>
+    <li>Per Query via Query.setLazyLoadBatchSize()</li>
+    <li>Per Query path via Query.fetch() and FetchConfig</li>
+  </ul>
+
+  <h3>Global default</h3>
+  <p>
+    If you want to change the global default lazy load batch size to 100 you can set this via
+    <code>ServerConfig.setLazyLoadBatchSize()</code>
+  </p>
+  ```java
+  serverConfig.setLazyLoadBatchSize(100);
+  ```
+  <p>
+    ... or via ebean.properties:
+  </p>
+```properties
+ebean.lazyLoadBatchSize=100
+```
+  <h3>Per Query</h3>
+  <p>
+    If you want to change the lazy load batch size on a specific query you can set this via
+    <code>Query.setLazyLoadBatchSize()</code>:
+  </p>
+  ```java
+
+  List<Order> orders = ebeanServer.find(Order.class)
+      // set lazy loading batch size for this query
+      .setLazyLoadBatchSize(100)
+      ...
+      .findList();
+  ```
+
+  <h3>Per Path</h3>
+  <p>
+    If you want to change the lazy load batch size on a specific query you can set this via <code>FetchConfig</code>:
+  </p>
+  ```java
+
+  List<Order> orders = ebeanServer.find(Order.class)
+
+    // lazy fetch customer using batchSize of 10
+    .fetch("customer", new FetchConfig().lazy(10))
+
+    // eager fetch details using batchSize of 100
+    .fetch("details", new FetchConfig().query(100))
+    ...
+    .findList();
+    ```
+
+  <h2 id="eager-loading">Eager loading</h2>
+  <p>
+    The Ebean query language allows you to specify the "paths" that you want eagerly fetched. You can optionally
+    specify a batch size to use and if not specified the batch size defaults to 100.
+  </p>
+
+  ```java
+
+  List<Order> orders = ebeanServer.find(Order.class)
+
+    // specify some predicates
+    .status.eq(Order.Status.NEW)
+    .orderDate.after(since)
+
+    // specify 'what to fetch'
+
+    // eagerly fetch customer and details using batchSize of 100
+    .fetch("customer")
+    .fetch("details")
+    .findList();
+    ```
+
+      <h2 id="question-answer">Question and Answer</h2>
+      <h4>Q: Is a global lazyLoadBatchSize of 100 reasonable?</h4>
+      <p>
+        <b>A:</b> Yes I think it is reasonable and is possibly a better default than 10. The benefit of a
+        smaller batch size is in scenarios where the object graph use is not 'symmetrical'. That is, in
+        iterating a list of "root level objects" the parts of the object graph traversed/used is not the same.
+        This seems pretty rare though and it seems much more common that the parts of the object graph used is
+        the same for all the root level objects.
+      </p>
+
+      <h4>Q: How does this relate to AutoTune?</h4>
+
+      <p>
+        <b>A:</b> Ebean's AutoTune feature profiles what part of the object graph is used and using this can
+        provide automatic query tuning of the fetch() and select() clause and in this way reduce lazy loading
+        and replacing it with eager fetching. Paths that traverse ManyToOne and OneToOne can be combined reducing
+        the total number of SQL queries executed and so this can be better than batch lazy loading with a high
+        batch size.
+      </p>
+
+      <h4>Q: How do I identify a N + 1 issue?</h4>
+
+      <p>
+        <b>A:</b> In Ebean terminology the 1 relates to the <code>origin query</code> and the N relates to
+        <code>secondary queries</code>. In logging you can turn on <code>TRACE</code> level logging for
+        <code>org.avaje.ebean.SUM</code> and included in the logs entries is an attribute called <code>origin</code>.
+        The origin is a hash that is used to link the secondary queries back to the origin query. A low tech grep
+        of the logs for that origin key would return the origin query and all related lazy loading queries.
+      </p>
+      <p>
+        Shortly a dashboard/monitoring service will be available and that will be able to identify origin
+        queries that result in a lot of lazy loading.
+      </p>
+      <p>
+        AutoTune profiling provides another alternative although it is orientated towards providing the tuned query
+        that fixes excessive lazy loading.
+      </p>
+
+      <h4>Q: What about JPA FetchType.EAGER</h4>
+      <p>
+        <b>A:</b>As a deployment annotation FetchType provides a hint that suits a single use case. The issue is that
+        there are many use cases that beans and their properties / relationships need to support - optimising
+        via a deployment annotation can optimise for 1 use case potentially to the detriment of many other use
+        cases.
+      </p>
+      <p>
+        That is, a ORM should provide a mechanism / query language that enables the developer to optimise the
+        object graph constructor for each use case and fixed deployment annotations can't do that.
+      </p>
+
+      <h4>Q: What about JPA Fetch groups</h4>
+      <p>
+        <b>A:</b> Fetch groups is a good thing for JPA users and provides an ability to control what part
+        of the object graph to fetch in a similar vein to Ebean's <code>fetch()</code> and <code>select()</code>.
+      </p>
+      <p>
+        My personal disappointment with JPA Fetch groups is that:
+      </p>
+      <ul>
+        <li>Fetch groups seem verbose and painful to use</li>
+        <li>Fetch groups should have been part of the JPQL query language</li>
+        <li>Fetch groups are missing control over: Eager/Lazy, Batch Size/ ReadOnly, L2/L3 use</li>
+        <li>Fetch groups are a hint? Say What?</li>
+      </ul>
+
+      <h4>Q: What about JPQL?</h4>
+      <p>
+        <b>A:</b> JPQL is not a good query language for optimising object graph construction and Ebean didn't adopt JPQL
+        for this reason. That is, when building an object graph with Ebean we want to give the developers the
+        ability to:
+      </p>
+      <ul>
+        <li>Control what part of the object graph to populate (which paths)</li>
+        <li>Have per path control over eager/lazy loading</li>
+        <li>Have per path control over loading batch size</li>
+        <li>Have per path control over readOnly and L2/L3 cache use</li>
+      </ul>
+      <p>
+        Ebean's ORM query language is design to provide a powerful and let simple way to control and optimise
+        object graph construction. When the ORM query the language is not well suited (aggregate queries, reporting,
+        recursive queries etc) Ebean provides good integration into SQL. The ORM query language might cover
+        90%+ of your OLTP queries but we don't want to expand that and complicate the language but instead promote
+        good mechanisms to integrate with raw SQL instead.
+      </p>
+
+
 </div>
 </body>
 </html>

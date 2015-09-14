@@ -17,8 +17,16 @@
   <li><a href="#enhance_ide">IDE enhancement</a></li>
 </ul>
 </@smallnav>
+<@smallnav activeCheck="${logging!''}" url="/docs/logging" title="Logging">
+<ul class="nav">
+  <li><a href="#sql">SQL and Transaction logging</a></li>
+  <li><a href="#summary">Summary logging</a></li>
+  <li><a href="#l2cache">L2 Cache logging</a></li>
+</ul>
+</@smallnav>
 <@smallnav activeCheck="${serverconfig!''}" url="/docs/serverconfig" title="ServerConfig">
 <ul class="nav">
+  <li><a href="#overview">Overview</a></li>
   <li><a href="#ebean-properties">ebean.properties</a></li>
   <li><a href="#external-properties">External properties</a></li>
   <li><a href="#server">Register</a></li>
@@ -69,10 +77,8 @@
   <li><a href="#predicates">Predicates</a></li>
   <li><a href="#automatic-joins">Automatic joins</a></li>
   <li><a href="#cartesian-product">Avoiding Cartesian product</a></li>
-  <li><a href="#firstRows-maxRows">FirstRows MaxRows</a></li>
+  <li><a href="#firstrows-maxrows">FirstRows MaxRows</a></li>
   <li><a href="#complex-graphs">Arbitrarily complex graphs</a></li>
-  <li><a href="#n-plus-1">N + 1</a></li>
-  <li><a href="#terminology">TERMINOLOGY</a></li>
   <li><a href="#load-context">Load Context</a></li>
   <li><a href="#origin-queries">Origin queries</a></li>
   <li><a href="#secondary-queries">Secondary queries</a></li>
@@ -81,6 +87,11 @@
 <@smallnav activeCheck="${querynplus1!''}" url="/docs/query-nplus1" title="Query N + 1">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
+  <li><a href="#what-is-n">What is N</a></li>
+  <li><a href="#per-path">N is per path</a></li>
+  <li><a href="#lazy-batch-size">Lazy load batch size</a></li>
+  <li><a href="#eager-loading">Eager loading</a></li>
+  <li><a href="#question-answer">Question / Answer</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${querypartialobjects!''}" url="/docs/query-partialobjects" title="Query Partial Objects">

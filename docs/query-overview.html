@@ -116,10 +116,6 @@
     on these 'paths containing a many relationship'.
   </p>
 
-  <h2 id="n-plus-1">N + 1</h2>
-  <p>
-
-  </p>
 
   <hr/>
   <h3 id="terminology">TERMINOLOGY</h3>
@@ -151,7 +147,7 @@
   </p>
 
 ```xml
-  txn[1012] FindBean type[Order] origin[B0dP9E.DWeHD4.5WUnB] exeMicros[318] rows[1] bind[3]
+txn[1012] FindBean type[Order] origin[B0dP9E.DWeHD4.5WUnB] ...
 ```
 
   <h2 id="secondary-queries">Secondary queries</h2>
@@ -162,7 +158,9 @@
   </p>
   <h4>Summary logging</h4>
   <p>
-    In summary logging there is a <code>mode</code>, <code>origin</code>, <code>lazyLoadProp</code> and <code>load</code> attributes.
+    In summary logging the <code>mode</code> and <code>origin</code> attributes can be used to identify which sql
+    queries are "secondary queries" and the origin which they relate back to. This logging can be used to identify
+    excessive lazy loading (N + 1) for example.
   </p>
   <ul>
     <li><code>mode</code> : <b>+lazy</b> for lazy loading query and <b>+query</b> for a query join/eager loading</li>
@@ -170,11 +168,11 @@
   </ul>
 
 ```xml
-txn[1012] FindBean type[Order] origin[B0dP9E.DWeHD4.5WUnB] exeMicros[318] rows[1] bind[3]
+txn[1012] FindBean type[Order] origin[B0dP9E.DWeHD4.5WUnB] ...
 ...
-txn[1016] FindMany mode[+lazy] type[Customer] origin[B0dP9E.DWeHD4.5WUnB] lazyLoadProp[name] ...
+txn[1016] FindMany mode[+lazy] type[Customer] origin[B0dP9E.DWeHD4.5WUnB]  ...
 ...
-txn[1017] FindMany mode[+lazy] type[Address] origin[B0dP9E.DWeHD4.5WUnB] lazyLoadProp[city] ...
+txn[1017] FindMany mode[+lazy] type[Address] origin[B0dP9E.DWeHD4.5WUnB]  ...
 ```
 
 </div>
