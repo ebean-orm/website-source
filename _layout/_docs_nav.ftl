@@ -62,6 +62,11 @@
 <@smallnav activeCheck="${dbmigration!''}" url="/docs/dbmigration" title="DB Migration">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
+  <li><a href="#main-method">Main method</a></li>
+  <li><a href="#migration-xml">Migration XML</a></li>
+  <li><a href="#apply-ddl">Apply DDL</a></li>
+  <li><a href="#apply-rollback-ddl">Apply Rollback DDL</a></li>
+  <li><a href="#drop-ddl">Drop DDL</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${testing!''}" url="/docs/testing" title="Testing">
