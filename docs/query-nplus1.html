@@ -130,14 +130,43 @@ ebean.lazyLoadBatchSize=100
     .findList();
     ```
 
+      <h2 id="orm-query-conversion">ORM query to SQL Query</h2>
+
+      <h4>How is an ORM query broken into multiple SQL queries</h4>
+      <p>
+        Ebean will automatically break a single ORM query into multiple SQL queries in order that:
+      </p>
+      <ul>
+        <li><b>No SQL Cartesian product is produced</b></li>
+        <li><b>FirstRows / MaxRows is always honoured</b></li>
+      </ul>
+      <p>
+        Ebean will always honour firstRows/maxRows and will never generate a SQL Cartesian product both for performance
+        reasons. What this means is that Ebean will analyse all the "fetch paths" that are defined for a query and
+        detect which paths contain a OneToMany or ManyToMany relationship. For Ebean a single SQL query can contain at most
+        one path that contains a OneToMany/ManyToMany and Ebean will automatically break up the ORM query based on this.
+      </p>
+      <p>
+        Refer to <a href="/docs/queries#query_joins">Query Joins</a>
+      </p>
+
+
       <h2 id="question-answer">Question and Answer</h2>
       <h4>Q: Is a global lazyLoadBatchSize of 100 reasonable?</h4>
       <p>
-        <b>A:</b> Yes I think it is reasonable and is possibly a better default than 10. The benefit of a
+        <b>A:</b> Yes I think it is reasonable and is possibly a better default than 10 (to the point that
+        perhaps 100 should be the Ebean default). The benefit of a
         smaller batch size is in scenarios where the object graph use is not 'symmetrical'. That is, in
         iterating a list of "root level objects" the parts of the object graph traversed/used is not the same.
         This seems pretty rare though and it seems much more common that the parts of the object graph used is
         the same for all the root level objects.
+      </p>
+      <p>
+        If the batch size is 100 but the batch contains many less than that is doesn't matter at all. To explain that,
+        the number of bind values in the generated SQL IN clause falls into buckets of 1,5,10,20,50 and 100 where
+        some bind values are repeated in order to fill up the bucket. Why do this? We don't want to have too many
+        distinct SQL statements as the database itself parses and caches an execution plan for each SQL statement so
+        limiting the buckets gives us a better hit ratio on the databases cache of sql execution plans.
       </p>
 
       <h4>Q: How does this relate to AutoTune?</h4>

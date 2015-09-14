@@ -91,12 +91,20 @@
   <li><a href="#per-path">N is per path</a></li>
   <li><a href="#lazy-batch-size">Lazy load batch size</a></li>
   <li><a href="#eager-loading">Eager loading</a></li>
+  <li><a href="#orm-query-conversion">ORM query to SQL Query</a></li>
   <li><a href="#question-answer">Question / Answer</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${querypartialobjects!''}" url="/docs/query-partialobjects" title="Query Partial Objects">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
+  <li><a href="#index-query">Index only query</a></li>
+  <li><a href="#index-join">Index only join</a></li>
+  <li><a href="#database">Database buffers</a></li>
+  <li><a href="#jdbc">JDBC buffers</a></li>
+  <li><a href="#network">Network</a></li>
+  <li><a href="#select-fetch">Select / Fetch</a></li>
+  <li><a href="#autotune">AutoTune</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${queryautotune!''}" url="/docs/query-autotune" title="Query Automatic Tuning">
@@ -104,7 +112,7 @@
   <li><a href="#overview">Overview</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${querytypesafe!''}" url="/docs/query-typesafe" title="Query Type Safe">
+<@smallnav activeCheck="${querytypesafe!''}" url="/docs/query-typesafe" title="Query Type Safety">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
 </ul>
@@ -128,7 +136,7 @@
   <li><a href="#other_bits">Other bits</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${saving!''}" url="/docs/saving" title="Saving">
+<@smallnav activeCheck="${persisting!''}" url="/docs/persisting" title="Persisting">
 <ul class="nav">
   <li><a href="#saves">Save</a></li>
   <li><a href="#deletes">Delete</a></li>

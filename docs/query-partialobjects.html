@@ -8,7 +8,114 @@
 <div class="bs-docs-section">
   <h2 id="overview">Overview</h2>
   <p>
+    Partial Objects is where an entity bean is not fully populated with all its properties but instead has only
+    some of it's properties populated/loaded.
   </p>
+  <p>
+    Partial properties are very important from a database performance perspective and everything in Ebean is
+    built to support partially populated beans. The query language, enhancement, persisting, event adapters and all
+    of Ebean's internals work on the premise that partially populated beans are the norm.
+  </p>
+
+  <h2 id="index-query">Index only query</h2>
+  <p>
+    If a SQL query executes where all the columns used are included in an index then the database has the
+    ability to return the query result by only using the index and specifically avoid reading the data blocks associated
+    with the table.  This can also sometimes described as a "covering index" or "covering query".
+  </p>
+  ```java
+
+  ebeanServer.find(Customer.class)
+
+  // only fetch the customer id and name
+  // ... if there is an index covering id and name the database has the ability
+  // ... to avoid reading the customer table data blocks and instead resolve the
+  // ... query by only using the index (which can be much faster)
+  .select("name")
+
+  // predicates and order by covered by index
+  .where().name.istartsWith("rob")
+  .orderBy().name.asc()
+  .findList();
+  ```
+
+  <h2 id="index-join">Index only join</h2>
+  <p>
+    If a SQL join to a table can be fully satisfied by an index then the database has the ability to resolve that
+    part of the query by using only the index and specifically can avoid reading the associated table data blocks.
+    For example:
+  </p>
+```java
+
+  ebeanServer.find(Order.class)
+    // only fetch the customer id and name
+    // ... if there is an index covering id and name the database has the ability
+    // ... to avoid reading the customer table data blocks and instead resolve that
+    // ... join part of the query from only the index (which is faster)
+    .fetch("customer", "name")
+    ...
+    .findList();
+```
+
+  <h2 id="database">Database buffers</h2>
+  <p>
+    When the database is processing the query it creates buffers to performing sorting, joining etc. These buffers
+    are larger when there is more columns involved as there is more data. If you can only select the columns needed
+    then these buffers and the amount of data involved in the sorting, joining etc is reduced. This is more important
+    if the columns that can be excluded are large varchar columns or the entity beans are mapped to tables with large
+    numbers of columns.
+  </p>
+
+  <h2 id="jdbc">JDBC buffers</h2>
+  <p>
+    The JDBC driver also has buffers to pump the resultSet data over the network. More columns means a bigger JDBC
+    buffer to pump the data over the network.
+  </p>
+
+  <h2 id="network">Network</h2>
+  <p>
+    More columns included in the fetch means more data is pumped over the network. If you don't need it don't select/fetch it.
+  </p>
+  <p>
+    Note that some JDBC drivers do have something like column wise compression to reduce the network payload when
+    values repeat (as this is a pretty common occurrence with SQL resultSet data).
+  </p>
+
+  <h2 id="select-fetch">Select / Fetch</h2>
+  <p>
+    Ebean makes it easy to control what you want to fetch on a query using <code>select()</code> and <code>fetch()</code>.
+    <code>select()</code> defines the specific properties to fetch/load for the root level and <code>fetch()</code>
+    defines the properties to fetch/load for all other levels.
+  </p>
+
+  ```java
+  // control the lazy loading of customers ...
+  List<Order> list = Ebean.find(Order.class)
+     // fetch just these properties for the Order
+    .select("status,orderDate,shipDate")
+    // fetch customer name only
+    .fetch("customer","name")
+    .fetch("customer.shippingAddress", "*")
+    .fetch("details", "*")
+    // fetch product name only
+    .fetch("details.product", "name")
+    .where().eq("status",Order.Status.NEW)
+    .findList();
+    ```
+
+  <h2 id="autotune">AutoTune</h2>
+  <p>
+    Manually optimising queries to fetch only what is needed can be some work and even when you do that you often
+    have the case where a single query like 'find order by id' is used in multiple user cases and each use case
+    uses a different part of the object graph.
+  </p>
+  <p>
+    AutoTune is a feature than can profile the object graph use relative to the call stack for each query and
+    provide an query that selects/fetches only what is used for the given call stack - effectively provide a nice
+    automated way of optimising the query to only fetch what the application uses.
+  </p>
+
+
 </div>
 </body>
 </html>

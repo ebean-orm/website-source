@@ -676,16 +676,16 @@ List<Order> list =
 
   <p>
     Example: Control the query used to lazy load
-    ```java
-    // control the lazy loading of customers ...
-    List<Order> list = Ebean.find(Order.class)
-      .fetch("customer","name", new FetchConfig().lazy(5))
-      .fetch("customer.contacts","contactName, phone, email")
-      .fetch("customer.shippingAddress")
-      .where().eq("status",Order.Status.NEW)
-      .findList();
-      ```
   </p>
+  ```java
+  // control the lazy loading of customers ...
+  List<Order> list = Ebean.find(Order.class)
+    .fetch("customer","name", new FetchConfig().lazy(5))
+    .fetch("customer.contacts","contactName, phone, email")
+    .fetch("customer.shippingAddress")
+    .where().eq("status",Order.Status.NEW)
+    .findList();
+  ```
   <p>
     In the example above the orders are loaded. Only when the application requests a
     customer property (that is not the customer's id) then the lazy loading of the customer is
