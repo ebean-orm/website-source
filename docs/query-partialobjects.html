@@ -41,9 +41,11 @@
 
   <h2 id="index-join">Index only join</h2>
   <p>
-    If a SQL join to a table can where additionally any select/where and order by clauses can all be fully satisfied
-    by an index then the database has the ability to resolve that part of the query by using only the index and
-    specifically can avoid reading the associated table data blocks. For example:
+    Similar to 'Index only query' is the case for joins where the columns needed/used on the joined table can
+    be fully resolved by an index. For example, joining the customer table and only needing customer name.
+    Similarly, joining to the product table and only needing the product name. These are examples where the join
+    can often be resolved by the database by just using the index and not actually needing to read/access the
+    table data blocks.
   </p>
 ```java
 
