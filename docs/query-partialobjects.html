@@ -8,24 +8,29 @@
 <div class="bs-docs-section">
   <h2 id="overview">Overview</h2>
   <p>
-    Partial Objects is where an entity bean is not fully populated with all its properties but instead has only
+    <code>Partial Objects</code> is where an entity bean is not fully populated with all its properties but instead has only
     some of it's properties populated/loaded.
   </p>
   <p>
-    Partial properties are very important from a database performance perspective and everything in Ebean is
-    built to support partially populated beans. The query language, enhancement, persisting, event adapters and all
-    of Ebean's internals work on the premise that partially populated beans are the norm.
+    Partial properties are very important from a <code>database</code>, <code>JDBC</code> and <code>network</code>
+    performance perspective and everything in Ebean is built to support partially populated beans. The query
+    language, enhancement, persisting, event adapters and all of Ebean's internals work on the premise that
+    partially populated beans are the norm.
   </p>
 
   <h2 id="index-query">Index only query</h2>
   <p>
     If a SQL query executes where all the columns used are included in an index then the database has the
     ability to return the query result by only using the index and specifically avoid reading the data blocks associated
-    with the table.  This can also sometimes described as a "covering index" or "covering query".
+    with the table. This is sometimes described as a "covering index" or "covering query".
   </p>
-  ```java
+  <blockquote>
+    Small number of columns selected = opportunity for index only query
+  </blockquote>
 
-  ebeanServer.find(Customer.class)
+```java
+
+ebeanServer.find(Customer.class)
 
   // only fetch the customer id and name
   // ... if there is an index covering id and name the database has the ability
@@ -37,27 +42,30 @@
   .where().name.istartsWith("rob")
   .orderBy().name.asc()
   .findList();
-  ```
+```
 
   <h2 id="index-join">Index only join</h2>
   <p>
     Similar to 'Index only query' is the case for joins where the columns needed/used on the joined table can
     be fully resolved by an index. For example, joining the customer table and only needing customer name.
     Similarly, joining to the product table and only needing the product name. These are examples where the join
-    can often be resolved by the database by just using the index and not actually needing to read/access the
-    table data blocks.
+    can often be resolved by the database by just using an index and not actually needing to read/access the
+    table data blocks (join resolved by just reading the index blocks and avoiding reading the table blocks).
   </p>
-```java
+  <blockquote>
+    Small number of columns selected in joined table = opportunity for index only join
+  </blockquote>
 
-  ebeanServer.find(Order.class)
-    ...
-    // only fetch the customer id and name
-    // ... if there is an index on the customer table that is covering the customer id and name
-    // ... the database has the ability to avoid reading the customer table data blocks and instead
-    // ... resolve the join part of this query from only the customer index (which is faster)
-    .fetch("customer", "name")
-    ...
-    .findList();
+```java
+ebeanServer.find(Order.class)
+  ...
+  // only fetch the customer id and name
+  // ... if there is an index on the customer table that is covering the customer id and name
+  // ... the database has the ability to avoid reading the customer table data blocks and instead
+  // ... resolve the join part of this query from only the customer index (which is faster)
+  .fetch("customer", "name")
+  ...
+  .findList();
 ```
 
   <h2 id="database">Database buffers</h2>
@@ -68,12 +76,18 @@
     if the columns that can be excluded are large varchar columns or the entity beans are mapped to tables with large
     numbers of columns.
   </p>
+  <blockquote>
+    Less columns selected = smaller buffers used by DB to process sorts/joins etc
+  </blockquote>
 
   <h2 id="jdbc">JDBC buffers</h2>
   <p>
     The JDBC driver also has buffers to pump the resultSet data over the network. More columns means a bigger JDBC
     buffer and more memory required by the JDBC driver.
   </p>
+  <blockquote>
+    Less columns selected = smaller buffers used by JDBC driver
+  </blockquote>
 
   <h2 id="network">Network</h2>
   <p>
@@ -81,6 +95,9 @@
     Note that some JDBC drivers do have something like column wise compression to reduce the network payload when
     values repeat (as repeating values is a pretty common occurrence with SQL resultSet data).
   </p>
+  <blockquote>
+    Less columns selected = less data pumped over the network
+  </blockquote>
 
   <h2 id="select-fetch">Select / Fetch</h2>
   <p>
@@ -106,6 +123,9 @@
     ```
 
   <h2 id="autotune">AutoTune</h2>
+  <blockquote>
+    AutoTune will tune each query for each use case to fetch the minimal set of properties
+  </blockquote>
   <p>
     Manually optimising queries to fetch only what is needed can be some work and even when you do that you often
     have the case where a single query like 'find order by id' is used in multiple user cases and each use case
