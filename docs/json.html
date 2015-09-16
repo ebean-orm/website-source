@@ -75,7 +75,7 @@ public class SimpleDoc extends Model {
   <p>
     Unfortunately the JSONB exists expression uses the "?" character which is the JDBC bind value character.
     This makes it difficult to use that expression via JDBC. To get around this issue the suggested solution
-    is to create a database function like:
+    is to create a database function like the one below or create a new Postgres OPERATOR.
   </p>
 ```sql
 CREATE FUNCTION jsonbExists (jsonb, text) RETURNS bool AS $$ SELECT $1 ? $2; $$ LANGUAGE sql;
@@ -90,6 +90,12 @@ List<SimpleDoc> docs = SimpleDoc.find.where()
   .findList();
 
 ```
+  <h3>Example project</h3>
+  <p>
+    Note that the <a href="https://github.com/ebean-orm/avaje-ebeanorm-examples/tree/master/x-postgres-features">x-postgres-features</a>
+    project contains working examples of using Postgres JSON, JSONB and HSTORE.
+  </p>
+
 </p>
 </div>
 </body>
