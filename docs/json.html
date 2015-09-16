@@ -21,6 +21,75 @@ assertEquals(Integer.valueOf(42), customer.getId());
 assertEquals("rob", customer.getName());
 ```
 
+  <h2>Postgres JSONB</h2>
+  <p>
+
+  </p>
+
+  <h3>@DbJsonB</h3>
+  <p>
+    In your entity bean you can annotate a property with <code>@DbJsonB</code> and that indicates that the property
+    maps to a JSONB database type.  For non-Postgres databases this maps to a database Clob.
+  </p>
+```java
+@Entity
+@Table(name="p_doc")
+public class SimpleDoc extends Model {
+
+  @Id
+  Long id;
+  ...
+
+  @DbJsonB
+  Map<String,Object> content;
+```
+
+  <h3>Save and Find</h3>
+  <p>
+    You put JSON content into the content property and save it and fetch is as normal.
+  </p>
+```java
+
+  String rawJson = "{\"docName\":\"My document\", \"docScore\":234, \"title\":\"Some title\"}";
+
+  // get the JSON into a map using Jackson or similar tool.
+  // Ebean has EJson which using Jackson core which can be used
+  // to parse JSON content
+  Map<String, Object> content = EJson.parseObject(rawJson);
+
+  SimpleDoc doc = new SimpleDoc();
+  doc.setName("doc1");
+  doc.setContent(content);
+
+  // save to db
+  doc.save();
+
+  // fetch from db
+  SimpleDoc doc1 = SimpleDoc.find.byId(doc.getId());
+
+  assertEquals("My document", doc1.getContent().get("docName"));
+
+```
+
+  <h3>Exists expression</h3>
+  <p>
+    Unfortunately the JSONB exists expression uses the "?" character which is the JDBC bind value character.
+    This makes it difficult to use that expression via JDBC. To get around this issue the suggested solution
+    is to create a database function like:
+  </p>
+```sql
+CREATE FUNCTION jsonbExists (jsonb, text) RETURNS bool AS $$ SELECT $1 ? $2; $$ LANGUAGE sql;
+```
+  <p>
+    The function can then be used in an Ebean query like:
+  </p>
+
+```java
+List<SimpleDoc> docs = SimpleDoc.find.where()
+  .raw("jsonbExists(content#>'{docName}', 'My document')")
+  .findList();
+
+```
 </p>
 </div>
 </body>
