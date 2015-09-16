@@ -123,6 +123,11 @@
 <@smallnav activeCheck="${querytypesafe!''}" url="/docs/query-typesafe" title="Query Type Safety">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
+  <li><a href="#dependencies">Dependencies</a></li>
+  <li><a href="#enhancement">Enhancement</a></li>
+  <li><a href="#generation">Query bean generation</a></li>
+  <li><a href="#query-beans">Query beans</a></li>
+  <li><a href="#query-examples">Query examples</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${queries!''}" url="/docs/queries" title="Queries">
