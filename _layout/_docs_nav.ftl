@@ -186,6 +186,17 @@
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${json!''}" url="/docs/json" title="JSON"/>
+<@smallnav activeCheck="${jsonindb!''}" url="/docs/json-in-db" title="JSON in DB">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#mapping">Mapping</a></li>
+  <li><a href="#save-find">Save and Find</a></li>
+  <li><a href="#query">Query expressions</a></li>
+  <li><a href="#postgres">Postgres</a></li>
+  <li><a href="#oracle">Oracle</a></li>
+  <li><a href="#oracle">Raw expression</a></li>
+</ul>
+</@smallnav>
 <@smallnav activeCheck="${eventlisteners!''}" url="/docs/eventlisteners" title="Event listeners"/>
 <@smallnav activeCheck="${readaudit!''}" url="/docs/readauditing" title="Read Auditing">
 <ul class="nav">

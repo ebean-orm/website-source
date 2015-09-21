@@ -1,0 +1,242 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs.html"/>
+<#assign subtitle = "JSON in DB">
+<#assign jsonindb = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+
+  <h2 id="overview">Overview</h2>
+  <p>
+    Postgres and Oracle have extensive support with JSON stored in the database. Both provide a lot of support
+    for writing queries using document path expressions.
+  </p>
+  <p>
+    Ebean provides mapping support via <code>@DbJson</code> and <code>@DbJsonB</code> to map JSON documents to
+    various database types including Postgres JSON, JSONB types as well as standard Varchar, Clob and Blob types.
+    The mapping can be used with all supported databases and Postgres and Oracle provide support for including
+    JSON expressions in query where clauses.
+  </p>
+  <p>
+    Both Postgres and Oracle support writing queries with JSON expressions and Ebean exposes the most common
+    query expressions.:
+  </p>
+
+  <h2 id="mapping">Mapping</h2>
+  <p>
+    For all databases JSON documents can be mapped on entity beans and saved and loaded from the database.
+  </p>
+
+  <h3>@DbJsonB</h3>
+  <p>
+    In your entity bean you can annotate a property with <code>@DbJsonB</code> and that indicates that the property
+    maps to a JSONB database type.  For non-Postgres databases this maps to a database Clob.
+  </p>
+  ```java
+@Entity
+@Table(name="p_doc")
+public class SimpleDoc extends Model {
+
+  @Id
+  Long id;
+  ...
+
+  @DbJsonB
+  Map<String,Object> content;
+  ```
+
+  <h3>@DbJson</h3>
+  <p>
+    In your entity bean you can annotate a property with <code>@DbJson</code> and that indicates that the property
+    maps to a JSON database type.  For non-Postgres databases this maps to a database Clob.
+  </p>
+  ```java
+@Entity
+@Table(name="p_doc")
+public class SimpleDoc extends Model {
+
+  @Id
+  Long id;
+  ...
+
+  @DbJson
+  Map<String,Object> content;
+  ```
+
+
+  <h2 id="save-find">Save and Find</h2>
+  <p>
+    You put JSON content into the content property and save it and fetch is as normal.
+  </p>
+```java
+
+  String rawJson = "{\"docName\":\"My document\", \"docScore\":234, \"title\":\"Some title\"}";
+
+  // get the JSON into a map using Jackson or similar tool.
+  // Ebean has EJson which using Jackson core which can be used
+  // to parse JSON content
+  Map<String, Object> content = EJson.parseObject(rawJson);
+
+  SimpleDoc doc = new SimpleDoc();
+  doc.setName("doc1");
+  doc.setContent(content);
+
+  // save to db
+  doc.save();
+
+  // fetch from db
+  SimpleDoc doc1 = SimpleDoc.find.byId(doc.getId());
+
+  assertEquals("My document", doc1.getContent().get("docName"));
+
+```
+
+  <h2>Query expressions</h2>
+  <p>
+    <code>Postgres</code> and <code>Oracle</code> provide expressions such that you can use a <code>path</code>
+    expression to test is a given path <code>EXISTS</code> or test the value at a path.
+  </p>
+  <p>
+    Ebean <code>ExpressionList</code> has expressions for:
+  </p>
+```java
+/**
+ * Path exists - for the given path in a JSON document.
+ */
+ExpressionList<T> jsonExists(String propertyName, String path);
+
+/**
+ * Path does not exist - for the given path in a JSON document.
+ */
+ExpressionList<T> jsonNotExists(String propertyName, String path);
+
+/**
+ * Equal to expression for the value at the given path in the JSON document.
+ */
+ExpressionList<T> jsonEqualTo(String propertyName, String path, Object value);
+
+/**
+ * Not Equal to - for the given path in a JSON document.
+ */
+ExpressionList<T> jsonNotEqualTo(String propertyName, String path, Object val);
+
+/**
+ * Greater than - for the given path in a JSON document.
+ */
+ExpressionList<T> jsonGreaterThan(String propertyName, String path, Object val);
+
+/**
+ * Greater than or equal to - for the given path in a JSON document.
+ */
+ExpressionList<T> jsonGreaterOrEqual(String propertyName, String path, Object val);
+
+/**
+ * Less than - for the given path in a JSON document.
+ */
+ExpressionList<T> jsonLessThan(String propertyName, String path, Object val);
+
+/**
+ * Less than or equal to - for the given path in a JSON document.
+ */
+ExpressionList<T> jsonLessOrEqualTo(String propertyName, String path, Object val);
+
+```
+
+
+  <h2>Postgres expressions</h2>
+  <p>
+    Ebean uses Postgres <code>->></code> and <code>#>></code> operators to support the JSON expressions.
+  </p>
+
+  <h3>Exists expression</h3>
+  <p>
+    For Postgres Ebean's <code>jsonExists()</code> <code>jsonNotExists()</code> expression result in the
+    path value using <code>->></code> or <code>#>></code> and  <code>IS NULL</code>  and <code>IS NOT NULL</code>.
+  </p>
+  ```java
+  List<SimpleDoc> list = new QSimpleDoc().query()
+  .where()
+  .jsonExists("content", "path.other")
+  .findList();
+  ```
+  <p>
+    The function can then be used in an Ebean query like:
+  </p>
+
+  ```sql
+  select t0.id c0, ...
+  where (t0.content #>> '{path,other}') is not null
+  ```
+  <h3>Value expressions</h3>
+  <p>
+    For Postgres Ebean's value expressions such as <code>jsonEqualTo()</code>, <code>jsonGreaterThan()</code> etc use
+    the <code>->></code> or <code>#>></code> operator depending on the path and then cast the result depending on the
+    value testing against. That is, if the value tested is a Integer or Long the DB path expression is cast to
+    <code>::INTEGER</code> and there is similar casting for <code>::DECIMAL</code> and <code>::BOOLEAN</code>.
+  </p>
+```java
+List<SimpleDoc> list = new QSimpleDoc().query()
+  .where()
+  .jsonEqualTo("content", "path.other", 34)
+  .findList();
+  ```
+```sql
+select t0.id c0, ...
+where (t0.content #>> '{path,other}')::INTEGER = ?
+```
+
+
+  <h2>Oracle expressions</h2>
+  <p>
+    Ebean uses Oracles <code>json_exists</code> and <code>json_value</code> functions to support Ebean's JSON
+    expressions.
+  </p>
+
+  <h3>Exists expression</h3>
+  <p>
+    For Oracle Ebean's jsonExists() expression uses the Oracle <code>json_exists</code> function.
+  </p>
+  ```java
+  List<SimpleDoc> list = new QSimpleDoc().query()
+    .where()
+    .jsonExists("content", "path.other")
+    .findList();
+    ```
+  <p>
+    The function can then be used in an Ebean query like:
+  </p>
+
+```sql
+  select t0.id c0, ...
+  where json_exists(t0.content, '$.path.other')
+```
+  <h3>Value expressions</h3>
+  <p>
+    For Oracle Ebean's value's jsonEqualTo() jsonGreaterThan() etc use the Oracle <code>json_value</code> function.
+  </p>
+```java
+List<SimpleDoc> list = new QSimpleDoc().query()
+  .where()
+  .jsonEqualTo("content", "path.other", 34)
+  .findList();
+  ```
+```sql
+select t0.id c0, ...
+where json_value(t0.content, '$.path.other') = ?
+```
+
+ <h2 id="raw">Raw expression</h2>
+ <p>
+   If the provided expressions do not match what is required you can use <code>raw()</code> expressions.
+ </p>
+```java
+List<SimpleDoc> docs = SimpleDoc.find.where()
+  // pass a raw expression through - property names are translated to
+  // db columns but everything else is passed through to the DB
+  .raw("content#>'{docName}' ? 'rob doc'")
+  .findList();
+```
+</div>
+</body>
+</html>

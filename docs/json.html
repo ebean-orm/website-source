@@ -6,13 +6,25 @@
 </head>
 <body>
 <div class="bs-docs-section">
-<h1 id="json">JSON</h1>
-...(under construction)...
+  <h2 id="overview">Overview</h2>
+  <p>
+    Ebean has built in support for marshalling and unmarshalling entity beans to and from JSON.
+    Ebean uses <code>Jackson core</code> to do this.  The reason Ebean does this is treat
+    JSON as a first class feature with built in support for <code>Partial objects</code> and
+    <code>cyclical relationships</code> which are both common in ORM. In additional all
+    supported types including <code>Joda types</code>, <code>Java8 types</code> and
+    <a href="/docs/json-in-db"><code>JSON database mapping types</code></a> work out of the box.
+  </p>
+  <blockquote>
+    JSON marshalling/unmarshalling should be painless, performant and work out of the box.
+  </blockquote>
 
-<p>
-
-Ebean can hydrate a bean from json.  It will ignore the json properties that do not match up to properties on the bean.
-
+  <h2 id="json-context">JsonContext</h2>
+  <p>
+    Obtain a <code>JsonContext</code> from EbeanServer via the <code>json()</code> method.
+    This JsonContext then provides various methods for marshalling/unmarshalling JSON to and from
+    entity beans.
+  </p>
 ```java
 String jsonWithUnknown = "{\"id\":42, \"unknownProp\":\"foo\", \"name\":\"rob\", \"version\":1}";
 
@@ -21,82 +33,6 @@ assertEquals(Integer.valueOf(42), customer.getId());
 assertEquals("rob", customer.getName());
 ```
 
-  <h2>Postgres JSONB</h2>
-  <p>
-
-  </p>
-
-  <h3>@DbJsonB</h3>
-  <p>
-    In your entity bean you can annotate a property with <code>@DbJsonB</code> and that indicates that the property
-    maps to a JSONB database type.  For non-Postgres databases this maps to a database Clob.
-  </p>
-```java
-@Entity
-@Table(name="p_doc")
-public class SimpleDoc extends Model {
-
-  @Id
-  Long id;
-  ...
-
-  @DbJsonB
-  Map<String,Object> content;
-```
-
-  <h3>Save and Find</h3>
-  <p>
-    You put JSON content into the content property and save it and fetch is as normal.
-  </p>
-```java
-
-  String rawJson = "{\"docName\":\"My document\", \"docScore\":234, \"title\":\"Some title\"}";
-
-  // get the JSON into a map using Jackson or similar tool.
-  // Ebean has EJson which using Jackson core which can be used
-  // to parse JSON content
-  Map<String, Object> content = EJson.parseObject(rawJson);
-
-  SimpleDoc doc = new SimpleDoc();
-  doc.setName("doc1");
-  doc.setContent(content);
-
-  // save to db
-  doc.save();
-
-  // fetch from db
-  SimpleDoc doc1 = SimpleDoc.find.byId(doc.getId());
-
-  assertEquals("My document", doc1.getContent().get("docName"));
-
-```
-
-  <h3>Exists expression</h3>
-  <p>
-    Unfortunately the JSONB exists expression uses the "?" character which is the JDBC bind value character.
-    This makes it difficult to use that expression via JDBC. To get around this issue the suggested solution
-    is to create a database function like the one below or create a new Postgres OPERATOR.
-  </p>
-```sql
-CREATE FUNCTION jsonbExists (jsonb, text) RETURNS bool AS $$ SELECT $1 ? $2; $$ LANGUAGE sql;
-```
-  <p>
-    The function can then be used in an Ebean query like:
-  </p>
-
-```java
-List<SimpleDoc> docs = SimpleDoc.find.where()
-  .raw("jsonbExists(content#>'{docName}', 'My document')")
-  .findList();
-
-```
-  <h3>Example project</h3>
-  <p>
-    Note that the <a href="https://github.com/ebean-orm/avaje-ebeanorm-examples/tree/master/x-postgres-features">x-postgres-features</a>
-    project contains working examples of using Postgres JSON, JSONB and HSTORE.
-  </p>
-
-</p>
 </div>
 </body>
 </html>
