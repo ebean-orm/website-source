@@ -194,7 +194,7 @@
   <li><a href="#query">Query expressions</a></li>
   <li><a href="#postgres">Postgres</a></li>
   <li><a href="#oracle">Oracle</a></li>
-  <li><a href="#oracle">Raw expression</a></li>
+  <li><a href="#raw">Raw expression</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${eventlisteners!''}" url="/docs/eventlisteners" title="Event listeners"/>

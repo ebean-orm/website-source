@@ -92,7 +92,7 @@ public class SimpleDoc extends Model {
 
 ```
 
-  <h2>Query expressions</h2>
+  <h2 id="query">Query expressions</h2>
   <p>
     <code>Postgres</code> and <code>Oracle</code> provide expressions such that you can use a <code>path</code>
     expression to test is a given path <code>EXISTS</code> or test the value at a path.
@@ -144,7 +144,7 @@ ExpressionList<T> jsonLessOrEqualTo(String propertyName, String path, Object val
 ```
 
 
-  <h2>Postgres expressions</h2>
+  <h2 id="postgres">Postgres expressions</h2>
   <p>
     Ebean uses Postgres <code>->></code> and <code>#>></code> operators to support the JSON expressions.
   </p>
@@ -187,7 +187,7 @@ where (t0.content #>> '{path,other}')::INTEGER = ?
 ```
 
 
-  <h2>Oracle expressions</h2>
+  <h2 id="oracle">Oracle expressions</h2>
   <p>
     Ebean uses Oracles <code>json_exists</code> and <code>json_value</code> functions to support Ebean's JSON
     expressions.
