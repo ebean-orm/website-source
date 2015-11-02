@@ -19,14 +19,15 @@
 
   <h4>Current support in Ebean</h4>
   <ul>
-    <li>Oracle via Total recall</li>
-    <li>Postgres via Triggers/history table</li>
-    <li>MySql via Triggers/history table</li>
+    <li><code>Oracle</code> via Total recall</li>
+    <li><code>Postgres</code> via Triggers/history table</li>
+    <li><code>MySql</code> via Triggers/history table</li>
+    <li><code>H2</code> via Triggers/history table</li>
   </ul>
 
   <h2>History tables</h2>
   <p>
-    For Postgres and MySql (and in general databases that don't have SQL2011 support built in) Ebean generates
+    For Postgres, MySql and H2 (and in general databases that don't have SQL2011 support built in) Ebean generates
     DDL for History tables and associated triggers and views. This is a common "Temporal database design" approach
     that has been used for some time and not specific to Ebean. For example, this approach is already implemented
     as a Postgres extension - <a href="https://github.com/arkhipov/temporal_tables/">arkhipov/temporal_tables</a>.
@@ -272,6 +273,11 @@
      triggers/views/history tables.
     </li>
   </ul>
+
+  <h2 id="h2">H2</h2>
+  <p>
+
+  </p>
 
 </div>
 </body>

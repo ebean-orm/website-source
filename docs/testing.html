@@ -6,7 +6,55 @@
 </head>
 <body>
 <div class="bs-docs-section">
-<h1 id="testing">Testing</h1>
+<h2 id="test-properties">test-ebean.properties</h2>
+<p>
+  When you want to run all tests against <code>H2</code> in memory database a simple way to do this is to add a
+  <code>src/test/resources/test-ebean.properties</code> to your project. In the <code>test-ebean.properties</code>
+  you can effectively override the properties of the datasource and specify to use <code>H2</code>.
+</p>
+  <p>
+    When an EbeanServer is created automatically via <code>Ebean.getDefaultServer()</code> or <code>Ebean.getServer(name)</code>
+    then Ebean will look for the existence of test-ebean.properties in the classpath. If found this then typically
+    specifies to use an in memory <code>H2</code> datasource.
+  </p>
+  <p>
+    When programmatically creating an EbeanServer using <code>ServerConfig</code> and <code>EbeanServerFactory</code>
+    there is a method <code>serverConfig.loadTestProperties()</code> which will similarly look for a test-ebean.properties
+    file if present.
+  </p>
+  ```java
+  @Override
+  public EbeanServer getObject() throws Exception {
+
+    ServerConfig config = new ServerConfig();
+    config.setName("db");
+    config.loadFromProperties(properties);
+    ...
+
+    // load test-ebean.properties if present for running tests
+    // typically using H2 in memory database
+    config.loadTestProperties();
+
+    // set as default and register so that Model can be
+    // used if desired for save() and update() etc
+    config.setDefaultServer(true);
+    config.setRegister(true);
+
+    return EbeanServerFactory.create(config);
+  }
+  ```
+
+  <h3>Example test-ebean.properties</h3>
+```properties
+  ebean.db.ddl.generate=true
+  ebean.db.ddl.run=true
+
+  datasource.db.username=sa
+  datasource.db.password=
+  datasource.db.databaseUrl=jdbc:h2:mem:tests
+  datasource.db.databaseDriver=org.h2.Driver
+```
+
 
 <h2 id="mockibean">MockiEbean</h2>
 

@@ -71,6 +71,7 @@
 </@smallnav>
 <@smallnav activeCheck="${testing!''}" url="/docs/testing" title="Testing">
 <ul class="nav">
+  <li><a href="#test-properties">test-ebean.properties</a></li>
   <li><a href="#mockibean">MockiEbean</a></li>
 </ul>
 </@smallnav>
