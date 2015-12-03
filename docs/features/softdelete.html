@@ -1,0 +1,153 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features.html"/>
+<#assign subtitle = "Soft Delete">
+<#assign softdelete = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+
+  <h2 id="softdelete">@SoftDelete</h2>
+  <p>
+    Add a boolean property to your entity beans to indicate the deleted state.
+    This property can be on the entity bean or on a MappedSuperclass as per the example below:
+  </p>
+  <p>
+    This property must be a boolean type with a true value meaning that the row/bean has been logically deleted.
+  </p>
+
+
+
+```java
+
+@MappedSuperclass
+public class BaseSoftDelete {
+
+  @Id
+  Long id;
+
+  @Version
+  Long version;
+
+  @SoftDelete
+  boolean deleted;
+
+```
+
+  <h2 id="delete">Delete</h2>
+  <p>
+    A delete of an entity bean that has SoftDelete becomes a SQL update.
+  </p>
+```java
+
+  // delete becomes an update if the bean has soft delete property
+  ebeanServer.delete(bean);
+
+```
+
+```sql
+  -- soft delete  ... sets deleted = true
+  update mybean set version=?, deleted=? where id=? and version=?; --bind(2,true,1,1,)
+```
+
+
+  <h2 id="deletepermanent">Delete Permanent</h2>
+  <p>
+    Delete permanent is used to perform a SQL delete (hard delete).
+  </p>
+```java
+
+  // delete becomes an update if the bean has soft delete property
+  ebeanServer.deletePermanent(bean);
+
+```
+
+```sql
+  -- delete permanent
+  delete from mybean where id=? and version=?; --bind(1,2,)
+```
+
+  <h2 id="cascade">Cascading behavior</h2>
+  <p>
+    A soft delete will cascade along the same relationships as a hard delete as
+    long as the beans support soft delete.  If the 'target' bean does not have a
+    <code>@SoftDelete</code> property (and hence does not support soft delete) then
+    the soft delete will not cascade to that relationship.
+  </p>
+
+  <h4>ManyToMany</h4>
+  <p>
+    Soft delete will not cascade to the intersection table of a <code>@ManyToMany</code>.
+  </p>
+
+  <h4>Draftable</h4>
+  <p>
+    Soft delete will not propagate to the associated "live" row of a @Draftable entity bean.
+  </p>
+
+
+  <h2 id="query">Query (normal)</h2>
+  <p>
+    A normal query automatically includes a predicate to filter out soft deleted rows.
+    A predicate is added for each table (SQL FROM or JOIN) that has a soft delete column.
+    This is done for any subsequent lazy loading queries as necessary.
+  </p>
+
+  <blockquote>
+    and t0.deleted=false and t1.deleted=false    ... additional predicates
+  </blockquote>
+
+```sql
+  select t0.id c0, t0.name ...
+  from ebasic_soft_delete t0
+  left outer join ebasic_sdchild t1 on t1.owner_id = t0.id
+  where t0.id = ?
+    -- Additional predicates for soft delete
+    and t0.deleted=false and t1.deleted=false
+  order by t0.id; --bind(1)
+```
+
+  <h2 id="includeSoftDeletes">Query - includeSoftDeletes</h2>
+  <p>
+    A query can have <code>includeSoftDeletes()</code> set and in this case the soft delete predicates are
+    not added to the query and this means all rows including soft deleted rows are included in
+    the result.
+  </p>
+
+  <blockquote>
+    Query.includeSoftDeletes()
+  </blockquote>
+
+```java
+
+  // find a bean that could be soft deleted
+  List<MyBean> beans =
+    ebeanServer.find(MyBean.class)
+    .includeSoftDeletes()
+    .where().icontains("name", "rob")
+    .findList();
+
+
+  // find a bean that could be soft deleted
+  MyBean bean =
+    ebeanServer.find(MyBean.class)
+      .includeSoftDeletes()
+      .setId(idValue)
+      .findUnique();
+
+```
+
+  <h2 id="notifications">Notifications</h2>
+  <p>
+    For BeanPersistController, BeanPersistListener, L2 Cache and Cluster notifications a
+    soft delete is treated the same as a hard delete and the same event notifications occur.
+  </p>
+
+  <h2 id="changelog">Change Log</h2>
+  <p>
+    For ChangeLog soft deletes are treated as updates as this reflects the actual change that occured.
+  </p>
+
+</div>
+</body>
+</html>

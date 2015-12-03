@@ -15,6 +15,22 @@
 <@smallnav activeCheck="${eventlistening!''}" url="/docs/features/eventlistening" title="Event listening">
 </@smallnav>
 
+<@smallnav activeCheck="${softdelete!''}" url="/docs/features/softdelete" title="Soft Delete">
+<ul class="nav">
+  <li><a href="#softdelete">@SoftDelete</a></li>
+  <li><a href="#delete">Delete</a></li>
+  <li><a href="#deletepermanent">Delete Permanent</a></li>
+  <li><a href="#cascade">Cascading behavior</a></li>
+  <li><a href="#query">Query (normal)</a></li>
+  <li><a href="#includeSoftDeletes">Query - includeSoftDeletes</a></li>
+  <li><a href="#notifications">Notifications</a></li>
+  <li><a href="#changelog">Change Log</a></li>
+</ul>
+</@smallnav>
+
+<@smallnav activeCheck="${who!''}" url="/docs/features/who" title="Who Created Modified">
+</@smallnav>
+
 <@smallnav activeCheck="${readaudit!''}" url="/docs/features/readauditing" title="Read Auditing">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
