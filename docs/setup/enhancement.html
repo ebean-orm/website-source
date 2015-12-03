@@ -1,0 +1,273 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_setup.html"/>
+<#assign subtitle = "Enhancement">
+<#assign enhancement = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h1 id="enhancement" class="page-header">Enhancement</h1>
+
+  <h2 id="overview">Overview</h2>
+
+  <p>The term "Enhancement" covers all the ways (javaagent, ant, maven,IDE plugin, etc)
+    that are used to modify the entity beans. Others terms used to describe enhancement include "Weaving",
+    "Transformation" and "byte code manipulation".</p>
+
+  <p>Load time weaving is used to refer to when the class manipulation occurs at "load
+    time" typically via javaagent compared with class manipulation occurring at "build time"
+    typically via Maven, Ant or IDE plugin.</p>
+
+  <p>In raw terms a class is a byte[] and enhancement is manipulating those bytes prior to
+    the class being defined by its ClassLoader.</p>
+
+
+  <h2 id="multiple">Using multiple enhancers</h2>
+
+  <p>
+  Ebean enhancement is aware of when the enhancement has already occurred. In this way it is common
+    and expected that multiple forms of enhancement can be used at the same time such as using both
+    an IDE plugin and maven plugin to perform the enhancement.
+  </p>
+
+  <h2 id="recommendation">Recommendation</h2>
+  <p>
+    Rob: For IntelliJ IDEA and Eclipse users my recommendation is to use the IDE plugin in addition
+    to either build time enhancement (maven plugin) or agent.
+  </p>
+  <p>
+    That is, the IDE plugin is good to use during development enhancing the beans as the IDE compiles the
+    classes. Using the IDE plugin can reduce enhancement hassles during development and unit testing.
+    For production you can then choose between build time enhancement via say maven or run time
+    enhancement via javaagent.
+  </p>
+
+  <h2 id="idea">IntelliJ IDEA Plugin</h2>
+
+  <div class="media ">
+    <div class="media-left">
+      <div class="media-left">
+        <a href="https://youtu.be/o4kmglM48Vc">
+          <img src="/images/movies-64.png" width="64" height="64">
+        </a>
+      </div>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">IntelliJ plugin</h4>
+      Installing and using the enhancement plugin for IntelliJ IDEA.
+    </div>
+  </div>
+
+  <h2 id="eclipse">Eclipse IDE Plugin</h2>
+
+  <div class="media todo">
+    <div class="media-left">
+      <div class="media-left">
+        <img src="/images/movies-64-grey.png" width="64" height="64">
+      </div>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Eclipse plugin</h4>
+      TODO: Enhancement using the Eclipse plugin
+    </div>
+  </div>
+
+<#-------------------------------------------------------------------------------------------------->
+  <h2 id="maven">Maven enhancement</h2>
+
+  <p>A Maven plugin performs the enhancement as part of the maven compile process.
+    This can be described as "build time enhancement".
+  </p>
+
+<@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
+  ```xml
+  <plugin>
+    <groupId>org.avaje.ebeanorm</groupId>
+    <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
+    <version>::version::</version>
+    <executions>
+      <execution>
+        <id>main</id>
+        <phase>process-classes</phase>
+        <configuration>
+          <packages>org.example.domain.**,org.example.anotherdomain.**</packages>
+          <transformArgs>debug=1</transformArgs>
+        </configuration>
+        <goals>
+          <goal>enhance</goal>
+        </goals>
+      </execution>
+    </executions>
+  </plugin>
+  ```
+  </@maven_replace_version>
+
+
+<#-------------------------------------------------------------------------------------------------->
+  <div style="display: none">
+    <h2 id="maven_eclipse">Eclipse + Maven enhancement</h2>
+
+    <p>Eclipse can be configured to enhance the classes during build using maven configuration</p>
+
+  <@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
+      ```xml
+      <build>
+        <plugins>
+          <!-- plugins here -->
+        </plugins>
+        <pluginManagement>
+          <plugins>
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+            <plugin>
+              <groupId>org.eclipse.m2e</groupId>
+              <artifactId>lifecycle-mapping</artifactId>
+              <version>1.0.0</version>
+              <configuration>
+                <lifecycleMappingMetadata>
+                  <pluginExecutions>
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.avaje.ebeanorm</groupId>
+                        <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
+                        <versionRange>[::version::,)</versionRange>
+                        <goals>
+                          <goal>enhance</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <execute>
+                          <runOnConfiguration>true</runOnConfiguration>
+                          <runOnIncremental>true</runOnIncremental>
+                        </execute>
+                      </action>
+                    </pluginExecution>
+                  </pluginExecutions>
+                </lifecycleMappingMetadata>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+      ```
+    </@maven_replace_version>
+  </div>
+
+  <h2 id="agent">Agent</h2>
+  <p>
+    You can use <code>javaagent</code> parameter on the command line as per the examples below.
+    This is often described as "Runtime enhancement" or "Load time enhancement".
+  </p>
+
+  <p>
+    Note that since version 4.7.1 of avaje-ebeanorm-agent is expected that the agent
+    will perform well without specifying the packages to enhance. That is, the agent is pretty good
+    at ignoring non-interesting classes (JDK, groovy, scala, kotlin, jdbc drivers and many common
+    libraries from apache, google, testing etc.
+  </p>
+
+<@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
+```xml
+java -javaagent:avaje-ebeanorm-agent-::version::.jar MyApplication
+java -javaagent:avaje-ebeanorm-agent-::version::.jar=debug=3 MyApplication
+java -javaagent:avaje-ebeanorm-agent-::version::.jar=packages=org.example.model.** MyApplication
+java -javaagent:avaje-ebeanorm-agent-::version::.jar=debug=1;packages=org.example.model.**,org.example.model2.**
+MyApplication
+```
+</@maven_replace_version>
+
+  <p>
+    The avaje-ebeanorm-agent jar can be downloaded from maven. The current version is:
+  </p>
+<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-agent" "auto" "4" />
+
+<#-------------------------------------------------------------------------------------------------->
+  <h2 id="agent_loader">Agent Loader</h2>
+  <p>
+    The agent loader can be used to programmatically load the javaagent onto a running JVM. However,
+    this very occasionally does not enhance a bean as an entity bean class somehow gets loaded prior
+    to the agent being loaded on the JVM and for this reason this is not a recommended approach.
+  </p>
+
+  <p>
+    Note that this approach is used in the testing code for Ebean itself and if you use this approach you
+    need to make sure the agent loading occurs before any class loading of entity beans or transactional beans occurs.
+  </p>
+<@maven "org.avaje" "avaje-agentloader" "auto" "3" />
+
+  <p>
+    The code below loads the enhancer agent programmatically onto the running JVM.
+  </p>
+
+  ```java
+  import org.avaje.agentloader;
+  ...
+  public void someApplicationBootupMethod() {
+    // Load the agent into the running JVM process
+    if (!AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent","debug=1;packages=org.example.model.**")) {
+      logger.info("avaje-ebeanorm-agent not found in classpath - not dynamically loaded");
+    }
+  }
+  ```
+
+
+<#-------------------------------------------------------------------------------------------------->
+  <h2 id="ant">Ant enhancement</h2>
+
+  <p>Modify your ant build.xml file to: </p>
+
+  <ol>
+    <li>Define the AntEnhanceTask.</li>
+    <li>Create a target that uses the AntEnhanceTask to enhance the entity classes.</li>
+  </ol>
+
+  ```xml
+  <taskdef
+      name="ebeanEnhance"
+      classname="com.avaje.ebean.enhance.ant.AntEnhanceTask"
+      classpath="your_path_to/ebean-x.x.x.jar"/>
+
+  <target name="ormEnhance" depends="clean,compile">
+    <!--
+    classSource: This is the directory that contains your class files. That is, the directory where your IDE will compile your java class files to, or the directory where a previous ant task will compile your java class files to.
+
+    packages: a comma delimited list of packages that contain entity classes. All the classes in these packages are searched for entity classes to be enhanced. transformArgs: This contains a debug level (0 - 10) .
+    -->
+    <ebeanEnhance
+        classSource="your_classes_directory"
+        packages="app.domain.*"
+        transformArgs="debug=1"/>
+  </target>
+  ```
+
+<div style="display: none">
+  <h2>Programmatic enhancement</h2>
+
+  <p>
+    You can run the enhancement yourself programmatically using the Transformer class from the agent.
+  </p>
+
+  ```java
+  Transformer transformer = new Transformer("", "debug=1");
+  InputStreamTransform streamTransform = new InputStreamTransform(transformer, Ebean.class.getClassLoader());
+
+  // Or use ASM or Javassist get bytecode and new InputSream
+  // eg. in = new ByteArrayInputStream(ctClass.toBytecode());
+  InputStream in = new URL("your.class.file.class").openStream();
+
+  byte[] result = null;
+  try {
+    result = streamTransform.transform("your.class.name", in);//class must be not loaded by classLoader
+  } finally {
+    in.close();
+  }
+  if (result == null) {
+    throw new CannotCompileException("ebean enhance model fail!");
+  }
+  defineClass("your.class.name", result, 0, result.length);
+  ```
+
+</div>
+</div>
+
+</body>
+</html>

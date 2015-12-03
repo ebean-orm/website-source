@@ -199,7 +199,16 @@
   <li><a href="#raw">Raw expression</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${eventlisteners!''}" url="/docs/eventlisteners" title="Event listeners"/>
+<@smallnav activeCheck="${eventlistening!''}" url="/docs/eventlisteners" title="Event listening">
+
+  <@smallnav activeCheck="${eventlistenStandard!''}" url="/docs/eventlisteners" title="Standard">
+  </@smallnav>
+  <@smallnav activeCheck="${beanPersistController!''}" url="/docs/beanpersistcontroller" title="BeanPersistController">
+
+  </@smallnav>
+
+</@smallnav>
+
 <@smallnav activeCheck="${readaudit!''}" url="/docs/readauditing" title="Read Auditing">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>

@@ -1,0 +1,38 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features.html"/>
+<#assign subtitle = "JSON">
+<#assign json = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2 id="overview">Overview</h2>
+  <p>
+    Ebean has built in support for marshalling and unmarshalling entity beans to and from JSON.
+    Ebean uses <code>Jackson core</code> to do this.  The reason Ebean does this is treat
+    JSON as a first class feature with built in support for <code>Partial objects</code> and
+    <code>cyclical relationships</code> which are both common in ORM. In additional all
+    supported types including <code>Joda types</code>, <code>Java8 types</code> and
+    <a href="/docs/json-in-db"><code>JSON database mapping types</code></a> work out of the box.
+  </p>
+  <blockquote>
+    JSON marshalling/unmarshalling should be painless, performant and work out of the box.
+  </blockquote>
+
+  <h2 id="json-context">JsonContext</h2>
+  <p>
+    Obtain a <code>JsonContext</code> from EbeanServer via the <code>json()</code> method.
+    This JsonContext then provides various methods for marshalling/unmarshalling JSON to and from
+    entity beans.
+  </p>
+```java
+String jsonWithUnknown = "{\"id\":42, \"unknownProp\":\"foo\", \"name\":\"rob\", \"version\":1}";
+
+Customer customer = Ebean.json().toBean(Customer.class, jsonWithUnknown);
+assertEquals(Integer.valueOf(42), customer.getId());
+assertEquals("rob", customer.getName());
+```
+
+</div>
+</body>
+</html>

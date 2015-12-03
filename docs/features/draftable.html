@@ -1,0 +1,188 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features.html"/>
+<#assign subtitle = "Draftable">
+<#assign draftable = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2 id="overview">Overview</h2>
+  <p>
+    Draftable is a feature that uses a second set of tables to hold a 'draft' version of the
+    object graph separately from the 'live'. Typically the draft objects are edited and go
+    through an approval process before being published.
+  </p>
+  <p>
+    To implement this feature all @Draftable and @DraftElement beans have a second draft table
+    that closely resembles the live table but commonly will have additional columns to support
+    an approval workflow for publishing.
+  </p>
+  <p>
+    Publishing is a function that takes underlying rows from the draft tables and copies them
+    to the matching live table. In this way the application can easily maintain a 'draft' version
+    and 'live' version of the entities.
+  </p>
+
+  <h2 id="mapping">Mapping</h2>
+
+  <hr/>
+  <h4>ENTITY MAPPING</h4>
+  <h4 id="draftable">@Draftable</h4>
+  <p>
+    <code>@Draftable</code> is an annotation put on entity beans that should support draftable
+    features.
+  </p>
+  <p>
+    The @Draftable annotation put on 'top level' (or root level) entity beans and @DraftableElement
+    is put on related child entity beans which are considered part of the same graph.
+  </p>
+  <p>
+    Publishing a <code>@Draftable</code> bean will publish the 'top level' @Draftable entity beans
+    along with any of its related child @DraftableElement beans.
+  </p>
+
+  <h4 id="draftable-element">@DraftableElement</h4>
+  <p>
+    <code>@DraftableElement</code> is an annotation put on entity beans that are part of a draftable
+    object graph but not 'top level' beans. The publish() and draftRestore() functions act on a draftable
+    bean and all it's associated draftableElement beans as a single unit (published/restored as a unit).
+  </p>
+
+  <hr/>
+  <h4>PROPERTY MAPPING</h4>
+  <h4 id="draft-only">@DraftOnly</h4>
+  <p>
+    <code>@DraftOnly</code> is an annotation put on properties that exist on the draft table only
+    - these properties do not exist on the associated live table. For example, annotation properties
+    that are on the draft to support approval workflow (workflow status, when publish timestamp etc).
+  </p>
+
+  <h4 id="draft-dirty">@DraftDirty</h4>
+  <p>
+    <code>@DraftDirty</code> is an annotation that can be put on a boolean property of a @Draftable entity bean.
+    This property only exists on the draft table and it's value is automatically set to true when the draft
+    bean is saved and automatically set to false when the draft bean is published. The property is expected
+    to be used to identify (query) draft beans that should be published.
+  </p>
+  <p>
+    Currently a change to a @DraftableElement does not set the dirty flag on the 'owning' @Draftable bean and
+    instead this would need to be done manually in this case if required.
+  </p>
+
+  <h4 id="draft-reset">@DraftReset</h4>
+  <p>
+    <code>@DraftReset</code> is an annotation that can be put on a property of a @Draftable entity bean.
+    The value of this property is automatically set to null on the draft bean after it has been published.
+    For example, the property is could contain comments or timestamp values related to the approval workflow
+    (and after a bean is publish these are 'reset' to null on the draft bean).
+  </p>
+
+  <h2 id="query-as-draft">Query As Draft</h2>
+  <p>
+    A normal Query builds the object graph from the 'live' tables. You can specify the query to run
+    <code>asDraft()</code> and then it will build the object graph using the draft tables. This can be
+    used to <code>PREVIEW</code> the currently editing state of the object graphs.
+  </p>
+```java
+
+  // Get the 'draft' object graph
+  Document documentDraft =
+      Ebean.find(Document.class)
+        .setId(docId)
+        .asDraft()
+        .findUnique();
+
+
+  // Get the 'draft' documents
+  List<Document> draftDocuments =
+      Ebean.find(Document.class)
+        .where()
+          .eq("dirty", true)
+          .ge("whenPublish", now)
+        .asDraft()
+        .findList();
+
+```
+  <p>
+    Note: The <code>asDraft</code> query state is propagated to any lazy loading or query joins.
+  </p>
+  <p>
+    Note: Any <code>asDraft</code> query does not use the L2 cache (Only queries for live beans can use L2 cache).
+  </p>
+
+  <h2 id="publish">Publish</h2>
+  <p>
+    <code>Publish</code> is the function that takes the values from draft object graph and applies them
+    to the matching live object graph. The publish function cascades from a top level @Draftable entity bean
+    to any related @DraftableElement entity beans.
+  </p>
+
+  <h4>@OneToMany</h4>
+  <p>
+    A <code>@OneToMany</code> relationship to a @DraftableElement effectively has save and delete cascade
+    turned on automatically. The cascade save/delete is used internally to publish the object graph.
+  </p>
+
+  <h4>@ManyToMany</h4>
+  <p>
+    A <code>@ManyToMany</code> relationship to a @Draftable bean effectively has save and delete cascade
+    turned on automatically to maintain the relationship.
+  </p>
+
+```java
+
+  EbeanServer server = Ebean.getDefaultServer();
+
+  // publish a single bean (from draft to live)
+  // returning the 'live' bean
+  Document liveDoc = server.publish(Document.class, docId);
+
+
+  // publish using a query
+  Query<Link> pubQuery = server.find(Link.class)
+    .where().idIn(ids)
+    .order().asc("id");
+
+  // publish returning the resulting 'live' beans
+  List<Link> pubList = server.publish(pubQuery);
+
+```
+  <h2 id="draft-restore">Draft Restore</h2>
+  <p>
+    <code>DraftRestore</code> is the function that takes the values from the live object graph and applies them
+    back to the matching draft object graph. You can consider it the opposite of a publish().
+  </p>
+
+```java
+
+  EbeanServer server = Ebean.getDefaultServer();
+
+  // Restore a single draft bean
+  server.draftRestore(Document.class, docId);
+
+
+
+  Query<Document> restoreQuery = server.find(Document.class)
+    .where().idIn(ids)
+    .order().asc("id");
+
+  // Restore all the beans matching a query
+  server.draftRestore(restoreQuery);
+
+  ```
+
+  <h2 id="example-app">Example Application</h2>
+  <p>
+   An example application is available at <a href="https://github.com/ebean-orm/example-draftable">example-draftable</a> .
+  </p>
+
+  <h2>L2 Cache</h2>
+  <p>
+    Only live beans and queries can use the L2 cache. Similarly only save/delete of live beans invalidate parts
+    of the L2 cache.  All queries for draft beans do not use the L2 cache and save/delete of draft beans do not
+    invalidate any part of the L2 cache.
+  </p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features.html"/>
+<#assign documentation="active">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2><a href="/docs/features/json">JSON</a></h2>
+  <p>
+    Easily convert your entity bean object graphs to/from JSON.
+    Ebean provides JSON marshalling/unmarshalling support taking into account bi-directional relationships,
+    all the supported types (Enums, Joda, Java8) and partially loaded object graphs.
+  </p>
+
+  <h2><a href="/docs/features/json">JSON in DB</a></h2>
+  <p>
+    Postgres and Oracle especially has built in support for storing JSON documents in the database.
+    Ebean has built in support for this included support for query expressions.
+  </p>
+
+  <h2><a href="/docs/features/eventlistening">Event Listening</a></h2>
+  <p>
+    The various options to hook into persist and query events.
+  </p>
+
+  <h2><a href="/docs/features/readauditing">Read Auditing</a></h2>
+  <p>
+    How to use the read auditing feature to log all the read access by the application.
+  </p>
+
+  <h2><a href="/docs/features/changelog">Change Log</a></h2>
+  <p>
+    Use the built in change log feature to log the insert/update/delete activity of the application.
+    The default implementation logs the events in JSON formatter to a logger.
+  </p>
+
+  <h2><a href="/docs/features/history">History SQL2011</a></h2>
+  <p>
+    Support historical queries <code>query.asOf(timestamp)</code> and versions <code>query.findVersionsBetween()</code>
+    against historic/old versions of the rows. This supports Oracle Total Recall and for Postgres/MySql etc will
+    generate the appropriate history tables, triggers and views.
+  </p>
+
+  <h2><a href="/docs/features/draftable">Draftable</a></h2>
+  <p>
+    Uses a second set of tables to provide a "live" and "editing" version of object graphs. Typically this is used
+    when the model is content that can be edited, previewed and published to live.
+  </p>
+
+  <h2><a href="/docs/features/l2caching">L2 Caching</a></h2>
+  <p>
+    Describes the L2 caching feature and how it is configured and used.
+  </p>
+
+  <h2><a href="/docs/features/jvmlanguages">JVM Languages</a></h2>
+  <p>
+    Using Ebean with Kotlin, Groovy and Scala.
+  </p>
+
+  <h2><a href="/docs/features/clustering">Clustering</a></h2>
+  <p>
+    Running Ebean in a Cluster.
+  </p>
+
+  <h2><a href="/docs/features/monitoring">Monitoring</a></h2>
+  <p>
+    Monitoring performance, identifying issues such as N + 1 and slow queries.
+  </p>
+
+</div>
+</body>
+</html>
