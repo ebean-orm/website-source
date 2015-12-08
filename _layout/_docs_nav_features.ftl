@@ -83,6 +83,14 @@
   <li><a href="#using_query_cache">Using the Query Cache</a></li>
 </ul>
 </@smallnav>
+
+<@smallnav activeCheck="${elastic!''}" url="/docs/features/elasticsearch" title="ElasticSearch">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#mapping">Mapping</a></li>
+</ul>
+</@smallnav>
+
 <@smallnav activeCheck="${jvmlanguages!''}" url="/docs/features/jvmlanguages" title="JVM Languages">
 <ul class="nav">
   <li><a href="#groovy">Groovy</a></li>

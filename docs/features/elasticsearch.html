@@ -1,0 +1,201 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features.html"/>
+<#assign subtitle = "ElasticSearch">
+<#assign elastic = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2 id="overview">Overview</h2>
+  <p>
+    There are quite a few different reasons why ElasticSearch integration is useful to applications using
+    Ebean ORM.
+  </p>
+  <h4>ElasticSearch value</h4>
+  <ul>
+    <li>Provides 'text search'</li>
+    <li>Provides something like DB materialised views</li>
+    <li>Scaling read access</li>
+    <li>Read access performance (Document storage)</li>
+    <li>Fixes an issue with L2 cache</li>
+    <li>Provides L3 cache</li>
+  </ul>
+
+  <h4>Provides 'text search'</h4>
+  <p>
+    Many modern applications provide a single search input field to operate in a 'Google search' fashion.
+    For example, searching for customers including their name and address (street, city, country etc).
+  </p>
+  <p>
+    ElasticSearch uses analysers and inverted indexes to make "text search" fast and efficient.
+    OLTP databases generally provide very different indexing via BTree and BitMap indexes which are orientated
+    towards the needs of OLTP (short transactions, self balancing etc).
+  </p>
+
+  <h4>Provides something like DB materialised views</h4>
+  <p>
+    Many databases provide materialised views which are generally derived / calculated views used to provide
+    faster views of the data. Materialised views are often refreshed periodically and used by applications
+    knowing that the derived / calculated data is only refreshed periodically and potentially stale.
+    For example, product pricing might be refreshed every midnight.
+  </p>
+  <p>
+    ElasticSearch indexes can sometimes be thought in a similar way to DB materialised views. They represent
+    a materialised (document orientated) view of the data which can be updated in near real time with each commit
+    or updated in a more periodic batch fashion.
+  </p>
+
+  <h4>Scaling read access</h4>
+  <p>
+    ElasticSearch has built in horizontal scaling and this can be used to provide an easier / cheaper way to
+    scale read access when compared to scaling a more traditional OLTP database. Note that the access is not
+    equivalent to that provided by most OLTP databases (does not provide the same transactional read consistency
+    guarantees and is 'near' real time but usually lags by a second etc) - however, these limitations are often
+    acceptable given the improved read scalability.
+  </p>
+
+  <h4>Read access performance (denormalised document storage)</h4>
+  <p>
+    ElasticSearch can also be viewed as a document store and often the 'documents' stored are denormalised and
+    contain derived and joined information. This means a retrieve of a single document in elastic search can
+    compete with a SQL query would involve many joins. For example, an Order document might be denormalised and
+    otherwise in a SQL query join Order, OrderDetails, Customer and Product tables.
+  </p>
+  <p>
+    The traditional downsides of denormalised data exist but when your OLTP database is still the primary
+    data store and ElasticSearch is a secondary store then storing 'denormalised documents' is nicely manageable.
+  </p>
+
+
+  <h4>Fixes an issue with L2 cache</h4>
+  <p>
+    Ebean like other ORM's has an L2 cache and specifically all face the issue specifically with the
+    <code>L2 Query cache</code> being invalidated frequently.
+  </p>
+  <p>
+    Essentially if an application is reliant on the <code>L2 Query cache</code> on a bean type that is
+    frequently changed (Inserts, updates or deletes) then this will result in load on the database
+    (ineffective utilisation of the L2 Query cache as it is frequently invalidated).
+  </p>
+  <p>
+    ElasticSearch provides many relational predicates and many "relational" queries can be reasonably
+    executed against ElasticSearch. If there is a need to scale "findMany" queries against frequently
+    updated tables then ElasticSearch can provide a good solution (and a ORM L2 query cache faces
+    significant limitations in this case).
+  </p>
+
+
+  <h4>Provides L3 cache</h4>
+  <p>
+    Ebean can use ElasticSearch as an L3 cache (you can think of it as the remote part of an L2 cache).
+    If there is a miss in the local L2 cache Ebean can go and hit ElasticSearch rather than the database
+    with the benefits that ElasticSearch is known to have all the data and have it in denormalised form
+    (so a single hit against ElasticSearch might populate more of the graph than a traditional DB hit).
+  </p>
+
+
+
+  <h2 id="mapping">Mapping</h2>
+
+  <h4><code>@DocStore</code></h4>
+  <p>
+    TODO
+  </p>
+```java
+
+  // Store contact in ElasticSearch using default setup
+  @DocStore
+  @Entity
+  public class Contact {
+
+```
+
+  <h4><code>@DocStoreEmbedded</code></h4>
+  <p>
+    On @ManyToOne and @OneToMany properties you can specify the properties that should be
+    included in the document that is to be indexed.
+
+  </p>
+```java
+
+  @DocStore
+  @Entity
+  public class Contact {
+
+    ...
+    // denormalise including the customer id and name
+    // into the 'contact' document
+    @DocStoreEmbedded(doc="id,name")
+    @ManyToOne(optional=false)
+    Customer customer;
+
+
+```
+
+  <h2>DocumentStore</h2>
+  <p>
+
+  </p>
+  ```java
+
+
+  DocumentStore docStore = Ebean.getDefaultServer().docStore()
+
+  docStore.indexByQuery(query);
+  Order order = docStore.getById(Order.class, 2);
+
+  ```
+
+
+  <h2>Index by Query</h2>
+```java
+
+  Query<Order> query = Ebean.find(Order.class).where().gt("id", 1).query();
+
+  Ebean.getDefaultServer().docStore().indexByQuery(query);
+
+```
+
+
+```java
+
+ /**
+  * Document storage operations.
+  */
+ public interface DocumentStore {
+
+ /**
+  * Update the associated document store using the result of the query.
+  * <p>
+  * Note that the select and fetch paths of the query is set for you to match the
+  * document structure needed for the index so what this query requires is the
+  * predicates only.
+  * </p>
+  * <p>
+  *   This query will be executed using findEach so it is safe to use a query
+  *   that will fetch a lot of beans. The default bulkBatchSize is used.
+  * </p>
+  *
+  * @param query The query used to update the associated document store.
+  */
+ <T> void indexByQuery(Query<T> query);
+
+ /**
+  * Update the associated ElasticSearch index using the result of the query additionally specifying a
+  * bulkBatchSize to use for sending the messages to ElasticSearch.
+  */
+ <T> void indexByQuery(Query<T> query, int bulkBatchSize);
+
+ /**
+  * Return the bean by fetching it's content from the document store.
+  */
+ <T> T getById(Class<T> beanType, Object id);
+
+ }
+
+
+```
+
+</div>
+</body>
+</html>
