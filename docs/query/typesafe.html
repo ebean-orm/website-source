@@ -79,7 +79,7 @@
   </p>
 <@maven "org.avaje.ebeanorm" "querybean-agent" "auto" "1" />
 
-  <h4>typequery-maven-plugin</h4>
+  <h4>querybean-maven-plugin</h4>
   <p>
     You can configure the maven plugin to perform compile time enhancement.
   </p>
@@ -220,6 +220,7 @@ public class QOrder extends TQRootBean<Order,QOrder> {
   </p>
   <h4>Example</h4>
 ```java
+List<Customer> customers =
   new QCustomer()
     .id.greaterThan(12)
     .name.startsWith("Rob")
@@ -345,7 +346,7 @@ Customer customer =
     <code>GeneratorConfig</code> is configured to know where the classes are, where the source
     code should go and the package containing the entity beans.
   </p>
-                          
+
 ```java
 package main;
 

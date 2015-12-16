@@ -6,33 +6,43 @@
 <body>
 <div class="container doc-index bs-docs-container">
 
-  <h2><a href="/docs/setup/enhancement">Enhancement</a></h2>
+  <h2><a href="/docs/query/overview">Overview</a></h2>
   <p>
-    Various options for configuring the enhancement including javaagent, maven, IDE etc.
+    An overview of ORM queries in general and when you might look to use SQL queries.
   </p>
 
-  <h2><a href="/docs/setup/logging">Logging</a></h2>
+  <h2><a href="/docs/query/nplus1">N + 1</a></h2>
   <p>
-    Setup logging of SQL, Transaction demarcation and Summary level logging.
+    What is "N+1" and how queries can be optimised to minimise performance issues related to this.
   </p>
 
-  <h2><a href="/docs/setup/serverconfig">ServerConfig</a></h2>
+  <h2><a href="/docs/query/partialobjects">Partial Objects</a></h2>
   <p>
-    Programmatically configure EbeanServer instances.
+    What are partial object queries and why are they important.
   </p>
 
-  <h2><a href="/docs/setup/guice">Guice</a></h2>
+  <h2><a href="/docs/query/autotune">Automatic Tuning</a></h2>
   <p>
-    How to configure and use EbeanServer instances with Guice dependency injection.
+    Get Ebean to profile the application object graph use and automatically optimise the queries.
   </p>
 
-  <h2><a href="/docs/setup/spring">Spring</a></h2>
+  <h2><a href="/docs/query/typesafe">Type safe queries (Query beans)</a></h2>
   <p>
-    Using Ebean with Spring Boot. How to configure and use EbeanServer instances
-    with Spring dependency injection and optionally use Spring transactions.
+    We can generate "Query Beans" which provide the ability to write type safe queries.
   </p>
-
-  <!-- /.row -->
+```java
+// Example using Customer query bean
+List<Customer> customers =
+  new QCustomer()
+    .name.startsWith("Rob")
+    .status.equalTo(Customer.Status.NEW)
+    .findList();
+```
+    <h2><a href="/docs/query/features">Query Features</a></h2>
+    <p>
+      The various query features such as paging, large queries, asynchronous queries, RawSql, SqlQuery etc.
+    </p>
+    <!-- /.row -->
 </div>  <!-- /.container -->
 
 </body>

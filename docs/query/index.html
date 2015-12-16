@@ -26,11 +26,18 @@
     Get Ebean to profile the application object graph use and automatically optimise the queries.
   </p>
 
-  <h2><a href="/docs/query/typesafe">Type safe queries</a></h2>
+  <h2><a href="/docs/query/typesafe">Type safe queries (Query beans)</a></h2>
   <p>
-    You can generate "Query Beans" which provide the ability to write type safe queries.
+    We can generate "Query Beans" which provide the ability to write type safe queries.
   </p>
-
+```java
+// Example using Customer query bean
+List<Customer> customers =
+  new QCustomer()
+      .name.startsWith("Rob")
+      .status.equalTo(Customer.Status.NEW)
+      .findList();
+```
   <h2><a href="/docs/query/features">Query Features</a></h2>
   <p>
     The various query features such as paging, large queries, asynchronous queries, RawSql, SqlQuery etc.
