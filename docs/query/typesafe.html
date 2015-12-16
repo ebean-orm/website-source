@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_query.html"/>
-<#assign subtitle = "Query Type Safe">
+<#assign subtitle = "Type safe queries (Query Beans)">
 <#assign querytypesafe = "true">
 </head>
 <body>
@@ -28,26 +28,32 @@
   </p>
 
   <h2 id="dependencies">Dependencies</h2>
-  <h4>avaje-ebeanorm-typequery</h4>
+
+  <h4>querybean-generator</h4>
   <p>
-    You need to add <code>avaje-ebeanorm-typequery</code> as a dependency. This provides the property
+    Query bean generator is a Java annotation processor so you add it as a dependency and then javac
+    will automatically register it and whenever a entity is compiled the associated query beans are
+    generated.
+  </p>
+  <p>
+    If the dependency is added with <code>provided</code> scope then the generator itself will not
+    be included in the final build artifact.
+  </p>
+<@maven "org.avaje.ebeanorm" "querybean-generator" "auto" "1" />
+
+  <h4>avaje-ebeanorm-querybean</h4>
+  <p>
+    We need to add <code>avaje-ebeanorm-querybean</code> as a dependency. This provides the property
     types for the generated <code>query beans</code>.
   </p>
-<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-typequery" "auto" "1" />
+<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-querybean" "auto" "1" />
 
-  <h4>avaje-ebeanorm-typequery-generator</h4>
-  <p>
-    You need to add a <code>test</code> scope dependency for <code>avaje-ebeanorm-typequery-generator</code>.
-    This contains the <code>org.avaje.ebean.typequery.generator.Generator</code> which is used to read the
-    entity bean meta data (properties, types etc) and generate the <code>query beans</code>.
-  </p>
-<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-typequery-generator" "auto" "1" />
 
   <h2 id="enhancement">Enhancement</h2>
   <p>
     The <code>query beans</code> have been designed so for maximum readability of the query code. That is,
     some type safe query mechanisms achieve the type safety goal but in doing so result in query code that
-    is virtually unreadable.
+    is virtually unreadable and we specifically want to avoid that issue.
   </p>
   <p>
     Ebean's type safe query mechanism results in very readable queries with the downside that it requires
@@ -60,18 +66,18 @@
     for Eclipse) as well as the standard javaagent and maven plugin for load time and compile time enhancement.
   </p>
 
-  <h4>IDEA Type Query Plugin</h4>
+  <h4>IDEA Query bean plugin</h4>
   <p>
-    In IntelliJ install the <code>Ebean ORM Type Query Enhancer</code> plugin. It should then appear as an
+    In IntelliJ install the <code>Ebean ORM Query bean enhancer</code> plugin. It should then appear as an
     extra item on the <code>Build menu</code> where it can be toggled on and off.
   </p>
 
-  <h4>avaje-ebeanorm-typequery-agent</h4>
+  <h4>querybean-agent</h4>
   <p>
-    You use the <code>avaje-ebeanorm-typequery-agent</code> if you want to use the standard <code>javaagent</code>
+    You use the <code>querybean-agent</code> if you want to use the standard <code>javaagent</code>
     mechanism to enhance the <code>query beans</code>.
   </p>
-<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-typequery-agent" "auto" "1" />
+<@maven "org.avaje.ebeanorm" "querybean-agent" "auto" "1" />
 
   <h4>typequery-maven-plugin</h4>
   <p>
@@ -81,8 +87,8 @@
   ```xml
   <plugin>
     <groupId>org.avaje.ebeanorm</groupId>
-    <artifactId>typequery-maven-plugin</artifactId>
-    <version>1.5.1</version>
+    <artifactId>querybean-maven-plugin</artifactId>
+    <version>2.1.1</version>
     <executions>
       <!-- enhance code -->
       <execution>
@@ -111,58 +117,16 @@
   </plugin>
  ```
 
-  <h2 id="generation">Query bean generation</h2>
+  <h2 id="generation">Generation</h2>
   <p>
-    To generate the <code>query beans</code> add code similar to below to your <code>src/test</code>.
-    The Generator reads compiled <code>.class</code> entity beans using the <code>ASM</code> library.
-    It then uses this meta data to generate java source for the <code>query beans</code>.
+    Once the dependency to querybean-generator is added the query beans will be generated
+    automatically whenever javac compile occurs.
   </p>
   <p>
-    The generation is done in this way rather than using <code>javac</code> annotation processing as
-    it means there is no requirement for javac - you can use any JVM language to write/compile your
-    entity beans including <code>Kotlin</code> and <code>Scala</code>. It also makes it easy/low tech
-    to configure the code generation and execution is just a manor of running the <code>main()</code>
-    method.
+    Note that along with generating query beans the generator generates
+    a manifest file at: <code>META-INF/ebean-typequery.mf</code>
   </p>
-  <p>
-    The requirement of this approach is that entity beans are compiled as .class files and that
-    <code>GeneratorConfig</code> is configured to know where the classes are, where the source
-    code should go and the package containing the entity beans.
-  </p>
-```java
-package main;
 
-import org.avaje.ebean.typequery.generator.Generator;
-import org.avaje.ebean.typequery.generator.GeneratorConfig;
-
-import java.io.IOException;
-
-/**
- * Generate type query beans for each entity bean.
- */
-public class MainQueryBeanGenerator {
-
-  public static void main(String[] args) throws IOException {
-
-    GeneratorConfig config = new GeneratorConfig();
-    //config.setClassesDirectory("./target/classes");
-    //config.setDestDirectory("./src/main/java");
-    //config.setDestResourceDirectory("./src/main/resources");
-
-    config.setEntityBeanPackage("org.example.domain");
-    //config.setDestPackage("org.example.domain.query");
-
-    //config.setOverwriteExistingFinders(true);
-
-    Generator generator = new Generator(config);
-    generator.generateQueryBeans();
-
-    // Additionally generate 'finder's
-    //generator.generateFinders();
-    //generator.modifyEntityBeansAddFinderField();
-  }
-}
-```
 
   <h2 id="query-beans">Query beans</h2>
   <p>
@@ -357,6 +321,66 @@ Customer customer =
     .id.eq(12)
     .findUnique();
 ```
+
+
+
+  <hr/>
+
+  <h2 id="manual-generation"><b>ALTERNATE STYLE</b> - Manual Query bean generation</h2>
+  <p>
+    There is a mechanism to generate query beans via running code (not via javac annotation processing).
+  </p>
+  <p>
+    To generate the <code>query beans</code> add code similar to below to your <code>src/test</code>.
+    The Generator reads compiled <code>.class</code> entity beans using the <code>ASM</code> library.
+    It then uses this meta data to generate java source for the <code>query beans</code>.
+  </p>
+  <p>
+    Using this approach rather than using <code>javac</code> annotation processing means there is
+    no requirement for javac - you can use any JVM language to write/compile your
+    entity beans (so maybe <code>Scala</code> and SBT.
+  </p>
+  <p>
+    The requirement of this approach is that entity beans are compiled as .class files and that
+    <code>GeneratorConfig</code> is configured to know where the classes are, where the source
+    code should go and the package containing the entity beans.
+  </p>
+                          
+```java
+package main;
+
+import org.avaje.ebean.typequery.generator.Generator;
+import org.avaje.ebean.typequery.generator.GeneratorConfig;
+
+import java.io.IOException;
+
+/**
+ * Generate type query beans for each entity bean.
+ */
+public class MainQueryBeanGenerator {
+
+  public static void main(String[] args) throws IOException {
+
+    GeneratorConfig config = new GeneratorConfig();
+    //config.setClassesDirectory("./target/classes");
+    //config.setDestDirectory("./src/main/java");
+    //config.setDestResourceDirectory("./src/main/resources");
+
+    config.setEntityBeanPackage("org.example.domain");
+    //config.setDestPackage("org.example.domain.query");
+
+    //config.setOverwriteExistingFinders(true);
+
+    Generator generator = new Generator(config);
+    generator.generateQueryBeans();
+
+    // Additionally generate 'finder's
+    //generator.generateFinders();
+    //generator.modifyEntityBeansAddFinderField();
+  }
+}
+```
+
 </div>
 </body>
 </html>
