@@ -52,7 +52,7 @@
   <li><a href="#generation">Generation</a></li>
   <li><a href="#query-beans">Query beans</a></li>
   <li><a href="#query-examples">Query examples</a></li>
-  <li><a href="#manual-generation">Alternate manual generation</a></li>
+  <li><a href="#manual-generation">Manual generation</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${features!''}" url="/docs/query/features" title="Query Features">

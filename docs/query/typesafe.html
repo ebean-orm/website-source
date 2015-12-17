@@ -10,7 +10,7 @@
 
   <div class="row">
     <div class="col-md-4">
-    <@video_item "" "Generation" "How to generate query beans" />
+    <@video_item "VhMq270FmVg" "Generation" "Generating query beans (via java annotation processor)" />
     </div>
     <div class="col-md-4">
     <@video_item "Kp528zWlbqU" "Using query beans" "Using query beans and how they work" />
@@ -339,10 +339,14 @@ Customer customer =
 
   <hr/>
 
-  <h2 id="manual-generation"><b>ALTERNATE STYLE</b> - Manual Query bean generation</h2>
+  <h2 id="manual-generation">Manual generation</h2>
   <p>
     There is a mechanism to generate query beans via running code (not via javac annotation processing).
+    This is manual in the sense that whenever there is a change to the entity beans we then need to
+    re-run this process (where as with the java annotation processor it is automatically updated with each
+    compile).
   </p>
+  <@maven "org.avaje.ebeanorm" "avaje-ebeanorm-typequery-generator" "auto" "1" />
   <p>
     To generate the <code>query beans</code> add code similar to below to your <code>src/test</code>.
     The Generator reads compiled <code>.class</code> entity beans using the <code>ASM</code> library.
@@ -358,6 +362,7 @@ Customer customer =
     <code>GeneratorConfig</code> is configured to know where the classes are, where the source
     code should go and the package containing the entity beans.
   </p>
+
 
 ```java
 package main;
