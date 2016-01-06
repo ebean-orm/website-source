@@ -13,39 +13,21 @@
     <code>diff</code> from the prior version of the model and generating appropriate DDL changes based on
     the model difference.
   </p>
-
-  <h2 id="main-method">Main method</h2>
   <p>
-    To run the <code>DbMigration</code> you should create a main method in the test source similar to
-    the following code:
+    You are expected to run the <code>diff</code> DDL using <code>FlywayDb</code>, <code>LiquiBase</code>
+    or similar tool. In the future Ebean will likely have built in support to run the DDL as it already has
+    most of the capability and could address some current issues with developer workflow and DDL script ordering.
   </p>
+  <p>
+    DB migration has several output files:
+  </p>
+  <ul>
+    <li>Migration model XML - This has the logical diff of the model as an <code>apply</code> or <code>drop</code> change set</li>
+    <li>Apply SQL - This is the DDL script that has positive/non-destructive changes like ADD COLUMN</li>
+    <li>Rollback DDL - This is the UNDO of the apply SQL. With FlywayDB you don't use this at all.</li>
+    <li>Drop DDL - This is the DDL script with destructive changes like DROP TABLE and DROP COLUMN</li>
+  </ul>
 
-```java
-package main;
-
-import com.avaje.ebean.config.dbplatform.DbPlatformName;
-import com.avaje.ebean.dbmigration.DbMigration;
-
-import java.io.IOException;
-
-public class MainDbMigration {
-
-  public static void main(String[] args) throws IOException {
-
-    DbMigration dbMigration = new DbMigration();
-
-    // set path that the migration xml and ddl is located
-    // this defaults to standard maven src/main/resources
-    //dbMigration.setPathToResources("src/main/resources");
-
-    // Postgres as the target DB
-    dbMigration.setPlatform(DbPlatformName.POSTGRES);
-
-    // generate the migration xml and ddl
-    dbMigration.generateMigration();
-  }
-}
-```
   <p>
     When the DbMigration is run it loads any prior migration xml and combines that together
     to define the prior model which is then compared against the existing entity beans.
@@ -58,24 +40,37 @@ public class MainDbMigration {
 
   <h2 id="migration-xml">Migration xml</h2>
   <p>
-    When DbMigration is run if there is a diff detected a migration xml document is generated.
-    The diff can have <code>apply</code> changes or <code>drop</code> tables.
+    When DbMigration is run the <code>diff</code> to the model is determined and output
+    as the migration model xml document. This diff can have <code>apply</code> changes or <code>drop</code> changes.
   </p>
   <p>
-    The migration xml represents the <code>diff</code> to the model. Note that the changes
-    in the migration xml are database agnostic and a single migration xml document can be used
-    to generate migration DDL for multiple databases. For example, generate migration DDL
-    scripts for Postgres, Oracle and SQL Server from the single migration xml.
-  </p>
-  <p>
-    From the migration xml DDL scripts are generated for <code>apply</code>, <code>applyRollback</code>
+    From the migration xml DDL scripts are generated for <code>apply</code>, <code>rollback</code>
     and <code>drop</code>.
+  </p>
+
+  <h4>Logical changes</h4>
+  <p>
+    Note that the changes
+    in the migration xml are database agnostic and a single migration xml document can be used
+    to generate migration DDL for multiple databases. For example, you can generate migration DDL
+    scripts for Postgres, Oracle and SQL Server from the single migration xml. In the migration xml
+    you will see logical types like JSON types (storing JSON documents in the DB) and for Postgres
+    that could translate to a JSONB and for Oracle to a CLOB.
+  </p>
+  <p>
+    The changes are also "logical" in the sense that changes to entities with @History and @Draftable
+    typically translates into multiple changes. For example adding a property to a @History entity could
+    add a column to the base table, add a column to the history table and a change the triggers as required.
   </p>
 
   <h4>Example migration xml</h4>
   <p>
     Below is an example migration xml generated with <code>apply</code> changes. The customer table
     has 2 new columns added to it.
+  </p>
+  <p>
+    If the customer table has @History support this could also add columns to the history table and
+    update the associated db triggers.
   </p>
 ```xml
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -107,13 +102,21 @@ public class MainDbMigration {
     The <code>apply</code> ddl script contains the changes that are deemed non-destructive
     so adding tables, adding columns, adding indexes etc.
   </p>
-
-  <h2 id="apply-rollback-ddl">Apply Rollback DDL</h2>
   <p>
-    The <code>applyRollback</code> ddl script contains DDL to reverse or undo the <code>apply</code> changes.
+    This is the DDL script that you get FlywayDB to run. By default only this apply DDL has the
+    <code>.sql</code> extension and so by default you can point FlywayDB to the dbmigration resource
+    path to run the apply changes.
+  </p>
+
+  <h2 id="apply-rollback-ddl">Rollback DDL</h2>
+  <p>
+    The <code>Rollback</code> ddl script contains DDL to reverse or undo the <code>apply</code> changes.
     Some databases support transactional DDL and if the apply DDL can be run in a transactional manor then
-    the applyRollback script is not necessary. The <code>applyRollback</code> ddl script is always generated
-    (even if the DB supports transactional DDL) and you can use it as required or not.
+    the rollback script is not necessary.
+  </p>
+  <p>
+    In the FlywayDB case it does not run or use rollback script. By default DB Migration generates the
+    rollback ddl with the <code>.ddl</code> extension such that FlywayDB does not run it.
   </p>
 
   <h2 id="drop-ddl">Drop DDL</h2>
@@ -125,13 +128,129 @@ public class MainDbMigration {
     that the <code>drop</code> changes can not be applied until the application has been upgraded.
   </p>
   <p>
-    That is, unless outage is scheduled the drop changes need to trail the apply changes by at least 1 version.
+    That is, unless outage is scheduled the drop changes need to trail the apply changes by at least 1 migration.
   </p>
   <p>
     In many cases the <code>drop</code> changes are actually not run for weeks or longer (or not at all even)
     until such time that it is known the application does not need to revert etc.
   </p>
+  <p>
+    By default DB Migration generates the drop ddl with the <code>.ddl</code> extension such that FlywayDB
+    does not run it.
+  </p>
 
+  <h2 id="workflow">Workflow</h2>
+  <p>
+    In terms of a developers workflow, the expectation is that a migration is associated with a merge request
+    (git flow feature). A feature requires certain changes to the model (add a property/column) and the DB
+    migration change (DDL to add columns etc) and the actual code changes are all in the same merge request
+    (git flow feature branch). The developer working on their feature runs the DB migration such that they have
+    the DDL changes required to support that feature.
+  </p>
+  <blockquote>Migration per merge request</blockquote>
+
+  <h2 id="versioning">Versioning</h2>
+  <p>
+    The "version" numbering format supported is the same as FlywayDB version numbering.
+  </p>
+  <p>
+    In a "git flow feature" workflow a decent versioning schema is to take the pom version and append a number
+    to represent the feature and take the form:
+  </p>
+```xml
+  {pom version}_{feature number}_{feature name}
+
+  So for:
+    pom version = 4.5.6
+    feature number = 12
+    feature name = support end dating
+
+  The resulting apply sql is:
+    4.5.6_12_support-end-dating.sql
+
+```
+  <p>
+    The versioning is important for your development workflow (how you process merge requests in terms
+    of ordering) and the related restrictions in terms of running DDL changes in order.
+    For example, in the case of FlywayDB you need to take into
+    account if you allow out of order execution of the sql and this directly effects if you all
+  </p>
+
+  <h4>Future enhancement:</h4>
+  <p>
+    It is possible to resolve issues around DDL execution order and how that can badly impact development workflow
+    (how merge requests are handled) by somehow defining a dependency between sql scripts (for example, define
+    that 4.5.6_12 is dependent on 4.5.6_4) and supporting that via Ebean itself or enhancing FlywayDB.
+  </p>
+  <p>
+    There is certainly an issue here which could be addressed with some effort in order to get both safety in
+    processing DDL in order and allow flexibility in the order with which merge requests are processed.
+  </p>
+
+  <h2 id="version">Migration version and name</h2>
+  <p>
+    For a migration the developer needs to provide the <code>version</code> and <code>name</code>
+    and these can be set via environment variables, system properties or ebean.properties or programmatically.
+  </p>
+  ```java
+  System.setProperty("ddl.migration.generate", "true");
+
+  System.setProperty("ddl.migration.version", "4.5.6_12");
+  System.setProperty("ddl.migration.name", "support end dating");
+  ```
+
+
+  <h2 id="on-startup">Running on startup</h2>
+  <p>
+    The DB migration can run when the EbeanServer instance is started by setting <code>ddl.migration.generate</code>
+    system property or environment variable to true.
+  </p>
+
+  ```java
+  @Test
+  public void generate() {
+
+    System.setProperty("ddl.migration.generate", "true");
+    System.setProperty("ddl.migration.version", "4.5.6_12");
+    System.setProperty("ddl.migration.name", "support end dating");
+
+    // migration will be run when EbeanServer instance starts
+    Ebean.getDefaultServer();
+  }
+  ```
+
+  <h2 id="programmatic">Running programmatically</h2>
+  <p>
+    You can run the <code>DbMigration</code> programmatically. For example by a main method in a class in
+    the test source similar to the following code:
+  </p>
+
+  ```java
+  package main;
+
+  import com.avaje.ebean.config.dbplatform.DbPlatformName;
+  import com.avaje.ebean.dbmigration.DbMigration;
+
+  import java.io.IOException;
+
+  public class MainDbMigration {
+
+    public static void main(String[] args) throws IOException {
+
+      DbMigration dbMigration = new DbMigration();
+
+      // set path that the migration xml and ddl is located
+      // this defaults to standard maven src/main/resources
+      //dbMigration.setPathToResources("src/main/resources");
+
+      // Postgres as the target DB
+      dbMigration.setPlatform(DbPlatformName.POSTGRES);
+
+      // generate the migration xml and ddl
+      dbMigration.generateMigration();
+    }
+  }
+  ```
 
 </div>
 </body>

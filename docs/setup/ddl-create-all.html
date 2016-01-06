@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_setup.html"/>
+<#assign subtitle = "DDL - Create all">
+<#assign ddlcreateall = "true">
+</head>
+<body>
+
+<div class="bs-docs-section">
+  <h2 id="overview">Overview</h2>
+  <p>
+    Ebean has the ability to generate and execute <code>CREATE ALL</code> and <code>DROP ALL</code> DDL
+    scripts which create all the tables. These are typically used when running tests and frequently these tests
+    run against H2 database rather than the target Postgres/Oracle/MySql/SQL Server ... database.
+    That is, when running a test or suite of tests the DB is created entirely from scratch.
+  </p>
+  <blockquote>
+    When running a test or suite of tests the DB is created entirely from scratch
+  </blockquote>
+
+  <h2 id="properties">test-ebean.properties</h2>
+  <p>
+    Usually you set both <code>ebean.ddl.generate</code> and <code>ebean.ddl.run</code> to true in the
+    <code>test-ebean.properties</code> (which is in src/test/resources) and in this way the <code>CREATE ALL</code>
+    DDL is only generated and executed when running tests.
+  </p>
+
+```properties
+  ebean.ddl.generate=true
+  ebean.ddl.run=true
+```
+
+  <h2>DB Migration</h2>
+  <p>
+    <a href="dbmigration">DB Migration</a> is different in that <code>DIFF</code> DDL scripts are generated for the changes to the model
+    and these <code>DIFF</code> DDL scripts can be applied to the target Postgres/Oracle/MySql/SQL Server ... database and
+    often <code>FlywayDb</code> or <code>Liquibase</code> is used to apply those DDL changes.
+  </p>
+
+</div>
+</body>
+</html>

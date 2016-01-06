@@ -51,7 +51,13 @@
   <li><a href="#finder">Finder</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${dbmigration!''}" url="/docs/setup/dbmigration" title="DB Migration">
+<@smallnav activeCheck="${ddlcreateall!''}" url="/docs/setup/ddl-create-all" title="DDL - Create All">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#properties">Properties</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${dbmigration!''}" url="/docs/setup/dbmigration" title="DDL - DB Migration">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
   <li><a href="#main-method">Main method</a></li>
@@ -59,11 +65,20 @@
   <li><a href="#apply-ddl">Apply DDL</a></li>
   <li><a href="#apply-rollback-ddl">Apply Rollback DDL</a></li>
   <li><a href="#drop-ddl">Drop DDL</a></li>
+  <li><a href="#workflow">Workflow</a></li>
+  <li><a href="#versioning">Versioning</a></li>
+  <li><a href="#version">Version and name</a></li>
+  <li><a href="#on-startup">Run on startup</a></li>
+  <li><a href="#programmatic">Run programmatically</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${testproperties!''}" url="/docs/setup/test-properties" title=" Test properties">
+<ul class="nav">
+  <li><a href="#test-properties">test-ebean.properties</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${testing!''}" url="/docs/setup/testing" title="Testing">
 <ul class="nav">
-  <li><a href="#test-properties">test-ebean.properties</a></li>
   <li><a href="#mockibean">MockiEbean</a></li>
 </ul>
 </@smallnav>
