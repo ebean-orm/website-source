@@ -131,7 +131,7 @@ public class Customer {
 ```
 
 The Order entity bean...
-```
+```java
 ...
 @Entity
 @Table(name="or_order")
@@ -316,9 +316,10 @@ public class User implements Serializable {
   ...
   @ManyToMany(cascade=CascadeType.ALL)
   List<Role> roles;
-  @Entity
-  @Table(name="s_role")
-  public class Role {
+  
+@Entity
+@Table(name="s_role")
+public class Role {
   ...
   @ManyToMany(cascade=CascadeType.ALL)
   List<User> users;
