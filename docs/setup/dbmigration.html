@@ -19,33 +19,39 @@
     most of the capability and could address some current issues with developer workflow and DDL script ordering.
   </p>
   <p>
-    DB migration has several output files:
+    DB migration has 2 output files:
   </p>
   <ul>
-    <li>Migration model XML - This has the logical diff of the model as an <code>apply</code> or <code>drop</code> change set</li>
-    <li>Apply SQL - This is the DDL script that has positive/non-destructive changes like ADD COLUMN</li>
-    <li>Rollback DDL - This is the UNDO of the apply SQL. With FlywayDB you don't use this at all.</li>
-    <li>Drop DDL - This is the DDL script with destructive changes like DROP TABLE and DROP COLUMN</li>
+    <li><b>Migration model XML</b> - This has the logical diff of the model as an <code>apply</code> or <code>pendingDrops</code> change set</li>
+    <li><b>Apply SQL</b> - This is the DDL script of the apply changes</li>
   </ul>
 
   <p>
     When the DbMigration is run it loads any prior migration xml and combines that together
     to define the prior model which is then compared against the existing entity beans.
   </p>
+
+  <h4>Pending Drops</h4>
   <p>
-    A <code>migration xml</code> document is generated which represents the <code>diff</code>
-    to the logical model and from that DDL scripts are generated
+    Only non-destructive changes are included in <code>apply</code> and changes like <code>drop table</code> and
+    <code>drop column</code> are put into a <code>pendingDrops</code> changeSet.
+  </p>
+  <p>
+    The drop pending changes need to be explicitly selected to go into a migration.
+  </p>
+  <p>
+    Given applications running in a clustered environment, pending drops typically need to trail the normal apply
+    changes by at least 1 migration. This delay could be minutes, days and some drops might not ever be run.
   </p>
 
 
   <h2 id="migration-xml">Migration xml</h2>
   <p>
     When DbMigration is run the <code>diff</code> to the model is determined and output
-    as the migration model xml document. This diff can have <code>apply</code> changes or <code>drop</code> changes.
+    as the migration model xml document. This diff can have <code>apply</code> changes or <code>pendingDrops</code> changes.
   </p>
   <p>
-    From the migration xml DDL scripts are generated for <code>apply</code>, <code>rollback</code>
-    and <code>drop</code>.
+    From the migration <code>apply</code> changeSet the actual DDL that will be applied is generated.
   </p>
 
   <h4>Logical changes</h4>
@@ -84,60 +90,64 @@
   </migration>
 ```
 
-  <h4>Example migration drop changes</h4>
+  <h4>Example migration with pendingDrops</h4>
   <p>
-    Below is an example migration xml generated with <code>drop</code> changes.
+    Below is an example migration xml generated with <code>pendingDrops</code> changes.
   </p>
   ```xml
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
-    <changeSet type="drop">
-      <dropColumn columnName="comments" tableName="customer"/>
+    <changeSet type="pendingDrops">
+      <dropColumn columnName="shortTitle" tableName="document" withHistory="true"/>
+    </changeSet>
+  </migration>
+  ```
+  <p>
+    Pending drop changes are not incorporated into the apply DDL script unless they are explicitly selected.
+    Once pending drops are applied they drop off the 'pending drops' list.
+  </p>
+
+  <h2 id="apply-ddl">Apply DDL</h2>
+  <p>
+    The apply ddl script contains the changes that we want to apply to the database.
+    This is the DDL script that you get FlywayDB or similar to run.
+  </p>
+
+  <h2>Applying pending drops</h2>
+
+  ```sh
+  INFO  c.a.ebean.dbmigration.DbMigration - Pending un-applied drops in versions [1.2]
+  ```
+
+  <p>
+    The DB migration will log <code>INFO</code> level messages saying which migrations contain
+    pending drops that have not yet been applied.  At some point it is decided to apply one of
+    the pending drops as the next migration.
+  </p>
+
+  ```java
+  // generate a migration as the drops from migration version "1.2"
+  System.setProperty("ddl.migration.pendingDrop", "1.2");
+
+  DbMigration dbMigration = new DbMigration();
+  dbMigration.setPlatform(DbPlatformName.POSTGRES);
+  dbMigration.generateMigration();
+  ```
+  <p>
+    A migration is then generated with <code>dropsFor</code> set to the version of the migration that
+    had the pending drops that we want to apply.  Additionally the migration apply ddl contains the
+    various drop statements that will be executed.
+  </p>
+
+  ```xml
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply" dropsFor="1.2">
+      <dropColumn columnName="shortTitle" tableName="document" withHistory="true"/>
     </changeSet>
   </migration>
   ```
 
-  <h2 id="apply-ddl">Apply DDL</h2>
-  <p>
-    The <code>apply</code> ddl script contains the changes that are deemed non-destructive
-    so adding tables, adding columns, adding indexes etc.
-  </p>
-  <p>
-    This is the DDL script that you get FlywayDB to run. By default only this apply DDL has the
-    <code>.sql</code> extension and so by default you can point FlywayDB to the dbmigration resource
-    path to run the apply changes.
-  </p>
-
-  <h2 id="apply-rollback-ddl">Rollback DDL</h2>
-  <p>
-    The <code>Rollback</code> ddl script contains DDL to reverse or undo the <code>apply</code> changes.
-    Some databases support transactional DDL and if the apply DDL can be run in a transactional manor then
-    the rollback script is not necessary.
-  </p>
-  <p>
-    In the FlywayDB case it does not run or use rollback script. By default DB Migration generates the
-    rollback ddl with the <code>.ddl</code> extension such that FlywayDB does not run it.
-  </p>
-
-  <h2 id="drop-ddl">Drop DDL</h2>
-  <p>
-    The <code>drop</code> ddl script contains DDL that is considered destructive such as <code>drop table</code>
-    and <code>drop column</code>. These types of changes are not expected to be able to be run automatically in
-    production with the apply changes as typically the existing application will remain running and as such the
-    existing application is potentially using those tables/columns that are to be dropped and so it is expected
-    that the <code>drop</code> changes can not be applied until the application has been upgraded.
-  </p>
-  <p>
-    That is, unless outage is scheduled the drop changes need to trail the apply changes by at least 1 migration.
-  </p>
-  <p>
-    In many cases the <code>drop</code> changes are actually not run for weeks or longer (or not at all even)
-    until such time that it is known the application does not need to revert etc.
-  </p>
-  <p>
-    By default DB Migration generates the drop ddl with the <code>.ddl</code> extension such that FlywayDB
-    does not run it.
-  </p>
 
   <h2 id="workflow">Workflow</h2>
   <p>
@@ -147,7 +157,6 @@
     (git flow feature branch). The developer working on their feature runs the DB migration such that they have
     the DDL changes required to support that feature.
   </p>
-  <blockquote>Migration per merge request</blockquote>
 
   <h2 id="versioning">Versioning</h2>
   <p>
@@ -166,7 +175,7 @@
     feature name = support end dating
 
   The resulting apply sql is:
-    4.5.6_12_support-end-dating.sql
+    4.5.6_12__support-end-dating.sql
 
 ```
   <p>
@@ -200,9 +209,9 @@
   ```
 
 
-  <h2 id="on-startup">Running on startup</h2>
+  <h2 id="on-startup">Generating migration on startup</h2>
   <p>
-    The DB migration can run when the EbeanServer instance is started by setting <code>ddl.migration.generate</code>
+    The DB migration can be generated when the EbeanServer instance is started by setting <code>ddl.migration.generate</code>
     system property or environment variable to true.
   </p>
 
@@ -214,14 +223,14 @@
     System.setProperty("ddl.migration.version", "4.5.6_12");
     System.setProperty("ddl.migration.name", "support end dating");
 
-    // migration will be run when EbeanServer instance starts
+    // migration will be generated when EbeanServer instance starts
     Ebean.getDefaultServer();
   }
   ```
 
-  <h2 id="programmatic">Running programmatically</h2>
+  <h2 id="programmatic">Generating migration programmatically</h2>
   <p>
-    You can run the <code>DbMigration</code> programmatically. For example by a main method in a class in
+    You can generate the a migration programmatically. For example by a main method in a class in
     the test source similar to the following code:
   </p>
 
