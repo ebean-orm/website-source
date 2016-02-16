@@ -128,7 +128,7 @@ public class Customer extends Model {
   Timestamp whenCreated;
 
   @UpdatedTimestamp
-  Timestamp whenUpdated
+  Timestamp whenUpdated;
 
   @Column(length=100)
   String name;
@@ -262,7 +262,7 @@ In this ebean.properties, it is using H2 database, so you would need to add H2 t
 
         Ebean.save(customer);
       }
-    }
+    });
 ```
 
 
@@ -276,7 +276,7 @@ In this ebean.properties, it is using H2 database, so you would need to add H2 t
         Ebean.save(customer);
 
       }
-    }
+    });
 ```
 
 <h4>Delete</h4>
@@ -294,7 +294,7 @@ In this ebean.properties, it is using H2 database, so you would need to add H2 t
         // sql bulk update uses table and column names
         server.createSqlUpdate("delete from o_country").execute();
       }
-    }
+    });
 ```
 
 
