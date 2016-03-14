@@ -1,27 +1,26 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_features.html"/>
-<#assign subtitle = "ElasticSearch">
-<#assign elastic = "true">
+  <meta name="layout" content="_layout/docs_features_elasticsearch.html"/>
+<#assign elastic_overview = "true">
 </head>
 <body>
 <div class="bs-docs-section">
-  <h2 id="overview">Overview</h2>
+  <h2 id="why">Why integrate?</h2>
   <p>
     There are quite a few different reasons why ElasticSearch integration is useful to applications using
     Ebean ORM.
   </p>
   <h4>ElasticSearch value</h4>
   <ul>
-    <li>Provides 'text search'</li>
+    <li>Provides 'full text search'</li>
     <li>Provides something like DB materialised views</li>
     <li>Scaling read access</li>
     <li>Read access performance (Document storage)</li>
-    <li>Fixes an issue with L2 cache</li>
+    <li>Fixes issues with L2 cache</li>
     <li>Provides L3 cache</li>
   </ul>
 
-  <h4>Provides 'text search'</h4>
+  <h4>Provides 'full text search'</h4>
   <p>
     Many modern applications provide a single search input field to operate in a 'Google search' fashion.
     For example, searching for customers including their name and address (street, city, country etc).
@@ -40,17 +39,17 @@
     For example, product pricing might be refreshed every midnight.
   </p>
   <p>
-    ElasticSearch indexes can sometimes be thought in a similar way to DB materialised views. They represent
+    ElasticSearch indexes can viewed in a similar way to DB materialised views. They represent
     a materialised (document orientated) view of the data which can be updated in near real time with each commit
     or updated in a more periodic batch fashion.
   </p>
 
   <h4>Scaling read access</h4>
   <p>
-    ElasticSearch has built in horizontal scaling and this can be used to provide an easier / cheaper way to
+    ElasticSearch architecturally has built in horizontal scaling and this can be used to provide an easier / cheaper way to
     scale read access when compared to scaling a more traditional OLTP database. Note that the access is not
-    equivalent to that provided by most OLTP databases (does not provide the same transactional read consistency
-    guarantees and is 'near' real time but usually lags by a second etc) - however, these limitations are often
+    equivalent to that provided by most OLTP databases in that it does not provide the same transactional read consistency
+    guarantees and is 'near' real time (usually lags by a second etc) - however, these limitations are often
     acceptable given the improved read scalability.
   </p>
 
@@ -69,8 +68,9 @@
 
   <h4>Fixes an issue with L2 cache</h4>
   <p>
-    Ebean like other ORM's has an L2 cache and specifically all face the issue specifically with the
-    <code>L2 Query cache</code> being invalidated frequently.
+    ElasticSearch can be used as an effective replacement of the <b>L2 query cache</b> on types that experience
+    a reasonable amount of insert, update or delete changes.
+    Ebean like other ORM's has an L2 cache.
   </p>
   <p>
     Essentially if an application is reliant on the <code>L2 Query cache</code> on a bean type that is
@@ -87,114 +87,222 @@
 
   <h4>Provides L3 cache</h4>
   <p>
-    Ebean can use ElasticSearch as an L3 cache (you can think of it as the remote part of an L2 cache).
+    For Ebean we have the term <code>L3 cache</code> which means the remote part of an <code>L2 cache</code>.
+    That is, the L2 cache has a "Near cache" and "Remote cache" and "L3 cache" means the remote part of an
+    L2 cache.
+  </p>
+  <p>
+    Ebean can use ElasticSearch as an L3 cache (instead of the more traditional Hazelcast/Infinispan/etc
+    distributed caches).
     If there is a miss in the local L2 cache Ebean can go and hit ElasticSearch rather than the database
     with the benefits that ElasticSearch is known to have all the data and have it in denormalised form
     (so a single hit against ElasticSearch might populate more of the graph than a traditional DB hit).
   </p>
 
-
-
-  <h2 id="mapping">Mapping</h2>
-
-  <h4><code>@DocStore</code></h4>
+  <h2 id="graphs-as-json">ORM graphs as JSON documents</h2>
   <p>
-    TODO
+    ORM graphs naturally map to JSON documents. Ebean also has built in support for marshalling/unmarshalling
+    to and from JSON as well as executing large queries efficiently.  This makes it is completely natural and
+    reasonable for example to execute a large query over all the objects of a certain type and covert those object
+    graphs to JSON and send to ElasticSearch.
   </p>
-```java
-
-  // Store contact in ElasticSearch using default setup
-  @DocStore
-  @Entity
-  public class Contact {
-
-```
-
-  <h4><code>@DocStoreEmbedded</code></h4>
   <p>
-    On @ManyToOne and @OneToMany properties you can specify the properties that should be
-    included in the document that is to be indexed.
-
+    The caveat is that ORM graphs are typically well structured (semi-structured if you include storing JSON in
+    the DB which is well supported by Postgres and Oracle). In terms of mapping ORM graphs to ElasticSearch
+    documents we typically need to take mapping into account such as identifying properties that are 'codes'
+    (and should not be analysed) and identifying properties that we want in analysed and raw form (to support the
+    order by clause for queries).
   </p>
-```java
 
-  @DocStore
-  @Entity
-  public class Contact {
-
-    ...
-    // denormalise including the customer id and name
-    // into the 'contact' document
-    @DocStoreEmbedded(doc="id,name")
-    @ManyToOne(optional=false)
-    Customer customer;
-
-
-```
-
-  <h2>DocumentStore</h2>
+  <h2 id="automatic-sync">Automatic sync</h2>
   <p>
+    The core integration function is to provide good mechanisms to sync changes to ElasticSearch.
+    That is, when Ebean processes changes to the database it automatically knows what updates it needs to make
+    to the indexes and providing features such that you can control how and when those updates occur.
+  </p>
+  <p>
+    Ebean determines from the mapping what index update events are required and you can control if these updates
+    are sent to ElasticSearch immediately in the background or queued for later processing or ignored (when you want
+    full control over the indexing).
+  </p>
 
+  <h2 id="query">Query</h2>
+  <p>
+    You can always query ElasticSearch directly without using Ebean and that will fit well with some use cases.
+    In addition Ebean provides good support for executing queries with a number of benefits.
+  </p>
+
+  <h4>Persistence Context</h4>
+  <p>
+    Used when we want to fetch from ElasticSearch and then persist to OLTP. The Persistence context is used to
+    de-duplicates beans built from JSON documents giving a consistent graph (which is what we typically want for
+    persisting). The persistence context also plays a part in query joins.
+  </p>
+
+  <h4>Load Context - Lazy loading & query joins</h4>
+  <p>
+    Like ORM queries we can use the Load Context to provide efficient batch lazy loading and query joins. Object
+    graphs built from ElasticSearch can invoke lazy loading (to L2, other indexes and fallback to the DB).
+    The Load context also provides "query joins" such that we can build a result by joining secondary indexes.
+    For example, fetch from the customer index and join the contacts index (In ElasticSearch this would be described
+    as an "application side join".
+  </p>
+
+  <h4>Query beans - type safe query building</h4>
+  <p>
+    We can use query beans to build the query in a type safe manor which is good for long term maintenance with
+    compile time protection against schema and type changes.
+  </p>
+
+  <h4>Hit DB or Elastic?</h4>
+  <p>
+    The ability to write an ORM query and then painlessly change it to hit ElasticSearch gives application
+    developers the ability to delay the decision and fairly painlessly change between hitting the DB or
+    Elastic. This is not a 'perfect' swap with considerations for case insensitivity of predicates
+    and read consistency but for a great many cases this ability to easily swap between the two will allow
+    developers to get on with building with the knowledge they can later revisit (and change to hit Elastic
+    without changing the semantics in terms of persistence context, lazy loading, saving back to the DB etc).
+  </p>
+
+  <p>
+    You can build an Ebean query and execute it against ElasticSearch. The only query expressions that can't be
+    translated to ElasticSearch are sub-query expressions - otherwise all the expressions can be translated to
+    ElasticSearch expressions.
   </p>
   ```java
-
-
-  DocumentStore docStore = Ebean.getDefaultServer().docStore()
-
-  docStore.indexByQuery(query);
-  Order order = docStore.getById(Order.class, 2);
-
+  Product product = server.find(Product.class)
+      .setId(1)
+      .setUseDocStore(true)
+      .findUnique();
   ```
 
+  <h3>Mapping relational expressions</h3>
+  <p>
+    Most "relational/exact value" expressions map directly to ElasticSearch expressions with some exceptions.
+    Note that Like, StartsWith, EndsWith and Contains are all effectively case insensitive in ElasticSearch.
+  </p>
+  <ul>
+    <li>Sub-query IN - this is currently not supported/translated</li>
+    <li>Sub-query EXISTS - this is currently not supported/translated</li>
+  </ul>
 
-  <h2>Index by Query</h2>
-```java
+  <h3>Partial objects - select() and fetch()</h3>
+  <p>
+    Just like ORM queries you can optimise an ElasticSearch query to only fetch the part
+    of the document that you need. You can use the normal Ebean query select() and fetch() to define what part
+    of the document to fetch back and Ebean will apply that to the ElasticSearch query.
+  </p>
+  ```java
+  List<Customer> customers =
+    server.find(Customer.class)
+      .useDocStore(true)
+      // only fetch id, status and name from index
+      // ... Elastic will love you :)
+      .select("status, name")
+      .where().istartWith("name", "Rob")
+      .findList();
+  ```
 
-  Query<Order> query = Ebean.find(Order.class).where().gt("id", 1).query();
+  <h3>Query joins</h3>
+  <p>
+    Like ORM queries you can "query join" multiple indexes.
+  </p>
+  ```java
+  // fetch from the customer index
+  // ... "join" the contacts index
 
-  Ebean.getDefaultServer().docStore().indexByQuery(query);
+  List<Customer> customers = server.find(Customer.class)
+    .setUseDocStore(true)
+    // fetch related contacts from the contacts index
+    .fetch("contacts", new FetchConfig().query())
+    .findList();
+  ```
 
-```
+  ```java
+  // fetch from the order index
+  // ... "join" the customer index
+  //
+  // internally this merges the customer details
+  // ... from the order index with the customer details
+  // ... from the customer index
 
+  List<Order> orders = server.find(Order.class)
+    .setUseDocStore(true)
+    // perhaps the order index only contains customer (id,name)
+    // so we additionally fetch all customer details such as
+    // billingAddress, shippingAddress etc from the customer index
+    .fetch("customer", new FetchConfig().query())
+    .findList();
+    ```
 
-```java
+  <p>
+    Support for this can change the decisions on how much denormalisation/embedded documents is used
+    for specific indexes. For example, in an "Order" index you need to decide how much of the customer
+    will be included/embedded into the order. You can embedded the customer(id,name)
+    or customer(id,name,billingAddress(*)) etc. The ability to easily join the "customer index" (to fetch
+    whatever customer details is required) means that you may choose to embed less of the customer into
+    the order document.
+  </p>
 
- /**
-  * Document storage operations.
-  */
- public interface DocumentStore {
+  <h2 id="query-full-text">Query - Full text</h2>
+  <p>
+    Full text query expressions are also exposed by Ebean. These are only used for "document store" queries
+    and are not used for normal ORM queries that go to the OLTP database.
+  </p>
+  <p>
+    Instead of using <code>where()</code> you can use <code>text()</code> to add "full text" search expressions
+    to the query like <code>match</code>, <code>multi-match</code>, <code>common terms</code>,
+    <code>text simple query</code> and <code>text query</code>. These map directly to the corresponding ElasticSearch
+    full text expressions.
+  </p>
+  <p>
+    Note that when you add a "text expression" the query is automatically set to <code>useDocStore(true)</code>.
+  </p>
 
- /**
-  * Update the associated document store using the result of the query.
-  * <p>
-  * Note that the select and fetch paths of the query is set for you to match the
-  * document structure needed for the index so what this query requires is the
-  * predicates only.
-  * </p>
-  * <p>
-  *   This query will be executed using findEach so it is safe to use a query
-  *   that will fetch a lot of beans. The default bulkBatchSize is used.
-  * </p>
-  *
-  * @param query The query used to update the associated document store.
-  */
- <T> void indexByQuery(Query<T> query);
+  ```java
+  PagedList<Customer> customers = server.find(Customer.class)
+    .text()
+      .match("name", "Rob")
+      .findPagedList();
+  ```
+  ```java
+  PagedList<Customer> customers = server.find(Customer.class)
+    .text()
+      .match("name", "Rob")
+      .match("notes", "kung fu")
+      .findPagedList();
+  ```
+  ```java
+  PagedList<Customer> customers = server.find(Customer.class)
+    .text()
+    .must()
+      .match("customer.name", "Rob")
+      .eq("status", Order.Status.COMPLETE)
+      .findPagedList();
+  ```
+  ```java
+  MultiMatch match = MultiMatch.fields("name", "notes").boost(2).opAnd();
 
- /**
-  * Update the associated ElasticSearch index using the result of the query additionally specifying a
-  * bulkBatchSize to use for sending the messages to ElasticSearch.
-  */
- <T> void indexByQuery(Query<T> query, int bulkBatchSize);
+  PagedList<Customer> customers = server.find(Customer.class)
+    .text()
+      .multiMatch("Rob", match)
+      .findPagedList();
+  ```
 
- /**
-  * Return the bean by fetching it's content from the document store.
-  */
- <T> T getById(Class<T> beanType, Object id);
+  <h2 id="out-of-scope">Out of scope features</h2>
+  <p>
+    The following features are currently considered out of scope.
+  </p>
 
- }
+  <h4>ElasticSearch parent/child mapping</h4>
+  <p>
+    ElasticSearch provides a parent/child mapping as an alternative to nested/embedded/denormalised approach.
+    At this stage support for this is out of scope and instead the nesting/denormalisation approach is preferred.
+  </p>
+  <p>
+    Note that Ebean can use "query joins" to fetch join multiple indexes into a single result.
+  </p>
 
-
-```
 
 </div>
 </body>

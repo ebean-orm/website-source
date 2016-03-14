@@ -1,0 +1,139 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features_elasticsearch.html"/>
+<#assign subtitle = "Mapping">
+<#assign elastic_mapping = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2 id="overview">Mapping</h2>
+  <p>
+    For mapping we need to define:
+  </p>
+  <ul>
+    <li>Which Entities should be mapped to an Index</li>
+    <li>For each entity type, what part of the object graph is included in the document</li>
+    <li>Which string properties are really 'codes' and should not be analysed</li>
+    <li>Which string properties do we want both analysed and 'raw' for search and sorting</li>
+    <li>Any extra ElasticSearch specific mapping</li>
+  </ul>
+
+
+  <h2 id="which">Which Entities should be mapped to an Index</h2>
+  <p>
+    We add the <code>@DocStore</code> annotation on each entity we want to map into an ElasticSearch
+    index.
+  </p>
+```java
+
+  // Store contact in ElasticSearch using default setup
+  @DocStore
+  @Entity
+  public class Contact {
+
+```
+
+  <p>
+    By default @DocStore means:
+  </p>
+  <ul>
+    <li>@OneToMany and @ManyToMany are NOT included</li>
+    <li>@ManyToOne and @OneToOne include the associate @Id property only</li>
+    <li>All other persistent properties are included in the document</li>
+  </ul>
+
+  <h2 id="whatPart">What part of the object graph to include</h2>
+  <p>
+    By default when you map an entity with @DocStore that means any  in the resulting document.
+  </p>
+
+
+  <h4><code>@DocStoreEmbedded</code></h4>
+  <p>
+    On @ManyToOne and @OneToMany properties you can specify the properties that should be
+    included in the document that is to be indexed.
+
+  </p>
+```java
+
+  @DocStore
+  @Entity
+  public class Contact {
+
+    ...
+    // denormalise including the customer id and name
+    // into the 'contact' document
+    @DocStoreEmbedded(doc="id,name")
+    @ManyToOne(optional=false)
+    Customer customer;
+
+
+```
+
+  <h2>DocumentStore</h2>
+  <p>
+
+  </p>
+  ```java
+
+
+  DocumentStore docStore = Ebean.getDefaultServer().docStore()
+
+  docStore.indexByQuery(query);
+  Order order = docStore.getById(Order.class, 2);
+
+  ```
+
+
+  <h2>Index by Query</h2>
+```java
+
+  Query<Order> query = Ebean.find(Order.class).where().gt("id", 1).query();
+
+  Ebean.getDefaultServer().docStore().indexByQuery(query);
+
+```
+
+
+```java
+
+ /**
+  * Document storage operations.
+  */
+ public interface DocumentStore {
+
+ /**
+  * Update the associated document store using the result of the query.
+  * <p>
+  * Note that the select and fetch paths of the query is set for you to match the
+  * document structure needed for the index so what this query requires is the
+  * predicates only.
+  * </p>
+  * <p>
+  *   This query will be executed using findEach so it is safe to use a query
+  *   that will fetch a lot of beans. The default bulkBatchSize is used.
+  * </p>
+  *
+  * @param query The query used to update the associated document store.
+  */
+ <T> void indexByQuery(Query<T> query);
+
+ /**
+  * Update the associated ElasticSearch index using the result of the query additionally specifying a
+  * bulkBatchSize to use for sending the messages to ElasticSearch.
+  */
+ <T> void indexByQuery(Query<T> query, int bulkBatchSize);
+
+ /**
+  * Return the bean by fetching it's content from the document store.
+  */
+ <T> T getById(Class<T> beanType, Object id);
+
+ }
+
+
+```
+
+</div>
+</body>
+</html>

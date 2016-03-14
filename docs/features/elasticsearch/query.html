@@ -1,0 +1,74 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features_elasticsearch.html"/>
+<#assign subtitle = "Query">
+<#assign elastic_query = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2 id="overview">Query</h2>
+  <p>
+
+  </p>
+
+
+  <h3>Equal To</h3>
+  <p>
+    Equals to is translated to a <code>term</code>
+  </p>
+  <h6>Ebean example</h6>
+
+```java
+  .where().eq("status", Order.Status.COMPLETE)
+```
+  <h6>Elastic JSON query</h6>
+
+```xml
+  { "term": { "status": "COMPLETE" } }
+```
+
+  <h3>Greater Than</h3>
+  <p>
+    Greater Than is translated to a <code>range</code>
+  </p>
+  <h6>Ebean example</h6>
+
+```java
+  .where().gt("customer.id", 42)
+```
+  <h6>Elastic JSON query</h6>
+
+```xml
+  {"range":{"customer.id":{"gt":42}}}
+```
+
+
+
+  <h3>All Equals</h3>
+  <p>
+    All equals is translated to a <code>bool</code> <code>must</code> list of <code>term</code>
+  </p>
+  <h6>Ebean example</h6>
+
+```java
+  Map<String, Object> allEq = new HashMap<String,Object>();
+  allEq.put("status", "COMPLETE");
+  allEq.put("customer.id", 1);
+
+  ...
+  .where().allEq(allEq)
+```
+  <h6>Elastic JSON query</h6>
+
+```xml
+  "bool": {
+    "must": [
+      { "term": { "customer.id": 1 } },
+      { "term": { "status": "COMPLETE" } }
+    ]
+  }
+```
+
+</div>
+</body>
+</html>
