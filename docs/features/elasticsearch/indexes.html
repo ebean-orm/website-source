@@ -34,13 +34,89 @@
 
   <h2 id="createIndex">Create index</h2>
 
-  <h2 id="dropIndex">Drop index</h2>
+  <p>
+    Creates an index with the option of also creating an alias to map to the index.
+  </p>
+  <p>
+    This will load an associated mapping file as a resource from the class path.
+  </p>
 
+  ```java
+
+  // create a new index without an alias
+  // ... the mapping is loaded from classpath as a resource
+  documentStore.createIndex("product_copy", null);
+
+  ```
+
+  <h2 id="dropIndex">Drop index</h2>
+  <p>
+    Drop a index.
+  </p>
+
+  ```java
+  documentStore.dropIndex("product_copy");
+  ```
   <h2 id="copyIndex">Copy index</h2>
+  <p>
+    This does not hit the database but instead uses an ElasticSearch <code>scroll</code> query
+    to go through the ElasticSearch index and use the index source to send to the destination index.
+  </p>
+  <p>
+    This could be used as part of a devops index migration task.
+  </p>
+  <h4>Example: Copy index - All</h4>
+  ```java
+  // scroll the product index sending the source documents to "product_copy"
+  long docCount = documentStore.copyIndex(Product.class, "product_copy");
+  ```
+
+  <h4>Example: Copy index - Query</h4>
+  <p>
+    You can specify a query filter such that only part of the index is copied.
+    This could be used to update an index with recent changes or to partition
+    a single index copy task into multiple tasks that could be executed in parallel.
+  </p>
+  ```java
+  Query<Product> query = server.find(Product.class)
+    .where()
+    .ge("whenModified", new Timestamp(since))
+    .istartsWith("sku", "c")
+    .query();
+
+  int bulkBatchSize = 1000;
+  long docCount = documentStore.copyIndex(query, "product_copy", bulkBatchSize);
+  ```
+
 
   <h2 id="indexAll">Index all</h2>
+  <p>
+    This uses the database as the "source" and will execute a <code>findEach</code> query to
+    iterate all the rows (ORM graphs actually) and index them.
+  </p>
+  <p>
+    This is expected to be more useful for testing and during development.
+  </p>
+
+  ```java
+  // query all countries and index them
+  documentStore.indexAll(Country.class);
+  ```
 
   <h2 id="indexByQuery">Index by query</h2>
+  <p>
+    This is similar to indexAll by using the database as the "source" and will execute a
+    <code>findEach</code> query to iterate all the rows (ORM graphs) and index them.
+  </p>
+  ```java
+  Query<Product> query = server.find(Product.class)
+    .where()
+    .ge("whenModified", new Timestamp(since))
+    .startsWith("sku", "C")
+    .query();
+
+    server.docStore().indexByQuery(query, 1000);
+  ```
 
 </div>
 </body>
