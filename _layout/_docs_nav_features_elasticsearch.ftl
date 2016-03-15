@@ -1,7 +1,7 @@
 
 <@smallnav activeCheck="${elastic_overview!''}" url="/docs/features/elasticsearch" title="Overview">
 <ul class="nav">
-  <li><a href="#why">Why</a></li>
+  <li><a href="#why">Why integrate</a></li>
   <li><a href="#graphs-as-json">ORM graphs as JSON</a></li>
   <li><a href="#automatic-sync">Automatic Sync</a></li>
   <li><a href="#query">Query</a></li>
