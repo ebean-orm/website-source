@@ -36,13 +36,8 @@
   <li><a href="#Expressions">Expressions</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${elastic!''}" url="/docs/features/elasticsearch" title="ElasticSearch">
+<@smallnav activeCheck="${elastic_syncing!''}" url="/docs/features/elasticsearch/syncing" title="Syncing">
 <ul class="nav">
-  <li><a href="/docs/features/elasticsearch">Overview</a></li>
-  <li><a href="/docs/features/elasticsearch/mapping">Mapping</a></li>
-  <li><a href="/docs/features/elasticsearch/indexes">Indexes and Aliases</a></li>
-  <li><a href="/docs/features/elasticsearch/query">Query expressions</a></li>
-  <li><a href="/docs/features/elasticsearch/syncing">Syncing changes</a></li>
-  <li><a href="/docs/features/elasticsearch/queue">Queue processing</a></li>
+  <li><a href="#aliases">Aliases</a></li>
 </ul>
 </@smallnav>
