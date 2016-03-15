@@ -317,6 +317,19 @@ public class Content {
     This is expected to be used during development/testing.
   </p>
 
+
+  <h3>ebean.docstore.create=true</h3>
+  <p>
+    With <code>ebean.docstore.create=true</code> Ebean at startup will check which indexes exists
+    and create any missing ones using the generated mapping.
+  </p>
+  <p>
+    This is expected to be used during development/testing.
+  </p>
+  <p>
+    Note that you only use <code>create=true</code> if <code>dropCreate</code> is false.
+  </p>
+
 </div>
 </body>
 </html>
