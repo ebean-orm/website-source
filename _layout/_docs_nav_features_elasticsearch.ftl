@@ -2,11 +2,11 @@
 <@smallnav activeCheck="${elastic_overview!''}" url="/docs/features/elasticsearch" title="Overview">
 <ul class="nav">
   <li><a href="#why">Why</a></li>
-  <li><a href="#graphs-as-json">ORM graphs as JSON documents</a></li>
+  <li><a href="#graphs-as-json">ORM graphs as JSON</a></li>
   <li><a href="#automatic-sync">Automatic Sync</a></li>
   <li><a href="#query">Query</a></li>
   <li><a href="#query-full-text">Query - full text</a></li>
-  <li><a href="#out-of-scope">Out of scope</a></li>
+  <li><a href="#out-of-scope">Currently out of scope</a></li>
 
 </ul>
 </@smallnav>
@@ -14,16 +14,21 @@
 <ul class="nav">
   <li><a href="#Overview">Overview</a></li>
   <li><a href="#DocStore">@DocStore</a></li>
-  <li><a href="#DocEmbedded">@DocEmbedded</a></li>
+  <li><a href="#DocStoreEmbedded">@DocStoreEmbedded</a></li>
   <li><a href="#DocCode">@DocCode</a></li>
   <li><a href="#DocSortable">@DocSortable</a></li>
   <li><a href="#DocProperty">@DocProperty</a></li>
-  <li><a href="#ExtraMapping">Extra mapping</a></li>
+  <li><a href="#MappingGeneration">Mapping generation</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${elastic_indexes!''}" url="/docs/features/elasticsearch/aliases" title="Indexes and Aliases">
+<@smallnav activeCheck="${elastic_indexes!''}" url="/docs/features/elasticsearch/indexes" title="Indexes">
 <ul class="nav">
-  <li><a href="#">Overview</a></li>
+  <li><a href="#aliases">Aliases</a></li>
+  <li><a href="#createIndex">Create index</a></li>
+  <li><a href="#dropIndex">Drop index</a></li>
+  <li><a href="#copyIndex">Copy index</a></li>
+  <li><a href="#indexAll">Index all</a></li>
+  <li><a href="#indexByQuery">Index by query</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${elastic_query!''}" url="/docs/features/elasticsearch/query" title="Query">

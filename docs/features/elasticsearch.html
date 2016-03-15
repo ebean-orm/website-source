@@ -70,25 +70,23 @@
   <p>
     ElasticSearch can be used as an effective replacement of the <b>L2 query cache</b> on types that experience
     a reasonable amount of insert, update or delete changes.
-    Ebean like other ORM's has an L2 cache.
   </p>
   <p>
     Essentially if an application is reliant on the <code>L2 Query cache</code> on a bean type that is
     frequently changed (Inserts, updates or deletes) then this will result in load on the database
-    (ineffective utilisation of the L2 Query cache as it is frequently invalidated).
+    due to ineffective utilisation of the L2 Query cache (as it is frequently invalidated).
   </p>
   <p>
-    ElasticSearch provides many relational predicates and many "relational" queries can be reasonably
-    executed against ElasticSearch. If there is a need to scale "findMany" queries against frequently
-    updated tables then ElasticSearch can provide a good solution (and a ORM L2 query cache faces
-    significant limitations in this case).
+    ElasticSearch provides many "exact value / term" predicates that map well to "relational" predicates
+    and many relational/orm queries can be reasonably executed against ElasticSearch. If there is a need to
+    scale "find many" queries against frequently updated tables then ElasticSearch can provide a good solution
+    with the caveat that ElasticSearch indexes might be slightly out of date.
   </p>
-
 
   <h4>Provides L3 cache</h4>
   <p>
     For Ebean we have the term <code>L3 cache</code> which means the remote part of an <code>L2 cache</code>.
-    That is, the L2 cache has a "Near cache" and "Remote cache" and "L3 cache" means the remote part of an
+    That is, the L2 cache has a "Near cache" and "Remote cache" and "L3 cache" here means the remote part of an
     L2 cache.
   </p>
   <p>
@@ -132,20 +130,29 @@
     In addition Ebean provides good support for executing queries with a number of benefits.
   </p>
 
+  <h4>Automatic use of 'raw' fields</h4>
+  <p>
+    Ebean will automatically translate expressions to use associated 'raw' fields for sort (order by) clauses
+    and in the case of term expressions.  That is, Ebean knows via mapping which properties have associated
+    non-analyzed (raw) fields and will use these where needed (order by and term expression).
+  </p>
   <h4>Persistence Context</h4>
   <p>
-    Used when we want to fetch from ElasticSearch and then persist to OLTP. The Persistence context is used to
-    de-duplicates beans built from JSON documents giving a consistent graph (which is what we typically want for
-    persisting). The persistence context also plays a part in query joins.
+    Used when we want to fetch from ElasticSearch and then persist to our OLTP DB. The Persistence context is used to
+    de-duplicate beans when the object graph is built from JSON documents giving us a consistent graph
+    (which is what we typically want for persisting). The persistence context also plays a part in query joins
+    (merging multiple JSON sources of the same bean together).
   </p>
 
   <h4>Load Context - Lazy loading & query joins</h4>
   <p>
     Like ORM queries we can use the Load Context to provide efficient batch lazy loading and query joins. Object
-    graphs built from ElasticSearch can invoke lazy loading (to L2, other indexes and fallback to the DB).
-    The Load context also provides "query joins" such that we can build a result by joining secondary indexes.
-    For example, fetch from the customer index and join the contacts index (In ElasticSearch this would be described
-    as an "application side join".
+    graphs built from ElasticSearch can invoke lazy loading (to L2, other indexes and fallback to the OLTP DB when
+    a bean type is mapped to an Elastic index).
+    The Load context also provides "query joins" such that we can build a result by joining to other indexes.
+    For example, fetch from the customer index and join the contacts index (In ElasticSearch terminology this
+    would be described as an "application side join". We can do this efficiently by batch loading as we do in
+    traditional ORM query joins (to avoid N + 1).
   </p>
 
   <h4>Query beans - type safe query building</h4>
@@ -159,29 +166,45 @@
     The ability to write an ORM query and then painlessly change it to hit ElasticSearch gives application
     developers the ability to delay the decision and fairly painlessly change between hitting the DB or
     Elastic. This is not a 'perfect' swap with considerations for case insensitivity of predicates
-    and read consistency but for a great many cases this ability to easily swap between the two will allow
-    developers to get on with building with the knowledge they can later revisit (and change to hit Elastic
-    without changing the semantics in terms of persistence context, lazy loading, saving back to the DB etc).
+    and read consistency (and no support for sub-queries) but for a great many cases this ability to
+    easily swap between the two allows developers to get on with building with the knowledge they can later
+    revisit (and change the implementation to hit Elastic without changing the semantics in terms of
+    persistence context, lazy loading, saving back to the DB etc).
+  </p>
+  <p>
+    That is, this provides a low barrier path to horizontally scaling reads.
   </p>
 
+  <h4>useDocStore(true)</h4>
   <p>
-    You can build an Ebean query and execute it against ElasticSearch. The only query expressions that can't be
-    translated to ElasticSearch are sub-query expressions - otherwise all the expressions can be translated to
-    ElasticSearch expressions.
+    On an Ebean query you just need to set <code>useDocStore(true)</code> and then the query will execute
+    against ElasticSearch. The only query expressions that can't be translated to ElasticSearch are
+    sub-query expressions - otherwise all the expressions can be translated to ElasticSearch expressions.
   </p>
-  ```java
-  Product product = server.find(Product.class)
-      .setId(1)
-      .setUseDocStore(true)
-      .findUnique();
-  ```
+  <h5>Example: find paged list</h5>
+```java
+PagedList<Product> products = server.find(Product.class)
+  .setUseDocStore(true) // hit Elastic index
+  .where().startsWith("sku", "C00")
+  .setMaxRows(20)
+  .findPagedList();
+```
+
+  <h5>Example: find by id</h5>
+```java
+Product product = server.find(Product.class)
+  .setUseDocStore(true) // hit Elastic index
+  .setId(1)
+  .findUnique();
+```
+
 
   <h3>Mapping relational expressions</h3>
   <p>
     Most "relational/exact value" expressions map directly to ElasticSearch expressions with some exceptions.
-    Note that Like, StartsWith, EndsWith and Contains are all effectively case insensitive in ElasticSearch.
   </p>
   <ul>
+    <li>Note that Like, StartsWith, EndsWith and Contains are all effectively case insensitive in ElasticSearch.</li>
     <li>Sub-query IN - this is currently not supported/translated</li>
     <li>Sub-query EXISTS - this is currently not supported/translated</li>
   </ul>
@@ -197,7 +220,7 @@
     server.find(Customer.class)
       .useDocStore(true)
       // only fetch id, status and name from index
-      // ... Elastic will love you :)
+      // ... as a performance optimisation
       .select("status, name")
       .where().istartWith("name", "Rob")
       .findList();
@@ -228,9 +251,10 @@
 
   List<Order> orders = server.find(Order.class)
     .setUseDocStore(true)
-    // perhaps the order index only contains customer (id,name)
-    // so we additionally fetch all customer details such as
-    // billingAddress, shippingAddress etc from the customer index
+    // say the order index only embeds customer(id,name)
+    // so we additionally fetch (and merge) all customer
+    // details including the billingAddress and shippingAddress
+    // from the customer index
     .fetch("customer", new FetchConfig().query())
     .findList();
     ```
@@ -289,7 +313,7 @@
       .findPagedList();
   ```
 
-  <h2 id="out-of-scope">Out of scope features</h2>
+  <h2 id="out-of-scope">Currently out of scope</h2>
   <p>
     The following features are currently considered out of scope.
   </p>

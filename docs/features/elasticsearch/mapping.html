@@ -6,33 +6,30 @@
 </head>
 <body>
 <div class="bs-docs-section">
-  <h2 id="overview">Mapping</h2>
+  <h2 id="overview">Overview</h2>
   <p>
     For mapping we need to define:
   </p>
   <ul>
-    <li>Which Entities should be mapped to an Index</li>
+    <li>Which Entities should be mapped to an index</li>
     <li>For each entity type, what part of the object graph is included in the document</li>
-    <li>Which string properties are really 'codes' and should not be analysed</li>
-    <li>Which string properties do we want both analysed and 'raw' for search and sorting</li>
+    <li>Which string properties are really <code>codes</code> and should not be analysed</li>
+    <li>Which string properties do we want <code>both analysed and 'raw'</code> fields for search and sorting</li>
     <li>Any extra ElasticSearch specific mapping</li>
   </ul>
 
 
-  <h2 id="which">Which Entities should be mapped to an Index</h2>
+  <h2 id="DocStore">@DocStore - Entities to map</h2>
   <p>
     We add the <code>@DocStore</code> annotation on each entity we want to map into an ElasticSearch
     index.
   </p>
 ```java
-
-  // Store contact in ElasticSearch using default setup
-  @DocStore
-  @Entity
-  public class Contact {
-
+// Store contact in ElasticSearch
+@DocStore
+@Entity
+public class Contact {
 ```
-
   <p>
     By default @DocStore means:
   </p>
@@ -42,97 +39,283 @@
     <li>All other persistent properties are included in the document</li>
   </ul>
 
-  <h2 id="whatPart">What part of the object graph to include</h2>
   <p>
-    By default when you map an entity with @DocStore that means any  in the resulting document.
+    You can effective reduce the properties that are included in an index by specifying which
+    ones to include via <code>doc</code>.
+  </p>
+  <h5>Example: Only index some properties</h5>
+```java
+@DocStore(doc="firstName, lastName, email")
+@Entity
+public class Contact {
+...
+```
+  <p>
+    I expect that reducing properties to index like the above to be relatively rare.
+    TODO: Add @DocIgnore and @DocProperty(ignore=true) support.
   </p>
 
-
-  <h4><code>@DocStoreEmbedded</code></h4>
+  <h2 id="DocStoreEmbedded">@DocStoreEmbedded - Embedded documents</h2>
   <p>
     On @ManyToOne and @OneToMany properties you can specify the properties that should be
-    included in the document that is to be indexed.
-
+    included in the document that is to be indexed using <code>@DocStoreEmbedded</code>.
   </p>
-```java
-
-  @DocStore
-  @Entity
-  public class Contact {
-
-    ...
-    // denormalise including the customer id and name
-    // into the 'contact' document
-    @DocStoreEmbedded(doc="id,name")
-    @ManyToOne(optional=false)
-    Customer customer;
 
 
-```
-
-  <h2>DocumentStore</h2>
+  <h5>Example: Embedded ManyToOne</h5>
   <p>
-
+    Embedded the customer id, name into the contact index.
   </p>
-  ```java
-
-
-  DocumentStore docStore = Ebean.getDefaultServer().docStore()
-
-  docStore.indexByQuery(query);
-  Order order = docStore.getById(Order.class, 2);
-
-  ```
-
-
-  <h2>Index by Query</h2>
-```java
-
-  Query<Order> query = Ebean.find(Order.class).where().gt("id", 1).query();
-
-  Ebean.getDefaultServer().docStore().indexByQuery(query);
-
-```
-
 
 ```java
+@DocStore
+@Entity
+public class Contact {
 
- /**
-  * Document storage operations.
-  */
- public interface DocumentStore {
-
- /**
-  * Update the associated document store using the result of the query.
-  * <p>
-  * Note that the select and fetch paths of the query is set for you to match the
-  * document structure needed for the index so what this query requires is the
-  * predicates only.
-  * </p>
-  * <p>
-  *   This query will be executed using findEach so it is safe to use a query
-  *   that will fetch a lot of beans. The default bulkBatchSize is used.
-  * </p>
-  *
-  * @param query The query used to update the associated document store.
-  */
- <T> void indexByQuery(Query<T> query);
-
- /**
-  * Update the associated ElasticSearch index using the result of the query additionally specifying a
-  * bulkBatchSize to use for sending the messages to ElasticSearch.
-  */
- <T> void indexByQuery(Query<T> query, int bulkBatchSize);
-
- /**
-  * Return the bean by fetching it's content from the document store.
-  */
- <T> T getById(Class<T> beanType, Object id);
-
- }
-
-
+  ...
+  // denormalise including the customer id and name
+  // into the 'contact' document
+  @DocStoreEmbedded(doc="id,name")
+  @ManyToOne(optional=false)
+  Customer customer;
 ```
+  <h5>Example: Embedded OneToMany</h5>
+  <p>
+    Embed some customer details (customer id and name).
+    Embed the order details (as ElasticSearch "nested" property as it is a @OneToMany).
+  </p>
+```java
+@DocStore
+@Entity
+public class Order {
+
+  ...
+  @DocStoreEmbedded(doc="id,name")
+  @ManyToOne(optional=false)
+  Customer customer;
+
+  @DocStoreEmbedded
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+  List<OrderDetail> details;
+```
+
+  <h5>Example: Embed with nesting</h5>
+  <p>
+    Embed more customer details including the nested billingAddress and billingAddress.country.
+    Embed more order details including the nested product with id, sku and name.
+  </p>
+```java
+@DocStore
+@Entity
+public class Order {
+
+  ...
+  // embed some customer details including the billingAddress
+  @DocStoreEmbedded(doc = "id,status,name,billingAddress(*,country(*)")
+  @ManyToOne(optional=false)
+  Customer customer;
+
+  @DocStoreEmbedded(doc = "*,product(id,sku,name)")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+  List<OrderDetail> details;
+```
+
+  <h2 id="DocCode">@DocCode - Strings that are "codes"</h2>
+  <p>
+    We want to map some string properties with <code>@DocCode</code> such that the
+    property values are not analysed and instead treated as literal values / codes
+    (not lower cased / stemmed etc by analysers).
+  </p>
+  <p>
+    Ebean will automatically treat <code>UUID</code>, <code>Enum</code> and any string
+    <code>@Id</code> properties as "codes" and you do not need to annotate these with
+    <code>@DocCode</code>.
+  </p>
+  <p>
+    Note that if you put @DocCode on product sku, then it is also deemed a code where ever
+    it is embedded. So if product sku is embedded in the order index it will also be considered
+    a @DocCode property there.
+  </p>
+
+    <h4>Example</h4>
+  <p>
+    We want to treat product sku values as literal codes (not analysed).
+  </p>
+```java
+@DocStore
+@Entity
+public class Product {
+
+  // treat sku as a "code" (not analysed)
+  @DocCode
+  String sku;
+
+  @DocSortable
+  String name;
+```
+
+  <h4>Mapping</h4>
+  <p>
+    @DocCode properties are mapped as not analyzed.
+  </p>
+```java
+"properties" : {
+  "sku": { "type": "string", "index": "not_analyzed" },
+  ...
+```
+
+  <h2 id="DocSortable">@DocSortable - Analysed and not analysed</h2>
+  <p>
+    Some string properties we want to annotate with <code>@DocSortable</code> and what this
+    does is that it provides both an analysed and non-analysed/raw field for the property.
+    We can use the analysed field for text search and we can use the non-analysed/raw field
+    for sorting (and ElasticSearch aggregation features).
+  </p>
+  <p>
+    Note that if you put @DocSortable on customer name, then it is also deemed sortable where ever
+    it is embedded. So if customer name is embedded in the order index it will also be considered
+    @DocSortable there.
+  </p>
+
+  <h5>Example: Customer</h5>
+  <p>
+    We want to be able to sort on customer name.
+  </p>
+```java
+@DocStore
+@Entity
+public class Customer {
+
+  ...
+  @DocSortable
+  String name;
+```
+
+  <h5>Example: Product</h5>
+  <p>
+    We want to be able to sort on product name (and we can sort on product sku as it's a code).
+  </p>
+```java
+@DocStore
+@Entity
+public class Product {
+
+  @DocCode
+  String sku;
+
+  @DocSortable
+  String name;
+```
+  <h4>Mapping</h4>
+  <p>
+    @DocSortable properties are mapped with additional "raw" not analyzed field.
+  </p>
+```java
+"properties" : {
+  "name": { "type": "string", "fields": {
+            "raw": { "type": "string", "index": "not_analyzed" } } },
+  ...
+```
+
+  <h4>Query use - order by</h4>
+  <p>
+    When you write an Ebean query and specify an order by clause Ebean will automatically
+    translate the order by clause to use the associated 'raw' field is one is defined.
+  </p>
+```java
+List<Product> products = server.find(Product.class)
+  .setUseDocStore(true)
+  .order().asc("name")
+  .findList();
+```
+   <h5>Elastic query:</h5>
+```java
+// name.raw used automatically for sort order
+{"sort":[{"name.raw":{"order":"asc"}}],"query":{"match_all":{}}}
+```
+
+   <h4>Query use - Term expressions</h4>
+   <p>
+     "Equal to" translates to an Elastic "term" query and for the case of a @DocSortable property
+     the term expression will use the associated "raw" field.
+   </p>
+   <p>
+     Similarly "Greater than", "Less than", "Greater than or equal to" and "Less than or equal to"
+     also translate into range queries that also use the "raw" field when available.
+   </p>
+```java
+List<Product> products = server.find(Product.class)
+  .setUseDocStore(true)
+  .where().eq("name","Chair")
+  .findList();
+```
+   <h5>Elastic query:</h5>
+```java
+// name.raw used automatically for 'term' expression
+{"query":{"filtered":{"filter":{"term":{"name.raw":"Chair"}}}}}
+```
+
+  <h2 id="DocProperty">@DocProperty</h2>
+  <p>
+    <code>@DocProperty</code> provides all the extra mapping options including:
+  </p>
+  <ul>
+    <li><code>store</code> default false</li>
+    <li><code>boost</code> default 1</li>
+    <li><code>includeInAll</code> default true</li>
+    <li><code>enabled</code> default true</li>
+    <li><code>norms</code> default true</li>
+    <li><code>docValues</code> default true</li>
+    <li><code>nullValue</code></li>
+    <li><code>analyzer</code></li>
+    <li><code>searchAnalyzer</code></li>
+    <li><code>copyTo</code></li>
+    <li><code>index options</code> - DOCS, FREQS, POSITIONS, OFFSETS</li>
+  </ul>
+  <p>
+    It also provides flags to set <code>code</code> and <code>sortable</code> as an alternative
+    to <code>@DocCode</code> and <code>@DocSortable</code>.
+  </p>
+  <p>
+    <code>@DocProperty</code> can be put on a property or on the <code>@DocStore mapping</code> attribute
+    and mappings here effectively override any existing property mappings.
+  </p>
+```java
+@DocStore(mapping = {
+  @DocMapping(name = "description",
+    options = @DocProperty(enabled = false)),
+  @DocMapping(name = "notes",
+    options = @DocProperty(boost = 1.5f, store = true))
+})
+@Entity
+public class Content {
+```
+
+   <h2 id="MappingGeneration">Mapping generation</h2>
+   <p>
+     In order to use ElasticSearch effectively with the relatively structured ORM documents we need to
+     create the ElasticSearch indexes with the appropriate property mappings (types, codes, sortable etc)
+     which in a way is similar to DDL for SQL databases.
+   </p>
+  <h3>ebean.docstore.generateMapping=true</h3>
+  <p>
+   With <code>ebean.docstore.generateMapping=true</code> Ebean will generate a mapping file for each
+   bean type that is mapped (with @DocStore). By default these mapping files go into
+   <code>src/main/resources</code> and then <code>elastic-mapping</code> and this is configurable via
+   DocStoreConfig pathToResources and mappingPath.
+  </p>
+  <p>
+    This is expected to be used during development/testing.
+  </p>
+
+  <h3>ebean.docstore.dropCreate=true</h3>
+  <p>
+    With <code>ebean.docstore.dropCreate=true</code> Ebean at startup will drop all the mapped indexes
+    and re-create them using the generated mapping.
+  </p>
+  <p>
+    This is expected to be used during development/testing.
+  </p>
 
 </div>
 </body>

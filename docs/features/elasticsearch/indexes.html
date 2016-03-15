@@ -1,0 +1,41 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features_elasticsearch.html"/>
+<#assign subtitle = "Indexes">
+<#assign elastic_indexes = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+  <h2 id="aliases">Aliases</h2>
+  <p>
+    It is expected that <code>Aliases</code> are used for most processing
+    rather than the direct index name.
+  </p>
+  <p>
+    That is, there will be an alias say "customer" and that will initially map
+    to the "customer_v1" index and over time there might be a change in mapping,
+    re-indexing etc and the "customer" alias points to "customer_v2", "customer_v3" etc.
+  </p>
+  <p>
+    Ebean generates "versioned" (*_v1) index mapping files and when using <code>dropCreate=true</code>
+    it will create indexes with the version suffix (_v1) and also create an alias to those indexes.
+  </p>
+  <p>
+    Just as with large OLTP databases re-indexing can be relatively expensive and take significant
+    time and there are devops component/effort around maintaining indexes and aliases.
+    Ebean provides some features to help in this area.
+  </p>
+
+  <h2 id="createIndex">Create index</h2>
+
+  <h2 id="dropIndex">Drop index</h2>
+
+  <h2 id="copyIndex">Copy index</h2>
+
+  <h2 id="indexAll">Index all</h2>
+
+  <h2 id="indexByQuery">Index by query</h2>
+
+</div>
+</body>
+</html>
