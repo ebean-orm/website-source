@@ -37,6 +37,32 @@ html, body {height: 100%;}
 	height: 110px;
 	clear:both;}
 
+.locationBar {
+    border-top:1px solid #333;
+    background-image: url(/images/px_by_greg.png);
+    padding:5px 10px 15px 10px;
+}
+.locationBar h1 a, .locationBar h1 {
+    font-size:20px;
+    color: #9d9d9d;
+}
+.mobile-nav {
+    display:none;
+    margin-right: -15px;
+    margin-left: -15px;
+    border-top:1px solid #444;
+}
+.mobile-nav .sideNav {
+    padding: 10px;
+}
+.mobile-nav .sideNav .nav .nav {
+    display:none;
+}
+.mobile-nav.collapse.in {
+    display:block;
+}
+
+
 /*Opera Fix*/
 body:before {
 	content:"";
@@ -56,10 +82,14 @@ body {
   text-align: left;
 }
 .navbar-nav>li.active {
-  border-bottom: 3px solid #417888;//428bca; //rgb(182, 47, 182);
+  border-bottom: 3px solid #417888;
 }
 .navbar-nav>li.active>a {
   padding-bottom:12px;
+}
+.sideNav>.navbar-nav>li.active {
+    border-bottom: none;
+    border-left: 7px solid orange;
 }
 .starter-template {
   padding: 40px 15px;
