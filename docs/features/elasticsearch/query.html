@@ -82,7 +82,42 @@
     as well as the standard expressions (equalTo, greaterThan, like etc).
   </p>
 
-  <h3>Must, MustNot, Should</h3>
+  ```java
+  List<Order> orders = server.find(Order.class)
+    .text() // automatically doc store query
+      .where().eq("customer.name","Rob")
+      .findList();
+  ```
+
+  ```json
+  {
+    "query": {
+      "filtered": {
+        "filter": {
+          "term": { "customer.name.raw": "Rob" }
+        }
+      }
+    }
+  }
+  ```
+  <p>
+    <code>text()</code> provides additional "Full text search" expressions such as <code>match</code>,
+    <code>multi match</code>, <code>text simple</code>, <code>text query string</code> and <code>text common terms</code>.
+  </p>
+
+  ```java
+  List<Order> orders = server.find(Order.class)
+    .text()
+      .match("customer.name","Rob")
+      .findList();
+  ```
+
+  ```json
+  { "query": { "match": { "customer.name": "Rob" } } }
+  ```
+
+
+  <h3>Must, must not, should</h3>
   <p>
     The "text expression list" is only used to build queries against the document store (ElasticSearch etc)
     and in this context <code>must()</code>, <code>mustNot()</code> and <code>should()</code> are provided.
@@ -91,7 +126,57 @@
     a ElasticSearch <code>bool</code> expression.
   </p>
 
+  <p>
+    By default expressions are added by <code>bool</code> <code>should</code>.
+  </p>
 
+  ```java
+  List<Customer> customers = server.find(Customer.class)
+      .text()
+        .match("name", "Rob")
+        .match("note", "interesting")
+        .findList();
+  ```
+  ```json
+  {
+    "query": {
+      "bool": {
+        "should": [
+          { "match": { "name": "Rob" } },
+          { "match": { "note": "interesting" } }
+        ]
+      }
+    }
+  }
+  ```
+
+  <p>
+    We use <code>must()</code>, <code>mustNot()</code> and <code>should()</code> to join
+    expressions.
+  </p>
+
+  ```java
+
+  List<Customer> customers =
+    server.find(Customer.class)
+      .text()
+      .must()
+        .match("name", "Rob")
+        .match("smallNote", "interesting")
+      .findList();
+  ```
+  ```json
+  {
+    "query": {
+      "bool": {
+        "must": [
+          { "match": { "name": "Rob" } },
+          { "match": { "smallNote": "interesting" } }
+        ]
+      }
+    }
+  }
+  ```
   <h2 id="query-beans">Query beans</h2>
   <p>
     Query beans provides a type safe "wrapper" over the query criteria API. We can also
@@ -100,8 +185,6 @@
   ```java
   List<Order> orders = new QOrder()
     .setUseDocStore(true)
-    .setFirstRow(10)
-    .setMaxRows(10)
     .status.eq(Order.Status.COMPLETE)
     .orderBy()
       .whenCreated.desc()
@@ -118,6 +201,7 @@
   }
   ```
 
+
   <h3>String properties: match()</h3>
   <p>
     For query beans the <code>match()</code> expression is available on properties of type string.
@@ -126,7 +210,8 @@
   </p>
 
   ```java
-  new QOrder()
+  List<Order> orders =
+    new QOrder()
       .customer.name.match("Rob")
       .findList();
   ```
@@ -141,6 +226,127 @@
   }
   ```
 
+  <p>
+    Multiple expressions are by default added by <code>bool</code> <code>should</code>.
+  </p>
+
+  ```java
+    PagedList<Order> orders = new QOrder()
+      // "match" so automatically a doc store query
+      // and added to the 'text expressions' so goes
+      // into the ElasticSearch 'query context'
+      .customer.name.match("Rob")
+      .status.eq(Order.Status.COMPLETE)
+      .setMaxRows(50)
+      .findPagedList();
+
+    int totalHits = orders.getTotalRowCount();
+
+    List<Order> list = orders.getList();
+  ```
+  ```json
+    {
+      "size": 50,
+      "query": {
+        "bool": {
+          "should": [
+            { "match": { "customer.name": "Rob" } },
+            { "term": { "status": "COMPLETE" } }
+          ]
+        }
+      }
+    }
+  ```
+
+
+
+  <h3>where</h3>
+  <p>
+    Expressions added after <code>where()</code> are put into the <code>filter context</code>.
+  </p>
+
+  ```java
+    PagedList<Order> orders = new QOrder()
+      .customer.name.match("Rob")
+      .where()
+        // after where() so in "filter context"
+        .status.eq(Order.Status.COMPLETE)
+      .setMaxRows(50)
+      .findPagedList();
+
+    int totalRowCount = orders.getTotalRowCount();
+    List<Order> list = orders.getList();
+  ```
+
+  ```json
+  {
+    "size": 50,
+    "query": { "match": { "customer.name": "Rob" } },
+    "filter": { "term": { "status": "COMPLETE" } }
+  }
+  ```
+
+  <h3>must, should, must not</h3>
+  <p>
+    By default expressions are joined by <code>should</code> and we can explicitly specify
+    <code>must()</code>, <code>mustNot()</code> or <code>should()</code> instead.
+  </p>
+
+  ```java
+   PagedList<Order> orders = new QOrder()
+    // expressions joined by must
+    .must()
+      .customer.name.match("Rob")
+      .status.eq(Order.Status.COMPLETE)
+    .setMaxRows(50)
+    .findPagedList();
+  ```
+  ```json
+{
+  "size": 50,
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "customer.name": "Rob" } },
+        { "term": { "status": "COMPLETE" } }
+      ]
+    }
+  }
+}
+  ```
+
+  <h4>endMust(), endShould(), endMustNot()</h4>
+  <p>
+    If we want to some expressions into <code>must</code> and some others in <code>should</code>
+    then we use <code>endMust()</code> to indicate we have finished adding expressions to the
+    'list of must expressions' and then we can start a <code>should</code>.
+  </p>
+
+  ```java
+   List<Order> orders = new QOrder()
+    .must()
+      .customer.name.match("Rob")
+    .endMust() // end
+    .should()
+      .customer.name.match("Bygr")
+      .status.eq(Order.Status.COMPLETE)
+      .findList();
+  ```
+  ```json
+  {
+    "query": {
+      "bool": {
+        "must": [
+          { "match": { "customer.name": "Rob" } }
+        ],
+        "should": [
+          { "match": { "customer.name": "Bygr" } },
+          { "term": { "status": "COMPLETE" } }
+        ]
+      }
+    }
+  }
+  ```
   <h3>Query level expressions:</h3>
   <h4>multiMatch(), textSimple(), textCommonTerms(), textQueryString()</h4>
   <p>
