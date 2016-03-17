@@ -33,7 +33,11 @@
 </@smallnav>
 <@smallnav activeCheck="${elastic_query!''}" url="/docs/features/elasticsearch/query" title="Query">
 <ul class="nav">
-  <li><a href="#Expressions">Expressions</a></li>
+  <li><a href="#query-translation">Query translation</a></li>
+  <li><a href="#criteria-query">Criteria query</a></li>
+  <li><a href="#query-beans">Query beans</a></li>
+  <li><a href="#text-expressions">Text expressions</a></li>
+  <li><a href="#expression-translation">Expression translation</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${elastic_syncing!''}" url="/docs/features/elasticsearch/syncing" title="Syncing">

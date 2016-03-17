@@ -6,12 +6,209 @@
 </head>
 <body>
 <div class="bs-docs-section">
-  <h2 id="overview">Query</h2>
+  <h2 id="query-translation">Query translation</h2>
+
+  <h4>orderBy -> sort</h4>
+  <p>
+    The <code>orderBy</code> clause translates to the ElasticSearch
+    <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html">sort</a>.
+  </p>
+
+  <h4>firstRows/maxRows -> from/size</h4>
+  <p>
+    The <code>firstRows</code> and <code>maxRows</code> translate to the ElasticSearch
+    <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html">from and size</a>
+    respectively.
+  </p>
   <p>
 
   </p>
 
-  <h3>Equal To</h3>
+  <h4>select/fetch -> fields/include</h4>
+  <p>
+    The <code>select</code> and <code>fetch</code> clauses of an ORM query translate to the ElasticSearch
+    <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-fields.html">fields</a>
+    and <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-source-filtering.html">_source include</a>.
+  </p>
+
+  <h4>where -> filter context</h4>
+  <p>
+    Expressions added to <code>where</code> becomes expression in the ElasticSearch
+    <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html">filter context</a>.
+  </p>
+  <p>
+    Expression in the filter context are not <b>scored</b> and do not take part in relevance ordering. The benefit
+    of expressions in the filter context is that they can be cached by ElasticSearch for performance.
+  </p>
+  <p>
+
+  </p>
+
+  <h4>text -> query context</h4>
+  <p>
+    Expressions added to <code>text</code> become expressions in the ElasticSearch
+    <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html">query context</a>.
+    These expressions are scored and are used to determine the relevance ordering of documents.
+  </p>
+  <p>
+    If expressions are added <code>text</code> then the query is automatically deemed to be a document
+    store query.
+  </p>
+  <p>
+    The query <code>text()</code> provides additional "Full text search" expressions that can only be executed
+    against the document store such as: <code>match</code>, <code>multi match</code>,
+    <code>text common terms</code>, <code>text simple</code> and <code>text query string</code>.
+  </p>
+
+
+  <h2 id="criteria-query">Criteria query</h2>
+  <p>
+    You can use the standard query criteria API to build queries to execute against ElasticSearch.
+  </p>
+
+  <h3>useDocStore(true)</h3>
+  <p>
+    If <code>useDocStore(true)</code> is set then the query will execute against ElasticSearch.
+  </p>
+
+  <h3>text()</h3>
+  <p>
+    Using <code>text()</code> automatically sets the query to execute against ElasticSearch and
+    there is no need to set <code>useDocStore(true)</code>.
+  </p>
+  <p>
+    The text() method returns <code>TextExpressionList</code> which provides the ability to add
+    "Full text search" expressions (match, multiMatch, textSimple etc)
+    as well as the standard expressions (equalTo, greaterThan, like etc).
+  </p>
+
+  <h3>Must, MustNot, Should</h3>
+  <p>
+    The "text expression list" is only used to build queries against the document store (ElasticSearch etc)
+    and in this context <code>must()</code>, <code>mustNot()</code> and <code>should()</code> are provided.
+    This operate in a similar way to <code>and()</code> and <code>or()</code> as a list of expressions that
+    are joined by <code>must()</code>, <code>mustNot()</code> or <code>should()</code> and together become
+    a ElasticSearch <code>bool</code> expression.
+  </p>
+
+
+  <h2 id="query-beans">Query beans</h2>
+  <p>
+    Query beans provides a type safe "wrapper" over the query criteria API. We can also
+  </p>
+
+  ```java
+  List<Order> orders = new QOrder()
+    .setUseDocStore(true)
+    .setFirstRow(10)
+    .setMaxRows(10)
+    .status.eq(Order.Status.COMPLETE)
+    .orderBy()
+      .whenCreated.desc()
+    .findList();
+  ```
+  ```json
+  {
+    "sort": [ { "whenCreated": { "order": "desc" } } ],
+    "query": {
+      "filtered": {
+        "filter": { "term": { "status": "COMPLETE" } }
+      }
+    }
+  }
+  ```
+
+  <h3>String properties: match()</h3>
+  <p>
+    For query beans the <code>match()</code> expression is available on properties of type string.
+    If you use match() then this expression is automatically added to the "text expressions" and the
+    query is automatically treated as a document store query.
+  </p>
+
+  ```java
+  new QOrder()
+      .customer.name.match("Rob")
+      .findList();
+  ```
+
+  ```json
+  {
+    "query": {
+      "match": {
+        "customer.name": "Rob"
+      }
+    }
+  }
+  ```
+
+  <h3>Query level expressions:</h3>
+  <h4>multiMatch(), textSimple(), textCommonTerms(), textQueryString()</h4>
+  <p>
+    There are "query level" expressions that can be used: <code>multiMatch()</code>, <code>textSimple()</code>,
+    <code>textCommonTerms()</code> and <code>textQueryString()</code>. These expressions apply to multiple
+    fields or the entire document (_all field).
+  </p>
+  <p>
+    These expressions are added to the "text expressions" and automatically make the query a document store
+    query.
+  </p>
+
+  ```java
+
+  MultiMatch multiMatch =
+    MultiMatch.fields("customer.name", "customer.notes")
+      .opAnd()
+      .type(MultiMatch.Type.PHRASE_PREFIX);
+
+  new QOrder()
+      .multiMatch("Rob", multiMatch)
+      .findList();
+  ```
+
+  ```json
+  {"query": {
+    "multi_match": {
+      "query": "Rob",
+      "fields": [
+        "customer.name",
+        "customer.notes"
+      ],
+      "type": "phrase_prefix",
+      "operator": "and"
+    }
+  }}
+  ```
+
+  <h2>Text expressions</h2>
+  <h4>match</h4>
+  <p>
+    <code>match</code> maps to ElasticSearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html">match query</a>.
+  </p>
+
+  <h4>multi match</h4>
+  <p>
+    <code>multi match</code> maps to ElasticSearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-multi-match-query.html">multi match query</a>.
+  </p>
+
+  <h4>text simple</h4>
+  <p>
+    <code>text simple</code> maps to ElasticSearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html">simple query string query</a>.
+  </p>
+
+  <h4>text query string</h4>
+  <p>
+    <code>text query string</code> maps to ElasticSearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html">query string query</a>.
+  </p>
+
+  <h4>text common terms</h4>
+  <p>
+    <code>text common terms</code> maps to ElasticSearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-common-terms-query.html">common terms query</a>.
+  </p>
+
+
+  <h2 id="expression-translation">Expression translation</h2>
+
+  <h4>Equal To</h4>
   <p>
     Equals to is translated to a <code>term</code>
   </p>
@@ -26,7 +223,7 @@
   { "term": { "status": "COMPLETE" } }
 ```
 
-  <h3>Greater Than</h3>
+  <h4>Greater Than</h4>
   <p>
     Greater Than is translated to a <code>range</code>
   </p>
@@ -43,7 +240,7 @@
 
 
 
-  <h3>All Equals</h3>
+  <h4>All Equals</h4>
   <p>
     All equals is translated to a <code>bool</code> <code>must</code> list of <code>term</code>
   </p>
