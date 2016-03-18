@@ -33,11 +33,15 @@
 </@smallnav>
 <@smallnav activeCheck="${elastic_query!''}" url="/docs/features/elasticsearch/query" title="Query">
 <ul class="nav">
-  <li><a href="#query-translation">Query translation</a></li>
-  <li><a href="#criteria-query">Criteria query</a></li>
-  <li><a href="#query-beans">Query beans</a></li>
-  <li><a href="#text-expressions">Text expressions</a></li>
-  <li><a href="#expression-translation">Expression translation</a></li>
+  <li><a href="#order-by">orderBy -> sort</a></li>
+  <li><a href="#max-rows">firstRows/maxRows -> from/size</a></li>
+  <li><a href="#select">select/fetch -> fields/include</a></li>
+  <li><a href="#filter-context">where -> filter context</a></li>
+  <li><a href="#query-context">text -> query context</a></li>
+  <li><a href="#use-doc-store">Explicit useDocStore(true)</a></li>
+  <li><a href="#implied-use-doc-store">Implied useDocStore(true)</a></li>
+  <li><a href="#must-must-not-should">Must, must not, should</a></li>
+
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${elastic_syncing!''}" url="/docs/features/elasticsearch/syncing" title="Syncing">

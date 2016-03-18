@@ -6,32 +6,42 @@
 </head>
 <body>
 <div class="bs-docs-section">
-  <h2 id="query-translation">Query translation</h2>
-
-  <h4>orderBy -> sort</h4>
+  <h2 id="order-by">orderBy -> sort</h2>
   <p>
     The <code>orderBy</code> clause translates to the ElasticSearch
     <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html">sort</a>.
   </p>
 
-  <h4>firstRows/maxRows -> from/size</h4>
+  <h2 id="max-rows">firstRows/maxRows -> from/size</h2>
   <p>
     The <code>firstRows</code> and <code>maxRows</code> translate to the ElasticSearch
     <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-from-size.html">from and size</a>
     respectively.
   </p>
-  <p>
 
-  </p>
-
-  <h4>select/fetch -> fields/include</h4>
+  <h2 id="select">select/fetch -> fields/include</h2>
   <p>
     The <code>select</code> and <code>fetch</code> clauses of an ORM query translate to the ElasticSearch
     <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-fields.html">fields</a>
     and <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-source-filtering.html">_source include</a>.
+    For background reading there is <a href="https://www.elastic.co/blog/found-managing-elasticsearch-fields-when-searching">managing elasticsearch fields when searching</a>.
+  </p>
+  <p>
+    Ebean will translate a fetch() clause into a _source include if the fetch is a <code>*</code>
+    "fetch all properties for the path" or if the path is a OneToMany or ManyToMany.
+  </p>
+  <p>
+    The expectation is that there will be some specific queries we want to optimise (to support Autocomplete UI etc)
+    and for those we can store the fields we want to fetch (so that ElasticSearch does not need to read them out of
+    the _source) and then use fields to specifically only fetch those fields. An expected use case would be to support
+    autocomplete for 'customer name' or 'product name' etc where we really only need the id and name fields.
+  </p>
+  <p>
+    If no select() or fetch() is specified then no fields or _source section is included in the query and ElasticSearch
+    will return the _source.
   </p>
 
-  <h4>where -> filter context</h4>
+  <h2 id="filter-context">where -> filter context</h2>
   <p>
     Expressions added to <code>where</code> becomes expression in the ElasticSearch
     <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html">filter context</a>.
@@ -40,36 +50,254 @@
     Expression in the filter context are not <b>scored</b> and do not take part in relevance ordering. The benefit
     of expressions in the filter context is that they can be cached by ElasticSearch for performance.
   </p>
+  <blockquote>By default where() expressions are joined by <code>MUST</code></blockquote>
   <p>
-
+    When multiple expressions are added to <code>where()</code> they are by default added using <code>MUST</code> and
+    this is consistent with the 'object relational' default of <code>AND</code>.
   </p>
 
-  <h4>text -> query context</h4>
+  <h4>Example: filter context</h4>
+
+  ```java
+  PagedList<Order> orders =
+    Order.find
+      .where()
+        // default to MUST for where()
+        .customer.name.istartsWith("Rob")
+        .status.eq(Order.Status.COMPLETE)
+      .setMaxRows(50)
+      .setUseDocStore(true)
+      .findPagedList();
+  ```
+
+  ```json
+  {
+    "size": 50,
+    "query": {
+      "filtered": {
+        "filter": {
+          "bool": {
+            "must": [
+              { "prefix": { "customer.name": "rob" } },
+              { "term": { "status": "COMPLETE" } }
+            ]
+          }
+        }
+      }
+    }
+  }
+
+  ```
+
+  <h2 id="query-context">text -> query context</h2>
   <p>
     Expressions added to <code>text</code> become expressions in the ElasticSearch
     <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html">query context</a>.
     These expressions are scored and are used to determine the relevance ordering of documents.
   </p>
   <p>
-    If expressions are added <code>text</code> then the query is automatically deemed to be a document
+    If expressions are added <code>text()</code> then the query is automatically deemed to be a document
     store query.
   </p>
+  <blockquote>By default text() expressions are joined by <code>SHOULD</code></blockquote>
   <p>
-    The query <code>text()</code> provides additional "Full text search" expressions that can only be executed
-    against the document store such as: <code>match</code>, <code>multi match</code>,
-    <code>text common terms</code>, <code>text simple</code> and <code>text query string</code>.
+    When multiple expressions are added to <code>text()</code> they are by default added using <code>SHOULD</code> and
+    this is consistent with the 'object relational' default of <code>OR</code>.
+  </p>
+
+  <h4>Example: query context</h4>
+
+  ```java
+  PagedList<Order> orders =
+    Order.find
+      .text()
+        // implicitly sets setUseDocStore(true)
+        // goes to ElasticSearch 'query context'
+        // defaults to SHOULD for text()
+        .customer.name.match("Rob")
+        .status.eq(Order.Status.COMPLETE)
+      .setMaxRows(50)
+      .findPagedList();
+  ```
+
+
+  ```json
+  {
+    "size": 50,
+    "query": {
+      "bool": {
+        "should": [
+          { "match": { "customer.name": "Rob" } },
+          { "term": { "status": "COMPLETE" } }
+        ]
+      }
+    }
+  }
+
+  ```
+
+  <h4>Example: query context and filter context</h4>
+  <p>
+    A "Full text" query can have both the <code>query context</code> and <code>filter context</code> like
+    the example query below.
+  </p>
+
+  ```java
+  List<Order> orders = Order.find
+      .text() // 'query context'
+        .must()
+          .customer.name.match("Rob")
+          .customer.name.match("Bygr")
+          .endJunction()
+        .mustNot()
+          .customer.status.eq(Customer.Status.ACTIVE)
+      .where() // 'filter context'
+        .should()
+          .status.eq(Order.Status.COMPLETE)
+          .status.isNotNull()
+      .findList();
+  ```
+
+   ```json
+  {
+    "query": {
+      "bool": {
+        "must": [
+          { "match": { "customer.name": "Rob" } },
+          { "match": { "customer.name": "Bygr" } }
+        ],
+        "must_not": [
+          { "term": { "customer.status": "ACTIVE" } }
+        ]
+      }
+    },
+    "filter": {
+      "bool": {
+        "should": [
+          { "term": { "status": "COMPLETE" } },
+          { "exists": { "field": "status" } }
+        ]
+      }
+    }
+  }
+   ```
+
+  <h2 id="use-doc-store">Explicit useDocStore(true)</h2>
+  <p>
+    If <code>useDocStore(true)</code> is set then the query will execute against ElasticSearch.
+  </p>
+
+  <h2 id="implied-use-doc-store">Implied useDocStore(true)</h2>
+  <p>
+    A query is implicitly set as a doc store query when:
+  </p>
+  <ul>
+    <li><code>text()</code> is used</li>
+    <li>Text junctions are used - <code>must()</code>, <code>mustNot()</code>, <code>should()</code></li>
+    <li>A "Full text" expression is used - <code>match()</code>, <code>multiMatch()</code>, <code>textSimple()</code>,
+      <code>textQueryString()</code>, <code>textCommonTerms()</code></li>
+  </ul>
+
+  <h2 id="must-must-not-should">Must, must not, should</h2>
+  <p>
+    <code>MUST</code>, <code>MUST NOT</code> and <code>SHOULD</code> are junction expressions that are
+    using in text searches and map to <code>AND</code>, <code>NOT</code> and <code>OR</code>
+    respectively.
+  </p>
+  <p>
+    We can not use <b>must()</b>, <b>mustNot()</b> or <b>should()</b> in normal ORM queries and as soon as we use one of these
+    'text search junction expressions' the query is automatically considered a document store query
+    and will hit ElasticSearch.
+  </p>
+
+   ```java
+   Product
+    .where()
+      // we used must() so automatically
+      // becomes a doc store query
+      .must()
+        .sku.equalTo("C002")
+        .findList();
+   ```
+
+  <p>
+    We use <code>must()</code>, <code>mustNot()</code> and <code>should()</code> to join
+    expressions.
+  </p>
+
+  ```java
+
+  List<Customer> customers =
+    server.find(Customer.class)
+      .text()
+      .must()
+        .match("name", "Rob")
+        .match("smallNote", "interesting")
+      .findList();
+  ```
+  ```json
+  {
+    "query": {
+      "bool": {
+        "must": [
+          { "match": { "name": "Rob" } },
+          { "match": { "smallNote": "interesting" } }
+        ]
+      }
+    }
+  }
+  ```
+
+  <p>
+    We use <code>endJunction()</code> to end the 'current junction' so that we can start
+    another one.
   </p>
 
 
+  ```java
+  List<Order> orders = Order.find
+      .text() // 'query context'
+        .must()
+          .customer.name.match("Rob")
+          .customer.name.match("Bygr")
+          .endJunction()
+        .mustNot()
+          .customer.status.eq(Customer.Status.ACTIVE)
+      .where() // 'filter context'
+        .should()
+          .status.eq(Order.Status.COMPLETE)
+          .status.isNotNull()
+      .findList();
+  ```
+
+   ```json
+  {
+    "query": {
+      "bool": {
+        "must": [
+          { "match": { "customer.name": "Rob" } },
+          { "match": { "customer.name": "Bygr" } }
+        ],
+        "must_not": [
+          { "term": { "customer.status": "ACTIVE" } }
+        ]
+      }
+    },
+    "filter": {
+      "bool": {
+        "should": [
+          { "term": { "status": "COMPLETE" } },
+          { "exists": { "field": "status" } }
+        ]
+      }
+    }
+  }
+   ```
   <h2 id="criteria-query">Criteria query</h2>
   <p>
     You can use the standard query criteria API to build queries to execute against ElasticSearch.
   </p>
 
-  <h3>useDocStore(true)</h3>
-  <p>
-    If <code>useDocStore(true)</code> is set then the query will execute against ElasticSearch.
-  </p>
 
   <h3>text()</h3>
   <p>
@@ -116,67 +344,6 @@
   { "query": { "match": { "customer.name": "Rob" } } }
   ```
 
-
-  <h3>Must, must not, should</h3>
-  <p>
-    The "text expression list" is only used to build queries against the document store (ElasticSearch etc)
-    and in this context <code>must()</code>, <code>mustNot()</code> and <code>should()</code> are provided.
-    This operate in a similar way to <code>and()</code> and <code>or()</code> as a list of expressions that
-    are joined by <code>must()</code>, <code>mustNot()</code> or <code>should()</code> and together become
-    a ElasticSearch <code>bool</code> expression.
-  </p>
-
-  <p>
-    By default expressions are added by <code>bool</code> <code>should</code>.
-  </p>
-
-  ```java
-  List<Customer> customers = server.find(Customer.class)
-      .text()
-        .match("name", "Rob")
-        .match("note", "interesting")
-        .findList();
-  ```
-  ```json
-  {
-    "query": {
-      "bool": {
-        "should": [
-          { "match": { "name": "Rob" } },
-          { "match": { "note": "interesting" } }
-        ]
-      }
-    }
-  }
-  ```
-
-  <p>
-    We use <code>must()</code>, <code>mustNot()</code> and <code>should()</code> to join
-    expressions.
-  </p>
-
-  ```java
-
-  List<Customer> customers =
-    server.find(Customer.class)
-      .text()
-      .must()
-        .match("name", "Rob")
-        .match("smallNote", "interesting")
-      .findList();
-  ```
-  ```json
-  {
-    "query": {
-      "bool": {
-        "must": [
-          { "match": { "name": "Rob" } },
-          { "match": { "smallNote": "interesting" } }
-        ]
-      }
-    }
-  }
-  ```
   <h2 id="query-beans">Query beans</h2>
   <p>
     Query beans provides a type safe "wrapper" over the query criteria API. We can also
