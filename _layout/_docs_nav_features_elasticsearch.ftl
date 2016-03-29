@@ -18,7 +18,7 @@
   <li><a href="#DocCode">@DocCode</a></li>
   <li><a href="#DocSortable">@DocSortable</a></li>
   <li><a href="#DocProperty">@DocProperty</a></li>
-  <li><a href="#MappingGeneration">Mapping generation</a></li>
+  <li><a href="#mapping-generation">Mapping generation</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${elastic_indexes!''}" url="/docs/features/elasticsearch/indexes" title="Indexes">
@@ -46,6 +46,18 @@
 </@smallnav>
 <@smallnav activeCheck="${elastic_syncing!''}" url="/docs/features/elasticsearch/syncing" title="Syncing">
 <ul class="nav">
-  <li><a href="#aliases">Aliases</a></li>
+  <li><a href="#post-commit">Post commit</a></li>
+  <li><a href="#transaction-ignore">Transaction mode ignore</a></li>
+  <li><a href="#insert">Insert</a></li>
+  <li><a href="#delete">Delete</a></li>
+  <li><a href="#update">Update</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${elastic_start!''}" url="/docs/features/elasticsearch/get-started" title="Getting started">
+<ul class="nav">
+  <li><a href="#dependencies">Dependencies</a></li>
+  <li><a href="#bean-mapping">Bean mapping</a></li>
+  <li><a href="#generate-mapping">Generating mapping</a></li>
+  <li><a href="#issues">Review issues</a></li>
 </ul>
 </@smallnav>

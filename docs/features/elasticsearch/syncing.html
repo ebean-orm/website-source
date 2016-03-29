@@ -6,11 +6,290 @@
 </head>
 <body>
 <div class="bs-docs-section">
-  <h2 id="overview">Syncing</h2>
+  <h2 id="post-commit">Post commit</h2>
   <p>
-    There are quite a few different reasons why ElasticSearch integration is useful to applications using
-    Ebean ORM.
+    When a transaction successfully commits entity beans that are mapped to ElasticSearch directly
+    via <code>@DocStore</code> or indirectly via being part of an embedded document (de-normalisation)
+    will have changes that need to propagate to ElasticSearch.
   </p>
+  <p>
+    The processing of these entity beans occurs in a background thread so as to not effect the normal
+    response time of the transaction.
+  </p>
+  <p>
+    Changes are propagated based on their <code>DocStoreMode</code>:
+  </p>
+  <ul>
+    <li>UPDATE - changes are sent to ElasticSearch via it's bulk API.</li>
+    <li>QUEUE - changes are pushed onto a queue for later processing.</li>
+    <li>IGNORE - changes are ignored by Ebean with the expectation that the application will find and propagate changes as needed.</li>
+  </ul>
+
+  <h2 id="transaction-ignore">Transaction DocStoreMode.IGNORE</h2>
+  <p>
+    A transaction can be set to <code>DocStoreMode.IGNORE</code> and then Ebean will ignore any and all changes
+    in that transaction.
+    This is intended for use with large batch processing where it is deemed best to have Ebean not perform
+    normal processing of the changes and instead have the application search for changes to propagate to
+    ElasticSearch later.
+  </p>
+  ```java
+
+  Transaction transaction = server.beginTransaction();
+  transaction.setDocStoreMode(DocStoreMode.IGNORE);
+  try {
+
+    // perform lots of changes and we don't want
+    // Ebean to propagate those (as it would normall)
+    transaction.commit();
+  } finally {
+    transaction.end();
+  }
+
+  // typically application code later finds and
+  // updates indexes as necessary
+  // for example:
+
+  Query<Product> query = server.find(Product.class)
+    .where()
+      .ge("whenModified", new Timestamp(since))
+      .query();
+
+  // update products modified after a given dateTime
+  server.docStore().indexByQuery(query, 1000);
+
+  ```
+
+
+  <h2 id="insert">Insert</h2>
+  <p>
+    When a entity bean is inserted it is added as a to the DocStoreUpdate and sent to the DocStoreUpdateProcessor.
+  </p>
+  <p>
+    This translates into a <code>index</code> entry in ElasticSearch bulk updates.
+  </p>
+  <h4>Example: Insert a country</h4>
+  ```java
+    Country country = new Country("SA","South Africa");
+    country.save();
+  ```
+  <h4>Bulk API</h4>
+  ```json
+  {"index":{"_id":"SA","_type":"country","_index":"country"}}
+  {"name":"South Africa"}
+  ```
+
+  <h2 id="delete">Delete</h2>
+  <p>
+    When a entity bean is deleted it is added as a to the DocStoreUpdate and sent to the DocStoreUpdateProcessor.
+  </p>
+  <p>
+    This translates into a <code>delete</code> entry in ElasticSearch bulk updates.
+  </p>
+
+  <h4>Example: Delete a country</h4>
+  ```java
+  Ebean.delete(Country.class, "SA");
+  ```
+  <h4>Bulk API</h4>
+  ```json
+  {"delete":{"_id":"SA","_type":"country","_index":"country"}}
+  ```
+
+  <h2 id="update">Update</h2>
+  <p>
+    Processing updates are more complex than inserts and deletes in that with updates we need to not only
+    update the main <code>@DocStore</code> index but also update any indexes where the effected/updated
+    properties have been included as part of an embedded document (typically via <code>@DocStoreEmbedded</code>).
+  </p>
+
+  <h4>Example: Update country</h4>
+  ```java
+  Country sa = fetchSaFromDocStore();
+  sa.setName("Sud Africa");
+  sa.save();
+  ```
+  <h4>Bulk API</h4>
+  ```json
+  {"update":{"_id":"SA","_type":"country","_index":"country"}}
+  {"doc":{"name":"Sud Africa"}}
+  ```
+
+  <h3>Embedded documents</h3>
+  <p>
+    When we update an entity bean we also need to update indexes where the entity bean has been embedded.
+  </p>
+  <p>
+    Each <code>@DocStoreEmbedded</code> represents an embedded document (de-normalisation). When entity beans
+    are updated Ebean will also look to update any related embedded documents.
+  </p>
+  <p>
+    Based on the mapping (<code>@DocStoreEmbedded</code> doc attributes) Ebean knows the <code>nested paths</code>
+    that need to be checked/updated when an entity bean is updated.
+  </p>
+
+  <h4>E.g. Customer embedded in Order and Contacts</h4>
+  <p>
+    For example, let us index Customer but also have customer included as an embedded document
+    within the Order index and Contacts index.
+  </p>
+
+  <h5>Customer indexed</h5>
+  ```java
+  @DocStore
+  @Entity
+  public class Customer ...
+  ```
+
+  <h5>Customer embedded in Contacts</h5>
+
+  ```java
+  @DocStore
+  @Entity
+  public class Contact extends BasicDomain {
+
+    ...
+    @ManyToOne(optional = false)
+    @DocStoreEmbedded(doc = "id,name")
+    Customer customer;
+  ```
+
+  <h5>Customer embedded in Order</h5>
+  ```java
+  @DocStore
+  @Entity
+  @Table(name = "o_order")
+  public class Order extends BasicDomain {
+
+    ...
+    @NotNull @ManyToOne
+    @DocStoreEmbedded(doc = "id,status,name,billingAddress(*,country(*)")
+    Customer customer;
+  ```
+
+  <p>
+    When customer name is updated Ebean needs to:
+  </p>
+  <ul>
+    <li>Update the Customer index</li>
+    <li>Update any related Contacts (based on nested path update)</li>
+    <li>Update any related Orders (based nested path update)</li>
+  </ul>
+  <p>
+    When Ebean starts it uses the mapping, reading the <code>@DocStoreEmbedded</code> <code>doc</code>
+    attributes and determines the nested document structure. If then registers a listener for each
+    <code>nested path</code>. In the example above 2 listeners are registered with customer where one
+    will update contacts (if customer name is changed) and one will update orders (if name, status or
+    billing address is changed).
+  </p>
+  <h5>Change customer name</h5>
+  <p>
+    If we find customer 2 and change it's name to "Roberto" we will see:
+  </p>
+
+  <h5>Bulk API</h5>
+  ```json
+  {"update":{"_id":"2","_type":"customer","_index":"customer"}}
+  {"doc":{"name":"Roberto","whenModified":1459206556280,"version":2}}
+  {"update":{"_id":"5","_type":"order","_index":"order"}}
+  {"doc":{"customer":{"id":2,"status":"NEW","name":"Roberto","billingAddress":null}}}
+  {"update":{"_id":"2","_type":"order","_index":"order"}}
+  {"doc":{"customer":{"id":2,"status":"NEW","name":"Roberto","billingAddress":null}}}
+  {"update":{"_id":"4","_type":"contact","_index":"contact"}}
+  {"doc":{"customer":{"id":2,"name":"Roberto"}}}
+  ```
+  <ul>
+    <li>The 1st entry updates the Customer index</li>
+    <li>The 2nd and 3rd update Order 5 and Order 2 (Roberto's related orders)</li>
+    <li>The 4th updates Contact 4 (Roberto's related contact)</li>
+  </ul>
+
+  <h4>Nested paths</h4>
+  <p>
+    For each <code>nested path</code> Ebean will execute an ElasticSearch scan query to find the
+    entries in the index that need to be updated.
+  </p>
+  <h5>Find related orders</h5>
+  ```json
+  {"fields":["customer.id","id"],"query":{"filtered":{
+    "filter":{
+      "terms":{"customer.id":[2]}
+    }
+  }}}
+  ```
+  <h5>Find related contacts</h5>
+  ```json
+  {"fields":["customer.id","id"],"query":{"filtered":{
+    "filter":{
+      "terms":{"customer.id":[2]}
+    }
+  }}}
+  ```
+  <p>
+    It will execute an ORM query against the database to build the JSON to include in the Bulk API call
+    but as above it will execute ElasticSearch scan queries to find all the related entries to update.
+  </p>
+
+  <h4>E.g. Embedded Country</h4>
+  <p>
+    In the example below the Customer index contains embedded documents for
+    both the billing and shipping address and this in turn embeds the country.
+    In this example <code>"billingAddress.country.code"</code> and <code>"shippingAddress.country.code"</code>
+    are <code>nested paths</code> that Ebean needs to check to see which customer indexes need to be
+    updated when a country name is changed.
+  </p>
+
+  <p>
+    In this example below Country is embedded within the Customer index in both the billingAddress
+    and shippingAddress.  When we update a Country we also need to update any Customer documents that
+    contain that country in their billing or shipping address.
+  </p>
+  ```java
+  @DocStore
+  @Entity
+  public class Customer extends BasicDomain {
+    ...
+    @DocStoreEmbedded(doc = "*,country(*)")
+    @ManyToOne(cascade = CascadeType.ALL)
+    Address billingAddress;
+
+    @DocStoreEmbedded(doc = "*,country(*)")
+    @ManyToOne(cascade = CascadeType.ALL)
+    Address shippingAddress;
+  ```
+  <h4>e.g Nested path - billingAddress.country.code</h4>
+  <p>
+    Ebean will execute a scan query against ElasticSearch using the <code>nested path</code> in order to find
+    documents that need to be updated due to the change in the embedded document.
+  </p>
+  <h5>find customer's with billingAddress.country.code = SA</h5>
+  ```json
+  {"fields":["billingAddress.id","id"],"query":{
+      "filtered":{"filter":
+        {"terms":{"billingAddress.country.code":["SA"]}
+      }}
+  }}
+  ```
+  <h5>find customer's with shippingAddress.country.code = SA</h5>
+  ```json
+  {"fields":["shippingAddress.id","id"],"query":{
+      "filtered":{"filter":
+        {"terms":{"billingAddress.country.code":["SA"]}
+      }}
+  }}
+  ```
+  <h5>find orders with customer.billingAddress.country.code = SA</h5>
+  <p>
+    Country also is embedded in the Order index via customer.billingAddress so
+    we also find orders that have this embedded country.
+  </p>
+  ```json
+    {"fields":["customer.id","id"],"query":{"filtered":{
+      "filter":{
+        "terms":{"customer.billingAddress.country.code":["SA"]}
+      }
+    }}}
+  ```
 
 </div>
 </body>
