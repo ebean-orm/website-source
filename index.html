@@ -24,84 +24,103 @@
           Use JPA Mapping annotations.
         </p>
 
-```java
-@Entity
-@Table(name="be_customer")
-public class Customer extends BaseModel {
+        ```java
+        @Entity
+        @Table(name="be_customer")
+        public class Customer extends BaseModel {
 
-  @Column(length=100)
-  String name;
+          @Column(length=100)
+          String name;
 
-  @ManyToOne(cascade=CascadeType.ALL)
-  Address billingAddress;
+          @ManyToOne(cascade=CascadeType.ALL)
+          Address billingAddress;
 
-  @OneToMany(mappedBy="customer", cascade=CascadeType.PERSIST)
-  List<Contact> contacts;
-  ...
-```
-        <h3>Simple to save, delete</h3>
-        <p>
-          With Ebean it is very easy to insert, update, delete.
-          There is no 'Session' or EntityManager to manage, no merge/flush etc.
-        </p>
-```java
-  @Inject
-  final EbeanServer ebeanServer;
-
-  public void createCustomer(String name) {
-
-    Customer customer = new Customer();
-    customer.setName(name);
-
-    ebeanServer.save(customer);
-  }
-```
-
-        <h3>Partial Objects</h3>
-        <p>
-          Just fetch what you need. Makes is it easy to optimise the query and get the SQL that you want.
-        </p>
-```java
-
-Customer customer = ebeanServer.find(Customer.class)
-    .select("name, email")
-    .where().idEq(1)
-    .findUnique();
-```
-
-```sql
-select t0.id c0, t0.name c1, t0.email c2
-  from customer t0
- where t0.id = ?
-```
-        <h3>Query language</h3>
-        <p>
-          Ebean automatically adds the appropriate joins to support the queries fetch, where and order by
-          clauses. This makes it easy to
-        </p>
-```java
-List<Customer> customers = ebeanServer.find(Customer.class)
-    .select("name")
-    // join added for this predicate automatically
-    .where().eq("billingAddress.country.code", "NZ")
-    .findList();
-```
-```sql
-select t0.id c0, t0.name c1
-  from customer t0
-  left outer join o_address t1 on t1.id = t0.billing_address_id
- where t1.country_code = ?
-```
-
-
+          @OneToMany(mappedBy="customer", cascade=CascadeType.PERSIST)
+          List<Contact> contacts;
+          ...
+        ```
       </div>
 
-
       <div class="col-sm-6 feature">
-        <h3><a href="/videos">Videos</a></h3>
+
+        <h3>Simple to use</h3>
         <p>
-          <a href="/videos">Videos</a> to show you various features of Ebean and options for testing.
+          With Ebean it is very easy to insert, update, delete.
+          There is no 'Session' or EntityManager to manage, no merge/flush/attach/detach semantics.
         </p>
+        ```java
+          @Inject
+          final EbeanServer ebeanServer;
+
+          public void createCustomer(String name) {
+
+            Customer customer = new Customer();
+            customer.setName(name);
+
+            ebeanServer.save(customer);
+
+          }
+
+        ```
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 feature">
+        <h3><a href="/docs/query/typesafe">Type safe queries</a></h3>
+        <p>
+          Use Query beans to build queries in a type safe manor.
+        </p>
+        ```java
+        LocalDate lastWeek = ...;
+
+        List<Customer> customers
+          = new QCustomer()
+          .billingAddress.city.equalTo("Auckland")
+          .status.isEqualTo(Status.NEW)
+          .registered.before(lastWeek)
+          .name.istartsWith("rob")
+          .setMaxRows(10)
+          .orderBy()
+            .name.asc()
+            .id.desc()
+          .findList();
+        ```
+      </div>
+      <div class="col-sm-6 feature">
+
+        <h3><a href="/docs/query/autotune">Automatic query tuning</a></h3>
+        <p>
+          Ebean can profile the object graph use and use that to <code>automatically optimise</code>
+          ORM queries such that they only fetch the required properties and minimises N + 1.
+        </p>
+
+        <h3><a href="/docs/features/elasticsearch">ElasticSearch integration</a></h3>
+        <p>
+          Want <code>horizontally scale</code> read access, text searching or just want
+          some inverted index awesomeness?
+        </p>
+        <p>
+          Have a look at <a href="/docs/features/elasticsearch">Ebean's integration</a> with
+          <a href="https://www.elastic.co/">ElasticSearch</a> .
+        </p>
+
+        <h3><a href="/docs/features/history">SQL2011 History support</a></h3>
+        <p>
+          Ebean has built in @History support for Oracle, Postgres, MySql and H2.
+          This means database changes are kept for auditing or change tracking purposes
+          and perform <code>historical queries</code> (what did a object graph look like last week)
+          and perform <code>version queries</code> (what were all the changes to customer 42 including
+          a diff for each version).
+        </p>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="row">
+      <div class="col-sm-6 feature">
+
         <h3>Architecture</h3>
         <p>
           Ebean has an taken a different architectural when compared with JPA and JDO and this has important implications.
@@ -113,22 +132,34 @@ select t0.id c0, t0.name c1
           on the bean.
         </p>
 
-        <h3>Partial Objects</h3>
+        <h3><a href="/videos">Videos</a></h3>
         <p>
-          Partial objects are very important for a high performance ORM and Ebean has this as the bases of its design.
-          The query language makes it trivial to fetch only the properties you want and partial objects are supported
-          through-out.  JPA FetchGroups are trying to do the same task but look like a last minute add-on - partial
-          object support needs to be part of the query language for a high performance ORM.
+          <a href="/videos">Videos</a> to show you various features of Ebean and options for testing.
         </p>
 
-        <h3>Query Language Design</h3>
+      </div>
+      <div class="col-sm-6 feature">
+
+        <h3>Partial Objects and N + 1</h3>
         <p>
-          The Ebean query language was designed to make is easier to use. The developer specifies the parts of the
-          object graph they want to fetch, the predicates and the order by and then Ebean figures out all the underlying
-          joins that are required and if the joins need to be inner or outer joins. This makes is much easier for the
-          developer to use.
+          A high performance ORM needs good support for <a href="/docs/query/partialobjects">partial objects</a>
+          (only fetching the properties needed) and optimising object graph construction to mitigate
+          <a href="/docs/query/nplus1">N + 1</a>.
+        </p>
+        <p>
+          Ebean's query design provides a clean separation between what properties and paths to fetch and the
+          rest of the query (predicates, orderBy, paging) and this makes it easy for developers to optimise
+          object graph construction and also allows Ebean to <a href="/docs/query/autotune">automatically tune queries</a>
+          using profiling.
         </p>
 
+        </div>
+      </div>
+
+    <hr/>
+
+    <div>
+      <div>
         <h3>Interesting Features</h3>
 
         <ul>
