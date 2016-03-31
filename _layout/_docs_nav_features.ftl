@@ -73,14 +73,17 @@
 </@smallnav>
 <@smallnav activeCheck="${l2caching!''}" url="/docs/features/l2caching" title="L2 caching">
 <ul class="nav">
-  <li><a href="#bean_and_query_caches">Bean and query caches</a></li>
-  <li><a href="#read_only_instances">Read only instances</a></li>
-  <li><a href="#shared_instances">Shared instances</a></li>
-  <li><a href="#automatic_cache_maint">Automatic Cache Maintenance</a></li>
-  <li><a href="#external_mods">Handling External Modification</a></li>
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#l2-l3">L2/local and L3/remote</a></li>
+  <li><a href="#read-consistency">Read consistency</a></li>
+  <li><a href="#table-iud-invalidation">Table IUD invalidation</a></li>
+  <li><a href="#bean-iud-invalidation">Bean IUD invalidation</a></li>
+  <li><a href="#read-only-instances">Read only instances</a></li>
+  <li><a href="#shared-instances">Shared instances</a></li>
+  <li><a href="#external-mods">External modification</a></li>
   <li><a href="#cachestrategy">@CacheStrategy</a></li>
-  <li><a href="#manual_cache_use">Manually specifying to use the bean cache</a></li>
-  <li><a href="#using_query_cache">Using the Query Cache</a></li>
+  <li><a href="#query-bean-cache">Query - bean cache</a></li>
+  <li><a href="#query-query-cache">Query - query cache</a></li>
 </ul>
 </@smallnav>
 
