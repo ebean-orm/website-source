@@ -55,10 +55,10 @@ public class Contact {
     TODO: Add @DocIgnore and @DocProperty(ignore=true) support.
   </p>
 
-  <h2 id="DocStoreEmbedded">@DocStoreEmbedded - Embedded documents</h2>
+  <h2 id="DocEmbedded">@DocEmbedded - Embedded documents</h2>
   <p>
     On @ManyToOne and @OneToMany properties you can specify the properties that should be
-    included in the document that is to be indexed using <code>@DocStoreEmbedded</code>.
+    included in the document that is to be indexed using <code>@DocEmbedded</code>.
   </p>
 
 
@@ -75,7 +75,7 @@ public class Contact {
   ...
   // denormalise including the customer id and name
   // into the 'contact' document
-  @DocStoreEmbedded(doc="id,name")
+  @DocEmbedded(doc="id,name")
   @ManyToOne(optional=false)
   Customer customer;
 ```
@@ -90,11 +90,11 @@ public class Contact {
 public class Order {
 
   ...
-  @DocStoreEmbedded(doc="id,name")
+  @DocEmbedded(doc="id,name")
   @ManyToOne(optional=false)
   Customer customer;
 
-  @DocStoreEmbedded
+  @DocEmbedded
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
   List<OrderDetail> details;
 ```
@@ -111,11 +111,11 @@ public class Order {
 
   ...
   // embed some customer details including the billingAddress
-  @DocStoreEmbedded(doc = "id,status,name,billingAddress(*,country(*)")
+  @DocEmbedded(doc = "id,status,name,billingAddress(*,country(*)")
   @ManyToOne(optional=false)
   Customer customer;
 
-  @DocStoreEmbedded(doc = "*,product(id,sku,name)")
+  @DocEmbedded(doc = "*,product(id,sku,name)")
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
   List<OrderDetail> details;
 ```

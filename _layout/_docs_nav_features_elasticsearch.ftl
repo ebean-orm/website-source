@@ -14,7 +14,7 @@
 <ul class="nav">
   <li><a href="#Overview">Overview</a></li>
   <li><a href="#DocStore">@DocStore</a></li>
-  <li><a href="#DocStoreEmbedded">@DocStoreEmbedded</a></li>
+  <li><a href="#DocEmbedded">@DocEmbedded</a></li>
   <li><a href="#DocCode">@DocCode</a></li>
   <li><a href="#DocSortable">@DocSortable</a></li>
   <li><a href="#DocProperty">@DocProperty</a></li>
@@ -55,6 +55,7 @@
 </@smallnav>
 <@smallnav activeCheck="${elastic_start!''}" url="/docs/features/elasticsearch/get-started" title="Getting started">
 <ul class="nav">
+  <li><a href="#example-application">Example application</a></li>
   <li><a href="#dependencies">Dependencies</a></li>
   <li><a href="#bean-mapping">Bean mapping</a></li>
   <li><a href="#generate-mapping">Generating mapping</a></li>

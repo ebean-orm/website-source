@@ -6,10 +6,17 @@
 </head>
 <body>
 <div class="bs-docs-section">
+
+  <h2 id="example-application">Example application</h2>
+  <p>
+    There is an example application at <a href="https://github.com/ebean-orm-examples/example-elastic">ebean-orm-examples/example-elastic</a>
+    which you can investigate / clone etc.
+  </p>
+
   <h2 id="dependencies">Dependencies</h2>
   <p>
     Add <code>avaje-ebeanorm-elastic</code> as a dependency to your project.
-    This will register with Ebean as the document store implementation.
+    This will automatically register with Ebean as the document store implementation.
   </p>
 
   <@maven "org.avaje.ebeanorm" "avaje-ebeanorm-elastic" "auto" "1" />
@@ -25,7 +32,7 @@
   <ul>
     <li><code>@DocCode</code> on properties that should not be analysed</li>
     <li><code>@DocSortable</code> on properties that we want both analysed and not analysed</li>
-    <li><code>@DocStoreEmbedded</code> to include embedded documents (denormalise) for @ManyToOne and @OneToMany properties</li>
+    <li><code>@DocEmbedded</code> to include embedded documents (denormalise) for @ManyToOne and @OneToMany properties</li>
   </ul>
   <p>
     Refer to <a href="/docs/features/elasticsearch/mapping">mapping</a> for more details.

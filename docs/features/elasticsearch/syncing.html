@@ -100,7 +100,7 @@
   <p>
     Processing updates are more complex than inserts and deletes in that with updates we need to not only
     update the main <code>@DocStore</code> index but also update any indexes where the effected/updated
-    properties have been included as part of an embedded document (typically via <code>@DocStoreEmbedded</code>).
+    properties have been included as part of an embedded document (typically via <code>@DocEmbedded</code>).
   </p>
 
   <h4>Example: Update country</h4>
@@ -120,11 +120,11 @@
     When we update an entity bean we also need to update indexes where the entity bean has been embedded.
   </p>
   <p>
-    Each <code>@DocStoreEmbedded</code> represents an embedded document (de-normalisation). When entity beans
+    Each <code>@DocEmbedded</code> represents an embedded document (de-normalisation). When entity beans
     are updated Ebean will also look to update any related embedded documents.
   </p>
   <p>
-    Based on the mapping (<code>@DocStoreEmbedded</code> doc attributes) Ebean knows the <code>nested paths</code>
+    Based on the mapping (<code>@DocEmbedded</code> doc attributes) Ebean knows the <code>nested paths</code>
     that need to be checked/updated when an entity bean is updated.
   </p>
 
@@ -150,7 +150,7 @@
 
     ...
     @ManyToOne(optional = false)
-    @DocStoreEmbedded(doc = "id,name")
+    @DocEmbedded(doc = "id,name")
     Customer customer;
   ```
 
@@ -163,7 +163,7 @@
 
     ...
     @NotNull @ManyToOne
-    @DocStoreEmbedded(doc = "id,status,name,billingAddress(*,country(*)")
+    @DocEmbedded(doc = "id,status,name,billingAddress(*,country(*)")
     Customer customer;
   ```
 
@@ -176,7 +176,7 @@
     <li>Update any related Orders (based nested path update)</li>
   </ul>
   <p>
-    When Ebean starts it uses the mapping, reading the <code>@DocStoreEmbedded</code> <code>doc</code>
+    When Ebean starts it uses the mapping, reading the <code>@DocEmbedded</code> <code>doc</code>
     attributes and determines the nested document structure. If then registers a listener for each
     <code>nested path</code>. In the example above 2 listeners are registered with customer where one
     will update contacts (if customer name is changed) and one will update orders (if name, status or
@@ -249,11 +249,11 @@
   @Entity
   public class Customer extends BasicDomain {
     ...
-    @DocStoreEmbedded(doc = "*,country(*)")
+    @DocEmbedded(doc = "*,country(*)")
     @ManyToOne(cascade = CascadeType.ALL)
     Address billingAddress;
 
-    @DocStoreEmbedded(doc = "*,country(*)")
+    @DocEmbedded(doc = "*,country(*)")
     @ManyToOne(cascade = CascadeType.ALL)
     Address shippingAddress;
   ```
