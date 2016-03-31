@@ -329,6 +329,84 @@ public class Content {
     Note that you only use <code>create=true</code> if <code>dropCreate</code> is false.
   </p>
 
+  <h5>Example mappings</h5>
+  <p>
+    You can find examples of generated mappings of the example application at
+    <a href="https://github.com/ebean-orm-examples/example-elastic/tree/master/src/main/resources/elastic-mapping">src/main/resources/elastic-mapping</a>.
+  </p>
+
+  <h5>Example: product_v1.mapping.json</h5>
+
+   ```json
+      {
+        "mappings" : {
+          "product" : {
+            "properties" : {
+              "sku": { "type": "string", "fields": { "raw": { "type": "string", "index": "not_analyzed" } } },
+              "name": { "type": "string", "fields": { "raw": { "type": "string", "index": "not_analyzed" } } },
+              "whenCreated": { "type": "date" },
+              "whenModified": { "type": "date" },
+              "version": { "type": "long" }
+            }
+          }
+        }
+      }
+   ```
+
+   <h5>Example: customer_v1.mapping.json</h5>
+
+   ```json
+{
+  "mappings" : {
+    "customer" : {
+      "properties" : {
+        "status": { "type": "string", "index": "not_analyzed" },
+        "name": { "type": "string" },
+        "smallNote": { "type": "string" },
+        "anniversary": { "type": "date" },
+        "billingAddress" : {
+          "properties" : {
+            "id": { "type": "long" },
+            "line1": { "type": "string" },
+            "line2": { "type": "string" },
+            "city": { "type": "string" },
+            "country" : {
+              "properties" : {
+                "code": { "type": "string", "index": "not_analyzed" },
+                "name": { "type": "string" }
+              }
+            },
+            "whenCreated": { "type": "date" },
+            "whenModified": { "type": "date" },
+            "version": { "type": "long" }
+          }
+        },
+        "shippingAddress" : {
+          "properties" : {
+            "id": { "type": "long" },
+            "line1": { "type": "string" },
+            "line2": { "type": "string" },
+            "city": { "type": "string" },
+            "country" : {
+              "properties" : {
+                "code": { "type": "string", "index": "not_analyzed" },
+                "name": { "type": "string" }
+              }
+            },
+            "whenCreated": { "type": "date" },
+            "whenModified": { "type": "date" },
+            "version": { "type": "long" }
+          }
+        },
+        "whenCreated": { "type": "date" },
+        "whenModified": { "type": "date" },
+        "version": { "type": "long" }
+      }
+    }
+  }
+}
+   ```
+
 </div>
 </body>
 </html>
