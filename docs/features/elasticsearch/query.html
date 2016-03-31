@@ -293,87 +293,14 @@
     }
   }
    ```
-  <h2 id="criteria-query">Criteria query</h2>
+
+
+  <h2 id="match">Match</h2>
   <p>
-    You can use the standard query criteria API to build queries to execute against ElasticSearch.
+    Match is an ElasticSearch only expression and when used the query is automatically treated as a document store query.
   </p>
-
-
-  <h3>text()</h3>
-  <p>
-    Using <code>text()</code> automatically sets the query to execute against ElasticSearch and
-    there is no need to set <code>useDocStore(true)</code>.
-  </p>
-  <p>
-    The text() method returns <code>TextExpressionList</code> which provides the ability to add
-    "Full text search" expressions (match, multiMatch, textSimple etc)
-    as well as the standard expressions (equalTo, greaterThan, like etc).
-  </p>
-
-  ```java
-  List<Order> orders = server.find(Order.class)
-    .text() // automatically doc store query
-      .where().eq("customer.name","Rob")
-      .findList();
-  ```
-
-  ```json
-  {
-    "query": {
-      "filtered": {
-        "filter": {
-          "term": { "customer.name.raw": "Rob" }
-        }
-      }
-    }
-  }
-  ```
-  <p>
-    <code>text()</code> provides additional "Full text search" expressions such as <code>match</code>,
-    <code>multi match</code>, <code>text simple</code>, <code>text query string</code> and <code>text common terms</code>.
-  </p>
-
-  ```java
-  List<Order> orders = server.find(Order.class)
-    .text()
-      .match("customer.name","Rob")
-      .findList();
-  ```
-
-  ```json
-  { "query": { "match": { "customer.name": "Rob" } } }
-  ```
-
-  <h2 id="query-beans">Query beans</h2>
-  <p>
-    Query beans provides a type safe "wrapper" over the query criteria API. We can also
-  </p>
-
-  ```java
-  List<Order> orders = new QOrder()
-    .setUseDocStore(true)
-    .status.eq(Order.Status.COMPLETE)
-    .orderBy()
-      .whenCreated.desc()
-    .findList();
-  ```
-  ```json
-  {
-    "sort": [ { "whenCreated": { "order": "desc" } } ],
-    "query": {
-      "filtered": {
-        "filter": { "term": { "status": "COMPLETE" } }
-      }
-    }
-  }
-  ```
-
-
-  <h3>String properties: match()</h3>
   <p>
     For query beans the <code>match()</code> expression is available on properties of type string.
-    If you use match() then this expression is automatically added to the "text expressions" and the
-    query is automatically treated as a document store query.
   </p>
 
   ```java
@@ -393,137 +320,14 @@
   }
   ```
 
+  <h2 id="multi-match">Multi match, Text simple etc</h2>
   <p>
-    Multiple expressions are by default added by <code>bool</code> <code>should</code>.
-  </p>
-
-  ```java
-    PagedList<Order> orders = new QOrder()
-      // "match" so automatically a doc store query
-      // and added to the 'text expressions' so goes
-      // into the ElasticSearch 'query context'
-      .customer.name.match("Rob")
-      .status.eq(Order.Status.COMPLETE)
-      .setMaxRows(50)
-      .findPagedList();
-
-    int totalHits = orders.getTotalRowCount();
-
-    List<Order> list = orders.getList();
-  ```
-  ```json
-    {
-      "size": 50,
-      "query": {
-        "bool": {
-          "should": [
-            { "match": { "customer.name": "Rob" } },
-            { "term": { "status": "COMPLETE" } }
-          ]
-        }
-      }
-    }
-  ```
-
-
-
-  <h3>where</h3>
-  <p>
-    Expressions added after <code>where()</code> are put into the <code>filter context</code>.
-  </p>
-
-  ```java
-    PagedList<Order> orders = new QOrder()
-      .customer.name.match("Rob")
-      .where()
-        // after where() so in "filter context"
-        .status.eq(Order.Status.COMPLETE)
-      .setMaxRows(50)
-      .findPagedList();
-
-    int totalRowCount = orders.getTotalRowCount();
-    List<Order> list = orders.getList();
-  ```
-
-  ```json
-  {
-    "size": 50,
-    "query": { "match": { "customer.name": "Rob" } },
-    "filter": { "term": { "status": "COMPLETE" } }
-  }
-  ```
-
-  <h3>must, should, must not</h3>
-  <p>
-    By default expressions are joined by <code>should</code> and we can explicitly specify
-    <code>must()</code>, <code>mustNot()</code> or <code>should()</code> instead.
-  </p>
-
-  ```java
-   PagedList<Order> orders = new QOrder()
-    // expressions joined by must
-    .must()
-      .customer.name.match("Rob")
-      .status.eq(Order.Status.COMPLETE)
-    .setMaxRows(50)
-    .findPagedList();
-  ```
-  ```json
-{
-  "size": 50,
-  "query": {
-    "bool": {
-      "must": [
-        { "match": { "customer.name": "Rob" } },
-        { "term": { "status": "COMPLETE" } }
-      ]
-    }
-  }
-}
-  ```
-
-  <h4>endMust(), endShould(), endMustNot()</h4>
-  <p>
-    If we want to some expressions into <code>must</code> and some others in <code>should</code>
-    then we use <code>endMust()</code> to indicate we have finished adding expressions to the
-    'list of must expressions' and then we can start a <code>should</code>.
-  </p>
-
-  ```java
-   List<Order> orders = new QOrder()
-    .must()
-      .customer.name.match("Rob")
-    .endMust() // end
-    .should()
-      .customer.name.match("Bygr")
-      .status.eq(Order.Status.COMPLETE)
-      .findList();
-  ```
-  ```json
-  {
-    "query": {
-      "bool": {
-        "must": [
-          { "match": { "customer.name": "Rob" } }
-        ],
-        "should": [
-          { "match": { "customer.name": "Bygr" } },
-          { "term": { "status": "COMPLETE" } }
-        ]
-      }
-    }
-  }
-  ```
-  <h3>Query level expressions:</h3>
-  <h4>multiMatch(), textSimple(), textCommonTerms(), textQueryString()</h4>
-  <p>
-    There are "query level" expressions that can be used: <code>multiMatch()</code>, <code>textSimple()</code>,
-    <code>textCommonTerms()</code> and <code>textQueryString()</code>. These expressions apply to multiple
-    fields or the entire document (_all field).
+    <code>multiMatch()</code>, <code>textSimple()</code>,
+    <code>textCommonTerms()</code> and <code>textQueryString()</code> are all ElasticSearch only
+    expression and using them automatically make the query a document store query.
   </p>
   <p>
-    These expressions are added to the "text expressions" and automatically make the query a document store
-    query.
+    These expression are "query level" expressions that apply to multiple fields or the entire document (_all field).
   </p>
 
   ```java
@@ -552,7 +356,7 @@
   }}
   ```
 
-  <h2>Text expressions</h2>
+  <h2 id="text-expressions">Text expressions</h2>
   <h4>match</h4>
   <p>
     <code>match</code> maps to ElasticSearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html">match query</a>.
@@ -578,65 +382,6 @@
     <code>text common terms</code> maps to ElasticSearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-common-terms-query.html">common terms query</a>.
   </p>
 
-
-  <h2 id="expression-translation">Expression translation</h2>
-
-  <h4>Equal To</h4>
-  <p>
-    Equals to is translated to a <code>term</code>
-  </p>
-  <h6>Ebean example</h6>
-
-```java
-  .where().eq("status", Order.Status.COMPLETE)
-```
-  <h6>Elastic JSON query</h6>
-
-```xml
-  { "term": { "status": "COMPLETE" } }
-```
-
-  <h4>Greater Than</h4>
-  <p>
-    Greater Than is translated to a <code>range</code>
-  </p>
-  <h6>Ebean example</h6>
-
-```java
-  .where().gt("customer.id", 42)
-```
-  <h6>Elastic JSON query</h6>
-
-```xml
-  {"range":{"customer.id":{"gt":42}}}
-```
-
-
-
-  <h4>All Equals</h4>
-  <p>
-    All equals is translated to a <code>bool</code> <code>must</code> list of <code>term</code>
-  </p>
-  <h6>Ebean example</h6>
-
-```java
-  Map<String, Object> allEq = new HashMap<String,Object>();
-  allEq.put("status", "COMPLETE");
-  allEq.put("customer.id", 1);
-
-  ...
-  .where().allEq(allEq)
-```
-  <h6>Elastic JSON query</h6>
-
-```xml
-  "bool": {
-    "must": [
-      { "term": { "customer.id": 1 } },
-      { "term": { "status": "COMPLETE" } }
-    ]
-  }
-```
 
 </div>
 </body>

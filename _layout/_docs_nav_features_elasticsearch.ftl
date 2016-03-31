@@ -41,7 +41,9 @@
   <li><a href="#use-doc-store">Explicit useDocStore(true)</a></li>
   <li><a href="#implied-use-doc-store">Implied useDocStore(true)</a></li>
   <li><a href="#must-must-not-should">Must, must not, should</a></li>
-
+  <li><a href="#match">Match</a></li>
+  <li><a href="#multi-match">Multi match, Text simple etc</a></li>
+  <li><a href="#text-expressions">Text expressions</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${elastic_syncing!''}" url="/docs/features/elasticsearch/syncing" title="Syncing">
