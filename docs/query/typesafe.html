@@ -1,6 +1,7 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_query.html"/>
+  <title>Type safe queries - Ebean ORM</title>
 <#assign subtitle = "Type safe queries (Query Beans)">
 <#assign querytypesafe = "true">
 </head>
@@ -38,6 +39,139 @@
     For deployment/production you can use the <code>javaagent</code> or <code>maven plugin</code>.
   </p>
 
+  <h2 id="benefits">Benefits</h2>
+
+  <h5>Model changes</h5>
+  <p>
+    When entity bean model changes the query beans are regenerated. If there are queries that are
+    broken by a model change then this results in a compile error (rather than a runtime error) and
+    so breaking model changes are detected easily and early.
+  </p>
+
+  <h5>Typed bind values</h5>
+  <p>
+    Using query beans means that the bind values used for any given property must be compatible with
+    the properties type.  For example, you can bind a String value for a property that has type Timestamp.
+  </p>
+
+  <h5>Speed of development</h5>
+  <p>
+    Using query beans means we can use IDE auto completion to help write our queries. There is no need to
+    check the model when we build our queries. This makes development a little bit faster, safer and fun!!
+  </p>
+
+  <h5>Long term maintenance</h5>
+  <p>
+    When applications get bigger and older using strongly type query beans makes maintenance easier as
+    it helps guide new developers who are less familiar with the model and model changes across large
+    applications are much less risky due to compile type checking relative to string based queries.
+  </p>
+
+  <h2 id="query-examples">Examples</h2>
+  <h4>Example</h4>
+  ```java
+  List<Customer> customers =
+    new QCustomer()
+      .id.greaterThan(12)
+      .name.startsWith("Rob")
+      .findList();
+  ```
+    <h4>Example: nested or() and and()</h4>
+    <p>
+      The following example contains an <code>or()</code> containing a nested <code>and()</code>.
+    </p>
+  ```java
+  List<Customer> customers
+    = new QCustomer()
+    .billingAddress.city.equalTo("Auckland")
+    .version.between(1,100)
+    .billingAddress.country.equalTo(nz)
+    .registered.before(new Date())
+    .or()
+      .id.greaterThan(1)
+      .and()
+        .name.icontains("Jim")
+        .inactive.isTrue()
+      .endAnd()
+    .endOr()
+    .orderBy()
+      .name.asc()
+      .id.desc()
+    .findList();
+  ```
+
+  <h4>Example: filterMany</h4>
+  <p>
+    filterMany provides the ability to filter the returned objects of an associated
+    OneToMany or ManyToMany relationship.
+  </p>
+  <p>
+    For example, lets say Customers have a lot of orders and for a specific use case
+    we want to find customers and only want their recent new orders. We want to
+    fetch the orders (a OneToMany) for the customers but want to filter those orders
+    to only contain 'recent new orders'
+  </p>
+  ```java
+  Date oneWeekAgo = ...
+
+  // Use QOrder to create an expression list ...
+  // .. use this expression list to then filter orders
+  ExpressionList<Order> recentNewOrders = new QOrder()
+    .orderDate.after(oneWeekAgo)
+    .status.eq(Order.Status.NEW)
+    .getExpressionList();
+
+
+  List<Customer> customers = new QCustomer()
+    .name.ilike("Rob")
+    // filter the orders (not customers)
+    .orders.filterMany(recentNewOrders)
+    .findList();
+  ```
+  <h4>Example: select() and fetch()</h4>
+  <p>
+    Use the <code>alias()</code> method to get a shared instance of the <code>query bean</code>
+    that can be used to specify properties for <code>select()</code> and <code>fetch()</code>.
+  </p>
+  <p>
+    Note that the 'alias' instance of the query bean returned by the <code>alias()</code> method
+    does not have an underlying query associated with it and can only be used to provide properties
+    to <code>select()</code> and <code>fetch()</code>.
+  </p>
+  ```java
+  // special 'alias' instances of query beans
+  // used to supply properties to the select() and fetch()
+  QCustomer cus = QCustomer.alias();
+  QContact con = QContact.alias();
+
+  List<Customer> customers = new QCustomer()
+    // query tuning
+    .select(cus.name, cus.inactive)
+    .contacts.fetch(con.email, con.firstName)
+
+    // predicates
+    .name.ilike("Rob")
+    .findList();
+  ```
+
+  ```java
+  // special 'alias' instances of query beans
+  // used to supply properties to the select() and fetch()
+  QContact con = QContact.alias();
+  QCustomer cus = QCustomer.alias();
+  QProduct pro = QProduct.alias();
+
+  Customer customer =
+    Customer.find.where()
+      // manual query tuning
+      .select(cus.name, cus.registered)
+      .orders.fetchAll()
+      .orders.details.product.fetch(pro.name)
+      .contacts.fetch(con.firstName)
+      // predicates
+      .id.eq(12)
+      .findUnique();
+  ```
 
   <h2 id="dependencies">Dependencies</h2>
 
@@ -140,7 +274,71 @@
   </p>
 
 
-  <h2 id="query-beans">Query beans</h2>
+  <hr/>
+
+  <h2 id="manual-generation">Manual generation</h2>
+  <p>
+    There is a mechanism to generate query beans via running code (not via javac annotation processing).
+    This is manual in the sense that whenever there is a change to the entity beans we then need to
+    re-run this process (where as with the java annotation processor it is automatically updated with each
+    compile).
+  </p>
+  <@maven "org.avaje.ebeanorm" "avaje-ebeanorm-typequery-generator" "auto" "1" />
+  <p>
+    To generate the <code>query beans</code> add code similar to below to your <code>src/test</code>.
+    The Generator reads compiled <code>.class</code> entity beans using the <code>ASM</code> library.
+    It then uses this meta data to generate java source for the <code>query beans</code>.
+  </p>
+  <p>
+    Using this approach rather than using <code>javac</code> annotation processing means there is
+    no requirement for javac - you can use any JVM language to write/compile your
+    entity beans (so maybe <code>Scala</code> and SBT.
+  </p>
+  <p>
+    The requirement of this approach is that entity beans are compiled as .class files and that
+    <code>GeneratorConfig</code> is configured to know where the classes are, where the source
+    code should go and the package containing the entity beans.
+  </p>
+
+
+```java
+package main;
+
+import org.avaje.ebean.typequery.generator.Generator;
+import org.avaje.ebean.typequery.generator.GeneratorConfig;
+
+import java.io.IOException;
+
+/**
+ * Generate type query beans for each entity bean.
+ */
+public class MainQueryBeanGenerator {
+
+  public static void main(String[] args) throws IOException {
+
+    GeneratorConfig config = new GeneratorConfig();
+    //config.setClassesDirectory("./target/classes");
+    //config.setDestDirectory("./src/main/java");
+    //config.setDestResourceDirectory("./src/main/resources");
+
+    config.setEntityBeanPackage("org.example.domain");
+    //config.setDestPackage("org.example.domain.query");
+
+    //config.setOverwriteExistingFinders(true);
+
+    Generator generator = new Generator(config);
+    generator.generateQueryBeans();
+
+    // Additionally generate 'finder's
+    //generator.generateFinders();
+    //generator.modifyEntityBeansAddFinderField();
+  }
+}
+```
+
+
+
+  <h2 id="query-beans">Query bean source</h2>
   <p>
     For each entity bean a <code>query bean</code> is generated.
   </p>
@@ -225,179 +423,6 @@ public class QOrder extends TQRootBean<Order,QOrder> {
     They look a little redundant but they aren't (in order to get a nice representation of the query language
     features).
   </p>
-
-  <h2 id="query-examples">Query examples</h2>
-  <p>
-
-  </p>
-  <h4>Example</h4>
-```java
-List<Customer> customers =
-  new QCustomer()
-    .id.greaterThan(12)
-    .name.startsWith("Rob")
-    .findList();
-```
-  <h4>Example: nested or() and and()</h4>
-  <p>
-    The following example contains an <code>or()</code> containing a nested <code>and()</code>.
-  </p>
-```java
-List<Customer> customers
-  = new QCustomer()
-  .billingAddress.city.equalTo("Auckland")
-  .version.between(1,100)
-  .billingAddress.country.equalTo(nz)
-  .registered.before(new Date())
-  .or()
-    .id.greaterThan(1)
-    .and()
-      .name.icontains("Jim")
-      .inactive.isTrue()
-    .endAnd()
-  .endOr()
-  .orderBy()
-    .name.asc()
-    .id.desc()
-  .findList();
-```
-
-<h4>Example: filterMany</h4>
-<p>
-  filterMany provides the ability to filter the returned objects of an associated
-  OneToMany or ManyToMany relationship.
-</p>
-<p>
-  For example, lets say Customers have a lot of orders and for a specific use case
-  we want to find customers and only want their recent new orders. We want to
-  fetch the orders (a OneToMany) for the customers but want to filter those orders
-  to only contain 'recent new orders'
-</p>
-```java
-Date oneWeekAgo = ...
-
-// Use QOrder to create an expression list ...
-// .. use this expression list to then filter orders
-ExpressionList<Order> recentNewOrders = new QOrder()
-  .orderDate.after(oneWeekAgo)
-  .status.eq(Order.Status.NEW)
-  .getExpressionList();
-
-
-List<Customer> customers = new QCustomer()
-  .name.ilike("Rob")
-  // filter the orders (not customers)
-  .orders.filterMany(recentNewOrders)
-  .findList();
-```
-<h4>Example: select() and fetch()</h4>
-<p>
-  Use the <code>alias()</code> method to get a shared instance of the <code>query bean</code>
-  that can be used to specify properties for <code>select()</code> and <code>fetch()</code>.
-</p>
-<p>
-  Note that the 'alias' instance of the query bean returned by the <code>alias()</code> method
-  does not have an underlying query associated with it and can only be used to provide properties
-  to <code>select()</code> and <code>fetch()</code>.
-</p>
-```java
-// special 'alias' instances of query beans
-// used to supply properties to the select() and fetch()
-QCustomer cus = QCustomer.alias();
-QContact con = QContact.alias();
-
-List<Customer> customers = new QCustomer()
-  // query tuning
-  .select(cus.name, cus.inactive)
-  .contacts.fetch(con.email, con.firstName)
-
-  // predicates
-  .name.ilike("Rob")
-  .findList();
-```
-
-```java
-// special 'alias' instances of query beans
-// used to supply properties to the select() and fetch()
-QContact con = QContact.alias();
-QCustomer cus = QCustomer.alias();
-QProduct pro = QProduct.alias();
-
-Customer customer =
-  Customer.find.where()
-    // manual query tuning
-    .select(cus.name, cus.registered)
-    .orders.fetchAll()
-    .orders.details.product.fetch(pro.name)
-    .contacts.fetch(con.firstName)
-    // predicates
-    .id.eq(12)
-    .findUnique();
-```
-
-
-
-  <hr/>
-
-  <h2 id="manual-generation">Manual generation</h2>
-  <p>
-    There is a mechanism to generate query beans via running code (not via javac annotation processing).
-    This is manual in the sense that whenever there is a change to the entity beans we then need to
-    re-run this process (where as with the java annotation processor it is automatically updated with each
-    compile).
-  </p>
-  <@maven "org.avaje.ebeanorm" "avaje-ebeanorm-typequery-generator" "auto" "1" />
-  <p>
-    To generate the <code>query beans</code> add code similar to below to your <code>src/test</code>.
-    The Generator reads compiled <code>.class</code> entity beans using the <code>ASM</code> library.
-    It then uses this meta data to generate java source for the <code>query beans</code>.
-  </p>
-  <p>
-    Using this approach rather than using <code>javac</code> annotation processing means there is
-    no requirement for javac - you can use any JVM language to write/compile your
-    entity beans (so maybe <code>Scala</code> and SBT.
-  </p>
-  <p>
-    The requirement of this approach is that entity beans are compiled as .class files and that
-    <code>GeneratorConfig</code> is configured to know where the classes are, where the source
-    code should go and the package containing the entity beans.
-  </p>
-
-
-```java
-package main;
-
-import org.avaje.ebean.typequery.generator.Generator;
-import org.avaje.ebean.typequery.generator.GeneratorConfig;
-
-import java.io.IOException;
-
-/**
- * Generate type query beans for each entity bean.
- */
-public class MainQueryBeanGenerator {
-
-  public static void main(String[] args) throws IOException {
-
-    GeneratorConfig config = new GeneratorConfig();
-    //config.setClassesDirectory("./target/classes");
-    //config.setDestDirectory("./src/main/java");
-    //config.setDestResourceDirectory("./src/main/resources");
-
-    config.setEntityBeanPackage("org.example.domain");
-    //config.setDestPackage("org.example.domain.query");
-
-    //config.setOverwriteExistingFinders(true);
-
-    Generator generator = new Generator(config);
-    generator.generateQueryBeans();
-
-    // Additionally generate 'finder's
-    //generator.generateFinders();
-    //generator.modifyEntityBeansAddFinderField();
-  }
-}
-```
 
 </div>
 </body>
