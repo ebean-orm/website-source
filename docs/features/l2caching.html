@@ -6,34 +6,93 @@
 </head>
 <body>
 <div class="bs-docs-section">
-<h1 id="l2caching">L2 caching</h1>
+  <h1 id="l2caching">Overview</h1>
+  <p>
+    When we want to talk about caching for performance we are talking about the "Level 2"
+    cache or the "server cache". It is called the "Level 2 cache" because the persistence
+    context is often referred to as the "Level 1 cache".
+  </p>
+  <p>
+    The goal of the L2 server cache is to gain very significant performance improvement by
+    not having to hit the database. Ebean has 2 types of caches – Bean caches and Query caches.
+  </p>
 
-<p>
-When we want to talk about caching for performance we are talking about the "Level 2"
-cache or the "server cache". It is called the "Level 2 cache" because the persistence
-context is often referred to as the "Level 1 cache".
-</p>
-<p>
-The goal of the L2 server cache is to gain very significant performance improvement by
-not having to hit the database.
-</p>
+  <h4>Bean Caches</h4>
+  <p>
+    Bean caches hold entity beans and are keyed by their Id values. The bean cache can be used with:
+  </p>
+  <ul>
+    <li>Find by id query</li>
+    <li>Find unique by "natural key" query</li>
+  </ul>
 
-<#-------------------------------------------------------------------------------------------------->
-<h2 id="bean_and_query_caches">Bean and query caches</h2>
-<p>
-Ebean has 2 types of caches – Bean caches and Query caches.
-</p>
-<h4>Bean Caches</h4>
-<p>Bean caches hold entity beans and are keyed by their Id values.</p>
-<h4>Query Caches</h4>
-<p>
-Query caches hold the results of queries (Lists, Sets, Maps of entity beans) and are keyed
-by the query hash value (effectively a hash of the query and its bind values).
-The entries in a query cache are invalidated by ANY change to the underlying table –
-insert, update or delete. This means that the query cache is only useful on entities that are
-infrequently modified (typically "lookup tables" such as countries, currencies, status codes
-etc).
-</p>
+  <h4>Query Caches</h4>
+  <p>
+    Query caches hold the results of queries (Lists, Sets, Maps of entity beans) and are keyed
+    by the query hash value (effectively a hash of the query and its bind values).
+    The entries in a query cache are invalidated by ANY change to the underlying table –
+    insert, update or delete. This means that the query cache is only useful on entities that are
+    infrequently modified (typically "lookup tables" such as countries, currencies, status codes
+    etc).
+  </p>
+  <p>
+    The query cache can be used with:
+  </p>
+  <ul>
+    <li>Find list/set/map queries</li>
+  </ul>
+
+
+  <h2 id="table-iud-invalidation">Table IUD invalidation (Bulk updates)</h2>
+  <p>
+    Bulk insert, update or delete events are processed by table. For a given table the bean types
+    that depend on that table are determined and then for each bean type the L2 bean cache and L2 query cache
+    are invalidated as necessary.
+  </p>
+  <h4>Cluster message</h4>
+  <p>
+    The message sent around the cluster contains the table name and boolean flags for insert, update and delete.
+  </p>
+  <h4>L2 query cache</h4>
+  <ul>
+    <li><code>Inserts, updates or deletes:</code> Invalidate the entire L2 query cache for the related bean type</li>
+  </ul>
+  <p>
+    For any bulk statements (bulk table insert, update or delete statement) the entire L2 query cache is invalidated
+    for the associated bean type.
+    For example, a bulk update of the customer table invalidates the entire L2 query cache for the Customer bean type.
+  </p>
+  <h4>L2 bean cache</h4>
+  <ul>
+    <li><code>Inserts:</code> Do not effect the L2 bean cache</li>
+    <li><code>Updates:</code> Invalidate the entire L2 bean cache for the related bean type</li>
+    <li><code>Deletes:</code> Invalidate the entire L2 bean cache for the related bean type</li>
+  </ul>
+
+  <h2 id="bean-iud-invalidation">Bean IUD invalidation</h2>
+  <p>
+    Persisted beans are processed by bean type and id value.
+  </p>
+  <h4>Cluster message</h4>
+  <p>
+    The message sent around the cluster contains the bean type and 3 lists of ids - a list of id values for inserted, updated and deleted beans.
+  </p>
+
+  <h4>L2 query cache</h4>
+  <ul>
+    <li><code>Inserts, updates or deletes:</code> Invalidate the entire L2 query cache for the bean type</li>
+  </ul>
+  <p>
+    For any bean persist event invalidates the entire related L2 query cache for the associated bean type.
+    For example, saving a customer bean invalidates the entire L2 query cache for the Customer bean type.
+  </p>
+
+  <h4>L2 bean cache</h4>
+  <ul>
+    <li><code>Inserts:</code> Do not effect the L2 bean cache</li>
+    <li><code>Updates:</code> An entry is removed from the L2 bean cache based on the id value</li>
+    <li><code>Deletes:</code> An entry is removed from the L2 bean cache based on the id value</li>
+  </ul>
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="read_only_instances">Read only instances</h2>

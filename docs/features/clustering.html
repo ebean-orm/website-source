@@ -6,90 +6,111 @@
 </head>
 <body>
 <div class="bs-docs-section">
-<h1 id="clustering">Clustering</h1>
 
-<p>...(under construction)... needs reviewed</p>
+    <h3>Note: (as per 7.5.1)</h3>
+    <p>
+      As per version 7.5.1 the clustering support has been refactored and pulled into a separate module.
+      By default avaje-ebeanorm-cluster is included as a dependency and uses TCP sockets for cluster communication.
+    </p>
 
-<p>
-Use ContainerConfig Configuration for the container that holds the EbeanServer instances.
-</p><p>
-Provides configuration for cluster communication (if clustering is used). The cluster communication is used to invalidate appropriate parts of the L2 cache across the cluster.
-</p>
+    <h2 id="overview">Overview</h2>
+    <p>
+      When Ebean servers are running in a cluster then it is the job of the clustering support to:
+    </p>
+    <ul>
+      <li>Notify L2 cache invalidation events</li>
+      <li>Notify BeanPersistListeners (of remote insert/update/delete events)</li>
+    </ul>
+    <p>
+      When a transaction commits the events that will result in cache invalidation or have registered
+      BeanPersistListeners are collected into a <code>RemoteTransactionEvent</code> and this event
+      is broadcast to all the members in the cluster. Each member then processes the event invalidating
+      parts of the local L2 cache and invoking listeners as necessary.
+    </p>
 
-```java
-private ContainerConfig createContainerConfig(String local, String threadPoolName) {
-    ContainerConfig container = new ContainerConfig();
-    container.setMode(ContainerConfig.ClusterMode.SOCKET);  // also CusterMode.MULTICAST
+    <h2>L2 cache invalidation</h2>
+    <p>
+      For details on L2 cache invalidation refer to <a href="/docs/features/l2caching#table-iud-invalidation">Table IUD</a> invalidation
+      and <a href="/docs/features/l2caching#bean-iud-invalidation">Bean IUD</a> invalidation.
+    </p>
 
-    ContainerConfig.SocketConfig socketConfig = new ContainerConfig.SocketConfig();
-    socketConfig.setLocalHostPort(local);
-    socketConfig.setThreadPoolName(threadPoolName);
-    socketConfig.setMembers(Arrays.asList("127.0.0.1:9876", "127.0.0.1:9866"));
+    <h2>Cluster message</h2>
+    <p>
+      The message send around the cluster is a <code>RemoteTransactionEvent</code> which contains information for
+      Table IUD bulk changes and Bean IUD events.
+    </p>
 
-    container.setSocketConfig(socketConfig);
-    return container;
-  }
-```
+    <h4>Table IUD message</h4>
+    <p>
+      For bulk table insert, update or delete events the message contains the table name and boolean flags for insert,
+      update and delete.
+    </p>
 
-```java
-// Startup server 1
-ContainerConfig container = createContainerConfig("127.0.0.1:9876", "pool0");
-ClusterManager mgr = new ClusterManager(container);
-
-// Create your ebean server as you normally do
-EbeanServer server = ...;
-
-// Register the EbeanServer with the cluster manger
-mgr.registerServer(server);
-
-// Register the cluster manager with the cluster
-mgr.startup();
-
-// Deregister the cluster manager from the cluster
-mgr.shutdown();
-```
-
-Same code different port:
-```java
-// Startup server 2
-ContainerConfig container = createContainerConfig("127.0.0.1:9866", "pool1");
-
-ClusterManager mgr = new ClusterManager(container);
-
-ServerConfig serverConfig = ...;
-
-EbeanServer server = EbeanServerFactory.create(config);
-mgr.registerServer(server);
-
-// Create your ebean server as you normally do
-EbeanServer server = ...;
-
-// Register the EbeanServer with the cluster manger
-mgr.registerServer(server);
-
-// Register the cluster manager with the cluster
-mgr.startup();
-
-// Deregister the cluster manager from the cluster
-mgr.shutdown();
-```
-</p>
+    <h4>Bean IUD message</h4>
+    <p>
+      For bean insert, update or delete events the message contains the bean type (class name) and a list of id values
+      for inserted, updated and deleted beans.
+    </p>
 
 
-<h4>Other notes</h4>
-<p>The <a href="/apidocs/com/avaje/ebean/event/AbstractBeanPersistListener.html">BeanPersistListener</a> listens for committed bean events.</p>
+    <h2>Configuration</h2>
+    <p>
+      By default clustering support is included via a dependency on <code>avaje-ebeanorm-cluster</code> so we just
+      need to configure it. The example properties below show the configuration for a 3 node cluster.
+    </p>
+    ```properties
+    ebean.cluster.active=true
 
-<p>These listen events occur after a successful commit. They also occur in a background thread rather than the thread used to perform the actual insert update or delete. In this way there is a delay between the commit and when the listener is notified of the event.</p>
+    ## the host:port for this node
+    ebean.cluster.localHostPort=127.0.0.1:9942
 
-<p>For a cluster these events may need to be broadcast. Each of the inserted(), updated() and deleted() methods return true if you want those events to be broadcast to the other members of a cluster (the id values are broadcast). If these methods return false then the events are not broadcast.</p>
+    ## all the members of the cluster
+    ebean.cluster.members=127.0.0.1:9942,127.0.0.1:9943,127.0.0.1:9944
+    ```
+    <p>
+      Each member of the cluster should configure their unique <code>localHostPort</code> value.
+    </p>
 
-<p>
-  Ebean.externalModification(String tableName, boolean inserted, boolean updated, boolean deleted) processes committed changes from another framework or clustered server
-</p>
+    <h2>Logging</h2>
+    <p>
+      At <code>INFO</code> level logging on <code>org.avaje.ebean.Cluster</code> messages are output
+      when clustering starts, stops and members leave or join.
+    </p>
+  ```sh
+  INFO  org.avaje.ebean.Cluster - Clustering using local[127.0.0.1:9943] members[[127.0.0.1:9942, 127.0.0.1:9943]]
+  ```
+  ```sh
+  INFO  org.avaje.ebean.Cluster - Register as online with member [localhost:9942]
+  ```
+  ```sh
+  INFO  org.avaje.ebean.Cluster - Cluster member [localhost:9943] online[true]
+  ```
 
-<p>
-Calling Ebean.externalModification notifies Ebean that beans have been committed externally, either by another framework or clustered server. Ebean uses this information to maintain its cache and lucene indexes appropriately.
-</p>
+  <p>
+    At <code>DEBUG</code> level messages are logged for sending and receiving events.
+  </p>
+  ```sh
+  DEBUG org.avaje.ebean.Cluster - sending: [org.example.domain.Customer updateIds:[4]]
+  ```
+  ```sh
+  DEBUG org.avaje.ebean.Cluster - processing [org.example.domain.Customer updateIds:[4]]
+  ```
+
+
+  <h4>Other notes</h4>
+  <p>The <a href="/apidocs/com/avaje/ebean/event/AbstractBeanPersistListener.html">BeanPersistListener</a> listens for committed bean events.</p>
+
+  <p>These listen events occur after a successful commit. They also occur in a background thread rather than the thread used to perform the actual insert update or delete. In this way there is a delay between the commit and when the listener is notified of the event.</p>
+
+  <p>For a cluster these events may need to be broadcast. Each of the inserted(), updated() and deleted() methods return true if you want those events to be broadcast to the other members of a cluster (the id values are broadcast). If these methods return false then the events are not broadcast.</p>
+
+  <p>
+    Ebean.externalModification(String tableName, boolean inserted, boolean updated, boolean deleted) processes committed changes from another framework or clustered server
+  </p>
+
+  <p>
+  Calling Ebean.externalModification notifies Ebean that beans have been committed externally, either by another framework or clustered server. Ebean uses this information to maintain its cache and lucene indexes appropriately.
+  </p>
 
 
 </div>
