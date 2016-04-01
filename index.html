@@ -19,7 +19,7 @@
 
     <div class="row">
       <div class="col-sm-6 feature">
-        <h3>Uses JPA Mapping</h3>
+        <h3>JPA Mapping</h3>
         <p>
           Use JPA Mapping annotations.
         </p>
@@ -116,49 +116,51 @@
       </div>
     </div>
 
-    <hr/>
+  </div>
+  <div  style="background: #F6F6F6; border:1px solid #ddd; margin-top:30px; margin-bottom: 30px; padding-bottom: 30px;">
+    <div class="container">
+      <div class="row" >
+        <div class="col-sm-6 feature">
 
-    <div class="row">
-      <div class="col-sm-6 feature">
+          <h3>Architecture</h3>
+          <p>
+            Ebean has an taken a different architectural when compared with JPA and JDO and this has important implications.
+            Specifically Ebean does not use a 'Persistence Context' or 'Session' when it persists objects back to the database.
+            This means you don't need to attach/detach your beans or manage a JPA EntityManager or JDO PersistenceManager.
+          </p>
+          <p>
+            Persisting a bean means you just call save(). Cascade persistence is supported by traversing the relationships
+            on the bean.
+          </p>
 
-        <h3>Architecture</h3>
-        <p>
-          Ebean has an taken a different architectural when compared with JPA and JDO and this has important implications.
-          Specifically Ebean does not use a 'Persistence Context' or 'Session' when it persists objects back to the database.
-          This means you don't need to attach/detach your beans or manage a JPA EntityManager or JDO PersistenceManager.
-        </p>
-        <p>
-          Persisting a bean means you just call save(). Cascade persistence is supported by traversing the relationships
-          on the bean.
-        </p>
-
-        <h3><a href="/videos">Videos</a></h3>
-        <p>
-          <a href="/videos">Videos</a> to show you various features of Ebean and options for testing.
-        </p>
-
-      </div>
-      <div class="col-sm-6 feature">
-
-        <h3>Partial Objects and N + 1</h3>
-        <p>
-          A high performance ORM needs good support for <a href="/docs/query/partialobjects">partial objects</a>
-          (only fetching the properties needed) and optimising object graph construction to mitigate
-          <a href="/docs/query/nplus1">N + 1</a>.
-        </p>
-        <p>
-          Ebean's query design provides a clean separation between what properties and paths to fetch and the
-          rest of the query (predicates, orderBy, paging) and this makes it easy for developers to optimise
-          object graph construction and also allows Ebean to <a href="/docs/query/autotune">automatically tune queries</a>
-          using profiling.
-        </p>
+          <h3><a href="/videos">Videos</a></h3>
+          <p>
+            <a href="/videos">Videos</a> to show you various features of Ebean and options for testing.
+          </p>
 
         </div>
-      </div>
+        <div class="col-sm-6 feature">
 
-    <hr/>
+          <h3>Partial Objects and N + 1</h3>
+          <p>
+            A high performance ORM needs good support for <a href="/docs/query/partialobjects">partial objects</a>
+            (only fetching the properties needed) and optimising object graph construction to mitigate
+            <a href="/docs/query/nplus1">N + 1</a>.
+          </p>
+          <p>
+            Ebean's query design provides a clean separation between what properties and paths to fetch and the
+            rest of the query (predicates, orderBy, paging) and this makes it easy for developers to optimise
+            object graph construction and also allows Ebean to <a href="/docs/query/autotune">automatically tune queries</a>
+            using profiling.
+          </p>
 
-    <div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="container">
+
+  <div>
       <div>
         <h3>Interesting Features</h3>
 
