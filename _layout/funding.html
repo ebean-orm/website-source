@@ -1,0 +1,37 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/main.html"/>
+<#assign funding="active">
+</head>
+<body>
+<div class="jumbotron mini">
+  <div class="container">
+    <h1><a href="/funding">Funding</a> <#if subtitle??>/ ${subtitle!''}</#if> </h1>
+  </div>
+</div>
+
+<div class="container doc-index bs-docs-container">
+
+  <div class="row">
+
+    <div class="col-md-9" role="main">
+
+      <div id="layout-body"></div>
+
+    </div>
+
+    <div class="col-md-3" role="complementary">
+      <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+        <ul class="nav bs-docs-sidenav">
+        <#include "/_layout/_funding_nav.ftl">
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+</div>
+<!-- /.row -->
+</div>  <!-- /.container -->
+
+</body>
+</html>
