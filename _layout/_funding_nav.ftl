@@ -7,3 +7,9 @@
 </@smallnav>
 <@smallnav activeCheck="${donationHistory!''}" url="/funding/donations" title="Donation history">
 </@smallnav>
+<@smallnav activeCheck="${sponsorship!''}" url="/funding/sponsorship" title="Sponsorship">
+<ul class="nav">
+  <li><a href="#Imilia">Imilia.com</a></li>
+</ul>
+</@smallnav>
+
