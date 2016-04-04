@@ -212,22 +212,49 @@
     for Eclipse) as well as the standard javaagent and maven plugin for load time and compile time enhancement.
   </p>
 
-  <h4>IDEA Query bean plugin</h4>
+  <h3>IDEA Query bean plugin</h3>
   <p>
     In IntelliJ install the <code>Ebean ORM Query bean enhancer</code> plugin. It should then appear as an
     extra item on the <code>Build menu</code> where it can be toggled on and off.
   </p>
 
-  <h4>querybean-agent</h4>
+  <h3>Maven tile</h3>
   <p>
-    You use the <code>querybean-agent</code> if you want to use the standard <code>javaagent</code>
-    mechanism to enhance the <code>query beans</code>.
+    Ebean supplies a maven tile that brings in both the enhancer for entity beans as well
+    as the enhancement for query beans. This is simpler, cleaner less verbose than
+    defining the plugin in the traditional (non-tile) fashion and now the preferred approach.
   </p>
-<@maven "org.avaje.ebeanorm" "querybean-agent" "auto" "1" />
 
-  <h4>querybean-maven-plugin</h4>
+  <h5>ebean-enhancement tile</h5>
+  ```xml
+  <plugin>
+    <groupId>io.repaint.maven</groupId>
+    <artifactId>tiles-maven-plugin</artifactId>
+    <version>2.8</version>
+    <extensions>true</extensions>
+    <configuration>
+      <tiles>
+         <!--
+             Leave out java-compile tile if you already
+             have the compile plugin defined
+          -->
+        <!-- <tile>org.avaje.tile:java-compile:1.1</tile> -->
+        <tile>org.avaje.tile:ebean-enhancement:1.1</tile>
+      </tiles>
+    </configuration>
+  </plugin>
+  ```
   <p>
-    You can configure the maven plugin to perform compile time enhancement.
+    Use <code>mvn help:effective-pom</code> to view the plugins that the tile brings in.
+  </p>
+
+
+
+  <h3>querybean-maven-plugin</h3>
+  <p>
+    If you do <b>NOT</b> wish to use maven tiles then you can define the <code>querybean-maven-plugin</code>
+    in the more traditional (non-tile) manor as shown below. This is more verbose and less clean than the
+    tile approach and as such using the tile instead is preferred.
   </p>
 
   ```xml
@@ -262,6 +289,14 @@
     </executions>
   </plugin>
  ```
+
+  <h4>querybean-agent</h4>
+  <p>
+    You use the <code>querybean-agent</code> if you want to use the standard <code>javaagent</code>
+    mechanism to enhance the <code>query beans</code>.
+  </p>
+<@maven "org.avaje.ebeanorm" "querybean-agent" "auto" "1" />
+
 
   <h2 id="generation">Generation</h2>
   <p>

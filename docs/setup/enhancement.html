@@ -75,8 +75,46 @@
 <#-------------------------------------------------------------------------------------------------->
   <h2 id="maven">Maven enhancement</h2>
 
-  <p>A Maven plugin performs the enhancement as part of the maven compile process.
+  <p>
+    A Maven plugin performs the enhancement as part of the maven compile process.
     This can be described as "build time enhancement".
+  </p>
+
+  <h3>Maven tile</h3>
+  <p>
+    Ebean supplies a maven tile that brings in both the enhancer for entity beans as well
+    as the enhancement for query beans. This is simpler, cleaner less verbose than
+    defining the plugin in the traditional (non-tile) fashion and now the preferred approach.
+  </p>
+
+  <h5>ebean-enhancement tile</h5>
+  ```xml
+  <plugin>
+    <groupId>io.repaint.maven</groupId>
+    <artifactId>tiles-maven-plugin</artifactId>
+    <version>2.8</version>
+    <extensions>true</extensions>
+    <configuration>
+      <tiles>
+         <!--
+             Leave out java-compile tile if you already
+             have the compile plugin defined
+          -->
+        <!-- <tile>org.avaje.tile:java-compile:1.1</tile> -->
+        <tile>org.avaje.tile:ebean-enhancement:1.1</tile>
+      </tiles>
+    </configuration>
+  </plugin>
+  ```
+  <p>
+    Use <code>mvn help:effective-pom</code> to view the plugins that the tile brings in.
+  </p>
+
+  <h3>Maven plugin</h3>
+  <p>
+    If you do not want to use maven tiles you can specify the maven enhancement
+    plugin in 'normal' fashion. Note the unlike the tile this does not bring in the
+    <a href="/docs/query/typesafe#enhancement">query bean enhancement</a>.
   </p>
 
 <@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
@@ -90,7 +128,6 @@
         <id>main</id>
         <phase>process-classes</phase>
         <configuration>
-          <packages>org.example.domain.**,org.example.anotherdomain.**</packages>
           <transformArgs>debug=1</transformArgs>
         </configuration>
         <goals>
