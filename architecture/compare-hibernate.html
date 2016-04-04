@@ -1,0 +1,75 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/architecture.html"/>
+  <title>Ebean versus Hibernate</title>
+<#assign compareHibernate="active">
+<#assign subtitle = "Compare with Hibernate">
+</head>
+<body>
+
+<h1 id="jpa">JPA</h1>
+<p>
+  The issues discussed in the <a href="/architecture/compare-jpa">comparison with JPA</a> also apply to Hibernate.
+  The comparison here apply more specifically to Hibernate.
+</p>
+
+<h1 id="lazyInitialisationException">LazyInitialisationException</h1>
+<p>
+  Hibernate does not allow lazy loading beyond the end of it's Session scope and instead
+  throws <code>LazyInitialisationException</code>.
+</p>
+<blockquote>
+  Ebean does not suffer this limitation.
+</blockquote>
+<h4>Ebean allows lazy loading beyond the initial scope</h4>
+<ul>
+  <li>
+    The transaction isolation level of read committed is used as per the JPA spec. This means
+    there is no effective difference when we lazy load with using another JDBC transaction relative
+    to holding open a transaction (as typically required by Hibernate via "Open session in view").
+  </li>
+  <li>
+    Ebean's entity beans have a reference back to their load context which enables subsequent
+    lazy loading to execute with the same PersistenceContext and also enables batch lazy loading.
+    This means the lazy loading still produces a consistent object graph (just as if it was loaded
+    eagerly).
+  </li>
+</ul>
+<blockquote>
+  With Ebean lazy loading just works!
+</blockquote>
+
+<p>&nbsp;</p>
+<h1 id="open-session-in-view">Open session in view</h1>
+<p>
+  As a byproduct of Ebean supporting lazy loading (beyond transaction scope) Ebean does not require
+  the <code>"Open session in view"</code> pattern.
+</p>
+<p>
+  The "Open session in view" used with Hibernate has the effect of holding a transaction open for a
+  longer time relative to Ebean.
+</p>
+
+<p>&nbsp;</p>
+<h1 id="set">Set vs List</h1>
+<p>
+  Hibernate has different semantics for <code>Set</code> and <code>List</code> (bag semantics).
+  For Hibernate this tends to promote the use of Set as the preferred collection type.
+</p>
+<p>
+  Ebean does not apply different semantics between <code>Set</code> and <code>List</code>.
+</p>
+<p>
+  The issue with using <code>Set</code> is that it implies the use of <code>hashCode()/equals()</code> and the
+  implementation of hashCode()/equals() is not perfect for the case of entity beans that mutate and don't
+  always have an @Id value (e.g. When the @Id value is not populated via generated value and hence not
+  populated until after the save and hence the @Id value can't be used in hashCode/equals implementation).
+</p>
+<p>
+  For Ebean I'd like to promote the use of <code>List</code> in preference to <code>Set</code> in order to
+  avoid any confusion relating to hashCode()/equals() implementation on mutating entity beans.
+</p>
+
+
+</body>
+</html>

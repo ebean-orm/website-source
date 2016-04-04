@@ -1,0 +1,74 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/architecture.html"/>
+  <title>Ebean versus JPA</title>
+<#assign compareJPA="active">
+<#assign subtitle = "Compare with JPA">
+</head>
+<body>
+
+<h1 id="sessionless">Sessionless architecture</h1>
+<p>
+  JPA is architecture such that the entity beans must be <code>attached</code> to the <code>PersistenceContext</code>
+  in order for the entity beans to be <code>persisted</code>.
+</p>
+<p>
+  That is, JPA mandates <code>attach/detach</code> semantics. This has a number of consequences including:
+</p>
+<ul>
+  <li>Developers can't easily take control and persist selected objects</li>
+  <li>All attached beans must be in a valid state to flush</li>
+  <li>Flush implicitly flushes all dirty state (so dirty state created <em>anywhere</em> flushes implicitly)</li>
+  <li>Flush can reorder statements in unexpected ways (causing deadlocks)</li>
+  <li>The EntityManager scope must now be managed along with the transaction scope</li>
+</ul>
+
+<h3>Ebean persistence</h3>
+
+<h4>Dirty state on each bean</h4>
+<p>
+  For Ebean each entity bean manages it's own dirty state and do not be attached to be persisted.
+</p>
+
+<h4>JDBC batch control</h4>
+<p>
+  Using JDBC batch is important so that Ebean can get optimal performance when persisting. With Ebean
+  there is a JDBC batch buffer attached to the transaction and can seamlessly batch up persistence
+  calls using JDBC batch.
+</p>
+<p>
+  Ebean provides full control over JDBC batch via the transaction including the
+  <code>batch size</code>, <code>getGeneratedKeys</code>, and <code>cascade behavior</code>.
+  Unlike JPA with Ebean it is easy to fully control and optimise batch processing.
+</p>
+<p>
+  Ebean can match JPA persistence performance without the complexity of attach/detach semantics.
+</p>
+
+
+<h1 id="jpql">Query language</h1>
+<blockquote>
+  There were no DBA's in the room when JPQL was designed :(
+</blockquote>
+<p>
+  <code>JPQL</code> has both poor support for <code><a href="/docs/query/partialobjects">partial objects</a></code>
+  and poor support for <code><a href="/docs/query/nplus1">optimising complex queries for N + 1</a></code> by defining
+  what part of the object graph should be fetched.
+</p>
+<p>
+  In it's current state <code>JPQL</code> is a poor language for optimising ORM queries. JPA 2.1 added
+  in support for <code>fetch groups</code> as a query hint but there are a number of issues with this:
+  being rather inelegant to use, only a query hint with relatively poor support and ultimately missing
+  some important features for controlling object graph construction from mixed sources (L2, L3 and DB).
+</p>
+<p>
+  In JPA the emphasis on annotations <code>FetchType.Eager</code> and <code>FetchType.Lazy</code>
+  and limitations in JPQL has put JPA in a bad position for optimising ORM queries and it will be
+  interesting if they can get to the level of control over object graph construction that Ebean supports.
+</p>
+<p>
+  To be absolutely clear there is absolutely no intention of supporting <code>JPQL</code>.
+</p>
+
+</body>
+</html>

@@ -42,6 +42,9 @@ html, body {height: 100%;}
     background-image: url(/images/px_by_greg.png);
     padding:5px 10px 15px 10px;
 }
+h1 a {
+   color: #333;
+}
 .locationBar h1 a, .locationBar h1 {
     font-size:20px;
     color: #9d9d9d;

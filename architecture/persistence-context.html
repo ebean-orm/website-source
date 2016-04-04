@@ -1,15 +1,13 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs.html"/>
-<#assign subtitle = "Architecture">
-<#assign xsubtitle = "Persistence Context">
-<#assign architecture = "true">
+  <title>Ebean's PersistenceContext</title>
+  <meta name="layout" content="_layout/architecture.html"/>
+<#assign subtitle = "Persistence Context">
+<#assign persistenceContext = "true">
 </head>
 <body>
 
 <div class="bs-docs-section">
-
-  <h1 id="persistence-context">Persistence Context</h1>
 
   <h2 id="definition">Definition</h2>
 
@@ -32,7 +30,7 @@
     methods and the persistence context is not involved in persisting.</p>
 
 
-  <h2>Unique Entity Instances</h2>
+  <h2 id="unique-instances">Unique Entity Instances</h2>
 
   <p>Ebean uses the Persistence context for queries and lazy loading (when it is building object
     graphs). The purpose of this is to ensure that <code>consistent object graphs</code> are constructed
@@ -52,7 +50,7 @@
     "customer 7" … and modified one instance but not the other … things get very ugly. The
     "persistence context" ensures the user/application code works with unique entity instances.</p>
 
-  <h2>Persisting</h2>
+  <h2 id="persisting">Persisting</h2>
 
   <p>Ebean has a different approach to lifecycle management. The core difference is that with
     Ebean each bean itself has it's own dirty checking (detects when it has been modified and
@@ -90,16 +88,15 @@
       instance.
     </li>
   </ul>
-  </p>
 
-  <h2>Scopes</h2>
+  <h2 id="scopes">Scopes</h2>
 
   <p>
     Ebean has 3 scopes for the the persistence context - <code>Transaction scope</code>, <code>Query scope</code>
     and <code>Per Object Graph scope</code>.
   </p>
 
-  <h2>Transaction scope</h2>
+  <h2 id="transaction-scope">Transaction scope</h2>
 
   <p>With Ebean the persistence context is by default transaction scoped. This means that when you begin
     a new transaction (implicitly or explicitly) Ebean will start a new persistence context.</p>
@@ -111,6 +108,7 @@
 
   <p>
     This means, a persistence context
+  </p>
   <ul>
     <li>Starts when a transaction starts</li>
     <li>Is used during the transactions scope to build all object graphs (queries)</li>
@@ -118,7 +116,6 @@
       persistence context
     </li>
   </ul>
-  </p>
 
   <h3>Transaction scoped persistence context as a "first level cache"</h3>
 
@@ -148,15 +145,17 @@
   <p>
     The code above shows that there is only 1 instance of "Order 72". As we try to fetch it
     again (during the scope of a single persistence context) we end up getting back the same
-    instance.</p>
+    instance.
+  </p>
 
   <p>
     However, typically you don't write code that fetches the same Order multiple times in a
-    single transaction. The code above is not something you would typically write.</p>
+    single transaction. The code above is not something you would typically write.
+  </p>
 
   <p>
     A more realistic example would be when the persistence context is used:
-
+  </p>
     ```java
     // a new persistence context started with the transaction
     Ebean.beginTransaction();
@@ -180,18 +179,22 @@
       Ebean.endTransaction();
     }
     ```
+
+
+  <p>
+    From these examples you should hopefully see that the persistence context acts as a
+    cache to some degree. It can sometimes reduce the number of database queries required
+    when you get object graphs and navigate them.
   </p>
 
-  <p>From these examples you should hopefully see that the persistence context acts as a
-    cache to some degree. It can sometimes reduce the number of database queries required
-    when you get object graphs and navigate them.</p>
-
-  <p>However, the primary function of the persistence context is to ensure ... unique instances
+  <p>
+    However, the primary function of the persistence context is to ensure ... unique instances
     for a given identity (so that the object graphs are constructed in a consistent manor). The
-    fact that it sometimes looks/acts like a cache is more of a side effect.</p>
+    fact that it sometimes looks/acts like a cache is more of a side effect.
+  </p>
 
 
-  <h2>Query Scope</h2>
+  <h2 id="query-scope">Query Scope</h2>
   <p>
     The purpose of the query scope is to effectively bypass a transaction scoped persistence context
     (l1 cache) in order to read fresh data from the database.
@@ -201,7 +204,32 @@
     a particular query hits the database to get fresh data. In doing so we want to avoid using the
     current transaction scoped persistence context.
   </p>
+  ```java
 
+  // transaction with a persistence context
+  Transaction transaction = ...
+
+  // Fetch customer 42 hitting the database
+  // ... ignoring the transaction persistence context
+  Customer customer = Ebean.find(Customer.class)
+        .setId(42)
+        // ignore transaction persistence context
+        .setPersistenceContextScope(QUERY)
+        .findUnique();
+
+  ```
+
+  <h2 id="object-scope">Object graph scope - large queries</h2>
+  <p>
+    When you use a <code>findEach()</code>, <code>findEachWhile()</code> or <code>findIterate()</code>
+    streaming type query then Ebean uses a special scope for the persistence context.
+    These queries are expected to iterate through arbitrarily large query requests
+    and as such we don't want to hold all the object graphs in memory.
+  </p>
+  <p>
+    For these streaming queries Ebean creates a new <code>PersistenceContext</code> when iteration
+    occurs and effectively the scope becomes per object graph.
+  </p>
 
 
 </div>
