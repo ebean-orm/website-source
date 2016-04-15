@@ -1,0 +1,471 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features_elasticsearch.html"/>
+<#assign subtitle = "Simple query comparison">
+<#assign elastic_simple_query = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+
+  <h2 id="caveats">Caveats</h2>
+  <p>
+    Benchmarks are very difficult and then intention here is look at <code>patterns</code> in response
+    times and specifically look at an ORM query that can be executed against both <code>Postgres</code>
+    and <code>ElasticSearch</code> to identify patterns and conditions for certain responses.
+  </p>
+  <p>
+    You should ALWAYS try to run your own benchmarks against your own data. There are so many factors
+    (volume, cardinality, relationships, data skew etc) that randomly generated data does not cater to.
+  </p>
+
+  <blockquote>
+    Don't focus on the absolute numbers
+  </blockquote>
+  <blockquote>
+    ... with ElasticSearch by default we effectively get an index on every property. We generally
+    can't do that on our OLTP database (have an index on every column in the table).
+  </blockquote>
+
+
+  <h2 id="setup">Setup</h2>
+  <p>
+    Populated customers, products, orders, order details
+    (using a modifications to the example application:
+    <a href="https://github.com/ebean-orm-examples/example-kotlin-web">example-kotlin-web</a> with:
+  </p>
+  <ul>
+    <li>Orders: 500,000</li>
+    <li>Customers: 100,000</li>
+    <li>Products: 30,000</li>
+    <li>Order lines: 5,263,023</li>
+  </ul>
+  <p>
+    The orders are are generated with an <code>orderDate</code> spread randomly over 12 months for 2015
+    and a random spread of <code>orderStatus</code>.
+  </p>
+  <p>
+    This is loaded into a Postgres database and additionally indexed into ElasticSearch.
+    This is a relatively small database but it is decent enough to play around with various aspects
+    of the query (selectivity of the order date and denormalisation).
+  </p>
+  <p>
+    For Postgres I did add indexes on order date and status but other wise kept with defaults for both Postgres and
+    ElasticSearch. This is not about getting the best numbers but instead looking at the variations we can see
+    in changing selectivity of predicates and denormalisation.
+  </p>
+  <p>
+    It is also interesting to note that for ElasticSearch this is a non-scoring query (filter query only) so
+    it's good to see how it compares ballpark wise to Postgres for this simple query.
+  </p>
+
+  <h2 id="query">The query</h2>
+  <blockquote>
+    Run a simple ORM query against both Postgres and ElasticSearch ...
+  </blockquote>
+
+  <p>
+    Find <code>Top 100</code> <code>NEW</code> orders after a given <code>orderDate</code>.
+    We can pass in a boolean to switch between running the query against a Postgres database or ElasticSearch.
+  </p>
+
+  ```java
+
+      // top 100 new orders after (given date)
+      // ... run against Postgres or ElasticSearch
+      // ... based on boolean - asDocStore
+
+      return Order.find.where()
+        .status.in(Order.Status.NEW)
+        .orderDate.after(useDate)
+        .order()
+          .orderDate.desc()
+
+        .setMaxRows(100)
+        .setUseDocStore(asDocStore)
+        .findList()
+
+  ```
+
+  <h2>SQL query</h2>
+
+  ```sql
+    SELECT
+      t0.id                  c0,
+      t0.status              c1,
+      t0.order_date          c2,
+      t0.ship_date           c3,
+      t0.version             c4,
+      t0.when_created        c5,
+      t0.when_modified       c6,
+      t0.customer_id         c7,
+      t0.shipping_address_id c8
+    FROM o_order t0
+    WHERE t0.status IN (?) AND t0.order_date > ?
+    ORDER BY t0.order_date DESC, t0.id
+    LIMIT 100; --bind(NEW,2015-12-08)
+  ```
+
+  <h2>Elastic query</h2>
+
+  ```json
+  {
+    "size": 100,
+    "sort": [ { "orderDate": { "order": "desc" } } ],
+    "query": {
+      "filtered": {
+        "filter": {
+          "bool": {
+            "must": [
+              { "terms": { "status": [ "NEW" ] } },
+              { "range": { "orderDate": { "gt": 1450263600000 } } }
+            ]
+          }
+        }
+      }
+    }
+  }
+  ```
+
+
+  <h2 id="run1">Run mode 1</h2>
+  <p>
+    In this first run mode I restrict the order date to be <code>dates in December</code> which makes the query
+    reasonably selective. This means the cost of the sort and filter required for the TOP 100 is not too bad.
+  </p>
+
+  ```sh
+    DB mean: 10.2    std dev: 2.34    min:6    max:18
+    ES mean: 8.77    std dev: 1.08    min:7    max:14
+  ```
+
+  <p>
+    ElasticSearch and Postgres are in the same ballpark here - near enough to the same which is great.
+  </p>
+  <blockquote>
+    Could we give ElasticSearch this query to run in our application? Yes.
+  </blockquote>
+
+
+  <h2 id="run2">Run mode 2 - Denormalisation effect</h2>
+  <blockquote>
+    Denormalisation benefit in action (ElasticSearch as an alternative to a DB materialised view)
+  </blockquote>
+  <p>
+    ElasticSearch did very well but actually the object it returned contained some additional denormalised
+    information that we didn't have in the Postgres query.
+  </p>
+  <p>
+    Specifically the ElasticSearch order index contains additional details for the <code>customer (id,name)</code>
+    and <code>order details (*,product(id,sku,name))</code>. If we change the ORM query to match the data the
+    index is returning we need to fetch the customer name and order details (with some additional joins).
+  </p>
+  ```java
+  // change the ORM query to additionally fetch
+  // customer and order details to match the index
+  // which has been denormalised
+  query
+    .fetch("customer", "id,name")
+    .fetch("details", "*")
+    .fetch("details.product","id,sku,name")
+  ```
+  <p>
+    So this is going to make the ORM query against the DB more expensive because now we join to
+    customer, order details and products.
+  </p>
+  <p>
+    In the ElasticSearch index these 'joins' have been denormalised into the index so that will run
+    as before. In a DB we could create a materialised view to get a similar effect.
+  </p>
+
+  ```sh
+  DB mean: 56.4    std dev: 5.95    min:48   max:95
+  ES mean: 8.75    std dev: 1.01    min:7    max:13
+  ```
+
+  <p>
+    So denormalisation in the ElasticSearch index when it is needed is good (which is pretty much
+    stating the obvious but it is always good to check).
+  </p>
+  <p>
+    Database materialised views would give us a similar effect but we note that using ElasticSearch
+    also has the advantage of taking load off the database.
+  </p>
+
+  <h2 id="run3">Run mode 3 - less selective</h2>
+  <p>
+    In this run mode we drop fetching the customer and order details etc (so back to run mode 1) but
+    change the <code>order date</code> used such that it is now randomly selected from
+    <code>the first 100 days of the year</code>. This means the query is much less selective and so to
+    get the <code>TOP 100</code> there are many more rows to sort and filter out of the result.
+  </p>
+
+  ```sh
+  DB mean: 51.3    std dev: 3.71    min:44   max:60
+  ES mean: 14.0    std dev: 2.00    min:10   max:22
+  ```
+  <p>
+    So here both queries go slower than run mode 1 as we expect (as they have to sort and filter out many more results to
+    obtain the top 100). ElasticSearch does do rather well here in this TOP 100 relatively unselective query
+    in the sense that it didn't really get that much slower.
+  </p>
+  <p>
+    ElasticSearch is orientated to paging query results but this a is pretty impressive result given that this
+    is a non-scoring filter only query.
+  </p>
+
+
+  <h2 id="appendix-bean">Appendix - Bean mapping</h2>
+  <p>
+    The mapping on the order entity bean is:
+  </p>
+
+  ```java
+
+  // this is Kotlin
+  // .. the @DocEmbedded is what you should look at
+
+  @DocStore
+  @Entity
+  @Table(name = "o_order")
+  class Order : BaseModel() {
+
+    ...
+
+    var status: Status = Status.NEW;
+
+    @DocEmbedded(doc = "id,name")
+    @ManyToOne @NotNull
+    var customer: Customer? = null;
+
+    @DocEmbedded(doc = "*,product(id,sku,name)")
+    @OneToMany(mappedBy = "order", cascade = arrayOf(CascadeType.PERSIST))
+    @OrderBy("id asc")
+    var details: MutableList<OrderDetail> = ArrayList();
+
+  ```
+
+  <h2 id="appendix-index">Appendix: Index mapping</h2>
+  <p>
+    The mapping for the ElasticSearch order index. Note that enums are automatically treated as codes (hence status
+    is not_analysed). The customer and details mapping from the respective <code>@DocEmbedded</code> annotations.
+  </p>
+
+  ```json
+  {
+    "mappings" : {
+      "order" : {
+        "properties" : {
+          "status": { "type": "string", "index": "not_analyzed" },
+          "orderDate": { "type": "date" },
+          "shipDate": { "type": "date" },
+          "customer" : {
+            "properties" : {
+              "id": { "type": "long" },
+              "name": { "type": "string" }
+            }
+          },
+          "details" : {
+            "type" : "nested",
+            "properties" : {
+              "id": { "type": "long" },
+              "orderQty": { "type": "integer" },
+              "shipQty": { "type": "integer" },
+              "unitPrice": { "type": "double" },
+              "product" : {
+                "properties" : {
+                  "id": { "type": "long" },
+                  "sku": { "type": "string" },
+                  "name": { "type": "string" }
+                }
+              },
+              "version": { "type": "long" },
+              "whenCreated": { "type": "date" },
+              "whenModified": { "type": "date" }
+            }
+          },
+          "version": { "type": "long" },
+          "whenCreated": { "type": "date" },
+          "whenModified": { "type": "date" }
+        }
+      }
+    }
+  }
+
+  ```
+
+
+  <h3 id="example-data">Appendix: Example Order</h3>
+  <p>
+    An example from the ElasticSearch index.
+  </p>
+
+  ```json
+  {
+    "_index": "order_v1",
+    "_type": "order",
+    "_id": "72033",
+    "_version": 1,
+    "found": true,
+    "_source": {
+      "status": "NEW",
+      "orderDate": 1446462000000,
+      "shipDate": 1446721200000,
+      "customer": {
+        "id": 31772,
+        "name": "big 31775"
+      },
+      "details": [
+        {
+          "id": 759300,
+          "orderQty": 7,
+          "unitPrice": 78,
+          "product": {
+            "id": 9697,
+            "sku": "A1672",
+            "name": "A1672"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759301,
+          "orderQty": 8,
+          "unitPrice": 94,
+          "product": {
+            "id": 18351,
+            "sku": "E2322",
+            "name": "E2322"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759302,
+          "orderQty": 11,
+          "unitPrice": 73,
+          "product": {
+            "id": 12358,
+            "sku": "B2332",
+            "name": "B2332"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759303,
+          "orderQty": 14,
+          "unitPrice": 33,
+          "product": {
+            "id": 11847,
+            "sku": "B1821",
+            "name": "B1821"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759304,
+          "orderQty": 11,
+          "unitPrice": 34,
+          "product": {
+            "id": 14230,
+            "sku": "C2203",
+            "name": "C2203"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759305,
+          "orderQty": 17,
+          "unitPrice": 95,
+          "product": {
+            "id": 20625,
+            "sku": "F2595",
+            "name": "F2595"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759306,
+          "orderQty": 4,
+          "unitPrice": 89,
+          "product": {
+            "id": 11653,
+            "sku": "B1627",
+            "name": "B1627"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759307,
+          "orderQty": 2,
+          "unitPrice": 42,
+          "product": {
+            "id": 2237,
+            "sku": "C450",
+            "name": "C450"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759308,
+          "orderQty": 1,
+          "unitPrice": 60,
+          "product": {
+            "id": 3404,
+            "sku": "D726",
+            "name": "D726"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759309,
+          "orderQty": 18,
+          "unitPrice": 80,
+          "product": {
+            "id": 19433,
+            "sku": "F1403",
+            "name": "F1403"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        },
+        {
+          "id": 759310,
+          "orderQty": 9,
+          "unitPrice": 53,
+          "product": {
+            "id": 22608,
+            "sku": "G2577",
+            "name": "G2577"
+          },
+          "version": 1,
+          "whenCreated": 1460670857630,
+          "whenModified": 1460670857630
+        }
+      ],
+      "version": 1,
+      "whenCreated": 1460670857630,
+      "whenModified": 1460670857630
+    }
+  }
+
+  ```
+  </div>
+</body>
+</html>

@@ -64,3 +64,16 @@
   <li><a href="#issues">Review issues</a></li>
 </ul>
 </@smallnav>
+<@smallnav activeCheck="${elastic_simple_query!''}" url="/docs/features/elasticsearch/simple-query-comparison" title="Simple query comparison">
+<ul class="nav">
+  <li><a href="#caveats">Caveats</a></li>
+  <li><a href="#setup">Setup</a></li>
+  <li><a href="#query">The query</a></li>
+  <li><a href="#run1">Run mode 1</a></li>
+  <li><a href="#run2">Run mode 2 - Denormalisation</a></li>
+  <li><a href="#run3">Run mode 3 - Selectivity</a></li>
+  <li><a href="#appendix-bean">Appendix: Bean mapping</a></li>
+  <li><a href="#appendix-index">Appendix: Index mapping</a></li>
+  <li><a href="#example-data">Appendix: Example data</a></li>
+</ul>
+</@smallnav>
