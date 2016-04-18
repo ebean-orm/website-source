@@ -1,0 +1,58 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features_l2caching.html"/>
+<#assign subtitle = "L2 caching">
+<#assign l2caching_using_bean = "true">
+</head>
+<body>
+
+  <h2 id="cache">@CacheStrategy</h2>
+  <p>
+    @CacheStrategy provides a way to automatically use the bean cache and also allows us
+    to optionally define a <code>natural unique key</code> that can be used.
+  </p>
+
+
+  <h2 id="implicitly">Implicitly</h2>
+  <p>
+    If @CacheStrategy has been defined on the bean then Ebean will automatically try and
+    use the L2 bean cache.
+  </p>
+
+  ```java
+  @CacheStrategy
+  @Entity
+  @Table(name="o_country")
+  public class Country {
+  ```
+
+  ```java
+  // automatically use the cache
+  Country country = Ebean.find(Country.class,"NZ");
+
+  // references automatically use the cache too
+  Country countryRef = Ebean.getReference(Country.class,"NZ");
+
+  // hit the country cache automatically via navigation
+  // ... and lazy loading
+  Customer customer = Ebean.find(Customer.class, 1);
+  Address billingAddress = customer.getBillingAddress();
+  Country c2 = billingAddress.getCountry();
+  ```
+
+
+  <h2 id="explicit">Explicitly</h2>
+  <p>
+    We can explicitly specify to use the bean cache via query.setUseCache(true);
+  </p>
+
+  ```java
+  // explicitly state we want to use the bean cache
+  Customer customer = Ebean.find(Customer.class)
+    .setUseCache(true)
+    .setId(7)
+    .findUnique();
+  ```
+
+</body>
+</html>

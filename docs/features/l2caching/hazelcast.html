@@ -1,0 +1,103 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features_l2caching.html"/>
+<#assign subtitle = "Hazelcast">
+<#assign l2caching_hazelcast = "true">
+</head>
+<body>
+  <h2>Overview</h2>
+  <p>
+    <a href="https://hazelcast.com/">Hazelcast</a> provides a very nice set of features for
+    distributed caching (which is what we use it for with L2 caching) plus "Data grid" features.
+  </p>
+  <p>
+    My expectation is that most people will prefer client/server mode with use of near caches.
+  </p>
+
+  <h2 id="client-server">Client/server mode</h2>
+  <p>
+    We can use Hazelcast in <code>client/server</code> mode which means that our application uses a
+    <code>Hazelcast client</code> to talk to a Hazelcast cluster (of servers).
+  </p>
+  <p>
+    In this mode the bean cache data is partitioned across all the Hazelcast servers in the cluster
+    and not in our application. We can choose to use a <code>near cache</code> for some or all of our bean
+    types and in doing so improve performance (by having local data) but increase memory footprint in our
+    application (as it now holds some cache data).
+  </p>
+
+  <h5>Configuration</h5>
+  <p>
+    For client/server mode the configuration file should be a <code>hazelcast-client.xml</code>
+  </p>
+
+  <h2 id="server-mode">Server mode</h2>
+  <p>
+    In server mode our application starts a <code>Hazelcast server instance</code> which is a full fledged member
+    of the Hazelcast cluster. This means that it will hold data etc.
+  </p>
+
+  <h5>Configuration</h5>
+  <p>
+    For server mode the configuration file should be a <code>hazelcast.xml</code>.
+  </p>
+
+
+
+  <h2 id="dependency">Dependency</h2>
+  <p>
+    Add a dependency to <code>avaje-ebeanorm-hazelcast</code>. When Ebean starts avaje-ebeanorm-hazelcast is
+    automatically registered as the L2 cache implementation.
+  </p>
+
+  <h2 id="disable">Disable L2 cache</h2>
+  <p>
+    During development and testing it is often useful to disable the use of the l2 cache.
+  </p>
+
+  <h5>Properties</h5>
+  ```properties
+  ## disable use of L2 cache (for dev / testing etc)
+  ebean.disableL2Cache=true
+  ```
+  <p>
+
+  </p>
+
+  <h2 id="configuration">Configuration</h2>
+
+  <h4>XML configuration</h4>
+  <p>
+    Hazelcast will operate without any configuration but typically you will want to add a <code>hazelcast-client.xml</code>
+    or <code>hazelcast.xml</code> configuration for client/server or server mode respectively.
+  </p>
+  <p>
+    In hazelcast-client.xml you can specify the use of <code>near cache</code> for example which is a common need.
+  </p>
+
+  <h4>Programmatic configuration</h4>
+  <p>
+    You can programmatically configure Hazelcast by creating an instance of Hazelcast <code>ClientConfig</code> or
+    <code>Config</code> and setting it via: <code></code>
+  </p>
+  ```java
+  ClientConfig configuration = ...;
+  serverConfig.setServiceObject("hazelcastConfiguration", configuration);
+  ```
+  <p>
+    If this configuration instance is passed in Ebean will use it to configure a Hazelcast client or server instance.
+    Otherwise it will use default configuration and Hazelcast will automatically search for and use the xml configuration
+    files.
+  </p>
+
+  <h2 id="getting-started">Getting started</h2>
+  <ul>
+    <li>Annotate beans with @CacheStrategy</li>
+    <li>Add maven dependency avaje-ebeanorm-hazelcast</li>
+    <li>Optionally add hazelcast-client.xml or hazelcast.xml</li>
+    <li>For client/server mode you need a running Hazelcast server</li>
+  </ul>
+
+
+</body>
+</html>

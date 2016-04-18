@@ -1,0 +1,38 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/main.html"/>
+  <meta id="layout-head"/>
+<#assign documentation="active">
+<#assign sideNav>
+  <#include "/_layout/_docs_nav_features_l2caching.ftl">
+</#assign>
+<#assign locationBar>
+  <h1><a href="/docs">Documentation</a> / <a href="/docs/features">Features</a> / <a href="/docs/features/l2caching">L2 caching</a> <#if subtitle??>/ ${subtitle!''}</#if> </h1>
+</#assign>
+</head>
+<body>
+<div class="jumbotron mini">
+  <div class="container">
+    ${locationBar}
+  </div>
+</div>
+
+<div class="container doc-index bs-docs-container">
+  <div class="row">
+    <div class="col-md-9" role="main">
+      <div id="layout-body"></div>
+    </div>
+
+    <div class="col-md-3" role="complementary">
+      <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
+        <ul class="nav bs-docs-sidenav">
+          ${sideNav}
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
