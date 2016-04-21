@@ -10,7 +10,7 @@
   </div>
 
   <div class="col-md-4">
-  <@video_item "" "Eclipse plugin" "TODO: Enhancement using the Eclipse plugin" "todo" />
+  <@video_item "_DWxNj-_orA" "Eclipse plugin" "Enhancement using the Eclipse plugin" />
   </div>
 
 </div>
