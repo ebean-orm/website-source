@@ -325,6 +325,10 @@ a.nav-link {
 .mtl {
     margin-top: 60px;
 }
+.mvl {
+    margin-top:40px;
+    margin-bottom:40px;
+}
 .mvm {
     margin-top:25px;
 }
@@ -496,4 +500,7 @@ pre.console {
 }
 .header-links h3 a {
     color: rgb(51, 51, 51);
+}
+.line-bold {
+    border-top: 4px solid #ccc;
 }
