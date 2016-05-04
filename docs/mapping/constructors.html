@@ -1,0 +1,248 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping.html"/>
+<#assign subtitle = "Constuctors">
+<#assign constructors = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+
+  <h2 id="default-constructor">Default constructor</h2>
+
+  <p>
+    Ebean enhancement will <code>automatically add a default constructor</code> if one does not already exist on
+    the entity bean.
+  </p>
+
+  <h4>Example - Customer, No default constructor</h4>
+  <p>
+    In the example Customer entity bean below there is no default constructor and Ebean's enhancement
+    will add one automatically.
+  </p>
+
+  ```java
+  /**
+   * Customer entity bean with no default constructor.
+   */
+  @Entity
+  public class Customer {
+
+    public static final CustomerFinder find = new CustomerFinder();
+
+    @Column(length=100)
+    final String name;
+
+    ...
+
+    // enhancement will automatically add a default constructor
+    // if there is not one on the entity bean
+
+    public Customer(String name) {
+      this.name = name;
+    }
+
+    ... // getters, setters etc
+
+  ```
+  <h3 id="partial-objects">Partial objects</h3>
+  <p>
+    Note that although the name property is final there is no restriction to Ebean for partially loading
+    the customer bean (without the name property) or creating reference beans (that only have their @Id
+    property loaded).
+  </p>
+
+  ```java
+
+  // fetch partially populated beans that
+  // don't have the name property loaded
+
+  List<Customer> customers =
+    Customer.find.where()
+      .name.startsWith("Rob")
+      .select("id") // only select id property
+      .findList();
+
+  ```
+  <h3 id="reference-bean">Reference bean</h3>
+  <p>
+    Ebean can construct reference beans which only have their <code>@Id</code> property loaded.
+  </p>
+
+  ```java
+  // reference bean with only @Id property loaded
+  Customer refBean = Customer.find.ref(42);
+
+  // reference beans don't hit the database unless
+  // lazy loading is invoked
+
+  // invoke lazy loading as name property is not loaded
+  String name = refBean.getName();
+  ```
+
+
+  <h2 id="no-setters">Example - Country, No setters</h2>
+  <p>
+    With the Country entity bean below there are only 2 properties and these are both
+    set in the constructor. In this case there are no setters on this entity bean.
+  </p>
+  <p>
+
+  </p>
+
+  ```java
+   /**
+    * Country entity bean with no default constructor and
+    * no setters (only getters).
+    */
+    @Entity
+    public class Country extends Model {
+
+      public static final CountryFinder find = new CountryFinder();
+
+      @Id @Size(max = 2)
+      final String code;
+
+      @Size(max = 60)
+      final String name;
+
+      // enhancement will add a default constructor
+
+      public Country(String code, String name) {
+        this.code = code;
+        this.name = name;
+      }
+
+      // getters only for Country bean
+
+      public String getCode() { return code; }
+
+      public String getName() { return name; }
+
+    }
+
+  ```
+
+  <p>
+    Ebean can still support partially loaded entity beans and reference beans.
+  </p>
+
+  ```java
+
+  // insert a country
+  new Country("NZ", "New Zealand").save();
+
+  // reference bean (only has @Id property loaded)
+  Country nzRefBean = ebeanServer.getReference(Country.class, "NZ");
+
+  // reference bean using a "finder"
+  Country nzRefBean = Country.find.ref("NZ");
+
+  ```
+  <h2 id="kotlin">Kotlin</h2>
+
+  <h3>Country written in Kotlin</h3>
+  <p>
+    The code and name properties are non-null / required (no ? after the type declaration).
+  </p>
+  ```java
+  @Entity
+  @Table(name = "o_country")
+  class Country (
+
+      @Id @Size(max = 2)
+      var code: String, // non-null
+
+      @Size(max = 60)
+      var name: String  // non-null
+
+  ) : Model() {
+
+    override fun toString(): String {
+      return "code:$code name:$name";
+    }
+
+    companion object : CountryFinder() {}
+  }
+  ```
+
+  <p>
+    ... using the Customer bean in Kotlin.
+  </p>
+
+  ```java
+
+    Country("NZ", "New Zealand").save()
+
+    // reference bean
+    val nzRef = Country.ref("NZ")
+
+    // finder & query bean use
+    val nz = Country.where()
+        .code.equalTo("NZ")
+        .findUnique()
+
+  ```
+
+  <h3>Customer written in Kotlin</h3>
+  <p>
+    The customer name property is declared as always non-null (no ? after the type declaration for name)
+    and must be passed when constructing a new customer instance.
+  </p>
+  ```java
+
+  @Entity
+  @Table(name = "be_customer")
+  class Customer(
+
+    @Size(max = 100)
+    var name: String,  // non-null, always required
+
+    @SoftDelete
+    var deleted: Boolean = false,
+
+    var registered: Date? = null,
+
+    @Size(max = 1000)
+    var comments: String? = null,
+
+    @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+    var billingAddress: Address? = null,
+
+    @ManyToOne(cascade = arrayOf(CascadeType.ALL))
+    var shippingAddress: Address? = null,
+
+    @OneToMany(mappedBy = "customer", cascade = arrayOf(CascadeType.PERSIST))
+    var contacts: MutableList<Contact> = ArrayList()
+
+  ) : BaseModel() {
+
+    companion object find : CustomerFinder() {}
+
+    override fun toString(): String {
+      return "customer(id:$id name:$name)";
+    }
+  }
+
+  ```
+  <p>
+    ... using Customer in Kotlin.
+  </p>
+  ```java
+
+    // new customer (requires name)
+    val rob = Customer("Rob")
+    rob.save()
+
+    // reference bean
+    val refBean = Customer.ref(42L)
+
+    // finder / query bean use
+    val customers =
+      Customer.find.where()
+        .name.istartsWith("rob")
+        .findList()
+  ```
+
+</div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping.html"/>
+<#assign subtitle = "List / Set">
+<#assign list = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+
+  <h2 id="list">List vs Set</h2>
+  <p>
+    For mapping collections for <code>@OneToMany</code> or <code>@ManyToMany</code> properties
+    we need to choose between using <code>Set</code> or <code>List</code> for these collections.
+  </p>
+
+  <h4>Hibernate bag semantics</h4>
+  <p>
+    With Hibernate there could be a preference for using <code>Set</code> because Set and List have
+    different semantics with Hibernate. Set uses "bag semantics" and is often preferred.
+  </p>
+
+  <h4>hashCode() / equals()</h4>
+  <p>
+    Using Set by implication means that <code>hashCode()/equals()</code> implementation is used.
+    This is problematic as the nature of entity beans is that they a mutating and often don't have
+    an @Id value until after the bean has been persisted.
+  </p>
+  <p>
+    The difficulty in implementing hashCode()/equals() on entity beans means that <code>List</code>
+    is the recommended collection type to hold @OneToMany and @ManyToMany collections.
+  </p>
+
+  ```java
+
+  @Entity
+  @Table(name="be_customer")
+  public class Customer extends BaseModel {
+    ...
+
+    // List is recommended for collection types
+
+    @OneToMany(mappedBy="customer", cascade=CascadeType.PERSIST)
+    List<Contact> contacts;
+    ...
+  ```
+
+  <h2 id="enhancement">Enhancement</h2>
+  <p>
+    When you define a collection type enhancement will ensure:
+  </p>
+  <ul>
+    <li>Any List/Set initialisation is removed</li>
+    <li>The List/Set is always initialised by Ebean (and never null)</li>
+  </ul>
+
+  <h3>List/Set initialisation is removed</h3>
+  ```java
+
+  // initialisation of the new ArrayList() is removed
+
+  @OneToMany(mappedBy="customer")
+  List<Contact> contacts = new ArrayList<Contact>;
+
+  // you can declare an un-initialised List if you wish
+  // and there is no actual difference to an initialised one
+
+  @OneToMany(mappedBy="customer")
+  List<Contact> contacts;
+
+  ```
+  <p>
+    In Kotlin we'd typically always want to define it as being not null:
+  </p>
+  ```java
+    // kotlin: contacts type not nullable
+    @OneToMany(mappedBy = "customer")
+    var contacts: MutableList<Contact> = ArrayList()
+  ```
+
+  <h3>The List/Set is always initialised (never null)</h3>
+  <p>
+    Ebean needs to control the initialisation of the List/Set in order to support:
+  </p>
+  <ul>
+    <li>Lazy loading</li>
+    <li>Support @PrivateOwned where we need the list/set to be aware of removals</li>
+    <li>Support @ManyToMany where we need the list/set to be aware of adds and removals</li>
+  </ul>
+  <p>
+    Enhancement ensures that whenever you access a List/Set Ebean will always
+    initialise it and setup the List/Set to listen for adds/removals if necessary
+    (for @PrivateOwned and @ManyToMany).
+  </p>
+  <p>
+    This has the effect that accessing the list/set.
+  </p>
+
+  ```java
+
+    // it "looks" like contacts could be null ...
+
+    @OneToMany(mappedBy="customer")
+    List<Contact> contacts;
+
+    public void addContact(Contact contact) {
+      // but actually contacts will never be null here
+      if (contacts == null) {
+        contacts = new ArrayList<>();
+      }
+      contacts.add(contact);
+    }
+  ```
+  <p>
+    Enhancement replaces all the <code>GETFIELD</code> instructions for persistent collections
+    and replaces that will code that ensures the List/Set is initialised if required.
+  </p>
+
+
+
+</div>
+</body>
+</html>

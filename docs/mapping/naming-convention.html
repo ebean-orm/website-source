@@ -1,0 +1,53 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping.html"/>
+<#assign subtitle = "Naming convention">
+<#assign namingconvention = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+
+  <h2 id="naming_convention">Naming convention</h2>
+
+  <p>
+    Ebean has a Naming Convention API to map column names to property names. It also
+    maps entity to table names and can take into account database schema and catalog if
+    required.
+  </p>
+
+  <p>
+    The default <code>UnderscoreNamingConvention</code> converts column names with underscores into
+    normal java camel case property names (e.g. "first_name" maps to "firstName").
+  </p>
+
+  ```java
+  @Entity
+  @Table(name="be_contact")
+  public class Contact extends BaseModel {
+
+    ...
+    // the default underscore naming convention maps
+    // "firstName" property to column "first_name"
+    // ... so this @Column annotation is not required
+    @Column(name="first_name")
+    String firstName;
+  ```
+
+  <p>
+    Alternatively you can use the <code>MatchingNamingConvention</code> or implement your own naming convention.
+  </p>
+
+  <p>
+    The MatchingNamingConvention names column names to match property names and table names to match entity names.
+    Ebean follows the JPA specification which states that the in the case of no annotations the name of the class will
+    be take as the table name and the name of a property will be taken as the name of the column.
+  </p>
+
+
+  <div class="next pull-right">
+    <a href="constructors" class="btn btn-info">Next: Constructors</a>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,13 +1,27 @@
-<@smallnav activeCheck="${mapping!''}" url="/docs/mapping" title="Mapping">
+<@smallnav activeCheck="${overview!''}" url="/docs/mapping" title="Overview">
+<ul class="nav">
+  <li><a href="#jpa-mapping">JPA mapping</a></li>
+  <li><a href="#validation-annotations">@Size @NotNull</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${namingConvention!''}" url="/docs/mapping/naming-convention" title="Naming convention">
 <ul class="nav">
   <li><a href="#jpa_mapping">JPA mapping</a></li>
   <li><a href="#ddl_generation">DDL generation</a></li>
-  <li><a href="#naming_convention">Naming convention</a></li>
-  <li><a href="#mapping_annotations">Mapping annotations</a></li>
-  <li><a href="#relationships">Relationships</a></li>
-  <li><a href="#id_generation">Id generation</a></li>
-  <li><a href="#formula">Formula</a></li>
-  <li><a href="#enummapping">EnumMapping</a></li>
-  <li><a href="#encryption">Encryption</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${constructors!''}" url="/docs/mapping/constructors" title="Constructors">
+<ul class="nav">
+  <li><a href="#default-constructor">Default constructor</a></li>
+  <li><a href="#partial-objects">Partial objects</a></li>
+  <li><a href="#reference-bean">Reference bean</a></li>
+  <li><a href="#no-setters">No setters example</a></li>
+  <li><a href="#kotlin">Kotlin</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${list!''}" url="/docs/mapping/list" title="List">
+<ul class="nav">
+  <li><a href="#list">List vs Set</a></li>
+  <li><a href="#enhancement">Enhancement</a></li>
 </ul>
 </@smallnav>
