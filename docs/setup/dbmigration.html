@@ -7,7 +7,20 @@
 <body>
 
 <div class="bs-docs-section">
+
+  <h2 id="videos">Introduction</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+    <@video_item "n7VXOFwM2og" "DB Migration introduction" "Introduction to DB migration" />
+    </div>
+    <div class="col-md-6">
+    <@video_item "cxiacf0wmNk" "Repeatable migrations" "Use of @View, extra-ddl.xml and repeatable migrations"/>
+    </div>
+  </div>
+
   <h2 id="overview">Overview</h2>
+
   <p>
     DB Migration is a feature for generation of DDL from the entity bean model that supports determining the
     <code>diff</code> from the prior version of the model and generating appropriate DDL changes based on
@@ -148,63 +161,13 @@
   </migration>
   ```
 
-
-  <h2 id="workflow">Workflow</h2>
-  <p>
-    In terms of a developers workflow, the expectation is that a migration is associated with a merge request
-    (git flow feature). A feature requires certain changes to the model (add a property/column) and the DB
-    migration change (DDL to add columns etc) and the actual code changes are all in the same merge request
-    (git flow feature branch). The developer working on their feature runs the DB migration such that they have
-    the DDL changes required to support that feature.
-  </p>
-
-  <h2 id="versioning">Versioning</h2>
-  <p>
-    The "version" numbering format supported is the same as FlywayDB version numbering.
-  </p>
-  <p>
-    In a "git flow feature" workflow a decent versioning schema is to take the pom version and append a number
-    to represent the feature and take the form:
-  </p>
-```xml
-  {pom version}_{feature number}_{feature name}
-
-  So for:
-    pom version = 4.5.6
-    feature number = 12
-    feature name = support end dating
-
-  The resulting apply sql is:
-    4.5.6_12__support-end-dating.sql
-
-```
-  <p>
-    The versioning is important for your development workflow (how you process merge requests in terms
-    of ordering) and the related restrictions in terms of running DDL changes in order.
-    For example, in the case of FlywayDB you need to take into
-    account if you allow out of order execution of the sql and this directly effects if you all
-  </p>
-
-  <h4>Future enhancement:</h4>
-  <p>
-    It is possible to resolve issues around DDL execution order and how that can badly impact development workflow
-    (how merge requests are handled) by somehow defining a dependency between sql scripts (for example, define
-    that 4.5.6_12 is dependent on 4.5.6_4) and supporting that via Ebean itself or enhancing FlywayDB.
-  </p>
-  <p>
-    There is certainly an issue here which could be addressed with some effort in order to get both safety in
-    processing DDL in order and allow flexibility in the order with which merge requests are processed.
-  </p>
-
   <h2 id="version">Migration version and name</h2>
   <p>
     For a migration the developer needs to provide the <code>version</code> and <code>name</code>
     and these can be set via environment variables, system properties or ebean.properties or programmatically.
   </p>
   ```java
-  System.setProperty("ddl.migration.generate", "true");
-
-  System.setProperty("ddl.migration.version", "4.5.6_12");
+  System.setProperty("ddl.migration.version", "1.1");
   System.setProperty("ddl.migration.name", "support end dating");
   ```
 
@@ -220,18 +183,25 @@
   public void generate() {
 
     System.setProperty("ddl.migration.generate", "true");
-    System.setProperty("ddl.migration.version", "4.5.6_12");
+
+    System.setProperty("ddl.migration.version", "1.1");
     System.setProperty("ddl.migration.name", "support end dating");
 
     // migration will be generated when EbeanServer instance starts
+    // ... typically by running your application.
     Ebean.getDefaultServer();
   }
   ```
 
-  <h2 id="programmatic">Generating migration programmatically</h2>
+  <h2 id="programmatic">Generate offline</h2>
   <p>
-    You can generate the a migration programmatically. For example by a main method in a class in
-    the test source similar to the following code:
+    We can generate a migration programmatically without starting your application.
+    In <code>src/test/java</code> add the following code with a <code>main method</code>.
+  </p>
+  <p>
+    Running this main method will generate the next migration and starts the EbeanServer
+    in <code>offline mode</code>. This offline mode means we don't need to start the application
+    or need a database to generate the migration.
   </p>
 
   ```java
@@ -242,24 +212,86 @@
 
   import java.io.IOException;
 
+  /**
+   * Generate the DB Migration.
+   */
   public class MainDbMigration {
 
+    /**
+     * Generate the next "DB schema DIFF" migration.
+     * <p>
+     * These migration are typically run using FlywayDB, Liquibase
+     * or Ebean's own built in migration runner.
+     * </p>
+     */
     public static void main(String[] args) throws IOException {
 
+      // optionally specify the version and name
+      //System.setProperty("ddl.migration.version", "1.1");
+      System.setProperty("ddl.migration.name", "support end dating");
+
+      // generate a migration using drops from a prior version
+      //System.setProperty("ddl.migration.pendingDropsFor", "1.2");
+
       DbMigration dbMigration = new DbMigration();
-
-      // set path that the migration xml and ddl is located
-      // this defaults to standard maven src/main/resources
-      //dbMigration.setPathToResources("src/main/resources");
-
-      // Postgres as the target DB
       dbMigration.setPlatform(DbPlatformName.POSTGRES);
-
-      // generate the migration xml and ddl
+      // generate the migration ddl and xml
+      // ... with EbeanServer in "offline" mode
       dbMigration.generateMigration();
     }
   }
   ```
+
+  <h2 id="running">Running migration</h2>
+  <p>
+    You can run the migrations using <code>FlywayDb</code>, <code>Liquibase</code> or Ebean's own
+    built in migration runner.
+  </p>
+
+  <h4>Ebean's migration runner</h4>
+  ```properties
+
+  ## run migrations when the EbeanServer starts
+  ebean.migration.run=true
+
+  ## optionally specify different DB credentials
+  ## to run the migration (own the tables)
+  datasource.db.adminusername=myDbTableOwner
+  datasource.db.adminpassword=secret
+  ```
+  <p>
+    With <code>ebean.migration.run=true</code> then when the EbeanServer starts it will look at the
+    migrations and run any that need to be run.  The migration runner will by default create a table
+    called <code>db_migration</code> that holds the meta data about the migrations that have been run
+    and inserts into this table when migrations are successfully executed.
+  </p>
+
+  <h2 id="repeatable">Repeatable migrations</h2>
+  <p>
+    Repeatable migrations are special migrations that start with <code>R__</code> and do not have a
+    version number.  Repeatable migrations will run if they have not already been run or if there
+    content has changed (MD5 checksum has changed).
+  </p>
+  <p>
+    Repeatable migrations can contain any DDL but for ORM we use these for defining <code>database VIEWS</code>
+    and for example using <code>@View</code> for mapping entity beans to database views rather than tables.
+  </p>
+  <p>
+    Refer to the second video showing repeatable migrations with extra-ddl.xml and use with @View.
+  </p>
+<@video_item "cxiacf0wmNk" "Repeatable migrations" "Use of @View, extra-ddl.xml and repeatable migrations"/>
+
+  <h4>FlywayDB note</h4>
+  <p>
+    For use with FlywayDB currently we need to prefix "version migrations" with <code>V</code> in order to
+    support both "version migrations" and "repeatable migrations".  To do this:
+  </p>
+  ```properties
+  ## must use V prefix on "version migrations" when using FlywayDB
+  ## with both "version" and "repeatable" migrations
+  ebean.migration.applyPrefix=V
+  ```
+
 
 </div>
 </body>
