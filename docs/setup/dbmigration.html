@@ -161,6 +161,37 @@
   </migration>
   ```
 
+  <h2 id="version-format">Version format</h2>
+  <p>
+    The "version" numbering format supported is the same as FlywayDB version numbering where you may use
+    "." or "_" (period or underscore) as separating characters.
+  </p>
+  <h5>Examples:</h5>
+  <p>
+    So <code>1.1</code> and <code>1_1</code> both translate as version <code>1.1</code>.
+  </p>
+  <p>
+    Note that version numbering controls the order in which migrations are executed and follows semantic
+    versioning so for example <code>1.1.1</code> would execute before <code>1.2</code>. By this means we
+    can add a "patch" migration.
+  </p>
+
+  <h3>Workflow</h3>
+  <p>
+    If you use Ebean's migration runner to execute the migration note that to run a migration the
+    <code>requirement is that the previous migration needs to have been run</code>.  This is slightly
+    different from FlywayDB which requires either strict version number order (or we can disable that to
+    allow any ordering).
+  </p>
+  <p>
+    If you are using a workflow similar to "git flow" then Ebean's migration runner allows you to
+    process merge requests in a non-strict order. The assumption made for this to work is that in the case
+    where there are 2 or more merge requests (that are being reviewed and not yet merged into a common
+    DEV branch) will not have conflicting DB migration changes (If they do Ebean will allow the migration
+    to run but the migration itself will error).
+  </p>
+
+
   <h2 id="version">Migration version and name</h2>
   <p>
     For a migration the developer needs to provide the <code>version</code> and <code>name</code>
