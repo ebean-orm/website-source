@@ -5,7 +5,6 @@
 <#assign constructors = "true">
 </head>
 <body>
-<div class="bs-docs-section">
 
   <h2 id="default-constructor">Default constructor</h2>
 
@@ -29,12 +28,12 @@
 
     public static final CustomerFinder find = new CustomerFinder();
 
-    @Column(length=100)
-    final String name;
+    @NotNull @Size(max = 100)
+    String name;
 
     ...
 
-    // enhancement will automatically add a default constructor
+    // enhancement will add a default constructor
     // if there is not one on the entity bean
 
     public Customer(String name) {
@@ -46,7 +45,7 @@
   ```
   <h3 id="partial-objects">Partial objects</h3>
   <p>
-    Note that although the name property is final there is no restriction to Ebean for partially loading
+    Note that you can make fields final if you wish, there is no restriction to Ebean for partially loading
     the customer bean (without the name property) or creating reference beans (that only have their @Id
     property loaded).
   </p>
@@ -102,7 +101,7 @@
       @Id @Size(max = 2)
       final String code;
 
-      @Size(max = 60)
+      @NotNull @Size(max = 60)
       final String name;
 
       // enhancement will add a default constructor
@@ -150,10 +149,10 @@
   class Country (
 
       @Id @Size(max = 2)
-      var code: String, // non-null
+      var code: String, // non-null type
 
-      @Size(max = 60)
-      var name: String  // non-null
+      @NotNull @Size(max = 60)
+      var name: String  // non-null type
 
   ) : Model() {
 
@@ -194,8 +193,8 @@
   @Table(name = "be_customer")
   class Customer(
 
-    @Size(max = 100)
-    var name: String,  // non-null, always required
+    @NotNull @Size(max = 100)
+    var name: String,  // non-null type
 
     @SoftDelete
     var deleted: Boolean = false,
@@ -243,6 +242,5 @@
         .findList()
   ```
 
-</div>
 </body>
 </html>

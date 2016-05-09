@@ -19,9 +19,18 @@
   <li><a href="#kotlin">Kotlin</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${list!''}" url="/docs/mapping/list" title="List">
+<@smallnav activeCheck="${list!''}" url="/docs/mapping/list" title="Collections">
 <ul class="nav">
   <li><a href="#list">List vs Set</a></li>
   <li><a href="#enhancement">Enhancement</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${id!''}" url="/docs/mapping/id" title="Id">
+<ul class="nav">
+  <li><a href="#enhancement">Enhancement</a></li>
+  <li><a href="#generated-value">Generated value</a></li>
+  <li><a href="#uuid">UUID</a></li>
+  <li><a href="#database-platform">Database platform</a></li>
+  <li><a href="#custom">Custom Id Generator</a></li>
 </ul>
 </@smallnav>

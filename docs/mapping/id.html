@@ -1,0 +1,104 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping.html"/>
+<#assign subtitle = "Id">
+<#assign id = "true">
+</head>
+<body>
+
+<h2 id="enhancement">Enhancement</h2>
+<p>
+  In terms of enhancement @Id properties are treated differently in that they never invoke lazy loading.
+</p>
+
+<h2 id="generated-value">Generated value</h2>
+<p>
+  When you annotate a property with <code>@Id</code> Ebean will automatically assign an appropriate
+  <code>Id generator</code> if the type <code>is a number type or UUID type</code>.
+</p>
+<p>
+  That is, with Ebean it is effectively redundant to also add the <code>@GeneratedValue</code> annotation.
+</p>
+```java
+  @Id
+  Long id;
+
+  // ... is effectively the same as
+
+  @Id @GeneratedValue
+  Long id;
+```
+
+<h2 id="uuid">UUID</h2>
+<p>
+  If the @Id type is <code>UUID</code> then Ebean will automatically assign an appropriate Id generator
+  to that property.
+</p>
+```java
+// an appropriate UUID based Id generator
+// is automatically assigned
+@Id
+UUID id;
+```
+
+<h2 id="database-platform">Database platform</h2>
+<p>
+  All the supported databases use either <code>Identity</code> or <code>Sequences</code> (or allow both)
+  and Ebean will choose the appropriate Id generation strategy based on the database platform.
+</p>
+<table class="table">
+  <tr><th>Database</th><th>Strategy</th></tr>
+  <tr><td>H2</td><td>Sequences</td></tr>
+  <tr><td>Postgres</td><td>Identity (as serial, also supports sequences)</td></tr>
+  <tr><td>MySql</td><td>Identity</td></tr>
+  <tr><td>Oracle</td><td>Sequences</td></tr>
+  <tr><td>DB2</td><td>Identity (also supports sequences)</td></tr>
+  <tr><td>SQL Server</td><td>Identity</td></tr>
+  <tr><td>SQLite</td><td>Identity</td></tr>
+  <tr><td>SqlAnywhere</td><td>Identity</td></tr>
+</table>
+
+<h2 id="custom">Custom Id Generator</h2>
+<p>
+  There is support for registering and using a custom Id generator.
+</p>
+
+<h4>1. Implement com.avaje.ebean.config.IdGenerator</h4>
+```java
+public class ModUuidGenerator implements IdGenerator {
+
+  @Override
+  public Object nextValue() {
+    return ModUUID.newShortId();
+  }
+
+  @Override
+  public String getName() {
+    return "shortUid";
+  }
+}
+```
+<h4>2. Register with ServerConfig</h4>
+<p>
+  We register the IdGenerator with ServerConfig by using <code>addClass()</code>
+  or <code>add(IdGenerator idGenerator)</code> or <code>setIdGenerators(List<IdGenerator> idGenerators)</code>.
+</p>
+<p>
+  Note that if you are using classpath scanning to find entity beans that this will also automatically
+  find implementations of IdGenerator and automatically register them so in this case you don't need to
+  register the IdGenerator manually with ServerConfig.
+</p>
+
+<h4>3. @GeneratedValue</h4>
+<p>
+  We can then tell Ebean to use our custom IdGenerator by using the <code>@GeneratedValue</code> with
+  the generator being the name of our custom IdGenerator.
+</p>
+```java
+  @Id @GeneratedValue(generator = "shortUid")
+  String id;
+```
+
+
+</body>
+</html>
