@@ -1,0 +1,72 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_jpa.html"/>
+<#assign subtitle = "@ManyToOne">
+<#assign manyToOne = "true">
+</head>
+<body>
+
+<h2 id="pair">Relationship Pair</h2>
+<p>
+  We can think of <code>@ManyToOne</code> as the <code>"one"</code> side of a
+  @OneToMany/@ManyToOne relationship pair.
+</p>
+<p>
+  As such it is the side that maps to the foreign key column(s).
+</p>
+
+```java
+@Entity
+public class Contact ...
+
+  // maps to "customer_id" foreign key column
+  @ManyToOne
+  Customer customer;
+  ...
+```
+<p>
+  If the foreign key column does not match the naming convention based on the property name + "_id"
+  then we need to define a @JoinColumn.
+</p>
+
+```java
+@Entity
+public class Contact ...
+
+  // explicit @JoinColumn of "cust_id" as the foreign key column
+  @ManyToOne @JoinColumn("cust_id")
+  Customer customer;
+  ...
+```
+
+<h2 id="optional">optional=false</h2>
+<p>
+  If the underlying foreign key should have a NOT NULL constraint then we specify <code>optional=false</code>.
+</p>
+```java
+@Entity
+public class Contact ...
+
+  // not null constraint as optional=false
+  @ManyToOne(optional=false)
+  Customer customer;
+  ...
+```
+
+<h2 id="notNull">@NotNull</h2>
+<p>
+  We can use javax validation <code>@NotNull</code> instead of <code>optional=false</code> to define
+  that the underlying foreign key column has a NOT NULL constraint.
+</p>
+```java
+@Entity
+public class Contact ...
+
+  // @NotNull same as optional=false
+  @NotNull @ManyToOne
+  Customer customer;
+...
+```
+
+</body>
+</html>

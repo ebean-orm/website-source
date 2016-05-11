@@ -1,0 +1,65 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_jpa.html"/>
+<#assign subtitle = "@OneToOne">
+<#assign oneToOne = "true">
+</head>
+<body>
+
+<h2 id="pair">Relationship Pair</h2>
+<p>
+  We can think of a <code>@OneToOne</code>/<code>@OneToOne</code> relationship pair as
+  the same as a <code>@OneToMany</code>/<code>@ManyToOne</code> relationship pair but with the
+  addition that the "many" side has a cardinality of "at most 1".
+</p>
+<p>
+  From a Relational database perspective the @OneToOne relationship pair is
+  like the @OneToMany/@ManyToOne pair but with the <code>addition of a unique
+  constraint</code> which effectively limits the cardinality of the "many" side to be "at most 1".
+</p>
+<p>
+  From the perspective of Ebean internals. The @OneToOne(mappedBy=) acts much
+  like the @OneToMany(mappedBy=) <em>[the "many" side]</em> and the other @OneToOne acts
+  like the @ManyToOne <em>[the "one" side]</em>.
+</p>
+
+<h2 id="manySide">@OneToOne "many" side</h2>
+<p>
+  The "many" side @OneToOne has the <code>mappedBy</code> attribute (like @OneToMany).
+</p>
+```java
+@Entity
+public class Wheel ...
+
+  // has "mappedBy" (like @OneToMany)
+  // ... so we can think of this as the "many" side
+  // ... with cardinality limited to "at most 1"
+  @OneToOne(mappedBy = "wheel")
+  Tire tire;
+  ...
+```
+
+<h2 id="oneSide">@OneToOne "one" side</h2>
+<p>
+  The "one" side @OneToOne has no <code>mappedBy</code> attribute.
+  This side acts almost exactly like @ManyToOne.
+</p>
+<p>
+  This side maps to the foreign key column. If the foreign key column does not match the
+  naming convention we can specify a <code>@JoinColumn</code>.
+</p>
+```java
+@Entity
+public class Tire ...
+
+  // no mappedBy (like @OneToMany)
+  // ... so the "one" side of the relationship
+  // ... means it maps to the foreign key
+  // ... use @JoinColumn if needed
+  @OneToOne
+  @JoinColumn(name = "wheel")
+  Wheel wheel;
+```
+
+</body>
+</html>

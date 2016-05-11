@@ -1,0 +1,114 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_extension.html"/>
+<#assign subtitle = "@DbJson">
+<#assign DbJson = "true">
+</head>
+<body>
+<h2 id="overview">Overview</h2>
+<p>
+  Ebean provides <code>@DbJson</code> and <code>@DbJsonB</code> for mapping properties as
+  JSON documents into Postgres JSON, Postgres JSONB, CLOB, VARCHAR or BLOB.
+</p>
+<p>
+  Both <code>Postgres</code> and <code>Oracle</code> (and shortly <code>MySql</code>) provide
+  functions/expressions for querying and manipulating the JSON.
+</p>
+<p>
+  Ebean also has <code>ElasticSearch</code> integration so even without the built in database
+  support we can use that integration to effectively replicate to ElasticSearch and use it
+  to search our data.
+</p>
+
+<h2 id="mixed">Mixing structured and unstructured</h2>
+<p>
+  What these capabilities do is enable designers/developers to mix unstructured (or semi-structured)
+  document content with our typically highly structured data.
+</p>
+<p>
+  An example use case might be storing 'user preferences' where the data naturally comes in as JSON,
+  has potentially deep nesting and where we only need limited queries/expressions on the document attributes.
+  In this type of case the use of unstructured document storage as JSON can be a good fit.
+</p>
+
+<h2 id="simple-types">Mapping simple types</h2>
+<p>
+  If the mapping is to <code>String</code>, <code>Long</code> or <code>Map&lt;String,Object&gt;</code> types
+  then Ebean will use it's built in JSON support to handle the marshalling to/from JSON.
+</p>
+```java
+@DbJsonB
+Map<String,Object> content;
+
+@DbJsonB
+List<String> contents;
+```
+<p>
+  With these types note that Ebean will use <code>ModifyAware</code> collections so that it knows if the
+  property is <code>dirty</code> and needs to be included in an update. If the type is not ModifyAware then
+  it must be treated as dirty and included in an update.
+</p>
+
+<h2 id="jackson">Mapping with Jackson ObjectMapper</h2>
+<p>
+  If the type mapped is not one of <code>String</code>, <code>Long</code> or <code>Map&lt;String,Object&gt;</code> types
+  then Ebean will use Jackson ObjectMapper to handle the marshalling to/from JSON.
+  In this case <code>jackson-databind</code> becomes a required dependency.
+</p>
+```java
+  // Jackson ObjectMapper used here
+  @DbJsonB
+  Map<String,SomePojo> content;
+
+  // Jackson ObjectMapper used here
+  @DbJsonB
+  SomePojo content;
+```
+<p>
+  Note that when we use Jackson for marshalling the property type is not <code>ModifyAware</code> and that
+  means that it must be treated as <code>dirty</code> and included in updates.  It will only be included in
+  updates if the property is actually loaded of course and so if you know a use case will not update the content
+  it can be worth while to not load it in the first place (with the additional benefit that it won't be automatically
+  included in the update).
+</p>
+
+<h4>ServerConfig</h4>
+<p>
+  An ObjectMapper instance can be configured on ServerConfig via <code>setObjectMapper()</code>. If an ObjectMapper is
+  not specified in this way an instance will be created for use by the EbeanServer (If Jackson ObjectMapper is
+  detected in the classpath).
+</p>
+
+<h2 id="fallback">Fallback mapping</h2>
+<p>
+  When Postgres is not used then fallback is to store JSON into VARCHAR, CLOB or BLOB database types.
+  If the <code>length</code> attribute is specified like <code>@DbJson(length=1000)</code>
+  or <code>@DbJsonB(length=1000)</code> then VARCHAR is the fallback type and the length defined is the
+  length of the varchar column definition.
+</p>
+```java
+  // fallback to store in VARCHAR(800)
+  @DbJson(length=800)
+  Map<String,Object> content;
+```
+<p>
+  The storage can be explicitly defined using the <code>storage</code> attribute.
+</p>
+```java
+  // explicitly store using BLOB
+  @DbJson(storage = DbJsonType.BLOB)
+  Map<String,Object> content;
+```
+<p>
+  The default fallback for JSON and JSONB types is CLOB and this is used when both the length and
+  storage attributes are not defined.
+</p>
+
+
+<h2 id="expressions">Query expressions</h2>
+<p>
+  Refer to <a href="/docs/features/json-in-db">json-in-db</a> documentation for details on the query expressions
+  and how those translate for both Postgres and Oracle expressions.
+</p>
+</body>
+</html>

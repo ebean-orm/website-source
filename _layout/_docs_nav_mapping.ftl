@@ -25,12 +25,5 @@
   <li><a href="#enhancement">Enhancement</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${id!''}" url="/docs/mapping/id" title="Id">
-<ul class="nav">
-  <li><a href="#enhancement">Enhancement</a></li>
-  <li><a href="#generated-value">Generated value</a></li>
-  <li><a href="#uuid">UUID</a></li>
-  <li><a href="#database-platform">Database platform</a></li>
-  <li><a href="#custom">Custom Id Generator</a></li>
-</ul>
-</@smallnav>
+<@smallnav activeCheck="" url="/docs/mapping/jpa" title="JPA Mapping"></@smallnav>
+<@smallnav activeCheck="" url="/docs/mapping/extension" title="Extensions"></@smallnav>

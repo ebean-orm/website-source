@@ -8,7 +8,7 @@
   <h2 id="jpa-mapping">JPA mapping</h2>
   <p>
     Ebean uses the same mapping as per the JPA specification. You can learn and use the
-    same mapping annotations. This is generally a very good part of the specification and I'd
+    same mapping annotations. This is generally a good part of the specification and I'd
     expect this part of the specification to mostly stand the test of time.
   </p>
   <p>
@@ -20,7 +20,8 @@
       <td>
         <p>
           Ebean uses a Naming convention API. This is relatively important as it typically it
-          means we only need to specify a <code>@Column name</code> when the naming convention can't be followed.
+          means we only need to specify a <code>@Column name</code> when the naming convention
+          is not followed.
         </p>
         <p>
           Similarly we tend to not require explicit use of @JoinColumn or @JoinTable as long as the naming convention

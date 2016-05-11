@@ -1,0 +1,129 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_extension.html"/>
+<#assign subtitle = "@DbArray">
+<#assign DbArray = "true">
+</head>
+<body>
+
+<h2 id="postgres">Postgres</h2>
+<p>
+  The primary target database for <code>@DbArray</code> is Postgres as single dimension array.
+  In time, we could also maps this to Oracle nested tables but at this stage that will be done
+  on demand (you can ask and sponsor the development effort etc).
+</p>
+
+<h2 id="fallback">Fallback</h2>
+<p>
+  For non-Postgres this the fallback is to simple store the data in JSON form in VARCHAR (ala @DbJson).
+</p>
+
+<h2>Example: uuid[]</h2>
+```java
+  @DbArray
+  List<UUID> uids = new ArrayList<UUID>();
+```
+<p>
+  The example above will map to a database column type <code>uuid[]</code>.
+</p>
+
+<h2>Example: integer[]</h2>
+```java
+@DbArray
+List<Long> someIds = new ArrayList<Long>();
+```
+<p>
+  The example above will map to a database column type <code>integer[]</code>.
+</p>
+
+<h2>Example: varchar[]</h2>
+```java
+@DbArray
+List<String> phoneNumbers = new ArrayList<String>();
+```
+<p>
+  The example above will map to a database column type <code>varchar[]</code>.
+</p>
+
+<h2>Fallback varchar length</h2>
+<p>
+  The <code>length</code> attribute is used with non-Postgres databases and defines
+  the size of the varchar column used in the fallback case.
+</p>
+
+```java
+  // fallback to varchar(300) for non-Postgres databases
+  @DbArray(length = 300)
+  List<String> phNums = new ArrayList<String>();
+```
+
+<h2>Expressions</h2>
+<p>
+  Ebean "Query Beans" and ExpressionList have a 4 expressions added to handle the common
+  ARRAY expressions we want to execute.
+</p>
+<p>
+  The following examples use a <code>phNums</code> property that maps to array of varchar.
+</p>
+<h4>contains()</h4>
+```java
+    List<Contact> contacts = Contact.find
+        .where()
+        .phNums.contains("2314")
+        .findList();
+```
+<p>
+  contains() uses the <code>@></code> contains operator and
+  results in the following predicate:
+</p>
+```sql
+    where t0.ph_nums @> array[?]; --bind(2314)
+```
+
+<h4>notContains()</h4>
+```java
+    List<Contact> contacts = Contact.find
+        .where()
+        .phNums.notContains("2314")
+        .findList();
+```
+<p>
+  notContains() uses the <code>@></code> contains operator and
+  Results in the following predicate:
+</p>
+```sql
+  where not (t0.ph_nums @> array[?]); --bind(2314)
+```
+
+<h4>isEmpty()</h4>
+```java
+    List<Contact> contacts = Contact.find
+        .where()
+        .phNums.isEmpty()
+        .findList();
+```
+<p>
+  isEmpty() uses the cardinality function and
+  results in the following predicate:
+</p>
+```sql
+  where coalesce(cardinality(t0.ph_nums),0) = 0
+```
+
+<h4>isNotEmpty()</h4>
+```java
+    List<Contact> contacts = Contact.find
+        .where()
+        .phNums.isNotEmpty()
+        .findList();
+```
+<p>
+  isNotEmpty() uses the cardinality function and
+  Results in the following predicate:
+</p>
+```sql
+  where coalesce(cardinality(t0.ph_nums),0) <> 0
+```
+
+</body>
+</html>

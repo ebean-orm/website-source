@@ -1,0 +1,67 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_extension.html"/>
+<#assign subtitle = "@DbEnumValue">
+<#assign DbEnumValue = "true">
+</head>
+<body>
+
+<h2 id="use">Use</h2>
+<p>
+  The standard JPA mapping for Enum types is poor. The use of <code>EnumType.ORDINAL</code> values is
+  dangerous as it relies on the exact order of the Enum elements never changing (which is subtle).
+  The use of <code>EnumType.STRING</code> compromises the name of the Enum values.
+</p>
+<p>
+  To use <code>@DbEnumValue</code> we need to annotate a method that returns a value that is used
+  to map the Enum value into the database.
+</p>
+
+```java
+  public enum Status {
+
+    NEW("N"),
+    ACTIVE("A"),
+    INACTIVE("I");
+
+    String dbValue;
+    Status(String dbValue) {
+      this.dbValue = dbValue;
+    }
+
+    // annotate a method that returns the value
+    // in the DB that the enum element maps to
+
+    @DbEnumValue
+    public String getValue() {
+      return dbValue;
+    }
+  }
+```
+
+<h2 id="storage">Storage</h2>
+<p>
+  We use the <code>storage</code> attribute to specify the DB type that the
+  values map to. In effect we typically use this when we want to map the Enum
+  values to database INTEGER type.
+</p>
+```java
+  public enum Status {
+    NEW("1"),
+    ACTIVE("2"),
+    INACTIVE("3");
+
+    String value;
+    Status(String value) {
+      this.value = value;
+    }
+
+    // map to DB INTEGER
+    @DbEnumValue(storage = DbEnumType.INTEGER)
+    public String getValue() {
+      return value;
+    }
+  }
+```
+</body>
+</html>

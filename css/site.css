@@ -508,3 +508,6 @@ pre.console {
     margin-top: 30px;
     margin-bottom:20px;
 }
+ul.nav.bs-docs-sidenav li.sub-menu {
+    margin-left:7px;
+}

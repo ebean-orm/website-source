@@ -1,0 +1,122 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_jpa.html"/>
+<#assign subtitle = "@OneToMany">
+<#assign oneToMany = "true">
+</head>
+<body>
+
+<h2 id="pair">Relationship Pair</h2>
+<p>
+  Most often we can think of <code>@OneToMany</code> and <code>@ManyToOne</code> as
+  a pair representing 2 sides of a relationship. As such @OneToMany has the <code>"many"</code>
+  side of the relationship and @ManyToOne has the <code>"one"</code> side of the relationship.
+</p>
+
+<h2 id="mappedBy">mappedBy</h2>
+<p>
+  The <code>mappedBy</code> attribute should be defined in most @OneToMany.
+  The mappedBy attribute effectively refers to the other side of the relationship.
+</p>
+
+<h4>Example: Customer has many Contacts</h4>
+```java
+@Entity
+public class Customer ...
+
+  // mappedBy referring to the other side of this relationship
+  @OneToMany(mappedBy="customer")
+  List<Contact> contacts;
+  ...
+```
+<p>
+  On the other side of the relationship in the Contact entity bean we define the
+  <code>@ManyToOne</code> property that the <code>mappedBy</code> refers to.
+</p>
+
+```java
+@Entity
+public class Contact ...
+
+  // the customer property referred to by @OneToMany(mappedBy="customer")
+  @ManyToOne(optional=false)
+  Customer customer;
+  ...
+```
+
+<h2 id="bidirectional">Bi-directional</h2>
+<p>
+  When we map both sides of the relationship with a <code>@OneToMany</code> and <code>@ManyToOne</code>
+  pair we can describe this as a bi-directional relationship.  The relationship can be viewed, navigated
+  and loaded from both directions.
+</p>
+<blockquote>
+  There are no restrictions or limitations when we have a bi-directional relationship.
+</blockquote>
+
+<h2 id="no-OneToMany">Not mapping the @OneToMany</h2>
+<p>
+  The reason we might choose to not map the <code>@OneToMany</code> side of a relationship is
+  <code>when the cardinality is high (say thousands)</code> and we deem that we never want to
+  allow the application to navigate the relationship in that direction as doing so naively
+  might load too many of objects.
+</p>
+<p>
+  For example if a Customer had 1 million Orders and we naively navigated from that Customer to
+  all their orders we could load 1 millions Order instances into memory which is generally something
+  we don't want to do.  In this case we could use <code>filterMany</code> on a Customer query
+  to filter the orders for each customer (e.g. orders created in the last week). Alternatively we can
+  load the graph in the other direction (From Order to Customer).
+</p>
+<p>
+  Omitting a @OneToMany effectively means we can't navigate or
+  load the relationship from that direction and instead it forces the application to always
+  use the other direction (to build object graphs).
+</p>
+
+<h2 id="no-ManyToOne">Not mapping the @ManyToOne</h2>
+<p>
+  When we do not map the @ManyToOne this adds a restriction and implies an <code>ownership relationship</code>.
+</p>
+<p>
+  For example take the case of <code>Order</code> having many <code>OrderDetail</code>. When we don't map
+  the @ManyToOne side in OrderDetail:
+</p>
+<h4>Order has details:</h4>
+```java
+@Entity
+@Table(name = "o_order")
+public class Order ...
+
+  // we MUST have cascade persist here for this
+  // unidirectional case (no @ManyToOne)
+  @OneToMany(cascade = CascadeType.ALL)
+  List<OrderDetail> details;
+  ...
+```
+
+<h4>OrderDetail has no matching @ManyToOne:</h4>
+```java
+@Entity
+public class OrderDetail ...
+
+  // Does not have - @ManyToOne(optional = false) Order order;
+```
+<p>
+  This effectively adds the restriction that to insert new OrderDetails we must
+  cascade persist from Order to do so. That is, the @ManyToOne effectively represents
+  the foreign key column that is on the underlying table for OrderDetail and to populate
+  that foreign key column <code>we must use cascade persist from Order</code>.
+</p>
+<p>
+  This also implies that the foreign key value can never change and hence we can view
+  this conceptually as an <code>'ownership' relationship</code>.
+  In this example each OrderDetail is 'owned' by an Order.
+</p>
+<blockquote>
+Personally I always map the @ManyToOne
+</blockquote>
+
+
+</body>
+</html>
