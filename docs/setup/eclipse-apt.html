@@ -1,0 +1,77 @@
+<html>
+<head>
+  <title>Eclipse IDE setup for Ebean ORM Query Bean generation (Java annotation processing / APT)</title>
+  <meta name="layout" content="_layout/docs_setup.html"/>
+<#assign subtitle = "Eclipse IDE - APT">
+<#assign eclipseApt = "true">
+</head>
+<body>
+<div class="bs-docs-section">
+
+  <h2 id="videos">Introduction</h2>
+  <div class="row">
+    <div class="col-md-6">
+    <@video_item "_DWxNj-_orA" "Installing the enhancement plugin" "This plugin performs both entity bean and query bean enhancement."/>
+    </div>
+    <div class="col-md-6">
+    <@video_item "20dvi_oqVus" "Eclipse IDE APT" "Query bean generation (Java annotation) with Eclipse IDE"/>
+    </div>
+  </div>
+  <p class="mvm">
+    The Eclipse IDE plugin is installed from: <code>http://ebean-orm.github.io/eclipse/update</code>
+  </p>
+
+  <h2 id="overview">Overview</h2>
+  <p>
+    If you want to use <code>Query beans</code> it is best that they are generated
+    via <code>Java annotation processing</code>. Ebean provides <code>querybean-generator</code>
+    which is a java annotation processor that generates query beans.
+  </p>
+  <p>
+    Normally we just need to add the <code>querybean-generator</code> as a maven dependency and
+    it will all automatically work (with Maven and IntelliJ) but with Eclipse IDE we need some extra
+    setup in order for it to work.
+  </p>
+  <p>
+    This page documents the extra setup we need for Eclipse IDE such that it becomes aware of the
+    <code>querybean-generator</code> APT processor and generates query beans for us during development.
+  </p>
+
+  <h2 id="m2e-apt">1. Install m2e apt plugin</h2>
+  <p>
+    First install the m2e apt plugin (by Redhat) from the Market place.
+  </p>
+  <p>
+    This plugin allows us to configure Eclipse to find java annotation processors
+    in the maven classpath (just like Maven and IntelliJ do automatically).
+  </p>
+  <img src="/images/eclipse/apt/install-m2e-apt.png" class="img-responsive img-thumbnail">
+
+
+  <h2 id="preferences">2. Preferences / Maven / Annotation processing</h2>
+  <p>
+    Goto Preferences / Maven / Annotation processing and select the option.
+    "Automatically configure JDT APT" is usually a fine default.
+  </p>
+  <img src="/images/eclipse/apt/pref-maven-apt.png" class="img-responsive img-thumbnail">
+
+
+  <h2 id="java-compile">3. Project / Java compile / Annotation processing</h2>
+  <p>
+    Turn on annotation processing for the project.
+  </p>
+  <img src="/images/eclipse/apt/javacompile-apt.png" class="img-responsive img-thumbnail">
+
+
+  <h2 id="factory-path">4. Project / Java compile / Annotation processing / Factory Path</h2>
+  <p>
+    Check the <code>Factory Path</code>. It is ok if all entries in the classpath are
+    selected but what MUST be selected is <code>querybean-generator</code> and additionally
+    <code>persistence-api</code> and <code>avaje-ebeanorm</code> (we need these last 2 as
+    they contain annotations that querybean-generator is reading as part of it's code generation).
+  </p>
+  <img src="/images/eclipse/apt/javacompile-apt-factorypath.png" class="img-responsive img-thumbnail">
+
+</div>
+</body>
+</html>

@@ -1,11 +1,19 @@
 
 <@smallnav activeCheck="${enhancement!''}" url="/docs/setup/enhancement" title="Enhancement">
-
 <ul class="nav">
   <li><a href="#idea">IDE</a></li>
   <li><a href="#maven">Maven</a></li>
   <li><a href="#agent">Agent</a></li>
   <li><a href="#ant">Ant</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${eclipseApt!''}" url="/docs/setup/eclipse-apt" title="Eclipse IDE - APT">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#m2e-apt">Install m2e apt</a></li>
+  <li><a href="#preferences">Preferences</a></li>
+  <li><a href="#java-compile">Java compile / APT</a></li>
+  <li><a href="#factory-path">Factory Path</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${logging!''}" url="/docs/setup/logging" title="Logging">
