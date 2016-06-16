@@ -111,7 +111,7 @@ public class Order {
 
   ...
   // embed some customer details including the billingAddress
-  @DocEmbedded(doc = "id,status,name,billingAddress(*,country(*)")
+  @DocEmbedded(doc = "id,name,status,billingAddress(*,country(*))")
   @ManyToOne(optional=false)
   Customer customer;
 
