@@ -6,7 +6,44 @@
 </head>
 <body>
 <div class="bs-docs-section">
-  <h1 id="enhancement" class="page-header">Enhancement</h1>
+
+  <h2>Videos</h2>
+  <div class="row">
+    <div class="col-md-6">
+    <@video_item "q-SB_X_X-GU" "Maven enhancement" "Enhancement of entity and query beans using the maven enhancement tile" />
+    </div>
+  </div>
+  <div class="row mvm">
+    <div class="col-md-6">
+    <@video_item "o4kmglM48Vc" "IntelliJ plugin" "Enhancement using the IntelliJ IDEA plugin" />
+    </div>
+    <div class="col-md-6">
+    <@video_item "49vKdpbUl-0" "IntelliJ debugger" "Looks at Idea debugger setting that invokes lazy loading" />
+    </div>
+  </div>
+  <div class="row mvm">
+    <div class="col-md-6">
+    <@video_item "_DWxNj-_orA" "Eclipse plugin" "Enhancement using the Eclipse plugin" />
+    </div>
+    <div class="col-md-6">
+    <@video_item "20dvi_oqVus" "Eclipse APT" "Eclipse setup for Query bean generation (via Java annotation processor)." />
+    </div>
+  </div>
+
+  <h2 id="recommendation">Recommendation</h2>
+  <blockquote>
+    Use <b>both</b> IDE plugin enhancement (Idea or Eclipse) plus build time enhancement.
+  </blockquote>
+  <p>
+    For IntelliJ IDEA and Eclipse users my recommendation is to use the IDE plugin in addition
+    to either build time enhancement (maven plugin) or agent.
+  </p>
+  <p>
+    That is, the IDE plugin is good to use during development enhancing the beans as the IDE compiles the
+    classes. Using the IDE plugin can reduce enhancement hassles during development and unit testing.
+    For production you can then choose between build time enhancement via say maven or run time
+    enhancement via javaagent.
+  </p>
 
   <h2 id="overview">Overview</h2>
 
@@ -30,63 +67,6 @@
     an IDE plugin and maven plugin to perform the enhancement.
   </p>
 
-  <h2 id="recommendation">Recommendation</h2>
-  <p>
-    Rob: For IntelliJ IDEA and Eclipse users my recommendation is to use the IDE plugin in addition
-    to either build time enhancement (maven plugin) or agent.
-  </p>
-  <p>
-    That is, the IDE plugin is good to use during development enhancing the beans as the IDE compiles the
-    classes. Using the IDE plugin can reduce enhancement hassles during development and unit testing.
-    For production you can then choose between build time enhancement via say maven or run time
-    enhancement via javaagent.
-  </p>
-
-  <h2 id="idea">IntelliJ IDEA Plugin</h2>
-
-  <div class="media ">
-    <div class="media-left">
-      <div class="media-left">
-        <a href="https://youtu.be/o4kmglM48Vc">
-          <img src="/images/movies-64.png" width="64" height="64">
-        </a>
-      </div>
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">IntelliJ plugin</h4>
-      Installing and using the enhancement plugin for IntelliJ IDEA.
-    </div>
-  </div>
-
-  <h2 id="eclipse">Eclipse IDE Plugin</h2>
-
-  <div class="media">
-    <div class="media-left">
-      <div class="media-left">
-        <a href="https://youtu.be/_DWxNj-_orA">
-          <img src="/images/movies-64.png" width="64" height="64">
-        </a>
-      </div>
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Eclipse plugin</h4>
-      Installing the enhancement plugin for Eclipse IDE from <code>http://ebean-orm.github.io/eclipse/update</code>
-    </div>
-  </div>
-
-  <div class="media">
-    <div class="media-left">
-      <div class="media-left">
-        <a href="https://youtu.be/20dvi_oqVus">
-          <img src="/images/movies-64.png" width="64" height="64">
-        </a>
-      </div>
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Eclipse APT (Query bean generation)</h4>
-      Eclipse IDE specific setup for Query bean generation (via Java annotation processor).
-    </div>
-  </div>
 
 <#-------------------------------------------------------------------------------------------------->
   <h2 id="maven">Maven enhancement</h2>
