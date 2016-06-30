@@ -1,6 +1,27 @@
+<@smallnav activeCheck="${elastic!''}" url="/docs/features/elasticsearch" title="ElasticSearch">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#mapping">Mapping</a></li>
+</ul>
+</@smallnav>
 
+<@smallnav activeCheck="${history!''}" url="/docs/features/history" title="History SQL2011">
+<ul class="nav">
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#history-tables">History tables</a></li>
+  <li><a href="#change-log">Compared to Change Log</a></li>
+  <li><a href="#history">@History</a></li>
+  <li><a href="#history-exclude">@HistoryExclude</a></li>
+  <li><a href="#manytomany">ManyToMany intersection</a></li>
+  <li><a href="#as-of-query">As of query</a></li>
+  <li><a href="#versions-between-query">Versions between</a></li>
+  <li><a href="#who-when">Who and When</a></li>
+  <li><a href="#postgres">Postgres</a></li>
+  <li><a href="#mysql">MySql</a></li>
+  <li><a href="#oracle">Oracle</a></li>
+</ul>
+</@smallnav>
 
-<@smallnav activeCheck="${json!''}" url="/docs/features/json" title="JSON"/>
 <@smallnav activeCheck="${jsonindb!''}" url="/docs/features/json-in-db" title="JSON in DB">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
@@ -12,6 +33,8 @@
   <li><a href="#raw">Raw expression</a></li>
 </ul>
 </@smallnav>
+
+<@smallnav activeCheck="${json!''}" url="/docs/features/json" title="JSON"/>
 <@smallnav activeCheck="${eventlistening!''}" url="/docs/features/eventlistening" title="Event listening">
 </@smallnav>
 
@@ -46,22 +69,6 @@
   <li><a href="#getting-started">Getting started</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${history!''}" url="/docs/features/history" title="History SQL2011">
-<ul class="nav">
-  <li><a href="#overview">Overview</a></li>
-  <li><a href="#history-tables">History tables</a></li>
-  <li><a href="#change-log">Compared to Change Log</a></li>
-  <li><a href="#history">@History</a></li>
-  <li><a href="#history-exclude">@HistoryExclude</a></li>
-  <li><a href="#manytomany">ManyToMany intersection</a></li>
-  <li><a href="#as-of-query">As of query</a></li>
-  <li><a href="#versions-between-query">Versions between</a></li>
-  <li><a href="#who-when">Who and When</a></li>
-  <li><a href="#postgres">Postgres</a></li>
-  <li><a href="#mysql">MySql</a></li>
-  <li><a href="#oracle">Oracle</a></li>
-</ul>
-</@smallnav>
 <@smallnav activeCheck="${draftable!''}" url="/docs/features/draftable" title="Draftable">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
@@ -84,13 +91,6 @@
   <li><a href="#cachestrategy">@CacheStrategy</a></li>
   <li><a href="#query-bean-cache">Query - bean cache</a></li>
   <li><a href="#query-query-cache">Query - query cache</a></li>
-</ul>
-</@smallnav>
-
-<@smallnav activeCheck="${elastic!''}" url="/docs/features/elasticsearch" title="ElasticSearch">
-<ul class="nav">
-  <li><a href="#overview">Overview</a></li>
-  <li><a href="#mapping">Mapping</a></li>
 </ul>
 </@smallnav>
 

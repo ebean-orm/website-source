@@ -5,17 +5,30 @@
 </head>
 <body>
 <div class="bs-docs-section">
-  <h3><a href="/docs/features/json">JSON</a></h3>
+
+  <h3><a href="/docs/features/elasticsearch">ElasticSearch integration</a></h3>
   <p>
-    Easily convert your entity bean object graphs to/from JSON.
-    Ebean provides JSON marshalling/unmarshalling support taking into account bi-directional relationships,
-    all the supported types (Enums, Joda, Java8) and partially loaded object graphs.
+    Details on the integration with ElasticSearch. Automatic indexing changes into ElasticSearch etc.
+  </p>
+
+  <h3><a href="/docs/features/history">History SQL2011</a></h3>
+  <p>
+    Support historical queries <code>query.asOf(timestamp)</code> and versions <code>query.findVersionsBetween()</code>
+    against historic/old versions of the rows. This supports Oracle Total Recall and for Postgres/MySql etc will
+    generate the appropriate history tables, triggers and views.
   </p>
 
   <h3><a href="/docs/features/json-in-db">JSON in DB</a></h3>
   <p>
     Postgres and Oracle especially has built in support for storing JSON documents in the database.
     Ebean has built in support for this included support for query expressions.
+  </p>
+
+  <h3><a href="/docs/features/json">JSON</a></h3>
+  <p>
+    Easily convert your entity bean object graphs to/from JSON.
+    Ebean provides JSON marshalling/unmarshalling support taking into account bi-directional relationships,
+    all the supported types (Enums, Joda, Java8) and partially loaded object graphs.
   </p>
 
   <h3><a href="/docs/features/eventlistening">Event Listening</a></h3>
@@ -34,13 +47,6 @@
     The default implementation logs the events in JSON formatter to a logger.
   </p>
 
-  <h3><a href="/docs/features/history">History SQL2011</a></h3>
-  <p>
-    Support historical queries <code>query.asOf(timestamp)</code> and versions <code>query.findVersionsBetween()</code>
-    against historic/old versions of the rows. This supports Oracle Total Recall and for Postgres/MySql etc will
-    generate the appropriate history tables, triggers and views.
-  </p>
-
   <h3><a href="/docs/features/draftable">Draftable</a></h3>
   <p>
     Uses a second set of tables to provide a "live" and "editing" version of object graphs. Typically this is used
@@ -50,11 +56,6 @@
   <h3><a href="/docs/features/l2caching">L2 Caching</a></h3>
   <p>
     Describes the L2 caching feature and how it is configured and used.
-  </p>
-
-  <h3><a href="/docs/features/elasticsearch">ElasticSearch</a></h3>
-  <p>
-    Details on the integration with ElasticSearch.
   </p>
 
   <h3><a href="/docs/features/jvmlanguages">JVM Languages</a></h3>
