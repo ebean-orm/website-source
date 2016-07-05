@@ -7,13 +7,47 @@
 </head>
 <body>
 
-<h1 id="jpa">JPA</h1>
+<h2 id="jpa">JPA</h2>
 <p>
   The issues discussed in the <a href="/architecture/compare-jpa">comparison with JPA</a> also apply to Hibernate.
   The comparison here apply more specifically to Hibernate.
 </p>
 
-<h1 id="lazyInitialisationException">LazyInitialisationException</h1>
+<h2 id="honor-maxRows">Honoring maxRows in SQL</h2>
+<p>
+  Ebean ORM will always honor firstRows / maxRows in generated SQL. Once you include a join fetch
+  to a @OneToMany Hibernate stops implementing maxRows in SQL and instead brings all the rows back
+  to the client (application server) and filters the results there.
+</p>
+<p>
+  This means the database does not get the opportunity to optimise that query using maxRows
+  (via limit offset clause or similar) and so the DB query execution plan can be very different
+  by reducing the ability of the DB to use indexes and increasing the chances of full table scans.
+</p>
+<p>
+  This also means significantly more data is pulled back from the DB to the client.
+</p>
+<div class="row">
+  <div class="col-md-6">
+  <@video_item "Ztzru3_3WCA" "Join @OneToMany with maxRows" "Hibernate does not honor maxRows in this case" />
+  </div>
+</div>
+
+<h2>SQL cartesian product</h2>
+<p>
+  Ebean ORM will never generate a SQL cartesian product.
+</p>
+<p>
+  Hibernate generates a SQL cartesian product when you join fetch multiple @OneToMany or @ManyToMany
+  associations.
+</p>
+<div class="row">
+  <div class="col-md-6">
+  <@video_item "T9IWXLJB_I4" "Join fetch multiple @OneToMany" "Hibernate generates SQL cartesian product. Comparing that with Ebean's approach" />
+  </div>
+</div>
+
+<h2 id="lazyInitialisationException">LazyInitialisationException</h2>
 <p>
   Hibernate does not allow lazy loading beyond the end of it's Session scope and instead
   throws <code>LazyInitialisationException</code>.
@@ -51,7 +85,7 @@
 </p>
 
 <p>&nbsp;</p>
-<h1 id="set">Set vs List</h1>
+<h2 id="set">Set vs List</h2>
 <p>
   Hibernate has different semantics for <code>Set</code> and <code>List</code> (bag semantics).
   For Hibernate this tends to promote the use of Set as the preferred collection type.
