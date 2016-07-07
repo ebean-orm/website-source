@@ -52,9 +52,6 @@
   Hibernate does not allow lazy loading beyond the end of it's Session scope and instead
   throws <code>LazyInitialisationException</code>.
 </p>
-<blockquote>
-  Ebean does not suffer this limitation.
-</blockquote>
 <h4>Ebean allows lazy loading beyond the initial scope</h4>
 <ul>
   <li>
@@ -68,20 +65,27 @@
     This means the lazy loading still produces a consistent object graph (just as if it was loaded
     eagerly).
   </li>
+  <li>
+    If you want to prevent lazy loading with Ebean you can do <code>query.setDisableLazyLoading(true)</code>.
+    This is useful when you want to use a partially populated bean and give it to a reflection based tool
+    that converts it to JSON or DTO's etc.
+  </li>
 </ul>
 <blockquote>
-  With Ebean lazy loading just works!
+  With Ebean lazy loading just works without any drama
 </blockquote>
 
 <p>&nbsp;</p>
-<h1 id="open-session-in-view">Open session in view</h1>
+<h4 id="open-session-in-view">Open session in view</h4>
 <p>
   As a byproduct of Ebean supporting lazy loading (beyond transaction scope) Ebean does not require
-  the <code>"Open session in view"</code> pattern.
+  the <code>"Open session in view"</code> pattern which is sometimes used with Hibernate.
 </p>
 <p>
   The "Open session in view" used with Hibernate has the effect of holding a transaction open for a
-  longer time relative to Ebean.
+  longer time relative to Ebean. This pattern is considered an anti-pattern by many and instead the
+  focus is on making sure service layer code has loaded everything that is needed on the entities
+  (and this is code we don't need to write with Ebean).
 </p>
 
 <p>&nbsp;</p>
@@ -104,6 +108,74 @@
   avoid any confusion relating to hashCode()/equals() implementation on mutating entity beans.
 </p>
 
+
+<p>&nbsp;</p>
+<h2 id="fetchgraph">Ebean (select/fetch) vs Hibernate JPA fetchgraph hint (EntityGraph)</h2>
+<p>
+  Hibernate does not honor the JPA fetchgraph hint at the property/column level which means we can't
+  use that to optimise our SQL queries.
+</p>
+
+
+<p>&nbsp;</p>
+<h2 id="paged-list">PagedList / findRowCount()</h2>
+<p>
+  JPA nor Hibernate have built in support for PagedList with findRowCount - That is, having a single query to
+  execute and having that query automatically converted into an appropriate and optimised "find total row count" query.
+</p>
+
+
+<p>&nbsp;</p>
+<h2 id="find-each">findEach() / findEachWhile()</h2>
+<p>
+  JPA does not have a standard approach for large query support but Hibernate has a <code>scroll</code> query.
+</p>
+<p>
+  TODO: Comparison of findEach() and Hibernate scroll().
+</p>
+
+
+<p>&nbsp;</p>
+<h2 id="history">SQL2011 @History vs Hibernate Envers</h2>
+<p>
+  TODO: ...
+</p>
+
+<p>&nbsp;</p>
+<h2 id="type-safe">Type safe queries</h2>
+<p>
+  TODO: ...
+</p>
+
+<p>&nbsp;</p>
+<h2 id="draftable">@Draftable</h2>
+<p>
+  TODO: ...
+</p>
+
+<p>&nbsp;</p>
+<h2 id="soft-delete">@SoftDelete</h2>
+<p>
+  TODO: ...
+</p>
+
+<p>&nbsp;</p>
+<h2 id="json-in-db">JSON in DB</h2>
+<p>
+  TODO: ...
+</p>
+
+<p>&nbsp;</p>
+<h2 id="ddl">DDL Generation / DB Migrations</h2>
+<p>
+  TODO: ...
+</p>
+
+<p>&nbsp;</p>
+<h2 id="elastic">ElasticSearch integration</h2>
+<p>
+  TODO: ...
+</p>
 
 </body>
 </html>
