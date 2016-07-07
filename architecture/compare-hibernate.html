@@ -89,24 +89,16 @@
 </p>
 
 <p>&nbsp;</p>
-<h2 id="set">Set vs List</h2>
+<h2 id="history">SQL2011 @History vs Hibernate Envers</h2>
 <p>
-  Hibernate has different semantics for <code>Set</code> and <code>List</code> (bag semantics).
-  For Hibernate this tends to promote the use of Set as the preferred collection type.
+  Ebean's @History is a database centric approach mapping to SQL2011. Hibernate Envers is an application centric approach
+  which means that unlike @History bulk updates and external updates don't get included in auditing with Envers.
 </p>
-<p>
-  Ebean does not apply different semantics between <code>Set</code> and <code>List</code>.
-</p>
-<p>
-  The issue with using <code>Set</code> is that it implies the use of <code>hashCode()/equals()</code> and the
-  implementation of hashCode()/equals() is not perfect for the case of entity beans that mutate and don't
-  always have an @Id value (e.g. When the @Id value is not populated via generated value and hence not
-  populated until after the save and hence the @Id value can't be used in hashCode/equals implementation).
-</p>
-<p>
-  For Ebean I'd like to promote the use of <code>List</code> in preference to <code>Set</code> in order to
-  avoid any confusion relating to hashCode()/equals() implementation on mutating entity beans.
-</p>
+<div class="row">
+  <div class="col-md-6">
+  <@video_item "YOuElXoidxk" "Comparison to Hibernate Envers" "Comparison with the approach taken by Hibernate Envers"/>
+  </div>
+</div>
 
 
 <p>&nbsp;</p>
@@ -134,12 +126,6 @@
   TODO: Comparison of findEach() and Hibernate scroll().
 </p>
 
-
-<p>&nbsp;</p>
-<h2 id="history">SQL2011 @History vs Hibernate Envers</h2>
-<p>
-  TODO: ...
-</p>
 
 <p>&nbsp;</p>
 <h2 id="type-safe">Type safe queries</h2>
@@ -175,6 +161,27 @@
 <h2 id="elastic">ElasticSearch integration</h2>
 <p>
   TODO: ...
+</p>
+
+
+<p>&nbsp;</p>
+<h2 id="set">Set vs List</h2>
+<p>
+  Hibernate has different semantics for <code>Set</code> and <code>List</code> (bag semantics).
+  For Hibernate this tends to promote the use of Set as the preferred collection type.
+</p>
+<p>
+  Ebean does not apply different semantics between <code>Set</code> and <code>List</code>.
+</p>
+<p>
+  The issue with using <code>Set</code> is that it implies the use of <code>hashCode()/equals()</code> and the
+  implementation of hashCode()/equals() is not perfect for the case of entity beans that mutate and don't
+  always have an @Id value (e.g. When the @Id value is not populated via generated value and hence not
+  populated until after the save and hence the @Id value can't be used in hashCode/equals implementation).
+</p>
+<p>
+  For Ebean I'd like to promote the use of <code>List</code> in preference to <code>Set</code> in order to
+  avoid any confusion relating to hashCode()/equals() implementation on mutating entity beans.
 </p>
 
 </body>
