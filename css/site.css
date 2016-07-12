@@ -331,6 +331,10 @@ a.nav-link {
 }
 .mvm {
     margin-top:25px;
+    margin-bottom:25px;
+}
+.mbm {
+    margin-bottom:25px;
 }
 .mtl {
     margin-top: 50px;

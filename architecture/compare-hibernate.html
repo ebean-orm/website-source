@@ -35,11 +35,8 @@
 
 <h2>SQL cartesian product</h2>
 <p>
-  Ebean ORM will never generate a SQL cartesian product.
-</p>
-<p>
-  Hibernate generates a SQL cartesian product when you join fetch multiple @OneToMany or @ManyToMany
-  associations.
+  Ebean ORM will never generate a SQL cartesian product. Hibernate generates a SQL cartesian product when
+  you join fetch multiple @OneToMany or @ManyToMany associations.
 </p>
 <div class="row">
   <div class="col-md-6">
@@ -48,6 +45,12 @@
 </div>
 
 <h2 id="lazyInitialisationException">LazyInitialisationException</h2>
+<div class="row mbm">
+  <div class="col-md-6">
+  <@video_item "-AWdW6LxKaA" "Lazy loading beyond the context" "Ebean and EclipseLink do it, Hibernate throws LazyInitialisationException" />
+  </div>
+</div>
+
 <p>
   Hibernate does not allow lazy loading beyond the end of it's Session scope and instead
   throws <code>LazyInitialisationException</code>.

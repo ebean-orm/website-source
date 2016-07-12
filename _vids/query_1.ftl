@@ -11,6 +11,9 @@
 </div>
 <div class="row">
   <div class="col-md-4">
+  <@video_item "-AWdW6LxKaA" "Lazy loading beyond the context" "Ebean and EclipseLink do it, Hibernate throws LazyInitialisationException" />
+  </div>
+  <div class="col-md-4">
   <@video_item "Kp528zWlbqU" "Using query beans" "Using query beans and how they work" />
   </div>
   <div class="col-md-4">
