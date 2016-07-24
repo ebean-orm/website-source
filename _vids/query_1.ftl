@@ -20,6 +20,10 @@
   <@video_item "smAB0X0X_i4" "Generate Finders" "Using the codegen maven plugin to generate Finders" />
   </div>
 </div>
-
+<div class="row">
+  <div class="col-md-4">
+  <@video_item "knUtH3I0WPM" "FindRowCount & PagedList" "How Ebean's findRowCount query works and how to use PagedList" />
+  </div>
+</div>
 
 
