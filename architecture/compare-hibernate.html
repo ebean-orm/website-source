@@ -13,7 +13,7 @@
   The comparison here apply more specifically to Hibernate.
 </p>
 
-<h2 id="honor-maxRows">Honoring maxRows in SQL</h2>
+<h2 id="max-rows">Honoring maxRows in SQL</h2>
 <p>
   Ebean ORM will always honor firstRows / maxRows in generated SQL. Once you include a join fetch
   to a @OneToMany Hibernate stops implementing maxRows in SQL and instead brings all the rows back
@@ -33,7 +33,7 @@
   </div>
 </div>
 
-<h2>SQL cartesian product</h2>
+<h2 id="cartesian-product">SQL cartesian product</h2>
 <p>
   Ebean ORM will never generate a SQL cartesian product. Hibernate generates a SQL cartesian product when
   you join fetch multiple @OneToMany or @ManyToMany associations.
@@ -44,7 +44,7 @@
   </div>
 </div>
 
-<h2 id="lazyInitialisationException">LazyInitialisationException</h2>
+<h2 id="lazy-initialization-exception">LazyInitialisationException</h2>
 <div class="row mbm">
   <div class="col-md-6">
   <@video_item "-AWdW6LxKaA" "Lazy loading beyond the context" "Ebean and EclipseLink do it, Hibernate throws LazyInitialisationException" />
@@ -105,15 +105,14 @@
 
 
 <p>&nbsp;</p>
-<h2 id="fetchgraph">Ebean (select/fetch) vs Hibernate JPA fetchgraph hint (EntityGraph)</h2>
+<h2 id="optimising-fetch">Ebean (select/fetch) vs Hibernate JPA fetchgraph hint (EntityGraph)</h2>
 <p>
   Hibernate does not honor the JPA fetchgraph hint at the property/column level which means we can't
   use that to optimise our SQL queries.
 </p>
 
-
 <p>&nbsp;</p>
-<h2 id="paged-list">PagedList / findRowCount()</h2>
+<h2 id="paged-list">PagedList / findRowCount</h2>
 <p>
   JPA nor Hibernate have built in support for PagedList with findRowCount - That is, having a single query to
   execute and having that query automatically converted into an appropriate and optimised "find total row count" query.
@@ -126,7 +125,7 @@
 
 
 <p>&nbsp;</p>
-<h2 id="find-each">findEach() / findEachWhile()</h2>
+<h2 id="find-each">findEach vs scroll</h2>
 <p>
   JPA does not have a standard approach for large query support but Hibernate has a <code>scroll</code> query.
 </p>
@@ -149,43 +148,6 @@
 
 
 <p>&nbsp;</p>
-<h2 id="type-safe">Type safe queries</h2>
-<p>
-  TODO: ...
-</p>
-
-<p>&nbsp;</p>
-<h2 id="draftable">@Draftable</h2>
-<p>
-  TODO: ...
-</p>
-
-<p>&nbsp;</p>
-<h2 id="soft-delete">@SoftDelete</h2>
-<p>
-  TODO: ...
-</p>
-
-<p>&nbsp;</p>
-<h2 id="json-in-db">JSON in DB</h2>
-<p>
-  TODO: ...
-</p>
-
-<p>&nbsp;</p>
-<h2 id="ddl">DDL Generation / DB Migrations</h2>
-<p>
-  TODO: ...
-</p>
-
-<p>&nbsp;</p>
-<h2 id="elastic">ElasticSearch integration</h2>
-<p>
-  TODO: ...
-</p>
-
-
-<p>&nbsp;</p>
 <h2 id="set">Set vs List</h2>
 <p>
   Hibernate has different semantics for <code>Set</code> and <code>List</code> (bag semantics).
@@ -203,6 +165,70 @@
 <p>
   For Ebean I'd like to promote the use of <code>List</code> in preference to <code>Set</code> in order to
   avoid any confusion relating to hashCode()/equals() implementation on mutating entity beans.
+</p>
+
+<p>&nbsp;</p>
+<h2 id="mapping">Mapping</h2>
+
+<h4>Naming conventions</h4>
+<p>
+  Ebean's default <code>UnderscoreNamingConvention</code> matches Hibernate's <code>ImprovedNamingStrategy</code> but
+  not the JPA standard based one (which has mixed case column naming AND underscores). Note that
+  Spring boot automatically configures Hibernate to use the ImprovedNamingStrategy.
+</p>
+
+<h4>javax.validation.constraints NotNull & Size</h4>
+<p>
+  Both Ebean and Hibernate use the <code>@NotNull</code> and <code>@Size</code> validation annotations for mapping.
+</p>
+
+<h4>@ManyToOne</h4>
+<p>
+  JPA defaults all @ManyToOne to be treated as fetch EAGER. We almost certainly don't want that when using Hibernate
+  (as those Eager fetch types can then not be made lazy via JPQL or via fetchgraph hints so typically with Hibernate
+  we would expect most @ManyToOne to be explicitly lazy via ... @ManyToOne(fetch = FetchType.LAZY).
+</p>
+<p>
+  With Ebean we use our query language to define "What to fetch" and don't need to specify FetchType.LAZY on @ManyToOne.
+</p>
+
+
+<h4>UUID type</h4>
+<p>
+  Ebean automatically maps UUID to their native types for Postgres and H2 - so UUID just works as we would like.
+</p>
+<p>
+  Hibernate supports mapping UUID to the native type for Postgres via org.hibernate.annotations.Type - @Type(type="pg-uuid").
+  The downside here is that this does not work with UUID on H2 (mapping to binary instead) and this means that SQL
+  test scripts don't execute against H2 using literal UUID values (so some pain here when testing against H2 here).
+</p>
+
+<h4>Entities without an @Id</h4>
+<p>
+  Ebean allows entities to be mapped without an @Id. These entities are typically based on SQL or DB Views and used
+  for reporting purposes. Ebean allows this and these entity beans bypass the persistence context because they don't
+  have an @Id value.
+</p>
+<p>
+  With Hibernate we would look to use a different approach, perhaps a DTO query.
+</p>
+
+<h4>@View - Entities based on views</h4>
+<p>
+  Ebean has explicit support for entities based on views via @View. This takes into account DDL for creating the view
+  from a DB migration and testing perspective as well as L2 caching based on underlying table dependencies.
+</p>
+
+<h4>DDL Foreign Key and Unique constraints</h4>
+<p>
+  Hibernate currently generates foreign key names like <code>FK_edi14sijwrl3p2sf41ls3svkm</code> and
+  unique constraint names like <code>UK_ajysu81d17lesquo7uqosrtah</code>.
+</p>
+<p>
+  Ebean has a naming convention for foreign key names and unique constraint names that includes the table and
+  column names. When the names are very restricted (DB2 and Oracle) Ebean uses a "vowel remover" and trim in order
+  to still produce decent foreign key and unique constraint names. The DBA in me thinks those Hibernate constraint
+  names are "absolute pants!".
 </p>
 
 </body>
