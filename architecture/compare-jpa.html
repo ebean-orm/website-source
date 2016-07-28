@@ -76,6 +76,10 @@
   raw JDBC if needed along with <code>transaction.addModification(table, ...)</code> method to
   tell Ebean what tables were modified for L2 cache invalidation.
 </p>
+<p>
+  Ebean also has built in <code>SqlUpdate</code> and <code>CallableSql</code> for easy SQL bulk
+  statements and calling stored procedures.
+</p>
 
 <h3>Transaction Isolation level</h3>
 <p>
@@ -118,27 +122,31 @@
   JPA has no equivalent to Ebean's <code>findMap</code> which returns the objects mapped by a property.
 </p>
 
-<h3>Async queries - findFutureList, findFutureCount, findFutureIds</h3>
+<h3>Async queries</h3>
 <p>
-  Ebean has built in support for executing queries in the background returning <code>Futures</code>.
-  This provides an easy way to execute queries that can be cancelled. Internally findFutureRowCount
-  is used as part of <code>PagedList</code> query.
+  Ebean has built in support for executing queries in the background returning <code>Futures</code>
+  with <code>findFutureList(), findFutureCount() and findFutureIds().</code>
+  This provides an easy way to execute queries that can be cancelled.
+</p>
+<p>
+  Internally findFutureRowCount() is used as part of <code>PagedList</code> query such that the
+  total count query can be executed in parallel to the findList() query.
 </p>
 
-<h3>History - AS OF query</h3>
+<h3>As of history query</h3>
 <p>
-  JPA has no support for SQL2011 <code>AS OF</code> queries.
+  JPA has no support for SQL2011 <a href="/docs/features/history#as-of-query"><code>AS OF</code></a> queries yet.
 </p>
 
-<h3>History - VERSIONS BETWEEN query</h3>
+<h3>Versions between history query</h3>
 <p>
-    JPA has no support for SQL2011 <code>VERSIONS BETWEEN</code> queries.
+  JPA has no support for SQL2011 <a href="/docs/features/history#versions-between-query"><code>VERSIONS BETWEEN</code></a> queries yet.
 </p>
 
 <h3>Generics</h3>
 <p>
-  JPA missed using generics from the start and hence has both <code>Query</code> and <code>TypedQuery</code>
-  API which is not ideal.
+  JPA missed using generics with it's initial API and hence has both <code>Query</code> and <code>TypedQuery</code>
+  which is not ideal.
 </p>
 
 
@@ -160,6 +168,50 @@
   interesting if they can get to the level of control over object graph construction that Ebean supports.
 </p>
 
+<h3 id="type-safe-query">Type safe queries</h3>
+<p>
+  You could argue there is a bit more "ceremony" with JPA Criteria queries which makes the
+  query more verbose and harder to read.
+</p>
+
+<h5>Ebean "Query beans"</h5>
+```java
+LocalDate today = new LocalDate();
+
+List<Customer> customers =
+  new QCustomer()
+    .birthday.equalTo(today)
+    .createdAt.before(today.minusYears(2))
+    .findList();
+```
+
+<h5>JPA Criteria</h5>
+```java
+LocalDate today = new LocalDate();
+
+EntityManager em = ...;
+
+CriteriaBuilder builder = em.getCriteriaBuilder();
+CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
+Root<Customer> root = query.from(Customer.class);
+
+Predicate hasBirthday = builder.equal(root.get(Customer_.birthday), today);
+Predicate isLongTermCustomer = builder.lessThan(root.get(Customer_.createdAt), today.minusYears(2);
+query.where(builder.and(hasBirthday, isLongTermCustomer));
+
+List<Customer> customers = em.createQuery(query.select(root)).getResultList();
+```
+<p>
+  Java annotation processing is used by both Ebean (to generate "Query beans") and JPA
+  (to generate
+  <a href="https://docs.jboss.org/hibernate/orm/5.0/topical/html/metamodelgen/MetamodelGenerator.html">JPA Query Meta model classes</a>
+  in order to provide type safe query construction and execution.
+</p>
+<h5>QueryDSL</h5>
+<p>
+  I suspect many JPA users look to use <a href="http://www.querydsl.com/">QueryDSL</a> as a preference
+  over the standard JPA Criteria meta model objects.
+</p>
 
 <hr/>
 <h2 id="mapping">Mapping</h2>
@@ -187,10 +239,10 @@
   and not the JPA spec naming convention.
 </p>
 
-<h3>Auditing</h3>
+<h3>Auditing & @History</h3>
 <p>
   Ebean has built in support for <code>@WhenCreated</code>, <code>@WhenModified</code>, <code>@WhoCreated</code>
-  , <code>@WhoModified</code> and full <a href="/docs/features/history">SQL2011 History support</a>.
+  , <code>@WhoModified</code> and full <a href="/docs/features/history">SQL2011 @History support</a>.
 </p>
 
 <h3>JSON in DB</h3>
