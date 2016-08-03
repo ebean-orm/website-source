@@ -19,16 +19,16 @@
   </ul>
   <p>
     This example does not show integration with Spring transactions (and instead uses Ebean's own transactions). Please
-    review the <code>avaje-ebeanorm-spring</code> project for that.
+    review the <code>ebean-spring</code> project for that.
   </p>
 
 
-  <h2 id="avaje-ebeanorm-spring">avaje-ebeanorm-spring</h2>
+  <h2 id="ebean-spring">ebean-spring</h2>
   <p>
-    The avaje-ebeanorm-spring provides a FactoryBean as well as integration with Spring transactions.
+    The ebean-spring provides a FactoryBean as well as integration with Spring transactions.
   </p>
 
-<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-spring" "auto" "4" />
+<@maven "org.avaje.ebean" "ebean-spring" "auto" "4" />
 
   <h5>EbeanServerFactoryBean</h5>
   <p>
@@ -51,7 +51,7 @@
 
   <h2 id="factorybean">FactoryBean</h2>
   <p>
-    Rather than use the implementation provided in <code>avaje-ebeanorm-spring</code> you can write your
+    Rather than use the implementation provided in <code>ebean-spring</code> you can write your
     own Spring FactoryBean like the code below (or the spring boot EbeanFactoryBean example
     <a href="https://github.com/ebean-orm/example-springboot/blob/master/src/main/java/org/example/sboot/service/EbeanFactoryBean.java">Factory Bean (programmatic configuration of EbeanServer)</a>).
   </p>

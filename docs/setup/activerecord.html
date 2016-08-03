@@ -35,7 +35,7 @@
     <li><b>Testability</b> - Active record is in theory harder to test</li>
   </ul>
   <p>
-    It should be noted that Ebean provides a testing mechanism via <code>avaje-ebeanorm-mocker</code> such
+    It should be noted that Ebean provides a testing mechanism via <code>ebean-mocker</code> such
     that the active record patterns for both saving and finding are fully testable.
   </p>
 
@@ -68,7 +68,7 @@
   <h2 id="testing">Testing</h2>
 
   <p>
-    Ebean provides the <code>avaje-ebeanorm-mocker</code> project and that supports the testing requirements
+    Ebean provides the <code>ebean-mocker</code> project and that supports the testing requirements
     when using active record pattern. It supports using test doubles for EbeanServer in both persisting and
     finding and provides DelegateEbeanServer as a good out of the box test double for persisting and finding.
   </p>
@@ -108,7 +108,7 @@
   <p>
     If someone asks me whether to choose between active record style or traditional DAO/Inject style
     I would suggest the active record style due to the very nice clean simple code that results.
-    We don't miss out on testability (due to avaje-ebeanorm-mocker) and I'm ok that the entity beans
+    We don't miss out on testability (due to ebean-mocker) and I'm ok that the entity beans
     have save() delete() methods (mixed concerns).
   </p>
 
@@ -117,7 +117,7 @@
 
   <p>
     When your entity beans extend the
-    <a href="https://github.com/ebean-orm/avaje-ebeanorm/blob/master/src/main/java/com/avaje/ebean/Model.java"><code>com.avaje.ebean.Model</code></a> object they
+    <a href="https://github.com/ebean-orm/ebean/blob/master/src/main/java/com/avaje/ebean/Model.java"><code>com.avaje.ebean.Model</code></a> object they
     inherit some convenience methods save(), delete() etc. When these methods are called internally
     the default EbeanServer is used to perform the save() and delete().
   </p>

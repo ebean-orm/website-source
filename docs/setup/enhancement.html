@@ -141,11 +141,11 @@
     <a href="/docs/query/typesafe#enhancement">query bean enhancement</a>.
   </p>
 
-<@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
+<@maven_replace_version "::version::" "ebean-maven-plugin">
   ```xml
   <plugin>
-    <groupId>org.avaje.ebeanorm</groupId>
-    <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
+    <groupId>org.avaje.ebean</groupId>
+    <artifactId>ebean-maven-plugin</artifactId>
     <version>::version::</version>
     <executions>
       <execution>
@@ -170,7 +170,7 @@
 
     <p>Eclipse can be configured to enhance the classes during build using maven configuration</p>
 
-  <@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
+  <@maven_replace_version "::version::" "ebean-maven-plugin">
       ```xml
       <build>
         <plugins>
@@ -188,8 +188,8 @@
                   <pluginExecutions>
                     <pluginExecution>
                       <pluginExecutionFilter>
-                        <groupId>org.avaje.ebeanorm</groupId>
-                        <artifactId>avaje-ebeanorm-mavenenhancer</artifactId>
+                        <groupId>org.avaje.ebean</groupId>
+                        <artifactId>ebean-maven-plugin</artifactId>
                         <versionRange>[::version::,)</versionRange>
                         <goals>
                           <goal>enhance</goal>
@@ -220,26 +220,23 @@
   </p>
 
   <p>
-    Note that since version 4.7.1 of avaje-ebeanorm-agent is expected that the agent
+    Note that since version 4.7.1 of ebean-agent is expected that the agent
     will perform well without specifying the packages to enhance. That is, the agent is pretty good
     at ignoring non-interesting classes (JDK, groovy, scala, kotlin, jdbc drivers and many common
     libraries from apache, google, testing etc.
   </p>
 
-<@maven_replace_version "::version::" "avaje-ebeanorm-mavenenhancer">
+<@maven_replace_version "::version::" "ebean-maven-plugin">
 ```xml
-java -javaagent:avaje-ebeanorm-agent-::version::.jar MyApplication
-java -javaagent:avaje-ebeanorm-agent-::version::.jar=debug=3 MyApplication
-java -javaagent:avaje-ebeanorm-agent-::version::.jar=packages=org.example.model MyApplication
-java -javaagent:avaje-ebeanorm-agent-::version::.jar=debug=1;packages=org.example.model,org.example.model2
-MyApplication
+java -javaagent:ebean-agent-::version::.jar MyApplication
+java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
 ```
 </@maven_replace_version>
 
   <p>
-    The avaje-ebeanorm-agent jar can be downloaded from maven. The current version is:
+    The ebean-agent jar can be downloaded from maven. The current version is:
   </p>
-<@maven "org.avaje.ebeanorm" "avaje-ebeanorm-agent" "auto" "4" />
+<@maven "org.avaje.ebean" "ebean-agent" "auto" "4" />
 
 <#-------------------------------------------------------------------------------------------------->
   <h2 id="agent_loader">Agent Loader</h2>
@@ -267,8 +264,8 @@ MyApplication
   ...
   public void someApplicationBootupMethod() {
     // Load the agent into the running JVM process
-    if (!AgentLoader.loadAgentFromClasspath("avaje-ebeanorm-agent","debug=1;packages=org.example.model.**")) {
-      logger.info("avaje-ebeanorm-agent not found in classpath - not dynamically loaded");
+    if (!AgentLoader.loadAgentFromClasspath("ebean-agent","debug=1;packages=org.example.model")) {
+      logger.info("ebean-agent not found in classpath - not dynamically loaded");
     }
   }
   ```

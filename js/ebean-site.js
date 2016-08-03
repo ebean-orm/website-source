@@ -78,7 +78,7 @@ function retrieveAndReplaceVersionsInPage() {
     replaceVersionsInPage();
   } else {
     console.log("retrieving from url");
-    getVersionsFromUrl('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje.ebeanorm%22%20OR%20(g:%22org.avaje%22%20AND%20a:%22avaje-agentloader%22)&wt=json');
+    getVersionsFromUrl('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje.ebean%22%20OR%20(g:%22org.avaje%22%20AND%20a:%22avaje-agentloader%22)&wt=json');
   }
 }
 

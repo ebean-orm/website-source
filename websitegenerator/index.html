@@ -204,7 +204,7 @@ To use the syntax highlighting you prefix the code with <strong>3 backticks</str
 Example logs from running the application are shown below:
 </p>
 ```sql
-java -jar avaje-website-generator-1.0.1.jar -s /home/rob/avaje-ebeanorm-website -d /home/rob/site
+java -jar avaje-website-generator-1.0.1.jar -s /home/rob/website-source -d /home/rob/site
 
 --
 -- walks the source directory tree and generates html and copies files into destination directory
@@ -224,7 +224,7 @@ java -jar avaje-website-generator-1.0.1.jar -s /home/rob/avaje-ebeanorm-website 
 --
 -- After the source directory walk the watcher service is registered on all the directories 
 --
-16:33:34.443 [MainThread] INFO  org.avaje.website.generator.WatchDir - Scanning /home/rob/avaje-ebeanorm-website ...
+16:33:34.443 [MainThread] INFO  org.avaje.website.generator.WatchDir - Scanning /home/rob/website-source ...
 16:33:34.476 [MainThread] INFO  org.avaje.website.generator.WatchDir - Watching...
 
 --

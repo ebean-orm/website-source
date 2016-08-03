@@ -44,7 +44,7 @@
 <@smallnav activeCheck="${spring!''}" url="/docs/spring" title="Spring">
 <ul class="nav">
   <li><a href="#spring-boot">Spring boot</a></li>
-  <li><a href="#avaje-ebeanorm-spring">avaje-ebeanorm-spring</a></li>
+  <li><a href="#ebean-spring">ebean-spring</a></li>
   <li><a href="#factory">FactoryBean</a></li>
 </ul>
 </@smallnav>
