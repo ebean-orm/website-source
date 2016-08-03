@@ -76,23 +76,22 @@
     This can be described as "build time enhancement".
   </p>
 
-  <h3>Maven tile: ebean-enhancement</h3>
+  <h3>Maven enhancement tile</h3>
   <p>
     Ebean supplies a maven tile that brings in both the enhancer for entity beans as well
     as the enhancement for query beans. This is simpler, cleaner less verbose than
     defining the plugin in the traditional (non-tile) fashion and now the preferred approach.
   </p>
 
-  <h5>The ebean-enhancement tile brings plugin configuration for:</h5>
+  <h5>The ebean enhancement tile brings plugin configuration for:</h5>
   <ul>
-    <li>Entity bean and @Transactional enhancement for main classes</li>
-    <li>Query bean enhancement for main classes</li>
-    <li>Query bean enhancement for test classes</li>
+    <li>Entity bean and @Transactional enhancement for main and test</li>
+    <li>Query bean enhancement for main and test</li>
     <li>ebean-codegen plugin, helper to generate finders etc</li>
   </ul>
 
 
-  <h5>ebean-enhancement tile</h5>
+  <h5>ebean enhancement tile</h5>
   ```xml
   <plugin>
     <groupId>io.repaint.maven</groupId>
@@ -102,7 +101,7 @@
     <configuration>
       <tiles>
         <!-- other tiles ... -->
-        <tile>org.avaje.tile:ebean-enhancement:1.4</tile>
+        <tile>org.avaje.ebean.tile:enhancement:1.1</tile>
       </tiles>
     </configuration>
   </plugin>
@@ -110,29 +109,6 @@
   <p>
     Use <code>mvn help:effective-pom</code> to view the plugins that the tile brings in.
   </p>
-
-  <h3>Maven tile: test-ebean-enhancement</h3>
-  <p>
-    If a project has entity beans or @Transactional code in <code>src/test</code> we can additionally
-    bring in the <code>test-ebean-enhancement</code> tile which has plugin configuration for entity bean
-    and @Transaction enhancement of test classes.
-  </p>
-
-  ```xml
-  <plugin>
-    <groupId>io.repaint.maven</groupId>
-    <artifactId>tiles-maven-plugin</artifactId>
-    <version>2.8</version>
-    <extensions>true</extensions>
-    <configuration>
-      <tiles>
-        <!-- other tiles ... -->
-        <tile>org.avaje.tile:ebean-enhancement:1.4</tile>
-        <tile>org.avaje.tile:test-ebean-enhancement:1.4</tile>
-      </tiles>
-    </configuration>
-  </plugin>
-  ```
 
   <h3>Maven plugin</h3>
   <p>
