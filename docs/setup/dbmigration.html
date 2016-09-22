@@ -140,7 +140,7 @@
 
   ```java
   // generate a migration as the drops from migration version "1.2"
-  System.setProperty("ddl.migration.pendingDrop", "1.2");
+  System.setProperty("ddl.migration.pendingDropsFor", "1.2");
 
   DbMigration dbMigration = new DbMigration();
   dbMigration.setPlatform(DbPlatformName.POSTGRES);
