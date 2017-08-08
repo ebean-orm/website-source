@@ -101,7 +101,7 @@
     <configuration>
       <tiles>
         <!-- other tiles ... -->
-        <tile>org.avaje.ebean.tile:enhancement:1.1</tile>
+        <tile>io.ebean.tile:enhancement:2.9</tile>
       </tiles>
     </configuration>
   </plugin>
@@ -120,7 +120,7 @@
 <@maven_replace_version "::version::" "ebean-maven-plugin">
   ```xml
   <plugin>
-    <groupId>org.avaje.ebean</groupId>
+    <groupId>io.ebean</groupId>
     <artifactId>ebean-maven-plugin</artifactId>
     <version>::version::</version>
     <executions>
@@ -164,7 +164,7 @@
                   <pluginExecutions>
                     <pluginExecution>
                       <pluginExecutionFilter>
-                        <groupId>org.avaje.ebean</groupId>
+                        <groupId>io.ebean</groupId>
                         <artifactId>ebean-maven-plugin</artifactId>
                         <versionRange>[::version::,)</versionRange>
                         <goals>
