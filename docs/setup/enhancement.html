@@ -212,7 +212,7 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
   <p>
     The ebean-agent jar can be downloaded from maven. The current version is:
   </p>
-<@maven "org.avaje.ebean" "ebean-agent" "auto" "4" />
+<@maven "io.ebean" "ebean-agent" "auto" "4" />
 
 <#-------------------------------------------------------------------------------------------------->
   <h2 id="agent_loader">Agent Loader</h2>
@@ -260,7 +260,7 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
   ```xml
   <taskdef
       name="ebeanEnhance"
-      classname="com.avaje.ebean.enhance.ant.AntEnhanceTask"
+      classname="io.ebean.enhance.ant.AntEnhanceTask"
       classpath="your_path_to/ebean-x.x.x.jar"/>
 
   <target name="ormEnhance" depends="clean,compile">
