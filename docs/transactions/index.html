@@ -1,12 +1,13 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_transactions.html"/>
-<#assign transactions = "true">
+    <title>Introduction</title>
+    <meta name="layout" content="_layout/docs_index.html"/>
+    <#assign transactions="active">
+    <#assign subtitle="Transactions">
 </head>
 <body>
-<div class="bs-docs-section">
-<h1 id="transactions">Transactions</h1>
 
+<h2 id="transactions">Transactions</h2>
 
 <p>Within a Transaction, you can also control JDBC batching (batch size, flushing), turn on/off
 transaction logging, and turn on/off cascading of save and delete. ...(under construction)... how?</p>
@@ -287,6 +288,5 @@ Ebean.execute(txScope, new TxRunnable() {
 <h2 id="jta">JTA</h2>
 (under construction)
 
-</div>
 </body>
 </html>

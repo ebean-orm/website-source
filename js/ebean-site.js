@@ -73,12 +73,12 @@ $(function() {
 });
 
 function retrieveAndReplaceVersionsInPage() {
-  if ($.sessionStorage.isSet('versions')) {
+  if ($.sessionStorage.isSet('ebean-versions')) {
     console.log("retrieving from storage");
     replaceVersionsInPage();
   } else {
     console.log("retrieving from url");
-    getVersionsFromUrl('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22org.avaje.ebean%22%20OR%20(g:%22org.avaje%22%20AND%20a:%22avaje-agentloader%22)&wt=json');
+    getVersionsFromUrl('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22io.ebean%22%20OR%20(g:%22io.ebean%22%20AND%20a:%22ebean%22)&wt=json');
   }
 }
 
@@ -99,14 +99,14 @@ function getVersionsFromUrl(url) {
       versions[artifactid]=p.latestVersion;
     }
 
-    $.sessionStorage.set('versions', versions);
+    $.sessionStorage.set('ebean-versions', versions);
     replaceVersionsInPage();
   });
 }
 
 // Find <span class="${artifactid}-version"></span> tags and fill with the artifacts version
 function replaceVersionsInPage() {
-  var versions = $.sessionStorage.get('versions');
+  var versions = $.sessionStorage.get('ebean-versions');
 
   $.each(versions, function(artifactid, version) {
     $("span."+artifactid+"-version").text(version);

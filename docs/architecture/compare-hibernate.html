@@ -1,0 +1,235 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/architecture.html"/>
+  <title>Ebean versus Hibernate</title>
+<#assign compareHibernate="active">
+<#assign subtitle = "Compare with Hibernate">
+</head>
+<body>
+
+<h2 id="jpa">JPA</h2>
+<p>
+  The issues discussed in the <a href="/docs/architecture/compare-jpa">comparison with JPA</a> also apply to Hibernate.
+  The comparison here apply more specifically to Hibernate.
+</p>
+
+<h2 id="max-rows">Honoring maxRows in SQL</h2>
+<p>
+  Ebean ORM will always honor firstRows / maxRows in generated SQL. Once you include a join fetch
+  to a @OneToMany Hibernate stops implementing maxRows in SQL and instead brings all the rows back
+  to the client (application server) and filters the results there.
+</p>
+<p>
+  This means the database does not get the opportunity to optimise that query using maxRows
+  (via limit offset clause or similar) and so the DB query execution plan can be very different
+  by reducing the ability of the DB to use indexes and increasing the chances of full table scans.
+</p>
+<p>
+  This also means significantly more data is pulled back from the DB to the client.
+</p>
+<div class="row">
+  <div class="col-md-6">
+  <@video_item "Ztzru3_3WCA" "Join @OneToMany with maxRows" "Hibernate does not honor maxRows in this case" />
+  </div>
+</div>
+
+<h2 id="cartesian-product">SQL cartesian product</h2>
+<p>
+  Ebean ORM will never generate a SQL cartesian product. Hibernate generates a SQL cartesian product when
+  you join fetch multiple @OneToMany or @ManyToMany associations.
+</p>
+<div class="row">
+  <div class="col-md-6">
+  <@video_item "T9IWXLJB_I4" "Join fetch multiple @OneToMany" "Hibernate generates SQL cartesian product. Comparing that with Ebean's approach" />
+  </div>
+</div>
+
+<h2 id="lazy-initialization-exception">LazyInitialisationException</h2>
+<div class="row mbm">
+  <div class="col-md-6">
+  <@video_item "-AWdW6LxKaA" "Lazy loading beyond the context" "Ebean and EclipseLink do it, Hibernate throws LazyInitialisationException" />
+  </div>
+</div>
+
+<p>
+  Hibernate does not allow lazy loading beyond the end of it's Session scope and instead
+  throws <code>LazyInitialisationException</code>.
+</p>
+<h4>Ebean allows lazy loading beyond the initial scope</h4>
+<ul>
+  <li>
+    The transaction isolation level of read committed is used as per the JPA spec. This means
+    there is no effective difference when we lazy load with using another JDBC transaction relative
+    to holding open a transaction (as typically required by Hibernate via "Open session in view").
+  </li>
+  <li>
+    Ebean's entity beans have a reference back to their load context which enables subsequent
+    lazy loading to execute with the same PersistenceContext and also enables batch lazy loading.
+    This means the lazy loading still produces a consistent object graph (just as if it was loaded
+    eagerly).
+  </li>
+  <li>
+    If you want to prevent lazy loading with Ebean you can do <code>query.setDisableLazyLoading(true)</code>.
+    This is useful when you want to use a partially populated bean and give it to a reflection based tool
+    that converts it to JSON or DTO's etc.
+  </li>
+</ul>
+<blockquote>
+  With Ebean lazy loading just works without any drama
+</blockquote>
+
+<p>&nbsp;</p>
+<h4 id="open-session-in-view">Open session in view</h4>
+<p>
+  As a byproduct of Ebean supporting lazy loading (beyond transaction scope) Ebean does not require
+  the <code>"Open session in view"</code> pattern which is sometimes used with Hibernate.
+</p>
+<p>
+  The "Open session in view" used with Hibernate has the effect of holding a transaction open for a
+  longer time relative to Ebean. This pattern is considered an anti-pattern by many and instead the
+  focus is on making sure service layer code has loaded everything that is needed on the entities
+  (and this is code we don't need to write with Ebean).
+</p>
+
+<p>&nbsp;</p>
+<h2 id="history">SQL2011 @History vs Hibernate Envers</h2>
+<p>
+  Ebean's @History is a database centric approach mapping to SQL2011. Hibernate Envers is an application centric approach
+  which means that unlike @History bulk updates and external updates don't get included in auditing with Envers.
+</p>
+<div class="row">
+  <div class="col-md-6">
+  <@video_item "YOuElXoidxk" "Comparison to Hibernate Envers" "Comparison with the approach taken by Hibernate Envers"/>
+  </div>
+</div>
+
+
+<p>&nbsp;</p>
+<h2 id="optimising-fetch">Ebean (select/fetch) vs Hibernate JPA fetchgraph hint (EntityGraph)</h2>
+<p>
+  Hibernate does not honor the JPA fetchgraph hint at the property/column level which means we can't
+  use that to optimise our SQL queries.
+</p>
+
+<p>&nbsp;</p>
+<h2 id="paged-list">PagedList / findCount</h2>
+<p>
+  JPA nor Hibernate have built in support for PagedList with findCount - That is, having a single query to
+  execute and having that query automatically converted into an appropriate and optimised "find total row count" query.
+</p>
+<div class="row">
+  <div class="col-md-4">
+  <@video_item "knUtH3I0WPM" "FindCount & PagedList" "How Ebean's findCount query works and how to use PagedList" />
+  </div>
+</div>
+
+
+<p>&nbsp;</p>
+<h2 id="find-each">findEach vs scroll</h2>
+<p>
+  JPA does not have a standard approach for large query support but Hibernate has a <code>scroll</code> query.
+</p>
+<p>
+  Ebean's findEach()/findEachWhile() work using a per object graph scope for the persistence context and also
+  automatically adjust the JDBC fetchSize for cursor/scrolling use such that the JDBC driver (Especially MySql
+  and Postgres) don't pull all the results to the client and for MySql runs the findEach() query in a separate
+  transaction (such that we can perform query joins and iterate complex object graphs).
+</p>
+<p>
+  When using Hibernate <code>scroll</code> query you need to make sure you:
+</p>
+<ul>
+  <li>Either regularly <code>evict()</code> the beans from the Session or use a StatelessSession.</li>
+  <li>Set the fetchSize on the query</li>
+  <li>If you are using MySql you need to create the Statement with FORWARD_ONLY and READ_ONLY options, use
+  Integer.MIN as the buffer fetchSize and NOT use the same java.sql.Connection if you want to perform other
+  queries while the query scrolls</li>
+</ul>
+
+
+<p>&nbsp;</p>
+<h2 id="set">Set vs List</h2>
+<p>
+  Hibernate has different semantics for <code>Set</code> and <code>List</code> (bag semantics).
+  For Hibernate this tends to promote the use of Set as the preferred collection type.
+</p>
+<p>
+  Ebean does not apply different semantics between <code>Set</code> and <code>List</code>.
+</p>
+<p>
+  The issue with using <code>Set</code> is that it implies the use of <code>hashCode()/equals()</code> and the
+  implementation of hashCode()/equals() is not perfect for the case of entity beans that mutate and don't
+  always have an @Id value (e.g. When the @Id value is not populated via generated value and hence not
+  populated until after the save and hence the @Id value can't be used in hashCode/equals implementation).
+</p>
+<p>
+  For Ebean I'd like to promote the use of <code>List</code> in preference to <code>Set</code> in order to
+  avoid any confusion relating to hashCode()/equals() implementation on mutating entity beans.
+</p>
+
+<p>&nbsp;</p>
+<h2 id="mapping">Mapping</h2>
+
+<h4>Naming conventions</h4>
+<p>
+  Ebean's default <code>UnderscoreNamingConvention</code> matches Hibernate's <code>ImprovedNamingStrategy</code> but
+  not the JPA standard based one (which has mixed case column naming AND underscores). Note that
+  Spring boot automatically configures Hibernate to use the ImprovedNamingStrategy.
+</p>
+
+<h4>javax.validation.constraints NotNull & Size</h4>
+<p>
+  Both Ebean and Hibernate use the <code>@NotNull</code> and <code>@Size</code> validation annotations for mapping.
+</p>
+
+<h4>@ManyToOne</h4>
+<p>
+  JPA defaults all @ManyToOne to be treated as fetch EAGER. We almost certainly don't want that when using Hibernate
+  (as those Eager fetch types can then not be made lazy via JPQL or via fetchgraph hints so typically with Hibernate
+  we would expect most @ManyToOne to be explicitly lazy via ... @ManyToOne(fetch = FetchType.LAZY).
+</p>
+<p>
+  With Ebean we use our query language to define "What to fetch" and don't need to specify FetchType.LAZY on @ManyToOne.
+</p>
+
+
+<h4>UUID type</h4>
+<p>
+  Ebean automatically maps UUID to their native types for Postgres and H2 - so UUID just works as we would like.
+</p>
+<p>
+  Hibernate supports mapping UUID to the native type for Postgres via org.hibernate.annotations.Type - @Type(type="pg-uuid").
+  The downside here is that this does not work with UUID on H2 (mapping to binary instead) and this means that SQL
+  test scripts don't execute against H2 using literal UUID values (so some pain here when testing against H2 here).
+</p>
+
+<h4>Entities without an @Id</h4>
+<p>
+  Ebean allows entities to be mapped without an @Id. These entities are typically based on SQL or DB Views and used
+  for reporting purposes. Ebean allows this and these entity beans bypass the persistence context because they don't
+  have an @Id value.
+</p>
+<p>
+  With Hibernate we would look to use a different approach, perhaps a DTO query.
+</p>
+
+<h4>@View - Entities based on views</h4>
+<p>
+  Ebean has explicit support for entities based on views via @View. This takes into account DDL for creating the view
+  from a DB migration and testing perspective as well as L2 caching based on underlying table dependencies.
+</p>
+
+<h4>DDL Foreign Key and Unique constraints</h4>
+<p>
+  Hibernate currently generates foreign key names like <code>FK_edi14sijwrl3p2sf41ls3svkm</code> and
+  unique constraint names like <code>UK_ajysu81d17lesquo7uqosrtah</code>.
+</p>
+<p>
+  Ebean has a naming convention for foreign key names and unique constraint names that includes the table and
+  column names. When the names are very restricted (DB2 and Oracle) Ebean uses a "vowel remover" and trim in order
+  to still produce decent foreign key and unique constraint names. The DBA in me thinks those Hibernate constraint
+  names are "absolute pants!".
+</p>
+
+</body>
+</html>

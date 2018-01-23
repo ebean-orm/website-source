@@ -1,0 +1,38 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/architecture.html"/>
+  <title>Ebean versus JPA</title>
+<#assign loadContext="active">
+<#assign subtitle = "Load Context">
+</head>
+<body>
+
+<h2 id="overview">Overview</h2>
+<p>
+  The job of the <code>Load Context</code> is to support secondary loading queries (both eager and lazy)
+  with batch loading (to avoid N + 1) and propagating key query execution context from the origin query
+  to the secondary queries.
+</p>
+
+<h2 id="batch-loading">Batch loading</h2>
+<p>
+  The Load context provides the batch loading mechanism. This solves the <a href="/docs/query/nplus1">N + 1</a> issue
+  for Ebean. As such it is one of the most important internal features of Ebean ORM.
+</p>
+
+<h2 id="propagate">Propagate query context</h2>
+<p>
+  When secondary queries load additional parts of the object graph Ebean propagates key query execution context
+  from the <code>origin query</code> to the secondary queries including:
+</p>
+<ul>
+  <li><code>History</code> asOf timestamp or version timestamps</li>
+  <li><code>Draftable</code> state</li>
+  <li><code>Soft delete</code> state</li>
+  <li><code>Read auditing</code> state</li>
+  <li><code>Document store</code> state</li>
+  <li><code>Read only</code> state</li>
+</ul>
+
+</body>
+</html>

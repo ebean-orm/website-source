@@ -1,0 +1,329 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_setup.html"/>
+<#assign subtitle = "DB Migration">
+<#assign dbmigration = "true">
+</head>
+<body>
+
+<div class="bs-docs-section">
+
+  <h2 id="videos">Introduction</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+    <@video_item "n7VXOFwM2og" "DB Migration introduction" "Introduction to DB migration" />
+    </div>
+    <div class="col-md-6">
+    <@video_item "cxiacf0wmNk" "Repeatable migrations" "Use of @View, extra-ddl.xml and repeatable migrations"/>
+    </div>
+  </div>
+
+  <h2 id="overview">Overview</h2>
+
+  <p>
+    DB Migration is a feature for generation of DDL from the entity bean model that supports determining the
+    <code>diff</code> from the prior version of the model and generating appropriate DDL changes based on
+    the model difference.
+  </p>
+  <p>
+    You are expected to run the <code>diff</code> DDL using <code>FlywayDb</code>, <code>LiquiBase</code>
+    or similar tool. In the future Ebean will likely have built in support to run the DDL as it already has
+    most of the capability and could address some current issues with developer workflow and DDL script ordering.
+  </p>
+  <p>
+    DB migration has 2 output files:
+  </p>
+  <ul>
+    <li><b>Migration model XML</b> - This has the logical diff of the model as an <code>apply</code> or <code>pendingDrops</code> change set</li>
+    <li><b>Apply SQL</b> - This is the DDL script of the apply changes</li>
+  </ul>
+
+  <p>
+    When the DbMigration is run it loads any prior migration xml and combines that together
+    to define the prior model which is then compared against the existing entity beans.
+  </p>
+
+  <h4>Pending Drops</h4>
+  <p>
+    Only non-destructive changes are included in <code>apply</code> and changes like <code>drop table</code> and
+    <code>drop column</code> are put into a <code>pendingDrops</code> changeSet.
+  </p>
+  <p>
+    The drop pending changes need to be explicitly selected to go into a migration.
+  </p>
+  <p>
+    Given applications running in a clustered environment, pending drops typically need to trail the normal apply
+    changes by at least 1 migration. This delay could be minutes, days and some drops might not ever be run.
+  </p>
+
+
+  <h2 id="migration-xml">Migration xml</h2>
+  <p>
+    When DbMigration is run the <code>diff</code> to the model is determined and output
+    as the migration model xml document. This diff can have <code>apply</code> changes or <code>pendingDrops</code> changes.
+  </p>
+  <p>
+    From the migration <code>apply</code> changeSet the actual DDL that will be applied is generated.
+  </p>
+
+  <h4>Logical changes</h4>
+  <p>
+    Note that the changes
+    in the migration xml are database agnostic and a single migration xml document can be used
+    to generate migration DDL for multiple databases. For example, you can generate migration DDL
+    scripts for Postgres, Oracle and SQL Server from the single migration xml. In the migration xml
+    you will see logical types like JSON types (storing JSON documents in the DB) and for Postgres
+    that could translate to a JSONB and for Oracle to a CLOB.
+  </p>
+  <p>
+    The changes are also "logical" in the sense that changes to entities with @History and @Draftable
+    typically translates into multiple changes. For example adding a property to a @History entity could
+    add a column to the base table, add a column to the history table and a change the triggers as required.
+  </p>
+
+  <h4>Example migration xml</h4>
+  <p>
+    Below is an example migration xml generated with <code>apply</code> changes. The customer table
+    has 2 new columns added to it.
+  </p>
+  <p>
+    If the customer table has @History support this could also add columns to the history table and
+    update the associated db triggers.
+  </p>
+```xml
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+      <addColumn tableName="customer">
+        <column name="registered" type="date"/>
+        <column name="comments" type="varchar(1000)"/>
+      </addColumn>
+    </changeSet>
+  </migration>
+```
+
+  <h4>Example migration with pendingDrops</h4>
+  <p>
+    Below is an example migration xml generated with <code>pendingDrops</code> changes.
+  </p>
+  ```xml
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="pendingDrops">
+      <dropColumn columnName="shortTitle" tableName="document" withHistory="true"/>
+    </changeSet>
+  </migration>
+  ```
+  <p>
+    Pending drop changes are not incorporated into the apply DDL script unless they are explicitly selected.
+    Once pending drops are applied they drop off the 'pending drops' list.
+  </p>
+
+  <h2 id="apply-ddl">Apply DDL</h2>
+  <p>
+    The apply ddl script contains the changes that we want to apply to the database.
+    This is the DDL script that you get FlywayDB or similar to run.
+  </p>
+
+  <h2>Applying pending drops</h2>
+
+  ```sh
+  INFO  c.a.ebean.dbmigration.DbMigration - Pending un-applied drops in versions [1.2]
+  ```
+
+  <p>
+    The DB migration will log <code>INFO</code> level messages saying which migrations contain
+    pending drops that have not yet been applied.  At some point it is decided to apply one of
+    the pending drops as the next migration.
+  </p>
+
+  ```java
+  // generate a migration as the drops from migration version "1.2"
+  System.setProperty("ddl.migration.pendingDropsFor", "1.2");
+
+  DbMigration dbMigration = new DbMigration();
+  dbMigration.setPlatform(DbPlatformName.POSTGRES);
+  dbMigration.generateMigration();
+  ```
+  <p>
+    A migration is then generated with <code>dropsFor</code> set to the version of the migration that
+    had the pending drops that we want to apply.  Additionally the migration apply ddl contains the
+    various drop statements that will be executed.
+  </p>
+
+  ```xml
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply" dropsFor="1.2">
+      <dropColumn columnName="shortTitle" tableName="document" withHistory="true"/>
+    </changeSet>
+  </migration>
+  ```
+
+  <h2 id="version-format">Version format</h2>
+  <p>
+    The "version" numbering format supported is the same as FlywayDB version numbering where you may use
+    "." or "_" (period or underscore) as separating characters.
+  </p>
+  <h5>Examples:</h5>
+  <p>
+    So <code>1.1</code> and <code>1_1</code> both translate as version <code>1.1</code>.
+  </p>
+  <p>
+    Note that version numbering controls the order in which migrations are executed and follows semantic
+    versioning so for example <code>1.1.1</code> would execute before <code>1.2</code>. By this means we
+    can add a "patch" migration.
+  </p>
+
+  <h3>Workflow</h3>
+  <p>
+    If you use Ebean's migration runner to execute the migration note that to run a migration the
+    <code>requirement is that the previous migration needs to have been run</code>.  This is slightly
+    different from FlywayDB which requires either strict version number order (or we can disable that to
+    allow any ordering).
+  </p>
+  <p>
+    If you are using a workflow similar to "git flow" then Ebean's migration runner allows you to
+    process merge requests in a non-strict order. The assumption made for this to work is that in the case
+    where there are 2 or more merge requests (that are being reviewed and not yet merged into a common
+    DEV branch) will not have conflicting DB migration changes (If they do Ebean will allow the migration
+    to run but the migration itself will error).
+  </p>
+
+
+  <h2 id="version">Migration version and name</h2>
+  <p>
+    For a migration the developer needs to provide the <code>version</code> and <code>name</code>
+    and these can be set via environment variables, system properties or ebean.properties or programmatically.
+  </p>
+  ```java
+  System.setProperty("ddl.migration.version", "1.1");
+  System.setProperty("ddl.migration.name", "support end dating");
+  ```
+
+
+  <h2 id="on-startup">Generating migration on startup</h2>
+  <p>
+    The DB migration can be generated when the EbeanServer instance is started by setting <code>ddl.migration.generate</code>
+    system property or environment variable to true.
+  </p>
+
+  ```java
+  @Test
+  public void generate() {
+
+    System.setProperty("ddl.migration.generate", "true");
+
+    System.setProperty("ddl.migration.version", "1.1");
+    System.setProperty("ddl.migration.name", "support end dating");
+
+    // migration will be generated when EbeanServer instance starts
+    // ... typically by running your application.
+    Ebean.getDefaultServer();
+  }
+  ```
+
+  <h2 id="programmatic">Generate offline</h2>
+  <p>
+    We can generate a migration programmatically without starting your application.
+    In <code>src/test/java</code> add the following code with a <code>main method</code>.
+  </p>
+  <p>
+    Running this main method will generate the next migration and starts the EbeanServer
+    in <code>offline mode</code>. This offline mode means we don't need to start the application
+    or need a database to generate the migration.
+  </p>
+
+  ```java
+  package main;
+
+  import io.ebean.Platform;
+  import io.ebean.dbmigration.DbMigration;
+
+  import java.io.IOException;
+
+  /**
+   * Generate the DB Migration.
+   */
+  public class MainDbMigration {
+
+    /**
+     * Generate the next "DB schema DIFF" migration.
+     * <p>
+     * These migration are typically run using FlywayDB, Liquibase
+     * or Ebean's own built in migration runner.
+     * </p>
+     */
+    public static void main(String[] args) throws IOException {
+
+      // optionally specify the version and name
+      //System.setProperty("ddl.migration.version", "1.1");
+      System.setProperty("ddl.migration.name", "support end dating");
+
+      // generate a migration using drops from a prior version
+      //System.setProperty("ddl.migration.pendingDropsFor", "1.2");
+
+      DbMigration dbMigration = new DbMigration();
+      dbMigration.setPlatform(Platform.POSTGRES);
+      // generate the migration ddl and xml
+      // ... with EbeanServer in "offline" mode
+      dbMigration.generateMigration();
+    }
+  }
+  ```
+
+  <h2 id="running">Running migration</h2>
+  <p>
+    You can run the migrations using <code>FlywayDb</code>, <code>Liquibase</code> or Ebean's own
+    built in migration runner.
+  </p>
+
+  <h4>Ebean's migration runner</h4>
+  ```properties
+
+  ## run migrations when the EbeanServer starts
+  ebean.migration.run=true
+
+  ## optionally specify different DB credentials
+  ## to run the migration (own the tables)
+  datasource.db.adminusername=myDbTableOwner
+  datasource.db.adminpassword=secret
+  ```
+  <p>
+    With <code>ebean.migration.run=true</code> then when the EbeanServer starts it will look at the
+    migrations and run any that need to be run.  The migration runner will by default create a table
+    called <code>db_migration</code> that holds the meta data about the migrations that have been run
+    and inserts into this table when migrations are successfully executed.
+  </p>
+
+  <h2 id="repeatable">Repeatable migrations</h2>
+  <p>
+    Repeatable migrations are special migrations that start with <code>R__</code> and do not have a
+    version number.  Repeatable migrations will run if they have not already been run or if there
+    content has changed (MD5 checksum has changed).
+  </p>
+  <p>
+    Repeatable migrations can contain any DDL but for ORM we use these for defining <code>database VIEWS</code>
+    and for example using <code>@View</code> for mapping entity beans to database views rather than tables.
+  </p>
+  <p>
+    Refer to the second video showing repeatable migrations with extra-ddl.xml and use with @View.
+  </p>
+<@video_item "cxiacf0wmNk" "Repeatable migrations" "Use of @View, extra-ddl.xml and repeatable migrations"/>
+
+  <h4>FlywayDB note</h4>
+  <p>
+    For use with FlywayDB currently we need to prefix "version migrations" with <code>V</code> in order to
+    support both "version migrations" and "repeatable migrations".  To do this:
+  </p>
+  ```properties
+  ## must use V prefix on "version migrations" when using FlywayDB
+  ## with both "version" and "repeatable" migrations
+  ebean.migration.applyPrefix=V
+  ```
+
+
+</div>
+</body>
+</html>

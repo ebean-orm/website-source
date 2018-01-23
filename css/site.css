@@ -65,7 +65,6 @@ h1 a {
     display:block;
 }
 
-
 /*Opera Fix*/
 body:before {
 	content:"";
@@ -519,4 +518,9 @@ pre.console {
 }
 ul.nav.bs-docs-sidenav li.sub-menu {
     margin-left:7px;
+}
+.docs-index h3 {
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 7px;
 }

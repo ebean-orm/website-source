@@ -1,0 +1,127 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/architecture.html"/>
+  <title>ORM impedance mismatch - Ebean view</title>
+<#assign impedenceMismatch="active">
+<#assign subtitle = "ORM impedance mismatch">
+</head>
+<body>
+
+<h2 id="overview">ORM for OLTP only</h2>
+<p>
+  If you try to look at ORM from the viewpoint of trying to cover the entire feature set
+  of Relational Databases then yes there is absolutely a large mismatch.
+</p>
+<p>
+  Certainly for Ebean ORM and I'd suggest in general ORM is a poor abstraction for a large
+  feature set of Relational Databases and specifically ORM is not well placed to be a
+  good abstraction for <code>Reporting</code> and <code>Data Warehouse</code> features.
+</p>
+<p>
+  Ebean ORM is orientated towards OLTP with reasonably normalised schemas and well known
+  relationships but Relational Databases can do much more than this.
+</p>
+
+<h2>Impedance details</h2>
+<p>
+  Lets continue to look into the ORM impedance details with the view that we are restricting
+  ourselves to OLTP Databases.
+</p>
+
+<h3>Inheritance</h3>
+<p>
+
+</p>
+
+<h3>Object vs Relational relationships</h3>
+<p>
+
+</p>
+
+<h3>Schema ownership conflict</h3>
+<p>
+  Ted makes the point that there can be a conflict if DBA's control the database schema
+  (and thus it is not under control of the development team). This seems like an
+  organisation structure point as opposed to some fundamental issue with ORM.
+</p>
+<p>
+  Ted's point about a schema being "frozen" by denormalisation and reporting requirements
+  seems a stretch. Denormalisation on an OLTP DB design should be additive and non-breaking
+  and a good DB design should be well placed to allow it to be extended by adding columns and tables etc.
+</p>
+<p>
+  Ultimately if the schema is designed well and then there should no major mapping issue.
+</p>
+
+<h3>Discriminator column and Reporting</h3>
+<p>
+  I think Ted makes a reasonable point about inheritance and reporting though. His point there
+  is that typical SQL reporting tools are not often not well placed to handle "discriminator column"
+  and inheritance in general.
+</p>
+<p>
+  For me the mitigation of this issue is to provide views as needed to flatten inheritance schemas for
+  reporting tools.
+</p>
+
+<h3>Dual schema problem</h3>
+<h4>DB Migration</h4>
+<p>
+  Ted's first point is that there is now effectively an Object model (entity beans) and DB model (tables)
+  and there is a issue that these need to be kept in sync.
+</p>
+<p>
+  This issue is reasonably addressed by <code>DB Migration</code> where Ebean generates a <code>DIFF</code>
+  to the DB schema and either <code>FlywayDB</code> or Ebean's own DB Migration runner applies that as an
+  application task.
+</p>
+<h4>DB Refactoring</h4>
+<p>
+  Ted's second point is that the DB is typically a shared resource and that means you can't just refactor
+  the DB design without breaking other applications.
+</p>
+<p>
+  The argument against that is that <code>IF</code> the DB design got to <code>4NF</code> then the only
+  changes to it should be non breaking changes. That is, <code>Normalization</code> has the properties that
+  it can be proven correct and DB multiple designers will get to the same design at 4NF by following the
+  normalisation rules.
+</p>
+<p>
+  Unlike programming DB design via normalisation is somewhat strict and deterministic.
+</p>
+
+
+<h4>Identity</h4>
+<p>
+  I completely disagree with Ted's point regarding identity and that is based on the fact that an ORM
+  is fundamentally presenting the application with a <code>SNAPSHOT</code> view of part of the database.
+</p>
+<p>
+  That is, what we are doing with ORM is <code>exactly the same as what we were doing with client/server</code>
+  tools in terms of presenting a <code>snapshot</code> of part of the database <code>at a given time</code>
+  via a <code>transaction</code> at a particular <code>isolation level</code>.
+</p>
+<p>
+  The issues with identity (Id value to Primary key) and concurrency (optimistic locking via @Version property)
+  are exactly the same as they were with client server tools of old and there is no ORM mismatch issue here with Ebean.
+</p>
+<p>
+  However, an ORM that NEEDS to put unsaved beans that don't yet have an Identity into some "PersistenceContext"
+  and relies on hashCode()/equals() has created a problem for themselves (but that isn't an ORM problem that is
+  an implementation mistake).
+</p>
+
+
+<h4>Partial object problem</h4>
+<p>
+  Ebean solves this well and this IMO a massively important feature for an ORM.
+</p>
+
+<h4>N + 1</h4>
+<p>
+  Ebean solves this well via query language and also provides profiling and automatic
+  query tuning to optimise this per use case.
+</p>
+
+</body>
+</html>
