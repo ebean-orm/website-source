@@ -22,7 +22,7 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-  <@video_item "knUtH3I0WPM" "FindRowCount & PagedList" "How Ebean's findRowCount query works and how to use PagedList" />
+  <@video_item "knUtH3I0WPM" "FindCount & PagedList" "How Ebean's findCount query works and how to use PagedList" />
   </div>
 </div>
 

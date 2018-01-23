@@ -15,7 +15,7 @@
 
   <li><a href="#history">@History vs Envers</a></li>
   <li><a href="#optimising-fetch">Optimising fetch</a></li>
-  <li><a href="#paged-list">PagedList / findRowCount</a></li>
+  <li><a href="#paged-list">PagedList / findCount</a></li>
   <li><a href="#find-each">findEach vs Scroll</a></li>
   <li><a href="#set-list">Set vs List</a></li>
   <li><a href="#mapping">Mapping</a></li>
