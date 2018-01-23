@@ -239,7 +239,7 @@
     Customer customer = Customer.find
     .select("name")
     .where().idEq(1L)
-    .findUnique();
+    .findOne();
     ```
 
     ```sql
@@ -264,7 +264,7 @@
     .fetch("details") // all fields from details
     .fetch("details.product", "sku") // just sku field from product
     .where().idEq(1L)
-    .findUnique();
+    .findOne();
     ```
     ```sql
 
@@ -294,7 +294,7 @@
   Customer customer = Ebean.find(Customer.class)
   .select("name")
   .where().idEq(1)
-  .findUnique();
+  .findOne();
 
   customer.setName("CoolName");
 
@@ -776,7 +776,7 @@ List<Order> list =
   Order order = Ebean.find(Order.class)
   .select("orderDate")
   .where().idEq(12)
-  .findUnique();
+  .findOne();
 
   // shipDate is not in the partially populated order
   // ... so it will lazy load all the missing properties
@@ -817,12 +817,12 @@ List<Order> list =
     queries are per entity type (not global as they are in JPA).</p>
 
   <p>Once you get a named query you set any named parameters and then execute it – in the
-    case below we use findUnique() as we expect only one object graph returned.</p>
+    case below we use findOne() as we expect only one object graph returned.</p>
 
     ```java
     User u = Ebean.createNamedQuery(User.class, "bugsSummary")
               .setParameter("id", 1)
-              .findUnique();
+              .findOne();
     ```
 
   <h4>Named Queries are Modifyable</h4>
@@ -1271,7 +1271,7 @@ FutureList<Order> futureList = query.findFutureList();
 
     SqlRow bug = Ebean.createSqlQuery(sql)
       .setParameter("id", 1)
-      .findUnique();
+      .findOne();
     String prodName = bug.getString("product_name");
     String title = bug.getString("title");
     ```

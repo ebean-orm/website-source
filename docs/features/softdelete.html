@@ -133,7 +133,7 @@ public class BaseSoftDelete {
     ebeanServer.find(MyBean.class)
       .includeSoftDeletes()
       .setId(idValue)
-      .findUnique();
+      .findOne();
 
 ```
 

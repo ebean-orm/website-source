@@ -90,7 +90,7 @@
       Ebean.find(Document.class)
         .setId(docId)
         .asDraft()
-        .findUnique();
+        .findOne();
 
 
   // Get the 'draft' documents

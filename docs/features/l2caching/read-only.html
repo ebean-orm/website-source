@@ -63,7 +63,7 @@
   Country countryCopy = Ebean.find(Country.class)
   .setReadOnly(false)
   .setId("NZ")
-  .findUnique();
+  .findOne();
 
   // we can mutate this one
   countryCopy.setName("Nu Zilund");

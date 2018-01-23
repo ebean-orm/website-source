@@ -208,7 +208,7 @@ PagedList<Product> products = server.find(Product.class)
 Product product = server.find(Product.class)
   .setUseDocStore(true) // hit Elastic index
   .setId(1)
-  .findUnique();
+  .findOne();
 ```
 
 
