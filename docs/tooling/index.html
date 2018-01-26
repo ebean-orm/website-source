@@ -1,0 +1,79 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav.ftl"></template>
+  <#assign tooling="active">
+</head>
+<body>
+
+<h2>TODO</h2>
+
+
+<h2>Videos</h2>
+<div class="row">
+  <div class="col-md-6">
+    <@video_item "q-SB_X_X-GU" "Maven enhancement" "Enhancement of entity and query beans using the maven enhancement tile" />
+  </div>
+</div>
+<div class="row mvm">
+  <div class="col-md-6">
+    <@video_item "o4kmglM48Vc" "IntelliJ plugin" "Enhancement using the IntelliJ IDEA plugin" />
+  </div>
+  <div class="col-md-6">
+    <@video_item "49vKdpbUl-0" "IntelliJ debugger" "Looks at Idea debugger setting that invokes lazy loading" />
+  </div>
+</div>
+<div class="row mvm">
+  <div class="col-md-6">
+    <@video_item "_DWxNj-_orA" "Eclipse plugin" "Enhancement using the Eclipse plugin" />
+  </div>
+  <div class="col-md-6">
+    <@video_item "20dvi_oqVus" "Eclipse APT" "Eclipse setup for Query bean generation (via Java annotation processor)." />
+  </div>
+</div>
+
+<h2 id="recommendation">Recommendation</h2>
+<blockquote>
+  Use <b>both</b> IDE plugin enhancement (Idea or Eclipse) plus build time enhancement.
+</blockquote>
+<p>
+  For IntelliJ IDEA and Eclipse users my recommendation is to use the IDE plugin in addition
+  to either build time enhancement (maven plugin) or agent.
+</p>
+<p>
+  That is, the IDE plugin is good to use during development enhancing the beans as the IDE compiles the
+  classes. Using the IDE plugin can reduce enhancement hassles during development and unit testing.
+  For production you can then choose between build time enhancement via say maven or run time
+  enhancement via javaagent.
+</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>The term "Enhancement" covers all the ways (javaagent, ant, maven,IDE plugin, etc)
+  that are used to modify the entity beans. Others terms used to describe enhancement include "Weaving",
+  "Transformation" and "byte code manipulation".</p>
+
+<p>Load time weaving is used to refer to when the class manipulation occurs at "load
+  time" typically via javaagent compared with class manipulation occurring at "build time"
+  typically via Maven, Ant or IDE plugin.</p>
+
+<p>In raw terms a class is a byte[] and enhancement is manipulating those bytes prior to
+  the class being defined by its ClassLoader.</p>
+
+
+<h2 id="multiple">Using multiple enhancers</h2>
+
+<p>
+  Ebean enhancement is aware of when the enhancement has already occurred. In this way it is common
+  and expected that multiple forms of enhancement can be used at the same time such as using both
+  an IDE plugin and maven plugin to perform the enhancement.
+</p>
+
+<a href="idea/">IntelliJ IDEA</a>
+<a href="eclipse/">Eclipse IDE</a>
+<a href="maven/">Maven</a>
+<a href="gradle/">Gradle</a>
+</body>
+</html>

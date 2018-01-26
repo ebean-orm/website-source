@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Introduction" href="/docs/introduction/"/>
+  <meta name="bread2" content="EbeanServer" href="/docs/introduction/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_intro.ftl"></template>
+  <#assign introduction="active">
+</head>
+<body>
+<h2>EbeanServer</h2>
+<p>
+  The EbeanServer provides the main API for creating <code>queries</code>, <code>saving</code>, <code>deleting</code>,
+  <code>transactions</code> etc. It effectively provides all the functionality.
+</p>
+<p>
+  A EbeanServer instance maps to a <code>single database</code> - there is effectively a one to one mapping of
+  EbeanServer instance to database. If our application talks to many databases we can have many EbeanServer instances
+  each with a unique name.
+</p>
+<p>
+  Applications that only use a single database only have one instance of EbeanServer.
+</p>
+
+<h3>The default EbeanServer</h3>
+<p>
+  We can define one of the EbeanServer instances to be the <code>default EbeanServer</code>. This is the <code>main</code>
+  or <code>primary</code> EbeanServer instance that the application uses.
+</p>
+<h2>Ebean</h2>
+<p>
+  Ebean provides a convenient way to call methods on the <code>default EbeanServer</code>. The methods on the Ebean
+  proxy through to the underlying default EbeanServer instance.
+</p>
+<p>
+  When an EbeanServer instance is created it is registered with Ebean and the default EbeanServer instance is registered
+</p>
+
+</body>
+</html>

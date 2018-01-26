@@ -1,100 +1,31 @@
 <html>
 <head>
   <title>Introduction</title>
-  <meta name="layout" content="_layout/docs_index.html"/>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Introduction" href="/docs/introduction/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_intro.ftl"></template>
   <#assign introduction="active">
-  <#assign subtitle="Introduction">
 </head>
 <body>
-<h2>Why Ebean exists</h2>
-<p>
-  There are 3 parts to the JPA standard. It defines how objects are <code>Mapped</code>, <code>Persisted</code>
-  and <code>Queried</code>.
-</p>
-<p>
-  The Ebean view is that:
-</p>
 <ul>
-  <li>JPA Mapping is pretty good</li>
-  <li>JPA Persisting is not so great</li>
-  <li>JPA querying is not so great</li>
-  <li>Hibernate is not sufficient</li>
+  <li><a href="why">Why does Ebean exist?</a></li>
+  <li><a href="ebeanserver">EbeanServer & Ebean</a></li>
+  <li><a href="manifest">ebean.mf manifest file</a></li>
 </ul>
-<h3>Ebean</h3>
-<ul>
-  <li>Is a session-less ORM making it easier to use and understand</li>
-  <li>Provides much better control over queries / what to fetch</li>
-  <li>Provides better control over persisting</li>
-</ul>
-
-<h2>JPA Query</h2>
+<h2><a href="why">Why Ebean exists</a></h2>
 <p>
-  The view is that the JPA Query language does not have good support for controlling how much to fetch.  In terms
-  of JPA they have introduced the <code>FetchGraph</code> hints which do this but there are a few downsides to this:
-</p>
-<ul>
-  <li>FetchGraph hints are just hints and are effectively ignored by Hibernate</li>
-  <li>Hibernate instead (roughly) promotes the idea of creating DTO objects and fetching into those instead</li>
-  <li>FetchGraph fell out of the ugly tree - not pretty to use, not part of JPQL</li>
-</ul>
-<p>
-  That is, the ability to fetch <code>partial objects</code> in JPA is poor and this can lead to poor
-  performance fetching data from the database. We want the ability to control the this much better than what JPA provides.
+  Look at why does Ebean exists, how does it compare to JPA and Hibernate.
 </p>
 
-<h2>JPA Persisting</h2>
+<h2><a href="ebeanserver">EbeanServer and Ebean</a></h2>
 <p>
-  The JPA API requires that persisting beans are attached to the persistence context. This means that developers
-  don't explicitly control which beans are persisted and have little control over the order in which beans are
-  persisted to the database. The lack of ordering control can lead to deadlock issues. The lack of explicit control
-  means that the behavior is less obvious and the interactions with bulk updates and external SQL on the JPA
-  persistence context needs to be managed (explicitly detach beans etc).
-</p>
-<p>
-  Ebean's approach is that beans are <code>explicitly persisted</code> and that persisting does not involve the
-  persistence context.  This means that the developer has:
-</p>
-<ul>
-  <li>Control over exactly what is persisted</li>
-  <li>Control over the ordering of statements</li>
-  <li>No concerns when using bulk updates</li>
-</ul>
-
-<h2>Hibernate</h2>
-<p>
-  Respect to these people, it is a huge amount of work to build an ORM - but the view is that we want a better ORM.
-  An ORM that is easier to understand, makes the simple stuff simple, makes the hard stuff doable and provides
-  the performance and control that is needed when both fetching data and persisting it.
-</p>
-<p>
-  With Hibernate 5 it could be we are seeing a move to better partial object support with their changes towards using
-  bytecode enhancement (lazy loading on partially populated beans, dirty checking etc) - should be interesting.
+  Introduction to EbeanServer, Ebean and the concept of the "default server".
 </p>
 
-<h2>Can Ebean implement JPA?</h2>
+<h2><a href="manifest">ebean.mf manifest file</a></h2>
 <p>
-  The JPA API has the concepts of <code>attached</code> and <code>detached</code> beans - that is, it is
-  fundamental to JPA that persisting beans are attached to the persistence context. This is not the case with
-  Ebean - we have effectively removed the need for those concepts and instead just have <code>save() and delete()</code>.
-</p>
-<p>
-  That is, Ebean has no EntityManager to manage and as such can been called a <code>session-less orm</code>.
-  Ideally Ebean is be as close to JPA as possible with mapping and behavior - but it is a session-less API which
-  is fundamentally different to JPA and we believe much easier to use.
-</p>
-<ul>
-  <li>Ebean is a "session-less" ORM</li>
-  <li>Unlike JPA Ebean has no EntityManager to manage</li>
-  <li>Simpler to use and understand</li>
-</ul>
-<h3>
-  <a href="/docs/architecture/compare-jpa">How Ebean is architected to be a session-less ORM</a>
-</h3>
-<h3>
-  <a href="/docs/architecture/compare-hibernate">More detailed comparison to Hibernate</a>
-</h3>
-<p>
-  &nbsp;
+  This file controls the enhancement for Ebean. What packages are enhanced for
+  a project and what enhancement features are turned on.
 </p>
 
 </body>

@@ -494,7 +494,9 @@ pre.console {
     width: 263px;
   }
 }
-
+#search-input {
+    margin-top: 15px;
+}
 .row-space .row {
     padding-bottom: 20px;
 }
