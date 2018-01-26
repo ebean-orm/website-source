@@ -1,0 +1,90 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Configuration" href="/docs/configuration/"/>
+  <meta name="bread2" content="Spring" href="/docs"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_configuration.ftl"></template>
+  <#assign guice="active">
+</head>
+<body>
+
+<h2 id="provider">Provider</h2>
+<p>
+  Create a Guice Provider that programmatically creates a EbeanServer instance.
+</p>
+
+<h4>Example 1</h4>
+<p>
+  Example provider implementation using <code>ServerConfig</code> and <code>EbeanServerFactory</code>.
+</p>
+```java
+
+import io.ebean.Ebean;
+import io.ebean.EbeanServer;
+import com.google.inject.Provider;
+
+public class EbeanServerProvider implements Provider<EbeanServer> {
+
+  @Override
+  public EbeanServer get() {
+
+    ServerConfig config = new ServerConfig();
+    config.setName("pg");
+    // load configuration from ebean.properties
+    config.loadFromProperties();
+    config.setDefaultServer(true);
+    ...
+    // other programmatic configuration
+
+    return EbeanServerFactory.create(config);
+  }
+}
+```
+
+  <h4>Example 2</h4>
+  <p>
+    Example provider implementation using <code>Ebean</code> that implicitly creates the
+    <code>default</code> EbeanServer using ebean.properties.
+  </p>
+```java
+
+import io.ebean.Ebean;
+import io.ebean.EbeanServer;
+import com.google.inject.Provider;
+
+public class EbeanServerProvider implements Provider<EbeanServer> {
+
+  @Override
+  public EbeanServer get() {
+
+    // EbeanServer configured by ebean.properties
+    return Ebean.getDefaultServer();
+    }
+  }
+```
+<h2 id="module">Module bind</h2>
+<p>
+  In the Guice module bind the provider using eager singleton so that the EbeanServer is
+  created eagerly at startup.
+</p>
+```java
+
+// bind the provider as eager singleton
+bind(EbeanServer.class).toProvider(EbeanServerProvider.class).asEagerSingleton()
+
+```
+
+<h2 id="activerecord">Inject and ActiveRecord</h2>
+<p>
+  As long as  <code>ServerConfig.setRegister(true)</code> and <code>ServerConfig.setDefaultServer(true)</code>
+  are used in the Guice provider then the EbeanServer instance created is also available via the Ebean
+  singleton and that means both <code>@Inject</code> and the <code>active record</code> style can be used.
+</p>
+
+<div class="next pull-right">
+  <a href="manifest" class="btn btn-info">Next: Ebean.mf</a>
+</div>
+
+</body>
+</html>

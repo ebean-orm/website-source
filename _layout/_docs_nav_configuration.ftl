@@ -8,3 +8,6 @@
   <li><a href="#model">Model</a></li>
 </ul>
 </@smallnav>
+<@smallnav activeCheck="${spring!''}" url="/docs/configuration/spring" title="Spring"/>
+<@smallnav activeCheck="${guice!''}" url="/docs/configuration/guice" title="Guice"/>
+

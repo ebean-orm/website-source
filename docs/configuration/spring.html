@@ -1,0 +1,105 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Configuration" href="/docs/configuration/"/>
+  <meta name="bread2" content="Spring" href="/docs"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_configuration.ftl"></template>
+  <#assign spring="active">
+</head>
+<body>
+
+<h2 id="spring-boot">Spring boot</h2>
+<p>
+  Ebean is now aware of Spring boot runnable jar structure (for scanning the classpath). There is an
+  <a href="https://github.com/ebean-orm/example-springboot">example application</a> showing:
+</p>
+
+<ul>
+  <li><a href="https://github.com/ebean-orm/example-springboot/blob/master/src/main/java/org/example/sboot/service/EbeanFactoryBean.java">Factory Bean (programmatic configuration of EbeanServer)</a></li>
+  <li>The EbeanFactoryBean also loads and uses configuration Properties from application.properties</li>
+  <li><a href="https://github.com/ebean-orm/example-springboot/blob/master/src/test/resources/test-ebean.properties">test-ebean.properties</a></li>
+</ul>
+<p>
+  This example does not show integration with Spring transactions (and instead uses Ebean's own transactions). Please
+  review the <code>ebean-spring</code> project for that.
+</p>
+
+<h2 id="factorybean">FactoryBean</h2>
+<p>
+  Rather than use the implementation provided in <code>ebean-spring</code> you can write your
+  own Spring FactoryBean like the code below (or the spring boot EbeanFactoryBean example
+  <a href="https://github.com/ebean-orm/example-springboot/blob/master/src/main/java/org/example/sboot/service/EbeanFactoryBean.java">Factory Bean (programmatic configuration of EbeanServer)</a>).
+</p>
+```java
+/**
+* Simple Spring bean factory for creating the EbeanServer.
+*/
+public class MyEbeanServerFactory implements FactoryBean<EbeanServer> {
+
+  public EbeanServer getObject() throws Exception {
+
+    return createEbeanServer();
+  }
+
+  public Class<?> getObjectType() {
+    return EbeanServer.class;
+  }
+
+  public boolean isSingleton() {
+    return true;
+  }
+
+  /**
+  * Create a EbeanServer instance.
+  */
+  private EbeanServer createEbeanServer() {
+
+    ServerConfig config = new ServerConfig();
+    config.setName("pg");
+
+    // load configuration from ebean.properties
+    config.loadFromProperties();
+    config.setDefaultServer(true);
+    ...
+    // other programmatic configuration
+
+    return EbeanServerFactory.create(config);
+  }
+}
+```
+
+
+  <h2 id="ebean-spring">ebean-spring</h2>
+  <p>
+    The ebean-spring provides a FactoryBean as well as integration with Spring transactions.
+  </p>
+
+  <@maven "io.ebean" "ebean-spring" "auto" "4" />
+
+  <h5>EbeanServerFactoryBean</h5>
+  <p>
+    <code>EbeanServerFactoryBean</code> is a spring FactoryBean that also holds a serverConfig.
+    It is expected to be used in conjunction with <code>default-ebean-server.xml</code> which specifically
+    registers <code>SpringAwareJdbcTransactionManager</code> as the external transaction manager on the ServerConfig.
+  </p>
+
+  <h5>SpringAwareJdbcTransactionManager</h5>
+  <p>
+    <code>SpringAwareJdbcTransactionManager</code> implements Ebean's ExternalTransactionManager API and provides the
+    integration into Spring transaction management.
+  </p>
+
+  <h5>SpringJdbcTransaction</h5>
+  <p>
+    <code>SpringJdbcTransaction</code> extends Ebean's <code>ExternalJdbcTransaction</code> and
+    is used by SpringAwareJdbcTransactionManager.
+  </p>
+
+
+  <div class="next pull-right">
+  <a href="guice" class="btn btn-info">Next: Guice</a>
+</div>
+
+</body>
+</html>
