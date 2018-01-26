@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Configuration" href="/docs/configuration/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_configuration.ftl"></template>
+  <#assign introduction="active">
+</head>
+<body>
+
+<h3><a href="manifest">Configuring enhancement via ebean.mf</a></h3>
+<p>
+  Controlling the enhancement via <code>src/main/resources/ebean.mf</code>
+</p>
+
+<h3><a href="serverconfig">ServerConfig</a></h3>
+<p>
+  Configuration of the EbeanServer instance via <code>ServerConfig</code>.
+</p>
+
+<h3><a href="/docs/testing/test-properties">test-ebean.properties</a></h3>
+<p>
+  Testing configuration via <code>test-ebean.properties</code>.
+</p>
+
+<h3><a href="/docs/testing/docker-run">docker-run.properties</a></h3>
+<p>
+  Controlling docker containers for testing via <code>docker-run.properties</code>.
+</p>
+
+<div class="next pull-right">
+  <a href="/docs/testing/" class="btn btn-info">Next: Testing</a>
+</div>
+</body>
+</html>
