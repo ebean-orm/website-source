@@ -5,10 +5,10 @@
   <meta name="bread1" content="Introduction" href="/docs/introduction/"/>
   <meta name="bread2" content="EbeanServer" href="/docs/introduction/"/>
   <template id="menuNav"><#include "/_layout/_docs_nav_intro.ftl"></template>
-  <#assign introduction="active">
+  <#assign ebeanserver="active">
 </head>
 <body>
-<h2>EbeanServer</h2>
+<h2 id="ebeanserver">EbeanServer</h2>
 <p>
   The EbeanServer provides the main API for creating <code>queries</code>, <code>saving</code>, <code>deleting</code>,
   <code>transactions</code> etc. It effectively provides all the functionality.
@@ -21,20 +21,78 @@
 <p>
   Applications that only use a single database only have one instance of EbeanServer.
 </p>
+```java
+// save customer to the database
+Customer> customer  = ...
+ebeanServer.save(customer);
+```
 
-<h3>The default EbeanServer</h3>
+```java
+// fetch some customers from the database
+
+List<Customer> customers =
+  ebeanServer.find(Customer.class)
+  .where().eq("status", Customer.Status.NEW)
+  .findList();
+```
+
+<h2 id="defaultserver">The "default" EbeanServer</h2>
 <p>
   We can define one of the EbeanServer instances to be the <code>default EbeanServer</code>. This is the <code>main</code>
   or <code>primary</code> EbeanServer instance that the application uses.
 </p>
-<h2>Ebean</h2>
+
+<h2 id="ebean">Ebean</h2>
 <p>
-  Ebean provides a convenient way to call methods on the <code>default EbeanServer</code>. The methods on the Ebean
-  proxy through to the underlying default EbeanServer instance.
+    When an EbeanServer instance is created it is registered with Ebean. We can use <code>Ebean</code> to obtain those
+    EbeanServer instances by name and we can obtain the default server via <code>Ebean.getDefaultServer()</code>.
 </p>
+```java
+// obtain the "default" server
+EbeanServer server = Ebean.getDefaultServer();
+```
 <p>
-  When an EbeanServer instance is created it is registered with Ebean and the default EbeanServer instance is registered
+  When there are many EbeanServer instances they are registered with Ebean with a <code>name</code> and we can use that
+    to obtain them via Ebean.
+</p>
+```java
+// obtain the HR server by name
+EbeanServer hrServer = Ebean.getServer("hr");
+```
+<p>
+  Ebean provides a convenient way to call methods on the default EbeanServer. The <code>methods on Ebean
+    proxy through to the underlying default EbeanServer instance</code>.
 </p>
 
+
+<h3>Ebean convenience methods</h3>
+<p>
+  Ebean has static convenience methods that proxy through to the default server.
+</p>
+
+```java
+Customer> customer  = ...
+
+// save customer to the database
+// using the 'default' ebeanServer
+Ebean.save(customer);
+
+// which is the same as
+EbeanServer defaultServer = Ebean.getDefaultServer()
+defaultServer.save(customer);
+```
+
+<h2 id="model">Optional use of Model and Finder</h2>
+<p>
+ Due to the way we can access the <code>default server</code> a coding style / approach has evolved that
+ uses <code>io.ebean.Model</code> and <code>io.ebean.Finder</code> to provide an active record style approach.
+</p>
+<p>
+    We discuss the use of Model and Finder in more detail at <a href="/docs/codestyle">coding style options</a>.
+</p>
+
+<div class="next pull-right">
+    <a href="serverconfig" class="btn btn-info">Next: ServerConfig</a>
+</div>
 </body>
 </html>

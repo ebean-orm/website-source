@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
+  <meta name="bread2" content="IDEA" href="/docs/idea"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_tooling.ftl"></template>
+  <#assign idea="active">
+</head>
+<body>
+
+<h2>IntelliJ IDEA enhancement plugin</h2>
+
+<h2>Videos</h2>
+<div class="row mvm">
+  <div class="col-md-6">
+    <@video_item "o4kmglM48Vc" "IntelliJ plugin" "Enhancement using the IntelliJ IDEA plugin" />
+  </div>
+  <div class="col-md-6">
+    <@video_item "49vKdpbUl-0" "IntelliJ debugger" "Looks at Idea debugger setting that invokes lazy loading" />
+  </div>
+</div>
+
+<h2 id="recommendation">Recommendation</h2>
+<blockquote>
+  Use <b>both</b> IDE plugin enhancement (Idea or Eclipse) plus build time enhancement (maven or gradle).
+</blockquote>
+<p>
+  That is, the IDE plugin is good to use during development enhancing the beans as the IDE compiles the
+  classes. The IDE plugin can perform the enhancement during development and unit testing.
+  For production you can then choose between build time enhancement (via maven or gradle) or run time
+  enhancement via javaagent.
+</p>
+
+
+</body>
+</html>
