@@ -32,5 +32,60 @@
   enhancement via javaagent.
 </p>
 
+
+
+
+<#-------------------------------------------------------------------------------------------------->
+<div style="display: none">
+  <h2 id="maven_eclipse">Eclipse + Maven enhancement</h2>
+
+  <p>Eclipse can be configured to enhance the classes during build using maven configuration</p>
+
+  <@maven_replace_version "::version::" "ebean-maven-plugin">
+  ```xml
+  <build>
+    <plugins>
+      <!-- plugins here -->
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>io.ebean</groupId>
+                    <artifactId>ebean-maven-plugin</artifactId>
+                    <versionRange>[::version::,)</versionRange>
+                    <goals>
+                      <goal>enhance</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute>
+                      <runOnConfiguration>true</runOnConfiguration>
+                      <runOnIncremental>true</runOnIncremental>
+                    </execute>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  ```
+</@maven_replace_version>
+</div>
+<div class="next pull-right">
+  <a href="maven" class="btn btn-info">Next: Maven</a>
+</div>
+
 </body>
 </html>

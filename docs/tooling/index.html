@@ -8,16 +8,51 @@
 </head>
 <body>
 
-<h2>TODO</h2>
 
-<h2>Enhancement</h2>
+<h3><a href="enhancement">Enhancement</a></h3>
 <p>
   Ebean uses bytecode enhancement to provide <code>dirty checking</code> and <code>lazy loading</code> among other things.
   We using tooling via IDEA, Eclipse, maven and gradle plugins to perform this enhancement.
 </p>
-<p>
-  ...
-</p>
+
+<div class="row mvm">
+    <div class="col-md-6">
+        <h3><a href="idea">IntelliJ IDEA</a></h3>
+        <p>
+            Install and use the <code>IDEA plugin</code> to perform enhancement during development. Typically we do this <code>AND</code>
+            use build time enhancement via <a href="maven">maven</a>  or <a href="gradle">gradle</a>.
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h3><a href="eclipse">Eclipse IDE</a></h3>
+        <p>
+            Install and use the <code>Eclipse plugin</code> to perform enhancement during development. Typically we do this <code>AND</code>
+            use build time enhancement via <a href="maven">maven</a>  or <a href="gradle">gradle</a>.
+        </p>
+    </div>
+</div>
+
+
+<div class="row mvm">
+  <div class="col-md-6">
+    <h3><a href="maven">Maven</a></h3>
+    <p>
+      Add a maven <code>tile</code> or <code>plugin</code> to perform build time enhancement.
+    </p>
+  </div>
+  <div class="col-md-6">
+    <h3><a href="gradle">Gradle</a></h3>
+    <p>
+      Add a gradle <code>plugin</code> to perform build time enhancement.
+    </p>
+  </div>
+</div>
+
+<h2 id="recommendation">Recommendation</h2>
+<blockquote>
+    Use <b>both</b> IDE plugin enhancement (Idea or Eclipse) plus build time enhancement (maven or gradle).
+</blockquote>
+
 
 <h2>Videos</h2>
 <div class="row">
@@ -42,46 +77,9 @@
   </div>
 </div>
 
-<h2 id="recommendation">Recommendation</h2>
-<blockquote>
-  Use <b>both</b> IDE plugin enhancement (Idea or Eclipse) plus build time enhancement.
-</blockquote>
-<p>
-  For IntelliJ IDEA and Eclipse users my recommendation is to use the IDE plugin in addition
-  to either build time enhancement (maven plugin) or agent.
-</p>
-<p>
-  That is, the IDE plugin is good to use during development enhancing the beans as the IDE compiles the
-  classes. Using the IDE plugin can reduce enhancement hassles during development and unit testing.
-  For production you can then choose between build time enhancement via say maven or run time
-  enhancement via javaagent.
-</p>
+<div class="next pull-right">
+    <a href="/docs/logging" class="btn btn-info">Next: Logging</a>
+</div>
 
-<h2 id="overview">Overview</h2>
-
-<p>The term "Enhancement" covers all the ways (javaagent, ant, maven,IDE plugin, etc)
-  that are used to modify the entity beans. Others terms used to describe enhancement include "Weaving",
-  "Transformation" and "byte code manipulation".</p>
-
-<p>Load time weaving is used to refer to when the class manipulation occurs at "load
-  time" typically via javaagent compared with class manipulation occurring at "build time"
-  typically via Maven, Ant or IDE plugin.</p>
-
-<p>In raw terms a class is a byte[] and enhancement is manipulating those bytes prior to
-  the class being defined by its ClassLoader.</p>
-
-
-<h2 id="multiple">Using multiple enhancers</h2>
-
-<p>
-  Ebean enhancement is aware of when the enhancement has already occurred. In this way it is common
-  and expected that multiple forms of enhancement can be used at the same time such as using both
-  an IDE plugin and maven plugin to perform the enhancement.
-</p>
-
-<a href="idea/">IntelliJ IDEA</a>
-<a href="eclipse/">Eclipse IDE</a>
-<a href="maven/">Maven</a>
-<a href="gradle/">Gradle</a>
 </body>
 </html>
