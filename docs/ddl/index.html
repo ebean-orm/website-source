@@ -1,13 +1,12 @@
 <html>
 <head>
-  <title>Introduction</title>
-  <meta name="layout" content="_layout/docs.html"/>
+  <title>DDL | Docs | Ebean</title>
+  <meta name="layout" content="_layout/docs_ddl.html"/>
   <meta name="bread1" content="DDL" href="/docs/ddl/"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav.ftl"></template>
+  <template id="menuNav"><#include "/_layout/_docs_nav_ddl.ftl"></template>
   <#assign ddl="active">
 </head>
 <body>
-
 <h2><a href="/docs/ddl/ddl-create-all.html">Create all DDL</a></h2>
 <p>
   DDL generated from the current model for testing purposes.
@@ -18,6 +17,5 @@
   Generate migrations as a <code>DIFF</code> of the model. Ebean can also run these migrations or you can
   use Flyway or similar tool.
 </p>
-
 </body>
 </html>

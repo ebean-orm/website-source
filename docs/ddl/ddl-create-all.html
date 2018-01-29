@@ -1,12 +1,11 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_setup.html"/>
-<#assign subtitle = "DDL - Create all">
+  <title>Create All DDL | Docs | Ebean</title>
+  <meta name="layout" content="_layout/docs_ddl.html"/>
+  <meta name="bread2" content="Create all" href="/docs/ddl/"/>
 <#assign ddlcreateall = "true">
 </head>
 <body>
-
-<div class="bs-docs-section">
   <h2 id="overview">Overview</h2>
   <p>
     Ebean has the ability to generate and execute <code>CREATE ALL</code> and <code>DROP ALL</code> DDL
@@ -36,7 +35,5 @@
     and these <code>DIFF</code> DDL scripts can be applied to the target Postgres/Oracle/MySql/SQL Server ... database and
     often <code>FlywayDb</code> or <code>Liquibase</code> is used to apply those DDL changes.
   </p>
-
-</div>
 </body>
 </html>
