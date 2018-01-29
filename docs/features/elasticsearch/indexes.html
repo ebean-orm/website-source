@@ -1,11 +1,10 @@
 <html>
 <head>
-<#assign subtitle = "Indexes">
-<#assign elastic_indexes = "true">
   <meta name="layout" content="_layout/docs_features_elasticsearch.html"/>
+  <meta name="bread3" content="Indexes" href="/docs/features/elasticsearch"/>
+<#assign elastic_indexes = "true">
 </head>
 <body>
-<div class="bs-docs-section">
   <h2 id="aliases">Aliases</h2>
   <p>
     It is expected that <code>Aliases</code> are used for most processing
@@ -118,6 +117,5 @@
     server.docStore().indexByQuery(query, 1000);
   ```
 
-</div>
 </body>
 </html>

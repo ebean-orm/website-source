@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_features_elasticsearch.html"/>
-<#assign subtitle = "Getting started">
+  <meta name="bread3" content="Getting started" href="/docs/features/elasticsearch"/>
 <#assign elastic_start = "true">
 </head>
 <body>
@@ -19,7 +19,7 @@
     This will automatically register with Ebean as the document store implementation.
   </p>
 
-  <@maven "org.avaje.ebean" "ebean-elastic" "auto" "1" />
+  <@maven "io.ebean" "ebean-elastic" "auto" "1" />
 
   <h2 id="bean-mapping">Bean mapping</h2>
   <p>
