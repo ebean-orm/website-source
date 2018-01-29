@@ -1,0 +1,37 @@
+<html>
+<head>
+    <meta name="layout" content="_layout/docs.html"/>
+    <meta name="bread1" content="SQL" href="/docs/sql"/>
+    <template id="menuNav"><#include "/_layout/_docs_nav_sql.ftl"></template>
+    <#assign sql="true">
+</head>
+<body>
+<h2>Abstraction</h2>
+<p>
+    ORM is an abstraction for SQL databases. Sometimes that abstraction is not sufficient and we want to either
+    <code>bypass</code> part or all of that abstraction and use SQL directly.
+</p>
+<p>
+    Ebean provides mechanisms to use SQL directly.
+</p>
+
+<h3>Queries</h3>
+<ul>
+    <li>Where raw() expression</li>
+    <li>Query.findNative</li>
+    <li>Query RawSql</li>
+    <li>SqlQuery</li>
+    <li>SQL Views</li>
+</ul>
+
+<h3>Bulk Updates</h3>
+<h3>Stored procedures</h3>
+<h3>JDBC</h3>
+
+
+<!--<div class="next pull-right">-->
+    <!--<a href="/docs/transactions" class="btn btn-info">Next: Transactions</a>-->
+<!--</div>-->
+
+</body>
+</html>

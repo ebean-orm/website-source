@@ -1,0 +1,35 @@
+<html>
+<head>
+    <meta name="layout" content="_layout/docs.html"/>
+    <meta name="bread1" content="SQL" href="/docs/sql"/>
+    <meta name="bread2" content="OLAP" href="/docs/sql"/>
+    <template id="menuNav"><#include "/_layout/_docs_nav_sql.ftl"></template>
+    <#assign sql="true">
+</head>
+<body>
+
+<h2>OLTP vs OLAP</h2>
+
+<div class="row mvm">
+    <div class="col-md-6">
+        <@video_item "zpBJdtHT5tc" "OLTP vs OLAP use cases" "How Ebean fits in OLTP vs OLAP use cases, when to use manually supplied SQL" />
+    </div>
+</div>
+
+<p>
+    Ebean ORM queries are good for typical OLTP query use cases but there are many queries that
+    can be written in SQL that ORM is not well suited to in the reporting and OLAP area.
+</p>
+<blockquote>Ebean ORM queries are focused to OLTP. Don't forget about using SQL where appropriate.</blockquote>
+<p>
+    For Ebean the focus is to use ORM queries for OLTP use cases. The plan is not to expand the ORM
+    query language to cover OLAP queries but to instead have good integration with SQL
+    via <code>findNative</code>, <code>RawSql</code> and <code>SqlQuery</code>.
+</p>
+
+<!--<div class="next pull-right">-->
+    <!--<a href="/docs/transactions" class="btn btn-info">Next: Transactions</a>-->
+<!--</div>-->
+
+</body>
+</html>

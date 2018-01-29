@@ -1,0 +1,93 @@
+<html>
+<head>
+    <meta name="layout" content="_layout/docs.html"/>
+    <meta name="bread1" content="SQL" href="/docs/sql"/>
+    <meta name="bread2" content="Queries" href="/docs/sql"/>
+    <template id="menuNav"><#include "/_layout/_docs_nav_sql.ftl"></template>
+    <#assign sql="true">
+</head>
+<body>
+
+<h2 id="whereraw">Where raw()</h2>
+<p>
+    We can use <code>raw()</code> expressions to add arbitrary SQL expressions to the <code>where</code>
+    clause of a query.
+</p>
+
+```java
+Order.find.where()
+  .raw("add_days(orderDate, 10) < ?", someDate)
+  .findList();
+```
+<p>
+    See <a href="/docs/query/features#whereraw">more detail and examples</a>.
+</p>
+
+<h2>findNative</h2>
+<p>
+    With <code>findNative()</code> we give Ebean <code>SQL</code>. Ebean will automatically map the columns
+    in the result back to the bean(s).
+</p>
+```java
+
+String nativeSql = "select id, name from customer where name like :some";
+
+List<Customer> customers =
+    ebeanServer.findNative(Customer.class, nativeSql);
+      .setParameter("some", "Rob%")
+      .findList();
+```
+<p>
+    See <a href="/docs/query/features#findnative">more detail and examples</a>.
+</p>
+
+    <h2>RawSql</h2>
+    <p>
+        <code>RawSql</code> is like findNative except instead of the mapping being automatic we explicitly
+        define the mapping of how the result columns map to the entity beans.
+    </p>
+```java
+
+String rs = "select o.id, o.status, c.id, c.name, " +
+    " d.id, d.order_qty, p.id, p.name " +
+    "from orders o join customer c on c.id = o.customer_id " +
+    "join order_detail d on d.order_id = o.id  " +
+    "join product p on p.id = d.product_id  " +
+    "where o.id <= :maxOrderId  and p.id = :productId " +
+    "order by o.id, d.id asc";
+
+
+RawSql rawSql = RawSqlBuilder.parse(rs)
+    .tableAliasMapping("c", "customer")
+    .tableAliasMapping("d", "details")
+    .tableAliasMapping("p", "details.product")
+    .create();
+
+List<Order> ordersFromRaw = Ebean.find(Order.class)
+    .setRawSql(rawSql)
+    .setParameter("maxOrderId", 2)
+    .setParameter("productId", 1)
+    .findList();
+```
+        <p>
+            See <a href="/docs/query/features#rawsql">more detail and examples</a>.
+        </p>
+
+    <h2>SqlQuery</h2>
+    <p>
+        <code>SqlQuery</code> is a query that doesn't use entity beans and instead returns <code>SqlRow</code>
+        objects. As such there is <code>no bean mapping</code>.
+    </p>
+
+    <h2>SQL Views</h2>
+    <p>
+
+    </p>
+
+
+    <div class="next pull-right">
+        <a href="updates" class="btn btn-info">Next: Updates</a>
+    </div>
+
+</body>
+</html>
