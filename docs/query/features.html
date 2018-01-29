@@ -244,7 +244,7 @@
 
     ```sql
     select t0.id c0, t0.name c1
-    from o_customer t0
+    from customer t0
     where t0.id = ? ; --bind(1)
     ```
   </p>
@@ -273,10 +273,10 @@
     t2.id c6, t2.order_qty c7, t2.ship_qty c8, t2.unit_price c9, t2.version c10,
     t2.when_created c11, t2.when_updated c12, t2.order_id c13,
     t3.id c14, t3.sku c15 -- product sku
-    from o_order t0
-    join o_customer t1 on t1.id = t0.customer_id
-    left outer join o_order_detail t2 on t2.order_id = t0.id
-    left outer join o_product t3 on t3.id = t2.product_id
+    from orders t0
+    join customer t1 on t1.id = t0.customer_id
+    left outer join order_detail t2 on t2.order_id = t0.id
+    left outer join product t3 on t3.id = t2.product_id
     where t0.id = ?
     order by t0.id, t2.id asc; --bind(1)
     ```
@@ -349,7 +349,7 @@
     .findList();
     ```
 
-    ... results in the "left outer join o_contact" and related t2.* columns being included in the
+    ... results in the "left outer join contact" and related t2.* columns being included in the
     query (so they won't be lazy loaded later).
 
     ```sql
@@ -359,9 +359,9 @@
     t1.id c2, t1.inactive c3, t1.name c4, ... -- truncated
     t2.id c12, t2.first_name c13, t2.last_name c14, ... -- truncated
     t2.when_updated c19, t2.customer_id c20
-    from o_order t0
-    join o_customer t1 on t1.id = t0.customer_id
-    left outer join o_contact t2 on t2.customer_id = t1.id
+    from orders t0
+    join customer t1 on t1.id = t0.customer_id
+    left outer join contact t2 on t2.customer_id = t1.id
     order by t1.name;
     ```
 </p>
@@ -372,7 +372,7 @@
 -- This second query fetchs the order details associated
 -- with the orders that were returned by the first query
 select t0.order_id c0, t0.id c1, t0.order_qty c2, ...
-from o_order_detail t0
+from order_detail t0
 where (t0.order_id) in (?,?,?,?,?,?,?,?,?,?)
 order by t0.order_id, t0.id;
 --bind(2,1,1,1,3,3,3,4,4,4)
@@ -395,7 +395,7 @@ List<Customer> customers = Customer.find
   select t0.id c0, t0.inactive c1, t0.name c2, ...
   t0.when_updated c7, t0.billing_address_id c8, ...
   t1.id c10, t1.first_name c11, t1.last_name c12, ...
-  from o_customer t0
+  from customer t0
   left outer join be_contact t1 on t1.customer_id = t0.id
   order by t0.name, t0.id
   ```
@@ -614,7 +614,7 @@ List<Order> list =
     // query 1 … the main query
     <sql summary='Order'>
       select o.id c0, o.status c1, o.ship_date c2, o.customer_id c3
-      from o_order o
+      from orders o
     </sql>
     ```
   </p>
@@ -627,8 +627,8 @@ List<Order> list =
       select c.id c0, c.name c1
       , cs.id c2, cs.line_1 c3, cs.city c4
       , cc.id c5, cc.first_name c6, cc.last_name c7, cc.mobile c8
-      from o_customer c
-      left outer join o_address cs on cs.id = c.shipping_address_id
+      from customer c
+      left outer join address cs on cs.id = c.shipping_address_id
       left outer join contact cc on cc.customer_id = c.id
       where c.id in (?,?,?,?,?,?,?,?,?,?)
       order by c.id
@@ -644,9 +644,9 @@ List<Order> list =
       select o.id c0
       , od.id c1, od.order_qty c2, od.unit_price c3
       , odp.id c4, odp.sku c5, odp.name c6
-      from o_order o
-      left outer join o_order_detail od on od.order_id = o.id
-      left outer join o_product odp on odp.id = od.product_id
+      from orders o
+      left outer join order_detail od on od.order_id = o.id
+      left outer join product odp on odp.id = od.product_id
       where o.id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
       order by o.id
     </sql>
@@ -716,8 +716,8 @@ List<Order> list =
       select c.id c0, c.name c1, cs.id c2, cs.line_1 c3, cs.line_2 c4, cs.city c5,
       cs.cretime c6, cs.updtime c7, cs.country_code c8,
       cc.id c9, cc.phone c10, cc.email c11
-      from o_customer c
-      left outer join o_address cs on cs.id = c.shipping_address_id
+      from customer c
+      left outer join address cs on cs.id = c.shipping_address_id
       left outer join contact cc on cc.customer_id = c.id
       where c.id in (?,?,?,?,?)
       order by c.id
@@ -1081,9 +1081,9 @@ FutureList<Order> futureList = query.findFutureList();
 
   String sql
   = " select order_id, o.status, c.id, c.name, sum(d.order_qty*d.unit_price) as totalAmount"
-  + " from o_order o"
-  + " join o_customer c on c.id = o.kcustomer_id "
-  + " join o_order_detail d on d.order_id = o.id "
+  + " from orders o"
+  + " join customer c on c.id = o.kcustomer_id "
+  + " join order_detail d on d.order_id = o.id "
   + " group by order_id, o.status ";
 
   RawSql rawSql =
@@ -1121,7 +1121,7 @@ FutureList<Order> futureList = query.findFutureList();
 
   String sql
   = " select order_id, sum(d.order_qty*d.unit_price) as totalAmount "
-  + " from o_order_detail d"
+  + " from order_detail d"
   + " group by order_id ";
 
   RawSql rawSql =
@@ -1214,9 +1214,9 @@ FutureList<Order> futureList = query.findFutureList();
   ```java
   String rs = "select o.id, o.status, c.id, c.name, "+
   " d.id, d.order_qty, p.id, p.name " +
-  "from o_order o join o_customer c on c.id = o.kcustomer_id " +
-  "join o_order_detail d on d.order_id = o.id " +
-  "join o_product p on p.id = d.product_id " +
+  "from orders o join customer c on c.id = o.kcustomer_id " +
+  "join order_detail d on d.order_id = o.id " +
+  "join product p on p.id = d.product_id " +
   "where o.id <= :maxOrderId and p.id = :productId "+
   "order by o.id, d.id asc";
 

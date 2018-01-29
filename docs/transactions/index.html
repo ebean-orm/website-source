@@ -49,27 +49,27 @@ The following SLF4J logs show the transaction that was implicitly created for th
 16:38:26.369 [main] TRACE org.avaje.ebean.TXN - txn[1002] Begin
 16:38:26.548 [main] INFO  org.avaje.ebean.TXN - txn[1002] Commit
 16:38:26.551 [main] TRACE org.avaje.ebean.TXN - txn[1003] Begin
-16:38:26.554 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from or_order_ship
-16:38:26.555 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[or_order_ship] rows[0] bind[null]
-16:38:26.556 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from o_order_detail
-16:38:26.557 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[o_order_detail] rows[0] bind[null]
-16:38:26.557 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from o_order
-16:38:26.557 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[o_order] rows[0] bind[null]
+16:38:26.554 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from order_ship
+16:38:26.555 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[order_ship] rows[0] bind[null]
+16:38:26.556 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from order_detail
+16:38:26.557 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[order_detail] rows[0] bind[null]
+16:38:26.557 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from orders
+16:38:26.557 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[orders] rows[0] bind[null]
 16:38:26.557 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from contact
 16:38:26.557 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[contact] rows[0] bind[null]
-16:38:26.557 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from o_customer
-16:38:26.557 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[o_customer] rows[0] bind[null]
-16:38:26.557 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from o_address
-16:38:26.558 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[o_address] rows[0] bind[null]
-16:38:26.563 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from o_country
-16:38:26.563 [main] DEBUG org.avaje.ebean.SUM - txn[1003] DeleteSql table[o_country] rows[0] bind[null]
-16:38:26.563 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from o_product
-16:38:26.564 [main] DEBUG org.avaje.ebean.SUM - txn[1003] DeleteSql table[o_product] rows[0] bind[null]
-16:38:26.567 [main] TRACE org.avaje.ebean.SQL - txn[1003] insert into o_country (code, name) values (?,?); --bind(NZ,New Zealand,)
+16:38:26.557 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from customer
+16:38:26.557 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[customer] rows[0] bind[null]
+16:38:26.557 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from address
+16:38:26.558 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Delete table[address] rows[0] bind[null]
+16:38:26.563 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from country
+16:38:26.563 [main] DEBUG org.avaje.ebean.SUM - txn[1003] DeleteSql table[country] rows[0] bind[null]
+16:38:26.563 [main] TRACE org.avaje.ebean.SQL - txn[1003] delete from product
+16:38:26.564 [main] DEBUG org.avaje.ebean.SUM - txn[1003] DeleteSql table[product] rows[0] bind[null]
+16:38:26.567 [main] TRACE org.avaje.ebean.SQL - txn[1003] insert into country (code, name) values (?,?); --bind(NZ,New Zealand,)
 16:38:26.568 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Inserted [Country] [NZ]
-16:38:26.568 [main] TRACE org.avaje.ebean.SQL - txn[1003] insert into o_country (code, name) values (?,?); --bind(AU,Australia,)
+16:38:26.568 [main] TRACE org.avaje.ebean.SQL - txn[1003] insert into country (code, name) values (?,?); --bind(AU,Australia,)
 16:38:26.568 [main] DEBUG org.avaje.ebean.SUM - txn[1003] Inserted [Country] [AU]
-16:38:26.570 [main] TRACE org.avaje.ebean.SQL - txn[1003] insert into o_product (id, sku, name, cretime, updtime) values (?,?,?,?,?); --bind
+16:38:26.570 [main] TRACE org.avaje.ebean.SQL - txn[1003] insert into product (id, sku, name, cretime, updtime) values (?,?,?,?,?); --bind
 
 ```
 
@@ -128,7 +128,7 @@ try {
   // for batch processing via raw SQL you can inform
   // Ebean what tables were modified so that it can
   // clear the appropriate L2 caches
-  String tableName = "o_customer";
+  String tableName = "customer";
   boolean inserts = true;
   boolean upates = true;
   boolean deletes = false;

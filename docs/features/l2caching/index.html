@@ -201,12 +201,12 @@
 
   ```java
   // inform Ebean that some rows have been inserted and updated
-  // on the o_country table.
+  // on the country table.
   // ... Ebean will invalidate the appropriate caches
   boolean inserts = true;
   boolean updates = true;
   boolean deletes = false;
-  Ebean.externalModification("o_country", inserts, updates, deletes);
+  Ebean.externalModification("country", inserts, updates, deletes);
   ```
 
   <h5>Alternative:</h5>

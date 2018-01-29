@@ -130,7 +130,7 @@ names are used in place of column names.</p>
 server.createUpdate(OrderDetail.class, "delete from orderDetail").execute();
 
 // sql bulk update uses table and column names
-server.createSqlUpdate("delete from o_country").execute();
+server.createSqlUpdate("delete from country").execute();
 ````
 
 <h2 id="bulksqlupdate">Bulk SQL updates</h2>
@@ -180,9 +180,9 @@ try {
   Connection connection = transaction.getConnection();
   // use raw JDBC
   ...
-  // assuming we updated the "o_shipping_details" table
+  // assuming we updated the "shipping_detail" table
   // inform Ebean so it can maintain it's 'L2' cache
-  transaction.addModification("o_shipping_details",false,true,false);
+  transaction.addModification("shipping_detail",false,true,false);
   Ebean.commitTransaction();
 } finally {
   Ebean.endTransaction();
@@ -190,7 +190,7 @@ try {
 ```
 
 <p>The <b>transaction.addModification()</b> in the code above informs Ebean that your jdbc code
-updated the o_shipping_details table. Ebean uses this information to automatically
+updated the shipping_details table. Ebean uses this information to automatically
 manage its "L2" cache as well as maintain Lucene text indexes.</p>
 
 <h2 id="batch_processing">JDBC Batch</h2>
@@ -230,7 +230,7 @@ try {
   // for batch processing via raw SQL you can inform
   // Ebean what tables were modified so that it can
   // clear the appropriate L2 caches
-  String tableName = "o_customer";
+  String tableName = "customer";
   boolean inserts = true;
   boolean upates = true;
   boolean deletes = false;

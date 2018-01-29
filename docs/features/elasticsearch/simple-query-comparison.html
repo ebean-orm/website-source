@@ -97,7 +97,7 @@
       t0.when_modified       c6,
       t0.customer_id         c7,
       t0.shipping_address_id c8
-    FROM o_order t0
+    FROM orders t0
     WHERE t0.status IN (?) AND t0.order_date > ?
     ORDER BY t0.order_date DESC, t0.id
     LIMIT 100; --bind(NEW,2015-12-08)
@@ -224,7 +224,7 @@
 
   @DocStore
   @Entity
-  @Table(name = "o_order")
+  @Table(name = "orders")
   class Order : BaseModel() {
 
     ...

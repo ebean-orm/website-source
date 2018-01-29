@@ -5,6 +5,7 @@
   <li><a href="#ebeanserver">EbeanServer</a></li>
   <li><a href="#defaultserver">Default server</a></li>
   <li><a href="#ebean">Ebean</a></li>
+  <li><a href="#global">Global state</a></li>
   <li><a href="#model">Model</a></li>
 </ul>
 </@smallnav>
