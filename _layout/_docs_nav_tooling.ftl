@@ -9,5 +9,11 @@
   <li><a href="#ebean">mvn ebean:init</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${gradle!''}" url="/docs/tooling/gradle" title="Gradle"/>
+<@smallnav activeCheck="${gradle!''}" url="/docs/tooling/gradle" title="Gradle">
+<ul class="nav">
+    <li><a href="/docs/tooling/gradle">Plugin</a></li>
+    <li><a href="/docs/tooling/gradle-apt">APT</a></li>
+    <li><a href="/docs/tooling/gradle-plugin-source">Plugin source</a></li>
+</ul>
+</@smallnav>
 <@smallnav activeCheck="${agent!''}" url="/docs/tooling/agent" title="Agent"/>

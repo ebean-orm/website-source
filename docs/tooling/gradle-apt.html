@@ -1,0 +1,71 @@
+<html>
+<head>
+    <title>Introduction</title>
+    <meta name="layout" content="_layout/docs.html"/>
+    <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
+    <meta name="bread2" content="Gradle" href="/docs/gradle"/>
+    <template id="menuNav"><#include "/_layout/_docs_nav_tooling.ftl"></template>
+    <#assign gradle="active">
+</head>
+<body>
+
+<h2>APT - Query Beans</h2>
+<p>
+    We can additionally generate <code>Query beans</code> using <code>APT</code> (Java annotation processing).
+    To do this we need to make some additional changes to <code>build.gradle</code>.
+</p>
+
+<h4>1) configurations apt</h4>
+<p>
+    Add <code>apt</code> to the configurations section.
+</p>
+```groovy
+configurations {
+  apt
+}
+```
+
+<h4>ebean queryBeans</h4>
+<p>
+    Set <code>queryBeans</code> to true in the ebean section. This tells the ebean plugin to add query bean
+    generation to the build.
+</p>
+
+```groovy
+ebean {
+    debugLevel = 1
+    queryBeans = true
+}
+```
+
+<h4>ebean-querybean dependency</h4>
+<p>
+    Add <code>ebean-querybean</code> as a compile dependency.
+</p>
+
+```groovy
+compile 'io.ebean:ebean-querybean:11.1.1'
+```
+
+
+<h4>Idea</h4>
+<p>
+    For IntelliJ IDEA we also should tell it to add <code>generated</code> directory to the sourceDirs. We do this
+    such that we can run tests in the IDE and IntelliJ will 'see' the generated query beans.
+</p>
+```groovy
+idea {
+    module {
+        sourceDirs += file("$projectDir/generated")
+        generatedSourceDirs += file("$projectDir/generated")
+    }
+}
+```
+
+
+<div class="next pull-right">
+    <a href="agent" class="btn btn-info">Next: Agent</a>
+</div>
+
+</body>
+</html>
