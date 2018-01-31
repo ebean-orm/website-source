@@ -23,10 +23,10 @@
 </p>
 
 <@maven_replace_version "::version::" "ebean-maven-plugin">
-```xml
+<pre content="xml">
 java -javaagent:ebean-agent-::version::.jar MyApplication
 java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
-```
+</pre>
 </@maven_replace_version>
 
 <p>
@@ -55,47 +55,46 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
   The code below loads the enhancer agent programmatically onto the running JVM.
 </p>
 
-```java
+<pre content="java">
 import org.avaje.agentloader;
 ...
 public void someApplicationBootupMethod() {
-// Load the agent into the running JVM process
-if (!AgentLoader.loadAgentFromClasspath("ebean-agent","debug=1;packages=org.example.model")) {
-logger.info("ebean-agent not found in classpath - not dynamically loaded");
+  // Load the agent into the running JVM process
+  if (!AgentLoader.loadAgentFromClasspath("ebean-agent","debug=1")) {
+    logger.info("ebean-agent not found in classpath - not dynamically loaded");
+  }
 }
-}
-```
+</pre>
 
 
+<!--<#&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+<!--<h2 id="ant">Ant enhancement</h2>-->
 
-<#-------------------------------------------------------------------------------------------------->
-<h2 id="ant">Ant enhancement</h2>
+<!--<p>Modify your ant build.xml file to: </p>-->
 
-<p>Modify your ant build.xml file to: </p>
+<!--<ol>-->
+  <!--<li>Define the AntEnhanceTask.</li>-->
+  <!--<li>Create a target that uses the AntEnhanceTask to enhance the entity classes.</li>-->
+<!--</ol>-->
 
-<ol>
-  <li>Define the AntEnhanceTask.</li>
-  <li>Create a target that uses the AntEnhanceTask to enhance the entity classes.</li>
-</ol>
+<!--```xml-->
+<!--<taskdef-->
+        <!--name="ebeanEnhance"-->
+        <!--classname="io.ebean.enhance.ant.AntEnhanceTask"-->
+        <!--classpath="your_path_to/ebean-x.x.x.jar"/>-->
 
-```xml
-<taskdef
-        name="ebeanEnhance"
-        classname="io.ebean.enhance.ant.AntEnhanceTask"
-        classpath="your_path_to/ebean-x.x.x.jar"/>
+<!--<target name="ormEnhance" depends="clean,compile">-->
+  <!--&lt;!&ndash;-->
+  <!--classSource: This is the directory that contains your class files. That is, the directory where your IDE will compile your java class files to, or the directory where a previous ant task will compile your java class files to.-->
 
-<target name="ormEnhance" depends="clean,compile">
-  <!--
-  classSource: This is the directory that contains your class files. That is, the directory where your IDE will compile your java class files to, or the directory where a previous ant task will compile your java class files to.
-
-  packages: a comma delimited list of packages that contain entity classes. All the classes in these packages are searched for entity classes to be enhanced. transformArgs: This contains a debug level (0 - 10) .
-  -->
-  <ebeanEnhance
-          classSource="your_classes_directory"
-          packages="app.domain.*"
-          transformArgs="debug=1"/>
-</target>
-```
+  <!--packages: a comma delimited list of packages that contain entity classes. All the classes in these packages are searched for entity classes to be enhanced. transformArgs: This contains a debug level (0 - 10) .-->
+  <!--&ndash;&gt;-->
+  <!--<ebeanEnhance-->
+          <!--classSource="your_classes_directory"-->
+          <!--packages="app.domain.*"-->
+          <!--transformArgs="debug=1"/>-->
+<!--</target>-->
+<!--```-->
 
 </body>
 </html>

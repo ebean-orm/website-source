@@ -1,11 +1,11 @@
 <html>
 <head>
-  <title>Introduction</title>
-  <meta name="layout" content="_layout/docs.html"/>
-  <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
-  <meta name="bread2" content="Gradle" href="/docs/gradle"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_tooling.ftl"></template>
-  <#assign gradle="active">
+    <title>Introduction</title>
+    <meta name="layout" content="_layout/docs.html"/>
+    <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
+    <meta name="bread2" content="Gradle" href="/docs/gradle"/>
+    <template id="menuNav"><#include "/_layout/_docs_nav_tooling.ftl"></template>
+    <#assign gradle="active">
 </head>
 <body>
 
@@ -13,9 +13,9 @@
 
 <h4>1) buildscript dependency</h4>
 <p>
-  Add the <code>ebean-gradle-plugin</code> dependency to the <code>buildscript</code> section.
+    Add the <code>ebean-gradle-plugin</code> dependency to the <code>buildscript</code> section.
 </p>
-```groovy
+<pre content="groovy">
 buildscript {
   repositories {
     mavenCentral()
@@ -24,52 +24,54 @@ buildscript {
     classpath "io.ebean:ebean-gradle-plugin:11.5.3"
   }
 }
-```
+</pre>
+
 
 <h4>2) apply</h4>
 <p>
-  Add <code>'io.ebean'</code> to the apply plugin section like:
+    Add <code>'io.ebean'</code> to the apply plugin section like:
 </p>
-```groovy
-apply plugin: 'io.ebean'
-```
+<pre content="groovy">
+  apply plugin: 'io.ebean'
+</pre>
 
 <h4>3) ebean</h4>
 <p>
-  Add a <code>ebean</code> section to control the debug level of the enhancement. This is optional but generally a good idea.
+    Add a <code>ebean</code> section to control the debug level of the enhancement. This is optional but generally a
+    good idea.
 </p>
-```groovy
+<pre content="groovy">
 ebean {
   debugLevel = 1
 }
-```
+</pre>
 
 
 <h4>4) test output</h4>
 <p>
-  Gradle by default suppresses output logging. If we want to see SQL, DDL, Transaction logging etc we
-  need to set <code>testLogging.showStandardStreams</code> = <code>true</code> in the test section like:
+    Gradle by default suppresses output logging. If we want to see SQL, DDL, Transaction logging etc we
+    need to set <code>testLogging.showStandardStreams</code> = <code>true</code> in the test section like:
 </p>
-```groovy
+<pre content="groovy">
 test {
   testLogging.showStandardStreams = true
 }
-```
+</pre>
 
 <h2>Example project</h2>
 <p>
-  Have a look at the <a href="https://github.com/ebean-orm-examples/example-gradle-java">Example Gradle Java</a> for
-  a full example -  it's <a href="https://github.com/ebean-orm-examples/example-gradle-java/blob/master/build.gradle">build.gradle</a>.
+    Have a look at the <a href="https://github.com/ebean-orm-examples/example-gradle-java">Example Gradle Java</a> for
+    a full example - it's <a href="https://github.com/ebean-orm-examples/example-gradle-java/blob/master/build.gradle">build.gradle</a>.
 </p>
 
 
 <h2>Test output</h2>
 <p>
-  Below is a example output from <code>./gradlew clean test</code>. Specifically we can see:
+    Below is a example output from <code>./gradlew clean test</code>. Specifically we can see:
 </p>
 <ul>
-  <li>The classes being enhanced (due to ebean debugLevel = 1)</li>
-  <li>The DDL, SQL and Transactions (controlled by logback-test.xml in this case)</li>
+    <li>The classes being enhanced (due to ebean debugLevel = 1)</li>
+    <li>The DDL, SQL and Transactions (controlled by logback-test.xml in this case)</li>
 </ul>
 <pre>
 $ ./gradlew clean test
@@ -106,7 +108,7 @@ BUILD SUCCESSFUL in 1s
 
 
 <div class="next pull-right">
-  <a href="agent" class="btn btn-info">Next: Agent</a>
+    <a href="agent" class="btn btn-info">Next: Agent</a>
 </div>
 
 </body>

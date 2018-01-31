@@ -1,36 +1,37 @@
 <html>
 <head>
-  <title>Introduction</title>
-  <meta name="layout" content="_layout/docs.html"/>
-  <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
-  <meta name="bread2" content="Maven" href="/docs/maven"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_tooling.ftl"></template>
-  <#assign mavensetup="active">
+    <title>Introduction</title>
+    <meta name="layout" content="_layout/docs.html"/>
+    <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
+    <meta name="bread2" content="Maven" href="/docs/maven"/>
+    <template id="menuNav"><#include "/_layout/_docs_nav_tooling.ftl"></template>
+    <#assign mavensetup="active">
 </head>
 <body>
 
 <h2>Video</h2>
 <div class="row">
-  <div class="col-md-6">
-    <@video_item "q-SB_X_X-GU" "Maven enhancement" "Enhancement of entity and query beans using the maven enhancement tile" />
-  </div>
+    <div class="col-md-6">
+        <@video_item "q-SB_X_X-GU" "Maven enhancement" "Enhancement of entity and query beans using the maven
+        enhancement tile" />
+    </div>
 </div>
 
 <h2>Steps</h2>
 
 <h4>1. Add ebean as a dependency</h4>
 <@maven_replace_version "::version::" "ebean-maven-plugin">
-```xml
+<pre content="xml">
 <dependency>
   <groupId>io.ebean</groupId>
   <artifactId>ebean</artifactId>
   <version>::version::</version>
 </dependency>
-```
+</pre>
 </@maven_replace_version>
 
 <h4>2. Add the maven tile into the <code>build / plugins</code> section of the pom.xml</h4>
-```xml
+<pre content="xml">
 <plugin>
   <groupId>io.repaint.maven</groupId>
   <artifactId>tiles-maven-plugin</artifactId>
@@ -43,55 +44,55 @@
     </tiles>
   </configuration>
 </plugin>
-```
+</pre>
 
 <h4>3. Run <code>mvn ebean:init</code></h4>
-```sh
+<pre content="sh">
 mvn ebean:init
-```
+</pre>
 <p>
-  Run the ebean interactive project setup. This will prompt you as to what you would like to
-  do with the project.
+    Run the ebean interactive project setup. This will prompt you as to what you would like to
+    do with the project.
 </p>
 <p>
-  Typically we want to:
+    Typically we want to:
 </p>
 <ul>
-  <li>Add an ebean.mf ... to control the enhancement</li>
-  <li>Add support for testing and logging</li>
+    <li>Add an ebean.mf ... to control the enhancement</li>
+    <li>Add support for testing and logging</li>
 </ul>
 
 <hr/>
 
 <h3>Maven enhancement tile</h3>
 <p>
-  The maven tile above brings in both the enhancer for entity beans as well
-  as the enhancement for query beans. This is simpler, cleaner less verbose than
-  defining the plugin in the traditional (non-tile) fashion and is the preferred approach.
+    The maven tile above brings in both the enhancer for entity beans as well
+    as the enhancement for query beans. This is simpler, cleaner less verbose than
+    defining the plugin in the traditional (non-tile) fashion and is the preferred approach.
 </p>
 <p>
-  The maven tile also brings in the code generation plugin that is run by <code>mvn ebean:init</code>
+    The maven tile also brings in the code generation plugin that is run by <code>mvn ebean:init</code>
 </p>
 <h5>The ebean enhancement tile brings plugin configuration for:</h5>
 <ul>
-  <li>Entity bean and @Transactional enhancement for main and test</li>
-  <li>Query bean enhancement for main and test</li>
-  <li>ebean-codegen plugin, helper to generate finders etc</li>
+    <li>Entity bean and @Transactional enhancement for main and test</li>
+    <li>Query bean enhancement for main and test</li>
+    <li>ebean-codegen plugin, helper to generate finders etc</li>
 
 </ul>
 <p>
-  Use <code>mvn help:effective-pom</code> to view the plugins that the tile brings in.
+    Use <code>mvn help:effective-pom</code> to view the plugins that the tile brings in.
 </p>
 
 <h3>Maven enhancement plugin</h3>
 <p>
-  If you do not want to use maven tiles you can specify the maven enhancement
-  plugin in 'normal' fashion. Note the unlike the tile this does not bring in the
-  <a href="/docs/query/typesafe#enhancement">query bean enhancement</a>.
+    If you do not want to use maven tiles you can specify the maven enhancement
+    plugin in 'normal' fashion. Note the unlike the tile this does not bring in the
+    <a href="/docs/query/typesafe#enhancement">query bean enhancement</a>.
 </p>
 
 <@maven_replace_version "::version::" "ebean-maven-plugin">
-```xml
+<pre content="xml">
 <plugin>
   <groupId>io.ebean</groupId>
   <artifactId>ebean-maven-plugin</artifactId>
@@ -109,7 +110,7 @@ mvn ebean:init
       </goals>
     </execution>
 
-    <!-- enhance test classes -->
+      <!-- enhance test classes -->
     <execution>
       <id>test</id>
       <phase>process-test-classes</phase>
@@ -124,25 +125,25 @@ mvn ebean:init
   </executions>
 </plugin>
 
-```
+</pre>
 </@maven_replace_version>
 
 
 <h3>Maven code generation plugin</h3>
 <p>
-  This is the plugin that runs <code>mvn ebean:init</code>. It generates <code>Finders</code>,
-  adds <code>ebean.mf</code> and sets up testing for a project.
+    This is the plugin that runs <code>mvn ebean:init</code>. It generates <code>Finders</code>,
+    adds <code>ebean.mf</code> and sets up testing for a project.
 </p>
 
-```xml
+<pre content="xml">
 <plugin>
   <groupId>io.ebean.tools</groupId>
   <artifactId>codegen-maven-plugin</artifactId>
   <version>version</version>
 </plugin>
-```
+</pre>
 <div class="next pull-right">
-  <a href="/docs/logging" class="btn btn-info">Next: Logging</a>
+    <a href="/docs/logging" class="btn btn-info">Next: Logging</a>
 </div>
 </body>
 </html>

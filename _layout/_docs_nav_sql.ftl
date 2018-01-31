@@ -1,11 +1,11 @@
 
 <li><a href="/docs/sql/queries">Queries</a>
 <ul class="nav" style="display: block;">
-  <li><a href="#whereraw">Where raw()</a></li>
-  <li><a href="#native">Native SQL</a></li>
-  <li><a href="#rawsql">RawSQL</a></li>
-  <li><a href="#sqlquery">SqlQuery</a></li>
-  <li><a href="#view">Views</a></li>
+  <li><a href="/docs/sql/queries#whereraw">Where raw()</a></li>
+  <li><a href="/docs/sql/queries#native">Native SQL</a></li>
+  <li><a href="/docs/sql/queries#rawsql">RawSQL</a></li>
+  <li><a href="/docs/sql/queries#sqlquery">SqlQuery</a></li>
+  <li><a href="/docs/sql/queries#view">Views</a></li>
 </ul>
 </li>
 <@smallnav activeCheck="${ebeanmf!''}" url="/docs/sql/updates#bulk" title="Bulk Updates"/>
