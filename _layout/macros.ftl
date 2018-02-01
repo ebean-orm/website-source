@@ -138,3 +138,18 @@ ${dep_block?replace(placeholder, "<span class='"+artifactid+"-version'>$"+"{vers
   <a href="https://github.com/ebean-orm/website-source/blob/master${href}"><i class="fa fa-github"></i> Edit Page</a>
 </p>
 </#macro>
+
+<#macro next title href>
+<div class="next pull-right">
+  <a href="${href}" class="btn btn-info">Next: ${title}</a>
+</div>
+</#macro>
+
+<#macro next_edit title href editHref>
+<div class="next pull-right">
+  <a href="${href}" class="btn btn-info">Next: ${title}</a>
+</div>
+<p class="edit-page">
+  <a href="https://github.com/ebean-orm/website-source/blob/master${editHref}"><i class="fa fa-github"></i> Edit Page</a>
+</p>
+</#macro>

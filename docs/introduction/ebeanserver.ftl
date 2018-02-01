@@ -21,25 +21,26 @@
 <p>
   Applications that only use a single database only have one instance of EbeanServer.
 </p>
-```java
+<pre content="java">
 // save customer to the database
 Customer customer  = ...
 ebeanServer.save(customer);
-```
+</pre>
 
-```java
+<pre content="java">{@code
 // fetch some customers from the database
 
 List<Customer> customers =
   ebeanServer.find(Customer.class)
   .where().eq("status", Customer.Status.NEW)
   .findList();
-```
+}</pre>
 
 <h2 id="defaultserver">The "default" EbeanServer</h2>
 <p>
   We can define one of the EbeanServer instances to be the <code>default EbeanServer</code>. This is the
-  <code>main</code> or <code>primary</code> EbeanServer instance that the application uses.
+  <code>main</code>
+  or <code>primary</code> EbeanServer instance that the application uses.
 </p>
 
 <h2 id="ebean">Ebean</h2>
@@ -47,10 +48,10 @@ List<Customer> customers =
   When an EbeanServer instance is created it is registered with Ebean. We can use <code>Ebean</code> to obtain those
   EbeanServer instances by name and we can obtain the default server via <code>Ebean.getDefaultServer()</code>.
 </p>
-```java
+<pre content="java">
 // obtain the "default" server
 EbeanServer server = Ebean.getDefaultServer();
-```
+</pre>
 <p>
   When there are many EbeanServer instances they are registered with Ebean with a <code>name</code> and we can use that
   to obtain them via Ebean.
@@ -70,7 +71,8 @@ EbeanServer hrServer = Ebean.getServer("hr");
   Ebean has static convenience methods that proxy through to the default server.
 </p>
 
-```java
+```
+<pre content="java">
 Customer customer  = ...
 
 // save customer to the database
@@ -80,7 +82,7 @@ Ebean.save(customer);
 // which is the same as
 EbeanServer defaultServer = Ebean.getDefaultServer()
 defaultServer.save(customer);
-```
+</pre>
 
 <h3>Ebean is optional</h3>
 <p>

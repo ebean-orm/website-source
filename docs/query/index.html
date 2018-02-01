@@ -1,46 +1,47 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_query.html"/>
-<#assign documentation="active">
+  <#assign documentation="active">
 </head>
 <body>
 
-  <h2><a href="/docs/query/overview">Overview</a></h2>
-  <p>
-    An overview of ORM queries in general and when you might look to use SQL queries.
-  </p>
+<h2><a href="/docs/query/overview">Overview</a></h2>
+<p>
+  An overview of ORM queries in general and when you might look to use SQL queries.
+</p>
 
-  <h2><a href="/docs/query/nplus1">N + 1</a></h2>
-  <p>
-    What is "N+1" and how queries can be optimised to minimise performance issues related to this.
-  </p>
+<h2><a href="/docs/query/nplus1">N + 1</a></h2>
+<p>
+  What is "N+1" and how queries can be optimised to minimise performance issues related to this.
+</p>
 
-  <h2><a href="/docs/query/partialobjects">Partial Objects</a></h2>
-  <p>
-    What are partial object queries and why are they important.
-  </p>
+<h2><a href="/docs/query/partialobjects">Partial Objects</a></h2>
+<p>
+  What are partial object queries and why are they important.
+</p>
 
-  <h2><a href="/docs/query/autotune">Automatic Tuning</a></h2>
-  <p>
-    Get Ebean to profile the application object graph use and automatically optimise the queries.
-  </p>
+<h2><a href="/docs/query/autotune">Automatic Tuning</a></h2>
+<p>
+  Get Ebean to profile the application object graph use and automatically optimise the queries.
+</p>
 
-  <h2><a href="/docs/query/typesafe">Type safe queries (Query beans)</a></h2>
-  <p>
-    We can generate "Query Beans" which provide the ability to write type safe queries.
-  </p>
-```java
+<h2><a href="/docs/query/typesafe">Type safe queries (Query beans)</a></h2>
+<p>
+  We can generate "Query Beans" which provide the ability to write type safe queries.
+</p>
+<pre content="java">
 // Example using Customer query bean
 List<Customer> customers =
   new QCustomer()
       .name.startsWith("Rob")
       .status.equalTo(Customer.Status.NEW)
       .findList();
-```
-  <h2><a href="/docs/query/features">Query Features</a></h2>
-  <p>
-    The various query features such as paging, large queries, asynchronous queries, RawSql, SqlQuery etc.
-  </p>
+
+</pre>
+<h2><a href="/docs/query/features">Query Features</a></h2>
+<p>
+  The various query features such as paging, large queries, asynchronous queries, RawSql, SqlQuery etc.
+</p>
 
 <div class="next pull-right">
   <a href="/docs/persist" class="btn btn-info">Next: Persist</a>
