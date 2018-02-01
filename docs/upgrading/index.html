@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Upgrading" href="/docs/upgrading/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav.ftl"></template>
+  <#assign upgrading="active">
+</head>
+<body>
+<h2>Upgrading</h2>
+<p>
+  A summary of changes needed in migrating to a later version of Ebean.
+</p>
+
+<h2>Upgrading to 11.x from 10.x</h2>
+
+<h5>methods</h5>
+<ul>
+  <li>findUnique() -> findOne()</li>
+</ul>
+<h5>packages</h5>
+<ul>
+  <li>io.ebean.Platform; -> io.ebean.annotation.Platform;</li>
+</ul>
+<h5>other</h5>
+<ul>
+  <li>new DbMigration(); -> DbMigration.create();</li>
+</ul>
+
+
+<h2>Upgrading to 10.x from 9.x</h2>
+<p>
+  Please help add documentation here - <a href="">Edit page</a>
+</p>
+
+
+</body>
+</html>
