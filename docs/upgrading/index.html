@@ -1,38 +1,80 @@
 <html>
 <head>
-  <title>Introduction</title>
-  <meta name="layout" content="_layout/docs.html"/>
-  <meta name="bread1" content="Upgrading" href="/docs/upgrading/"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav.ftl"></template>
-  <#assign upgrading="active">
+    <title>Introduction</title>
+    <meta name="layout" content="_layout/docs.html"/>
+    <meta name="bread1" content="Upgrading" href="/docs/upgrading/"/>
+    <template id="menuNav"><#include "/_layout/_docs_nav.ftl"></template>
+    <#assign upgrading="active">
 </head>
 <body>
-<h2>Upgrading</h2>
+<h2>Summary of changes</h2>
 <p>
-  A summary of changes needed in migrating to a later version of Ebean.
+    A summary of changes needed in migrating to a later version of Ebean.
 </p>
 
 <h2>Upgrading to 11.x from 10.x</h2>
 
-<h5>methods</h5>
 <ul>
-  <li>findUnique() -> findOne()</li>
+    <li>new DbMigration(); -> DbMigration.create();</li>
+    <li>findUnique() -> findOne()</li>
 </ul>
-<h5>packages</h5>
 <ul>
-  <li>io.ebean.Platform; -> io.ebean.annotation.Platform;</li>
+    <li>CacheMode.QUERY_ONLY -> GET</li>
+    <li>CacheMode.RECACHE -> PUT</li>
 </ul>
-<h5>other</h5>
 <ul>
-  <li>new DbMigration(); -> DbMigration.create();</li>
+    <li>io.ebean.Platform; -> io.ebean.annotation.Platform;</li>
+    <li>io.ebean.PersistBatch; -> io.ebean.annotation.PersistBatch;</li>
+    <li>io.ebean.TxType; -> io.ebean.annotation.TxType;</li>
+    <li>io.ebean.TxIsolation; -> io.ebean.annotation.TxIsolation;</li>
 </ul>
-
+<ul>
+    <li>Remove support for PropertyChangeListener from entity beans</li>
+    <li>Remove ServerConfig h2ProductionMode ... means for testing with h2 explicitly set ddlGenerate and ddlRun</li>
+</ul>
 
 <h2>Upgrading to 10.x from 9.x</h2>
-<p>
-  Please help add documentation here - <a href="">Edit page</a>
-</p>
+<ul>
+    <li>Remove DbMigrationConfig.generateOnStart() ... migrate to offline generation</li>
+</ul>
 
+<h2>Upgrading to 9.x from 8.x</h2>
+<ul>
+    <li>Query.includeSoftDeletes() -> setIncludeSoftDeletes()</li>
+</ul>
+
+<h2>Upgrading to 8.x from 7.x</h2>
+<ul>
+    <li>(#682) Remove deprecated Model.Finder constructors that take Id type ... migrate to ones that don't</li>
+</ul>
+
+<h2>Upgrading to 7.x from 6.x</h2>
+
+<ul>
+    <li>(#352) Remove deprecated API - ValuePair getValue1() getValue2() ... use getNewValue() getOldValue() </li>
+    <li>(#344) Remove deprecated annotation @ColumnHstore ... migrate to @DbHstore</li>
+    <li>(#343) Remove deprecated interface BeanFinder&lt;T&gt; ... migrate to BeanFindController</li>
+    <li>(#342) Remove deprecated method - JsonContext createJsonContext() ... migrate to json() </li>
+    <li>(#331) Remove deprecated method - EbeanServer.findVisit() ... migrate to findEachWhile</li>
+</ul>
+
+<p>Changes for: <code>saveAll()</code>, <code>insertAll()</code>, <code>updateAll()</code>, <code>deleteAll()</code></p>
+<ul>
+    <li>(#341) Remove deprecated method - insert(Collection<?> beans); ... migrate to insertAll()  </li>
+    <li>(#340) Remove deprecated method - update(Collection<?> beans) ... migrate to updateAll() </li>
+    <li>(#339) Remove deprecated method - save(Collection<?> beans, Transaction transaction) ... migrate to saveAll() </li>
+    <li>(#339) Remove deprecated method - save(Collection<?> beans, Transaction transaction) ... migrate to saveAll() </li>
+    <li>(#338) Remove deprecated method - save(Iterator<?> it, Transaction transaction) ... please change to iterate yourself and save. </li>
+    <li>(#337) Remove deprecated method - delete(Class<?> beanType, Collection<?> ids) ... migrate to deleteAll() </li>
+    <li>(#336) Remove deprecated method - delete(Iterator<?> it, Transaction transaction) ... migrate to deleteAll() </li>
+    <li>(#335) Remove deprecated method - delete(Collection<?> beans) ... migrate to deleteAll()</li>
+    <li>(#334) Remove deprecated method - delete(Iterator<?> it) ... migrate to deleteAll()</li>
+    <li>(#333) Remove deprecated method - save(Iterator<?> it) ... change to iterate yourself and save()</li>
+    <li>(#332) Remove deprecated method - save(Collection<?> beans) ... migrate to saveAll(beans)</li>
+</ul>
+
+
+<@edit_page "/docs/upgrading/index.html"/>
 
 </body>
 </html>

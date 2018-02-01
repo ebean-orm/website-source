@@ -526,3 +526,7 @@ ul.nav.bs-docs-sidenav li.sub-menu {
     margin-top: 15px;
     margin-bottom: 7px;
 }
+.edit-page {
+    padding-top:30px;
+    padding-bottom:30px;
+}

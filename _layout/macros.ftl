@@ -132,3 +132,9 @@ ${dep_block?replace(placeholder, "<span class='"+artifactid+"-version'>$"+"{vers
   </div>
 </div>
 </#macro>
+
+<#macro edit_page href>
+<p class="edit-page">
+  <a href="https://github.com/ebean-orm/website-source/blob/master${href}"><i class="fa fa-github"></i> Edit Page</a>
+</p>
+</#macro>
