@@ -3,7 +3,7 @@
   <title>Introduction</title>
   <meta name="layout" content="_layout/docs.html"/>
   <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
-  <meta name="bread2" content="Eclipse" href="/docs/eclipse"/>
+  <meta name="bread2" content="Eclipse" href="/docs/tooling/eclipse"/>
   <template id="menuNav"><#include "/_layout/_docs_nav_tooling.ftl"></template>
   <#assign eclipse="active">
 </head>
@@ -21,6 +21,10 @@
   </div>
 </div>
 
+<p class="mvm">
+  The Eclipse IDE plugin is installed from: <code>http://ebean-orm.github.io/eclipse/update</code>
+</p>
+
 <h2 id="recommendation">Recommendation</h2>
 <blockquote>
   Use <b>both</b> IDE plugin enhancement (Idea or Eclipse) plus build time enhancement (maven or gradle).
@@ -33,56 +37,12 @@
 </p>
 
 
+<h2>Query bean generation with Maven and APT</h2>
+<p>
+  We can use APT to generate <b>Query beans</b>. To do this with Eclipse and maven have a look at
+  <a href="eclipse-maven-apt">Query bean generation with Eclipse + APT + Maven</a>.
+</p>
 
-
-<#-------------------------------------------------------------------------------------------------->
-<div style="display: none">
-  <h2 id="maven_eclipse">Eclipse + Maven enhancement</h2>
-
-  <p>Eclipse can be configured to enhance the classes during build using maven configuration</p>
-
-  <@maven_replace_version "::version::" "ebean-maven-plugin">
-  ```xml
-  <build>
-    <plugins>
-      <!-- plugins here -->
-    </plugins>
-    <pluginManagement>
-      <plugins>
-        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>io.ebean</groupId>
-                    <artifactId>ebean-maven-plugin</artifactId>
-                    <versionRange>[::version::,)</versionRange>
-                    <goals>
-                      <goal>enhance</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <execute>
-                      <runOnConfiguration>true</runOnConfiguration>
-                      <runOnIncremental>true</runOnIncremental>
-                    </execute>
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-  ```
-</@maven_replace_version>
-</div>
 <div class="next pull-right">
   <a href="maven" class="btn btn-info">Next: Maven</a>
 </div>
