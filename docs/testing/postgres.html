@@ -1,0 +1,67 @@
+<html>
+<head>
+  <title>Testing with Postgres</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Testing" href="/docs/testing/"/>
+  <meta name="bread2" content="Postgres" href="/docs/testing/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_testing.ftl"></template>
+  <#assign postgres="active">
+</head>
+<body>
+<h3><a href="extensions">Extensions</a></h3>
+<p>
+  We may want to use extensions like <code>hstore</code> and <code>pgcrypto</code>.
+  Note that when using ebean-test-config with docker it will automatically add those 2
+  extensions by default.
+</p>
+<p>
+  We can specify extensions that should be installed automatically via:
+</p>
+```sh
+ebean:
+  test:
+    platform: postgres #, h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    dbName: myapp
+    postgres:
+      extensions: pgcrypto, hstore
+```
+<p>
+  In terms of logging / debugged we can see the extensions added via:
+</p>
+```sh
+17:07:17.078 DEBUG io.ebean.docker.commands.Commands - create database extensions pgcrypto,hstore
+17:07:17.078 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -d test -c create extension if not exists pgcrypto
+17:07:17.187 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -d test -c create extension if not exists hstore
+```
+
+<h3><a id="schema">Schema</a></h3>
+<p>
+  With Postgres it could be considered good practice to create our tables into a named schema (and not the public schema).
+  If we want to do this we have made this easy in Ebean version 11.18.2 where we can specify <code>ebean.dbSchema</code>
+  and this is then used for both DB migrations and create-all.sql.
+</p>
+<p>
+  It is advisable that the DB User matches the DB Schema. When this is done then there is no need to use
+  <code>currentSchema</code> or modify the <code>search path</code>. For example, if I want to use a schema called
+  <code>myapp</code> it is advisable to have the DB user/role match and be <code>myapp</code>.
+</p>
+<h5>application.yaml</h5>
+```sh
+ebean:
+  dbSchema: myapp  ## use this schema for migrations and testing
+```
+
+<h5>ServerConfig</h5>
+```java
+serverConfig.setDbSchema("myapp");
+```
+
+
+
+<div class="next pull-right">
+  <a href="/docs/testing/sqlserver" class="btn btn-info">Next: SQL Server</a>
+</div>
+
+</body>
+</html>

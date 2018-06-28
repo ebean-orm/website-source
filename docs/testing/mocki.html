@@ -28,57 +28,57 @@ import io.ebeaninternal.server.core.DefaultServer;
 @Test
 public void testWithMockito() {
 
-EbeanServer defaultServer = Ebean.getServer(null);
-assertTrue("is a real EbeanServer", defaultServer instanceof DefaultServer);
+  EbeanServer defaultServer = Ebean.getServer(null);
+  assertTrue("is a real EbeanServer", defaultServer instanceof DefaultServer);
 
-Long someBeanId = Long.valueOf(47L);
+  Long someBeanId = Long.valueOf(47L);
 
-// Use Mockito to create a mock for the EbeanServer interface
-EbeanServer mock = Mockito.mock(EbeanServer.class);
+  // Use Mockito to create a mock for the EbeanServer interface
+  EbeanServer mock = Mockito.mock(EbeanServer.class);
 
-// setup some required behaviour
-when(mock.getBeanId(null)).thenReturn(someBeanId);
+  // setup some required behaviour
+  when(mock.getBeanId(null)).thenReturn(someBeanId);
 
-// ---------------
-// 'register' the mock instance into Ebean
-// this becomes the 'default EbeanServer' until
-// mockiEbean.restoreOriginal() is called
-// ---------------
-MockiEbean mockiEbean = MockiEbean.start(mock);
-try {
+  // ---------------
+  // 'register' the mock instance into Ebean
+  // this becomes the 'default EbeanServer' until
+  // mockiEbean.restoreOriginal() is called
+  // ---------------
+  MockiEbean mockiEbean = MockiEbean.start(mock);
+  try {
 
-// Ebean singleton 'default server' now returns the mock instance
-EbeanServer server = Ebean.getDefaultServer();
+    // Ebean singleton 'default server' now returns the mock instance
+    EbeanServer server = Ebean.getDefaultServer();
 
-// always returns the someBeanId setup by Mockito
-Object beanId = server.getBeanId(null);
+    // always returns the someBeanId setup by Mockito
+    Object beanId = server.getBeanId(null);
 
-assertEquals(someBeanId, beanId);
+    assertEquals(someBeanId, beanId);
 
-} finally {
-// ---------------
-// restore the original defaultServer instance
-// ---------------
-mockiEbean.restoreOriginal();
-}
+  } finally {
+    // ---------------
+    // restore the original defaultServer instance
+    // ---------------
+    mockiEbean.restoreOriginal();
+  }
 
-EbeanServer restoredServer = Ebean.getDefaultServer();
-assertTrue("is a real EbeanServer", restoredServer instanceof DefaultServer);
+  EbeanServer restoredServer = Ebean.getDefaultServer();
+  assertTrue("is a real EbeanServer", restoredServer instanceof DefaultServer);
 }
 
 ```
-<h4>MoickiEbean Maven dependency</h4>
+<h4>MockiEbean Maven dependency</h4>
 ```xml
 <dependency>
   <groupId>io.ebean</groupId>
   <artifactId>ebean-mocker</artifactId>
-  <version>10.3.1</version>
+  <version>11.17.1</version>
   <scope>test</scope>
 </dependency>
 ```
 
 <div class="next pull-right">
-  <a href="/" class="btn btn-info">Next: DDL Generation</a>
+  <a href="/docs/ddl" class="btn btn-info">Next: DDL Generation</a>
 </div>
 
 </body>

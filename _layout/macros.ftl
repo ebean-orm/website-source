@@ -20,8 +20,7 @@
   <#--</ul>-->
 <#--</li>-->
 
-<#macro maven groupid artifactid version uq >
-
+<#macro maven groupid artifactid version uq>
 <#if version == "auto">
   <#assign version_auto = true />
   <#assign version_str = "/ver:${artifactid}:ver/" />

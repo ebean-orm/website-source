@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>Testing with SQL Server</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Testing" href="/docs/testing/"/>
+  <meta name="bread2" content="SQL Server" href="/docs/testing/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_testing.ftl"></template>
+  <#assign sqlserver="active">
+</head>
+<body>
+
+<h2>SQL Server</h2>
+
+<p>
+  With SQL Server we have to decide if we are going to use the <code>sqlserver17</code> or the default older one.
+</p>
+<h3>sqlserver17</h3>
+<p>
+  To setup to use sqlserver17 we should set the <code>databasePlatformName</code> to sqlserver17 at either the
+  `ebean.databasePlatformName` level or at `ebean.test.sqlserver.databasePlatformName` level.
+</p>
+```sh
+ebean:
+  databasePlatformName: sqlserver17  ## only using sql server
+  test:
+    sqlserver: postgres #, h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    dbName: test
+
+    sqlserver:
+      databasePlatformName: sqlserver17  ## put here when testing multiple platforms
+```
+
+<div class="next pull-right">
+  <a href="/docs/testing/mocki" class="btn btn-info">Next: Mocki Ebean</a>
+</div>
+
+
+</body>
+</html>

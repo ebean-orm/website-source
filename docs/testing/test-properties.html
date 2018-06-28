@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Introduction</title>
+  <title>Testing properties - DDL</title>
   <meta name="layout" content="_layout/docs.html"/>
   <meta name="bread1" content="Testing" href="/docs/testing/"/>
   <meta name="bread2" content="Test properties" href="/docs/testing/"/>
@@ -8,45 +8,44 @@
   <#assign testproperties="active">
 </head>
 <body>
-<h2 id="test-properties">test-ebean.properties</h2>
+<h2 id="test-properties">Test properties</h2>
 <p>
-  When you want to run all tests against <code>H2</code> in memory database a simple way to do this is to add a
-  <code>src/test/resources/test-ebean.properties</code> to your project. In the <code>test-ebean.properties</code>
-  you can effectively override the properties of the datasource and specify to use <code>H2</code>.
+  If we are using <code>ebean-test-config</code> that will automatically set appropriate DLL properties for
+  testing. If we are not using that or just want to understand more and have finer control read on ...
 </p>
+
+<h3>DDL generation and run</h3>
 <p>
-  When an EbeanServer is created automatically via <code>Ebean.getDefaultServer()</code> or <code>Ebean.getServer(name)</code>
-  then Ebean will look for the existence of test-ebean.properties in the classpath. If found this then typically
-  specifies to use an in memory <code>H2</code> datasource.
+  Controlling the generation and running of db-create-all.sql and db-drop-all.sql.
 </p>
-<p>
-  When programmatically creating an EbeanServer using <code>ServerConfig</code> and <code>EbeanServerFactory</code>
-  there is a method <code>serverConfig.loadTestProperties()</code> which will similarly look for a test-ebean.properties
-  file if present.
-</p>
-```java
-@Override
-public EbeanServer getObject() throws Exception {
+<table class="table">
+  <tr>
+    <th>Property</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>ddl.generate</td>
+    <td>Set to true to generate the db-create-all.sql and db-drop-all.sql DDL scripts.</td>
+  </tr>
+  <tr>
+    <td>ddl.run</td>
+    <td>Set to true to run the db-create-all.sql, db-drop-all.sql and extra DDL scripts</td>
+  </tr>
+  <tr>
+    <td>ddl.createOnly</td>
+    <td>
+      Set to true to run the db-create-all.sql but <b>NOT</b> run the db-drop-all.sql. Mostly used with H2 database
+      in-memory testing when we know that the database is not populated / there are no tables to drop first.
+    </td>
+  </tr>
+  <tr>
+    <td>ebean.migraton.run</td>
+    <td>Set to true or false to run the migrations when the EbeanServer starts</td>
+  </tr>
+</table>
 
-ServerConfig config = new ServerConfig();
-config.setName("db");
-config.loadFromProperties(properties);
-...
 
-// load test-ebean.properties if present for running tests
-// typically using H2 in memory database
-config.loadTestProperties();
-
-// set as default and register so that Model can be
-// used if desired for save() and update() etc
-config.setDefaultServer(true);
-config.setRegister(true);
-
-return EbeanServerFactory.create(config);
-}
-```
-
-<h3>Example test-ebean.properties</h3>
+<h3>Example application-test.properties</h3>
 ```properties
 ebean.db.ddl.generate=true
 ebean.db.ddl.run=true
