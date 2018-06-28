@@ -30,12 +30,8 @@ public class EbeanServerProvider implements Provider<EbeanServer> {
   public EbeanServer get() {
 
     ServerConfig config = new ServerConfig();
-    config.setName("pg");
-    // load configuration from ebean.properties
-    config.loadFromProperties();
-    config.setDefaultServer(true);
     ...
-    // other programmatic configuration
+    // plus any programmatic configuration
 
     return EbeanServerFactory.create(config);
   }
@@ -45,7 +41,7 @@ public class EbeanServerProvider implements Provider<EbeanServer> {
   <h4>Example 2</h4>
   <p>
     Example provider implementation using <code>Ebean</code> that implicitly creates the
-    <code>default</code> EbeanServer using ebean.properties.
+    <code>default</code> EbeanServer using application.yml.
   </p>
 ```java
 

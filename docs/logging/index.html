@@ -24,6 +24,10 @@
 <logger name="io.ebean.cache.BEAN" level="TRACE"/>
 <logger name="io.ebean.cache.COLL" level="TRACE"/>
 <logger name="io.ebean.cache.NATKEY" level="TRACE"/>
+
+<!-- Testing with Docker containers -->
+<logger name="io.ebean.docker" level="TRACE"/>
+
 ```
 
 <h2 id="ddl">DDL</h2>
@@ -94,6 +98,18 @@
 <logger name="io.ebean.ELQ" level="TRACE"/>
 <logger name="io.ebean.BULK" level="TRACE"/>
 ```
+
+<h2 id="docker">Docker logging</h2>
+<p>
+  Logging of docker commands used to start test containers with <a href="/docs/testing">ebean-test-config</a>.
+</p>
+
+```xml
+<!-- Docker commands for starting test containers  -->
+<logger name="io.ebean.docker" level="TRACE"/>
+```
+
+
 <div class="next pull-right">
   <a href="/docs/configuration" class="btn btn-info">Next: Configuration</a>
 </div>

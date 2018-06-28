@@ -43,6 +43,19 @@ querybean-packages: org.example
   With example 2 turns on <code>profile-location</code> enhancement and <code>query bean</code> enhancement.
 </p>
 
+<h3>Kotlin Query beans</h3>
+<p>
+  When we use Kotlin query beans we only need to enhance the query beans themselves. That means the
+  packages we specify in ebean.mf only need to cover the location of the query beans.
+</p>
+
+<h3>Java Query beans</h3>
+<p>
+  When we use Java query beans the enhancement needs to include code that calls the query beans. That means that
+  the <code>querybean-packages</code> needs to include any code that calls and uses the query beans. Typically
+  for Java query beans we specify the querybean-packages to be the same as transactional-packages.
+</p>
+
 <h3>Tooling</h3>
 <p>
   The ebean.mf file is read by all the tooling that performs enhancement. It is read by:
