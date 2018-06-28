@@ -1,13 +1,19 @@
-<@smallnav activeCheck="${ddlcreateall!''}" url="/docs/ddl/ddl-create-all" title="DDL - Create All">
+<@smallnav activeCheck="${ddlcreateall!''}" url="/docs/ddl/ddl-create-all" title="Create All">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
+  <li><a href="#test-config">ebean-test-config</a></li>
   <li><a href="#properties">Properties</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${dbmigration!''}" url="/docs/ddl/dbmigration" title="DDL - DB Migration">
+<@smallnav activeCheck="${dbmigration!''}" url="/docs/ddl/dbmigration" title="DB Migration">
 <ul class="nav">
-  <li><a href="#introduction">Introduction</a></li>
   <li><a href="#overview">Overview</a></li>
+  <li><a href="#generate">Generate</a></li>
+  <li><a href="#run">Run</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${migrationdetail!''}" url="/docs/ddl/dbmigration-detail" title="Migration details">
+<ul class="nav">
   <li><a href="#migration-xml">Migration XML</a></li>
   <li><a href="#apply-ddl">Apply DDL</a></li>
   <li><a href="#version">Version and name</a></li>
