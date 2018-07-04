@@ -11,6 +11,7 @@
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${testproperties!''}" url="/docs/testing/test-properties" title="Test properties"/>
+<@smallnav activeCheck="${elastic!''}" url="/docs/testing/elasticsearch" title="ElasticSearch"/>
 <@smallnav activeCheck="${postgres!''}" url="/docs/testing/postgres" title="Postgres">
 <ul class="nav">
   <li><a href="#extensions">Extensions</a></li>

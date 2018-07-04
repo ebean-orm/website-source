@@ -34,9 +34,18 @@ ebean:
     dbName: myapp
 ```
 <p>
-  We can modify this test configuration to control what DDL is executed (create-all.sql or migrations),
-  what database platform we want to test against (using docker) and
+  We can modify this test configuration to control what DDL is executed (create-all.sql or migrations)
+  and the database platform we want to test against (potentially using docker).
 </p>
+<p>
+  ebean-test-config will take care of:
+</p>
+<ul>
+  <li>Properties to control DDL generation and execution</li>
+  <li>Docker container setup and execution based on the database platform</li>
+  <li>JDBC Datasource properties (matching the database docker container)</li>
+  <li>Register a current user and tenant provider if not already specified (to ease testing with @Who properties etc)</li>
+</ul>
 
 <h3><a id="ddlmode">ddlMode</a></h3>
 <table class="table">
