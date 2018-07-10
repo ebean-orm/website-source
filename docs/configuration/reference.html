@@ -285,6 +285,31 @@
   </tr>
 
   <tr>
+    <td>jsonFactory</td>
+    <td>-</td>
+    <td>
+      The Jackson JsonFactory to use.
+    </td>
+  </tr>
+
+  <tr>
+    <td>objectMapper</td>
+    <td>-</td>
+    <td>
+      The Jackson ObjectMapper to use if/when marshalling beans to and from JSON. An ObjectMapper
+      will be created if needed and it is available on the classpath.
+    </td>
+  </tr>
+
+  <tr>
+    <td>platformConfig</td>
+    <td>PlatformConfig</td>
+    <td>
+      Database platform configuration for quoted identifiers, true value, UUID treatment.
+    </td>
+  </tr>
+
+  <tr>
     <td>lazyLoadBatchSize</td>
     <td>10</td>
     <td>
@@ -333,7 +358,153 @@
     </td>
   </tr>
 
+  <tr>
+    <td>namingConvention</td>
+    <td>UnderscoreNamingConvention</td>
+    <td>
+      The naming convention to use to translate property names to column names etc.
+    </td>
+  </tr>
 
+  <tr>
+    <td>constraintNaming</td>
+    <td>DbConstraintNaming</td>
+    <td>
+      Naming convention used in DDL generation for primary keys, foreign keys etc.
+    </td>
+  </tr>
+
+  <tr>
+    <td>updateChangesOnly</td>
+    <td>true</td>
+    <td>
+      Behaviour of update to include on the change properties.
+    </td>
+  </tr>
+
+  <tr>
+    <td>updateAllPropertiesInBatch</td>
+    <td>true</td>
+    <td>
+      Behaviour of updates in JDBC batch to by default include all properties.
+    </td>
+  </tr>
+
+  <tr>
+    <td>updatesDeleteMissingChildren</td>
+    <td>true</td>
+    <td>
+      Default behaviour for updates when cascade save on a O2M or M2M to delete any missing children.
+    </td>
+  </tr>
+
+  <tr>
+    <td>uuidVersion</td>
+    <td>VERSION4</td>
+    <td>
+      The UUID version to use.
+    </td>
+  </tr>
+
+  <tr>
+    <td>clock</td>
+    <td>systemUTC</td>
+    <td>
+      The clock used for setting the timestamps (e.g. @UpdatedTimestamp) on objects.
+    </td>
+  </tr>
+
+  <tr>
+    <td>disableL2Cache</td>
+    <td>false</td>
+    <td>
+      Set to true to globally disable L2 caching (typically for performance testing).
+    </td>
+  </tr>
+
+  <tr>
+    <td>notifyL2CacheInForeground</td>
+    <td>false</td>
+    <td>
+      Generally we want to perform L2 cache notification in the background and not impact the performance
+      of executing transactions. Set this to true to perform L2 cache notification in the foreground.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>expressionEqualsWithNullAsNoop</td>
+    <td>false</td>
+    <td>
+      Set to true if you want eq("someProperty", null) to generate 1=1 rather than "is null" sql expression.
+    </td>
+  </tr>
+
+  <tr>
+    <td>expressionNativeIlike</td>
+    <td>false</td>
+    <td>
+      Set to true to use native ILIKE expression (if support by database platform / like Postgres).
+    </td>
+  </tr>
+
+  <tr>
+    <td>useJavaxValidationNotNull</td>
+    <td>true</td>
+    <td>
+      Should the javax.validation.constraints.NotNull enforce a notNull column in DB. If set to false,
+      use io.ebean.annotation.NotNull or Column(nullable=true).
+    </td>
+  </tr>
+
+  <tr>
+    <td>slowQueryMillis</td>
+    <td>&nbsp;</td>
+    <td>
+      The time in millis used to determine when a query is alerted for being slow.
+    </td>
+  </tr>
+
+  <tr>
+    <td>slowQueryListener</td>
+    <td>&nbsp;</td>
+    <td>
+      The listener for processing slow query events. Defaults to logging.
+    </td>
+  </tr>
+
+  <tr>
+    <td>persistenceContextScope</td>
+    <td>TRANSACTION</td>
+    <td>
+      The default PersistenceContextScope used if one is not explicitly set on a query. Set this to <code>QUERY</code>
+      if we want the persistence context to be scoped per query by default.
+    </td>
+  </tr>
+
+  <tr>
+    <td>defaultOrderById</td>
+    <td>false</td>
+    <td>
+      Controls the default order by id setting of queries. See Query.orderById(boolean)
+    </td>
+  </tr>
+
+  <tr>
+    <td>idGeneratorAutomatic</td>
+    <td>&nbsp;</td>
+    <td>
+      When true we do not need explicit GeneratedValue mapping.
+    </td>
+  </tr>
+
+  <tr>
+    <td>mappingLocations</td>
+    <td>&nbsp;</td>
+    <td>
+      The mappingLocations for searching xml mapping.
+    </td>
+  </tr>
 
   <tr>
     <td colspan="3">&nbsp;</td>
