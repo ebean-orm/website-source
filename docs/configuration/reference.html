@@ -1,0 +1,350 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Configuration" href="/docs/configuration/"/>
+  <meta name="bread2" content="Reference" href="/docs/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_configuration.ftl"></template>
+  <#assign reference="active">
+</head>
+<body>
+
+<h2>Reference</h2>
+
+
+<h3>ServerConfig options</h3>
+
+<table class="table">
+  <tr>
+    <th>Property</th>
+    <th nowrap="true">Default value</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>name</td>
+    <td>db</td>
+    <td>
+      The name of the EbeanServer instance. Defaults to "db" and only needs to be set
+      when we are using multiple named servers (typically with multiple databases).
+    </td>
+  </tr>
+
+  <tr>
+    <td>defaultServer</td>
+    <td>true</td>
+    <td>
+      Set this to false when creating multiple named EbeanServer instances (as only
+      one instance can be considered the "default").
+    </td>
+  </tr>
+
+  <tr>
+    <td>register</td>
+    <td>true</td>
+    <td>
+      Set this to false we create an EbeanServer instance and we don't want to register
+      it with the Ebean singleton.
+    </td>
+  </tr>
+
+  <tr>
+    <td>register</td>
+    <td>true</td>
+    <td>
+      Set this to false we create an EbeanServer instance and we don't want to register
+      it with the Ebean singleton.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>classes</td>
+    <td>&lt;empty&gt;</td>
+    <td>
+      Entity classes and other interesting classes (listeners, controllers, custom scalar types etc).
+      It is recommended that we add classes explicitly via <code>serverConfig.addClass()</code> such
+      that we get good fast startup and do not use classpath scanning to find the entity classes etc.
+    </td>
+  </tr>
+
+  <tr>
+    <td>packages</td>
+    <td>&lt;empty&gt;</td>
+    <td>
+      The packages to search/scan for entity classes etc. It is not recommended to use that and instead
+      explicitly add each class. See classes.
+    </td>
+  </tr>
+
+  <tr>
+    <td>databasePlatform</td>
+    <td>-</td>
+    <td>
+      The database platform to use. By default it is determined automatically from the JDBC DataSource.
+    </td>
+  </tr>
+
+  <tr>
+    <td>databasePlatformName</td>
+    <td>-</td>
+    <td>
+      The database platform name. Used to explicitly specify a DatabasePlatform to use.
+      With SQL Server we should specify the platform specifically as <code>sqlserver17</code> or
+      <code>sqlserver16</code> - refer to <a href="/docs/testing/sqlserver"></a>.
+      Otherwise we generally do not set this and let the platform be determined automatically
+      from the JDBC DataSource.
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan="3"><div class="mtm">Current user</div></th>
+  </tr>
+
+  <tr>
+    <td>currentUserProvider</td>
+    <td> </td>
+    <td>
+      Provides the current user for use with `@WhoCreated`, `@WhoModified`.
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan="3"><div class="mtm">JDBC Batch</div></th>
+  </tr>
+
+  <tr>
+    <td>persistBatch</td>
+    <td>NONE</td>
+    <td>
+      Setting this to <code>ALL</code> means that JDBC batch would be on by default. The default of NONE
+      means that JDBC batch isn't used by default when saving top level beans (but typically
+      JDBC batch is used when saving beans via cascading).
+    </td>
+  </tr>
+
+  <tr>
+    <td>persistBatchOnCascade</td>
+    <td>INHERIT</td>
+    <td>
+      Use for cascade persist JDBC batch mode. INHERIT means use the platform default which generally means
+      it will use batch mode.
+    </td>
+  </tr>
+
+  <tr>
+    <td>persistBatchSize</td>
+    <td>20</td>
+    <td>
+      The default batch size to use when not explicitly set on the transaction.
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan="3"><div class="mtm">DataSource</div></th>
+  </tr>
+
+  <tr>
+    <td>dataSource</td>
+    <td>-</td>
+    <td>
+      The dataSource to use. When not set we expect dataSourceConfig to be used.
+    </td>
+  </tr>
+
+  <tr>
+    <td>dataSourceConfig</td>
+    <td>-</td>
+    <td>
+      Configuration to use to create a DataSource when one isn't provided.
+    </td>
+  </tr>
+
+  <tr>
+    <td>autoReadOnlyDataSource</td>
+    <td>false</td>
+    <td>
+      Set this to true to automatically have a read-only auto-commit based DataSource created
+      using the dataSourceConfig options. This is generally a good idea providing a performance
+      benefit for queries that are executed without an explicit transaction.
+    </td>
+  </tr>
+
+  <tr>
+    <td>readOnlyDataSourceConfig</td>
+    <td>-</td>
+    <td>
+      Configuration to use when creating a read-only DataSource when one isn't provided.
+    </td>
+  </tr>
+
+  <tr>
+    <td>readOnlyDataSource</td>
+    <td>-</td>
+    <td>
+      The explicitly set read only dataSource to use.
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan="3"><div class="mtm">DDL and Migrations</div></th>
+  </tr>
+
+  <tr>
+    <td>dbSchema</td>
+    <td>-</td>
+    <td>
+      A DB schema to use. Typically used with Postgres for both running DB migrations and testing DDL.
+    </td>
+  </tr>
+
+
+  <tr>
+    <th colspan="3"><div class="mtm">Document Store</div></th>
+  </tr>
+
+  <tr>
+    <td>docStoreOnly</td>
+    <td>false</td>
+    <td>
+      Set this to true when only using a Document store rather than using both Document store and DBMS.
+    </td>
+  </tr>
+
+  <tr>
+    <td>docStoreConfig</td>
+    <td>&nbsp;</td>
+    <td>
+      Document store configuration.
+    </td>
+  </tr>
+
+  <tr>
+    <th colspan="3"><div class="mtm">Multi-tenant</div></th>
+  </tr>
+
+  <tr>
+    <td>tenantMode</td>
+    <td>NONE</td>
+    <td>
+      One of NONE | DB | SCHEMA | CATALOG | PARTITION.
+    </td>
+  </tr>
+
+  <tr>
+    <td>currentTenantProvider</td>
+    <td> </td>
+    <td>
+      Provides the current tenant.
+    </td>
+  </tr>
+
+  <tr>
+    <td>tenantDataSourceProvider</td>
+    <td> </td>
+    <td>
+      Provides the DataSource for modes ...
+    </td>
+  </tr>
+
+  <tr>
+    <td>tenantSchemaProvider</td>
+    <td> </td>
+    <td>
+      Provides the schema when mode=SCHEMA is used.
+    </td>
+  </tr>
+
+  <tr>
+    <td>tenantCatalogProvider</td>
+    <td> </td>
+    <td>
+      Provides the catalog when mode=CATALOG is used.
+    </td>
+  </tr>
+
+
+  <tr>
+    <th colspan="3"><div class="mtm">General</div></th>
+  </tr>
+
+  <tr>
+    <td>jsonDateTime</td>
+    <td>MILLIS</td>
+    <td>
+      The JSON format used for DateTime types. Default to millis.
+    </td>
+  </tr>
+
+  <tr>
+    <td>jsonInclude</td>
+    <td>ALL</td>
+    <td>
+      For writing JSON specify if null values or empty collections should be excluded.
+      By default all values are included.
+    </td>
+  </tr>
+
+  <tr>
+    <td>lazyLoadBatchSize</td>
+    <td>10</td>
+    <td>
+      The default batch size for lazy loading
+    </td>
+  </tr>
+
+  <tr>
+    <td>queryBatchSize</td>
+    <td>100</td>
+    <td>
+      The default batch size for 'query joins'.
+    </td>
+  </tr>
+
+  <tr>
+    <td>eagerFetchLobs</td>
+    <td>false</td>
+    <td>
+      Set this to true if you want to globally eagerly fetch LOB properties.
+    </td>
+  </tr>
+
+  <tr>
+    <td>dataTimeZone</td>
+    <td>-</td>
+    <td>
+      The timezone to use for DateTime based properties.
+    </td>
+  </tr>
+
+  <tr>
+    <td>jdbcFetchSizeFindList</td>
+    <td>0</td>
+    <td>
+      JDBC fetchSize hint when using findList.  Defaults to 0 leaving it up to the JDBC driver.
+    </td>
+  </tr>
+
+  <tr>
+    <td>jdbcFetchSizeFindEach</td>
+    <td>100</td>
+    <td>
+      JDBC fetchSize hint when using findEach/findEachWhile.  Defaults to 100. Note that this does
+      not apply to MySql as that gets special treatment (forward only etc).
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td colspan="3">&nbsp;</td>
+  </tr>
+
+
+</table>
+
+
+<div class="next pull-right">
+  <a href="/docs/configuration/spring" class="btn btn-info">Next: Spring</a>
+</div>
+</body>
+</html>
