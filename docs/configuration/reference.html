@@ -48,16 +48,6 @@
   </tr>
 
   <tr>
-    <td>register</td>
-    <td>true</td>
-    <td>
-      Set this to false we create an EbeanServer instance and we don't want to register
-      it with the Ebean singleton.
-    </td>
-  </tr>
-
-
-  <tr>
     <td>classes</td>
     <td>&lt;empty&gt;</td>
     <td>
@@ -78,7 +68,7 @@
 
   <tr>
     <td>databasePlatform</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       The database platform to use. By default it is determined automatically from the JDBC DataSource.
     </td>
@@ -86,7 +76,7 @@
 
   <tr>
     <td>databasePlatformName</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       The database platform name. Used to explicitly specify a DatabasePlatform to use.
       With SQL Server we should specify the platform specifically as <code>sqlserver17</code> or
@@ -145,7 +135,7 @@
 
   <tr>
     <td>dataSource</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       The dataSource to use. When not set we expect dataSourceConfig to be used.
     </td>
@@ -153,7 +143,7 @@
 
   <tr>
     <td>dataSourceConfig</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       Configuration to use to create a DataSource when one isn't provided.
     </td>
@@ -171,7 +161,7 @@
 
   <tr>
     <td>readOnlyDataSourceConfig</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       Configuration to use when creating a read-only DataSource when one isn't provided.
     </td>
@@ -179,7 +169,7 @@
 
   <tr>
     <td>readOnlyDataSource</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       The explicitly set read only dataSource to use.
     </td>
@@ -191,7 +181,7 @@
 
   <tr>
     <td>dbSchema</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       A DB schema to use. Typically used with Postgres for both running DB migrations and testing DDL.
     </td>
@@ -286,7 +276,7 @@
 
   <tr>
     <td>jsonFactory</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       The Jackson JsonFactory to use.
     </td>
@@ -294,7 +284,7 @@
 
   <tr>
     <td>objectMapper</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       The Jackson ObjectMapper to use if/when marshalling beans to and from JSON. An ObjectMapper
       will be created if needed and it is available on the classpath.
@@ -335,7 +325,7 @@
 
   <tr>
     <td>dataTimeZone</td>
-    <td>-</td>
+    <td>&nbsp;</td>
     <td>
       The timezone to use for DateTime based properties.
     </td>
