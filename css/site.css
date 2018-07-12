@@ -98,7 +98,7 @@ html {
     border-left: 7px solid orange;
 }
 .starter-template {
-  padding: 40px 15px;
+  padding: 20px 15px;
   text-align: center;
 }
 
@@ -118,15 +118,7 @@ pre {
 .jumbotron a:hover {
     color: #2D4B65;/*#337ab7;*/
 }
-/*a {*/
-    /*color: #428bca;*/
-    /*text-decoration: none;*/
-/*}*/
-/*a:hover,*/
-/*a:focus {*/
-    /*color: #337ab7;*/
-    /*text-decoration: underline;*/
-/*}*/
+
 .jumbotron {
   border-radius: 0;
   text-align: center;
