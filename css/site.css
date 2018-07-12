@@ -77,11 +77,15 @@ body:before {
 html {
   overflow-y: scroll;
 }
-body {
-  padding-top: 50px;
-}
+/*body {*/
+  /*padding-top: 50px;*/
+/*}*/
 .highlight {
   text-align: left;
+}
+.navbar {
+  border-radius: 0;
+  margin-bottom: 0;
 }
 .navbar-nav>li.active {
   border-bottom: 3px solid #417888;

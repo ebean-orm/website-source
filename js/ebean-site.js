@@ -6,30 +6,28 @@ $(function() {
 
 
   // Adjust scrolling in pages for fixed header
-  var offset = 50;
-
-
-  // handle clicks on website, if link starts with #, handle here
-  $('a').bind ('click', function(event) {
-      var $anchor = $(this);
-
-      var href = $anchor.attr("href");
-
-      if (href.slice(0, 1) === "#") {
-        event.preventDefault();
-
-        if ($anchor.hasClass("page-scroll")) {
-          //  uses jquery.easing to animate scrolling
-          $('html, body').stop().animate({
-              scrollTop: $(href).offset().top - offset
-          }, 1500, 'easeInOutExpo');
-        } else {
-          // go to location quickly
-          $(href)[0].scrollIntoView();
-          scrollBy(0, -offset);
-        }
-      }
-  });
+  //var offset = 50;
+  // // handle clicks on website, if link starts with #, handle here
+  // $('a').bind ('click', function(event) {
+  //     var $anchor = $(this);
+  //
+  //     var href = $anchor.attr("href");
+  //
+  //     if (href.slice(0, 1) === "#") {
+  //       event.preventDefault();
+  //
+  //       if ($anchor.hasClass("page-scroll")) {
+  //         //  uses jquery.easing to animate scrolling
+  //         $('html, body').stop().animate({
+  //             scrollTop: $(href).offset().top - offset
+  //         }, 1500, 'easeInOutExpo');
+  //       } else {
+  //         // go to location quickly
+  //         $(href)[0].scrollIntoView();
+  //         scrollBy(0, -offset);
+  //       }
+  //     }
+  // });
 
 
   // Scrollspy
@@ -37,7 +35,7 @@ $(function() {
   var $body   = $(document.body)
 
   $body.scrollspy({
-    offset: 60,
+    offset: 0,
     target: '.bs-docs-sidebar'
   })
   $window.on('load', function () {
@@ -53,9 +51,9 @@ $(function() {
         top: function () {
           var offsetTop      = $sideBar.offset().top
           var sideBarMargin  = parseInt($sideBar.children(0).css('margin-top'), 10)
-          var navOuterHeight = $('.navbar-fixed-top').height()
+          //var navOuterHeight = $('.navbar-fixed-top').height()
 
-          return (this.top = offsetTop - navOuterHeight - sideBarMargin)
+          return (this.top = offsetTop - sideBarMargin)
         },
         bottom: function () {
           return (this.bottom = $('#footer').outerHeight(true))

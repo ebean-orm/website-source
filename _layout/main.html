@@ -1,5 +1,4 @@
 <#include "/_layout/macros.ftl">
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,7 +14,6 @@
     <link rel="stylesheet" href="/css/pygments.css" type="text/css" />
     <link rel="stylesheet" href="/css/site.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
   <#macro navlink activeCheck url title>
       <li <#if activeCheck?has_content>class="active"</#if>>
           <i class="fa fa-chevron-right"></i> <a href="${url}">${title}</a>
@@ -31,7 +29,7 @@
   <body>
   <div id="wrap">
     <div id="header">
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".mobile-nav">
@@ -52,8 +50,7 @@
     </div>
 
   </div>
-  <#---- data-offset is for scroll-spy -->
-  <div id="main" data-offset="60">
+  <div id="main">
 <div id="layout-body"></div>
   </div>
   </div>
