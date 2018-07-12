@@ -104,9 +104,6 @@ ${dep_block?replace(placeholder, "<span class='"+artifactid+"-version'>$"+"{vers
 <#macro menu_docs >
 <div class="jumbotron mini">
     <div class="container">
-        <form class="pull-right">
-            <input class="form-control ds-input" id="search-input" placeholder="Search..." autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-owns="algolia-autocomplete-listbox-0" style="position: relative; vertical-align: top;" dir="auto" type="search">
-        </form>
         <h1><a href="/docs">Documentation</a> <#nested>
     </div>
 </div>

@@ -130,7 +130,7 @@ defaultServer.save(customer);
   We discuss the option of using Model and Finder in more detail at <a href="/docs/codestyle">coding style options</a>.
 </p>
 
-<@next_edit "ServerConfig" "serverconfig" "/docs/introduction/ebeanserver.html"/>
+<@next_edit "ServerConfig" "serverconfig" "/docs/introduction/ebeanserver"/>
 
 </body>
 </html>

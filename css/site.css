@@ -539,3 +539,61 @@ div#main h2.htop {
 div#main h4 {
   margin-top: 25px;
 }
+
+.search-results-inline-container {
+  position: relative;
+}
+
+.search-results-inline-container .search-results {
+  background: white;
+  position: absolute;
+  border: 1px solid #f0f0f0;
+  width: 100%;
+  padding: 4px 8px;
+  border-top: none;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.search-results-inline-container .search-results li {
+
+}
+
+.search-results-inline-container ul {
+  list-style-type: none;
+}
+
+.search-results-inline-container .search-results li a {
+  color: #203060;
+}
+
+.search-results-inline-container .search-results:empty {
+  display: none;
+}
+
+.search-results-inline-container .search-results li.google-search {
+  border-top: 1px dotted #eee;
+}
+
+.search-results-inline-container .search-results li.google-search:only-child {
+  border-top: none;
+}
+
+
+.search-results-inline-container .search-results li.google-search a {
+  color:#999;
+}
+
+.search-results-inline-container .search-results li.google-search a code {
+  color:#3b5998;
+}
+
+.search-results li.active {
+  background: #eee;
+}
+
+#search-results-container li a {
+  display: block;
+  width: 100%;
+}
+

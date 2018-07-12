@@ -44,12 +44,6 @@ $(function() {
     $body.scrollspy('refresh')
   })
 
-
-  // Kill links
-  $('.bs-docs-container [href=#]').click(function (e) {
-    e.preventDefault()
-  })
-
   // Sidenav affixing
   setTimeout(function () {
     var $sideBar = $('.bs-docs-sidebar')

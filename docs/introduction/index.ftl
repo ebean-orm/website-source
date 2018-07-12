@@ -38,6 +38,6 @@
   a project and what enhancement features are turned on.
 </p>
 
-<@next_edit "Tooling" "/docs/tooling/" "/docs/introduction/index.html"/>
+<@next_edit "Tooling" "/docs/tooling/" "/docs/tooling"/>
 </body>
 </html>

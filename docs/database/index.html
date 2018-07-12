@@ -1,0 +1,115 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Database" href="/docs/database/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_database.ftl"></template>
+  <#assign introduction="active">
+</head>
+<body>
+
+<h2>Database Platforms</h2>
+
+
+<table class="table">
+  <tr>
+    <th>Platform</th>
+    <th>Identity</th>
+    <th>DbArray</th>
+    <th>DbJson/DbJsonB</th>
+    <th>History</th>
+    <th>Notes</th>
+  </tr>
+
+  <tr>
+    <td>H2</td>
+    <td>*Identity & Sequence</td>
+    <td>Partial</td>
+    <td>Simulated</td>
+    <td>Triggers</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>Postgres</td>
+    <td>*Identity & Sequence</td>
+    <td>Full</td>
+    <td>Full</td>
+    <td>Triggers</td>
+    <td>Schema, Extensions</td>
+  </tr>
+
+  <tr>
+    <td>MySQL</td>
+    <td>Identity</td>
+    <td>Simulated</td>
+    <td>Full</td>
+    <td>Triggers</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>Oracle</td>
+    <td>*Sequence & Identity</td>
+    <td>Simulated</td>
+    <td>Full</td>
+    <td>Native</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>SQL Server 17</td>
+    <td>*Sequence & Identity</td>
+    <td>Simulated</td>
+    <td>Full</td>
+    <td>Native</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>SQL Server 16</td>
+    <td>*Identity</td>
+    <td>Simulated</td>
+    <td>Full</td>
+    <td>Native</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>SQLite</td>
+    <td>*Identity</td>
+    <td>Partial</td>
+    <td>Simulated</td>
+    <td>None</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>DB2</td>
+    <td>*Identity & Sequence</td>
+    <td>None</td>
+    <td>-</td>
+    <td>-</td>
+    <td></td>
+  </tr>
+
+</table>
+
+<h3><a href="/docs/database/postgres">Postgres</a></h3>
+<h5>Schema</h5>
+<p>
+
+</p>
+
+<h5>Extensions</h5>
+<p>
+
+</p>
+
+
+<div class="next pull-right">
+  <a href="/docs/testing/" class="btn btn-info">Next: Testing</a>
+</div>
+
+</body>
+</html>
