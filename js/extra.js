@@ -1,24 +1,20 @@
 $(document).ready(function() {
 
-  // console.log('searhcInput: '+$('#searchinput').length);
-  // $('#searchinput').on('keypress', function(e) {
-  //     console.log('keypress', e);
-  // });
-
   $('#searchinput').on('keydown', function(e) {
     const search_container = $('.search-results');
     let active = search_container.find('li.active');
     //console.log(active);
-    console.log('keydown', active);
+    //console.log('keydown', active);
     switch (e.keyCode) {
       case 13: // RETURN
-        console.log('RETURN');
+        //console.log('RETURN');
         if (active.length === 0) {
           // Do nothing, do the normal behaviour.
         } else {
           e.preventDefault();
           document.location.href = active.find('a').attr('href');
           $('#searchinput').val('').blur();
+          scrollBy(0, -100);
         }
         break;
       case 27: // ESC
@@ -29,7 +25,7 @@ $(document).ready(function() {
         break;
       case 38: // UP
         e.preventDefault();
-        console.log('UP');
+        //console.log('UP');
 
         for (let n = 0; n < 10; n++) { // Skip up to 10 links
           active.removeClass('active');
@@ -44,7 +40,6 @@ $(document).ready(function() {
         break;
       case 40: // DOWN
         e.preventDefault();
-
         for (let n = 0; n < 10; n++) { // Skip up to 10 links
           active.removeClass('active');
           if (active.length === 0 || active.next().length === 0) {
@@ -55,7 +50,7 @@ $(document).ready(function() {
           // Found a link!
           if (active.find('a').length !== 0) break;
         }
-        console.log('DOWN');
+        //console.log('DOWN');
         break;
     }
   });
@@ -130,7 +125,7 @@ $(document).ready(function() {
     let results = await fetchSearchOnce();
 
     let tokens = querySearch.split(' ');
-    console.log('tokens:  '+tokens);
+    //console.log('tokens:  '+tokens);
     let filteredResultsAll = results
       .sorted(composeComparers(
         comparerBy((it) => it.priority || 0),
@@ -182,6 +177,7 @@ $(document).ready(function() {
 
   $('#searchinput').on('focus', function() {
     //console.log('focus');
+    scrollBy(0, -200);
     updateSearchResults();
   }).on('change', function() {
     //console.log('change');
@@ -192,24 +188,6 @@ $(document).ready(function() {
       updateSearchResults();
     }
   });
-
-  function hashChanged() {
-    const hash = document.location.hash;
-    $('.anchored-heading-fixed').removeClass('anchored-heading-fixed');
-    if (hash.startsWith('#') && hash.indexOf("&") < 0 && hash.indexOf("=") < 0 && hash.indexOf('"') < 0) {
-      $(hash).find('a').addClass('anchored-heading-fixed');
-    }
-  }
-
-  window.onhashchange = (e) => {
-    hashChanged();
-  };
-  hashChanged();
-
-  $('.artifact-tabs a').click(function (e) {
-    e.preventDefault();
-    $(this).tab('show');
-  })
 });
 
 

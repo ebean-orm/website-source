@@ -18,8 +18,8 @@
   <script src="/js/jquery.easing.min.js"></script>
 
   <#-- jquery.storeapi needs json2, jquery.cookie to support old browsers  -->
-  <script src="/js/json2.js"></script>
-  <script src="/js/jquery.cookie.min.js"></script>
+  <#--<script src="/js/json2.js"></script>-->
+  <#--<script src="/js/jquery.cookie.min.js"></script>-->
   <script src="/js/jquery.storageapi.min.js"></script>
   <script src="/js/ebean-site.js"></script>
   <script src="/js/extra.js"></script>

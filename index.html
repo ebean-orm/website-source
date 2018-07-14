@@ -1,251 +1,206 @@
 <html>
 <head>
-<meta name="layout" content="_layout/home.html" />
-<#assign home = "active">
+  <meta name="layout" content="_layout/home.html"/>
+  <#assign home = "active">
 </head>
-<body>
 
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Ebean ORM for Java/Kotlin</h1>
-      <h2 style="margin-left: 30px;">Fast and simple data access on the JVM - <a type="button" class="btn btn-warning" href="/funding">$Donate</a></h2>
-      <h3>Current version - <span class="ebean-version"></span></h3>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="jumbotron">
+        <div class="container">
+          <h1>Ebean ORM for Java/Kotlin</h1>
+          <h2 style="margin-left: 30px;">Fast and simple data access on the JVM</h2>
+          <h3>Current version - <span class="ebean-version"></span></h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 main-pg-idx">
+      <ul>
+        <li><h4><a href="/docs"><i class="fas fa-chevron-circle-right"></i> Documentation</a></h4></li>
+        <li><h4><a href="/videos"><i class="fas fa-chevron-circle-right"></i> Videos</a></h4></li>
+        <li><h4><a href="/support"><i class="fas fa-chevron-circle-right"></i> Getting started</a></h4></li>
+        <li><h4><a href="/support"><i class="fas fa-chevron-circle-right"></i> Getting help</a></h4></li>
+      </ul>
     </div>
   </div>
+</div>
 
-  <div class="container header-links">
-
-
-
-    <div class="row">
-      <div class="col-sm-6">
-
-        <h3>Search the documentation</h3>
-        <form action="https://www.google.com/search" method="get">
-          <div class="page-inline-search" style="margin-bottom:8px;">
-            <div class="input-group">
-              <input name="q" id="searchinput" type="text" class="form-control" placeholder="Search... (press 's' to focus)" data-placeholder-focus="Search... (use '↑', '↓' and '⏎' to select results)" data-placeholder-blur="Search... (press 's' to focus)" autocomplete="off">
-              <input type="hidden" name="as_sitesearch" value="ebean-orm.github.io">
-              <div class="input-group-btn">
-                <button class="btn btn-default form-control" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-              </div>
-            </div>
-            <div class="search-results-inline-container" style="display: none;">
-              <ul id="search-results-container" class="search-results"><li class=" active"><a href="/docs" title="Docs"><span style="color:#777;">Docs</span> Documentation </a></li><li class=""><small style="color:#999;">And 101 more...</small></li></ul>
-            </div>
-          </div>
-        </form>
-
-      </div>
-
+<div class="container mtl">
+  <div class="row">
+    <div class="col-md-9">
+      <div id="nav-search"><#include "/_layout/_searchinput.ftl"></div>
     </div>
+  </div>
+</div>
 
-    <p>&nbsp;</p>
+<div class="erkbg mtl">
+  <div class="container">
+
+    <h2 class="erk ">About Ebean</h2>
 
     <div class="row">
-      <div class="col-sm-6 feature">
+      <div class="col-md-3 feature">
         <h3>JPA Mapping</h3>
         <p>
-          Use JPA Mapping annotations.
+          Ebean uses JPA mapping annotations.
         </p>
-
+      </div>
+      <div class="col-md-6 feature mtl">
         ```java
         @Entity
         @Table(name="customer")
         public class Customer extends BaseModel {
 
-          @Column(length=100)
-          String name;
+        @Column(length=100)
+        String name;
 
-          @ManyToOne(cascade=CascadeType.ALL)
-          Address billingAddress;
+        @ManyToOne(cascade=CascadeType.ALL)
+        Address billingAddress;
 
-          @OneToMany(mappedBy="customer", cascade=CascadeType.PERSIST)
-          List<Contact> contacts;
+        @OneToMany(mappedBy="customer")
+        List
+        <Contact> contacts;
           ...
-        ```
+          ```
       </div>
+    </div>
 
-      <div class="col-sm-6 feature">
+    <div class="row">
+      <div class="col-md-3 feature">
+        <h3>Beyond JPA</h3>
+        <p>
+          Ebean supports features beyond JPA such as:
+        </p>
+      </div>
+      <div class="col-md-3 feature mtl">
 
+        <h5>Multi-tenancy</h5>
+        <h5>JSON in Database</h5>
+        <h5>Soft Delete</h5>
+        <h5>Encryption</h5>
+
+      </div>
+      <div class="col-md-3 feature mtl">
+
+        <h5>SQL 2011 History</h5>
+        <h5>Elastic Search</h5>
+        <h5>Who Created / Modified</h5>
+        <h5>Draftable</h5>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3 feature">
         <h3>Simple to use</h3>
         <p>
-          With Ebean it is very easy to insert, update, delete.
-          There is no 'Session' or EntityManager to manage, no merge/flush/attach/detach semantics.
+          Ebean provides a simpler programming model that developers can
+          understand and master quickly.
         </p>
-        ```java
-          @Inject
-          final EbeanServer ebeanServer;
+      </div>
+      <div class="col-md-6 feature mtl">
 
-          public void createCustomer(String name) {
+      </div>
 
-            Customer customer = new Customer();
-            customer.setName(name);
+    </div>
 
-            ebeanServer.save(customer);
+  </div>
+</div>
 
-          }
+<div class="">
 
-        ```
+  <div class="container">
+
+    <h2 class="erk">Getting started</h2>
+
+    <div class="row">
+      <div class="col-md-3 feature">
+        <h3></h3>
+      </div>
+      <div class="col-md-3 feature">
+        <h3>Kotlin</h3>
+
+      </div>
+      <div class="col-md-3 feature">
+
       </div>
     </div>
 
-    <p>&nbsp;</p>
-
     <div class="row">
-      <div class="col-sm-6">
-        <@video_item "ogx6hsLl95g" "Sessionless ORM" "How Ebean is architected to be a sessionless ORM" />
+      <div class="col-md-3 feature">
+        <h3></h3>
       </div>
+      <div class="col-md-3 feature">
 
-      <div class="col-sm-6">
-        <@video_item "taB58ZsSRKU" "ElasticSearch" "Why Ebean has ElasticSearch integration" />
+        <h3>Maven</h3>
+
+      </div>
+      <div class="col-md-3 feature">
+        <h3>Gradle</h3>
+
       </div>
     </div>
 
-    <p>&nbsp;</p>
+    <div class="row">
+      <div class="col-md-3 feature">
+
+      </div>
+      <div class="col-md-3 feature">
+        <h3>Examples</h3>
+        <h5><a href="/docs/examples">Minimal</a></h5>
+        <h5><a href="/docs/examples">Maven and Gradle</a></h5>
+        <h5><a href="/docs/examples">Multi-tenancy</a></h5>
+        <h5><a href="/docs/examples">Elastic Search</a></h5>
+
+      </div>
+      <div class="col-md-3 feature">
+        <p>&nbsp;</p><p>&nbsp;</p>
+        <h5><a href="/docs/examples">SQL 2011 History</a></h5>
+        <h5><a href="/docs/examples">Draftable</a></h5>
+        <h5><a href="/docs/examples">Postgres GIS</a></h5>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="erkbg">
+  <div class="container">
+    <h2 class="erk">Type safe queries</h2>
 
     <div class="row">
-      <div class="col-sm-6 feature">
-        <h3><a href="/docs/query/typesafe">Type safe queries</a></h3>
+      <div class="col-md-3">
+        <h3><a href="/docs/query/typesafe">Query beans</a></h3>
         <p>
           Use Query beans to build queries in a type safe manner.
         </p>
+      </div>
+
+      <div class="col-md-6 mtl">
+
         ```java
         LocalDate lastWeek = ...;
 
         List<Customer> customers
           = new QCustomer()
-          .billingAddress.city.equalTo("Auckland")
-          .status.isEqualTo(Status.NEW)
-          .registered.before(lastWeek)
-          .name.istartsWith("rob")
-          .setMaxRows(10)
-          .orderBy()
-            .name.asc()
-            .id.desc()
-          .findList();
-        ```
+            .name.istartsWith("rob")
+            .billingAddress.city.equalTo("Auckland")
+            .status.isEqualTo(Status.NEW)
+            .registered.before(lastWeek)
+            .setMaxRows(10)
+            .orderBy()
+              .name.asc()
+              .id.desc()
+            .findList();
+          ```
       </div>
-      <div class="col-sm-6 feature">
 
-        <h3><a href="/docs/query/autotune">Automatic query tuning</a></h3>
-        <p>
-          Ebean can profile the object graph use and use that to <code>automatically optimise</code>
-          ORM queries such that they only fetch the required properties and minimises N + 1.
-        </p>
-
-        <h3><a href="/docs/features/elasticsearch">ElasticSearch integration</a></h3>
-        <p>
-          Want <code>horizontally scale</code> read access, text searching or just want
-          some inverted index awesomeness?
-        </p>
-        <p>
-          Have a look at <a href="/docs/features/elasticsearch">Ebean's integration</a> with
-          <a href="https://www.elastic.co/">ElasticSearch</a> .
-        </p>
-
-        <h3><a href="/docs/features/history">SQL2011 History support</a></h3>
-        <p>
-          Ebean has built in @History support for Oracle, Postgres, MySql and H2.
-          This means database changes are kept for auditing or change tracking purposes
-          and perform <code>historical queries</code> (what did a object graph look like last week)
-          and perform <code>version queries</code> (what were all the changes to customer 42 including
-          a diff for each version).
-        </p>
-      </div>
-    </div>
-
-  </div>
-  <div  style="background: #F6F6F6; border:1px solid #ddd; margin-top:30px; margin-bottom: 30px; padding-bottom: 30px;">
-    <div class="container">
-      <div class="row" >
-        <div class="col-sm-6 feature">
-
-          <h3>Architecture</h3>
-          <p>
-            Ebean has an taken a different architectural when compared with JPA and JDO and this has important implications.
-            Specifically Ebean does not use a 'Persistence Context' or 'Session' when it persists objects back to the database.
-            This means you don't need to attach/detach your beans or manage a JPA EntityManager or JDO PersistenceManager.
-          </p>
-          <p>
-            Persisting a bean means you just call save(). Cascade persistence is supported by traversing the relationships
-            on the bean.
-          </p>
-
-          <h3><a href="/videos">Videos</a></h3>
-          <p>
-            <a href="/videos">Videos</a> to show you various features of Ebean and options for testing.
-          </p>
-
-        </div>
-        <div class="col-sm-6 feature">
-
-          <h3>Partial Objects and N + 1</h3>
-          <p>
-            A high performance ORM needs good support for <a href="/docs/query/partialobjects">partial objects</a>
-            (only fetching the properties needed) and optimising object graph construction to mitigate
-            <a href="/docs/query/nplus1">N + 1</a>.
-          </p>
-          <p>
-            Ebean's query design provides a clean separation between what properties and paths to fetch and the
-            rest of the query (predicates, orderBy, paging) and this makes it easy for developers to optimise
-            object graph construction and also allows Ebean to <a href="/docs/query/autotune">automatically tune queries</a>
-            using profiling.
-          </p>
-
-          </div>
-        </div>
     </div>
   </div>
-  <div class="container">
-
-  <div>
-      <div>
-        <h3>Interesting Features</h3>
-
-        <ul>
-          <li><strong>Raw SQL</strong>: Using raw sql is easy and the bean returned are fully featured with
-            the expected lazy loading and persisting support because sometimes you need full control
-          </li>
-          <li>
-            <strong>Paging results</strong>: Use findCount() or findPagedList() to make handling paged results easy.
-          </li>
-          <li><strong>Large Query Support</strong>: Use findIterate() to process lots of objects without
-            having them all in memory. Typically for batch processing requirements.
-          </li>
-          <li>
-            <strong>Batch inserting</strong>: Ability to tune batch inserting with per-transaction control over
-            JDBC batch size and the ability to turn off getGeneratedKeys and Cascade persist.
-          </li>
-
-          <li>
-            <strong>DB Encryption</strong>: Use DB encryption transparently with @Encrypt.
-          </li>
-          <li>
-            <strong>JSON support</strong>: Built in JSON support. Marshalling/unmarshalling is fully aware of
-            circular relationships, inheritance, partial objects and all data types.
-          </li>
-          <li>
-            <strong>Automatic Query Tuning</strong>: Has 'Autofetch' automatic query tuning support. Queries can be
-            automatically optimised based on profiling the object graph use.
-          </li>
-          <li>
-            <strong>Stateless Updates</strong>: Populate a bean object graph and then update() it without querying it
-            from the DB. This is useful to support REST.
-          </li>
-          <li>
-            <strong>Bulk Updates/Deletes</strong>: Use bulk update statements as you desire because sometimes a more
-            'relational' approach is vastly more efficient - Ebean is happy with that and the L2 cache will invalidate
-            the appropriate cache regions where necessary.
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- //end of row -->
-
-
-  </div>
-  <!-- /.container -->
+</div>
 
 
 </body>

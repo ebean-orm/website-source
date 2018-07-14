@@ -112,6 +112,14 @@ h2 {
 pre {
   border: 1px solid #ddd;
 }
+
+.erk {
+  font-size: 36px;
+  /*font-size: 2rem;*/
+  color: #f57a1b;
+  text-shadow: 3px 0 3px rgba(0, 0, 0, 0.1), 2px 0 2px rgba(0, 0, 0, 0.1), 1px 0 1px rgba(0, 0, 0, 0.1);
+}
+
 .jumbotron a {
   color: #333;/*#337ab7;*/
 }
@@ -122,11 +130,13 @@ pre {
 .jumbotron {
   border-radius: 0;
   text-align: center;
-  margin-bottom: 0; }
-  .jumbotron h1 {
+  margin-bottom: 0;
+}
+.jumbotron h1 {
+    font-size: 36px;
     margin-bottom: 10px;
     text-shadow: 3px 0 3px rgba(0, 0, 0, 0.1), 2px 0 2px rgba(0, 0, 0, 0.1), 1px 0 1px rgba(0, 0, 0, 0.1); }
-  .jumbotron h2 {
+.jumbotron h2 {
     line-height: 30px;
     font-size: 24px;
     margin: 0;
@@ -141,9 +151,10 @@ pre {
     margin-bottom: 0; }
 
 .jumbotron {
-  xx-background-color: #2D3150;
-  box-shadow: rgba(255, 255, 255, 0.8) 0 1px 0, inset rgba(0, 0, 0, 0.05) 0 1px 0;
-  background-image: url(/images/px_back.png);
+  background-color: #fff;
+  /*xx-background-color: #2D3150;*/
+  /*box-shadow: rgba(255, 255, 255, 0.8) 0 1px 0, inset rgba(0, 0, 0, 0.05) 0 1px 0;*/
+  /*xx-background-image: url(/images/px_back.png);*/
 }
 
 .jumbotron.mini {
@@ -193,6 +204,24 @@ pre {
     padding-top: 8px;
     padding-bottom: 8px;
   }
+}
+.main-pg-idx {
+  padding-top: 50px;
+}
+.main-pg-idx h4 {
+  font-size: 20px;
+}
+.main-pg-idx ul {
+  list-style: none;
+}
+.nav-btn-rhs li {
+  /*font-size: 25px;*/
+}
+.navbar-brand {
+  padding-top: 10px;
+}
+.nbr {
+  color: #919191;
 }
 .sidebar-nav .navbar li>a {
   font-weight: 900;
@@ -526,9 +555,6 @@ ul.nav.bs-docs-sidenav li.sub-menu {
     padding-top:30px;
     padding-bottom:30px;
 }
-div#main h2 {
-  margin-top: 50px;
-}
 div#main h2.htop {
   margin-top: 25px;
 }
@@ -536,6 +562,19 @@ div#main h4 {
   margin-top: 25px;
 }
 
+#nav-logo {
+  width: 50px;
+}
+#searchinput {
+  /*width: 300px;*/
+}
+#nav-search {
+  padding-top: 15px;
+  /*max-width: 500px;*/
+}
+.page-inline-search {
+  margin-top: 10px;
+}
 .search-results-inline-container {
   position: relative;
 }
@@ -593,3 +632,35 @@ div#main h4 {
   width: 100%;
 }
 
+.erkbg .syntax.java pre {
+  background: #fff;
+}
+.erkbg {
+  background: #f6f6f6;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+  padding:5px 10px 15px 10px;
+}
+
+#header {
+  background-color: #fff;
+  z-index: 100;
+  border-bottom: 1px solid #eee;
+}
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.stickyRhs {
+  position: fixed;
+  top: 60px;
+  /*width: 100%*/
+}
+
+/*!* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) *!*/
+.sticky + #main {
+  padding-top: 50px;
+}

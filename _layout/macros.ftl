@@ -131,7 +131,7 @@ ${dep_block?replace(placeholder, "<span class='"+artifactid+"-version'>$"+"{vers
 
 <#macro edit_page href>
 <p class="edit-page">
-  <a href="https://github.com/ebean-orm/website-source/blob/master${href}"><i class="fa fa-github"></i> Edit Page</a>
+  <a href="https://github.com/ebean-orm/website-source/blob/master${href}"><i class="fab fa-github"></i> Edit Page</a>
 </p>
 </#macro>
 
@@ -146,6 +146,6 @@ ${dep_block?replace(placeholder, "<span class='"+artifactid+"-version'>$"+"{vers
   <a href="${href}" class="btn btn-info">Next: ${title}</a>
 </div>
 <p class="edit-page">
-  <a href="https://github.com/ebean-orm/website-source/blob/master${editHref}"><i class="fa fa-github"></i> Edit Page</a>
+  <a href="https://github.com/ebean-orm/website-source/blob/master${editHref}"><i class="fab fa-github"></i> Edit Page</a>
 </p>
 </#macro>
