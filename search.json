@@ -1275,7 +1275,7 @@
   "title":"",
   "caption":"",
   "category":"Features",
-  "priority":"1",
+  "priority":"0",
   "keywords":"",
   "url":"/docs/features"
 }
@@ -1283,7 +1283,7 @@
   "title":"",
   "caption":"",
   "category":"Elastic",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/elasticsearch"
 }
@@ -1355,7 +1355,7 @@
   "title":"",
   "caption":"",
   "category":"History",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/history"
 }
@@ -1475,7 +1475,7 @@
   "title":"",
   "caption":"",
   "category":"JSON in DB",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/json-in-db"
 }
@@ -1539,7 +1539,7 @@
   "title":"",
   "caption":"",
   "category":"JSON Marshalling",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/json"
 }
@@ -1563,7 +1563,7 @@
   "title":"",
   "caption":"",
   "category":"Read Auditing",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/readauditing"
 }
@@ -1603,7 +1603,7 @@
   "title":"",
   "caption":"",
   "category":"Change log",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/changelog"
 }
@@ -1635,7 +1635,7 @@
   "title":"",
   "caption":"",
   "category":"Draftable",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/draftable"
 }
@@ -1763,7 +1763,7 @@
   "title":"",
   "caption":"",
   "category":"SoftDelete",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/softdelete"
 }
@@ -1835,7 +1835,7 @@
   "title":"",
   "caption":"",
   "category":"Who Created Modified",
-  "priority":"0",
+  "priority":"1",
   "keywords":"",
   "url":"/docs/features/who"
 }
