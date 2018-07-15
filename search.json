@@ -1952,78 +1952,6 @@
   "url":"/docs/features/draftable"
 }
 ,{
-  "title":"",
-  "caption":"",
-  "category":"Features",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/features/clustering"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"Features",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/clustering#overview"
-}
-,{
-  "title":"Container",
-  "caption":"",
-  "category":"Features",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/clustering#container"
-}
-,{
-  "title":"L2 cache invalidation",
-  "caption":"",
-  "category":"Features",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/clustering#l2cache-invalidation"
-}
-,{
-  "title":"Cluster message",
-  "caption":"",
-  "category":"Features",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/clustering#cluster-message"
-}
-,{
-  "title":"Configuration",
-  "caption":"",
-  "category":"Features",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/clustering#configuration"
-}
-,{
-  "title":"Logging",
-  "caption":"",
-  "category":"Features",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/clustering#logging"
-}
-,{
-  "title":"BeanPersistListener",
-  "caption":"",
-  "category":"Features",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/clustering#beanPersistListener"
-}
-,{
-  "title":"External modification",
-  "caption":"",
-  "category":"Features",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/clustering#external-modification"
-}
-,{
   "title":"@DbEnumValue",
   "caption":"",
   "category":"Mapping",
@@ -2534,6 +2462,102 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/multi-tenant"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/features/l2cache"
+}
+,{
+  "title":"L2 Cache",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/l2cache#overview"
+}
+,{
+  "title":"L2/local and L3/remote",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/l2cache#l2-l3"
+}
+,{
+  "title":"Read consistency",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/l2cache#read-consistency"
+}
+,{
+  "title":"Table IUD invalidation (Bulk updates)",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/l2cache#table-iud-invalidation"
+}
+,{
+  "title":"Bean IUD invalidation",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/l2cache#bean-iud-invalidation"
+}
+,{
+  "title":"External invalidation",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/l2cache#external-invalidation"
+}
+,{
+  "title":"Bean cache",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/features/l2cache/bean-cache"
+}
+,{
+  "title":"Query cache",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/features/l2cache/query-cache"
+}
+,{
+  "title":"Hazelcast",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/features/l2cache/hazelcast"
+}
+,{
+  "title":"Apache Ignite",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/features/l2cache/apache-ignite"
+}
+,{
+  "title":"TODO",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/l2cache/elasticsearch"
 }
 ,{
   "title":"",

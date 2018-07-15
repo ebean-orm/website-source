@@ -88,7 +88,7 @@
   <li><a href="#read-only-instances">Read only instances</a></li>
   <li><a href="#shared-instances">Shared instances</a></li>
   <li><a href="#external-mods">External modification</a></li>
-  <li><a href="#cachestrategy">@CacheStrategy</a></li>
+  <li><a href="#cache">@Cache</a></li>
   <li><a href="#query-bean-cache">Query - bean cache</a></li>
   <li><a href="#query-query-cache">Query - query cache</a></li>
 </ul>
@@ -101,18 +101,6 @@
 </ul>
 </@smallnav>
 
-<@smallnav activeCheck="${clustering!''}" url="/docs/features/clustering" title="Clustering">
-<ul class="nav">
-  <li><a href="#overview">Overview</a></li>
-  <li><a href="#container">Container</a></li>
-  <li><a href="#l2cache-invalidation">L2 cache invalidation</a></li>
-  <li><a href="#cluster-message">Cluster message</a></li>
-  <li><a href="#configuration">Configuration</a></li>
-  <li><a href="#logging">Logging</a></li>
-  <li><a href="#beanPersistListener">BeanPersistListener</a></li>
-  <li><a href="#external-modification">External modification</a></li>
-</ul>
-</@smallnav>
 <@smallnav activeCheck="${monitoring!''}" url="/docs/features/monitoring" title="Monitoring"/>
 <@smallnav activeCheck="${dbmigration!''}" url="/docs/setup/dbmigration" title="DB Migration">
 </@smallnav>

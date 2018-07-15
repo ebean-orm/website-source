@@ -50,7 +50,7 @@
     <div class="col-md-3 docs-index" role="main">
       <h3><a href="/docs/sql/">SQL</a></h3>
       <h3><a href="/docs/kotlin">Kotlin</a></h3>
-      <h3><a href="/docs/features/l2caching">L2 Caching</a></h3>
+      <h3><a href="/docs/features/l2cache">L2 Caching</a></h3>
       <h3><a href="/docs/upgrading">Upgrading</a></h3>
     </div>
 

@@ -1,11 +1,11 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_features_l2caching.html"/>
-<#assign subtitle = "Hazelcast">
+  <meta name="bread3" content="Hazelcast" href="/docs/features/l2cache/hazelcast"/>
 <#assign l2caching_hazelcast = "true">
 </head>
 <body>
-  <h2>Overview</h2>
+  <h2>Hazelcast</h2>
   <p>
     <a href="https://hazelcast.com/">Hazelcast</a> provides a very nice set of features for
     distributed caching (which is what we use it for with L2 caching) plus "Data grid" features.
@@ -14,7 +14,7 @@
     My expectation is that most people will prefer client/server mode with use of near caches.
   </p>
 
-  <h2 id="client-server">Client/server mode</h2>
+  <h3 id="client-server">Client/server mode</h3>
   <p>
     We can use Hazelcast in <code>client/server</code> mode which means that our application uses a
     <code>Hazelcast client</code> to talk to a Hazelcast cluster (of servers).
@@ -31,7 +31,7 @@
     For client/server mode the configuration file should be a <code>hazelcast-client.xml</code>
   </p>
 
-  <h2 id="server-mode">Server mode</h2>
+  <h3 id="server-mode">Server mode</h3>
   <p>
     In server mode our application starts a <code>Hazelcast server instance</code> which is a full fledged member
     of the Hazelcast cluster. This means that it will hold data etc.
@@ -44,13 +44,13 @@
 
 
 
-  <h2 id="dependency">Dependency</h2>
+  <h3 id="dependency">Dependency</h3>
   <p>
     Add a dependency to <code>ebean-hazelcast</code>. When Ebean starts ebean-hazelcast is
     automatically registered as the L2 cache implementation.
   </p>
 
-  <h2 id="disable">Disable L2 cache</h2>
+  <h3 id="disable">Disable L2 cache</h3>
   <p>
     During development and testing it is often useful to disable the use of the l2 cache.
   </p>
@@ -64,7 +64,7 @@
 
   </p>
 
-  <h2 id="configuration">Configuration</h2>
+  <h3 id="configuration">Configuration</h3>
 
   <h4>XML configuration</h4>
   <p>
@@ -90,14 +90,13 @@
     files.
   </p>
 
-  <h2 id="getting-started">Getting started</h2>
+  <h3 id="getting-started">Getting started</h3>
   <ul>
-    <li>Annotate beans with @CacheStrategy</li>
+    <li>Annotate beans with @Cache</li>
     <li>Add maven dependency ebean-hazelcast</li>
     <li>Optionally add hazelcast-client.xml or hazelcast.xml</li>
     <li>For client/server mode you need a running Hazelcast server</li>
   </ul>
-
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 
-<@smallnav activeCheck="${l2caching_overview!''}" url="/docs/features/l2caching" title="Overview">
+<@smallnav activeCheck="${l2caching_overview!''}" url="/docs/features/l2cache" title="Overview">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
   <li><a href="#l2-l3">L2/local and L3/remote</a></li>
@@ -10,20 +10,20 @@
 </ul>
 </@smallnav>
 
-<@smallnav activeCheck="${l2caching_using_bean!''}" url="/docs/features/l2caching/using-bean-cache" title="Using bean caching">
+<@smallnav activeCheck="${l2caching_using_bean!''}" url="/docs/features/l2cache/bean-cache" title="Bean caching">
 <ul class="nav">
-  <li><a href="#cache">@CacheStrategy</a></li>
+  <li><a href="#cache">@Cache</a></li>
   <li><a href="#implicitly">Implicit use</a></li>
   <li><a href="#explicitly">Explicit use</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${l2caching_using_query!''}" url="/docs/features/l2caching/using-query-cache" title="Using query caching">
+<@smallnav activeCheck="${l2caching_using_query!''}" url="/docs/features/l2cache/query-cache" title="Query caching">
 <ul class="nav">
   <li><a href="#setUseQueryCache">setUseQueryCache(true)</a></li>
   <li><a href="#cacheQueryTuning">@CacheQueryTuning</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${l2caching_hazelcast!''}" url="/docs/features/l2caching/hazelcast" title="Hazelcast">
+<@smallnav activeCheck="${l2caching_hazelcast!''}" url="/docs/features/l2cache/hazelcast" title="Hazelcast">
 <ul class="nav">
   <li><a href="#client-server">Client/server mode</a></li>
   <li><a href="#server-mode">Server mode</a></li>
@@ -33,7 +33,7 @@
   <li><a href="#getting-started">Getting started</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${l2caching_ignite!''}" url="/docs/features/l2caching/apache-ignite" title="Apache Ignite">
+<@smallnav activeCheck="${l2caching_ignite!''}" url="/docs/features/l2cache/apache-ignite" title="Apache Ignite">
 <ul class="nav">
   <li><a href="#client-server">Client/server mode</a></li>
   <li><a href="#server-mode">Server mode</a></li>
@@ -43,7 +43,7 @@
   <li><a href="#getting-started">Getting started</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${l2caching_elasticsearch!''}" url="/docs/features/l2caching/elasticsearch" title="ElasticSearch">
+<@smallnav activeCheck="${l2caching_elasticsearch!''}" url="/docs/features/l2cache/elasticsearch" title="ElasticSearch">
 <ul class="nav">
   <li><a href="#todo">TODO</a></li>
 </ul>

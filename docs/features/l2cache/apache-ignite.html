@@ -1,11 +1,11 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_features_l2caching.html"/>
-<#assign subtitle = "Apache Ignite">
+  <meta name="bread3" content="Apache Ignite" href="/docs/features/l2cache/apache-ignite"/>
 <#assign l2caching_ignite = "true">
 </head>
 <body>
-  <h2>Overview</h2>
+  <h2>Apache Ignite</h2>
   <p>
     <a href="https://ignite.apache.org/">Apache Ignite</a> provides a very nice set of features for
     distributed caching (which is what we use it for with L2 caching) plus "Data grid" features.
@@ -14,7 +14,7 @@
     My expectation is that most people will prefer client/server mode with use of near caches.
   </p>
 
-  <h2 id="client-server">Client/server mode</h2>
+  <h3 id="client-server">Client/server mode</h3>
   <p>
     We can use Ignite in <code>client/server</code> mode which means that our application uses a
     <code>Ignite client</code> to talk to a Ignite cluster (of servers).
@@ -26,20 +26,20 @@
     application (as it now holds some cache data).
   </p>
 
-  <h2 id="server-mode">Server mode</h2>
+  <h3 id="server-mode">Server mode</h3>
   <p>
     In server mode our application starts a <code>Ignite server instance</code> which is a full fledged member
     of the Ignite cluster. This means that it will hold data etc.
   </p>
 
 
-  <h2 id="dependency">Dependency</h2>
+  <h3 id="dependency">Dependency</h3>
   <p>
     Add a dependency to <code>ebean-ignite</code>. When Ebean starts ebean-ignite is
     automatically registered as the L2 cache implementation.
   </p>
 
-  <h2 id="disable">Disable L2 cache</h2>
+  <h3 id="disable">Disable L2 cache</h3>
   <p>
     During development and testing it is often useful to disable the use of the l2 cache.
   </p>
@@ -53,14 +53,14 @@
 
   </p>
 
-  <h2 id="configuration">Configuration</h2>
+  <h3 id="configuration">Configuration</h3>
 
-  <h4>XML configuration</h4>
+  <h3>XML configuration</h3>
   <p>
 
   </p>
 
-  <h4>Programmatic configuration</h4>
+  <h3>Programmatic configuration</h3>
   <p>
     You can programmatically configure Ignite by creating an instance of <code>IgniteConfiguration</code>
     and setting it via: <code></code>
@@ -74,9 +74,9 @@
     Otherwise it will use properties and avaje IgniteConfigBuilder.
   </p>
 
-  <h2 id="getting-started">Getting started</h2>
+  <h3 id="getting-started">Getting started</h3>
   <ul>
-    <li>Annotate beans with @CacheStrategy</li>
+    <li>Annotate beans with @Cache</li>
     <li>Add maven dependency ebean-ignite</li>
     <li>Optionally add ebean-ignite-config.xml</li>
     <li>For client/server mode you need a running Ignite server</li>

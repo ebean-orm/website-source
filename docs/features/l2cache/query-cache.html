@@ -1,0 +1,68 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features_l2caching.html"/>
+  <meta name="bread3" content="Query cache" href="/docs/features/l2cache/query-cache"/>
+<#assign l2caching_using_query = "true">
+</head>
+<body>
+
+<h2>Query cache</h2>
+<p>
+  Query caching is not enabled by default. To use Query caching we need to explicitly enable it
+  on the <code>@Cache</code> mapping annotation for the entity bean types we want to use it.
+</p>
+
+<h3>Enabling query cache</h3>
+<p>
+  The example below enables query caching on the Customer entity bean.
+</p>
+```java
+@Cache(enableQueryCache=true)
+@Entity
+public class Customer {
+  ...
+}
+
+```
+
+<h3 id="setUseQueryCache">setUseQueryCache(true)</h3>
+<p>
+  To use the query cache you have to <code>explicitly</code> specify its use on a query.
+</p>
+
+```java
+// use the query cache
+List<Country> list = Ebean.find(Country.class)
+  .setUseQueryCache(true)
+  .where().ilike("name", "New%")
+  .findList();
+```
+<p>
+  The query cache is generally useful for returning lists that are very infrequently changed.
+  These lists would often be used to populate drop down lists / combo boxes in user interfaces.
+</p>
+
+<p>
+  If you are familiar with the term "Lookup Tables" or "Reference Tables" these are typical candidates
+  for using cached queries. Some examples of lookup/reference tables could be, countries, currencies
+  and order status.
+</p>
+<p>
+  Query cache lists are read only.
+</p>
+
+<h3 id="cacheQueryTuning">@CacheQueryTuning</h3>
+<p>
+  All query caching implementations (including Hazelcast and Apache Ignite) uses near caches
+  and can be tuned using <code>@CacheQueryTuning</code>.
+</p>
+
+```java
+@Cache(enableQueryCache=true)
+@CacheQueryTuning(maxSecsToLive = 30)
+@Entity
+public class Product  {
+```
+
+</body>
+</html>

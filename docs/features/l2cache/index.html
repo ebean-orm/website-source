@@ -5,7 +5,7 @@
 <#assign l2caching_overview = "true">
 </head>
 <body>
-  <h2 id="overview">Overview</h2>
+  <h2 id="overview">L2 Cache</h2>
   <p>
     When we want to talk about caching for performance we are talking about the "Level 2"
     cache or the "server cache". It is called the "Level 2 cache" because the persistence
@@ -21,13 +21,15 @@
     Bean caches hold entity beans and are keyed by their Id values. The bean cache can be used with:
   </p>
   <ul>
-    <li>Find by id query</li>
-    <li>Find unique by "natural key" query</li>
+    <li>Find by id</li>
+    <li>Find one by "natural key"</li>
+    <li>Find many by "natural keys"</li>
+
   </ul>
 
   <h4>Query Caches</h4>
   <p>
-    Query caches hold the results of queries (Lists, Sets, Maps of entity beans) and are keyed
+    Query caches hold the results of queries (Lists, Sets, Maps of entity beans and Count) and are keyed
     by the query hash value (effectively a hash of the query and its bind values).
     The entries in a query cache are invalidated by ANY change to the underlying table –
     insert, update or delete. This means that the query cache is only useful on entities that are

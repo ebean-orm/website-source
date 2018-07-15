@@ -23,7 +23,7 @@
   ```java
   // Cache countries. Use readOnly=true so unless explicitly
   // stated in the query we will return read only/shared instances
-  @CacheStrategy(readOnly=true)
+  @Cache(readOnly=true)
   @Entity
   @Table(name="country")
   public class Country {
