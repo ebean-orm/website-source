@@ -44,6 +44,10 @@ public class SimpleDoc extends Model {
 
   @DbJsonB
   Map<String,Object> content;
+
+  // Ordinary bean - use Jackson object mapper
+  @DbJsonB
+  PlainBean plainBean;
   ```
 
   <h3>@DbJson</h3>
@@ -62,6 +66,10 @@ public class SimpleDoc extends Model {
 
   @DbJson
   Map<String,Object> content;
+
+  // Ordinary bean - use Jackson object mapper
+  @DbJson
+  PlainBean plainBean;
   ```
 
 
