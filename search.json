@@ -1352,9 +1352,17 @@
   "url":"/docs/features/elasticsearch#out-of-scope"
 }
 ,{
+  "title":"",
+  "caption":"",
+  "category":"History",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/features/history"
+}
+,{
   "title":"Videos",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#videos"
@@ -1362,7 +1370,7 @@
 ,{
   "title":"Overview",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#overview"
@@ -1370,7 +1378,7 @@
 ,{
   "title":"History tables",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history"
@@ -1378,7 +1386,7 @@
 ,{
   "title":"Compared to Change Log",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history"
@@ -1386,7 +1394,7 @@
 ,{
   "title":"@History",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#history"
@@ -1394,7 +1402,7 @@
 ,{
   "title":"@HistoryExclude",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#history-exclude"
@@ -1402,7 +1410,7 @@
 ,{
   "title":"ManyToMany intersection",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#manytomany"
@@ -1410,7 +1418,7 @@
 ,{
   "title":"As of query",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#as-of-query"
@@ -1418,7 +1426,7 @@
 ,{
   "title":"Versions between",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#versions-between-query"
@@ -1426,7 +1434,7 @@
 ,{
   "title":"Who and When",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#who-when"
@@ -1434,7 +1442,7 @@
 ,{
   "title":"Postgres",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#postgres"
@@ -1442,7 +1450,7 @@
 ,{
   "title":"MySql",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#mysql"
@@ -1450,7 +1458,7 @@
 ,{
   "title":"Oracle",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#oracle"
@@ -1458,15 +1466,31 @@
 ,{
   "title":"H2",
   "caption":"",
-  "category":"Features",
+  "category":"History",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#h2"
 }
 ,{
+  "title":"",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/features/json-in-db"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#overview"
+}
+,{
   "title":"Mapping",
   "caption":"",
-  "category":"Features",
+  "category":"JSON in DB",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/json-in-db#mapping"
@@ -1474,7 +1498,7 @@
 ,{
   "title":"Save and Find",
   "caption":"",
-  "category":"Features",
+  "category":"JSON in DB",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/json-in-db#save-find"
@@ -1482,7 +1506,7 @@
 ,{
   "title":"Query expressions",
   "caption":"",
-  "category":"Features",
+  "category":"JSON in DB",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/json-in-db#query"
@@ -1490,7 +1514,7 @@
 ,{
   "title":"Postgres expressions",
   "caption":"",
-  "category":"Features",
+  "category":"JSON in DB",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/json-in-db#postgres"
@@ -1498,7 +1522,7 @@
 ,{
   "title":"Oracle expressions",
   "caption":"",
-  "category":"Features",
+  "category":"JSON in DB",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/json-in-db#oracle"
@@ -1506,23 +1530,55 @@
 ,{
   "title":"Raw expression",
   "caption":"",
-  "category":"Features",
+  "category":"JSON in DB",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/json-in-db#raw"
 }
 ,{
+  "title":"",
+  "caption":"",
+  "category":"JSON Marshalling",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/features/json"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"JSON Marshalling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/json#overview"
+}
+,{
   "title":"JsonContext",
   "caption":"",
-  "category":"Features",
+  "category":"JSON Marshalling",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/json#json-context"
 }
 ,{
+  "title":"",
+  "caption":"",
+  "category":"Read Auditing",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/features/readauditing"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Read Auditing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/readauditing#overview"
+}
+,{
   "title":"Caveats",
   "caption":"",
-  "category":"Features",
+  "category":"Read Auditing",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/readauditing#caveats"
@@ -1530,7 +1586,7 @@
 ,{
   "title":"Getting started",
   "caption":"",
-  "category":"Features",
+  "category":"Read Auditing",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/readauditing#getting-started"
@@ -1538,15 +1594,71 @@
 ,{
   "title":"Query.setDisableReadAuditing()",
   "caption":"",
-  "category":"Features",
+  "category":"Read Auditing",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/readauditing#query"
 }
 ,{
+  "title":"",
+  "caption":"",
+  "category":"Change log",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/features/changelog"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Change log",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/changelog#overview"
+}
+,{
+  "title":"Caveats",
+  "caption":"",
+  "category":"Change log",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/changelog#caveats"
+}
+,{
+  "title":"Getting started",
+  "caption":"",
+  "category":"Change log",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/changelog#getting-started"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/features/draftable"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/draftable#overview"
+}
+,{
+  "title":"Mapping",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/draftable#mapping"
+}
+,{
   "title":"Query As Draft",
   "caption":"",
-  "category":"Features",
+  "category":"Draftable",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable#query-as-draft"
@@ -1554,7 +1666,7 @@
 ,{
   "title":"Publish",
   "caption":"",
-  "category":"Features",
+  "category":"Draftable",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable#publish"
@@ -1562,7 +1674,7 @@
 ,{
   "title":"Draft Restore",
   "caption":"",
-  "category":"Features",
+  "category":"Draftable",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable#draft-restore"
@@ -1570,7 +1682,7 @@
 ,{
   "title":"Example Application",
   "caption":"",
-  "category":"Features",
+  "category":"Draftable",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable#example-app"
@@ -1578,10 +1690,18 @@
 ,{
   "title":"L2 Cache",
   "caption":"",
-  "category":"Features",
+  "category":"Draftable",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Features",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/clustering#overview"
 }
 ,{
   "title":"Container",
@@ -1640,9 +1760,17 @@
   "url":"/docs/features/clustering#external-modification"
 }
 ,{
+  "title":"",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/features/softdelete"
+}
+,{
   "title":"@SoftDelete",
   "caption":"",
-  "category":"Features",
+  "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#softdelete"
@@ -1650,7 +1778,7 @@
 ,{
   "title":"Delete",
   "caption":"",
-  "category":"Features",
+  "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#delete"
@@ -1658,7 +1786,7 @@
 ,{
   "title":"Delete Permanent",
   "caption":"",
-  "category":"Features",
+  "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#deletepermanent"
@@ -1666,7 +1794,7 @@
 ,{
   "title":"Cascading behavior",
   "caption":"",
-  "category":"Features",
+  "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#cascade"
@@ -1674,7 +1802,7 @@
 ,{
   "title":"Query (normal)",
   "caption":"",
-  "category":"Features",
+  "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#query"
@@ -1682,7 +1810,7 @@
 ,{
   "title":"Query - includeSoftDeletes",
   "caption":"",
-  "category":"Features",
+  "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#includeSoftDeletes"
@@ -1690,7 +1818,7 @@
 ,{
   "title":"Notifications",
   "caption":"",
-  "category":"Features",
+  "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#notifications"
@@ -1698,15 +1826,23 @@
 ,{
   "title":"Change Log",
   "caption":"",
-  "category":"Features",
+  "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#changelog"
 }
 ,{
+  "title":"",
+  "caption":"",
+  "category":"Who Created Modified",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/features/who"
+}
+,{
   "title":"TODO ...",
   "caption":"",
-  "category":"Features",
+  "category":"Who Created Modified",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/who#overview"
