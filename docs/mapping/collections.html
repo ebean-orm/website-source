@@ -1,20 +1,27 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_mapping.html"/>
-<#assign subtitle = "Collections">
+  <meta name="bread2" content="Collections" href="/docs/mapping/list"/>
 <#assign list = "true">
 </head>
+
 <body>
-<h2 id="list">List vs Set</h2>
+
+<h2 id="recommendation">Recommendation - Use List</h2>
 <p>
-  For mapping collections for <code>@OneToMany</code> or <code>@ManyToMany</code> properties
-  we need to choose between using <code>Set</code> or <code>List</code> for these collections.
+  The recommendation is to use <code>List</code> to map collection properties
+  of <code>@OneToMany</code> or <code>@ManyToMany</code>.
+</p>
+<p>
+  This means we avoid implicit use of <code>hashCode() / equals()</code> which
+  occurs with the use of <code>Set</code>.
 </p>
 
+<h2 id="list">List vs Set</h2>
 <h4>Hibernate bag semantics</h4>
 <p>
   With Hibernate there could be a preference for using <code>Set</code> because Set and List have
-  different semantics with Hibernate. Set uses "bag semantics" and is often preferred.
+  different semantics with Hibernate. Set uses "bag semantics" and is often preferred with Hibernate.
 </p>
 
 <h4>hashCode() / equals()</h4>

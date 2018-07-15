@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_mapping_jpa.html"/>
-  <meta name="bread3" content="@Id" href="/docs/mapping/jpa"/>
+  <meta name="bread2" content="@Id" href="/docs/mapping/id"/>
 <#assign id = "true">
 </head>
 <body>
@@ -21,12 +21,12 @@ In terms of enhancement @Id properties are treated differently in that they neve
 </p>
 ```java
   @Id
-  Long id;
+  long id;
 
   // ... is effectively the same as
 
   @Id @GeneratedValue
-  Long id;
+  long id;
 ```
 
 <h2 id="uuid">UUID</h2>
@@ -48,10 +48,10 @@ UUID id;
 </p>
 <table class="table">
   <tr><th>Database</th><th>Strategy</th></tr>
-  <tr><td>H2</td><td>Sequences</td></tr>
+  <tr><td>H2</td><td>Identity (also supports sequences)</td></tr>
   <tr><td>Postgres</td><td>Identity (as serial, also supports sequences)</td></tr>
   <tr><td>MySql</td><td>Identity</td></tr>
-  <tr><td>Oracle</td><td>Sequences</td></tr>
+  <tr><td>Oracle</td><td>Sequences (also supports Identity)</td></tr>
   <tr><td>DB2</td><td>Identity (also supports sequences)</td></tr>
   <tr><td>SQL Server</td><td>Identity</td></tr>
   <tr><td>SQLite</td><td>Identity</td></tr>

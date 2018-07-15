@@ -1,0 +1,30 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_jpa.html"/>
+  <meta name="bread2" content="@Version" href="/docs/mapping/version"/>
+<#assign version = "true">
+</head>
+<body>
+
+<h2>@Version</h2>
+<p>
+  Mapping for a property that provides optimistic locking. The version property can either be
+  a number type like <code>long</code> or a timestamp type like <code>Instant</code>.
+</p>
+
+<h4>Recommendation</h4>
+<p>
+  The recommendation is to map <code>@Version</code> to a property of type <code>long</code> and
+  then additionally map a property using <code>@WhenModified</code>.
+</p>
+```java
+  @Version
+  long version;
+
+  @WhenModified
+  Instant whenModified;
+```
+
+
+</body>
+</html>

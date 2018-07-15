@@ -1,0 +1,52 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_jpa.html"/>
+  <meta name="bread2" content="@MappedSuperclass" href="/docs/mapping/mapped-superclass"/>
+<#assign mappedSuperclass = "true">
+</head>
+<body>
+
+<h2>MappedSuperclass</h2>
+<p>
+  We use <code>@MappedSuperclass</code> to have a bean that holds common properties. For example:
+</p>
+```java
+@MappedSuperclass
+public abstract class BaseDomain {
+
+  @Id
+  long id;
+
+  @Version
+  long version;
+
+  @WhenCreated
+  Instant whenCreated;
+
+  @WhenCreated
+  Instant whenModified;
+
+
+  // plus getters and setters ...
+
+}
+```
+<p>
+  We then create <code>entity</code> beans that extend the <code>MappedSuperclass</code> bean.
+
+</p>
+
+```java
+@Entity
+public class Customer extends BaseDomain {
+
+  String name;
+
+  @ManyToOne
+  Address billingAddress;
+
+  ...
+}
+```
+</body>
+</html>
