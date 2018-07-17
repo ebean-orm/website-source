@@ -1,0 +1,57 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="Dependencies" href="/docs/getting-started/dependencies"/>
+  <#assign dependencies="active">
+</head>
+<body>
+
+<h3>Step 2: Add dependencies</h3>
+
+<h4 id="main-dep">2A - Main dependency</h4>
+<p>
+  Add the ebean dependency.
+</p>
+<@maven "io.ebean" "ebean" "auto" "3" />
+
+<h4 id="jdbc-dep">2B - JDBC Driver(s)</h4>
+<p>
+  Add the dependency for the JDBC Driver(s) you want to use.
+</p>
+
+<ul class="nav nav-tabs mytabs">
+  <li role="presentation" class="active"><a href="#h2">H2</a></li>
+  <li role="presentation"><a href="#postgres">Postrges</a></li>
+</ul>
+
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="h2">
+    ```sh
+      com.h2database : h2 : 1.4.191
+    ```
+  </div>
+  <div role="tabpanel" class="tab-pane" id="postgres">
+    ```sh
+    org.postgresql : postgresql : 42.2.2
+    ```
+  </div>
+</div>
+
+
+<h4 id="test-dep">2C - Test Dependency</h4>
+<p>
+  Add the following test dependency.
+</p>
+<@maven "io.ebean.test" "ebean-test-config" "auto" "3" />
+
+
+<h4>Next</h4>
+<p class="pull-right">
+  Add build plugins for
+  <a class="btn btn-info" href="/docs/getting-started/maven">Next: Using Maven</a> or
+  <a class="btn btn-info" href="/docs/getting-started/gradle">Next: Using Gradle</a>.
+</p>
+
+</body>
+</html>

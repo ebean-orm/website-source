@@ -1,0 +1,115 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="MappedSuperclass" href="/docs/getting-started/java-mapped-superclass"/>
+  <#assign javamappedsuperclass="active">
+</head>
+<body>
+
+<h2>MappedSuperclass</h2>
+<p>
+  We can use <code>@MappedSuperclass</code> for common properties used across many entity beans.
+</p>
+<p>
+  It is common to have a mapped superclass with <code>@Id</code>, <code>@Versiond</code> and <code>@WhenModified</code>
+  properties like:
+</p>
+```java
+package org.example.domain;
+
+import io.ebean.Model;
+import io.ebean.annotation.WhenCreated;
+import io.ebean.annotation.WhenModified;
+
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
+import java.time.Instant;
+
+/**
+ * Base domain object with Id, version, whenCreated and whenModified.
+ */
+@MappedSuperclass
+public abstract class BaseDomain {
+
+  @Id
+  long id;
+
+  @Version
+  Long version;
+
+  @WhenCreated
+  Instant whenCreated;
+
+  @WhenModified
+  Instant whenModified;
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public Long getVersion() {
+    return version;
+  }
+
+  public void setVersion(Long version) {
+    this.version = version;
+  }
+
+  public Instant getWhenCreated() {
+    return whenCreated;
+  }
+
+  public void setWhenCreated(Instant whenCreated) {
+    this.whenCreated = whenCreated;
+  }
+
+  public Instant getWhenModified() {
+    return whenModified;
+  }
+
+  public void setWhenModified(Instant whenModified) {
+    this.whenModified = whenModified;
+  }
+
+}
+```
+<p>
+  Our entity beans then extend this to inherit the common properties.
+</p>
+
+<h2>Customer extends BaseDomain</h2>
+```java
+...
+@Entity
+public class Customer extends BaseModel {
+
+  String name;
+
+  LocalDate registered;
+  ...
+```
+
+<h2>Order extends BaseDomain</h2>
+```java
+...
+@Entity
+public class Order extends BaseModel {
+
+  @ManyToOne
+  Customer customer;
+
+  LocalDate orderDate;
+  ...
+```
+
+
+<@next_edit "Model" "/docs/getting-started/java-model" "/docs/getting-started/java-mapped-superclass.html"/>
+
+</body>
+</html>

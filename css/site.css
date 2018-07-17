@@ -257,6 +257,12 @@ footer {
   text-align: center;
 }
 
+.btn-info {
+  color: #fff;
+  background-color: #f27818;
+  border-color: #f27899;
+}
+
 .bs-callout-info {
   background-color: #f4f8fa;
   border-color: #5bc0de;
@@ -443,6 +449,13 @@ pre.console {
 .bs-docs-sidebar .nav .nav {
   display: none; /* Hide by default, but at >768px, show it */
   padding-bottom: 10px;
+}
+.bs-docs-sidenav li b {
+  display: inline-block;
+  padding-top: 20px;
+  padding-bottom: 1px;
+  padding-left: 20px;
+  font-size: 14px;
 }
 .bs-docs-sidebar .nav .nav > li > a {
   padding-top: 1px;

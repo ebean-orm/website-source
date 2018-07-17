@@ -1,6 +1,11 @@
 
 $(function() {
 
+  $('.mytabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+
   // update pages with artifact versions from ajax call to search.maven.org
   retrieveAndReplaceVersionsInPage();
 
@@ -94,7 +99,7 @@ function retrieveAndReplaceVersionsInPage() {
   if ($.sessionStorage.isSet('ebean-versions')) {
     replaceVersionsInPage();
   } else {
-    getVersionsFromUrl('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22io.ebean%22%20OR%20(g:%22io.ebean%22%20AND%20a:%22ebean%22)&wt=json');
+    getVersionsFromUrl('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22io.ebean%22%20OR%20(g:%22io.ebean.test%22)&wt=json');
   }
 }
 

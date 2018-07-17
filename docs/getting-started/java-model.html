@@ -1,0 +1,65 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="Model (java)" href="/docs/getting-started/java-model"/>
+  <#assign javamodel="active">
+</head>
+<body>
+
+<h2>Model</h2>
+<p>
+  We can have our entity beans extend <code>io.ebean.Model</code> which means they can then
+  <code>save()</code> and <code>delete()</code> methods.
+</p>
+
+<h4>BaseDomain extends Model ...</h4>
+```java
+
+import io.ebean.Model;
+...
+
+@MappedSuperclass
+public abstract class BaseDomain extends Model {
+
+  ...
+
+}
+```
+<p>
+  Now we can just <code>save()</code> and <code>delete()</code> them:
+</p>
+
+<h2>Model.save()</h2>
+
+```java
+Customer customer = new Customer("Jack");
+customer.save();
+
+
+// and delete it ...
+customer.delete();
+
+```
+<p>
+  Note that <code>Model.save()</code> and <code>Model.delete()</code> use the <code>default server</code>.
+  We obtain the default server via <code>Ebean.getDefaultServer()</code>.
+</p>
+
+
+<h2>Model vs Repository</h2>
+<p>
+  We don't have to use Model and the common alternative is to use the <code>repository</code> pattern
+  where we create a Repository for each entity type - e.g. <code>CustomerRepository</code> for the
+  Customer entity bean and <code>OrderRepository</code> for the Order entity bean and so forth.
+</p>
+<div class="alert alert-info">
+  The recommended approach is to use Model and Finder rather than the Repository pattern.
+  For more details goto ... TODO
+</div>
+
+
+<@next_edit "Finder" "/docs/getting-started/java-finder" "/docs/getting-started/java-model.html"/>
+
+</body>
+</html>

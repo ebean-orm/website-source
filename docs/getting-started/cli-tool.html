@@ -1,0 +1,43 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="CLI Tool" href="/docs/getting-started/cli-tool"/>
+  <#assign clitool="active">
+</head>
+<body>
+
+<h3>Install Command line tool</h3>
+<div class="alert alert-warning ">
+  <p>You can skip this step. The command line tool is optional but recommended.</p>
+</div>
+<h4>(Optional but recommended)</h4>
+<p>
+  The command line tool is optional, we don't strictly need it but it does some useful tasks.
+  We can do all these tasks manually.
+</p>
+<ul>
+  <li>Generates Finders</li>
+  <li>Generates ebean.mf</li>
+  <li>Add GenerateDbMigration (code to generate DB Migrations)</li>
+  <li>Add application-test.yml</li>
+  <li>Add logback-test.xml</li>
+</ul>
+
+
+<h4 id="linux">Linux install</h4>
+
+```sh
+cd ~/.local/bin
+
+curl https://raw.githubusercontent.com/ebean-orm-tools/ebean-init/master/distribution/ebean-init-1.1.jar > ebean-init-1.1.jar
+curl https://raw.githubusercontent.com/ebean-orm-tools/ebean-init/master/distribution/ebeaninit > ebeaninit
+
+chmod +x ebeaninit
+
+```
+
+<@next_edit "First Entity" "/docs/getting-started/java-first-entity" "/docs/getting-started/cli-tool.html"/>
+
+</body>
+</html>

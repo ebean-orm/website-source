@@ -1,0 +1,137 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <#assign ide="active">
+</head>
+<body>
+<h3 id="prerequisites">Prerequisite - Java 8</h3>
+<p>
+  <code>Java 8</code> or later is expected to be already installed.
+</p>
+
+
+<h3 id="ide">Step 1: Install IDE Plugin</h3>
+<p>
+  Ebean uses bytecode enhancement to provide <code>dirty checking</code> and <code>lazy loading</code>
+  among other things. We using tooling via IDEA, Eclipse, Maven and Gradle plugins to perform this enhancement.
+</p>
+<p>
+  Install the Plugin for IntelliJ IDEA or Eclipse IDE.
+</p>
+
+<ul class="nav nav-tabs mytabs">
+  <li role="presentation" class="active"><a href="#idea-tab">IntelliJ IDEA</a></li>
+  <li role="presentation"><a href="#eclipse-tab">Eclipse IDE</a></li>
+</ul>
+
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="idea-tab">
+
+    <h4>IntelliJ IDEA</h4>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-4">
+          <p>
+            <b>File</b> > <b>Settings</b> > <b>Plugins</b> > <b>"Ebean 11"</b>
+          </p>
+          <p>Install Ebean 11.x IDEA Plugin</p>
+        </div>
+        <div class="col-md-4">
+          <img src="/images/scn-idea-plugin.png" width="300">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <img src="/images/scn-idea-plugin-selected.png" width="300">
+        </div>
+        <div class="col-md-4">
+          <h4>Turn on plugin per project</h4>
+          <p>
+            The plugin is turned on and off per project. We need to turn it on for it to perform enhancement
+            on the current project.
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Review Messages</h4>
+          <p>
+            When we are compiling entity beans we can go to <code>messages</code> to confirm that the plugin
+            is enhancing the entity beans.
+          </p>
+        </div>
+        <div class="col-md-4">
+          <img src="/images/scn-idea-plugin-output.png" width="300">
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div role="tabpanel" class="tab-pane" id="eclipse-tab">
+
+    <h4>Eclipse IDE</h4>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-4">
+          <p>
+            <b>Help</b> > <b>Install new software</b>
+          </p>
+          <p>
+            <code>http://ebean-orm.github.io/eclipse/update</code>
+          </p>
+          <p>Install Ebean 11.x eclipse plugin</p>
+        </div>
+        <div class="col-md-4">
+          <img src="/images/scn-eclipse-plugin.png" width="300">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <img src="/images/scn-eclipse-plugin-enable.png" width="300">
+        </div>
+        <div class="col-md-4">
+          <h4>Turn on plugin per project</h4>
+          <p>
+            <b>Project</b> > <b>Enable Ebean enhancer</b>
+          </p>
+          <p>
+            The plugin is turned on and off per project. We need to turn it on for it to perform enhancement
+            on the current project.
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Review Messages</h4>
+          <p>
+            <b>Window</b> > <b>Show view</b> > <b>Other</b> > <b>Error log</b>
+          </p>
+          <p>
+            When we are compiling entity beans we can go to the <code>Error log</code> view
+            to confirm that the plugin is enhancing the entity beans.
+          </p>
+        </div>
+        <div class="col-md-4">
+          <img src="/images/scn-eclipse-plugin-output.png" width="300">
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+<@next_edit "Add Dependencies" "/docs/getting-started/dependencies" "/docs/getting-started/cli-tool"/>
+
+</body>
+</html>
