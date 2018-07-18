@@ -2,14 +2,15 @@
 <head>
   <title>Getting started | Ebean</title>
   <meta name="layout" content="_layout/docs_gettingstarted.html"/>
-  <meta name="bread2" content="Model (java)" href="/docs/getting-started/java-model"/>
+  <meta name="bread2" content="Java" href="/docs/getting-started/java-first-entity"/>
+  <meta name="bread3" content="Model" href="/docs/getting-started/java-model"/>
   <#assign javamodel="active">
 </head>
 <body>
 
 <h2>Model</h2>
 <p>
-  We can have our entity beans extend <code>io.ebean.Model</code> which means they can then
+  We can have our entity beans extend <code>io.ebean.Model</code>. They then have
   <code>save()</code> and <code>delete()</code> methods.
 </p>
 
@@ -34,6 +35,8 @@ public abstract class BaseDomain extends Model {
 
 ```java
 Customer customer = new Customer("Jack");
+
+// just save the bean
 customer.save();
 
 

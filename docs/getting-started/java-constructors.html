@@ -2,7 +2,8 @@
 <head>
   <title>Getting started | Ebean</title>
   <meta name="layout" content="_layout/docs_gettingstarted.html"/>
-  <meta name="bread2" content="Constructors" href="/docs/getting-started/java-constructors"/>
+  <meta name="bread2" content="Java" href="/docs/getting-started/java-first-entity"/>
+  <meta name="bread3" content="Constructors" href="/docs/getting-started/java-constructors"/>
   <#assign javaconstructors="active">
 </head>
 <body>
@@ -21,6 +22,9 @@
 
 @Entity
 public class Customer {
+
+  @Id
+  long id;
 
   String name;
 
@@ -44,6 +48,9 @@ public class Customer {
 
 @Entity
 public class Order {
+
+  @Id
+  long id;
 
   @Column(nullable=false)
   LocalDate orderDate;

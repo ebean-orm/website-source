@@ -1,0 +1,91 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="Kotlin" href="/docs/getting-started/kotlin-first-entity"/>
+  <meta name="bread3" content="MappedSuperclass" href="/docs/getting-started/kotlin-mapped-superclass"/>
+  <#assign kotlinmappedsuperclass="active">
+</head>
+<body>
+
+<h2>MappedSuperclass</h2>
+<p>
+  We can use <code>@MappedSuperclass</code> for common properties used across many entity beans.
+</p>
+<p>
+  It is common to have a mapped superclass with <code>@Id</code>, <code>@Version</code> and <code>@WhenModified</code>
+  properties like:
+</p>
+```java
+package org.example.domain
+
+import io.ebean.annotation.WhenCreated
+import io.ebean.annotation.WhenModified
+import java.time.Instant
+import javax.persistence.Id
+import javax.persistence.MappedSuperclass
+import javax.persistence.Version
+
+@MappedSuperclass
+open class BaseDomain {
+
+  @Id
+  var id: Long = 0
+
+  @Version
+  var version: Long = 0
+
+  @WhenModified
+  lateinit var whenModified: Instant
+
+  @WhenCreated
+  lateinit var whenCreated: Instant
+
+}
+```
+<p>
+  Our entity beans then extend this to inherit the common properties.
+</p>
+<p>
+  Note that we are using Kotlin <code>lateinit</code> on the <code>@WhenModified</code> and <code>@WhenCreated</code>
+  properties.  We are treating these as non-null types that will have their values set when the bean is saved.
+</p>
+
+<h4>Customer extends BaseDomain</h4>
+```java
+package org.example.domain
+
+import javax.persistence.Entity
+
+@Entity
+class Customer(
+
+  var name: String
+
+) : BaseDomain()
+```
+
+<h4>Order extends BaseDomain</h4>
+```java
+package org.example.domain
+
+import java.time.LocalDate
+import javax.persistence.*
+
+@Entity
+@Table(name="orders")
+class Order(
+
+  var orderDate: LocalDate,
+
+  @ManyToOne
+  var customer: Customer
+
+): BaseDomain()
+```
+
+
+<@next_edit "Model" "/docs/getting-started/kotlin-model" "/docs/getting-started/kotlin-mapped-superclass.html"/>
+
+</body>
+</html>

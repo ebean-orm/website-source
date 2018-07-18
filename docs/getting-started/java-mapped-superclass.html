@@ -2,7 +2,8 @@
 <head>
   <title>Getting started | Ebean</title>
   <meta name="layout" content="_layout/docs_gettingstarted.html"/>
-  <meta name="bread2" content="MappedSuperclass" href="/docs/getting-started/java-mapped-superclass"/>
+  <meta name="bread2" content="Java" href="/docs/getting-started/java-first-entity"/>
+  <meta name="bread3" content="MappedSuperclass" href="/docs/getting-started/java-mapped-superclass"/>
   <#assign javamappedsuperclass="active">
 </head>
 <body>
@@ -12,7 +13,7 @@
   We can use <code>@MappedSuperclass</code> for common properties used across many entity beans.
 </p>
 <p>
-  It is common to have a mapped superclass with <code>@Id</code>, <code>@Versiond</code> and <code>@WhenModified</code>
+  It is common to have a mapped superclass with <code>@Id</code>, <code>@Version</code> and <code>@WhenModified</code>
   properties like:
 </p>
 ```java
@@ -45,37 +46,8 @@ public abstract class BaseDomain {
   @WhenModified
   Instant whenModified;
 
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public Long getVersion() {
-    return version;
-  }
-
-  public void setVersion(Long version) {
-    this.version = version;
-  }
-
-  public Instant getWhenCreated() {
-    return whenCreated;
-  }
-
-  public void setWhenCreated(Instant whenCreated) {
-    this.whenCreated = whenCreated;
-  }
-
-  public Instant getWhenModified() {
-    return whenModified;
-  }
-
-  public void setWhenModified(Instant whenModified) {
-    this.whenModified = whenModified;
-  }
+  // getters and setters
+  ...
 
 }
 ```
@@ -83,11 +55,11 @@ public abstract class BaseDomain {
   Our entity beans then extend this to inherit the common properties.
 </p>
 
-<h2>Customer extends BaseDomain</h2>
+<h4>Customer extends BaseDomain</h4>
 ```java
 ...
 @Entity
-public class Customer extends BaseModel {
+public class Customer extends BaseDomain {
 
   String name;
 
@@ -95,11 +67,11 @@ public class Customer extends BaseModel {
   ...
 ```
 
-<h2>Order extends BaseDomain</h2>
+<h4>Order extends BaseDomain</h4>
 ```java
 ...
 @Entity
-public class Order extends BaseModel {
+public class Order extends BaseDomain {
 
   @ManyToOne
   Customer customer;

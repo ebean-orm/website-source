@@ -1,0 +1,168 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="Kotlin" href="/docs/getting-started/kotlin-first-entity"/>
+  <meta name="bread3" content="First entity" href="/docs/getting-started/kotlin-first-entity"/>
+  <#assign kotlinfirstentity="active">
+</head>
+<body>
+
+<h2>First Entity</h2>
+<p>
+  Create a package <code>org.example.domain</code> and in that create an entity bean
+  like <code>Customer.kt</code>
+</p>
+```java
+package org.example.domain
+
+import javax.persistence.Entity
+import javax.persistence.Id
+
+@Entity
+class Customer {
+
+  @Id
+  var id: Long = 0
+
+  var name: String? = null
+
+}
+```
+
+<h2>Add ebean.mf</h2>
+<p>
+  In <code>src/main/resources</code> add <code>ebean.mf</code> which tells the build plugins which packages
+  should be enhanced.
+</p>
+```sh
+entity-packages: org.example.domain
+transactional-packages: org.example
+querybean-packages: org.example
+```
+<p>
+  If you have the <code>ebeaninit</code> command line tool installed you can run it and get it to generate
+  the <code>ebean.mf</code> manifest file.
+</p>
+<p>
+  If your entity beans are in a different package (not <code>org.example.domain</code>) then adjust the
+  <code>ebean.mf</code> file to suit.
+</p>
+
+
+<h2>Add application-test.yml</h2>
+<p>
+  In <code>src/test/resources</code> add <code>application-test.yml</code> which tells Ebean how to run
+  tests.
+</p>
+```sh
+ebean:
+  test:
+#    shutdown: stop # stop | remove
+    platform: h2 # h2, postgres, mysql, oracle, sqlserver, sqlite
+    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    dbName: myapp
+```
+<p>
+  This tells Ebean which <code>DDL mode</code> to use like dropCreate or migration. <code>dropCreate</code>
+  is mode we would use the most (and we haven't generated migrations yet).
+</p>
+<p>
+  If we chose a database platform like Postgres, MySql, SQL Server or Oracle then a
+  <code>docker container</code> will automatically be started and setup to run the tests against.
+</p>
+<p>
+  <code>ebeaninit</code> can add a <code>application-test.ymll</code> if you have it installed.
+</p>
+
+
+<h2>Add logback-test.yml (optional)</h2>
+<p>
+  We don't have to setup logging but it is a good idea to be able to see the <code>DDL</code> and <code>SQL</code>
+  that is being generated and executed to help understand what is going on.
+</p>
+<h5>Example logback entries (add to logback-test.xml)</h5>
+```xml
+<!-- Testing with Docker containers -->
+<logger name="io.ebean.docker" level="TRACE"/>
+
+<logger name="io.ebean.DDL" level="TRACE"/>
+
+<logger name="io.ebean.SQL" level="TRACE"/>
+<logger name="io.ebean.TXN" level="TRACE"/>
+<logger name="io.ebean.SUM" level="TRACE"/>
+
+<!-- L2 cache logging -->
+<logger name="io.ebean.cache.QUERY" level="TRACE"/>
+<logger name="io.ebean.cache.BEAN" level="TRACE"/>
+<logger name="io.ebean.cache.COLL" level="TRACE"/>
+<logger name="io.ebean.cache.NATKEY" level="TRACE"/>
+```
+<p>
+  <code>ebeaninit</code> can add a <code>logback-test.xml</code> if you have it installed.
+</p>
+
+
+<h2>First Test</h2>
+<p>
+  Create a test in <code>src/test</code> like <code>CustomerTest.java</code>
+</p>
+
+```java
+package org.example.domain
+
+import io.ebean.Ebean
+import org.junit.Test
+
+class CustomerTest  {
+
+  @Test
+  fun insert_update_delete() {
+
+    val customer = Customer()
+    customer.name  = "Hello entity bean"
+
+    // insert
+    Ebean.save(customer)
+
+    // update
+    customer.name = "Goodbye"
+    Ebean.save(customer)
+
+    // delete the bean
+    Ebean.delete(customer);
+  }
+}
+```
+
+<h2>Run test</h2>
+<p>
+  Run the test via the IDE and via Maven or Gradle. Check the logs to confirm you see the
+  <code>DDL</code> and <code>SQL</code> that you expect.
+</p>
+
+```sh
+23:40:09.040 [main] INFO  io.ebean.EbeanVersion - ebean version: 11.19.1
+23:40:09.087 [main] INFO  i.e.config.properties.LoadContext - loaded properties from [application.yml, application-test.yml]
+23:40:09.163 [main] INFO  i.e.t.c.provider.ProviderAutoConfig - for testing purposes a current user and tenant provider has been configured. Use io.ebean.test.UserContext to set current user and tenant in tests.
+23:40:09.190 [main] INFO  o.a.datasource.pool.ConnectionPool - DataSourcePool [db] autoCommit[false] transIsolation[READ_COMMITTED] min[2] max[200]
+23:40:09.297 [main] INFO  io.ebean.internal.DefaultContainer - DatabasePlatform name:db platform:h2
+23:40:09.550 [main] INFO  io.ebean.DDL - Executing db-drop-all.sql - 1 statements
+23:40:09.551 [main] DEBUG io.ebean.DDL - executing 1 of 1 drop table if exists customer
+23:40:09.557 [main] INFO  io.ebean.DDL - Executing db-create-all.sql - 1 statements
+23:40:09.557 [main] DEBUG io.ebean.DDL - executing 1 of 1 create table customer ( id                            bigint auto_increment not...
+23:40:09.587 [main] DEBUG io.ebean.SQL - txn[1001] insert into customer (name) values (?); --bind(Hello entity bean)
+23:40:09.608 [main] DEBUG io.ebean.SUM - txn[1001] Inserted [Customer] [1]
+23:40:09.609 [main] DEBUG io.ebean.TXN - txn[1001] Commit
+23:40:09.615 [main] DEBUG io.ebean.SQL - txn[1002] update customer set name=? where id=?; --bind(Goodbye,1)
+23:40:09.616 [main] DEBUG io.ebean.SUM - txn[1002] Updated [Customer] [1]
+23:40:09.617 [main] DEBUG io.ebean.TXN - txn[1002] Commit
+23:40:09.618 [main] DEBUG io.ebean.SQL - txn[1003] delete from customer where id=?; --bind(1)
+23:40:09.619 [main] DEBUG io.ebean.SUM - txn[1003] Deleted [Customer] [1]
+23:40:09.619 [main] DEBUG io.ebean.TXN - txn[1003] Commit
+```
+
+<@next_edit "Constructors" "/docs/getting-started/kotlin-constructors" "/docs/getting-started/kotlin-first-entity.html"/>
+
+</body>
+</html>

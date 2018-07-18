@@ -1,0 +1,57 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="Kotlin" href="/docs/getting-started/kotlin-first-entity"/>
+  <meta name="bread3" content="Model" href="/docs/getting-started/kotlin-model"/>
+  <#assign kotlinmodel="active">
+</head>
+<body>
+
+<h2>Model</h2>
+<p>
+  We can have our entity beans extend <code>io.ebean.Model</code>. They then have
+  <code>save()</code> and <code>delete()</code> methods.
+</p>
+
+<h4>BaseDomain extends Model ...</h4>
+```java
+
+import io.ebean.Model;
+...
+
+@MappedSuperclass
+open class BaseDomain : Model() {
+
+  ...
+}
+```
+<p>
+  Now we can just <code>save()</code> and <code>delete()</code> them:
+</p>
+
+<h2>Model.save()</h2>
+
+```java
+val customer = Customer("Hello entity bean")
+// insert
+customer.save()
+
+// update
+customer.name = "Goodbye"
+customer.save()
+
+// delete the bean
+customer.delete()
+
+
+```
+<p>
+  Note that <code>Model.save()</code> and <code>Model.delete()</code> use the <code>default server</code>.
+</p>
+
+
+<@next_edit "Finder" "/docs/getting-started/kotlin-finder" "/docs/getting-started/kotlin-model.html"/>
+
+</body>
+</html>

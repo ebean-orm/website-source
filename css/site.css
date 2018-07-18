@@ -644,7 +644,9 @@ div#main h4 {
   display: block;
   width: 100%;
 }
-
+a.bright-link {
+  color: #f57a1b;
+}
 .erkbg .syntax.java pre {
   background: #fff;
 }

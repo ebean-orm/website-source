@@ -9,7 +9,7 @@
 
 <h2>Gradle</h2>
 
-<h4>1) buildscript dependency</h4>
+<h4>Buildscript dependency</h4>
 <p>
   Add the <code>ebean-gradle-plugin</code> dependency to the <code>buildscript</code> section.
 </p>
@@ -25,7 +25,7 @@ buildscript {
 </pre>
 
 
-<h4>2) apply</h4>
+<h4>Apply plugin</h4>
 <p>
   Add <code>'io.ebean'</code> to the apply plugin section like:
 </p>
@@ -33,9 +33,9 @@ buildscript {
   apply plugin: 'io.ebean'
 </pre>
 
-<h4>3) ebean</h4>
+<h4>Add ebean section</h4>
 <p>
-  Add a <code>ebean</code> section to control the debug level of the enhancement. This is optional but generally a
+  Add a <code>ebean</code> section to control the debug level of the4) t enhancement. This is optional but generally a
   good idea.
 </p>
 <pre content="groovy">
@@ -45,7 +45,7 @@ ebean {
 </pre>
 
 
-<h4>4) test output</h4>
+<h4>Test output</h4>
 <p>
   Gradle by default suppresses output logging. If we want to see SQL, DDL, Transaction logging etc we
   need to set <code>testLogging.showStandardStreams</code> = <code>true</code> in the test section like:

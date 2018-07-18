@@ -7,22 +7,25 @@
 </head>
 <body>
 
-<h3>Step 2: Add dependencies</h3>
+<h2>Add dependencies</h2>
 
-<h4 id="main-dep">2A - Main dependency</h4>
+<h4 id="main-dep">Main dependency</h4>
 <p>
   Add the ebean dependency.
 </p>
 <@maven "io.ebean" "ebean" "auto" "3" />
 
-<h4 id="jdbc-dep">2B - JDBC Driver(s)</h4>
+<h4 id="jdbc-dep">JDBC Driver(s)</h4>
 <p>
   Add the dependency for the JDBC Driver(s) you want to use.
 </p>
 
 <ul class="nav nav-tabs mytabs">
   <li role="presentation" class="active"><a href="#h2">H2</a></li>
-  <li role="presentation"><a href="#postgres">Postrges</a></li>
+  <li role="presentation"><a href="#postgres">Postgres</a></li>
+  <li role="presentation"><a href="#mysql">MySql</a></li>
+  <li role="presentation"><a href="#sqlserver">SQL Server</a></li>
+  <li role="presentation"><a href="#oracle">Oracle</a></li>
 </ul>
 
 <div class="tab-content">
@@ -36,22 +39,34 @@
     org.postgresql : postgresql : 42.2.2
     ```
   </div>
+  <div role="tabpanel" class="tab-pane" id="mysql">
+    ```sh
+    mysql : mysql-connector-java : 8.0.11
+    ```
+  </div>
+  <div role="tabpanel" class="tab-pane" id="sqlserver">
+    ```sh
+    com.microsoft.sqlserver : mssql-jdbc : 6.4.0.jre8
+    ```
+  </div>
+  <div role="tabpanel" class="tab-pane" id="oracle">
+    ```sh
+    com.oracle.jdbc : ojdbc8 : 12.2.0.1
+    ```
+  </div>
 </div>
 
 
-<h4 id="test-dep">2C - Test Dependency</h4>
+<h4 id="test-dep">Test Dependency</h4>
 <p>
   Add the following test dependency.
 </p>
 <@maven "io.ebean.test" "ebean-test-config" "auto" "3" />
 
-
-<h4>Next</h4>
 <p class="pull-right">
-  Add build plugins for
-  <a class="btn btn-info" href="/docs/getting-started/maven">Next: Using Maven</a> or
-  <a class="btn btn-info" href="/docs/getting-started/gradle">Next: Using Gradle</a>.
+  <b>Next:</b> Add build plugins for
+  <a class="btn btn-info" href="/docs/getting-started/maven">Maven</a>
+  <a class="btn btn-info" href="/docs/getting-started/gradle">Gradle</a>
 </p>
-
 </body>
 </html>
