@@ -1,0 +1,39 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_type.html"/>
+  <meta name="bread3" content="UUID" href="/docs/mapping/type/uuid"/>
+  <#assign uuid="true">
+</head>
+<body>
+<h2>UUID</h2>
+
+<h3>Native storage</h3>
+<p>
+  UUID has native support in the following database platforms:
+</p>
+<ul>
+  <li>H2</li>
+  <li>Postgres</li>
+  <li>SQL Server 17</li>
+</ul>
+<p>
+  When using these database platforms UUID is stored in a native manor.
+</p>
+
+<h3>Binary storage</h3>
+<p>
+  Stored as BINARY(16), has the option of storing in optimised manor meaning the order of bytes is changed
+  to provide a better distribution in index.
+</p>
+<p>
+  See ServerConfig.platformConfig.dbUuid
+</p>
+
+<h3>Varchar storage</h3>
+<p>
+  Stored as VARCHAR(40).
+</p>
+
+
+</body>
+</html>
