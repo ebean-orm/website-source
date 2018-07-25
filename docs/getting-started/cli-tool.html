@@ -8,10 +8,12 @@
 <body>
 
 <h3>Install Command line tool</h3>
-<div class="alert alert-warning ">
-  <p>You can skip this step. The command line tool is optional but recommended.</p>
-</div>
-<h4>(Optional but recommended)</h4>
+```sh
+## Linux install
+
+curl -s https://ebean-orm.github.io/cli-dist/install | bash
+```
+
 <p>
   The command line tool is optional, we don't strictly need it but it does some useful tasks.
   We can do all these tasks manually.
@@ -25,14 +27,16 @@
 </ul>
 
 
-<h4 id="linux">Linux install</h4>
+
+<h4 id="manual">Alternate manual installation (Linux)</h4>
 
 ```sh
 cd ~/.local/bin
 
-curl https://raw.githubusercontent.com/ebean-orm-tools/ebean-init/master/distribution/ebean-init-1.1.jar > ebean-init-1.1.jar
-curl https://raw.githubusercontent.com/ebean-orm-tools/ebean-init/master/distribution/ebeaninit > ebeaninit
+curl https://ebean-orm.github.io/cli-dist/ebean-init-1.5.jar > ebean-init-1.5.jar
+curl https://ebean-orm.github.io/cli-dist/ebeaninit > ebeaninit
 
+ln -s ebean-init-1.5.jar ebean-init.jar
 chmod +x ebeaninit
 
 ```
