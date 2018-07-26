@@ -5,7 +5,50 @@
   <#assign findCount= "true">
 </head>
 <body>
-<h2>findCount</h2>
+<h3>findCount</h3>
+<p>
+  Execute a count query.
+</p>
+```java
+    int count =
 
+      where()
+      .name.icontains("foo.bar")
+      .findCount();
+
+```
+<p>
+  Ebean will modify the query <code>select clause</code> as necessary executing a <code>select count(*)</code> type
+  query.
+</p>
+```sql
+select count(*)
+from customer t0
+where lower(t0.name) like ? escape'|'
+```
+
+<h4>"Many path"</h4>
+<p>
+  When the predicates include a <code>many path</code> (in the example below "contacts" is a <code>@OneToMany</code>)
+  then Ebean will use a subquery with count distinct.
+</p>
+```java
+    int count =
+
+      where()
+        .contacts.firstName.istartsWith("rob")
+        .findCount();
+```
+<p>
+  The above query includes a <code>many path</code> of contacts so the SQL becomes:
+</p>
+```sql
+select count(*)
+from (
+  select distinct t0.id
+  from customer t0 join contact u1 on u1.customer_id = t0.id
+  where lower(u1.first_name) like ? escape'|'
+) as c; --bind(rob%)
+```
 </body>
 </html>

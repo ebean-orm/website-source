@@ -5,7 +5,92 @@
   <#assign findNative= "true">
 </head>
 <body>
-<h2>findNative</h2>
+<h3>findNative</h3>
+<p>
+  With <code>findNative</code> we supply the SQL.  The SQL can contain positioned parameters with <code>?</code>
+  used for bind parameters or we can use named parameters like <code>:foo</code>
+</p>
+```java
+
+    Customer customer =
+
+      nativeSql("select id, name from customer where name like ?")
+        .setParameter(1, "Jo%")
+        .findOne();
+```
+<p>
+  An example using named parameters.
+</p>
+```java
+  List<Customer> customers =
+
+    nativeSql("select id, name from customer where name like :name order by name desc")
+      .setParameter("name", "Jo%")
+      .findList();
+```
+<p>
+  With the above examples we are selecting <b>some</b> columns and as a result getting
+  <b>partially populated entity beans</b> (which is good - we should only fetch things out of the DB
+  that we need).
+</p>
+<p>
+  We can use <code>select *</code> if we desire all the columns.
+</p>
+```java
+  List<Customer> customers =
+
+    nativeSql("select * from customer where name like :name order by name desc")
+      .setParameter("name", "Jo%")
+      .findList();
+```
+<h3>Internal workings</h3>
+<p>
+  The way this works is that when a query is first run the JDBC meta data is read for the
+  columns in the resultSet and then these columns are automatically mapped to bean properties.
+</p>
+<p>
+  This only needs to be done for the first execution of the query. How the query is mapped to
+  beans is cached so we only need to read the JDBC resultSet meta data once per query.
+</p>
+
+<h3>Oracle limitation</h3>
+<p>
+  There is a limitation with the Oracle JDBC driver in that the meta data currently does not include
+  the table that a column relates to. This means that with Oracle we can only map a single table
+  and not multiple tables (and would have to use <a href="/docs/query/rawSql">RawSql</a> instead).
+</p>
+
+<h3>Multiple tables</h3>
+<p>
+  Excluding Oracle our SQL can select from multiple tables and these can automatically be mapped.
+</p>
+<p>
+  For example, we can fetch and populate 2 related beans like Customer and Contact.
+</p>
+```java
+  // Contacts + Customer
+  String sql
+    = "select ct.id, ct.first_name, ct.last_name, cu.id, cu.name " +
+    " from contact ct " +
+    " join customer cu on cu.id = ct.customer_id " +
+    " order by ct.first_name desc";
+
+  List<Contact> contacts =
+
+    nativeSql(sql)
+      .findList();
+```
+<h5>Limitation</h5>
+<p>
+  The limitation with using findNative (excluding Oracle) is that it can only map multiple tables when the path
+  for a given table is unique. For example, lets say we have Customer that maps both a billingAddress and shippingAddress
+  to the Address. When ebean tries to map a column for the address table it does not know which path (billingAddress or
+  shippingAddress) the column maps to.
+</p>
+<p>
+  When we hit this limitation we need to use <a href="/docs/query/rawSql">RawSql</a> instead where we can map more
+  explicitly.
+</p>
 
 </body>
 </html>

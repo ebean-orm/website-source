@@ -5,7 +5,23 @@
   <#assign findList = "true">
 </head>
 <body>
-<h2>findList</h2>
+<h3>findList</h3>
+<p>
+  Returns a list of beans for the query.
+</p>
+```java
+List<Customer> customers =
+
+  where()
+    .email.istartsWith("rob")
+    .findList();
+
+```
+<p>
+  Note that we hold all the beans in memory when executing this query.  As such it is good when we
+  expect to fetch hundreds of beans but we should consider using a <a href="/findEach">findEach</a>
+  query when we look to query and read a very large number of results.
+</p>
 
 </body>
 </html>

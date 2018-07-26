@@ -5,7 +5,34 @@
   <#assign findOne = "true">
 </head>
 <body>
-<h2>findOne</h2>
+<h3>findOne</h3>
+<p>
+  Used when a query is expected to return 1 or zero beans.
+</p>
+```java
+Customer customer =
+
+  where()
+    .email.equalTo("rob@foo.bar")
+    .findOne();
+
+```
+
+<h3>findOneOrEmpty</h3>
+<p>
+  The same as findOne but returns an <code>Optional</code> holding the bean.
+</p>
+```java
+Optional<Customer> customer =
+
+  where()
+  .email.equalTo("rob@foo.bar")
+  .findOneOrEmpty();
+```
+<p>
+  These methods throw <code>javax.persistence.NonUniqueResultException</code> if there is more that one matching
+  result for the query.
+</p>
 
 </body>
 </html>
