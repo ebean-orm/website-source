@@ -1,13 +1,13 @@
 <html>
 <head>
   <title>N + 1 queries - Ebean ORM</title>
-  <meta name="layout" content="_layout/docs_query.html"/>
-  <meta name="bread2" content="N + 1" href="/docs/query/"/>
+  <meta name="layout" content="_layout/docs_query_background.html"/>
+  <meta name="bread3" content="N + 1" href="/docs/query/background/nplus1"/>
 <#assign querynplus1 = "true">
 </head>
 <body>
 <div class="bs-docs-section">
-  <h2 id="overview">Overview</h2>
+  <h2 id="overview">NPlus1</h2>
   <p>
     <code>N + 1</code> is a general term used in ORM to describe a situation where loading a single object graph
     takes N + 1 SQL queries. When the database is remote over a network (the most common situation) then

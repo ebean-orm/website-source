@@ -1,4 +1,4 @@
-<@smallnav activeCheck="${queryoverview!''}" url="/docs/query/overview" title="Overview">
+<@smallnav activeCheck="${queryoverview!''}" url="/docs/query/background/overview" title="Overview">
 <ul class="nav">
   <li><a href="#notsqlreplacement">Not a SQL replacement</a></li>
   <li><a href="#construction">Object graph construction</a></li>
@@ -13,7 +13,7 @@
   <li><a href="#secondary-queries">Secondary queries</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${querynplus1!''}" url="/docs/query/nplus1" title="N + 1">
+<@smallnav activeCheck="${querynplus1!''}" url="/docs/query/background/nplus1" title="N + 1">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
   <li><a href="#what-is-n">What is N</a></li>
@@ -24,7 +24,7 @@
   <li><a href="#question-answer">Question / Answer</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${querypartialobjects!''}" url="/docs/query/partialobjects" title="Partial Objects">
+<@smallnav activeCheck="${querypartialobjects!''}" url="/docs/query/background/partialobjects" title="Partial Objects">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
   <li><a href="#index-query">Index only query</a></li>
@@ -36,7 +36,7 @@
   <li><a href="#autotune">AutoTune</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${queryautotune!''}" url="/docs/query/autotune" title="Automatic Tuning">
+<@smallnav activeCheck="${queryautotune!''}" url="/docs/query/background/autotune" title="Automatic Tuning">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
   <li><a href="#origin">Origin point</a></li>
@@ -44,7 +44,7 @@
   <li><a href="#tuning">Tuning</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${querytypesafe!''}" url="/docs/query/typesafe" title="Type Safe queries">
+<@smallnav activeCheck="${querytypesafe!''}" url="/docs/query/background/typesafe" title="Type Safe queries">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
   <li><a href="#benefits">Benefits</a></li>
@@ -56,23 +56,5 @@
   <li><a href="#query-beans">Query bean source</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${features!''}" url="/docs/query/features" title="Query Features">
-<ul class="nav">
-  <li><a href="#where_clause">Where clause</a></li>
-  <li><a href="#query_language">Query language</a></li>
-  <li><a href="#partial_objects">Partial objects</a></li>
-  <li><a href="#query_joins">Query joins</a></li>
-  <li><a href="#fetchconfig">FetchConfig</a></li>
-  <li><a href="#lazy_loading">Lazy loading</a></li>
-  <li><a href="#named_queries">Named Queries</a></li>
-  <li><a href="#large_queries">Large queries</a></li>
-  <li><a href="#paging">Paging</a></li>
-  <li><a href="#async_queriess">Asynchronous queries</a></li>
-  <li><a href="#rawsql">RawSql</a></li>
-  <li><a href="#sqlquery">SqlQuery</a></li>
-  <li><a href="#l2cache">L2 cache</a></li>
-  <li><a href="#autofetch">Autofetch</a></li>
-  <li><a href="#other_bits">Other bits</a></li>
-</ul>
-</@smallnav>
+
 
