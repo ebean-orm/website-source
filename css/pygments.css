@@ -64,7 +64,7 @@ pre .il { color: #40a070 } /* Literal.Number.Integer.Long */.syntax pre .hll { b
 .syntax pre  { background: #ffffff; }
 .syntax pre .c { color: #3D743D } /* Comment */
 .syntax pre .err { border: 1px solid #FF0000 } /* Error */
-.syntax pre .k { color: #0000ff } /* Keyword */
+.syntax pre .k { color: #2C5F92 } /* Keyword */
 .syntax pre .cm { color: #3D743D } /* Comment.Multiline */
 .syntax pre .cp { color: #0000ff } /* Comment.Preproc */
 .syntax pre .c1 { color: #3D743D } /* Comment.Single */
