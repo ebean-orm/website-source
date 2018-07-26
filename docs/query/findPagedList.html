@@ -5,7 +5,53 @@
   <#assign findPagedList= "true">
 </head>
 <body>
+
 <h2>findPagedList</h2>
+
+<div class="row">
+  <div class="col-md-4">
+    <@video_item "knUtH3I0WPM" "FindCount & PagedList" "How Ebean's findCount query works and how to use PagedList" />
+  </div>
+</div>
+
+<p>&nbsp;</p>
+
+<p>
+  The benefit of using PagedList over just using the normal Query with Query.setFirstRow(int) and
+  Query.setMaxRows(int) is that it additionally wraps functionality that can call
+  Query.findFutureRowCount() to determine total row count, total page count etc.
+</p>
+<p>
+  Internally this works using Query.setFirstRow(int) and Query.setMaxRows(int) on the query. This
+  translates into SQL that uses limit offset, rownum or row_number function to limit the result
+  set.
+</p>
+
+<p>
+  Example: typical use including total row count
+</p>
+```java
+// Find the first 100 new orders
+
+PagedList<Order> pagedOrders
+  = Order.find.where()
+    .status.equalTo(Order.Status.NEW)
+    .order()
+      id.asc()
+    .setMaxRows(100)
+    .findPagedList();
+
+// Optional: initiate the loading of the total
+// row count in a background thread
+pagedOrders.loadRowCount();
+
+// fetch and return the list in the foreground thread
+List<Order> orders = pagedOrders.getList();
+
+  // get the total row count (from the future)
+int totalRowCount = pagedOrders.getTotalRowCount();
+```
+
 
 </body>
 </html>

@@ -5,7 +5,208 @@
   <#assign rawSql= "true">
 </head>
 <body>
-<h2>RawSql</h2>
+
+<h3>RawSql</h3>
+<p>
+  You can explicitly specify the SQL to use and have that mapped into Objects. You
+  may want to do this so use aggregate functions like sum() max() etc or in cases
+  where you just need exact control over the SQL.
+</p>
+<p>
+  This is useful for "Reporting" type requirements where you want to use aggregate functions such as
+  sum(), count(), max(), etc. It is also useful if you need to use Database specific SQL for whatever
+  reason.
+</p>
+<p>
+  You can programmatically use raw SQL like the following examples or put the Raw SQL and column
+  mappings into ebean-orm.xml file and reference them as 'named queries' - see
+  ebeanServer.createNamedQuery().
+</p>
+
+<p>
+  You can use RawSql with ebean enhanced entity beans. You can fetch only the properties that are need
+  (creating partially populated entity beans). All ebean enhanced entity beans built with RawSql invoke
+  lazy loading etc and act just the same as if they where populated via Ebean generated SQL.
+</p>
+
+<p>
+  If you let Ebean 'parse' the raw SQL then Ebean can add expressions to the WHERE and HAVING clauses as
+  well as set the ORDER BY and LIMIT OFFSET clauses.
+</p>
+
+```java
+// Use raw SQL with an aggregate function
+
+String sql
+= " select order_id, o.status, c.id, c.name, sum(d.order_qty*d.unit_price) as totalAmount"
++ " from orders o"
++ " join customer c on c.id = o.kcustomer_id "
++ " join order_detail d on d.order_id = o.id "
++ " group by order_id, o.status ";
+
+RawSql rawSql =
+RawSqlBuilder
+  // let ebean parse the SQL so that it can
+  // add expressions to the WHERE and HAVING
+  // clauses
+  .parse(sql)
+    // map resultSet columns to bean properties
+    .columnMapping("order_id", "order.id")
+    .columnMapping("o.status", "order.status")
+    .columnMapping("c.id", "order.customer.id")
+    .columnMapping("c.name", "order.customer.name")
+    .create();
 
 
+Query<OrderAggregate> query = Ebean.find(OrderAggregate.class);
+  query.setRawSql(rawSql)
+  // add expressions to the WHERE and HAVING clauses
+  .where().gt("order.id", 0)
+  .having().gt("totalAmount", 20);
+
+  List<OrderAggregate> list = query.findList();
+```
+
+<p>
+  This example uses FetchConfig to fetch other parts of the object graph. After the raw SQL query is
+  executed Ebean uses 'query joins' to fetch some order and customer properties.
+</p>
+```java
+// You can also use FetchConfig to get Ebean to
+// fetch additional parts of the object graph
+// after the Raw SQL query is executed.
+
+String sql
+= " select order_id, sum(d.order_qty*d.unit_price) as totalAmount "
++ " from order_detail d"
++ " group by order_id ";
+
+RawSql rawSql =
+RawSqlBuilder
+  .parse(sql)
+  .columnMapping("order_id", "order.id")
+  .create();
+
+
+Query<OrderAggregate> query = Ebean.find(OrderAggregate.class);
+  query.setRawSql(rawSql)
+    // get ebean to fetch parts of the order and customer
+    // after the raw SQL query is executed
+    .fetch("order", "status,orderDate",new FetchConfig().query())
+    .fetch("order.customer", "name")
+    .where().gt("order.id", 0)
+    .having().gt("totalAmount", 20)
+    .order().desc("totalAmount")
+    .setMaxRows(10);
+```
+</p>
+
+<p>
+  This is the OrderAggregate bean used in the examples above.
+</p>
+
+```java
+package com.avaje.tests.model.basic;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
+import com.avaje.ebean.annotation.Sql;
+
+/**
+* An example of an Aggregate object.
+*
+* Note the @Sql indicates to Ebean that this bean is not based on a table but
+* instead uses RawSql.
+*
+*/
+@Entity
+@Sql
+public class OrderAggregate {
+
+  @OneToOne
+  Order order;
+
+  Double totalAmount;
+
+  Double totalItems;
+
+  public String toString() {
+    return order.getId() + " totalAmount:" + totalAmount + " totalItems:" + totalItems;
+  }
+
+  public Order getOrder() {
+    return order;
+  }
+
+  public void setOrder(Order order) {
+    this.order = order;
+  }
+
+  public Double getTotalAmount() {
+    return totalAmount;
+  }
+
+  public void setTotalAmount(Double totalAmount) {
+    this.totalAmount = totalAmount;
+  }
+
+  public Double getTotalItems() {
+    return totalItems;
+  }
+
+  public void setTotalItems(Double totalItems) {
+    this.totalItems = totalItems;
+  }
+}
+```
+
+<h3>tableAliasMapping()</h3>
+<p>
+  tableAliasMapping() will automatically map columns from the query results to the associated object based
+  on its path. It does this using the query alias. This is a convenience mathod so that you don't have to
+  map each column individually.
+</p>
+
+<p>
+  So a test case looks like:
+
+</p>
+```java
+String rs = "select o.id, o.status, c.id, c.name, "+
+" d.id, d.order_qty, p.id, p.name " +
+"from orders o join customer c on c.id = o.kcustomer_id " +
+"join order_detail d on d.order_id = o.id " +
+"join product p on p.id = d.product_id " +
+"where o.id <= :maxOrderId and p.id = :productId "+
+"order by o.id, d.id asc";
+
+
+RawSql rawSql = RawSqlBuilder.parse(rs)
+    .tableAliasMapping("c", "customer")
+    .tableAliasMapping("d", "details")
+    .tableAliasMapping("p", "details.product")
+    .create();
+
+List<Order> ordersFromRaw = Ebean.find(Order.class)
+    .setRawSql(rawSql)
+    .setParameter("maxOrderId", 2)
+    .setParameter("productId", 1)
+    .findList();
+```
+<p>
+  Rather than using columnMapping like:
+</p>
+```java
+RawSql rawSql = RawSqlBuilder.parse(rs)
+    .columnMapping("t0.id", "id")
+    .columnMapping("t0.status", "status")
+    .columnMapping("t1.id", "customer.id")
+    .columnMapping("t1.name", "customer.name")
+    .columnMapping("t2.id", "details.id")
+    .columnMapping("t2.order_qty", "details.orderQty")
+    .columnMapping("t3.id", "details.product.id")
+    .columnMapping("t3.name", "details.product.name")
+    .create();
+```
 </body>

@@ -5,7 +5,29 @@
   <#assign findIterate= "true">
 </head>
 <body>
-<h2>findIterate</h2>
+<h3>findIterate</h3>
+
+<p>
+  Execute the query iterating over the results. This is good for processing large results where
+  we want to avoid holding all the beans/results in memory but instead iterator through them.
+</p>
+
+<h4>close</h4>
+<p>
+  Note that we must ensure the iterator is <code>closed</code> as it holds JDBC resources.
+</p>
+<p>
+  We should use <code>try with resources</code> or a <code>try finally</code> block to make sure
+  that the QueryIterator is closed regardless of exceptions thrown during processing.
+</p>
+<p>
+  Note that <a href="findEach">findEach</a> and <a href="findEachWhile">findEachWhile</a> ensure
+  all resoucres are closed regardless and for this reason they are recommended over <code>findIterate</code>.
+</p>
+<p>
+  There are some use cases where findEach and findEachWhile don't naturally fit and that is when we
+  would look to use findIterate.
+</p>
 
 </body>
 </html>

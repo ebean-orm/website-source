@@ -5,7 +5,34 @@
   <#assign findFutureList= "true">
 </head>
 <body>
-<h2>findFutureList</h2>
+
+<h3>findFutureList</h3>
+<p>
+  findFutureList allows for the background execution of a query which we can wait for and cancel if desired.
+</p>
+```java
+
+// find list using a background thread
+FutureList<Order> futureList =
+  Order.find.where()
+    .status.equalTo(Order.Status.NEW)
+    .findFutureList();
+
+  // do something else ...
+
+if (!futureList.isDone()){
+  // you can cancel the query. If supported by the JDBC
+  // driver and database this will actually cancel the
+  // sql query execution on the database
+  futureList.cancel(true);
+}
+
+// wait for the query to finish ... no timeout
+List<Order> list = futureList.get();
+
+// wait for the query to finish ... with a 30sec timeout
+List<Order> list2 = futureList.get(30, TimeUnit.SECONDS);
+```
 
 </body>
 </html>
