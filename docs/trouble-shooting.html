@@ -1,13 +1,13 @@
 <html>
 <head>
-  <title>Introduction</title>
+  <title>Trouble shooting | Ebean ORM</title>
   <meta name="layout" content="_layout/docs.html"/>
-  <meta name="bread2" content="Trouble shooting" href="/docs/troubleshooting"/>
+  <meta name="bread1" content="Trouble shooting" href="/docs/trouble-shooting"/>
   <template id="menuNav">&nbsp;</template>
 </head>
 <body>
 
-<h3>NullPointerException using Query beans</h3>
+<h2 id="npe-querybeans">NullPointerException using Query beans</h2>
 <h4>Example</h4>
 ```java
 new QCustomer
@@ -37,7 +37,7 @@ new QCustomer
 
 <p>&nbsp;</p>
 
-<h3>RuntimeException: Is class org.example.domain.Foo registered?</h3>
+<h2 id="registered">RuntimeException: Is class org.example.domain.Foo registered?</h2>
 <h4>Diagnosis</h4>
 <p>
   Ebean does not think the bean in question is an entity bean, or we are explicitly registering entity
@@ -64,7 +64,7 @@ new QCustomer
 
 <p>&nbsp;</p>
 
-<h3>DataSource user is null?</h3>
+<h2 id="datasource">DataSource user is null?</h2>
 
 <h4>Actions</h4>
 <h5>1. Check that there is a application-test.yml (or equivalent) to specify the datasource</h5>

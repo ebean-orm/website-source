@@ -3904,14 +3904,6 @@
   "url":"/docs/mapping/soft-delete"
 }
 ,{
-  "title":"@SoftDelete - Overview",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/soft-delete#overview"
-}
-,{
   "title":"@Encrypted",
   "caption":"",
   "category":"Mapping",
@@ -4254,6 +4246,38 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/getting-started/kotlin-next-steps"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Trouble shooting",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/trouble-shooting"
+}
+,{
+  "title":"NullPointerException using Query beans",
+  "caption":"",
+  "category":"Trouble shooting",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/trouble-shooting#npe-querybeans"
+}
+,{
+  "title":"RuntimeException: Is class org.example.domain.Foo registered?",
+  "caption":"",
+  "category":"Trouble shooting",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/trouble-shooting#registered"
+}
+,{
+  "title":"DataSource user is null?",
+  "caption":"",
+  "category":"Trouble shooting",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/trouble-shooting#datasource"
 }
 ,{
   "title":"",
