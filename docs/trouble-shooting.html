@@ -1,0 +1,42 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread2" content="Trouble shooting" href="/docs/troubleshooting"/>
+  <template id="menuNav">&nbsp;</template>
+</head>
+<body>
+
+<h3>NullPointerException using Query beans</h3>
+<h4>Example</h4>
+```java
+new QCustomer
+  .name.istartsWith("rob")  //   <-- Getting NPE here
+  .findList()
+```
+<h4>Diagnosis</h4>
+<p>
+  <b>For Java:</b> The query beans or the code using the query beans is not being enhanced.
+</p>
+<p>
+  <b>For Kotlin:</b> The query beans are not being enhanced.
+</p>
+
+<h4>Actions</h4>
+<h5>Check the <code>querybean-packages</code> entry in ebean.mf</h5>
+<p>
+  <b>For Java:</b>
+  We need to enhance both the code that is using the query beans and the query beans themselves.
+  The packages specified by <code>querybean-packages</code> needs to include the code that is using
+  the query beans.
+</p>
+<p>
+  <b>For Kotlin:</b> For Kotlin we only need to enhance the query beans themselves (and not the calling code).
+  For Kotlin the <code>querybean-packages</code> just needs to include the query beans.
+</p>
+
+
+
+
+</body>
+</html>
