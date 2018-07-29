@@ -23,7 +23,7 @@ new QCustomer
 </p>
 
 <h4>Actions</h4>
-<h5>Check the <code>querybean-packages</code> entry in ebean.mf</h5>
+<h5>1. Check the <code>querybean-packages</code> entry in ebean.mf</h5>
 <p>
   <b>For Java:</b>
   We need to enhance both the code that is using the query beans and the query beans themselves.
@@ -35,7 +35,56 @@ new QCustomer
   For Kotlin the <code>querybean-packages</code> just needs to include the query beans.
 </p>
 
+<p>&nbsp;</p>
 
+<h3>RuntimeException: Is class org.example.domain.Foo registered?</h3>
+<h4>Diagnosis</h4>
+<p>
+  Ebean does not think the bean in question is an entity bean, or we are explicitly registering entity
+  beans (via ServerConfig.addClass()) and have not added the entity bean to that.
+</p>
+
+<h4>Actions</h4>
+<h5>1. Check that the bean has <code>@Entity</code> annotation</h5>
+<h5>2. Register the entity bean if necessary</h5>
+<p>
+  If the entity beans are being explicit registered via <code>serverConfig.addClass()</code> then it could
+  be that this entity bean class needs to also be included.
+</p>
+<h5>Typically stacktrace</h5>
+<pre>
+  Caused by: java.lang.RuntimeException: Error with association to [class org.example.domain.Contact]
+  from [org.example.domain.Customer.contacts]. Is class org.example.domain.Contact registered?
+	at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.readToOne(AnnotationAssocManys.java:476)
+	at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.read(AnnotationAssocManys.java:73)
+	at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.parse(AnnotationAssocManys.java:64)
+	at io.ebeaninternal.server.deploy.parse.ReadAnnotations.readAssociations(ReadAnnotations.java:50)
+	... 37 more
+</pre>
+
+<p>&nbsp;</p>
+
+<h3>DataSource user is null?</h3>
+
+<h4>Actions</h4>
+<h5>1. Check that there is a application-test.yml (or equivalent) to specify the datasource</h5>
+<h5>2. Check that <code>io.ebean.test : ebean-test-config</code> is a test dependency </h5>
+<p>
+  See <a href="/docs/testing">docs / testing</a> for setting up <code>ebean-test-config</code>
+</p>
+
+<h5>Typically stacktrace</h5>
+<pre>
+ERROR io.ebean.Ebean - Error trying to create the default EbeanServer
+java.lang.RuntimeException: DataSource user is null?
+	at org.avaje.datasource.pool.ConnectionPool.&lt;init&gt;(ConnectionPool.java:207)
+	at org.avaje.datasource.core.Factory.createPool(Factory.java:15)
+	at io.ebeaninternal.server.core.DefaultContainer.getDataSourceFromConfig(DefaultContainer.java:273)
+	at io.ebeaninternal.server.core.DefaultContainer.setDataSource(DefaultContainer.java:217)
+	...
+</pre>
+
+<p>&nbsp;</p>
 
 
 </body>
