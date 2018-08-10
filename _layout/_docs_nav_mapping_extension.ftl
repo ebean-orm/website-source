@@ -16,7 +16,7 @@
 </@smallnav>
 <@smallnav activeCheck="${DbComment!''}" url="/docs/mapping/dbcomment" title="@DbComment">
 </@smallnav>
-<@smallnav activeCheck="${DbComment!''}" url="/docs/mapping/dbpartition" title="@DbPartition">
+<@smallnav activeCheck="${DbPartition!''}" url="/docs/mapping/dbpartition" title="@DbPartition">
 </@smallnav>
 <@smallnav activeCheck="${WhenCreated!''}" url="/docs/mapping/when-created" title="@WhenCreated">
 </@smallnav>

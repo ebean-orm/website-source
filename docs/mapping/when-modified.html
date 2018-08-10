@@ -6,8 +6,64 @@
 </head>
 <body>
 
-<h2 id="overview">Overview</h2>
 
+<h2>@WhenModified</h2>
+<p>
+  A date time property managed by Ebean that is set on both <code>insert</code> and <code>update</code>.
+</p>
+<p>
+  Typically we use both <code>@WhenCreated</code> and <code>@WhenModified</code> on a mapped superclass.
+</p>
+<p>&nbsp;</p>
+
+<h4>Example</h4>
+```java
+
+    @WhenCreated
+    private Instant whenCreated;
+
+    @WhenModified
+    private Instant whenModified;
+
+}
+```
+
+<p>&nbsp;</p>
+
+<h4>Example on mapped superclass</h4>
+```java
+@MappedSuperclass
+public abstract class BaseDomain {
+
+    @Id
+    protected UUID id;
+
+    @Version
+    private long version;
+
+    @WhenCreated
+    private Instant whenCreated;
+
+    @WhenModified
+    private Instant whenModified;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public Instant getWhenCreated() {
+        return whenCreated;
+    }
+
+    public Instant getWhenModified() {
+        return whenModified;
+    }
+}
+```
 
 </body>
 </html>

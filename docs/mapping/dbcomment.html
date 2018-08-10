@@ -11,5 +11,30 @@
   Provides the ability to add DDL <code>table comments</code> and <code>column comments</code>.
 </p>
 
+<h4>Table comment</h4>
+<p>
+  An example of a table comment.
+</p>
+```java
+@DbComment("External customers excluding prospects")
+@Entity
+@Table(name = "customer")
+public class Customer {
+```
+
+<h4>Column comment</h4>
+<p>
+  An example of a column comment.
+</p>
+```java
+@Entity
+public class Event {
+
+  ...
+  @DbComment("Event state set via workflow")
+  @Column(nullable = false)
+  private State state;
+
+```
 </body>
 </html>
