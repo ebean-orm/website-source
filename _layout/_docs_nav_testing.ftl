@@ -16,6 +16,7 @@
 <ul class="nav">
   <li><a href="#extensions">Extensions</a></li>
   <li><a href="#schema">Schema</a></li>
+  <li><a href="#postgis">Postgis</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${sqlserver!''}" url="/docs/testing/sqlserver" title="SQL Server"/>

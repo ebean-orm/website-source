@@ -63,6 +63,22 @@ List<String> names =
     .findSingleAttributeList();
 ```
 
+<h4>Example - select formula, Postgis ST_Distance</h4>
+<p>
+  With this example we explicitly cast to a Java BigDecimal type using
+  the <code>::BigDecimal</code> cast at the end of the formula.
+</p>
+```java
+// given route is a Postgis geometry(linestring,4326)
+// return the distance between the start and end points
+
+BigDecimal routeDistance = query()
+  .select("ST_Distance(ST_StartPoint(route), ST_EndPoint(route))::BigDecimal")
+  .where()
+  .idEq(tripId)
+  .findSingleAttribute();
+```
+
 <h4>Example - count distinct</h4>
 ```java
 int count =
