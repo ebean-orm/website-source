@@ -14,7 +14,7 @@
 <dependency>
   <groupId>io.ebean.test</groupId>
   <artifactId>ebean-test-config</artifactId>
-  <version>11.18.2</version>
+  <version>11.20.1</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -104,6 +104,18 @@ ebean:
         <dd><b>url:</b> jdbc:postgresql://localhost:{port}/{databaseName}</dd>
         <dd><b>driver:</b> org.postgresql.Driver</dd>
         <dd><b>image:</b> postgres:{version}</dd>
+      </dl>
+    </td>
+  </tr>
+  <tr>
+    <td>postgis</td>
+    <td>Run against Postgres Postgis docker DB.
+      <dl>
+        <dd><b>port:</b> 7432</dd>
+        <dd><b>password:</b> test</dd>
+        <dd><b>url:</b> jdbc:postgresql_lwgis://localhost:{port}/{databaseName}</dd>
+        <dd><b>driver:</b> org.postgis.DriverWrapperLW</dd>
+        <dd><b>image:</b> mdillon/postgis:{version}</dd>
       </dl>
     </td>
   </tr>
