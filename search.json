@@ -1128,6 +1128,38 @@
   "url":"/docs/testing"
 }
 ,{
+  "title":"Postgres",
+  "caption":"",
+  "category":"Testing",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/testing/postgres"
+}
+,{
+  "title":"SQL Server",
+  "caption":"",
+  "category":"Testing",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/testing/sqlserver"
+}
+,{
+  "title":"Mocki",
+  "caption":"",
+  "category":"Testing",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/testing/mocki"
+}
+,{
+  "title":"Mocki - MockiEbean",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/mocki#mockibean"
+}
+,{
   "title":"Test properties",
   "caption":"",
   "category":"Testing",
@@ -1534,126 +1566,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch/get-started#issues"
-}
-,{
-  "title":"Simple query comparison",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison"
-}
-,{
-  "title":"Simple query comparison - Caveats",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#caveats"
-}
-,{
-  "title":"Simple query comparison - Setup",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#setup"
-}
-,{
-  "title":"Simple query comparison - The query",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#query"
-}
-,{
-  "title":"Simple query comparison - SQL query",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison"
-}
-,{
-  "title":"Simple query comparison - Elastic query",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison"
-}
-,{
-  "title":"Simple query comparison - Run mode 1",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#run1"
-}
-,{
-  "title":"Simple query comparison - Run mode 2 - Denormalisation effect",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#run2"
-}
-,{
-  "title":"Simple query comparison - Run mode 3 - less selective",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#run3"
-}
-,{
-  "title":"Simple query comparison - Appendix - Bean mapping",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#appendix-bean"
-}
-,{
-  "title":"Simple query comparison - Appendix: Index mapping",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#appendix-index"
-}
-,{
-  "title":"Postgres",
-  "caption":"",
-  "category":"Testing",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/testing/postgres"
-}
-,{
-  "title":"SQL Server",
-  "caption":"",
-  "category":"Testing",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/testing/sqlserver"
-}
-,{
-  "title":"Mocki",
-  "caption":"",
-  "category":"Testing",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/testing/mocki"
-}
-,{
-  "title":"Mocki - MockiEbean",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/mocki#mockibean"
 }
 ,{
   "title":"DB Migration Details",
@@ -3838,6 +3750,14 @@
   "priority":"1",
   "keywords":"",
   "url":"/docs/mapping/dbcomment"
+}
+,{
+  "title":"@DbPartition",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/mapping/dbpartition"
 }
 ,{
   "title":"@WhenCreated",

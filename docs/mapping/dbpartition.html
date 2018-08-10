@@ -1,0 +1,84 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_mapping_extension.html"/>
+  <meta name="bread2" content="@DbPartition" href="/docs/mapping/dbpartition"/>
+<#assign DbPartition = "true">
+</head>
+<body>
+
+<h2>@DbPartition</h2>
+<p>
+  This is currently only applicable to <code>Postgres 10</code>.
+</p>
+<p>
+  We can specify common partitioning ranges such as Day, Week, Month and Year. This will then
+  result in appropriate DDL generation and some supporting features to make maintaining
+  partitions easier.
+</p>
+```java
+@DbPartition(mode = PartitionMode.MONTH, property = "whenOccurred")
+@Entity
+public class Event extends Model {
+  ...
+```
+<h3>Postgres DDL</h3>
+<ul>
+  <li>The table DDL uses <code>partition by range</code></li>
+  <li>Ebean supplies helper functions to create partitions</li>
+  <li>When CREATE ALL DLL is executed (ie. testing) Ebean will check for partitions and create some if none exist</li>
+</ul>
+```sql
+create table event (
+  id                            bigserial not null,
+  name                          varchar(255) not null,
+  when_occurred                 timestamptz not null
+  ...
+) partition by range (when_occurred);
+```
+
+<h4>Creating Partitions</h4>
+<p>
+  Ebean by default supplies helper functions <code>partition</code> and <code>partition_init</code> to make it
+  easier to create partitions going forward. The below statement creates <code>Week</code> partitions on the
+  event table. It will create a unique index on the id column and an index on the when_occurred column.
+</p>
+```sql
+select partition('week','event','id','when_occurred',3)
+```
+<p>
+  The above ensures the current partition and the 3 next partitions are created.
+</p>
+
+<h4>Initial partitions</h4>
+<p>
+  Generally we will specify explicitly some DDL to create the initial partitions in <code>extra-ddl.xml</code>.
+  The below example uses <code>partition_init</code> to create partitions that have a large initial partition.
+</p>
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<extra-ddl xmlns="http://ebean-orm.github.io/xml/ns/extraddl">
+
+  <ddl-script name="1 initial partitions" >
+select partition_init(date '2015-01-01', 'week', 'event', 'id', 'when_occurred', 3);
+select partition_init(date '2015-01-01', 'month', 'event_log', 'id', '', 2);
+  </ddl-script>
+
+</extra-ddl>
+```
+<p>
+  When we don't specify any initial partitions Ebean will detect that there are no partitions and create
+  some for us when it is executing the <code>create all ddl</code>. In the logs we will see messages like
+  the ones below when this occurs.
+</p>
+```sh
+12:18:47.711 [main] INFO  i.e.dbmigration.DdlGenerator - No table partitions for table event
+12:18:47.711 [main] INFO  io.ebean.DDL - Executing initial table partitions - 1 statements
+12:18:47.711 [main] DEBUG io.ebean.DDL - executing 1 of 1 select partition('week','event','id','when_occurred',1)
+```
+<p>
+  Once we explicitly specify how to create initial partitions in <code>extra-ddl</code> then Ebean will no longer
+  create these partitions automatically.
+</p>
+
+</body>
+</html>
