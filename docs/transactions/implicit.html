@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>Implicit Transactions | Ebean</title>
+  <meta name="layout" content="_layout/docs_transactions.html"/>
+  <meta name="bread2" content="Implicit" href="/docs/transactions/implicit"/>
+  <#assign implicit="active">
+</head>
+<body>
+<h2>Implicit transactions</h2>
+<p>
+  When no transactions are specified explicitly Ebean will create a transaction to perform the action.
+</p>
+<h4>Query - read only transaction</h4>
+<p>
+  For queries Ebean will look to use a read only transaction. If a <code>Read Only DataSource</code> has
+  be configured Ebean will look to use that by default.
+</p>
+
+<h4>Save, Insert, Update</h4>
+<p>
+  For all persist requests like save, insert, update, delete Ebean will create a transaction and perform
+  a <code>COMMIT</code> at the end of the operation.
+</p>
+
+<@next_edit "Programmatic transactions" "/docs/transactions/programmatic" "/docs/transactions/implicit.html"/>
+
+</body>
+</html>

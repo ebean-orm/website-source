@@ -1,11 +1,9 @@
-<@smallnav activeCheck="${transactions!''}" url="/docs/transactions" title="Transactions">
-<ul class="nav">
-  <li><a href="#implicit_transactions">Implicit</a></li>
-  <li><a href="#programmatic_transactions">Programmatic</a></li>
-  <li><a href="#tx_control_behaviour">Controlling behaviour in a transaction</a></li>
-  <li><a href="#transactional">@Transactional</a></li>
-  <li><a href="#tx_runnable">TxRunnable / TxCallable</a></li>
-  <li><a href="#spring">Spring</a></li>
-  <li><a href="#jta">JTA</a></li>
-</ul>
-</@smallnav>
+<@smallnav activeCheck="${transactions!''}" url="/docs/transactions" title="Transactions"/>
+<@smallnav activeCheck="${implicit!''}" url="/docs/transactions/implicit" title="Implicit"/>
+<@smallnav activeCheck="${programmatic!''}" url="/docs/transactions/programmatic" title="Programmatic"></@smallnav>
+<@smallnav activeCheck="${transactional!''}" url="/docs/transactions/transactional" title="@Transactional"></@smallnav>
+<@smallnav activeCheck="${scopes!''}" url="/docs/transactions/scopes" title="Scopes"></@smallnav>
+<@smallnav activeCheck="${savepoints!''}" url="/docs/transactions/savepoints" title="SavePoints"></@smallnav>
+<@smallnav activeCheck="${options!''}" url="/docs/transactions/options" title="Options"></@smallnav>
+<@smallnav activeCheck="${spring!''}" url="/docs/transactions/spring" title="Spring"></@smallnav>
+<@smallnav activeCheck="${jta!''}" url="/docs/transactions/jta" title="JTA"></@smallnav>
