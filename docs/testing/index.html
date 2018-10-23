@@ -26,7 +26,7 @@
   Add into <code>src/test/resources</code> a <code>application-test.yml</code> configuration file
   that we use for testing.
 </p>
-```sh
+```yml
 ebean:
   test:
     platform: h2 #, h2, postgres, mysql, oracle, sqlserver
@@ -181,7 +181,7 @@ ebean:
   We can see/review what is occurring by increasing the logging for <code>io.ebean.docker</code> to <code>TRACE</code>.
   When we do that we can see log messages like:
 </p>
-```sh
+```text
 
 15:15:02.232 [main] INFO  io.ebean.EbeanVersion - ebean version: 11.18.2
 
@@ -251,7 +251,7 @@ ebean:
   docker container after running all the tests. To do this we set <code>shutdown</code> to either
   <code>stop</code> (to just stop the container) or <code>remove</code> (to stop and remove the container).
 </p>
-```sh
+```yml
 ebean:
   test:
     shutdown: stop  # stop | remove
@@ -273,7 +273,7 @@ ebean:
   When we are using  <code>useDocker: false</code> the database and user are expected to already exist along with
   permissions (and Postgres extension).
 </p>
-```sh
+```yml
 ebean:
   test:
     useDocker: false  ## DO NOT USE DOCKER

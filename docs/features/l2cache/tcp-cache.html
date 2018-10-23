@@ -103,14 +103,14 @@
     when clustering starts, stops and members leave or join.
   </p>
   <h5>Startup configuration</h5>
-  ```sh
+  ```text
   INFO  org.avaje.ebean.Cluster - Clustering using local[127.0.0.1:9943] members[[127.0.0.1:9942, 127.0.0.1:9943]]
   ```
-  ```sh
+  ```text
   INFO  org.avaje.ebean.Cluster - Register as online with member [localhost:9942]
   ```
   <h5>Member joining/leaving</h5>
-  ```sh
+  ```text
   INFO  org.avaje.ebean.Cluster - Cluster member [localhost:9943] online[true]
   ```
 
@@ -118,11 +118,11 @@
     At <code>DEBUG</code> level messages are logged for sending and receiving events.
   </p>
   <h5>Sent message</h5>
-  ```sh
+  ```text
   DEBUG org.avaje.ebean.Cluster - sending: [org.example.domain.Customer updateIds:[4]]
   ```
   <h5>Received message</h5>
-  ```sh
+  ```text
   DEBUG org.avaje.ebean.Cluster - processing [org.example.domain.Customer updateIds:[4]]
   ```
 

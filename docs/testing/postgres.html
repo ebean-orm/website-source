@@ -17,7 +17,7 @@
 <p>
   We can specify extensions that should be installed automatically via:
 </p>
-```sh
+```yml
 ebean:
   test:
     platform: postgres #, h2, postgres, mysql, oracle, sqlserver
@@ -29,7 +29,7 @@ ebean:
 <p>
   In terms of logging / debugged we can see the extensions added via:
 </p>
-```sh
+```text
 17:07:17.078 DEBUG io.ebean.docker.commands.Commands - create database extensions pgcrypto,hstore
 17:07:17.078 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -d test -c create extension if not exists pgcrypto
 17:07:17.187 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -d test -c create extension if not exists hstore
@@ -47,7 +47,7 @@ ebean:
   <code>myapp</code> it is advisable to have the DB user/role match and be <code>myapp</code>.
 </p>
 <h5>application.yaml</h5>
-```sh
+```yml
 ebean:
   dbSchema: myapp  ## use this schema for migrations and testing
 ```
@@ -65,7 +65,7 @@ serverConfig.setDbSchema("myapp");
   This will automatically download and run the container making live a little easier.
   Note the use of the Postgis specfic driver and url.
 </p>
-```sh
+```yml
 ebean:
   geometrySRID: 4674  # If we don't want the default geometrySRID of 4326
 
@@ -85,7 +85,7 @@ ebean:
   <li>Uses <code>mdillon/postgis</code> docker image with Postgis installed</li>
 </ul>
 
-```sh
+```yml
 ebean:
   geometrySRID: 4674
 

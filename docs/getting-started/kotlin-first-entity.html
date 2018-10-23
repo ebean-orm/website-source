@@ -35,7 +35,7 @@ class Customer {
   In <code>src/main/resources</code> add <code>ebean.mf</code> which tells the build plugins which packages
   should be enhanced.
 </p>
-```sh
+```yml
 entity-packages: org.example.domain
 transactional-packages: org.example
 querybean-packages: org.example
@@ -55,7 +55,7 @@ querybean-packages: org.example
   In <code>src/test/resources</code> add <code>application-test.yml</code> which tells Ebean how to run
   tests.
 </p>
-```sh
+```yml
 ebean:
   test:
 #    shutdown: stop # stop | remove
@@ -141,7 +141,7 @@ class CustomerTest  {
   <code>DDL</code> and <code>SQL</code> that you expect.
 </p>
 
-```sh
+```text
 23:40:09.040 [main] INFO  io.ebean.EbeanVersion - ebean version: 11.19.1
 23:40:09.087 [main] INFO  i.e.config.properties.LoadContext - loaded properties from [application.yml, application-test.yml]
 23:40:09.163 [main] INFO  i.e.t.c.provider.ProviderAutoConfig - for testing purposes a current user and tenant provider has been configured. Use io.ebean.test.UserContext to set current user and tenant in tests.

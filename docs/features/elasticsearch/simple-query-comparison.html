@@ -131,7 +131,7 @@
     reasonably selective. This means the cost of the sort and filter required for the TOP 100 is not too bad.
   </p>
 
-  ```sh
+  ```text
     DB mean: 10.2    std dev: 2.34    min:6    max:18
     ES mean: 8.77    std dev: 1.08    min:7    max:14
   ```
@@ -175,7 +175,7 @@
     as before. In a DB we could create a materialised view to get a similar effect.
   </p>
 
-  ```sh
+  ```text
   DB mean: 56.4    std dev: 5.95    min:48   max:95
   ES mean: 8.75    std dev: 1.01    min:7    max:13
   ```
@@ -197,7 +197,7 @@
     get the <code>TOP 100</code> there are many more rows to sort and filter out of the result.
   </p>
 
-  ```sh
+  ```text
   DB mean: 51.3    std dev: 3.71    min:44   max:60
   ES mean: 14.0    std dev: 2.00    min:10   max:22
   ```

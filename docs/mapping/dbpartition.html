@@ -70,7 +70,7 @@ select partition_init(date '2015-01-01', 'month', 'event_log', 'id', '', 2);
   some for us when it is executing the <code>create all ddl</code>. In the logs we will see messages like
   the ones below when this occurs.
 </p>
-```sh
+```text
 12:18:47.711 [main] INFO  i.e.dbmigration.DdlGenerator - No table partitions for table event
 12:18:47.711 [main] INFO  io.ebean.DDL - Executing initial table partitions - 1 statements
 12:18:47.711 [main] DEBUG io.ebean.DDL - executing 1 of 1 select partition('week','event','id','when_occurred',1)
