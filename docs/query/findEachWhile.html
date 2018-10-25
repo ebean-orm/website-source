@@ -5,7 +5,38 @@
   <#assign findEachWhile= "true">
 </head>
 <body>
-<h2>findEachWhile</h2>
+<h2>findEachWhile (process large queries, one bean at a time with the ability to stop early)</h2>
+  
+<p>
+Execute the query using callbacks to a visitor to process the resulting
+beans one at a time, and allow breaking out of loop (by returning <code>false</code>)
+ </p>
+ <p>
+ Note that <a href="findEachWhile">findEachWhile</a> (and <a href="findEach">findEach</a> and <a href="findIterate">findIterate</a>) use a <code>per graph</code>
+   persistence context scope and adjusts <code>jdbc</code> fetch buffer size for large
+   queries. As such it is better to use <a href="findList">findList</a> for small queries.
+ </p>
+ <p>
+ This method is functionally equivalent to <a href="findIterate">findIterate()</a> but instead of using an
+ iterator uses the Predicate (<code>SAM (Single Abstract Method)</code>) interface which is better suited to use with Java 8+ closures.
+ </p>
+ ```java
+
+  // Returning false inside the predicate will stop the execution
+  ebeanServer.find(Customer.class)
+     .where().eq("status", Status.NEW)
+     .order().asc("id")
+     .setMaxRows(2000)
+     .findEachWhile((Customer customer) -> {
+
+       // do something with customer
+       System.out.println("-- visit " + customer);
+
+       // return true to continue processing or false to stop
+       return (customer.getId() < 40);
+     });
+
+ ``` 
 
 </body>
 </html>
