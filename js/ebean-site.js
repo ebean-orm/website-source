@@ -99,7 +99,7 @@ function retrieveAndReplaceVersionsInPage() {
   if ($.sessionStorage.isSet('ebean-versions')) {
     replaceVersionsInPage();
   } else {
-    getVersionsFromUrl('http://jsonp.afeld.me/?url=http://search.maven.org/solrsearch/select?q=g:%22io.ebean%22%20OR%20(g:%22io.ebean.test%22)&wt=json');
+    getVersionsFromUrl('https://jsonp.afeld.me/?url=https://search.maven.org/solrsearch/select?q=g:%22io.ebean%22%20OR%20(g:%22io.ebean.test%22)&wt=json');
   }
 }
 
