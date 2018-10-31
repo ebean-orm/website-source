@@ -5,7 +5,32 @@
   <#assign findMap= "true">
 </head>
 <body>
-<h2>findMap</h2>
+<h2>findMap (Execute a query returning the result as a map of the objects)</h2>
 
+  Execute the query returning a map of the objects.
+ <p>
+ This query will execute against the EbeanServer that was used to create it.
+ </p>
+ <p>
+ You can use <code>setMapKey()</code> to specify the property to be used as keys
+ on the map. If one is not specified then the <code>id</code> property is used.
+ The name of the properties is the name they have on the Model, not the name of the database column.
+ </p>
+ 
+ ```java
+  
+ // Assuming a list of Products exists
+ // with Product(name: 'P1', sku: 'I1'), Product(name: 'P2', sku: 'I2')
+ // the following code:
+
+ Map<String, Product> map =
+   ebeanServer.find(Product.class)
+     .setMapKey("sku")
+     .findMap();
+
+ // map.get('I1').getName() <-- This returns P1  
+  
+ ```
+  
 </body>
 </html>
