@@ -19,16 +19,16 @@
  
  ```java
   
- // Assuming a list of Products exists
- // with Product(name: 'P1', sku: 'I1'), Product(name: 'P2', sku: 'I2')
- // the following code:
+ /* Assuming a list of Products exists
+ with Product(name: "P1", sku: "I1"), Product(name: "P2", sku: "I2")
+ */ the following code:
 
  Map<String, Product> map =
    ebeanServer.find(Product.class)
      .setMapKey("sku")
      .findMap();
 
- // map.get('I1').getName() <-- This returns P1  
+ // map.get("I1").getName() <-- This returns P1  
   
  ```
   
