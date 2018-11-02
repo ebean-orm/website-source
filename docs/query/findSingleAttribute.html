@@ -5,7 +5,26 @@
   <#assign findSingleAttribute= "true">
 </head>
 <body>
-<h2>findSingleAttribute</h2>
+<h2>findSingleAttribute (retrieve the value of a single column)</h2>
+
+If you want to retrieve the value from a single property of a model, you can use the <code>findSingleAttribute</code> method.
+You need to use the <code>select()</code> method to select which column you want to retrieve the value
+
+  ```java
+   String name =
+     Ebean.find(Customer.class)
+       .select("name")
+       .where()
+       .idEq(42)
+       .findSingleAttribute();
+  ```
+
+This translates to an <code>SQL</code> query that only has the single property in the select clause, like the following:
+```sql
+    select t0.name from customers t0 where t0.id = 42
+```
+
+If you use more than one value in the <code>select</code> clause (like <code>select("name,email")</code>, only the first will be returned.
 
 </body>
 </html>
