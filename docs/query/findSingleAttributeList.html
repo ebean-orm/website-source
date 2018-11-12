@@ -5,7 +5,41 @@
   <#assign findSingleAttributeList= "true">
 </head>
 <body>
-<h2>findSingleAttributeList</h2>
+<h2>findSingleAttributeList (retrieve the value of a single column for all instances of a model that match the query)</h2>
 
+ <p>
+ Execute the query returning a list of values for a single property.
+If you want to retrieve the value from a single property of a specific model, you can use the <code>findSingleAttributeList</code> method.
+You need to use the <code>select()</code> method to select which column you want to retrieve the value
+
+</p>
+
+ <h3>Example 1:</h3>
+ ```java
+
+  List<String> names =
+    Ebean.find(Customer.class)
+      .select("name")
+      .orderBy().asc("name")
+      .findSingleAttributeList();
+
+ ```
+ <h3>Example 2:</h3>
+
+ ```java
+
+  List<String> names =
+    Ebean.find(Customer.class)
+      .setDistinct(true)
+      .select("name")
+      .where().eq("status", Customer.Status.NEW)
+      .orderBy().asc("name")
+      .setMaxRows(100)
+      .findSingleAttributeList();
+
+ ```
+<p>
+ If you use more than one value in the <code>select</code> clause (like <code>select("name,email")</code>, only the first will be returned.
+</p>
 </body>
 </html>
