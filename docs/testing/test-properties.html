@@ -39,6 +39,18 @@
     </td>
   </tr>
   <tr>
+    <td>ddl.initSql</td>
+    <td>
+      Specify a SQL script to run prior to running the create-all ddl.
+    </td>
+  </tr>
+  <tr>
+    <td>ddl.seedSql</td>
+    <td>
+      Specify a SQL script to run after to running the create-all ddl. Typically this inserts seed data into the test database.
+    </td>
+  </tr>
+  <tr>
     <td>ebean.migraton.run</td>
     <td>Set to true or false to run the migrations when the EbeanServer starts</td>
   </tr>
@@ -49,6 +61,8 @@
 ```properties
 ebean.db.ddl.generate=true
 ebean.db.ddl.run=true
+ebean.db.ddl.initSql=initialise-test-db.sql
+ebean.db.ddl.seedSql=seed-test-db.sql
 
 datasource.db.username=sa
 datasource.db.password=

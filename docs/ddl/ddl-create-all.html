@@ -52,6 +52,22 @@ ebean.ddl.generate=true
 ebean.ddl.run=true
 ```
 
+  <h2>Initial DDL</h2>
+  <p>
+    We can specify DDL to execute prior to running the `create-all` DDL.
+  </p>
+  ```properties
+  ebean.ddl.initSql=testInitialDdl.sql
+  ```
+
+  <h2>Seed DDL</h2>
+  <p>
+    We can specify DDL to execute after running the `create-all` DDL which we typically use to seed the database.
+  </p>
+  ```properties
+  ebean.ddl.seedSql=testSeedData.sql
+  ```
+
   <h2>DB Migration</h2>
   <p>
     <a href="dbmigration">DB Migration</a> is different in that <code>DIFF</code> DDL scripts are generated for the
