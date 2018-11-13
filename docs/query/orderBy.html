@@ -5,7 +5,39 @@
   <#assign orderBy= "true">
 </head>
 <body>
-<h2>orderBy</h2>
+<h2>orderBy (Control sort order)</h2>
+<p>
+  Control the <code>order</code>code> of your <code>SQL</code> query. There are several methods available:
+</p>
+<ul>
+  <li>orderBy(String clause)</li>
+  <li>order(String clause)</li>
+  <li>orderBy()</li>
+  <li>order()</li>
+</ul>
+
+<p>
+  <code>orderBy(String clause)</code> and <code>order(String clause)</code> are equivalent to each other and both receive the string of comma separated
+  properties and sort direction (much like SQL code), such as <code>name asc, status desc</code>
+</p>
+
+```java
+  Ebean.find(Customer.class)
+    .orderBy("name asc,status desc")
+    .findList()
+```
+
+<p>
+  <code>orderBy()</code> and <code>order()</code> are also equivalent and allow you to use a fluent interface to adding sort properties. See the example:
+</p>
+
+```java
+  Ebean.find(Customer.class)
+  .order()
+    .asc("name")
+    .desc("status")
+  .findList()
+```
 
 </body>
 </html>
