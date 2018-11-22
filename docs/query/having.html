@@ -5,7 +5,36 @@
   <#assign having= "true">
 </head>
 <body>
-<h2>having</h2>
+<h2>having (add expressions to the "having" clause)</h2>
+
+  <div class="alert alert-info" role="alert">
+    <strong>Warning:</strong> Currently only beans based on <code>Raw SQL (.setRawSql)</code> will use the having clause.
+  </div>
+
+  <p>
+  Note that this returns the ExpressionList (so you can add multiple
+  expressions to the query in a fluent API way).
+  </p>
+
+  Example code:
+
+```java
+  String sql =
+    "select order_id, count(*) as totalItems, sum(order_qty*unit_price) as totalAmount \n" +
+      "from o_order_detail \n" +
+      "group by order_id";
+
+  RawSql rawSql = RawSqlBuilder.parse(sql).columnMapping("order_id", "order.id").create();
+
+  List<OrderAggregate> l2 = Ebean.createQuery(OrderAggregate.class)
+    .setRawSql(rawSql)
+    .where()
+      .gt("order.id", 0)
+    .having()
+      .lt("totalItems", 3)
+      .gt("totalAmount", 50)
+    .findList();
+```
 
 </body>
 </html>

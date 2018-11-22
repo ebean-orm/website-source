@@ -12,9 +12,7 @@
 </p>
 ```java
 
-    Customer customer =
-
-      nativeSql("select id, name from customer where name like ?")
+    Customer customer = Ebean.findNative(Customer.class, "select id, name from customer where name like ?")
         .setParameter(1, "Jo%")
         .findOne();
 ```
@@ -22,9 +20,7 @@
   An example using named parameters.
 </p>
 ```java
-  List<Customer> customers =
-
-    nativeSql("select id, name from customer where name like :name order by name desc")
+  List<Customer> customers = Ebean.findNative(Customer.class, "select id, name from customer where name like :name order by name desc")
       .setParameter("name", "Jo%")
       .findList();
 ```
@@ -37,9 +33,7 @@
   We can use <code>select *</code> if we desire all the columns.
 </p>
 ```java
-  List<Customer> customers =
-
-    nativeSql("select * from customer where name like :name order by name desc")
+  List<Customer> customers = Ebean.findNative(Customer.class, "select * from customer where name like :name order by name desc")
       .setParameter("name", "Jo%")
       .findList();
 ```

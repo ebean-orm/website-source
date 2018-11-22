@@ -5,7 +5,35 @@
   <#assign filterMany= "true">
 </head>
 <body>
-<h2>filterMany</h2>
+<h2>filterMany (filter properties on a hasMany relation)</h2>
+
+<p>
+This applies a filter on the 'many' property list (a <code>hasMany</code> relation) rather than the root
+ level objects.
+ </p>
+ <p>
+ Typically you will use this in a scenario where the cardinality is high on
+ the 'many' property you wish to join to. Say you want to fetch customers
+ and their associated orders... but instead of getting all the orders for
+ each customer you only want to get the new orders they placed since last
+ week. In this case you can use <code>filterMany()</code> to filter the orders.
+ </p>
+ ```java
+
+ List<Customer> list =
+     ebeanServer.find(Customer.class)
+     .fetch("orders")
+     .where()
+     .ilike("name", "rob%")
+     .filterMany("orders").eq("status", Order.Status.NEW).gt("orderDate", lastWeek)
+     .findList();
+
+ ```
+ <p>
+ <strong>Please note you have to be careful that you add expressions to the correct
+ expression list - as there is one for the 'root level' and one for each
+ filterMany that you have.</strong>
+ </p>
 
 </body>
 </html>
