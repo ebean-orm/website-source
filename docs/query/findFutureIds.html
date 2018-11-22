@@ -5,7 +5,40 @@
   <#assign findFutureIds= "true">
 </head>
 <body>
-<h2>findFutureIds</h2>
+<h2>findFutureIds (find Ids of a query in a background thread)</h2>
+
+<p>
+  Similar to <a href='findIds'>findIds</a> you can find a list of Ids in a background thread using <code>findFutureIds</code>.
+</p>
+<p>
+  This returns a <a href='https://docs.oracle.com/javase/8/docs/api/index.html?java/util/concurrent/Future.html'>Future </a> object which can be used to cancel, check the
+  execution status (isDone etc) and get the value (with or without a
+  timeout).
+</p>
+
+```java
+FutureIds<Long> futureIds = futureList =
+  Order.find.where()
+    .status.equalTo(Order.Status.NEW)
+    .findFutureIds();
+```
+
+And to get the actual computed value
+
+```java
+// Waits (blocks) for the calculation to be finished and returns the value
+List<Long> ids = futureIds.get();
+
+// Waits for the calculation to be finished and returns the value
+// if it happens under 10 seconds, otherwise throw an exception
+List<Long> ids = futureIds.get(10, TimeUnit.SECONDS);
+
+if (futureIds.isDone()) {
+  // Here we can fetch the value (assuming that everything went ok)
+}
+```
+
+
 
 </body>
 </html>
