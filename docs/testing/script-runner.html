@@ -1,0 +1,50 @@
+<html>
+<head>
+  <title>Script Runner</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Testing" href="/docs/testing/"/>
+  <meta name="bread2" content="Script Runner" href="/docs/testing/"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_testing.ftl"></template>
+  <#assign runner="active">
+</head>
+<body>
+
+  <h2 id="scriptRunner">Script Runner (Run DDL/SQL Scripts)</h2>
+
+  <p>Runs DDL and SQL scripts.
+   Typically these are scripts used for testing such as seed SQL scripts or truncate SQL scripts.
+   <p/>
+
+  <p>Scripts are executed in their own transaction and committed on successful completion.</p>
+
+ <h4>Example of simple use</h4>
+
+ ```java
+   EbeanServer server = Ebean.getDefaultServer();
+   server.script().run("/scripts/test-script.sql");
+ ```
+
+ <h4>Example using place holders in the script</h4>
+
+ ```java
+
+   Map<String,String> placeholders = new HashMap();
+   placeholders.put("tableName", "e_basic");
+
+   EbeanServer server = Ebean.getDefaultServer();
+   server.script().run("/scripts/test-script.sql", placeholders);
+
+ ```
+
+ <p>In your SQL script, the way to reference the placeholder is:</p>
+
+<code>delete from ${r"${tableName}"}</code><br />
+<code>select count(*) from ${r"${tableName}"}</code> <br/><br/>
+
+<div class='alert alert-info'>
+  Notice that, the path to the script should start with "/". Ebean will do
+  a this.getClass().getResource(PATH_TO_RESOURCE), so the resource should be available in your class path
+</div>
+
+</body>
+</html>
