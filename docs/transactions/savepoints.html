@@ -6,7 +6,42 @@
   <#assign savepoints="active">
 </head>
 <body>
-<h2>SavePoints</h2>
+<h2>SavePoints (inside a transaction)</h2>
+
+<p>
+Ebean supports using <code>SavePoints</code> which are a feature of most Relational Databases
+in which you can create a "Save Point" inside a transaction to which you can rollback to in case of an error (or some other logic you want)
+and are exposed via the <code>JDBC</code> driver.
+</p>
+
+<p>
+If you have a batch job that needs to perform certain operations, but can fail at some point, but you don't want to loose all the work, <code>SavePoints</code> might be a tool for that. You can check more information on <a href='https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html#set_roll_back_savepoints'>Oracle's JDBC tutorial</a>
+</p>
+
+Example of using a <code>SavePoint</code>
+```java
+  Customer newCustomer = new Customer();
+  newCustomer.setName("John");
+  Ebean.save(newCustomer);
+
+  try (Transaction transaction = Ebean.beginTransaction()) {
+
+    Connection connection = transaction.getConnection();
+    // Create a Save Point
+    Savepoint savepoint = connection.setSavepoint();
+
+    newCustomer.setName("Doe");
+    Ebean.save(newCustomer);
+
+    // Rollback to a specific save point
+    connection.rollback(savepoint);
+    transaction.commit();
+  }
+
+  Customer found = Ebean.find(Customer.class, newCustomer.getId());
+  System.out.println(found.getName()); // Prints "John"
+
+```
 
 <@next "Transaction Options" "/docs/transactions/options"/>
 
