@@ -106,8 +106,8 @@
 
   <h4>Step 4: Configure logging</h4>
   <p>
-    The default implementation of ReadAuditLogger logs query plan entries to <code>org.avaje.ebean.ReadAuditQuery</code>
-    and read events to <code>org.avaje.ebean.ReadAudit</code>.  The query plans contain the full SQL and having these
+    The default implementation of ReadAuditLogger logs query plan entries to <code>io.ebean.ReadAuditQuery</code>
+    and read events to <code>io.ebean.ReadAudit</code>.  The query plans contain the full SQL and having these
     logged separately means that the read events don't need to include the full SQL executed and instead the bean type
     and query key can be used to reference/lookup the associated SQL. This reduces the bulk/size of the read event logs.
   </p>
@@ -144,11 +144,11 @@
 
 
 
-  <logger name="org.avaje.ebean.ReadAuditQuery" level="TRACE" additivity="false">
+  <logger name="io.ebean.ReadAuditQuery" level="TRACE" additivity="false">
     <appender-ref ref="READAUDIT_QUERY_LOG"/>
   </logger>
 
-  <logger name="org.avaje.ebean.ReadAudit" level="TRACE" additivity="false">
+  <logger name="io.ebean.ReadAudit" level="TRACE" additivity="false">
     <appender-ref ref="READAUDIT_LOG"/>
   </logger>
 
