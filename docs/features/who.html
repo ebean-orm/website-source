@@ -8,9 +8,38 @@
 <body>
 <div class="bs-docs-section">
 
-  <h2 id="overview">TODO ...</h2>
+  <h2 id="overview">Who Created/Who Modified</h2>
   <p>
+    A common scenario in application is to mark entities with the Id of the user who created
+    that entity and who last modified that entity.
+  </p>
+  <p>
+    Ebean provides a convenient way to do this via the <code>io.ebean.config.CurrentUserProvider</code> interface that you can implement.
+  </p>
+  <p>The interface only specifies a single method <code>Object currentUser();</code> which will return your typical
+    entity identifier: <code>Long, String or UUID</code>
+  </p>
+  <p>Notice that Ebean instantiates the <code>CurrentUserProvider</code> by means of creating a new instance</p>
 
+  <h4>Example Implementation</h4>
+  <p>This implementation does not work, it's just to provide an idea</p>
+  ```java
+    /**
+     * Returns the current user typically from a Thread local or similar context.
+     */
+    public class MyCurrentUserProvider implements CurrentUserProvider {
+
+      @Override
+      public Object currentUser() {
+        // Here you get the user id, from some kind of static context access (session information, thread local, etc..)
+        return someContext.getId();
+      }
+    }
+  ```
+
+  <h4>Activation</h4>
+  <p>In order to tell ebean which class imeplements the interface in your <code>ebean.properties</code> file you need to set the following property:
+    <code>ebean.currentUserProvider=path.to.my.implementation.MyCurrentUserProvider</code>
   </p>
 
 </div>

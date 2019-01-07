@@ -155,7 +155,7 @@
 
   <h4>Step 5: Configure logging</h4>
   <p>
-    The default implementation of ChangeLogListener logs events to <code>org.avaje.ebean.ChangeLog</code>.
+    The default implementation of ChangeLogListener logs events to <code>io.ebean.ChangeLog</code>.
     Typically you would look to configure logging such that these logs go to a separate log.
   </p>
 
@@ -178,7 +178,7 @@
     </encoder>
   </appender>
 
-  <logger name="org.avaje.ebean.ChangeLog" level="TRACE" additivity="false">
+  <logger name="io.ebean.ChangeLog" level="TRACE" additivity="false">
     <appender-ref ref="CHANGE_LOG"/>
   </logger>
 

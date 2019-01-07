@@ -38,7 +38,7 @@ depending on the etc).
 maps entity to table names and can take into account database schema and catalog if
 required.</p>
 
-<p>Refer to: com.avaje.ebean.config.NamingConvention</p>
+<p>Refer to: io.ebean.config.NamingConvention</p>
 <p>The default UnderscoreNamingConvention converts column names with underscores into
 normal java camel case property names (e.g. "first_name" maps to "firstName").</p>
 
@@ -316,7 +316,7 @@ public class User implements Serializable {
   ...
   @ManyToMany(cascade=CascadeType.ALL)
   List<Role> roles;
-  
+
 @Entity
 @Table(name="s_role")
 public class Role {
@@ -382,7 +382,7 @@ UUID id;
 </p>
 <h4>DB Sequences / DB Autoincrement</h4>
 <p>
-Refer: com.avaje.ebean.config.dbplatform.DatabasePlatform and DbIdentity
+Refer: io.ebean.config.dbplatform.DatabasePlatform and DbIdentity
 </p>
 <p>
 For each database type (Oracle, MySql, H2, Postgres etc) there is a specific
@@ -803,8 +803,8 @@ EbeanServer server = EbeanServerFactory.create(config);
 ```java
 package com.avaje.tests.basic.encrypt;
 
-import com.avaje.ebean.config.EncryptKey;
-import com.avaje.ebean.config.EncryptKeyManager;
+import io.ebean.config.EncryptKey;
+import io.ebean.config.EncryptKeyManager;
 
 public class BasicEncyptKeyManager implements EncryptKeyManager {
 
