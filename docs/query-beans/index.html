@@ -1,0 +1,120 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_querybeans.html"/>
+  <template id="menuNav">&nbsp;</template>
+  <#assign documentation="active">
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Introduction</h2>
+
+  <p>
+    Query beans are optional. They provide an alternative way to write queries.
+  </p>
+
+  <p>
+    Query beans provide us with the ability to write queries in a type safe manor.
+    Query beans are generated using a Java annotation processor - <code>APT</code> or
+    Kotlin annotation processor - <code>KAPT</code>.
+  </p>
+  <p>
+    When the entity bean model changes
+    the query beans are regenerated and as developers we get compile time checking on
+    our application queries - we get a compile time error if our queries are no longer
+    valid for the model.
+  </p>
+
+  <h2>APT / KAPT</h2>
+
+  <p>
+    To generate <code>Java</code> query beans we use the <code>io.ebean : querybean-generator</code>
+    java annotation processor and to generate <code>Kotlin</code> query beans we use
+    <code>io.ebean : kotlin-querybean-generator</code>.
+  </p>
+
+  <h2>Enhancement</h2>
+
+  <p>
+    Query beans require enhancement to work. In the <code>ebean.mf</code> manifest file
+    we need to specify via <code>querybean-packages</code> the packages that should be enhanced
+    for query beans.
+  </p>
+
+  <p>
+    Note that for Java we additionally need to enhance the code that calls the query ebeans.
+    For Kotlin we only need to enhance the query beans themselves.
+  </p>
+
+  <h4>Example</h4>
+  ```properties
+  entity-packages: org.example.domain
+  transactional-packages: org.example
+  querybean-packages: org.example
+  ```
+
+  <h2>Steps - Java</h2>
+  <h4>Specify the packages to enhance</h4>
+  <p>
+    For java the <code>querybean-packages</code> in src/main/resources/ebean.mf needs to
+    include BOTH the query beans and the code that calls the query beans.
+  </p>
+
+  <h4>Maven</h4>
+  <p>
+    Add dependency for <code>ebean-querybean</code>
+  </p>
+
+  ```xml
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-querybean</artifactId>
+    <version>11.32.1</version>
+  </dependency>
+  ```
+  <p>
+    Add provided scope dependency for <code>querybean-generator</code>
+  </p>
+  ```xml
+  <!-- java annotation processor to generate query beans -->
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>querybean-generator</artifactId>
+    <version>11.32.1</version>
+    <scope>provided</scope>
+  </dependency>
+  ```
+
+  <h4>Gradle</h4>
+  <p>
+    Add dependency for <code>ebean-querybean</code>
+  </p>
+
+  ```xml
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-querybean</artifactId>
+    <version>11.32.1</version>
+  </dependency>
+  ```
+  <p>
+    Add provided scope dependency for <code>querybean-generator</code>
+  </p>
+  ```xml
+  <!-- java annotation processor to generate query beans -->
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>querybean-generator</artifactId>
+    <version>11.32.1</version>
+    <scope>provided</scope>
+  </dependency>
+  ```
+
+  <h2>Steps - Kotlin</h2>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html>
+<head>
+  <title>Maven query bean generation | Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="Maven" href="/docs/getting-started/maven"/>
+  <#assign maven_build="active">
+</head>
+<body>
+
+<h2>APT - Generate query beans</h2>
+<p>
+  We can optionally add a Java annotation processor (APT) to generate query beans.
+  This allows us to write type safe queries.
+</p>
+<p>
+  Skip this if you don't want to use query beans.
+</p>
+
+<h2>Add ebean-querybean dependency</h2>
+
+<@maven "io.ebean" "ebean-querybean" "auto" "3" />
+
+
+<h2>Java APT</h2>
+<p>
+  To generate Java query beans with maven add provided scope dependency for <code>querybean-generator</code>
+</p>
+```xml
+<!-- java annotation processor to generate query beans -->
+<dependency>
+  <groupId>io.ebean</groupId>
+  <artifactId>querybean-generator</artifactId>
+  <version>11.32.1</version>
+  <scope>provided</scope>
+</dependency>
+```
+
+<h2>Kotlin KAPT</h2>
+<p>
+  To generate Kotlin query ebeans we need to register the <code>kotlin-querybean-generator</code>
+  with the kotlin compiler. The easiest way to do this is to use a maven tile.
+</p>
+
+<p>
+  Add the maven tile into the <code>build / plugins</code> section of the pom.xml.
+</p>
+<p>
+  This performs enhancement of the entity beans, @Transactional methods and query beans at build time.
+</p>
+
+<pre content="xml">
+<plugin>
+  <groupId>io.repaint.maven</groupId>
+  <artifactId>tiles-maven-plugin</artifactId>
+  <version>2.12</version>
+  <extensions>true</extensions>
+  <configuration>
+    <tiles>
+      <!-- other tiles ... -->
+      <tile>io.ebean.tile:enhancement:7.4</tile>
+    </tiles>
+  </configuration>
+</plugin>
+</pre>
+
+
+<@next_edit "CLI Tool" "/docs/getting-started/cli-tool" "/docs/getting-started/cli-tool"/>
+
+</body>
+</html>
