@@ -2,50 +2,65 @@
 <head>
   <title>Maven query bean generation | Getting started | Ebean</title>
   <meta name="layout" content="_layout/docs_gettingstarted.html"/>
-  <meta name="bread2" content="Maven" href="/docs/getting-started/maven"/>
-  <#assign maven_build="active">
+  <meta name="bread2" content="Maven Query beans" href="/docs/getting-started/maven"/>
+  <#assign maven_querybeans="active">
 </head>
 <body>
 
-<h2>APT - Generate query beans</h2>
+<h2>Query bean generation with Maven</h2>
 <p>
   We can optionally add a Java annotation processor (APT) to generate query beans.
-  This allows us to write type safe queries.
+  This allows us to write type safe queries like:
 </p>
+<pre content="java">
+List<Customer> customers =
+  new QCustomer()
+  .name.startsWith("Rob")
+  .findList();
+</pre>
 <p>
   Skip this if you don't want to use query beans.
 </p>
 
-<h2>Add ebean-querybean dependency</h2>
+<h3>Add ebean-querybean dependency</h3>
 
-<@maven "io.ebean" "ebean-querybean" "auto" "3" />
+<@maven "io.ebean" "ebean-querybean" "auto" "1" />
 
 
-<h2>Java APT</h2>
+<h3>Java APT</h3>
 <p>
-  To generate Java query beans with maven add provided scope dependency for <code>querybean-generator</code>
+  To generate Java query beans with maven add <code>provided</code> scope dependency for <code>querybean-generator</code>
 </p>
-```xml
-<!-- java annotation processor to generate query beans -->
+
+<!-- "io.ebean" "querybean-generator" "auto" "2"  -->
+
+<pre content="xml">
+<!-- annotation processor to generate query beans -->
 <dependency>
   <groupId>io.ebean</groupId>
   <artifactId>querybean-generator</artifactId>
   <version>11.32.1</version>
   <scope>provided</scope>
 </dependency>
-```
+</pre>
 
-<h2>Kotlin KAPT</h2>
+<h5>Example project</h5>
 <p>
-  To generate Kotlin query ebeans we need to register the <code>kotlin-querybean-generator</code>
-  with the kotlin compiler. The easiest way to do this is to use a maven tile.
+  <a href="https://github.com/ebean-orm-examples/example-java8/blob/master/pom.xml">Full example pom with query bean generation</a>
 </p>
 
+
+<h3>Kotlin KAPT</h3>
+<p>
+  To generate Kotlin query ebeans add the <code>kotlin-kapt</code> maven tile.
+</p>
+<p>
+  This tile brings in the kotlin-maven-plugin with configuration for kotlin-querybean-generator
+  annotation processor. As such <code>remove</code> the kotlin-maven-plugin that will already
+  be in the pom.xml (as the tile will bring in one that is configured to run the annotation processor).
+</p>
 <p>
   Add the maven tile into the <code>build / plugins</code> section of the pom.xml.
-</p>
-<p>
-  This performs enhancement of the entity beans, @Transactional methods and query beans at build time.
 </p>
 
 <pre content="xml">
@@ -56,12 +71,18 @@
   <extensions>true</extensions>
   <configuration>
     <tiles>
+      <tile>io.ebean.tile:enhancement:7.4</tile> <!-- ebean enhancement -->
+      <tile>io.ebean.tile:kotlin-kapt:1.5</tile> <!-- kotlin compile with query bean generation -->
       <!-- other tiles ... -->
-      <tile>io.ebean.tile:enhancement:7.4</tile>
     </tiles>
   </configuration>
 </plugin>
 </pre>
+
+<h5>Example project</h5>
+<p>
+  <a href="https://github.com/ebean-orm-examples/example-kotlin/blob/master/pom.xml">Full example pom for Kotlin query bean generation</a>
+</p>
 
 
 <@next_edit "CLI Tool" "/docs/getting-started/cli-tool" "/docs/getting-started/cli-tool"/>

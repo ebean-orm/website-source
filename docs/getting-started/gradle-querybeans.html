@@ -1,0 +1,76 @@
+<html>
+<head>
+  <title>Maven query bean generation | Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="Gradle Query beans" href="/docs/getting-started/gradle-querybeans"/>
+  <#assign gradle_querybeans="active">
+</head>
+<body>
+
+<h2>Query bean generation with Gradle</h2>
+<p>
+  We can optionally add a Java annotation processor (APT) to generate query beans.
+  This allows us to write type safe queries like:
+</p>
+<pre content="java">
+List<Customer> customers =
+  new QCustomer()
+  .name.startsWith("Rob")
+  .findList();
+</pre>
+<p>
+  Skip this if you don't want to use query beans.
+</p>
+
+
+<h3>Add ebean-querybean dependency</h3>
+<pre content="groovy">
+dependencies {
+  ...
+  compile 'io.ebean:ebean-querybean:11.32.1'
+
+}
+</pre>
+
+
+<h3>build.gradle</h3>
+<p>
+  Add the idea plugin if required.
+</p>
+<pre content="groovy">
+  apply plugin: 'idea'
+</pre>
+<p>
+  Add the configurations apt section if required.
+</p>
+<pre content="groovy">
+configurations {
+  apt
+}
+</pre>
+<p>
+  Add an idea module section to tell IntelliJ Idea about the generated query beans.
+</p>
+<pre content="groovy">
+idea {
+  module {
+    sourceDirs += file("$projectDir/generated")
+    generatedSourceDirs += file("$projectDir/generated")
+  }
+}
+</pre>
+<p>
+  Add querybeans = true to the ebean section
+</p>
+<pre content="groovy">
+ebean {
+  debugLevel = 0
+  queryBeans = true
+}
+</pre>
+
+
+<@next_edit "CLI Tool" "/docs/getting-started/cli-tool" "/docs/getting-started/cli-tool"/>
+
+</body>
+</html>
