@@ -33,7 +33,8 @@ dependencies {
 </pre>
 
 
-<h3>build.gradle</h3>
+<h3>Java APT build.gradle</h3>
+
 <p>
   Add the idea plugin if required.
 </p>
@@ -68,7 +69,77 @@ ebean {
   queryBeans = true
 }
 </pre>
+<h5>Example project</h5>
+<p>
+  <a href="https://github.com/ebean-orm-examples/example-gradle-java/blob/master/build.gradle">Full example build.gradle with apt query bean generation</a>
+</p>
 
+<p>&nbsp;</p>
+
+<h3>Kotlin KAPT build.gradle</h3>
+
+<p>
+  Add the plugins for <code>org.jetbrains.kotlin.jvm</code> and <code>org.jetbrains.kotlin.kapt</code>.
+</p>
+<pre content="groovy">
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+  dependencies {
+    classpath "io.ebean:ebean-gradle-plugin:11.27.1"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.11"
+  }
+}
+
+apply plugin: 'idea'
+apply plugin: 'io.ebean'
+apply plugin: "org.jetbrains.kotlin.jvm"
+apply plugin: "org.jetbrains.kotlin.kapt"
+</pre>
+
+<p>
+  Add <code>kapt</code> dependency for <code>io.ebean:kotlin-querybean-generator</code>.
+</p>
+
+<pre content="groovy">
+dependencies {
+
+  compile ...
+  compile "io.ebean:ebean:11.32.1"
+  compile "io.ebean:ebean-querybean:11.32.1"
+
+  kapt "io.ebean:kotlin-querybean-generator:11.32.1"
+
+  testCompile ...
+}
+</pre>
+
+
+<p>
+  Set <code>jvmTarget</code> to 1.8 for both compileKotlin and compileTestKotlin.
+</p>
+<pre content="groovy">
+compileKotlin {
+  kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+  kotlinOptions.jvmTarget = "1.8"
+}
+</pre>
+<h5>Example project</h5>
+<p>
+  <a href="https://github.com/ebean-orm-examples/example-gradle-kotlin/blob/master/build.gradle">Full example build.gradle with kapt query bean generation</a>
+</p>
+
+<p>
+  Note that unlike for Gradle Java we don't use <em>ebean.queryBeans = true</em>
+  and nor do we need to specify <em>idea.module.sourceDirs</em> or <em>idea.module.generatedSourceDirs</em>
+</p>
+
+<p>&nbsp;</p>
 
 <@next_edit "CLI Tool" "/docs/getting-started/cli-tool" "/docs/getting-started/cli-tool"/>
 
