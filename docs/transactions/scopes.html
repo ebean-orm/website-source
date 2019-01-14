@@ -8,7 +8,74 @@
 <body>
 <h2>Scopes</h2>
 
-<@next "SavePoints" "/docs/transactions/savepoints"/>
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>REQUIRED</td>
+    <td>Uses an existing transaction and if none exists will starts a new Transaction. This is the default.</td>
+  </tr>
+  <tr>
+    <td>MANDATORY</td>
+    <td>A transaction MUST already have been started. Throws TransactionRequiredException.</td>
+  </tr>
+  <tr>
+    <td>SUPPORTS</td>
+    <td>Uses the existing transaction if one exists, otherwise the method does not run with a transaction. Used this with caution.</td>
+  </tr>
+  <tr>
+    <td>REQUIRES_NEW</td>
+    <td>Always start a new transaction. Suspend an existing once if required.</td>
+  </tr>
+  <tr>
+    <td>NOT_SUPPORTED</td>
+    <td>Suspends an existing transaction if required. Method runs without a transaction.</td>
+  </tr>
+  <tr>
+    <td>NEVER</td>
+    <td>If there is an existing transaction throws an Exception. Method runs without a transaction.</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<h2>REQUIRED is default</h2>
+<p>
+  The default transaction scope when not specified is <code>REQUIRED</code>. This is by far the most
+  common transaction scope used in most applications.
+</p>
+
+<p>&nbsp;</p>
+
+<h3>Example with @Transactional</h3>
+<p>
+  We can specify other transaction scopes on methods annotated with <code>@Transactional</code>.
+</p>
+```java
+@Transactional(type = TxType.REQUIRES_NEW)
+public void doInner() {
+  // execute using a new transaction ...
+
+}
+```
+
+<p>&nbsp;</p>
+
+<h2>Example with beginTransaction</h2>
+<p>
+  We can specify other transaction scopes via <code>beginTransaction(TxScope)</code>.
+</p>
+
+```java
+try (Transaction transaction = server.beginTransaction(TxScope.requiresNew())) {
+  // using a new transaction ...
+  transaction.commit();
+}
+```
+
+<@next "Savepoint" "/docs/transactions/savepoints"/>
 
 </body>
 </html>

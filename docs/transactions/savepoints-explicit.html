@@ -1,0 +1,48 @@
+<html>
+<head>
+  <title>Explicit Savepoint | Ebean</title>
+  <meta name="layout" content="_layout/docs_transactions.html"/>
+  <meta name="bread2" content="Explicit Savepoint" href="/docs/transactions/savepoints-explicit"/>
+  <#assign explicitsavepoints="active">
+</head>
+<body>
+<h2>Explicit Savepoint</h2>
+
+<p>
+  As an alternative to using transaction.setNestedUseSavepoint() we can instead
+  explicitly create and use savepoints by obtaining the <code>Connection</code> from the transaction.
+</p>
+
+<p>
+For example:
+</p>
+
+```java
+
+  Customer newCustomer = new Customer();
+  newCustomer.setName("John");
+  newCustomer.save();
+
+  try (Transaction transaction = Ebean.beginTransaction()) {
+
+    Connection connection = transaction.getConnection();
+    // Create a Save Point
+    Savepoint savepoint = connection.setSavepoint();
+
+    newCustomer.setName("Doe");
+    newCustomer.save();
+
+    // Rollback to a specific save point
+    connection.rollback(savepoint);
+    transaction.commit();
+  }
+
+  Customer found = Ebean.find(Customer.class, newCustomer.getId());
+  System.out.println(found.getName()); // Prints "John"
+
+```
+
+<@next "Transaction Options" "/docs/transactions/options"/>
+
+</body>
+</html>
