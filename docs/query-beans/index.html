@@ -1,15 +1,11 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_querybeans.html"/>
-  <template id="menuNav">&nbsp;</template>
   <#assign documentation="active">
 </head>
 <body>
 
-<div class="container">
-
-  <h2>Introduction</h2>
-
+  <h2 id="introduction">Introduction</h2>
   <p>
     Query beans are optional. They provide an alternative way to write queries.
   </p>
@@ -34,7 +30,7 @@
     <code>io.ebean : kotlin-querybean-generator</code>.
   </p>
 
-  <h2>Enhancement</h2>
+  <h2 id="enhancement">Enhancement</h2>
 
   <p>
     Query beans require enhancement to work. In the <code>ebean.mf</code> manifest file
@@ -54,67 +50,18 @@
   querybean-packages: org.example
   ```
 
-  <h2>Steps - Java</h2>
-  <h4>Specify the packages to enhance</h4>
+  <h2 id="maven">Generating with Maven</h2>
   <p>
-    For java the <code>querybean-packages</code> in src/main/resources/ebean.mf needs to
-    include BOTH the query beans and the code that calls the query beans.
+    Refer to <a href="/docs/getting-started/maven-querybeans">docs / getting-started / maven query beans</a>
+    for details of how to generate query beans using maven.
   </p>
 
-  <h4>Maven</h4>
+  <h2 id="gradle">Generating with Gradle</h2>
   <p>
-    Add dependency for <code>ebean-querybean</code>
+    Refer to <a href="/docs/getting-started/gradle-querybeans">docs / getting-started / gradle query beans</a>
+    for details of how to generate query beans using gradle.
   </p>
 
-  ```xml
-  <dependency>
-    <groupId>io.ebean</groupId>
-    <artifactId>ebean-querybean</artifactId>
-    <version>11.32.1</version>
-  </dependency>
-  ```
-  <p>
-    Add provided scope dependency for <code>querybean-generator</code>
-  </p>
-  ```xml
-  <!-- java annotation processor to generate query beans -->
-  <dependency>
-    <groupId>io.ebean</groupId>
-    <artifactId>querybean-generator</artifactId>
-    <version>11.32.1</version>
-    <scope>provided</scope>
-  </dependency>
-  ```
-
-  <h4>Gradle</h4>
-  <p>
-    Add dependency for <code>ebean-querybean</code>
-  </p>
-
-  ```xml
-  <dependency>
-    <groupId>io.ebean</groupId>
-    <artifactId>ebean-querybean</artifactId>
-    <version>11.32.1</version>
-  </dependency>
-  ```
-  <p>
-    Add provided scope dependency for <code>querybean-generator</code>
-  </p>
-  ```xml
-  <!-- java annotation processor to generate query beans -->
-  <dependency>
-    <groupId>io.ebean</groupId>
-    <artifactId>querybean-generator</artifactId>
-    <version>11.32.1</version>
-    <scope>provided</scope>
-  </dependency>
-  ```
-
-  <h2>Steps - Kotlin</h2>
-
-
-</div>
 
 </body>
 </html>
