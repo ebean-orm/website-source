@@ -1,0 +1,237 @@
+<html>
+<head>
+  <title>Batch Transactions | Ebean</title>
+  <meta name="layout" content="_layout/docs_transactions.html"/>
+  <meta name="bread2" content="Batch" href="/docs/transactions/batch"/>
+  <#assign batch="active">
+</head>
+<body>
+
+<h2>Batch</h2>
+<p>
+  We can explicitly turn on the use of JDBC batch via <em>transaction.setBatchMode(true)</em>
+</p>
+```java
+try (Transaction transaction = server.beginTransaction()) {
+
+  // use JDBC batch
+  transaction.setBatchMode(true);
+
+  // these go to batch buffer
+  aBean.save();
+  bBean.save();
+  cBean.save();
+
+  // batched
+  server.saveAll(someBeans);
+
+  // flush batch and commit
+  transaction.commit();
+}
+
+```
+
+<p>&nbsp;</p>
+
+<h2 id="transactionalBatchSize">@Transactional(batchSize)</h2>
+<p>
+  When using <em>@Transactional</em> setting the <code>batchSize</code> attribute will turn on JDBC batch.
+</p>
+
+```java
+@Transactional(batchSize = 50)
+public void doGoodStuff() {
+
+  ...
+}
+
+```
+
+<p>&nbsp;</p>
+
+<h2 id="batchsize">Batch size</h2>
+<p>
+  The JDBC batch buffer has a size at which it will flush executing the statements in the batch buffer.
+</p>
+<p>
+  When the number of beans (or UpdateSql or CallableSql) hits the buffer size then the batch is flushed
+  and all the statements in the buffer are executed.
+</p>
+<p>
+  If we persist different types of beans, for example "order" and "order details" then when any of the buffers
+  hits the batch size all buffers are flushed. This allows Ebean to preserve the execution order, for example
+  persisting all the "orders" before persisting all the "order details".
+</p>
+<p>
+  The batch buffer size default value is set via <em>serverConfig.persistBatchSize</em> which defaults to <code>20</code>.
+  We can set the buffer size on the transaction via <code>transaction.setBatchSize()</code> or <code>@Transactional(batchSize)</code>.
+</p>
+```java
+try (Transaction transaction = server.beginTransaction()) {
+
+  // use JDBC batch
+  transaction.setBatchMode(true);
+  transaction.setBatchSize(50);
+
+  // these go to batch buffer
+  aBean.save();
+  ...
+
+  // flush batch and commit
+  transaction.commit();
+}
+
+```
+
+<p>&nbsp;</p>
+
+<h2 id="flush">Flush</h2>
+<p>
+  The batch is flushed when:
+</p>
+<ul>
+  <li>A buffer hits the batch size</li>
+  <li>We execute a query - depending on setBatchFlushOnQuery()</li>
+  <li>We mix UpdateSql, CallableSql with bean persisting - depending on setBatchFlushOnMixed()</li>
+  <li>We call a getter or setter on a bean property that is already batched e.g. bean.getId()</li>
+  <li>We explicitly call flush()</li>
+</ul>
+
+<h4>setBatchFlushOnQuery</h4>
+<p>
+  We set <em>setBatchFlushOnQuery(false)</em> on a transaction when we want to execute a query
+  but don't want that to trigger a flush.
+</p>
+```java
+try (Transaction transaction = server.beginTransaction()) {
+  transaction.setBatchMode(true);
+  transaction.setBatchFlushOnQuery(false);
+
+  // these go to batch buffer
+  aBean.save();
+  ...
+
+  // execute this query but we don't
+  // want that to trigger flush
+  SomeOtherBean.find.byId(42);
+
+  ...
+
+  transaction.commit();
+}
+
+```
+
+<h4>setBatchFlushOnMixed</h4>
+<p>
+  We set <em>setBatchFlushOnMixed(false)</em> on a transaction when we want to execute a UpdateSql
+  or CallableSql mixed with bean save(), delete() etc and don't want that to trigger a flush.
+</p>
+```java
+try (Transaction transaction = server.beginTransaction()) {
+  transaction.setBatchMode(true);
+  transaction.setBatchFlushOnQuery(false);
+
+  // these go to batch buffer
+  aBean.save();
+  ...
+
+  // execute UpdateSql but we don't
+  // want that to trigger flush
+  UpdateSql update = ...
+  update.execute();
+
+  ...
+
+  transaction.commit();
+}
+
+```
+
+<h4>Flush on getter/setter</h4>
+<p>
+  For beans that are in the batch buffer, if we call getters/setters on a generated property
+  or "unloaded" Id property this will trigger a flush.
+</p>
+```java
+try (Transaction transaction = server.beginTransaction()) {
+  transaction.setBatchMode(true);
+
+  // bean goes to batch buffer
+  myBean.save();
+  ...
+
+  // will trigger flush if id is an "unloaded" property and myBean is in the buffer (not flushed)
+  long id = myBean.getId();
+
+  // will trigger flush if myBean is in the buffer (not flushed)
+  Instant whenCreated = myBean.getWhenCreated();
+
+  ...
+
+  transaction.commit();
+}
+
+```
+
+<h4>Explicit flush()</h4>
+<p>
+  We may wish to perform an explicit <em>flush()</em> when we want to ensure that any batched statements
+  have been executed. This typically means that we know that all SQL statements have been executed and
+  that all the DB constraints are tested at that point in the application logic.
+</p>
+```java
+try (Transaction transaction = server.beginTransaction()) {
+  transaction.setBatchMode(true);
+
+  // bean goes to batch buffer
+  myBean.save();
+  ...
+
+
+  // ensure all SQL statements are executed which means that
+  // all DB constraints (unique, foreign key etc) are tested
+  transaction.flush();
+
+
+  // carry on with stuff ...
+  ...
+
+  transaction.commit();
+}
+
+```
+
+<p>&nbsp;</p>
+
+<h2 id="getGeneratedKeys">GetGeneratedKeys</h2>
+<p>
+  When we are performing a large bulk insert it is common to turn off <em>getGeneratedKeys</em>
+  as we typically don't use the beans after they have been inserted (so we don't need the keys).
+</p>
+
+```java
+try (Transaction transaction = server.beginTransaction()) {
+  transaction.setBatchMode(true);
+  transaction.setBatchSize(100);
+
+  // turn off GetGeneratedKeys ... as we don't need them
+  transaction.setBatchGetGeneratedKeys(false);
+
+  // maybe even turn off persist cascade ...
+  transaction.setPersistCascade(false)
+
+
+  // perform lots of bean inserts ...
+  ...
+
+
+  transaction.commit();
+}
+
+```
+
+<@next "Scopes" "/docs/transactions/scopes"/>
+
+</body>
+</html>

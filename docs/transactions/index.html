@@ -34,7 +34,81 @@ public void process(OffsetDateTime startOffset) {
 }
 ```
 
-<@next_edit "Implicit transactions" "/docs/transactions/implicit" "/docs/transactions/index.html"/>
+<h2 id="implicit">Implicit transactions</h2>
+<p>
+  When no transactions are specified explicitly Ebean will create a transaction to perform the action.
+</p>
+<h4>Query - read only transaction</h4>
+<p>
+  For queries Ebean will look to use a read only transaction. If a <code>Read Only DataSource</code> has
+  be configured Ebean will look to use that by default.
+</p>
+
+<h4>Save, Insert, Update</h4>
+<p>
+  For all persist requests like save, insert, update, delete Ebean will create a transaction and perform
+  a <code>COMMIT</code> at the end of the operation.
+</p>
+
+<h2 id="programmatic">Programmatic</h2>
+<p>
+  We programmatically create transactions using <code>ebeanServer.beginTransaction()</code>.
+  When we do so we generally should use <code>try with resources</code> to ensure that the
+  transaction is closed regardless of an exception throw.
+</p>
+```java
+// use try with resources such that the transaction is
+// always closed, even if an exception is thrown
+try (Transaction transaction = ebeanServer.beginTransaction()) {
+
+  // do good stuff...
+  customer.save();
+  order.save();
+
+  transaction.commit();
+}
+```
+
+<h2 id="atTransactional">@Transactional</h2>
+<p>
+  We can put <code>@Transactional</code> annotation on methods (including private methods) and Ebean
+  enhancement will add transaction demarcation to those methods.
+</p>
+```java
+@Transactional
+public void process(OffsetDateTime startOffset) {
+  ...
+}
+```
+<h3>ebean.mf</h3>
+<p>
+  For the <code>@Transactional</code> to work we need to make sure the <code>ebean.mf</code> manifest
+  file specifies the packages that contain the classes annotated with @Transactional such that they are enhanced.
+</p>
+<p>
+  The ebean.mf file is typically located in <code>src/main/resources/ebean.mf</code>.
+</p>
+
+<h3>Example ebean.mf</h3>
+```properties
+entity-packages: org.example.domain
+transactional-packages: org.example
+querybean-packages: none
+```
+<p>
+  With the example above we are enhancing <code>@Transactional</code> methods for classes in <code>org.example</code>
+  and any sub-packages.
+</p>
+<p>
+  Reference: <a href="/docs/configuration/manifest">docs/configuration/manifest</a>
+</p>
+<p>
+  Note that the <a href="/docs/getting-started/cli-tool">CLI Command line tool</a> can generate the ebean.mf
+  file so look to use that if you like.
+</p>
+
+
+<@next "Batch" "/docs/transactions/batch"/>
 
 </body>
 </html>
