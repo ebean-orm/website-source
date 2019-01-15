@@ -3560,6 +3560,30 @@
   "url":"/docs/transactions#transactions"
 }
 ,{
+  "title":"Implicit transactions",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#implicit"
+}
+,{
+  "title":"Programmatic",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#programmatic"
+}
+,{
+  "title":"@Transactional",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#atTransactional"
+}
+,{
   "title":"Spring",
   "caption":"",
   "category":"Transactions",
@@ -3576,36 +3600,100 @@
   "url":"/docs/transactions/jta"
 }
 ,{
-  "title":"Implicit",
+  "title":"Batch",
   "caption":"",
   "category":"Transactions",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/transactions/implicit"
+  "url":"/docs/transactions/batch"
 }
 ,{
-  "title":"Implicit - Implicit transactions",
+  "title":"Batch - @Transactional(batchSize)",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/transactions/implicit"
+  "url":"/docs/transactions/batch#transactionalBatchSize"
 }
 ,{
-  "title":"Programmatic",
+  "title":"Batch - Batch size",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#batchsize"
+}
+,{
+  "title":"Batch - Flush",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#flush"
+}
+,{
+  "title":"Batch - GetGeneratedKeys",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#getGeneratedKeys"
+}
+,{
+  "title":"Scopes",
   "caption":"",
   "category":"Transactions",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/transactions/programmatic"
+  "url":"/docs/transactions/scopes"
 }
 ,{
-  "title":"@Transactional",
+  "title":"Scopes - REQUIRED is default",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/scopes"
+}
+,{
+  "title":"Scopes - Example with beginTransaction",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/scopes"
+}
+,{
+  "title":"Savepoint",
   "caption":"",
   "category":"Transactions",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/transactions/transactional"
+  "url":"/docs/transactions/savepoints"
+}
+,{
+  "title":"Explicit Savepoint",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/transactions/savepoints-explicit"
+}
+,{
+  "title":"Options",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/transactions/options"
+}
+,{
+  "title":"Options - Transaction Options",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/options"
 }
 ,{
   "title":"CLI Tool",
@@ -4038,62 +4126,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/getting-started/kotlin-next-steps"
-}
-,{
-  "title":"Scopes",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/scopes"
-}
-,{
-  "title":"Scopes - REQUIRED is default",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/scopes"
-}
-,{
-  "title":"Scopes - Example with beginTransaction",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/scopes"
-}
-,{
-  "title":"Savepoint",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/savepoints"
-}
-,{
-  "title":"Explicit Savepoint",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/savepoints-explicit"
-}
-,{
-  "title":"Options",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/options"
-}
-,{
-  "title":"Options - Transaction Options",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/options"
 }
 ,{
   "title":"",
@@ -4542,5 +4574,61 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query-beans#gradle"
+}
+,{
+  "title":"Where",
+  "caption":"",
+  "category":"Query beans",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query-beans/where"
+}
+,{
+  "title":"Where - AND",
+  "caption":"",
+  "category":"Query beans",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query-beans/where"
+}
+,{
+  "title":"Where - OR",
+  "caption":"",
+  "category":"Query beans",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query-beans/where"
+}
+,{
+  "title":"Where - Raw expressions",
+  "caption":"",
+  "category":"Query beans",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query-beans/where"
+}
+,{
+  "title":"Select",
+  "caption":"",
+  "category":"Query beans",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query-beans/select"
+}
+,{
+  "title":"Select - Standard query select and fetch",
+  "caption":"",
+  "category":"Query beans",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query-beans/select"
+}
+,{
+  "title":"Select - Standard query FetchGroup",
+  "caption":"",
+  "category":"Query beans",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query-beans/select"
 }
 ]
