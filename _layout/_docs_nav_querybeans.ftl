@@ -1,4 +1,9 @@
-<@smallnav activeCheck="${intro!''}" url="/docs/query-beans#intro" title="Introduction"/>
-<@smallnav activeCheck="${enhancement!''}" url="/docs/query-beans#enhancement" title="Enhancement"/>
-<@smallnav activeCheck="${_maven!''}" url="/docs/query-beans#maven" title="Maven"/>
-<@smallnav activeCheck="${_gradle!''}" url="/docs/query-beans#gradle" title="Gradle"/>
+<@smallnav activeCheck="${intro!''}" url="/docs/query-beans#intro" title="Introduction">
+<ul class="nav">
+  <li><a href="/docs/query-beans#enhancement">Enhancement</a></li>
+  <li><a href="/docs/query-beans#maven">Maven</a></li>
+  <li><a href="/docs/query-beans#gradle">Gradle</a></li>
+</ul>
+</@smallnav>
+<@smallnav activeCheck="${where!''}" url="/docs/query-beans/where" title="Where"/>
+<@smallnav activeCheck="${select!''}" url="/docs/query-beans/select" title="Select"/>

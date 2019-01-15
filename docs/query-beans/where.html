@@ -1,0 +1,149 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_querybeans.html"/>
+  <meta name="bread2" content="Where" href="/docs/query-beans/where"/>
+  <#assign where="active">
+</head>
+<body>
+
+<h2 id="where">Where</h2>
+<p>
+  Query bean properties provide a nice type safe way to add expressions to the <code>where</code> clause.
+</p>
+```java
+Customer rob =
+  new QCustomer()
+    .name.equalTo("Rob")
+    .findOne();
+```
+
+```sql
+select ...
+from customer t0
+where t0.name = ?
+```
+<h4>Paths</h4>
+<p>
+  With properties that are associated to beans (OneToOne, OneToMany, ManyToOne, ManyToMany)
+  we can 'navigate' these paths adding valid expressions.
+</p>
+
+<h5>e.g. path "billingAddress.city" for Customer</h5>
+```java
+List<Customer> customers =
+  new QCustomer()
+    .billingAddress.city.equalTo("Auckland")
+    .findList();
+```
+<p>
+  Ebean will automatically add appropriate SQL JOINS to support the expressions.
+</p>
+```sql
+select ...
+from customer t0
+join address t1 on t1.id = t0.billing_address_id
+where t1.city = ?
+```
+<p>
+  These property paths can be any depth.
+</p>
+<h5>e.g. path "customer.billingAddress.city" for Order</h5>
+```java
+List<Order> orders =
+  new QOrder()
+    .customer.billingAddress.city.equalTo("Auckland")
+    .findList();
+```
+
+<h5>e.g. multiple paths for Order</h5>
+```java
+List<Order> orders =
+  new QOrder()
+     .orderDate.greaterThan(lastWeek)
+    .customer.status.equalTo(Status.NEW)
+    .customer.billingAddress.city.equalTo("Auckland")
+    .findList();
+```
+
+<p>&nbsp;</p>
+
+<h2>AND</h2>
+<p>
+  By default multiple expressions are added via <code>AND</code>.
+</p>
+```java
+List<Customer> customers =
+  new QCustomer()
+    .status.equalTo(Status.NEW)
+    .whenCreated.greaterThan(lastWeek)
+    .findList();
+```
+```sql
+select ...
+from customer t0
+where t0.status = ? and t0.when_created > ?
+```
+
+<p>&nbsp;</p>
+
+<h2>OR</h2>
+<p>
+  When we want to add multiple expressions via <em>OR</em> we use <code>or()</code> and <code>endOr()</code>
+  and all the expressions between them are joined by <em>OR</em>.
+</p>
+<p>
+  For example: (name is null OR name = 'Rob')
+</p>
+```java
+ Customer customer
+   = new QCustomer()
+      .or()
+        .name.isNull()
+        .name.equalTo("Rob")
+      .endOr()
+      .findOne()
+```
+```sql
+select ...
+from customer t0
+where (t0.name is null  or t0.name = ? )
+```
+<p>&nbsp;</p>
+
+<h2>Raw expressions</h2>
+<p>
+  Sometimes we want to add raw expressions to the where clause.
+  We use <code>raw()</code> to include arbitrary SQL, functions and stored procedures
+  into the query <em>where clause</em>.
+</p>
+
+<h5>e.g. simple raw expression</h5>
+```java
+List<Order> orders =
+  new QOrder()
+  .raw("orderDate > shipDate ")
+  .findList()
+```
+
+<h5>e.g. use sql function</h5>
+```java
+List<Order> orders =
+  new QOrder()
+  .raw("add_days(orderDate, 10) < ?", someDate)
+  .findList();
+```
+
+
+<h5>e.g. sql subquery</h5>
+```java
+List<Order> orders =
+  new QOrder()
+   .status.equalTo(Status.NEW)
+   .raw("t0.customer_id in (select customer_id from customer_group where group_id = any(?::uuid[]))", groupIds)
+   .findList()
+```
+
+<@next "Select" "/docs/query-beans/select"/>
+
+</body>
+</html>

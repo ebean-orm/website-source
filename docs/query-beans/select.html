@@ -1,0 +1,117 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_querybeans.html"/>
+  <meta name="bread2" content="Select" href="/docs/query-beans/select"/>
+  <#assign select="active">
+</head>
+<body>
+
+<h2 id="select">Select</h2>
+<p>
+  Query beans provide a type safe way to define what part of the object graph to fetch in
+  addition to the approaches provided via the normal Query.
+</p>
+<p>
+  Each query bean provides an <em>alias</em> bean that can be used in <em>select</em> and <em>fetch</em>.
+</p>
+<p>
+  In the example below we specify which properties to include in the select and only these
+  properties are loaded into the entity beans. This is described as "partial object".
+</p>
+```java
+
+// alias that can be used in select and fetch clauses
+QCustomer cust = QCustomer.alias();
+
+List<Customer> customers =
+  new QCustomer()
+  // only fetch some properties of customer (partial objects)
+  .select(cust.name, cust.version, cust.whenCreated)
+  .name.istartsWith("Rob")
+  .findList();
+
+```
+<p>
+  Similarly with <code>fetch</code> we can specify specific properties to fetch on associated beans.
+</p>
+```java
+QCustomer cust = QCustomer.alias();
+QContact con = QContact.alias();
+
+List<Customer> customers =
+  new QCustomer()
+  .select(cust.name, cust.version, cust.whenCreated)
+  // eagerly fetch contacts (only the email property)
+  .contacts.fetch(con.email)
+
+  .name.istartsWith("Rob")
+  .findList();
+
+```
+
+<p>&nbsp;</p>
+
+<h2>Standard query select and fetch</h2>
+<p>
+  Alternatively we can use the standard query select and fetch which take strings so are not
+  type safe per say.
+</p>
+```java
+
+List<Customer> customers =
+  new QCustomer()
+  // only fetch some properties of customer (partial objects)
+  .select("name, version, whenCreated")
+  .name.istartsWith("Rob")
+  .findList();
+
+```
+```java
+
+List<Customer> customers =
+  new QCustomer()
+  // fetch some properties of customer
+  // and the associated contacts
+  .select("name, version, whenCreated")
+  .fetch("contacts", "email")
+
+  .name.istartsWith("Rob")
+  .findList();
+
+```
+
+<p>&nbsp;</p>
+
+<h2>Standard query FetchGroup</h2>
+<p>
+  Alternatively we can use <em>FetchGroup</em> to specify what part of the object graph to fetch.
+</p>
+<h5>e.g. Just top level select properties</h5>
+```java
+FetchGroup<Customer> fetch = FetchGroup.of(Customer.class, "name, version, whenCreated");
+
+List<Customer> customers =
+  new QCustomer()
+    .select(fetch)
+    .name.istartsWith("Rob")
+    .findList();
+
+```
+<p>&nbsp;</p>
+
+<h5>e.g. select and fetch properties</h5>
+```java
+FetchGroup<Customer> fetch = FetchGroup.of(Customer.class)
+  .select("name, status")
+  .fetch("contacts", "email")
+  .build();
+
+List<Customer> customers =
+  new QCustomer()
+    .select(fetch)
+    .name.istartsWith("Rob")
+    .findList();
+```
+
+</body>
+</html>
