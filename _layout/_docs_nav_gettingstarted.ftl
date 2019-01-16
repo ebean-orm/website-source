@@ -17,8 +17,6 @@
 </@smallnav>
 <@smallnav activeCheck="${javafinder!''}" url="/docs/getting-started/java-finder" title="Finder">
 </@smallnav>
-<@smallnav activeCheck="${javarepository!''}" url="/docs/getting-started/java-repository" title="Repository">
-</@smallnav>
 <@smallnav activeCheck="${javanext!''}" url="/docs/getting-started/java-next-steps" title="Next steps">
 </@smallnav>
 <li><b>Kotlin</b></li>

@@ -60,7 +60,7 @@
           Address billingAddress;
 
           @OneToMany(mappedBy="customer")
-          List<Contact> contacts;
+          List<|Contact> contacts;
           ...
           ```
       </div>
@@ -154,7 +154,7 @@
 
     <div class="row">
       <div class="col-md-3">
-        <h3><a href="/docs/query/background/typesafe">Query beans</a></h3>
+        <h3><a href="/docs/query-beans">Query beans</a></h3>
         <p>
           Use Query beans to build queries in a type safe manner.
         </p>
@@ -165,7 +165,7 @@
         ```java
         LocalDate lastWeek = ...;
 
-        List<Customer> customers
+        List<|Customer> customers
           = new QCustomer()
             .name.istartsWith("rob")
             .billingAddress.city.equalTo("Auckland")

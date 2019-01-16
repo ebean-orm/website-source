@@ -7,11 +7,12 @@
 
   <h2 id="introduction">Introduction</h2>
   <p>
-    Query beans are optional. They provide an alternative way to write queries.
+    Query beans are optional but they provide a nice way to write queries that
+    is type safe but also easier to learn and use as the IDE helps us to
+    write query expressions with auto-completion on properties and expressions.
   </p>
 
   <p>
-    Query beans provide us with the ability to write queries in a type safe manor.
     Query beans are generated using a Java annotation processor - <code>APT</code> or
     Kotlin annotation processor - <code>KAPT</code>.
   </p>
@@ -25,9 +26,9 @@
   <h2>APT / KAPT</h2>
 
   <p>
-    To generate <code>Java</code> query beans we use the <code>io.ebean : querybean-generator</code>
+    To generate <code>Java</code> query beans we use the <em>io.ebean : querybean-generator</em>
     java annotation processor and to generate <code>Kotlin</code> query beans we use
-    <code>io.ebean : kotlin-querybean-generator</code>.
+    <em>io.ebean : kotlin-querybean-generator</em>.
   </p>
 
   <h2 id="enhancement">Enhancement</h2>

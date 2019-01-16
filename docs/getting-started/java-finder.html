@@ -69,7 +69,7 @@ Customer customer = Customer.find.byId(42L);
 // reference bean
 Customer refBean = Customer.find.ref(42L);
 
-List<Customer> customers =
+List|Customer> customers =
   Customer.find
     .where().istartsWith("name", "Rob")
     .findList();
@@ -92,7 +92,7 @@ List<Customer> customers = Customer.find.byName("Rob");
   The recommended approach is to use Model and Finder rather than the Repository pattern.
 </div>
 
-<@next_edit "Repository" "/docs/getting-started/java-repository" "/docs/getting-started/java-finder.html"/>
+<@next_edit "Next steps" "java-next-steps" "/docs/getting-started/java-finder.html"/>
 
 </body>
 </html>
