@@ -1,0 +1,61 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_querybeans.html"/>
+  <meta name="bread2" content="OrderBy" href="/docs/query-beans/orderby"/>
+  <#assign orderby="active">
+</head>
+<body>
+
+<h2 id="orderby">OrderBy</h2>
+<p>
+  Properties have <code>asc()</code> and <code>desc()</code> such that they are added
+  to the orderBy clause.
+</p>
+```java
+List<Customer> rob =
+  new QCustomer()
+    .status.in(Status.NEW, Status.ACTIVE)
+    .orderBy()
+      .name.desc() // order by t0.name desc
+    .findList();
+```
+<p>
+  Produces the SQL below:
+</p>
+```sql
+select ...
+from customer t0
+where t0.status in (?, ?)
+order by t0.name desc
+```
+<p>
+  We can add multiple properties to the orderBy clause.
+</p>
+```java
+List<Customer> customers =
+  new QCustomer()
+    .status.in(Status.NEW, Status.ACTIVE)
+    .orderBy()
+      .name.desc()
+      .id.asc()
+    .findList();
+```
+
+<h2 id="orderByExpression" class="art">OrderBy expression</h2>
+<p>
+  We can alternatively specify an order by expression which can include sql formula via <code>orderBy(string)</code>.
+</p>
+```java
+List<Customer> rob =
+  new QCustomer()
+    .status.in(Status.NEW, Status.ACTIVE)
+    .orderBy("coalesce(activeDate, now()) desc, name, id")
+    .findList();
+```
+
+
+<@next "Queries" "/docs/query"/>
+<@edit "/docs/query-beans/orderby"/>
+
+</body>
+</html>

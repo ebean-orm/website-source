@@ -28,6 +28,8 @@ pre .m { color: #40a070 } /* Literal.Number */
 pre .s { color: #4070a0 } /* Literal.String */
 pre .na { color: #2C5F92 } /* Name.Attribute */
 pre .na.field { color: #6f4297 } /* Name.Attribute #7D2E2D */
+pre .n.field { color: #6f4297 }
+
 pre .nb { color: #007020 } /* Name.Builtin */
 pre .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
 pre .no { color: #60add5 } /* Name.Constant */
@@ -66,7 +68,7 @@ pre .il { color: #40a070 } /* Literal.Number.Integer.Long */.syntax pre .hll { b
 .syntax pre .err { border: 1px solid #FF0000 } /* Error */
 .syntax pre .k { color: #2C5F92 } /* Keyword */
 .syntax pre .cm { color: #3D743D } /* Comment.Multiline */
-.syntax pre .cp { color: #0000ff } /* Comment.Preproc */
+.syntax pre .cp { color: #2c2ca1 } /* Comment.Preproc */
 .syntax pre .c1 { color: #3D743D } /* Comment.Single */
 .syntax pre .cs { color: #3D743D } /* Comment.Special */
 .syntax pre .ge { font-style: italic } /* Generic.Emph */
@@ -74,15 +76,15 @@ pre .il { color: #40a070 } /* Literal.Number.Integer.Long */.syntax pre .hll { b
 .syntax pre .gp { font-weight: bold } /* Generic.Prompt */
 .syntax pre .gs { font-weight: bold } /* Generic.Strong */
 .syntax pre .gu { font-weight: bold } /* Generic.Subheading */
-.syntax pre .kc { color: #0000ff } /* Keyword.Constant */
-.syntax pre .kd { color: #0000ff } /* Keyword.Declaration */
-.syntax pre .kn { color: #0000ff } /* Keyword.Namespace */
-.syntax pre .kp { color: #0000ff } /* Keyword.Pseudo */
-.syntax pre .kr { color: #0000ff } /* Keyword.Reserved */
+.syntax pre .kc { color: #2c2ca1 } /* Keyword.Constant */
+.syntax pre .kd { color: #2c2ca1 } /* Keyword.Declaration */
+.syntax pre .kn { color: #2c2ca1 } /* Keyword.Namespace */
+.syntax pre .kp { color: #2c2ca1 } /* Keyword.Pseudo */
+.syntax pre .kr { color: #2c2ca1 } /* Keyword.Reserved */
 .syntax pre .kt { color: #2b91af } /* Keyword.Type */
 .syntax pre .s { color: #a31515 } /* Literal.String */
 .syntax pre .nc { color: #2b91af } /* Name.Class */
-.syntax pre .ow { color: #0000ff } /* Operator.Word */
+.syntax pre .ow { color: #2c2ca1 } /* Operator.Word */
 .syntax pre .sb { color: #a31515 } /* Literal.String.Backtick */
 .syntax pre .sc { color: #a31515 } /* Literal.String.Char */
 .syntax pre .sd { color: #a31515 } /* Literal.String.Doc */

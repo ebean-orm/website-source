@@ -23,7 +23,7 @@
 // "alias" bean that can be used in select and fetch clauses
 QCustomer cust = QCustomer.alias();
 
-List<Customer> customers =
+List<|Customer> customers =
   new QCustomer()
   // only fetch some properties of customer (partial objects)
   .select(cust.name, cust.version, cust.whenCreated)
@@ -51,7 +51,7 @@ where lower(t0.name) like ? escape'|'; --bind(rob%)
 QCustomer cust = QCustomer.alias();
 QContact con = QContact.alias();
 
-List<Customer> customers =
+List<|Customer> customers =
   new QCustomer()
   .select(cust.name, cust.version, cust.whenCreated)
   // eagerly fetch contacts (only the email property)
@@ -104,12 +104,12 @@ val con = QContact._alias
 <h5>e.g. Just top level select properties</h5>
 ```java
 // reusable immutable constant (static final is good)
-static final FetchGroup<Customer> fetch =
+static final FetchGroup<|Customer> fetch =
     FetchGroup.of(Customer.class, "name, version, whenCreated"); // root level properties
 
 ...
 
-List<Customer> customers =
+List<|Customer> customers =
   new QCustomer()
     .select(fetch)
     .name.istartsWith("Rob")
@@ -121,7 +121,7 @@ List<Customer> customers =
 <h5>e.g. select and fetch properties</h5>
 ```java
 // reusable immutable constant (static final is good)
-static final FetchGroup<Customer> fetch =
+static final FetchGroup<|Customer> fetch =
    FetchGroup.of(Customer.class)
     .select("name, status")       // root level properties
     .fetch("contacts", "email")   // associated bean properties
@@ -129,7 +129,7 @@ static final FetchGroup<Customer> fetch =
 
 ...
 
-List<Customer> customers =
+List<|Customer> customers =
   new QCustomer()
     .select(fetch)
     .name.istartsWith("Rob")
@@ -147,7 +147,7 @@ List<Customer> customers =
 </p>
 ```java
 
-List<Customer> customers =
+List<|Customer> customers =
   new QCustomer()
   // only fetch some properties of customer (partial objects)
   .select("name, version, whenCreated")
@@ -157,7 +157,7 @@ List<Customer> customers =
 ```
 ```java
 
-List<Customer> customers =
+List<|Customer> customers =
   new QCustomer()
   // fetch some properties of customer
   // and the associated contacts
@@ -174,7 +174,7 @@ List<Customer> customers =
 </p>
 ```java
 // java
-List<String> names =
+List<|String> names =
   new QContact()
     .select("concat(lastName,', ',firstName)")
     .lastName.startsWith("A")
@@ -182,7 +182,7 @@ List<String> names =
 ```
 ```java
 // kotlin
-var names: List<String> =
+var names: List<|String> =
   QContact()
     .select("concat(lastName,' ',firstName)")
     .lastName.startsWith("A")
@@ -219,7 +219,7 @@ select max(t0.when_modified) from contact t0
   Similarly for a multiple column aggregation query we use the string select clause.
 </p>
 ```java
-List<MachineStats> result =
+List<|MachineStats> result =
   new QMachineStats()
   .select("machine, date, max(rate)")
   .date.gt(LocalDate.now().minusDays(10))
@@ -237,6 +237,7 @@ group by t0.machine_id, t0.date
 having max(t0.rate) > ?
 ```
 
+<@next "OrderBy" "/docs/query-beans/orderby"/>
 <@edit "/docs/query-beans/select"/>
 
 </body>

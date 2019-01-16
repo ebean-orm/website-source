@@ -7,3 +7,4 @@
 </@smallnav>
 <@smallnav activeCheck="${where!''}" url="/docs/query-beans/where" title="Where"/>
 <@smallnav activeCheck="${select!''}" url="/docs/query-beans/select" title="Select"/>
+<@smallnav activeCheck="${orderby!''}" url="/docs/query-beans/orderby" title="OrderBy"/>
