@@ -34,7 +34,7 @@ public void process(OffsetDateTime startOffset) {
 }
 ```
 
-<h2 id="implicit">Implicit transactions</h2>
+<h2 id="implicit" class="art">Implicit transactions</h2>
 <p>
   When no transactions are specified explicitly Ebean will create a transaction to perform the action.
 </p>
@@ -50,7 +50,7 @@ public void process(OffsetDateTime startOffset) {
   a <code>COMMIT</code> at the end of the operation.
 </p>
 
-<h2 id="programmatic">Programmatic</h2>
+<h2 id="programmatic" class="art">Programmatic</h2>
 <p>
   We programmatically create transactions using <code>ebeanServer.beginTransaction()</code>.
   When we do so we generally should use <code>try with resources</code> to ensure that the
@@ -69,7 +69,25 @@ try (Transaction transaction = ebeanServer.beginTransaction()) {
 }
 ```
 
-<h2 id="atTransactional">@Transactional</h2>
+<h2 id="kotlinUse" class="art">Kotlin transaction.use { }</h2>
+<p>
+  Kotlin <code>use</code> is used similarly to <em>try with resources</em> to ensure the transaction
+  is closed.
+</p>
+```kotlin
+Country.db().beginTransaction().use { transaction ->
+
+  transaction.isBatchMode = true
+
+  Country("FJ", "Fiji").save()
+  Country("TO", "Tonga").save()
+  Country("WS", "Samoa").save()
+
+  transaction.commit()
+}
+```
+
+<h2 id="atTransactional" class="art">@Transactional</h2>
 <p>
   We can put <code>@Transactional</code> annotation on methods (including private methods) and Ebean
   enhancement will add transaction demarcation to those methods.

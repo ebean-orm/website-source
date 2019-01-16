@@ -31,9 +31,7 @@ try (Transaction transaction = server.beginTransaction()) {
 
 ```
 
-<p>&nbsp;</p>
-
-<h2 id="transactionalBatchSize">@Transactional(batchSize)</h2>
+<h2 id="transactionalBatchSize" class="art">@Transactional(batchSize)</h2>
 <p>
   When using <em>@Transactional</em> setting the <code>batchSize</code> attribute will turn on JDBC batch.
 </p>
@@ -47,9 +45,7 @@ public void doGoodStuff() {
 
 ```
 
-<p>&nbsp;</p>
-
-<h2 id="batchsize">Batch size</h2>
+<h2 id="batchsize" class="art">Batch size</h2>
 <p>
   The JDBC batch buffer has a size at which it will flush executing the statements in the batch buffer.
 </p>
@@ -83,9 +79,7 @@ try (Transaction transaction = server.beginTransaction()) {
 
 ```
 
-<p>&nbsp;</p>
-
-<h2 id="flush">Flush</h2>
+<h2 id="flush" class="art">Flush</h2>
 <p>
   The batch is flushed when:
 </p>
@@ -202,9 +196,7 @@ try (Transaction transaction = server.beginTransaction()) {
 
 ```
 
-<p>&nbsp;</p>
-
-<h2 id="getGeneratedKeys">GetGeneratedKeys</h2>
+<h2 id="getGeneratedKeys" class="art">GetGeneratedKeys</h2>
 <p>
   When we are performing a large bulk insert it is common to turn off <em>getGeneratedKeys</em>
   as we typically don't use the beans after they have been inserted (so we don't need the keys).
@@ -230,6 +222,38 @@ try (Transaction transaction = server.beginTransaction()) {
 }
 
 ```
+
+<h2 id="serverConfig" class="art">Configuration via ServerConfig</h2>
+
+```java
+// use JDBC globally by default
+serverConfig.setPersistBatch(PersistBatch.ALL);
+```
+<p>
+  We can set <em>serverConfig.setPersistBatch(PersistBatch.ALL)</em> so that JDBC batch mode is the default
+  being used for all transactions.
+</p>
+
+```java
+// default batch size
+serverConfig.setPersistBatchSize(50);
+```
+<p>
+  We can change the global default batch size via <em>serverConfig.setPersistBatchSize()</em>. The default is
+  otherwise set at 20.
+</p>
+
+```java
+// update all loaded properties or just dirty properties
+serverConfig.setUpdateAllPropertiesInBatch(true);
+```
+<p>
+  When using batch update we have the option to include the dirty properties or all loaded properties in the
+  update. If we choose dirty properties we will include less properties in the update statement but we may
+  get more distinct update statements being executed (in the case where the application logic doesn't update
+  the same properties on all the beans being updated).
+</p>
+
 
 <@next "Scopes" "/docs/transactions/scopes"/>
 
