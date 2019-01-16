@@ -5,7 +5,212 @@
   <#assign where= "true">
 </head>
 <body>
-<h2>where</h2>
+
+<h2 id="where">Where</h2>
+<p>
+  Query bean properties provide a nice type safe way to add expressions to the <code>where</code> clause.
+  We get compile time validation of the query paths, expressions and bind value types.
+</p>
+```java
+// using query bean
+Customer rob =
+  new QCustomer()
+    .name.equalTo("Rob") // type safe expression with IDE auto-completion
+    .findOne();
+```
+<p>
+  The same query can be written without using query beans as:
+</p>
+```java
+// using standard query
+Customer rob =
+  ebeanServer.find(Customer.class)
+    .where().eq("name", "Rob")
+    .findOne();
+```
+<p>
+  The queries above produces the sql:
+</p>
+```sql
+select ...
+from customer t0
+where t0.name = ?
+```
+<p>
+  With the above the <code>name</code> property is of type String/varchar and so only valid String expressions
+  such as <em>like, startsWith, contains</em> etc are allowed and the bind value for the expression must be a String.
+</p>
+<p>
+  Developers get IDE assistance/auto-completion when creating queries using query beans as the properties and
+  expressions available based on their types are suggested by the IDE with auto-complete.
+</p>
+<p>
+  Additionally with query beans, if the property is renamed (e.g. "name" became "fullName") or if the property
+  changed it's type then the query would no longer compile.
+</p>
+
+
+<h4>Paths</h4>
+<p>
+  With properties that are associated to beans (OneToOne, OneToMany, ManyToOne, ManyToMany)
+  we can 'navigate' these paths adding valid expressions.
+</p>
+
+<h5>e.g. path "billingAddress.city" for Customer</h5>
+```java
+// using query beans
+List<|Customer> customers =
+  new QCustomer()
+    .billingAddress.city.equalTo("Auckland")
+    .findList();
+```
+
+```java
+// using standard query
+List<|Customer> customers =
+  ebeanServer.find(Customer.class)
+  .where()
+     .eq("billingAddress.city", "Auckland")
+  .findList();
+```
+<p>
+  Ebean will automatically add appropriate SQL JOINS to support the expressions in the query.
+</p>
+```sql
+select ...
+from customer t0
+join address t1 on t1.id = t0.billing_address_id
+where t1.city = ?
+```
+<p>
+  These property paths can be any depth. In the example below the path takes us from the
+  Order bean to the Customer bean to the Address bean via <em>customer.billingAddress</em>.
+</p>
+<h5>e.g. path "customer.billingAddress.city" for Order</h5>
+```java
+List<Order> orders =
+  new QOrder()
+    .customer.billingAddress.city.equalTo("Auckland")
+    .findList();
+```
+
+
+<h2 class="art">AND</h2>
+<p>
+  By default multiple expressions are added via <code>AND</code>.
+</p>
+```java
+List<|Customer> customers =
+  new QCustomer()
+    .status.equalTo(Status.NEW)
+    .whenCreated.greaterThan(lastWeek)
+    .findList();
+```
+```sql
+select ...
+from customer t0
+where t0.status = ? and t0.when_created > ?
+```
+```java
+// using standard query
+List<|Customer> customers =
+  ebeanServer.find(Customer.class)
+  .where()
+    .eq("status", Status.NEW)
+    .gt("whenCreated", lastWeek)
+    .findList();
+```
+
+<h5>e.g. multiple paths for Order</h5>
+```java
+List<|Order> orders =
+  new QOrder()
+    .orderDate.greaterThan(lastWeek)
+    .customer.status.equalTo(Status.NEW)
+    .customer.billingAddress.city.equalTo("Auckland")
+    .findList();
+```
+<p>
+  With the above query we have the additional paths of <em>customer</em> and <em>customer.billingAddress</em>.
+  Ebean will determine the joins that are needed to support the expressions.
+</p>
+```sql
+select ...
+from orders t0
+join customer t1 on t1.id = t0.order_id
+join address t2 on t2.id = t1.billing_address_id
+where t0.order_date >= ? and t1.status = ? and t2.city = ?
+```
+
+
+<h2 class="art">OR</h2>
+<p>
+  When we want to add multiple expressions via <em>OR</em> we use <code>or()</code> and <code>endOr()</code>
+  and all the expressions between them are joined by <em>OR</em>.
+</p>
+<p>
+  For example: (name is null OR name = 'Rob')
+</p>
+```java
+ Customer customer
+   = new QCustomer()
+      .or()
+        .name.isNull()
+        .name.equalTo("Rob")
+      .endOr()
+      .findOne()
+```
+```sql
+select ...
+from customer t0
+where (t0.name is null or t0.name = ? )
+```
+```java
+ Customer customer =
+   ebeanServer.find(Customer.class)
+    .where()
+      .or()
+        .isNull("name")
+        .eq("name", "Rob")
+      .endOr()
+      .findOne()
+```
+
+<h2 class="art">Raw expressions</h2>
+<p>
+  Sometimes we want to add raw expressions to the where clause.
+  We use <code>raw()</code> to include arbitrary SQL, functions and stored procedures
+  into the query <em>where clause</em>.
+</p>
+
+<h5>e.g. simple raw expression</h5>
+```java
+List<|Order> orders =
+  new QOrder()
+  .raw("orderDate > shipDate ")
+  .findList()
+```
+
+<h5>e.g. use sql function</h5>
+```java
+List<|Order> orders =
+  new QOrder()
+  .raw("add_days(orderDate, 10) < ?", someDate)
+  .findList();
+```
+
+
+<h5>e.g. sql subquery</h5>
+```java
+List<|Order> orders =
+  new QOrder()
+   .status.equalTo(Status.NEW)
+   .raw("t0.customer_id in (select customer_id from customer_group where group_id = any(?::uuid[]))", groupIds)
+   .findList()
+```
+
+<@next "Select" "/docs/query/select"/>
+<@edit "/docs/query-beans/where"/>
 
 </body>
 </html>

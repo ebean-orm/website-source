@@ -1,11 +1,12 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="select" href="/docs/query/select"/>
+  <meta name="bread2" content="Select" href="/docs/query/select"/>
   <#assign select= "true">
 </head>
 <body>
-<h3>select</h3>
+
+<h2>Select</h2>
 <p>
   <code>select</code> allows us to control the properties that are fetched. We can specify only selected
   properties to fetch.
@@ -31,39 +32,195 @@ List<Customer> customers =
   automatically exludeded for <b>distinct</b>, <b>findSingleAttribute</b> and <b>aggregation</b> queries.
 </p>
 
+
+<h4>Query beans</h4>
+<p>
+  Query beans provide a type safe way to define what part of the object graph to fetch in
+  addition to the approaches provided via the normal Query.
+</p>
+<p>
+  Each query bean provides an <em>alias</em> bean that can be used in <em>select</em> and <em>fetch</em>.
+</p>
+<p>
+  In the example below we specify which properties to include in the select and only these
+  properties are loaded into the entity beans. This is described as "partial object".
+</p>
+```java
+
+// "alias" bean that can be used in select and fetch clauses
+QCustomer cust = QCustomer.alias();
+
+List<|Customer> customers =
+  new QCustomer()
+  // only fetch some properties of customer (partial objects)
+  .select(cust.name, cust.version, cust.whenCreated)
+  .name.istartsWith("Rob")
+  .findList();
+
+```
+<p>
+  The above query produces the following sql:
+</p>
+```sql
+select t0.id, t0.name, t0.version, t0.when_created
+from customer t0
+where lower(t0.name) like ? escape'|'; --bind(rob%)
+```
+
+<p>&nbsp;</p>
+<h4>Fetch</h4>
+<p>
+  Similarly with <code>fetch</code> we can specify specific properties to fetch on associated beans.
+</p>
+```java
+// "alias" beans for customer and contact which
+// we use to specify the properties to select and fetch
+QCustomer cust = QCustomer.alias();
+QContact con = QContact.alias();
+
+List<|Customer> customers =
+  new QCustomer()
+  .select(cust.name, cust.version, cust.whenCreated)
+  // eagerly fetch contacts (only the email property)
+  .contacts.fetch(con.email)
+
+  .name.istartsWith("Rob")
+  .findList();
+```
+
+<p>
+  The resulting sql for the above query is:
+</p>
+```sql
+select t0.id, t0.name, t0.version, t0.when_created, t1.id, t1.email
+from customer t0
+left join contact t1 on t1.customer_id = t0.id
+where lower(t0.name) like ? escape'|' order by t0.id; --bind(rob%)
+```
+<p>
+  The <em>contacts</em> path is a <em>@OneToMany</em> so we get a <em>left join</em> to the
+  contact table. We only fetch the contact id and email properties.
+</p>
+
+<p>&nbsp;</p>
+<h4>Kotlin "alias" beans</h4>
+<p>
+  For Kotlin the <em>alias</em> beans are a companion object of the query bean
+  and accessed via <code>_alias</code>. Otherwise the queries are the same in Kotlin.
+</p>
+```kotlin
+val cust = QCustomer._alias
+val con = QContact._alias
+```
+
+<h2 class="art">FetchGroup</h2>
+<p>
+  As an alternative to <em>select</em> and <em>fetch</em> we can use <em>FetchGroup</em> to specify what part of
+  the object graph to fetch.
+</p>
+<p>
+  We can use <em>FetchGroup</em> with both query beans and standard queries.
+</p>
+<p>
+  FetchGroups provide a clean way to separate the definition of "what part of the object graph to load" (query tuning)
+  from the definition of the query predicates (query business logic).
+</p>
+<p>
+  A FetchGroup is immutable, most often declared as a <code>static final</code> and can be combined to make other
+  FetchGroups.
+</p>
+
+<h5>e.g. Just top level select properties</h5>
+```java
+// reusable immutable constant (static final is good)
+static final FetchGroup<|Customer> fetch =
+    FetchGroup.of(Customer.class, "name, version, whenCreated"); // root level properties
+
+...
+
+List<|Customer> customers =
+  new QCustomer()
+    .select(fetch)
+    .name.istartsWith("Rob")
+    .findList();
+
+```
 <p>&nbsp;</p>
 
-<h4>Example - single attribute</h4>
+<h5>e.g. select and fetch properties</h5>
 ```java
-  List<String> names =
+// reusable immutable constant (static final is good)
+static final FetchGroup<|Customer> fetch =
+   FetchGroup.of(Customer.class)
+    .select("name, status")       // root level properties
+    .fetch("contacts", "email")   // associated bean properties
+    .build();
 
-    query()
-      .select("lastName")
-      .findSingleAttributeList();
+...
+
+List<|Customer> customers =
+  new QCustomer()
+    .select(fetch)
+    .name.istartsWith("Rob")
+    .findList();
 ```
 
-<h4>Example - aggregate single attribute</h4>
-```java
-String maxName =
 
-  query()
-    .select("max(lastName)")
-    .findSingleAttribute();
+<h2 class="art">Standard query select and fetch</h2>
+<p>
+  The standard query select and fetch take strings so are not type safe per say.
+</p>
+<p>
+  The following examples produce the same query as above but specify the <em>select</em>
+  and <em>fetch</em> via strings in a non type safe way.
+</p>
+```java
+
+List<|Customer> customers =
+  new QCustomer()
+  // only fetch some properties of customer (partial objects)
+  .select("name, version, whenCreated")
+  .name.istartsWith("Rob")
+  .findList();
+
 ```
-<!--sql-->
-<!--select max(t0.last_name) from contact t0-->
-<!---->
-
-<h4>Example - select formula</h4>
 ```java
-List<String> names =
 
-  query()
+List<|Customer> customers =
+  new QCustomer()
+  // fetch some properties of customer
+  // and the associated contacts
+  .select("name, version, whenCreated")
+  .fetch("contacts", "email")
+
+  .name.istartsWith("Rob")
+  .findList();
+
+```
+<h4>Formula</h4>
+<p>
+  We need to use this string select clause when we want to specify a formula.
+</p>
+```java
+// java
+List<|String> names =
+  new QContact()
     .select("concat(lastName,', ',firstName)")
+    .lastName.startsWith("A")
     .findSingleAttributeList();
 ```
+```java
+// kotlin
+var names: List<|String> =
+  QContact()
+    .select("concat(lastName,' ',firstName)")
+    .lastName.startsWith("A")
+    .findSingleAttributeList()
+```
 
-<h4>Example - select formula, Postgis ST_Distance</h4>
+
+
+<h5>Example - Postgis ST_Distance formula</h5>
 <p>
   With this example we explicitly cast to a Java BigDecimal type using
   the <code>::BigDecimal</code> cast at the end of the formula.
@@ -79,31 +236,57 @@ BigDecimal routeDistance = query()
   .findSingleAttribute();
 ```
 
-<h4>Example - count distinct</h4>
+<h4>Aggregation</h4>
+<p>
+  Similarly when we want to use an aggregation query we use this string select clause.
+</p>
+<h5>Single aggregation queries</h5>
 ```java
-int count =
+// java
+Timestamp maxWhen  =
+  new QContact()
+    .select("max(whenModified)")
+    .findSingleAttribute()
+```
 
-  query()
-    .setDistinct(true)
-    .select("lastName")
-    .findCount();
+```java
+// kotlin
+var maxWhen: Timestamp =
+  QContact()
+    .select("max(whenModified)")
+    .findSingleAttribute()
 ```
 ```sql
-select count(distinct t0.last_name) from contact t0
+select max(t0.when_modified) from contact t0
 ```
-<h4>Example - aggregation</h4>
-```java
-List<Machine> machineStats =
 
-  query()
-    .select("date, sum(distance), sum(hours)")
-    .findList();
+
+<h5>Group by aggregation queries</h5>
+<p>
+  Similarly for a multiple column aggregation query we use the string select clause.
+</p>
+```java
+List<|MachineStats> result =
+  new QMachineStats()
+  .select("machine, date, max(rate)")
+  .date.gt(LocalDate.now().minusDays(10))
+  .query().having().gt("max(rate)", 4)
+  .findList();
 ```
+<p>
+  The above query produces the following sql:
+</p>
 ```sql
-select t0.date, sum(t0.distance), sum(t0.hours)
+select t0.machine_id, t0.date, max(t0.rate)
 from d_machine_stats t0
-group by t0.date
+where t0.date > ?
+group by t0.machine_id, t0.date
+having max(t0.rate) > ?
 ```
+
+
+<@next "OrderBy" "/docs/query/orderBy"/>
+<@edit "/docs/query/select"/>
 
 </body>
 </html>

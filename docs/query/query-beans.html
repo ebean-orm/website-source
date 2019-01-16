@@ -1,11 +1,12 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_querybeans.html"/>
-  <#assign documentation="active">
+  <meta name="layout" content="_layout/docs_query_select.html"/>
+  <meta name="bread2" content="Query beans" href="/docs/query/query-beans"/>
+  <#assign querybeans="true">
 </head>
 <body>
 
-  <h2 id="introduction">Introduction</h2>
+  <h2 id="querybeans">Query beans</h2>
   <p>
     Query beans are optional but they provide a nice way to write queries that
     is type safe but also easier to learn and use as the IDE helps us to
@@ -23,7 +24,7 @@
     valid for the model.
   </p>
 
-  <h2>APT / KAPT</h2>
+  <h2 id="apt">APT / KAPT</h2>
 
   <p>
     To generate <code>Java</code> query beans we use the <em>io.ebean : querybean-generator</em>
@@ -64,8 +65,8 @@
   </p>
 
 
-  <@next "Where" "/docs/query-beans/where"/>
-  <@edit "/docs/query-beans/index"/>
+  <@next "Where" "/docs/query/where"/>
+  <@edit "/docs/query/query-beans"/>
 
 </body>
 </html>

@@ -1,20 +1,71 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="orderBy" href="/docs/query/orderBy"/>
+  <meta name="bread2" content="OrderBy" href="/docs/query/orderBy"/>
   <#assign orderBy= "true">
 </head>
 <body>
-<h2>orderBy (Control sort order)</h2>
+
+<h2 id="orderby">OrderBy</h2>
 <p>
-  Control the <code>order</code> of your <code>SQL</code> query. There are several methods available:
+  Query bean properties have <code>asc()</code> and <code>desc()</code> methods such that they
+  are added to the orderBy clause.
 </p>
-<ul>
-  <li>orderBy(String clause)</li>
-  <li>order(String clause)</li>
-  <li>orderBy()</li>
-  <li>order()</li>
-</ul>
+```java
+List<|Customer> customers =
+  new QCustomer()
+    .status.in(Status.NEW, Status.ACTIVE)
+    .orderBy()
+      .name.desc() // order by t0.name desc
+    .findList();
+```
+<p>
+  Produces the SQL below:
+</p>
+```sql
+select ...
+from customer t0
+where t0.status in (?, ?)
+order by t0.name desc
+```
+<p>
+  We can add multiple properties to the orderBy clause.
+</p>
+```java
+List<|Customer> customers =
+  new QCustomer()
+    .status.in(Status.NEW, Status.ACTIVE)
+    .orderBy()
+      .name.desc()
+      .id.asc()
+    .findList();
+```
+<h4>Standard orderBy</h4>
+<p>
+  For standard queries we use <code>orderBy().desc()</code> or <code>orderBy().asc()</code>
+  which also can be chained. The same query as above is written without query beans as:
+</p>
+```java
+List<|Customer> customers =
+  ebeanServer.find(Customer.class)
+    .where().in("status"), Status.NEW, Status.ACTIVE)
+    .orderBy()
+      .desc("name")
+      .asc("id")
+    .findList();
+```
+
+<h2 id="orderByExpression" class="art">OrderBy expression</h2>
+<p>
+  We can specify an order by expression which can include sql formula via <code>orderBy(string)</code>.
+</p>
+```java
+List<|Customer> rob =
+  new QCustomer()
+    .status.in(Status.NEW, Status.ACTIVE)
+    .orderBy("coalesce(activeDate, now()) desc, name, id")
+    .findList();
+```
 
 <p>
   <code>orderBy(String clause)</code> and <code>order(String clause)</code> are equivalent to each other and both receive the string of comma separated
@@ -38,6 +89,9 @@
     .desc("status")
   .findList()
 ```
+
+<@next "Having" "/docs/query/having"/>
+<@edit "/docs/query/orderBy"/>
 
 </body>
 </html>
