@@ -1,515 +1,153 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="fetch" href="/docs/query/fetch"/>
+  <meta name="bread2" content="Fetch" href="/docs/query/fetch"/>
   <#assign fetch= "true">
 </head>
 <body>
-<h3>fetch</h3>
+<h2>Fetch</h2>
 <p>
-  With fetch you specify the properties that should be fetched on the associated beans.
+  With fetch we specify the properties that should be fetched on associated beans. Beans that
+  are related by <em>OneToOne, OneToMany, ManyToOne and ManyToMany</em>.
 </p>
+
+<p>&nbsp;</p>
+<h4>Query bean example</h4>
 <p>
-  Any node of the object graph can be a partial object. This example shows several ways partial
-  objects can be fetched.
+  When using query beans we use <code>alias</code> beans to provide properties for both <em>select</em>
+  and <em>fetch</em>.
 </p>
 
 ```java
-Order order = Order.find
-.select("status, orderDate, shipDate") // 3 fields from order
-.fetch("customer", "name") // just name field from customer
-.fetch("details") // all fields from details
-.fetch("details.product", "sku") // just sku field from product
-.where().idEq(1L)
-.findOne();
+// "alias" beans for customer and contact which
+// we use to specify the properties to select and fetch
+QCustomer cust = QCustomer.alias();
+QContact con = QContact.alias();
+
+// using query beans
+List<|Customer> customers =
+  new QCustomer()
+  .select(cust.name, cust.version, cust.whenCreated)   // type safe select
+  // eagerly fetch contacts (only the email property)  // type safe fetch
+  .contacts.fetch(con.email)
+
+  .name.istartsWith("Rob")
+  .findList();
 ```
+
+<p>
+  The resulting sql for the above query is:
+</p>
 ```sql
+select t0.id, t0.name, t0.version, t0.when_created, t1.id, t1.email
+from customer t0
+left join contact t1 on t1.customer_id = t0.id
+where lower(t0.name) like ? escape'|' order by t0.id; --bind(rob%)
+```
+<p>
+  The <em>contacts</em> path is a <em>@OneToMany</em> so we get a <em>left join</em> to the
+  contact table. We only fetch the contact id and email properties.
+</p>
 
-select
-  t0.id c0, t0.status c1, t0.order_date c2, t0.ship_date c3,
-  t1.id c4, t1.name c5, -- customer name
-  t2.id c6, t2.order_qty c7, t2.ship_qty c8, t2.unit_price c9, t2.version c10,
-  t2.when_created c11, t2.when_updated c12, t2.order_id c13,
-  t3.id c14, t3.sku c15 -- product sku
-from orders t0
-join customer t1 on t1.id = t0.customer_id
-left outer join order_detail t2 on t2.order_id = t0.id
-left outer join product t3 on t3.id = t2.product_id
-where t0.id = ?
-order by t0.id, t2.id asc; --bind(1)
+<p>&nbsp;</p>
+<h4>Kotlin "alias" beans</h4>
+<p>
+  For Kotlin the <em>alias</em> beans are a companion object of the query bean
+  and accessed via <code>_alias</code>. Otherwise the queries are the same in Kotlin.
+</p>
+```kotlin
+val cust = QCustomer._alias
+val con = QContact._alias
 ```
 
-<h2 id="query_joins">Query joins</h2>
-<h4>
-  Controlling eager loading of the object graph using query joins.
-</h4>
-
-<p>You can use fetch() to explicitly state which additional paths you want to fetch. You would do
-  this to reduce "lazy loading" of those beans later.</p>
-
+<h4>Standard query example</h4>
 <p>
-  When more than 1 OneToMany or ManyToMany relationship is eagerly fetched
-  then Ebean will automatically convert one of those into a 'Query Join'. Ebean does this so that it
-  avoids
-  generating a cartesian product query. Note that Ebean determines the type of SQL join for you
-  based on the cardinality and optionality of the relationship.
+  The above query written as a standard query is:
 </p>
-<h4>Example 1</h4>
 
+```java
+// using standard query
+List<|Customer> customers =
+  ebeanServer.find(Customer.class)
+  .select("name, version, whenCreated")
+  .fetch("contacts", "email")
+
+  .where()
+  .istartsWith("name", "Rob")
+  .findList();
+```
+
+<h2 id="fetch">fetch()</h2>
 <p>
-  It this example both "customer.contacts" and "details" are OneToMany relationships.
-  ```java
-  List<Order> orders = Order.find
-    .select("status")
-    .fetch("customer")
-    .fetch("customer.contacts") // contacts is a @OneToMany
-    .fetch("details") // details is a @OneToMany
-    .orderBy("customer.name")
+  When we specify to <code>fetch</code> a given path that is telling Ebean that we want to eagerly load
+  that path and that we <em>PREFER</em> for that to happen as a <em>SQL JOIN</em>.
+</p>
+<p>
+  Ebean enforces rules that limit the number of sql joins that it will allow when translating ORM query into
+  SQL queries. Those rules are:
+</p>
+<ul>
+  <li>Ebean will not generate a SQL cartesian product</li>
+  <li>Ebean will honor maxRows in SQL</li>
+</ul>
+
+<h3>SQL Cartesian product</h3>
+<p>
+  This rule has the implication that Ebean will allow at most 1 join to a <code>OneToMany</code> path
+  or a <code>ManyToMany</code> path. If the ORM query has more than 1 of those paths then the ORM query will
+  be translated and executed as multiple SQL queries.
+</p>
+<p>
+  We avoid sql cartesian product because it has a high risk of producing a very very bad sql query.
+</p>
+
+<h3>Honor maxRows in SQL</h3>
+<p>
+  This rule has the implication that Ebean can not include any joins to a <code>OneToMany</code> path
+  or a <code>ManyToMany</code> path if there is a <code>maxRows</code>. This is because SQL max rows
+  works on rows so we can't include SQL joins to paths that have a cardinality of more than 1.
+</p>
+<p>
+  Honoring maxRows is SQL is important because the database can typically give us a way better query plan and
+  more efficient sql queries.
+</p>
+
+<h2 id="fetchQuery" class="art">fetchQuery()</h2>
+<p>
+  When we specify <em>fetchQuery</em> we are telling Ebean that we want this path fetched eagerly but that
+  we want that to be done using a separate sql query (known as a "secondary query" or "query join").
+</p>
+<p>
+  We choose to do this on specific paths because we know the relative costs of joins vs query joins etc.
+</p>
+
+<h2 id="fetchLazy">fetchLazy()</h2>
+<p>
+  With <em>fetchLazy</em> we are telling Ebean that we don't want to eagerly
+  fetch this path BUT if it is lazy loaded we are optimising what the lazy loading query will fetch.
+
+</p>
+<h5>e.g. when lazy loading Customer only fetch the name.</h5>
+```java
+List<|Order> orders =
+  new QOrder()
+    .fetchLazy("customer", "name")
     .findList();
-    ```
-
-    ... results in the "left outer join contact" and related t2.* columns being included in the
-    query (so they won't be lazy loaded later).
-
-    ```sql
-    -- This first query includes the customer contacts
-    -- but does not include the order details
-    select t0.id c0, t0.status c1,
-    t1.id c2, t1.inactive c3, t1.name c4, ... -- truncated
-    t2.id c12, t2.first_name c13, t2.last_name c14, ... -- truncated
-    t2.when_updated c19, t2.customer_id c20
-    from orders t0
-    join customer t1 on t1.id = t0.customer_id
-    left outer join contact t2 on t2.customer_id = t1.id
-    order by t1.name;
-    ```
-</p>
-
-
-<h4>The 'Query Join' query ...</h4>
-```sql
--- This second query fetchs the order details associated
--- with the orders that were returned by the first query
-select t0.order_id c0, t0.id c1, t0.order_qty c2, ...
-from order_detail t0
-where (t0.order_id) in (?,?,?,?,?,?,?,?,?,?)
-order by t0.order_id, t0.id;
---bind(2,1,1,1,3,3,3,4,4,4)
 ```
 
-<h4>Example 2</h4>
-
-<p>
-  In this example contacts is a @OneToMany and then off from each contact notes is a @OneToMany.
-</p>
+<h5>e.g. when lazy loading Customer additionally fetch the billingAddress and shippingAddress.</h5>
 ```java
-List<Customer> customers = Customer.find
-  .fetch("contacts") // contacts is a OneToMany
-  .fetch("contacts.notes") // notes is a OneToMany
-  .orderBy("name")
-  .findList();
-  ```
+List<|Order> orders =
+  new QOrder()
+    .fetchLazy("customer")
+    .fetch("customer.billingAddress")  // fetched with lazy load of customer
+    .fetch("customer.shippingAddress") // fetched with lazy load of customer
 
-  ```sql
-  select t0.id c0, t0.inactive c1, t0.name c2, ...
-  t0.when_updated c7, t0.billing_address_id c8, ...
-  t1.id c10, t1.first_name c11, t1.last_name c12, ...
-  from customer t0
-  left outer join be_contact t1 on t1.customer_id = t0.id
-  order by t0.name, t0.id
-  ```
-
-  <h4>The 'Query Join' query ...</h4>
-  ```sql
-  -- fetch the contact notes for all the contacts
-  select t0.contact_id c0, t0.id c1, t0.contact_id c2, t0.title c3, ...
-  from contact_note t0
-  where (t0.contact_id) in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-```
-
-<#-------------------------------------------------------------------------------------------------->
-<h2 id="fetchconfig">FetchConfig</h2>
-
-<p>When you specify a Query with Ebean it can result in more than 1 SQL query. Sometimes
-you want explicit control over this (what the secondary queries are, batch size used, eager
-or lazily invoked)</p>
-
-<p>FetchConfig gives you the ability to specify these "secondary queries" and let them
-executed lazily ("lazy loading join") or eagerly ("query join").</p>
-
-
-<p>Note that explicitly using FetchConfig is not a requirement. Ebean is able to automatically
-convert some joins
-to "query joins" when it is needed such as when building object graphs with multiple *ToMany
-relationships or when limit offset
-is used with a *ToMany relationship.</p>
-
-
-<p>You use FetchConfig to define that you want to use a separate SQL query to fetch that part of
-the object graph (to use a "query join" rather than a "fetch join"). What this means is that
-Ebean will use 2 SQL queries rather than 1 to build the object graph.
-</p>
-
-<p>Note that you do not need to expicitly use FetchConfig if you don't want to. In that case Ebean
-will automatically convert any fetch paths over to use FetchConfig if it needs to (multiple
-*ToMany relationships etc).
-</p>
-
-<p>FetchConfig defines the configuration options for a "query fetch" or a "lazy loading fetch".
-This gives you the ability to use multiple smaller queries to populate an object graph as
-opposed to a single large query. The primary goal is to provide efficient ways of loading
-complex object graphs avoiding SQL Cartesian product and issues around populating object graphs
-that have multiple *ToMany relationships. It also provides the ability to control the lazy
-loading queries (batch size, selected properties and fetches) to avoid N+1 queries etc.
-</p>
-
-<p>
-There can also be cases loading across a single OneToMany where 2 SQL queries using Ebean
-FetchConfig.query() can be more efficient than one SQL query. When the "One" side is wide (lots
-of columns) and the cardinality difference is high (a lot of "Many" beans per "One" bean) then
-this can be more efficient loaded as 2 SQL queries.
-</p>
-
-<p>The reason for using "Query Joins" as opposed to "Fetch joins" is that there are some
-cases where using multiple queries is more efficient that a single query.
-
-<p>
-
-<p>Any time you want to load multiple OneToMany associations it will likely be more
-performant as multiple SQL queries. If a single SQL query was used that would result in a
-Cartesian product.</p>
-
-<p>There can also be cases loading across a single OneToMany where 2 SQL queries (using
-Ebean "query join") can be more efficient than one SQL query (using Ebean "fetch join").
-When the "One" side is wide (lots of columns) and the cardinality difference is high (a lot
-of "Many" beans per "One" bean) then this can be more efficient loaded as 2 SQL queries.</p>
-
-
-<p>
-Example: Find Orders join details using a single SQL query
-```java
-// Normal fetch join results in a single SQL query
-List<Order> list = Ebean.find(Order.class).fetch("details").findList();
-```
-<p>
-
-<p>
-Example: Using a "query join" instead of a "fetch join" we instead use 2 SQL queries
-
-```java
-// This will use 2 SQL queries to build this object graph.
-List<Order> list =
-  Ebean.find(Order.class)
-  .fetch("details", new FetchConfig().query())
-  .findList();
-  ```
-  queries:
-  <ol>
-    <li>find order</li>
-    <li>find orderDetails where order.id in (?,?...) // first 100 order id's</li>
-  </ol>
-</p>
-
-
-<p>
-Example: Using 2 "query joins"
-
-```java
-// This will use 3 SQL queries to build this object graph
-List<Order> list =
-  Ebean.find(Order.class)
-  .fetch("details", new FetchConfig().query())
-  .fetch("customer", new FetchConfig().queryFirst(5))
-  .findList();
-  ```
-  queries:
-  <ol>
-    <li>find order</li>
-    <li>find orderDetails where order.id in (?,?...) // first 100 order id's</li>
-    <li>find customer where id in (?,?,?,?,?) // first 5 customers</li>
-  </ol>
-</p>
-
-<p>
-Example: Using "query joins" and partial objects
-
-```java
-// This will use 3 SQL queries to build this object graph
-List<Order> list =
-  Ebean.find(Order.class)
-  .select("status, shipDate")
-  .fetch("details", "quantity, price", new FetchConfig().query())
-  .fetch("details.product", "sku, name")
-  .fetch("customer", "name", new FetchConfig().queryFirst(5))
-  .fetch("customer.contacts")
-  .fetch("customer.shippingAddress")
-  .findList();
-  ```
-  queries:
-  <ol>
-    <li>find order (status, shipDate)</li>
-    <li>find orderDetail (quantity, price) fetch product (sku, name) where order.id in (?,?
-      ...)
-    </li>
-    <li>find customer (name) fetch contacts (*) fetch shippingAddress (*) where id in
-      (?,?,?,?,?)
-    </li>
-  </ol>
-  Note: the fetch of "details.product" is automatically included into the fetch of "details"<br>
-  Note: the fetch of "customer.contacts" and "customer.shippingAddress" are automatically
-  included in the fetch of "customer"
-</p>
-
-<p>You can use query() and lazy together on a single join. The query is executed immediately
-and the lazy defines the batch size to use for further lazy loading (if lazy loading is
-invoked).
-
-```java
-List<Order> list =
-  Ebean.find(Order.class)
-  .fetch("customer", new FetchConfig().query(10).lazy(5))
-  .findList();
-  ```
-  queries:
-  <ol>
-    <li>find order</li>
-    <li>find customer where id in (?,?,?,?,?,?,?,?,?,?) // first 10 customers</li>
-    <li>then if lazy loading of customers is invoked, use a batch size of 5 to load the
-      customers
-    </li>
-  </ol>
-</p>
-
-  <p>
-    Example of controlling the lazy loading query:
-  </p>
-
-  <p>
-    This gives us the ability to optimise the lazy loading query for a given use case.
-
-  ```java:
-  List<Order> list = Ebean.find(Order.class)
-    .fetch("customer","name", new FetchConfig().lazy(5))
-    .fetch("customer.contacts","contactName, phone, email")
-    .fetch("customer.shippingAddress")
-    .where().eq("status",Order.Status.NEW)
     .findList();
-    ```
-      queries:
-      <ol>
-        <li>find order where status = Order.Status.NEW</li>
-        <li>if lazy loading of customers is invoked, use a batch size of 5 to load the
-          customers.
-  </p>
-  </ol>
+```
 
-  Note: when the laxy loading of customers is performed, it perform like:
-  ```xml
-  find customer (name)
-  fetch customer.contacts (contactName, phone, email)
-  fetch customer.shippingAddress (*)
-  where id in (?,?,?,?,?)
-  ```
-
-
-  <p>Example of wo "Query Joins" results in 3 SQL queries used to build an object graph
-    ```java
-    // A more advanced example with multiple query joins
-    List<Order> l0 = Ebean.find(Order.class)
-      .select("status, shipDate")
-      .fetch("details", "orderQty, unitPrice", new FetchConfig().query())
-      .fetch("details.product", "sku, name")
-      .fetch("customer", "name", new FetchConfig().query(10))
-      .fetch("customer.contacts","firstName, lastName, mobile")
-      .fetch("customer.shippingAddress","line1, city")
-      .findList();
-      ```
-
-      The resulting 3 sql queries are:
-  </p>
-  <p>
-    Query 1 - the main query - Note: customer_id was automatically added to support query join.
-    ```xml
-    // query 1 … the main query
-    <sql summary='Order'>
-      select o.id c0, o.status c1, o.ship_date c2, o.customer_id c3
-      from orders o
-    </sql>
-    ```
-  </p>
-  <p>
-    Query 2 - query join on customer - fetching the first 10 customers referenced (batch:10) but
-    there where actually only 2 to fetch (actual:2).
-    ```xml
-    <sql mode='+query' summary='Customer, shippingAddress
-+many:contacts' load='path:customer batch:10 actual:2'>
-      select c.id c0, c.name c1
-      , cs.id c2, cs.line_1 c3, cs.city c4
-      , cc.id c5, cc.first_name c6, cc.last_name c7, cc.mobile c8
-      from customer c
-      left outer join address cs on cs.id = c.shipping_address_id
-      left outer join contact cc on cc.customer_id = c.id
-      where c.id in (?,?,?,?,?,?,?,?,?,?)
-      order by c.id
-    </sql>
-    ```
-  </p>
-  <p>
-    Query 3 – query join on details - fetching the order details for the first 100 orders
-    (batch:100).
-    ```xml
-    <sql mode='+query' summary='Order +many:details, details.product'
-         load='path:details batch:100 actual:3'>
-      select o.id c0
-      , od.id c1, od.order_qty c2, od.unit_price c3
-      , odp.id c4, odp.sku c5, odp.name c6
-      from orders o
-      left outer join order_detail od on od.order_id = o.id
-      left outer join product odp on odp.id = od.product_id
-      where o.id in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-      order by o.id
-    </sql>
-    ```
-
-  <h4>FetchConfig.lazy() - "Lazy Joins"</h4>
-
-  <p>If a join is not defined at all (neither a fetch join or a query join) – then lazy loading
-    will by
-    default just fetch all the properties for that entity.
-  </p>
-
-  <p>
-    FetchConfig.lazy() allows you to control that lazy loading query – define the batch size,
-    properties to select and also fetch paths to include on the lazy load query.
-  </p>
-
-  <p>
-    This is very similar to a "query join" except that the loading occurs on demand (when the
-    property is requested and not already loaded).
-  </p>
-
-  <p>
-    The reason you would want to control the lazy loading query is to optimise performance
-    for further lazy loading (avoid N+1 queries, define joins that should be included for lazy
-    loading queries, load only the properties required and no more).
-  </p>
-
-  <p>
-    Example: Control the query used to lazy load
-  </p>
-  ```java
-  // control the lazy loading of customers ...
-  List<Order> list = Ebean.find(Order.class)
-    .fetch("customer","name", new FetchConfig().lazy(5))
-    .fetch("customer.contacts","contactName, phone, email")
-    .fetch("customer.shippingAddress")
-    .where().eq("status",Order.Status.NEW)
-    .findList();
-  ```
-  <p>
-    In the example above the orders are loaded. Only when the application requests a
-    customer property (that is not the customer's id) then the lazy loading of the customer is
-    invoked. At that point the customer name is loaded, with the contacts and
-    shippingAddress – this is done in batch of 5 customers.
-  </p>
-
-  <p>
-    Note that if the customer status is requested (rather than the customer name) and that
-    invokes the lazy loading then all the customer's properties are loaded (rather than just the
-    customers name).
-
-    ```java
-    Order order = list.get(0);
-    Customer customer = order.getCustomer();
-
-    // this invokes the lazy loading of 5 customers
-    String name = customer.getName();
-    ```
-  </p>
-
-  <p>
-    The resulting lazy loading query is …
-    ```xml
-    <sql mode='+lazy' summary='Customer, shippingAddress +many:contacts'
-         load='path:customer batch:5 actual:2'>
-      select c.id c0, c.name c1, cs.id c2, cs.line_1 c3, cs.line_2 c4, cs.city c5,
-      cs.cretime c6, cs.updtime c7, cs.country_code c8,
-      cc.id c9, cc.phone c10, cc.email c11
-      from customer c
-      left outer join address cs on cs.id = c.shipping_address_id
-      left outer join contact cc on cc.customer_id = c.id
-      where c.id in (?,?,?,?,?)
-      order by c.id
-    </sql>
-    ```
-
-  <h4>Using both</h4>
-
-  <p>You can use both queryFirst() and lazy() on a single join. The queryFirst() part defines
-    the
-    number of beans that will be loaded eagerly via an additional query and then lazy defines
-    the batch size of the lazy loading that occurs after than (if there is any).
-
-    ```java
-    new FetchQuery.queryFirst(100).lazy(10);
-    ```
-
-  </p>
-
-  <h4>+query and +lazy – query language syntax</h4>
-
-  <p>
-    To define "query joins" and "lazy joins" in the query language you can use +query and
-    +lazy. Optionally you can specify the batch size for both.
-
-    ```groovy
-    find order
-    join customers (+query )
-    where status = :status
-    ```
-
-    ```groovy
-    find order (status, shipDate)
-    join customers (+lazy(10) name, status)
-    where status = :orderStatus
-    ```
-  </p>
-
-
-<#-------------------------------------------------------------------------------------------------->
-  <h2 id="lazy_loading">Lazy loading</h2>
-  <h4>
-    Fine grained control over lazy loading.
-  </h4>
-
-  <p>
-    A Partial Object will lazy load the rest of the data on demand when you get or set a
-    property it does not have.
-  </p>
-
-  ```java
-  // find order 12
-  // ... fetching the order id, orderDate and version property
-  // .... nb: the Id and version property are always fetched
-
-  Order order = Ebean.find(Order.class)
-  .select("orderDate")
-  .where().idEq(12)
-  .findOne();
-
-  // shipDate is not in the partially populated order
-  // ... so it will lazy load all the missing properties
-  Date shipDate = order.getShipDate();
-
-  // similarly if we where to set the shipDate
-  // ... that would also trigger a lazy load
-  order.setShipDate(new Date());
-  ```
-
-  <p>
-    Lazy loading occurs automatically when you set or get a property that the partially
-    populated bean does not have.
-  </p>
+<@next "FetchGroup" "/docs/query/fetchgroup"/>
+<@edit "/docs/query/fetch"/>
 
 </body>
 </html>

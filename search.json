@@ -3208,30 +3208,6 @@
   "url":"/docs/query/where"
 }
 ,{
-  "title":"Select",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/select"
-}
-,{
-  "title":"Select - FetchGroup",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/select"
-}
-,{
-  "title":"Select - Standard query select and fetch",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/select"
-}
-,{
   "title":"OrderBy",
   "caption":"",
   "category":"Query",
@@ -3248,6 +3224,62 @@
   "url":"/docs/query/orderBy#orderByExpression"
 }
 ,{
+  "title":"Select",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/select"
+}
+,{
+  "title":"Select - Standard query select and fetch",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/select"
+}
+,{
+  "title":"Fetch",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/fetch"
+}
+,{
+  "title":"Fetch - fetch()",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetch"
+}
+,{
+  "title":"Fetch - fetchQuery()",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetchQuery"
+}
+,{
+  "title":"Fetch - fetchLazy()",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetchLazy"
+}
+,{
+  "title":"FetchGroup",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/fetchgroup"
+}
+,{
   "title":"having",
   "caption":"",
   "category":"Query",
@@ -3262,38 +3294,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/having"
-}
-,{
-  "title":"fetch",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/fetch"
-}
-,{
-  "title":"fetch - Query joins",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#query_joins"
-}
-,{
-  "title":"fetch - FetchConfig",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#fetchconfig"
-}
-,{
-  "title":"fetch - Lazy loading",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#lazy_loading"
 }
 ,{
   "title":"filterMany",

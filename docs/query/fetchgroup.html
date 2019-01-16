@@ -1,0 +1,66 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_query_select.html"/>
+  <meta name="bread2" content="FetchGroup" href="/docs/query/fetchgroup"/>
+  <#assign fetchgroup= "true">
+</head>
+<body>
+
+<h2>FetchGroup</h2>
+<p>
+  As an alternative to <em>select</em> and <em>fetch</em> we can use <em>FetchGroup</em> to specify what part of
+  the object graph to fetch.
+</p>
+<p>
+  We can use <em>FetchGroup</em> with both query beans and standard queries.
+</p>
+<p>
+  FetchGroups provide a clean way to separate the definition of "what part of the object graph to load" (query tuning)
+  from the definition of the query predicates (query business logic).
+</p>
+<p>
+  A FetchGroup is immutable, most often declared as a <code>static final</code> and can be combined to make other
+  FetchGroups.
+</p>
+
+<h4>e.g. Just top level select properties</h4>
+```java
+// reusable immutable constant (static final is good)
+static final FetchGroup<|Customer> fetch =
+    FetchGroup.of(Customer.class, "name, version, whenCreated"); // root level properties
+
+...
+
+List<|Customer> customers =
+  new QCustomer()
+    .select(fetch)
+    .name.istartsWith("Rob")
+    .findList();
+
+```
+<p>&nbsp;</p>
+
+<h4>e.g. select and fetch properties</h4>
+```java
+// reusable immutable constant (static final is good)
+static final FetchGroup<|Customer> fetch =
+   FetchGroup.of(Customer.class)
+    .select("name, status")       // root level properties
+    .fetch("contacts", "email")   // associated bean properties
+    .build();
+
+...
+
+List<|Customer> customers =
+  new QCustomer()
+    .select(fetch)
+    .name.istartsWith("Rob")
+    .findList();
+```
+
+
+<@next "Having" "/docs/query/having"/>
+<@edit "/docs/query/fetchgroup"/>
+
+</body>
+</html>

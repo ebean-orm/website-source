@@ -67,104 +67,6 @@ from customer t0
 where lower(t0.name) like ? escape'|'; --bind(rob%)
 ```
 
-<p>&nbsp;</p>
-<h4>Fetch</h4>
-<p>
-  Similarly with <code>fetch</code> we can specify specific properties to fetch on associated beans.
-</p>
-```java
-// "alias" beans for customer and contact which
-// we use to specify the properties to select and fetch
-QCustomer cust = QCustomer.alias();
-QContact con = QContact.alias();
-
-List<|Customer> customers =
-  new QCustomer()
-  .select(cust.name, cust.version, cust.whenCreated)
-  // eagerly fetch contacts (only the email property)
-  .contacts.fetch(con.email)
-
-  .name.istartsWith("Rob")
-  .findList();
-```
-
-<p>
-  The resulting sql for the above query is:
-</p>
-```sql
-select t0.id, t0.name, t0.version, t0.when_created, t1.id, t1.email
-from customer t0
-left join contact t1 on t1.customer_id = t0.id
-where lower(t0.name) like ? escape'|' order by t0.id; --bind(rob%)
-```
-<p>
-  The <em>contacts</em> path is a <em>@OneToMany</em> so we get a <em>left join</em> to the
-  contact table. We only fetch the contact id and email properties.
-</p>
-
-<p>&nbsp;</p>
-<h4>Kotlin "alias" beans</h4>
-<p>
-  For Kotlin the <em>alias</em> beans are a companion object of the query bean
-  and accessed via <code>_alias</code>. Otherwise the queries are the same in Kotlin.
-</p>
-```kotlin
-val cust = QCustomer._alias
-val con = QContact._alias
-```
-
-<h2 class="art">FetchGroup</h2>
-<p>
-  As an alternative to <em>select</em> and <em>fetch</em> we can use <em>FetchGroup</em> to specify what part of
-  the object graph to fetch.
-</p>
-<p>
-  We can use <em>FetchGroup</em> with both query beans and standard queries.
-</p>
-<p>
-  FetchGroups provide a clean way to separate the definition of "what part of the object graph to load" (query tuning)
-  from the definition of the query predicates (query business logic).
-</p>
-<p>
-  A FetchGroup is immutable, most often declared as a <code>static final</code> and can be combined to make other
-  FetchGroups.
-</p>
-
-<h5>e.g. Just top level select properties</h5>
-```java
-// reusable immutable constant (static final is good)
-static final FetchGroup<|Customer> fetch =
-    FetchGroup.of(Customer.class, "name, version, whenCreated"); // root level properties
-
-...
-
-List<|Customer> customers =
-  new QCustomer()
-    .select(fetch)
-    .name.istartsWith("Rob")
-    .findList();
-
-```
-<p>&nbsp;</p>
-
-<h5>e.g. select and fetch properties</h5>
-```java
-// reusable immutable constant (static final is good)
-static final FetchGroup<|Customer> fetch =
-   FetchGroup.of(Customer.class)
-    .select("name, status")       // root level properties
-    .fetch("contacts", "email")   // associated bean properties
-    .build();
-
-...
-
-List<|Customer> customers =
-  new QCustomer()
-    .select(fetch)
-    .name.istartsWith("Rob")
-    .findList();
-```
-
 
 <h2 class="art">Standard query select and fetch</h2>
 <p>
@@ -285,7 +187,7 @@ having max(t0.rate) > ?
 ```
 
 
-<@next "OrderBy" "/docs/query/orderBy"/>
+<@next "Fetch" "/docs/query/fetch"/>
 <@edit "/docs/query/select"/>
 
 </body>
