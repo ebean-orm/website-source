@@ -226,7 +226,7 @@ try (Transaction transaction = server.beginTransaction()) {
 <h2 id="serverConfig" class="art">Configuration via ServerConfig</h2>
 
 ```java
-// use JDBC globally by default
+// use JDBC batch by default
 serverConfig.setPersistBatch(PersistBatch.ALL);
 ```
 <p>
@@ -256,6 +256,7 @@ serverConfig.setUpdateAllPropertiesInBatch(true);
 
 
 <@next "Scopes" "/docs/transactions/scopes"/>
+<@edit "/docs/transactions/batch" />
 
 </body>
 </html>
