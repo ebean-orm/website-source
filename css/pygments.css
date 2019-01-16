@@ -27,7 +27,7 @@ pre .kt { color: #902000 } /* Keyword.Type */
 pre .m { color: #40a070 } /* Literal.Number */
 pre .s { color: #4070a0 } /* Literal.String */
 pre .na { color: #2C5F92 } /* Name.Attribute */
-pre .na.field { color: #7D2E2D } /* Name.Attribute */
+pre .na.field { color: #6f4297 } /* Name.Attribute #7D2E2D */
 pre .nb { color: #007020 } /* Name.Builtin */
 pre .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
 pre .no { color: #60add5 } /* Name.Constant */
@@ -94,3 +94,7 @@ pre .il { color: #40a070 } /* Literal.Number.Integer.Long */.syntax pre .hll { b
 .syntax pre .sr { color: #a31515 } /* Literal.String.Regex */
 .syntax pre .s1 { color: #a31515 } /* Literal.String.Single */
 .syntax pre .ss { color: #a31515 } /* Literal.String.Symbol */
+
+.syntax pre .py { color: #6f4297 } /* Literal.String.Symbol */
+
+

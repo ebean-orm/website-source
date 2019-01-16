@@ -9,6 +9,7 @@
 <h2 id="where">Where</h2>
 <p>
   Query bean properties provide a nice type safe way to add expressions to the <code>where</code> clause.
+  We get compile time validation of the query paths, expressions and bind value types.
 </p>
 ```java
 Customer rob =
@@ -16,12 +17,28 @@ Customer rob =
     .name.equalTo("Rob")
     .findOne();
 ```
-
+<p>
+  Produces the SQL below:
+</p>
 ```sql
 select ...
 from customer t0
 where t0.name = ?
 ```
+<p>
+  With the above the <code>name</code> property is of type String/varchar and so only valid String expressions
+  such as <em>like, startsWith, contains</em> etc are allowed and the bind value for the expression must be a String.
+</p>
+<p>
+  Developers get IDE assistance/auto-completion when creating queries as the properties and expressions based on
+  their types are suggested by the IDE.
+</p>
+<p>
+  Additionally, if the property is renamed (e.g. "name" became "fullName") or if the property changed it's type
+  then the query would no longer compile.
+</p>
+
+
 <h4>Paths</h4>
 <p>
   With properties that are associated to beans (OneToOne, OneToMany, ManyToOne, ManyToMany)
@@ -36,7 +53,7 @@ List<Customer> customers =
     .findList();
 ```
 <p>
-  Ebean will automatically add appropriate SQL JOINS to support the expressions.
+  Ebean will automatically add appropriate SQL JOINS to support the expressions in the query.
 </p>
 ```sql
 select ...
@@ -45,22 +62,13 @@ join address t1 on t1.id = t0.billing_address_id
 where t1.city = ?
 ```
 <p>
-  These property paths can be any depth.
+  These property paths can be any depth. In the example below the path takes us from the
+  Order bean to the Customer bean to the Address bean via <em>customer.billingAddress</em>.
 </p>
 <h5>e.g. path "customer.billingAddress.city" for Order</h5>
 ```java
 List<Order> orders =
   new QOrder()
-    .customer.billingAddress.city.equalTo("Auckland")
-    .findList();
-```
-
-<h5>e.g. multiple paths for Order</h5>
-```java
-List<Order> orders =
-  new QOrder()
-     .orderDate.greaterThan(lastWeek)
-    .customer.status.equalTo(Status.NEW)
     .customer.billingAddress.city.equalTo("Auckland")
     .findList();
 ```
@@ -82,6 +90,27 @@ List<Customer> customers =
 select ...
 from customer t0
 where t0.status = ? and t0.when_created > ?
+```
+
+<h5>e.g. multiple paths for Order</h5>
+```java
+List<Order> orders =
+  new QOrder()
+    .orderDate.greaterThan(lastWeek)
+    .customer.status.equalTo(Status.NEW)
+    .customer.billingAddress.city.equalTo("Auckland")
+    .findList();
+```
+<p>
+  With the above query we have the additional paths of <em>customer</em> and <em>customer.billingAddress</em>.
+  Ebean will determine the joins that are needed to support the expressions.
+</p>
+```sql
+select ...
+from orders t0
+join customer t1 on t1.id = t0.order_id
+join address t2 on t2.id = t1.billing_address_id
+where t0.order_date >= ? and t1.status = ? and t2.city = ?
 ```
 
 <p>&nbsp;</p>
@@ -106,7 +135,7 @@ where t0.status = ? and t0.when_created > ?
 ```sql
 select ...
 from customer t0
-where (t0.name is null  or t0.name = ? )
+where (t0.name is null or t0.name = ? )
 ```
 <p>&nbsp;</p>
 
@@ -144,6 +173,7 @@ List<Order> orders =
 ```
 
 <@next "Select" "/docs/query-beans/select"/>
+<@edit "/docs/query-beans/where"/>
 
 </body>
 </html>
