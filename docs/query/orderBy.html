@@ -59,35 +59,45 @@ List<|Customer> customers =
 <p>
   We can specify an order by expression which can include sql formula via <code>orderBy(string)</code>.
 </p>
+
+<h5>e.g. simple expression</h5>
 ```java
-List<|Customer> rob =
+  new QCustomer()
+    .orderBy("name asc,status desc")
+    .findList()
+```
+
+<h5>e.g. expression using DB function</h5>
+```java
+List<|Customer> customers =
   new QCustomer()
     .status.in(Status.NEW, Status.ACTIVE)
     .orderBy("coalesce(activeDate, now()) desc, name, id")
     .findList();
 ```
 
+<h2 id="nulls" class="art">Nulls high, Nulls low</h2>
 <p>
-  <code>orderBy(String clause)</code> and <code>order(String clause)</code> are equivalent to each other and both receive the string of comma separated
-  properties and sort direction (much like SQL code), such as <code>name asc, status desc</code>
+  The order by expression can include <code>nulls high</code> or <code>nulls low</code>.
 </p>
-
 ```java
-  Ebean.find(Customer.class)
-    .orderBy("name asc,status desc")
-    .findList()
+List<|Customer> customers =
+  new QCustomer()
+    .orderBy("name nulls high, id desc")
+    .findList();
 ```
 
+<h2 id="collate" class="art">Collate</h2>
 <p>
-  <code>orderBy()</code> and <code>order()</code> are also equivalent and allow you to use a fluent interface to adding sort properties. See the example:
+  We can specify the <code>collate</code> to use via <code>asc()</code> and <code>desc()</code>.
 </p>
-
 ```java
-  Ebean.find(Customer.class)
-  .order()
-    .asc("name")
-    .desc("status")
-  .findList()
+List<|Customer> customers =
+  new QCustomer()
+    .orderBy()
+      .asc("name", "latin_2");
+      .desc("id", "latin_1");
+    .findList();
 ```
 
 <@next "Select" "/docs/query/select"/>
