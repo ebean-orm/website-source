@@ -2568,7 +2568,7 @@
   "url":"/docs/query/query-beans"
 }
 ,{
-  "title":"Query beans - APT / KAPT",
+  "title":"Query beans - APT / KAPT (generating query beans)",
   "caption":"",
   "category":"Query",
   "priority":"3",
@@ -2582,22 +2582,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/query-beans#enhancement"
-}
-,{
-  "title":"Query beans - Generating with Maven",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/query-beans#maven"
-}
-,{
-  "title":"Query beans - Generating with Gradle",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/query-beans#gradle"
 }
 ,{
   "title":"Maven Query beans",
@@ -3224,6 +3208,22 @@
   "url":"/docs/query/orderBy#orderByExpression"
 }
 ,{
+  "title":"OrderBy - Nulls high, Nulls low",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/orderBy#nulls"
+}
+,{
+  "title":"OrderBy - Collate",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/orderBy#collate"
+}
+,{
   "title":"Select",
   "caption":"",
   "category":"Query",
@@ -3232,84 +3232,108 @@
   "url":"/docs/query/select"
 }
 ,{
-  "title":"Select - Standard query select and fetch",
+  "title":"Select - Formula",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/select"
+  "url":"/docs/query/select#formula"
 }
 ,{
-  "title":"Fetch",
+  "title":"Select - As Dto",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/select#asDto"
+}
+,{
+  "title":"Select - Aggregation",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/select#aggregation"
+}
+,{
+  "title":"DtoQuery",
   "caption":"",
   "category":"Query",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/query/fetch"
+  "url":"/docs/query/dto"
 }
 ,{
-  "title":"Fetch - fetch()",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#fetch"
-}
-,{
-  "title":"Fetch - fetchQuery()",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#fetchQuery"
-}
-,{
-  "title":"Fetch - fetchLazy()",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#fetchLazy"
-}
-,{
-  "title":"FetchGroup",
+  "title":"DtoQuery / findOne",
   "caption":"",
   "category":"Query",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/query/fetchgroup"
+  "url":"/docs/query/dto/findOne"
 }
 ,{
-  "title":"having",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/having"
-}
-,{
-  "title":"having - having (add expressions to the having clause)",
+  "title":"DtoQuery / findOne - findOne",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/having"
+  "url":"/docs/query/dto/findOne"
 }
 ,{
-  "title":"filterMany",
+  "title":"DtoQuery / findList",
   "caption":"",
   "category":"Query",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/query/filterMany"
+  "url":"/docs/query/dto/findList"
 }
 ,{
-  "title":"filterMany - filterMany (filter properties on a hasMany relation)",
+  "title":"DtoQuery / findList - findList",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/filterMany"
+  "url":"/docs/query/dto/findList"
+}
+,{
+  "title":"DtoQuery / findEach",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/dto/findEach"
+}
+,{
+  "title":"DtoQuery / findEach - findEach",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/dto/findEach"
+}
+,{
+  "title":"DtoQuery / findEachWhile",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/dto/findEachWhile"
+}
+,{
+  "title":"DtoQuery / findEachWhile - findEachWhile",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/dto/findEachWhile"
+}
+,{
+  "title":"Aggregation",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/aggregation"
 }
 ,{
   "title":"findOne",
@@ -3536,14 +3560,6 @@
   "url":"/docs/query/findVersionsBetween"
 }
 ,{
-  "title":"Aggregation",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/aggregation"
-}
-,{
   "title":"Count Distinct",
   "caption":"",
   "category":"Query",
@@ -3576,84 +3592,100 @@
   "url":"/docs/query/delete"
 }
 ,{
+  "title":"Fetch",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/fetch"
+}
+,{
+  "title":"Fetch - Select + Fetch = query tuning",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#tuning"
+}
+,{
+  "title":"Fetch - ORM query to SQL query rules",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#rules"
+}
+,{
+  "title":"Fetch - FetchQuery",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetchQuery"
+}
+,{
+  "title":"Fetch - FetchLazy",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetchLazy"
+}
+,{
+  "title":"Fetch - Alias Query beans",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#querybean"
+}
+,{
+  "title":"FetchGroup",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/fetchgroup"
+}
+,{
+  "title":"having",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/having"
+}
+,{
+  "title":"having - having (add expressions to the having clause)",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/having"
+}
+,{
+  "title":"filterMany",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/filterMany"
+}
+,{
+  "title":"filterMany - filterMany (filter properties on a hasMany relation)",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/filterMany"
+}
+,{
   "title":"Option",
   "caption":"",
   "category":"Query",
   "priority":"1",
   "keywords":"",
   "url":"/docs/query/option"
-}
-,{
-  "title":"DtoQuery",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/"
-}
-,{
-  "title":"DtoQuery / findOne",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/findOne"
-}
-,{
-  "title":"DtoQuery / findOne - findOne",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/dto/findOne"
-}
-,{
-  "title":"DtoQuery / findList",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/findList"
-}
-,{
-  "title":"DtoQuery / findList - findList",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/dto/findList"
-}
-,{
-  "title":"DtoQuery / findEach",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/findEach"
-}
-,{
-  "title":"DtoQuery / findEach - findEach",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/dto/findEach"
-}
-,{
-  "title":"DtoQuery / findEachWhile",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/findEachWhile"
-}
-,{
-  "title":"DtoQuery / findEachWhile - findEachWhile",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/dto/findEachWhile"
 }
 ,{
   "title":"SqlQuery",
