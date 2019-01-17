@@ -1,6 +1,10 @@
 
-<@smallnav activeCheck="${dtoQuery!''}" url="/docs/query/dto/" title="DtoQuery"/>
-<@smallnav activeCheck="${findOne!''}" url="/docs/query/dto/findOne" title="findOne"/>
-<@smallnav activeCheck="${findList!''}" url="/docs/query/dto/findList" title="findList"/>
-<@smallnav activeCheck="${findEach!''}" url="/docs/query/dto/findEach" title="findEach"/>
-<@smallnav activeCheck="${findEachWhile!''}" url="/docs/query/dto/findEachWhile" title="findEachWhile"/>
+<@smallnav activeCheck="${dtoQuery!''}" url="/docs/query/dto" title="DtoQuery">
+  <ul class="nav">
+    <li><a href="/docs/query/dto#mapping">Mapping</a></li>
+    <li><a href="/docs/query/dto#maxRows">firstRow / maxRows</a></li>
+    <li><a href="/docs/query/dto#relaxedMode">RelaxedMode</a></li>
+    <li><a href="/docs/query/dto#findEach">findEach</a></li>
+  </ul>
+</@smallnav>
+
