@@ -6,13 +6,13 @@
 </head>
 <body>
 
-<h2>Select</h2>
+<h2 id="select">Select</h2>
 <p>
   <code>select</code> allows us to control the properties that are fetched. We can specify only selected
   properties to fetch.
 </p>
 ```java
-List<Customer> customers =
+List<|Customer> customers =
   query()
     .select("name, registered, version")
     .findList();
@@ -67,39 +67,7 @@ from customer t0
 where lower(t0.name) like ? escape'|'; --bind(rob%)
 ```
 
-
-<h2 class="art">Standard query select and fetch</h2>
-<p>
-  The standard query select and fetch take strings so are not type safe per say.
-</p>
-<p>
-  The following examples produce the same query as above but specify the <em>select</em>
-  and <em>fetch</em> via strings in a non type safe way.
-</p>
-```java
-
-List<|Customer> customers =
-  new QCustomer()
-  // only fetch some properties of customer (partial objects)
-  .select("name, version, whenCreated")
-  .name.istartsWith("Rob")
-  .findList();
-
-```
-```java
-
-List<|Customer> customers =
-  new QCustomer()
-  // fetch some properties of customer
-  // and the associated contacts
-  .select("name, version, whenCreated")
-  .fetch("contacts", "email")
-
-  .name.istartsWith("Rob")
-  .findList();
-
-```
-<h4>Formula</h4>
+<h2 id="formula" class="art">Formula</h2>
 <p>
   We need to use this string select clause when we want to specify a formula.
 </p>
@@ -121,7 +89,6 @@ var names: List<|String> =
 ```
 
 
-
 <h5>Example - Postgis ST_Distance formula</h5>
 <p>
   With this example we explicitly cast to a Java BigDecimal type using
@@ -138,9 +105,35 @@ BigDecimal routeDistance = query()
   .findSingleAttribute();
 ```
 
-<h4>Aggregation</h4>
+
+<h2 id="asDto" class="art">As Dto</h2>
 <p>
-  Similarly when we want to use an aggregation query we use this string select clause.
+  When we use a select formula we sometimes want to return the result into a plain <code>DTO bean</code>
+  rather than an entity bean. We do this using <code>.asDto(Class<|D>)</code> to turn the ORM query
+  into a DtoQuery.
+</p>
+<p>
+  For more details refer to <a href="/docs/query/dto">DTO queries</a>.
+</p>
+```java
+// ContactDto is a plain bean with email and fullName properties
+
+List<|ContactDto> contacts =
+  new QContact()
+    .select("email, concat(lastName, ', ', firstName) as fullName")
+    .lastName.startsWith("A")
+    .orderBy()
+       .lastName.asc()
+    .setMaxRows(10)
+    .asDto(ContactDto.class)
+    .findList();
+```
+
+
+<h2 id="aggregation" class="art">Aggregation</h2>
+<p>
+  Similar to formula queries we can use the standard aggregations of
+  <code>SUM, MAX, MIN, AVG and COUNT</code> in the select clause.
 </p>
 <h5>Single aggregation queries</h5>
 ```java
@@ -165,7 +158,7 @@ select max(t0.when_modified) from contact t0
 
 <h5>Group by aggregation queries</h5>
 <p>
-  Similarly for a multiple column aggregation query we use the string select clause.
+  When  multiple column aggregation query we use the string select clause.
 </p>
 ```java
 List<|MachineStats> result =
