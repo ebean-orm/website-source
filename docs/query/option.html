@@ -6,6 +6,221 @@
 </head>
 <body>
 
+<h2 id="alias">Alias</h2>
+<p>
+  Sets the table alias to use on the base table.
+</p>
+
+```java
+List<|Customer> customers =
+    new QCustomer()
+      .alias("cust")
+      .name.istartsWith("Rob")
+      .findList();
+```
+```sql
+select cust.id, cust.inactive, cust.name, cust.registered, ...
+from customer cust
+where lower(cust.name) like ? escape'|' ; --bind(rob%)
+```
+<p>
+  The typically use of alias is when used as a subquery.
+</p>
+```java
+Query<|Order> subQuery = new QOrder()
+  .alias("sub")
+  .select("id").where().raw("sub.customer_id = main.id")
+  .query();
+
+List<|Customer> customers = new QCustomer()
+    .alias("main")
+    .query().where().exists(subQuery)
+    .findList();
+```
+
+```sql
+select main.id, main.inactive, main.name, main.registered, ...
+from customer main
+where  exists (select sub.id from orders sub where sub.customer_id = main.id)
+```
+
+
+<h2 id="asDraft" class="art">asDraft</h2>
+<p>
+  Used to fetch a <a href="/docs/features/draftable"><code>@Draftable</code></a> entities from their <em>draft</em> table(s)
+  rather than the <em>published</em> tables.
+</p>
+```java
+Document documentDraft =
+  new QDocument()
+    .asDraft()
+    .id.equalTo(42)
+    .findOne();
+```
+
+<h2 id="asOf">As of timestamp</h2>
+<p>
+  For entities with <a href="/docs/features/history">@History</a> fetch the entities <code>AS OF</code> the
+  given timestamp.
+</p>
+```
+Timestamp past = ...;
+
+List<|Customer> customers
+  = new QCustomer()
+  .asOf(past)
+  .findList();
+```
+
+<h2 id="autotune" class="art">Autotune</h2>
+<p>
+  Turn on or off automatic query tuning.
+</p>
+```
+List<|Customer> customers
+    = new QCustomer()
+    .setAutoTune(true)              // automatically tune the query
+    .status.equalTo(Status.NEW)
+    .findList();
+```
+
+<h2 id="bufferFetchSizeHint" class="art">bufferFetchSizeHint</h2>
+<p>
+  A hint which for JDBC translates to the Statement.fetchSize().
+</p>
+<p>
+  Gives the JDBC driver a hint as to the number of rows that should be
+  fetched from the database when more rows are needed for ResultSet.
+</p>
+
+
+<h2 id="disableLazyLoading" class="art">disableLazyLoading</h2>
+<p>
+  Disables any lazy loading that would otherwise occur. Instead unloaded properties would return null.
+</p>
+
+
+<h2 id="disableReadAuditing" class="art">disableReadAuditing</h2>
+<p>
+  Disable read auditing for this query. Refer to <a href="/docs/features/readauditing">Read Auditing</a>.
+</p>
+<p>
+  This is intended to be used when the query is not a user initiated query and instead
+  part of the internal processing in an application to load a cache or document store etc.
+  In these cases we don't want the query to be part of read auditing.
+</p>
+
+<h2 id="distinct" class="art">distinct</h2>
+<p>
+  Make the query use <code>sql distinct</code>.
+</p>
+```java
+List<|String> lastNames =
+  new QContact()
+   .setDistinct(true)
+   .select("lastName")
+   .email.isNull()
+   .findSingleAttributeList();
+```
+
+```java
+int count =
+  new QCustomer()
+      .setDistinct(true)
+      .select("anniversary")
+      .status.equalTo(Customer.Status.NEW)
+      .findCount();
+```
+```sql
+select count(distinct t0.anniversary) from customer t0 where t0.status = ?
+```
+
+```java
+// partially loaded beans without Id properties
+// ... not persistable, no lazy loading etc
+
+List<|Customer> beans =
+  new QContact()
+      .setDistinct(true)
+      .select("lastName, dateOfBirth")
+      .findList();
+```
+
+
+<h2 id="forUpdate" class="art">forUpdate</h2>
+<p>
+  Execute the query with <code>FOR UPDATE</code> that will hold a lock on the rows fetched.
+</p>
+```java
+
+try (Transaction txn = ebeanServer.beginTransaction()) {
+
+  Customer customer =
+    new QContact()
+    .forUpdate()
+    .email.equalTo("rob@foo.com")
+    .findOne();
+
+
+  customer.setName("a better name");
+  customer.save();
+
+  txn.commit();
+}
+
+```
+
+<h2 id="includeSoftDeletes" class="art">includeSoftDeletes</h2>
+<p>
+  Set to true to include soft deleted rows.  Refer to <a href="/docs/features/softdelete">Soft Delete</a>.
+</p>
+
+
+<h2 id="lazyLoadBatchSize" class="art">lazyLoadBatchSize</h2>
+<p>
+  Set this to tune the lazy loading batch size which by default is set to <code>10</code>.
+</p>
+
+<h2 id="persistenceContextScope" class="art">persistenceContextScope</h2>
+<p>
+  Generally queries run with <code>transaction scoped persistence context</code>.  With this we can set
+  to <code>QUERY</code> the object graph built will be fresh data from the database ignoring any existing
+  bean that is in the [transaction] persistence context.
+</p>
+```java
+
+try (Transaction txn = ebeanServer.beginTransaction()) {
+
+  // when customer is loaded it then is referenced in the
+  // transaction scoped persistence context (aka L1 cache)
+  Customer loaded = Customer.find.byId(42)
+
+
+  // fetch this same customer but we want to ignore the L1 cache
+  // such that we get a "fresh" version of its data
+
+  Customer customer =
+    new QCustomer()
+      .id.equalTo(42)
+      .setUseCache(false)                        // ignore L2 cache
+      .setPersistenceContextScope(QUERY)         // ignore L1 cache
+      .findOne();
+
+
+  ...
+
+  txn.commit();
+}
+```
+
+<h2 id="readOnly" class="art">readOnly</h2>
+<p>
+  Query returns beans that are deemed to be <code>READ ONLY</code> and calling setter methods will
+  throw an exception.
+</p>
+
+<@next "Queries" "/docs/query/"/>
+<@edit "/docs/query/option"/>
 
 </body>
 </html>
