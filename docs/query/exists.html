@@ -1,0 +1,30 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_query_find.html"/>
+  <meta name="bread2" content="Exists" href="/docs/query/exists"/>
+  <#assign exists= "true">
+</head>
+<body>
+
+<h2>Exists</h2>
+<p>
+  The <em>exists</em> query is a convenience that sets the query to only
+  select the Id property, use a maxRows = 1 and tests if the query returns
+  a row.
+</p>
+```java
+boolean userExists =
+    new QContact()
+       .email.equalTo("rob@foo.com")
+       .exists();
+```
+```sql
+select t0.id from contact t0 where t0.email = ?  limit 1
+```
+<p>
+  We could instead write this query using findIds() and maxRows() but it is a
+  common enough pattern to perform checks like this that we have this exists query.
+</p>
+
+</body>
+</html>

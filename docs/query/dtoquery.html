@@ -1,8 +1,8 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_query_option.html"/>
-  <meta name="bread2" content="DtoQuery" href="/docs/query/dto"/>
-  <#assign dto = "true">
+  <meta name="layout" content="_layout/docs_query_dto.html"/>
+  <meta name="bread2" content="DtoQuery" href="/docs/query/dtoquery"/>
+  <#assign dtoQuery = "true">
 </head>
 <body>
 
@@ -87,14 +87,14 @@ select id, name from o_customer where name like ?
 limit 10
 ```
 
-<h2 id="relaxedMode" class="art">query.setRelaxedMode()</h2>
+<h2 id="relaxedMode" class="art">RelaxedMode</h2>
 <p>
   By default when performing the mapping, if we are not able to map a column to a property
   (setter method) then an exception is thrown.
 <p>
   <p>
-  Instead we can set relaxed mode on the query and that means it will effectively ignore/skip
-  any column that it can't map.
+  Instead we can set relaxed mode on the query via <code>query.setRelaxedMode()</code> and that
+  means it will effectively ignore/skip any column that it can't map.
 </p>
 <p>
   This is expected to be useful when there is potentially a large existing query and there

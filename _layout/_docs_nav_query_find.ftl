@@ -1,3 +1,5 @@
+<@smallnav activeCheck="${exists!''}" url="/docs/query/exists" title="exists"/>
+
 <@smallnav activeCheck="${findOne!''}" url="/docs/query/findOne" title="findOne"/>
 <@smallnav activeCheck="${findList!''}" url="/docs/query/findList" title="findList"/>
 <@smallnav activeCheck="${findCount!''}" url="/docs/query/findCount" title="findCount"/>
@@ -20,9 +22,3 @@
 <@smallnav activeCheck="${findVersions!''}" url="/docs/query/findVersions" title="findVersions"/>
 <@smallnav activeCheck="${findVersionsBetween!''}" url="/docs/query/findVersionsBetween" title="findVersionsBetween"/>
 
-<li>&nbsp;</li>
-<@smallnav activeCheck="${rawSql!''}" url="/docs/query/rawSql" title="RawSql"/>
-<@smallnav activeCheck="${aggregation!''}" url="/docs/query/aggregation" title="Aggregation"/>
-<@smallnav activeCheck="${countDistinct!''}" url="/docs/query/countDistinct" title="Count distinct"/>
-<@smallnav activeCheck="${update!''}" url="/docs/query/update" title="Update"/>
-<@smallnav activeCheck="${delete!''}" url="/docs/query/delete" title="Delete"/>

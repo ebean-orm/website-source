@@ -8,23 +8,25 @@
 
 <div class="container">
 
-  <h5>ORM Query</h5>
+  <h2>ORM Query</h2>
 
   <div class="row">
     <div class="col-md-3">
-      <h5><a href="/docs/query/query-beans">Query beans</a> (start here)</h5>
-      <h5><a href="/docs/query/where">Where</a></h5>
+      <h4><a href="/docs/query/query-beans">Query beans</a></h4>
+      <h4><a href="/docs/query/where">Where</a></h4>
+      <h4><a href="/docs/query/orderBy">OrderBy</a></h4>
     </div>
 
     <div class="col-md-3">
-      <h5><a href="/docs/query/select">Select</a></h5>
-      <h5><a href="/docs/query/fetch">Fetch</a></h5>
+      <h4><a href="/docs/query/select">Select</a></h4>
+      <h4><a href="/docs/query/fetch">Fetch</a></h4>
+      <h4><a href="/docs/query/having">Having</a></h4>
     </div>
 
     <div class="col-md-3">
-      <h5><a href="/docs/query/orderBy">OrderBy</a></h5>
-      <h5><a href="/docs/query/having">Having</a></h5>
-      <h5><a href="/docs/query/filterMany">FilterMany</a></h5>
+      <h4><a href="/docs/query/filterMany">FilterMany</a></h4>
+      <h4><a href="/docs/query/aggregation">Aggregation</a></h4>
+      <h4><a href="/docs/query/rawSql">RawSql</a></h4>
     </div>
 
   </div>
@@ -33,152 +35,67 @@
 
   <div class="row">
     <div class="col-md-3">
-      <h5><a href="/docs/query/findOne">findOne</a></h5>
-      <h5><a href="/docs/query/findList">findList</a></h5>
-      <h5><a href="/docs/query/findCount">findCount</a></h5>
+      <h4><a href="/docs/query/update">Update query</a></h4>
+      <h4><a href="/docs/query/dtoquery">DtoQuery</a></h4>
     </div>
 
     <div class="col-md-3">
-      <h5><a href="/docs/query/findNative">findNative</a></h5>
-      <h5><a href="/docs/query/findPagedList">findPagedList</a></h5>
-      <h5><a href="/docs/query/findMap">findMap</a></h5>
+      <h4><a href="/docs/query/update">Delete query</a></h4>
+      <h4><a href="/docs/query/sqlquery">SqlQuery</a></h4>
+
     </div>
 
     <div class="col-md-3">
-      <h5><a href="/docs/query/findEach">findEach</a></h5>
-      <h5><a href="/docs/query/findEachWhile">findEachWhile</a></h5>
-      <h5><a href="/docs/query/findIterate">findIterate</a></h5>
-    </div>
-  </div>
 
-  <p>&nbsp;</p>
-
-  <div class="row">
-    <div class="col-md-3">
-      <h5><a href="/docs/query/findIds">findIds</a></h5>
-      <h5><a href="/docs/query/findSingleAttribute">findSingleAttribute</a></h5>
-      <h5><a href="/docs/query/findSingleAttributeList">findSingleAttributeList</a></h5>
-    </div>
-
-    <div class="col-md-3">
-      <h5><a href="/docs/query/findFutureCount">findFutureCount</a></h5>
-      <h5><a href="/docs/query/findFutureList">findFutureList</a></h5>
-      <h5><a href="/docs/query/findFutureIds">findFutureIds</a></h5>
-    </div>
-
-    <div class="col-md-3">
-      <h5><a href="/docs/query/findVersions">findVersions</a></h5>
-      <h5><a href="/docs/query/findVersionsBetween">findVersionsBetween</a></h5>
     </div>
 
   </div>
 
   <p>&nbsp;</p>
 
-  <div class="row">
-    <div class="col-md-3">
-      <h5><a href="/docs/query/rawSql">RawSql</a></h5>
-    </div>
+  <h4>Find methods:</h4>
+  <h5><a href="/docs/query/findOne">findOne</a>
+    , <a href="/docs/query/findList">list</a>
+    , <a href="/docs/query/findCount">count</a>
+    , <a href="/docs/query/findMap">map</a>
+    , <a href="/docs/query/findEach">each</a>
+    , <a href="/docs/query/findNative">native</a>
+    , <a href="/docs/query/findPagedList">pagedList</a>
+    , <a href="/docs/query/findIds">ids</a>
+    , <a href="/docs/query/findSingleAttribute">singleAttribute</a>
+    , <a href="/docs/query/findVersions">versions</a>
+    ,
+    ... <a href="/docs/query/findMethods">all options</a>
 
-    <div class="col-md-3">
-      <h5><a href="/docs/query/aggregation">Aggregation</a></h5>
-      <h5><a href="/docs/query/countDistinct">Count distinct</a></h5>
-    </div>
+  </h5>
 
-    <div class="col-md-3">
-      <h5><a href="/docs/query/update">update query</a></h5>
-      <h5><a href="/docs/query/update">delete query</a></h5>
-    </div>
-  </div>
+  <h4>Query options</h4>
+  <h5><a href="/docs/query/option#distinct">distinct</a>
+    , <a href="/docs/query/option#forUpdate">forUpdate</a>
+    , <a href="/docs/query/option#disableLazyLoading">disableLazyLoading</a>
+    , <a href="/docs/query/option#includeSoftDeletes">includeSoftDeletes</a>
+    ,
+    ... <a href="/docs/query/option">all options</a>
 
-
-  <p>&nbsp;</p>
-
-  <h5>Query options</h5>
-
-  <div class="row">
-    <div class="col-md-3">
-      <h5><a href="/docs/query/option#forUpdate">forUpdate</a></h5>
-      <h5><a href="/docs/query/option#distinct">distinct</a></h5>
-      <h5><a href="/docs/query/option#alias">alias</a></h5>
-      <h5><a href="/docs/query/option#asDraft">asDraft</a></h5>
-      <h5><a href="/docs/query/option#asOf-timestamp">asOf timestamp</a></h5>
-    </div>
-
-    <div class="col-md-3">
-      <h5><a href="/docs/query/option#autotune">autotune</a></h5>
-      <h5><a href="/docs/query/option#readOnly">readOnly</a></h5>
-      <h5><a href="/docs/query/option#includeSoftDeletes">includeSoftDeletes</a></h5>
-      <h5><a href="/docs/query/option#persistenceContextScope">persistenceContextScope</a></h5>
-    </div>
-
-    <div class="col-md-3">
-      <h5><a href="/docs/query/option#disableLazyLoading">disableLazyLoading</a></h5>
-      <h5><a href="/docs/query/option#disableReadAuditing">disableReadAuditing</a></h5>
-      <h5><a href="/docs/query/option#lazyLoadBatchSize">lazyLoadBatchSize</a></h5>
-      <h5><a href="/docs/query/option#bufferFetchSizeHint">bufferFetchSizeHint</a></h5>
-    </div>
-  </div>
+  </h5>
 
   <p>&nbsp;</p>
 
-  <h5>DTO Query</h5>
+  <h3>Background</h3>
 
   <div class="row">
     <div class="col-md-3">
-      <h5><a href="/docs/query/dto/">DtoQuery</a></h5>
-      <h5><a href="/docs/query/dto/findOne">findOne</a></h5>
-      <h5><a href="/docs/query/dto/findList">findList</a></h5>
+      <h4><a href="/docs/query/background/overview">Overview</a></h4>
+      <h4><a href="/docs/query/background/nplus1">N plus 1</a></h4>
     </div>
 
     <div class="col-md-3">
-      <h5><a href="/docs/query/dto/findEach">findEach</a></h5>
-      <h5><a href="/docs/query/dto/findEachWhile">findEachWhile</a></h5>
-    </div>
-
-  </div>
-
-  <p>&nbsp;</p>
-
-  <h5>SQL Query</h5>
-
-  <div class="row">
-    <div class="col-md-3">
-      <h5><a href="/docs/query/sqlquery/">SqlQuery</a></h5>
-      <h5><a href="/docs/query/sqlquery/findOne">findOne</a></h5>
-      <h5><a href="/docs/query/sqlquery/findList">findList</a></h5>
+      <h4><a href="/docs/query/background/partialobjects">Partial Objects</a></h4>
+      <h4><a href="/docs/query/background/autotune">Automatic query tuning</a></h4>
     </div>
 
     <div class="col-md-3">
-      <h5><a href="/docs/query/sqlquery/findEach">findEach</a></h5>
-      <h5><a href="/docs/query/sqlquery/findEachWhile">findEachWhile</a></h5>
-      <h5><a href="/docs/query/sqlquery/findEachRow">findEachRow</a></h5>
-    </div>
-
-    <div class="col-md-3">
-      <h5><a href="/docs/query/sqlquery/findSingleAttribute">findSingleAttribute</a></h5>
-      <h5><a href="/docs/query/sqlquery/findSingleAttributeList">findSingleAttributeList</a></h5>
-    </div>
-
-  </div>
-
-  <p>&nbsp;</p>
-
-  <h5>Background</h5>
-
-  <div class="row">
-    <div class="col-md-3">
-      <h5><a href="/docs/query/background/overview">Overview</a></h5>
-      <h5><a href="/docs/query/background/nplus1">N plus 1</a></h5>
-    </div>
-
-    <div class="col-md-3">
-      <h5><a href="/docs/query/background/partialobjects">Partial Objects</a></h5>
-      <h5><a href="/docs/query/background/autotune">Automatic query tuning</a></h5>
-    </div>
-
-    <div class="col-md-3">
-      <h5><a href="/docs/query/background/typesafe">Query beans</a></h5>
+      <h4><a href="/docs/query/background/typesafe">Query beans</a></h4>
     </div>
   </div>
 

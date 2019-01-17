@@ -562,6 +562,9 @@ pre.console {
 ul.nav.bs-docs-sidenav li.sub-menu {
     margin-left:7px;
 }
+h3 span.inline-h3 {
+  font-size: 13px;
+}
 .docs-index h3 {
     font-size: 18px;
     margin-top: 15px;
