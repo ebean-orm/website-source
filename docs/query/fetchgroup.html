@@ -25,7 +25,7 @@
 
 <h4>e.g. Just top level select properties</h4>
 ```java
-// reusable immutable constant (static final is good)
+// immutable and threadsafe
 static final FetchGroup<|Customer> fetch =
     FetchGroup.of(Customer.class, "name, version, whenCreated"); // root level properties
 
@@ -42,7 +42,7 @@ List<|Customer> customers =
 
 <h4>e.g. select and fetch properties</h4>
 ```java
-// reusable immutable constant (static final is good)
+// immutable and threadsafe
 static final FetchGroup<|Customer> fetch =
    FetchGroup.of(Customer.class)
     .select("name, status")       // root level properties

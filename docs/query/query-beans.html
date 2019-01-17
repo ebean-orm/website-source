@@ -8,14 +8,14 @@
 
   <h2 id="querybeans">Query beans</h2>
   <p>
-    Query beans are optional but they provide a nice way to write queries that
-    is type safe but also easier to learn and use as the IDE helps us to
-    write query expressions with auto-completion on properties and expressions.
+    Query beans are optional but they provide a nice way to write queries with <code>type safe
+    compile time checking</code>. They are also easy to use and learn with <code>IDE auto-completion</code>
+    on properties and expressions.
   </p>
 
   <p>
-    Query beans are generated using a Java annotation processor - <code>APT</code> or
-    Kotlin annotation processor - <code>KAPT</code>.
+    Query beans are generated using a Java annotation processing (<em>APT</em>) or
+    Kotlin annotation processing (<em>KAPT</em>).
   </p>
   <p>
     When the entity bean model changes
@@ -24,7 +24,27 @@
     valid for the model.
   </p>
 
-  <h2 id="apt">APT / KAPT</h2>
+  <h5>Examples:</h5>
+
+  ```java
+
+  Contact contact =
+    new QContact()                               // Contact query bean
+      .email.equalTo("rob@foo.com")              // type safe expression with IDE auto-completion
+      .findOne();
+  ```
+
+  ```java
+
+  List<|Customer> customers =
+    new QCustomer()                              // Customer query bean
+      .status.equalTo(Status.NEW)
+      .billingAddress.city.equalTo("Auckland")
+      .contacts.isEmpty()
+      .findList();
+  ```
+
+  <h2 id="apt" class="art">APT / KAPT <em>(generating query beans)</em></h2>
 
   <p>
     To generate <code>Java</code> query beans we use the <em>io.ebean : querybean-generator</em>
@@ -32,10 +52,22 @@
     <em>io.ebean : kotlin-querybean-generator</em>.
   </p>
 
-  <h2 id="enhancement">Enhancement</h2>
+  <h4 id="maven" class="art">Generating with Maven</h4>
+  <p>
+    Refer to <a href="/docs/getting-started/maven-querybeans">docs / getting-started / maven query beans</a>
+    for details of how to generate query beans using maven.
+  </p>
+
+  <h4 id="gradle">Generating with Gradle</h4>
+  <p>
+    Refer to <a href="/docs/getting-started/gradle-querybeans">docs / getting-started / gradle query beans</a>
+    for details of how to generate query beans using gradle.
+  </p>
+
+  <h2 id="enhancement" class="art">Enhancement</h2>
 
   <p>
-    Query beans require enhancement to work. In the <code>ebean.mf</code> manifest file
+    Query beans require enhancement to work. In the <code>src/main/resources/ebean.mf</code> manifest file
     we need to specify via <code>querybean-packages</code> the packages that should be enhanced
     for query beans.
   </p>
@@ -45,24 +77,12 @@
     For Kotlin we only need to enhance the query beans themselves.
   </p>
 
-  <h4>Example</h4>
+  <h5>Example</h5>
   ```properties
   entity-packages: org.example.domain
   transactional-packages: org.example
   querybean-packages: org.example
   ```
-
-  <h2 id="maven">Generating with Maven</h2>
-  <p>
-    Refer to <a href="/docs/getting-started/maven-querybeans">docs / getting-started / maven query beans</a>
-    for details of how to generate query beans using maven.
-  </p>
-
-  <h2 id="gradle">Generating with Gradle</h2>
-  <p>
-    Refer to <a href="/docs/getting-started/gradle-querybeans">docs / getting-started / gradle query beans</a>
-    for details of how to generate query beans using gradle.
-  </p>
 
 
   <@next "Where" "/docs/query/where"/>

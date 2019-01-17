@@ -10,12 +10,190 @@
   With fetch we specify the properties that should be fetched on associated beans. Beans that
   are related by <em>OneToOne, OneToMany, ManyToOne and ManyToMany</em>.
 </p>
-
-<p>&nbsp;</p>
-<h4>Query bean example</h4>
 <p>
-  When using query beans we use <code>alias</code> beans to provide properties for both <em>select</em>
-  and <em>fetch</em>.
+  <em>Fetch</em> means we want the query to eagerly load that path and that we <em>prefer</em>
+  for that to happen as a <em>SQL JOIN</em>.
+</p>
+
+```java
+List<|Customer> customers =
+  ebeanServer.find(Customer.class)
+  .select("name, version, whenCreated")    // root level properties
+  .fetch("contacts", "email")              // contacts is a OneToMany path
+
+  .where()
+  .istartsWith("name", "Rob")
+  .findList();
+```
+<p>
+  The resulting sql is:
+</p>
+```sql
+select t0.id, t0.name, t0.version, t0.when_created,    -- customer columns
+       t1.id, t1.email                                 -- contact columns
+from customer t0
+left join contact t1 on t1.customer_id = t0.id
+where lower(t0.name) like ? escape'|' order by t0.id
+```
+<p>
+  The <em>contacts</em> path is a <em>OneToMany</em> so we get a <em>left join</em> to the
+  contact table. We only fetch the id and email properties for the contacts.
+</p>
+
+
+<h2 id="tuning" class="art">Select + Fetch = query tuning</h2>
+<p>
+  Using <em>select</em> and <em>fetch</em> we are effectively tuning the query
+  controlling what part of the object graph is loaded.
+</p>
+<p>
+  Generally we prefer a query to only load what it needs to from the database. This gives us
+  the ability to reduce the cost of the query, the amount of data fetched and pulled over
+  the network as well as the opportunity to use covering indexes etc.
+</p>
+
+<h4>select -> "<em>graph root</em> level properties"</h4>
+<p>
+  The <em>select</em> defines what to fetch at the <em>root level of the object graph</em>.
+</p>
+
+<h4>fetch -> "<em>graph leaf</em> properties"</h4>
+<p>
+  The <em>fetch</em> defines what to fetch for the <em>leaves of the object graph</em>. This
+  translates to <em>what to fetch on the OneToOne, OneToMany, ManyToOne and ManyToMany paths</em>
+  of the object graph.
+</p>
+<p>
+  Note that <a href="fetchgroup">FetchGroup</a> provides an alternative to <em>select + fetch</em>.
+</p>
+
+
+<h2 id="rules" class="art">ORM query to SQL query rules</h2>
+<p>
+  Ebean enforces 2 rules when it converts an ORM query into SQL queries. These rules have the effect of
+  limiting the number of sql joins that it will allow when translating an ORM query into SQL queries.
+  These 2 rules are:
+</p>
+<ul>
+  <li>Ebean will not generate a SQL cartesian product</li>
+  <li>Ebean will honor maxRows in SQL</li>
+</ul>
+
+<h3>Rule 1: No SQL Cartesian product</h3>
+<p>
+  This rule has the implication that Ebean will allow at most 1 join to a <code>OneToMany</code> path
+  or a <code>ManyToMany</code> path. If the ORM query has more than 1 of those paths then the ORM query will
+  be translated and executed as multiple SQL queries.
+</p>
+<p>
+  We avoid sql cartesian product because it has a high risk of producing a very very bad sql query.
+</p>
+
+<h3>Rule 2: Always honor maxRows in SQL</h3>
+<p>
+  This rule has the implication that Ebean can not include any joins to a <code>OneToMany</code> path
+  or a <code>ManyToMany</code> path if there is a <code>maxRows</code>. This is because SQL max rows
+  works on rows so we can't include SQL joins to paths that have a cardinality of more than 1.
+</p>
+<p>
+  Honoring maxRows is SQL is important because the database can typically give us a much better
+  query plan and more efficient sql queries.
+</p>
+
+
+
+<h2 id="fetchQuery" class="art">FetchQuery</h2>
+<p>
+  When we specify <em>fetchQuery</em> we are telling Ebean that we want this path fetched eagerly but that
+  we want that to be done using a separate sql query (known as a "secondary query" or "query join").
+</p>
+<p>
+  We choose to do this on specific paths because we know the relative costs of sql joins vs query joins
+  based on cardinality and the relative width of the results etc.
+</p>
+```java
+List<|Order> orders =
+  new QOrder()
+    .customer.fetchQuery()                // fetch customer (and children) using a "secondary query"
+    .customer.billingAddress.fetch()
+    .customer.shippingAddress.fetch()
+    .findList();
+
+```
+<p>
+  With the above query we use <code>fetchQuery</code> to explicitly fetch the customers with their billing and
+  shipping addresses using a second separate sql query.
+</p>
+<h5>Primary query</h5>
+```sql
+-- "primary" query fetches the orders only
+select t0.id, ...
+from orders t0
+```
+
+<h5>Secondary query (aka "query join")</h5>
+
+```sql
+-- "secondary" query fetches customers with
+-- their billing and shipping addresses
+
+select t0.id, t0.inactive, t0.name, ...,                         -- customer
+       t1.id, t1.line1, t1.line2, t1.city, ...,                  -- customers billing address
+       t2.id, t2.line1, t2.line2, t2.city, ...                   -- customers shipping address
+from customer t0
+join address t1 on t1.id = t0.billing_address_id
+join address t2 on t2.id = t0.shipping_address_id
+where t0.id in (?, ?, ... )                                      -- customer ids
+```
+
+
+<h2 id="fetchLazy" class="art">FetchLazy</h2>
+<p>
+  With <em>fetchLazy</em> we don't want to eagerly fetch this path BUT if it is lazy loaded we are optimising
+  what the lazy loading query will fetch.
+</p>
+
+<h5>e.g. lazy loading Customer only fetch the name.</h5>
+```java
+List<|Order> orders =
+  new QOrder()
+    .fetchLazy("customer", "name")
+    .findList();
+
+...
+
+// invoke lazy loading will only fetch customer name
+customer.getName();
+
+```
+
+<h5>e.g. lazy loading Customer additionally fetch the billingAddress and shippingAddress.</h5>
+```java
+
+QCustomer cust = QCustomer.alias();
+
+List<|Order> orders =
+  new QOrder()
+    .fetchLazy("customer")
+    .fetch("customer.billingAddress")  // fetched with lazy load of customer
+    .fetch("customer.shippingAddress") // fetched with lazy load of customer
+
+    .findList();
+
+
+...
+
+// invoke lazy loading will fetch customer name + billingAddress + shippingAddress
+customer.getName();
+
+```
+
+
+
+<h2 id="querybean" class="art">Alias Query beans</h2>
+<p>
+  When using query beans we use <code>alias</code> beans to provide properties for both
+  the <em>select</em> and <em>fetch</em>.
 </p>
 
 ```java
@@ -27,30 +205,16 @@ QContact con = QContact.alias();
 // using query beans
 List<|Customer> customers =
   new QCustomer()
-  .select(cust.name, cust.version, cust.whenCreated)   // type safe select
-  // eagerly fetch contacts (only the email property)  // type safe fetch
-  .contacts.fetch(con.email)
+  .select(cust.name, cust.version, cust.whenCreated)    // customer properties only
+  .contacts.fetch(con.email)                            // contact properties only
 
   .name.istartsWith("Rob")
   .findList();
 ```
 
-<p>
-  The resulting sql for the above query is:
-</p>
-```sql
-select t0.id, t0.name, t0.version, t0.when_created, t1.id, t1.email
-from customer t0
-left join contact t1 on t1.customer_id = t0.id
-where lower(t0.name) like ? escape'|' order by t0.id; --bind(rob%)
-```
-<p>
-  The <em>contacts</em> path is a <em>@OneToMany</em> so we get a <em>left join</em> to the
-  contact table. We only fetch the contact id and email properties.
-</p>
 
 <p>&nbsp;</p>
-<h4>Kotlin "alias" beans</h4>
+<h3>Kotlin alias query beans</h3>
 <p>
   For Kotlin the <em>alias</em> beans are a companion object of the query bean
   and accessed via <code>_alias</code>. Otherwise the queries are the same in Kotlin.
@@ -58,92 +222,6 @@ where lower(t0.name) like ? escape'|' order by t0.id; --bind(rob%)
 ```kotlin
 val cust = QCustomer._alias
 val con = QContact._alias
-```
-
-<h4>Standard query example</h4>
-<p>
-  The above query written as a standard query is:
-</p>
-
-```java
-// using standard query
-List<|Customer> customers =
-  ebeanServer.find(Customer.class)
-  .select("name, version, whenCreated")
-  .fetch("contacts", "email")
-
-  .where()
-  .istartsWith("name", "Rob")
-  .findList();
-```
-
-<h2 id="fetch">fetch()</h2>
-<p>
-  When we specify to <code>fetch</code> a given path that is telling Ebean that we want to eagerly load
-  that path and that we <em>PREFER</em> for that to happen as a <em>SQL JOIN</em>.
-</p>
-<p>
-  Ebean enforces rules that limit the number of sql joins that it will allow when translating ORM query into
-  SQL queries. Those rules are:
-</p>
-<ul>
-  <li>Ebean will not generate a SQL cartesian product</li>
-  <li>Ebean will honor maxRows in SQL</li>
-</ul>
-
-<h3>SQL Cartesian product</h3>
-<p>
-  This rule has the implication that Ebean will allow at most 1 join to a <code>OneToMany</code> path
-  or a <code>ManyToMany</code> path. If the ORM query has more than 1 of those paths then the ORM query will
-  be translated and executed as multiple SQL queries.
-</p>
-<p>
-  We avoid sql cartesian product because it has a high risk of producing a very very bad sql query.
-</p>
-
-<h3>Honor maxRows in SQL</h3>
-<p>
-  This rule has the implication that Ebean can not include any joins to a <code>OneToMany</code> path
-  or a <code>ManyToMany</code> path if there is a <code>maxRows</code>. This is because SQL max rows
-  works on rows so we can't include SQL joins to paths that have a cardinality of more than 1.
-</p>
-<p>
-  Honoring maxRows is SQL is important because the database can typically give us a way better query plan and
-  more efficient sql queries.
-</p>
-
-<h2 id="fetchQuery" class="art">fetchQuery()</h2>
-<p>
-  When we specify <em>fetchQuery</em> we are telling Ebean that we want this path fetched eagerly but that
-  we want that to be done using a separate sql query (known as a "secondary query" or "query join").
-</p>
-<p>
-  We choose to do this on specific paths because we know the relative costs of joins vs query joins etc.
-</p>
-
-<h2 id="fetchLazy">fetchLazy()</h2>
-<p>
-  With <em>fetchLazy</em> we are telling Ebean that we don't want to eagerly
-  fetch this path BUT if it is lazy loaded we are optimising what the lazy loading query will fetch.
-
-</p>
-<h5>e.g. when lazy loading Customer only fetch the name.</h5>
-```java
-List<|Order> orders =
-  new QOrder()
-    .fetchLazy("customer", "name")
-    .findList();
-```
-
-<h5>e.g. when lazy loading Customer additionally fetch the billingAddress and shippingAddress.</h5>
-```java
-List<|Order> orders =
-  new QOrder()
-    .fetchLazy("customer")
-    .fetch("customer.billingAddress")  // fetched with lazy load of customer
-    .fetch("customer.shippingAddress") // fetched with lazy load of customer
-
-    .findList();
 ```
 
 <@next "FetchGroup" "/docs/query/fetchgroup"/>
