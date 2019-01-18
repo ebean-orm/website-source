@@ -13,3 +13,12 @@
 <@smallnav activeCheck="${fetchgroup!''}" url="/docs/query/fetchgroup" title="FetchGroup"/>
 <@smallnav activeCheck="${having!''}" url="/docs/query/having" title="Having"/>
 <@smallnav activeCheck="${filterMany!''}" url="/docs/query/filterMany" title="FilterMany"/>
+
+<@smallnav activeCheck="${aggregation!''}" url="/docs/query/aggregation" title="Aggregation"/>
+<@smallnav activeCheck="${native!''}" url="/docs/query/findNative" title="Native Sql"/>
+<@smallnav activeCheck="${rawsql!''}" url="/docs/query/rawSql" title="RawSql"/>
+
+<@smallnav activeCheck="${update!''}" url="/docs/query/update" title="Update query"/>
+<@smallnav activeCheck="${delete!''}" url="/docs/query/delete" title="Delete query"/>
+<@smallnav activeCheck="${dtoquery!''}" url="/docs/query/delete" title="DtoQuery"/>
+<@smallnav activeCheck="${sqlquery!''}" url="/docs/query/delete" title="SqlQuery"/>

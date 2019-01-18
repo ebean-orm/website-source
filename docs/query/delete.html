@@ -1,11 +1,91 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_query_find.html"/>
-  <meta name="bread2" content="Delete" href="/docs/query/delete"/>
+  <meta name="layout" content="_layout/docs_query_select.html"/>
+  <meta name="bread2" content="Delete query" href="/docs/query/delete"/>
   <#assign delete= "true">
 </head>
 <body>
-<h2>Delete</h2>
+<h2>Delete query</h2>
+<p>
+  Execute a query deleting rows.
+</p>
+```java
+int rows = new QContact()
+  .name.equalTo("rob@foo.com")
+  .delete();
+```
+```sql
+delete from contact where email = ?
+```
+<h5>Example 2</h5>
+```java
+    int rows = new QContact()
+      .email.startsWith("rob")
+      .firstName.eq("Rob")
+      .delete();
+```
+```sql
+delete from contact where email like ? escape'|'  and first_name = ?
+```
+
+<h5>Example 3</h5>
+<p>
+  When a where expression is on a associated bean path like <em>OneToMany</em> then the sql delete
+  uses a subquery.
+</p>
+```java
+int rows = new QCustomer()
+  .contacts.email.contains("foo.com")
+  .delete();
+```
+```sql
+delete from customer where id in (
+  select distinct t0.id
+  from customer t0
+  join contact u1 on u1.customer_id = t0.id
+  where u1.email like ? escape'|'
+)
+```
+
+<h4>Cascading delete</h4>
+<p>
+  If the bean type that we are deleting has cascading delete defined by for example
+  <code>@ManyToOne(cascade=CascadeType.ALL)</code> then the cascade will be honored.
+</p>
+<h5>Example</h5>
+<p>
+  In the following example Customer cascades save and delete to billingAddress.
+</p>
+```java
+
+// setup - a customer with a billing address
+Customer customer = new Customer("Bad Example");
+customer.setBillingAddress(new Address("My Street", "Hopeful City"));
+customer.save();
+
+
+// deleting customer needs to cascade delete the billingAddress
+int rows = new QCustomer()
+.name.startsWith("Bad")
+.delete();
+```
+<p>
+  The above ends up executing 4 statements in a transaction.
+</p>
+```sql
+-- first select the ids of customers that will be deleted
+select t0.id from customer t0 where t0.name like ? escape'' ; --bind(Bad%)
+
+-- select the foreign keys that will be cascade deleted
+select t0.id, t0.billing_address_id, t0.shipping_address_id from customer t0 where t0.id in (? )
+
+-- delete the customers
+delete from customer where id=?;
+
+-- [cascade] delete the related billing addresses
+delete from address where id=?;
+```
+
 
 </body>
 </html>
