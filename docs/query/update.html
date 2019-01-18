@@ -5,7 +5,69 @@
   <#assign update= "true">
 </head>
 <body>
+
 <h2>Update query</h2>
+<p>
+  <em>UpdateQuery</em> allows us to perform a <em>bulk sql update</em> by creating a query
+  via <em>query beans</em> or just as a standard ORM query.
+</p>
+
+<h3 class="art">asUpdate</h3>
+<p>
+  Use <em>asUpdate()</em> to convert a query into an <code>UpdateQuery</code> after which
+  point we can set update parameters via <code>set()</code> and <code>setRaw()</code>.
+</p>
+
+<h5>Example 1</h5>
+```java
+int rows = new QCustomer()
+  .name.startsWith("Rob")
+  .asUpdate()                      // convert to UpdateQuery
+    .set("registered", now)        // update set ...
+    .update();
+```
+```sql
+update customer set registered=? where name like ? escape'|'
+```
+
+<p>&nbsp;</p>
+
+<h5>Example 2</h5>
+```java
+int rows = new QCustomer()
+  .billingAddress.country.equalTo(nz)
+  .billingAddress.city.equalTo("Auckland")
+  .name.startsWith("Rob")
+  .asUpdate()
+    .set("registered", now)
+    .setRaw("name = concat(?, name, '+', ?)", "before", "after")
+    .update();
+```
+
+```sql
+
+update customer set registered=?, name = concat(?, name, '+', ?)
+where id in (
+  select t0.id from customer t0
+  left join address t1 on t1.id = t0.billing_address_id
+  where t1.country_code = ?  and t1.city = ?  and t0.name like ? escape'|'
+);
+--bind(2019-01-18 17:12:01.348,before,after,NZ,Auckland,Rob%) rows:0
+```
+
+<h3 class="art">Compare SqlUpdate</h3>
+<p>
+  If we want to use <em>SQL</em> directly we can instead use <a href="/docs/query/sqlupdate">SqlUpdate</a>.
+</p>
+
+
+<p class="pull-right">
+  Related:
+  <a class="btn btn-info" href="/docs/query/delete">Delete query</a>
+  <a class="btn btn-info" href="/docs/query/sqlupdate">SqlUpdate</a>
+</p>
+
+<@edit "/docs/query/update"/>
 
 </body>
 </html>

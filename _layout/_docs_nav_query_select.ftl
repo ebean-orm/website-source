@@ -20,5 +20,14 @@
 
 <@smallnav activeCheck="${update!''}" url="/docs/query/update" title="Update query"/>
 <@smallnav activeCheck="${delete!''}" url="/docs/query/delete" title="Delete query"/>
-<@smallnav activeCheck="${dtoquery!''}" url="/docs/query/delete" title="DtoQuery"/>
-<@smallnav activeCheck="${sqlquery!''}" url="/docs/query/delete" title="SqlQuery"/>
+<@smallnav activeCheck="${dtoquery!''}" url="/docs/query/dtoquery" title="DtoQuery">
+  <ul class="nav">
+    <li><a href="/docs/query/dtoquery#mapping">Mapping</a></li>
+    <li><a href="/docs/query/dtoquery#maxRows">firstRow / maxRows</a></li>
+    <li><a href="/docs/query/dtoquery#relaxedMode">RelaxedMode</a></li>
+    <li><a href="/docs/query/dtoquery#findEach">findEach</a></li>
+  </ul>
+</@smallnav>
+<@smallnav activeCheck="${sqlquery!''}" url="/docs/query/sqlquery" title="SqlQuery"/>
+<@smallnav activeCheck="${sqlupdate!''}" url="/docs/query/sqlupdate" title="SqlUpdate"/>
+<@smallnav activeCheck="${callablesql!''}" url="/docs/query/callablesql" title="CallableSql"/>
