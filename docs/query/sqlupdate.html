@@ -7,6 +7,79 @@
 <body>
 
 <h2>SqlUpdate</h2>
+<p>
+  <em>SqlUpdate</em> allows us to execute <em>sql delete</em> or <em>sql update</em> statements.
+</p>
+
+<h5>Example binding list</h5>
+```java
+String sql = "delete from customer where ref_id in (:ids)";
+
+int rows =
+  Ebean.createSqlUpdate()
+  .setParameter("ids", asList(9991, 9992, 9993))
+  .execute();
+```
+```sql
+delete from customer where ref_id in (?,?,?)
+```
+
+<p>&nbsp;</p>
+
+<h5>Example binding multiple lists</h5>
+```java
+String sql = "delete from customer where ref_id in (:ids) and name in (:names)";
+
+int rows =
+  Ebean.createSqlUpdate()
+    .setParameter("ids", asList(9991, 9992, 9993))
+    .setParameter("names", asList("rob", "jim"))
+    .execute();
+```
+```sql
+delete from customer where ref_id in (?,?,?) and name in (?,?)
+```
+
+<p>&nbsp;</p>
+
+<h3 id="upsert" class="art">Upsert</h3>
+<p>
+  We can execute upsert sql which is generally database specific.
+</p>
+
+<h4>Upsert - Postgres</h4>
+```java
+String sql =
+  "insert into e_person_online (email, online_status, when_updated) values (?, ?, now()) " +
+  "on conflict (email) do update set when_updated=now(), online_status = ?";
+
+String email = "foo@one.com";
+
+Object key = Ebean.createSqlUpdate(sql)
+  .setGetGeneratedKeys(true)
+  .setParameter(1, email)
+  .setParameter(2, true)
+  .setParameter(3, true)
+  .executeGetKey();
+```
+<p>&nbsp;</p>
+
+<h4>Upsert - MySql</h4>
+```java
+String email = "bar@one.com";
+
+String sql =
+  "insert into e_person_online (email, online_status, when_updated) values (?, ?, current_time) " +
+  "on duplicate key update when_updated=current_time, online_status = ?";
+
+Object key = Ebean.createSqlUpdate(sql)
+  .setGetGeneratedKeys(true)
+  .setParameter(1, email)
+  .setParameter(2, true)
+  .setParameter(3, true)
+  .executeGetKey();
+```
+
 
 <@edit "/docs/query/sqlupdate"/>
 
