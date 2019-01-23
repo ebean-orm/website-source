@@ -29,7 +29,7 @@ Customer rob =
     .findOne();
 ```
 <p>
-  The queries above produces the sql:
+  Both queries above produce the same sql:
 </p>
 ```sql
 select ...
@@ -175,6 +175,18 @@ where (t0.name is null or t0.name = ? )
       .endOr()
       .findOne()
 ```
+<h5>OR using raw expression</h5>
+<p>
+  Rather than using the fluid style with <em>or()</em> and <em>endOr()</em> we can alternatively
+  use <code>raw()</code> expressions. For example:
+</p>
+```java
+ Customer customer
+   = new QCustomer()
+      .raw("(name is null or name = ?)", "Rob")
+      .findOne()
+```
+
 
 <h2 class="art">Raw expressions</h2>
 <p>
@@ -207,6 +219,48 @@ List<|Order> orders =
    .status.equalTo(Status.NEW)
    .raw("t0.customer_id in (select customer_id from customer_group where group_id = any(?::uuid[]))", groupIds)
    .findList()
+```
+<p>&nbsp;</p>
+<h4>Property paths to sql joins</h4>
+<p>
+  If we use property paths in raw() then Ebean will automatically add appropriate joins to support the expression.
+  For example:
+</p>
+```java
+List<|Order> orders =
+    new QOrder()
+      .raw("(customer.name = ? or customer.billingAddress.city = ?)", "Rob", "Auckland")
+      .findList();
+```
+<p>
+  ... produces the following SQL with joins added to the customer and address tables.
+</p>
+```sql
+  select t0.id, t0.status, t0.order_date, t0.ship_date, ...
+  from orders t0
+  left join customer t1 on t1.id = t0.customer_id
+  left join address t2 on t2.id = t1.billing_address_id
+  where (t1.name = ? or t2.city = ?); --bind(Rob,Auckland)
+```
+
+<p>&nbsp;</p>
+
+<h4>Combing expressions</h4>
+<p>
+  We can combine <em>raw()</em> expressions with other expressions. For example:
+</p>
+```java
+  List<|Order> orders =
+    new QOrder()
+      .status.eq(Order.Status.NEW)       // before raw()
+      .raw("(customer.name = ? or customer.billingAddress.city = ?)", "Rob", "Auckland")
+      .orderDate.greaterThan(lastWeek)   // after raw()
+      .findList();
+```
+```sql
+select ...
+where t0.status = ?  and (t1.name = ? or t2.city = ?) and t0.order_date > ?
+ --bind(NEW,Rob,Auckland,2019-01-17)
 ```
 
 <@next "OrderBy" "/docs/query/orderBy"/>

@@ -18,6 +18,10 @@
     Kotlin annotation processing (<em>KAPT</em>).
   </p>
   <p>
+    For each entity a <em>query bean</em> is generated with the same name but prefixed with <code>Q</code>.
+    So for an entity bean called <em>Customer</em> there is a query bean generated called <em>QCustomer</em>.
+  </p>
+  <p>
     When the entity bean model changes
     the query beans are regenerated and as developers we get compile time checking on
     our application queries - we get a compile time error if our queries are no longer
