@@ -6,6 +6,61 @@
 </head>
 <body>
 <h2>Aggregation</h2>
+<p>
+  SQL has the aggregation functions of <code>SUM</code>, <code>MIN</code>, <code>MAX</code>, <code>COUNT</code>
+  and <code>AVG</code>.
+</p>
+<p>
+  We can use these functions in Ebean as <em>dynamic formula</em> or as properties
+  via <em>@Aggregation</em> and <em>@Sum</em>.
+</p>
+
+<p>&nbsp;</p>
+<h4>Dynamic formula</h4>
+
+<h5>Single attribute</h5>
+<p>
+
+</p>
+```java
+LocalDate maxDate =
+  new QOrder()
+    .select("max(orderDate)")
+    .customer.name.equalTo("Rob")
+    .findSingleAttribute();
+```
+```sql
+select max(t0.order_date)
+from orders t0
+join customer t1 on t1.id = t0.customer_id
+where t1.name = ? ; --bind(Rob)
+```
+<p>
+  With aggregation queries that select only a single attribute the returned type
+  matches the property type. In the above case the orderDate is a <code>LocalDate</code>
+  and so that is the type returned.
+</p>
+
+<p>&nbsp;</p>
+<h4>Multiple attributes</h4>
+<p>
+  When we specify non-aggregate properties (<em>status</em> in the example below) then
+  a <code>GROUP BY</code> clause is generated that includes all the non-aggregate properties.
+</p>
+```java
+List<|Order> orders =
+  new QOrder()
+  .select("status, max(orderDate)")     // status is non-aggregate
+  .customer.name.equalTo("Rob")
+  .findList();
+```
+```sql
+select t0.status, max(t0.order_date)
+from orders t0
+join customer t1 on t1.id = t0.customer_id
+where t1.name = ?
+group by t0.status  -- group by non-aggregate properties
+```
 
 
 </body>

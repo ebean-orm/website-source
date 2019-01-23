@@ -5,35 +5,57 @@
   <#assign filterMany= "true">
 </head>
 <body>
-<h2>filterMany (filter properties on a hasMany relation)</h2>
-
+<h2>FilterMany </h2>
 <p>
-This applies a filter on the 'many' property list (a <code>hasMany</code> relation) rather than the root
- level objects.
- </p>
- <p>
- Typically you will use this in a scenario where the cardinality is high on
- the 'many' property you wish to join to. Say you want to fetch customers
- and their associated orders... but instead of getting all the orders for
- each customer you only want to get the new orders they placed since last
- week. In this case you can use <code>filterMany()</code> to filter the orders.
- </p>
+  This applies a filter on the beans returned for a <code>OneToMany</code> or <code>ManyToMany</code>
+  relationship.
+</p>
+<p>
+  For example, Customer has <em>OneToMany</em> Orders. Instead of fetching <em>ALL</em> the orders for the
+  customers being fetched we instead only want to fetch the new orders they placed since last week.
+</p>
+<p>
+  We use <code>filterMany()</code> to apply the filter to the orders fetched for each customer.
+</p>
  ```java
 
- List<Customer> list =
-     ebeanServer.find(Customer.class)
-     .fetch("orders")
-     .where()
-     .ilike("name", "rob%")
-     .filterMany("orders").eq("status", Order.Status.NEW).gt("orderDate", lastWeek)
-     .findList();
+  // filter orders - status COMPLETE since last week
+  ExpressionList<|Order> filterOrders = new QOrder()
+    .status.eq(Order.Status.COMPLETE)
+    .orderDate.greaterThan(lastWeek)
+    .getExpressionList();
+
+
+  // query customers fetching 'new orders since last week' ...
+  List<|Customer> customers
+
+    = new QCustomer()
+    .name.istartsWith("Rob")                   // (1) filter customers
+    .orders.filterMany(filterOrders)           // (2) filter the orders for those customers
+    .findList();
 
  ```
- <p>
- <strong>Please note you have to be careful that you add expressions to the correct
- expression list - as there is one for the 'root level' and one for each
- filterMany that you have.</strong>
- </p>
+<p>
+  The above ORM query uses 2 sql queries to build the graph.
+</p>
+<h5></h5>
+```sql
+-- Primary query - customers ...
+select t0.id, t0.inactive, t0.name, ...
+from customer t0
+where lower(t0.name) like ? escape'|'          -- (1) filter customers
+```
+
+```sql
+-- Secondary query - orders for those customers ...
+select t0.customer_id, t0.id, t0.status, t0.order_date, t0.ship_date, ...
+from orders t0
+where (t0.customer_id) in (? )
+  and t0.order_date > ?  and t0.status = ?    -- (2) filter the orders for those customers
+```
+
+<@next "Aggregation" "/docs/query/aggregation"/>
+<@edit "/docs/query/filterMany"/>
 
 </body>
 </html>

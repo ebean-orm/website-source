@@ -11,10 +11,10 @@
 </@smallnav>
 <@smallnav activeCheck="${fetch!''}" url="/docs/query/fetch" title="Fetch"/>
 <@smallnav activeCheck="${fetchgroup!''}" url="/docs/query/fetchgroup" title="FetchGroup"/>
-<@smallnav activeCheck="${having!''}" url="/docs/query/having" title="Having"/>
 <@smallnav activeCheck="${filterMany!''}" url="/docs/query/filterMany" title="FilterMany"/>
 
 <@smallnav activeCheck="${aggregation!''}" url="/docs/query/aggregation" title="Aggregation"/>
+<@smallnav activeCheck="${having!''}" url="/docs/query/having" title="Having"/>
 <@smallnav activeCheck="${native!''}" url="/docs/query/findNative" title="Native Sql"/>
 <@smallnav activeCheck="${rawsql!''}" url="/docs/query/rawSql" title="RawSql"/>
 
