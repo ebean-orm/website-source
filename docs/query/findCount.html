@@ -12,7 +12,7 @@
 ```java
     int count =
 
-      where()
+      new QCustomer()
       .name.icontains("foo.bar")
       .findCount();
 
@@ -35,7 +35,7 @@ where lower(t0.name) like ? escape'|'
 ```java
     int count =
 
-      where()
+       new QCustomer()
         .contacts.firstName.istartsWith("rob")
         .findCount();
 ```

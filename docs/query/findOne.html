@@ -10,9 +10,8 @@
   Used when a query is expected to return 1 or zero beans.
 </p>
 ```java
-Customer customer =
-
-  where()
+Contact contact =
+  new QContact()
     .email.equalTo("rob@foo.bar")
     .findOne();
 
@@ -23,9 +22,8 @@ Customer customer =
   The same as findOne but returns an <code>Optional</code> holding the bean.
 </p>
 ```java
-Optional<Customer> customer =
-
-  where()
+Optional<|Contact> contact =
+  new QContact()
   .email.equalTo("rob@foo.bar")
   .findOneOrEmpty();
 ```
