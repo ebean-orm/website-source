@@ -580,7 +580,9 @@ div#main h2.htop {
 div#main h4 {
   margin-top: 25px;
 }
-
+div#main div.links h4 {
+  margin-top: 9px;
+}
 #nav-logo {
   width: 50px;
 }
