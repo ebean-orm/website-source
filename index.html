@@ -66,42 +66,63 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-3 feature">
-        <h3>Beyond JPA</h3>
-        <p>
-          Ebean supports features beyond JPA such as:
-        </p>
-      </div>
-      <div class="col-md-3 feature mtl">
-        <h5><a href="/docs/features/elasticsearch">Elastic Search</a></h5>
-        <h5><a href="/docs/features/json-in-db">JSON in Database</a></h5>
-        <h5><a href="/docs/features/softdelete">Soft Delete</a></h5>
-        <h5><a href="/docs/features/draftable">Draftable</a></h5>
-        <h5><a href="/docs/features/multi-tenant">Multi-tenancy</a></h5>
-      </div>
-      <div class="col-md-3 feature mtl">
-        <h5><a href="/docs/features/history">SQL 2011 History</a></h5>
-        <h5><a href="/docs/features/encryption">Encryption</a></h5>
-        <h5><a href="/docs/features/who">Who Created / Modified</a></h5>
-        <h5><a href="/docs/features/changelog">Change log</a></h5>
-        <h5><a href="/docs/features/readauditing">Read auditing</a></h5>
-      </div>
-    </div>
+
 
     <div class="row">
       <div class="col-md-3 feature">
         <h3>Simple to use</h3>
         <p>
-          Ebean provides a simpler programming model that developers can
+          Ebean provides a simple programming model that developers can
           understand and master quickly.
         </p>
       </div>
       <div class="col-md-6 feature mtl">
+        ```java
+        // insert ...
+        Customer customer = new Customer("Joe");
+        customer.save();
 
+        ...
+
+        // find and update ...
+        Customer customer = Customer.find.byId(42);
+        customer.setName("Montana");
+        customer.save();
+
+        ```
       </div>
 
     </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <h3>Queries</h3>
+        <p>
+          We can use Query beans to build queries in a type safe manner.
+        </p>
+      </div>
+
+      <div class="col-md-6 mtl">
+
+        ```java
+        List<|Customer> customers
+          = new QCustomer()
+            .name.istartsWith("rob")
+            .billingAddress.city.equalTo("Auckland")
+            .setMaxRows(10)
+            .orderBy()
+              .name.asc()
+            .findList();
+          ```
+
+        <p>
+          more <a href="/docs/query/">details on queries</a>
+        </p>
+      </div>
+
+    </div>
+
+
 
   </div>
 </div>
@@ -144,41 +165,33 @@
       </div>
     </div>
 
+    <p>&nbsp;</p><p>&nbsp;</p>
+
   </div>
 
 </div>
 
 <div class="erkbg">
   <div class="container">
-    <h2 class="erk">Type safe queries</h2>
+    <h2 class="erk">Features</h2>
 
     <div class="row">
-      <div class="col-md-3">
-        <h3><a href="/docs/query/query-beans">Query beans</a></h3>
-        <p>
-          Use Query beans to build queries in a type safe manner.
-        </p>
+      <div class="col-md-3 feature">
       </div>
-
-      <div class="col-md-6 mtl">
-
-        ```java
-        LocalDate lastWeek = ...;
-
-        List<|Customer> customers
-          = new QCustomer()
-            .name.istartsWith("rob")
-            .billingAddress.city.equalTo("Auckland")
-            .status.isEqualTo(Status.NEW)
-            .registered.before(lastWeek)
-            .setMaxRows(10)
-            .orderBy()
-              .name.asc()
-              .id.desc()
-            .findList();
-          ```
+      <div class="col-md-3 feature mtl">
+        <h5><a href="/docs/features/elasticsearch">Elastic Search</a></h5>
+        <h5><a href="/docs/features/json-in-db">JSON in Database</a></h5>
+        <h5><a href="/docs/features/softdelete">Soft Delete</a></h5>
+        <h5><a href="/docs/features/draftable">Draftable</a></h5>
+        <h5><a href="/docs/features/multi-tenant">Multi-tenancy</a></h5>
       </div>
-
+      <div class="col-md-3 feature mtl">
+        <h5><a href="/docs/features/history">SQL 2011 History</a></h5>
+        <h5><a href="/docs/features/encryption">Encryption</a></h5>
+        <h5><a href="/docs/features/who">Who Created / Modified</a></h5>
+        <h5><a href="/docs/features/changelog">Change log</a></h5>
+        <h5><a href="/docs/features/readauditing">Read auditing</a></h5>
+      </div>
     </div>
   </div>
 </div>
