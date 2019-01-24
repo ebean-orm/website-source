@@ -5,18 +5,90 @@
   <#assign having= "true">
 </head>
 <body>
-<h2>having (add expressions to the "having" clause)</h2>
 
-  <div class="alert alert-info" role="alert">
-    <strong>Warning:</strong> Currently only beans based on <code>Raw SQL (.setRawSql)</code> will use the having clause.
-  </div>
+<h2>Having</h2>
+<p>
+  We can add expressions to the <em>having clause</em> when we use Dynamic formula, @Aggregation properties
+  or RawSql.
+</p>
 
-  <p>
-  Note that this returns the ExpressionList (so you can add multiple
-  expressions to the query in a fluent API way).
-  </p>
+<p>&nbsp;</p>
+<h3 id="dynamicFormula">Dynamic formula</h3>
+<p>
+  See <a href="/docs/query/aggregation#dynamic">here </a> for more details on dynamic aggregation formula
+  (sum, min, max, count, avg).
+</p>
+```java
+// e.g. sum(hours)
 
-  Example code:
+List<|DMachineStats> result =
+  new QDMachineStats()
+  .select("date, sum(totalKms), sum(hours)")
+  .havingClause()
+    .gt("sum(hours)", 2)                         // (1) having clause
+  .findList();
+
+```
+
+```sql
+select t0.date, sum(t0.total_kms), sum(t0.hours)
+from d_machine_stats t0
+group by t0.date
+having sum(t0.hours) > ?                        -- (1) having clause
+```
+
+<p>&nbsp;</p>
+<h3 id="atAggregation">@Aggration</h3>
+<p>
+  With <em>@Aggration</em> and <em>@Sum</em> properties these are properties on the query bean
+  so we just use them as normal but after <code>having()</code>.
+</p>
+<h5>Example:</h5>
+```java
+@Entity
+@Table(name = "orders")
+public class Order extends BaseModel {
+
+  ...
+
+  LocalDate orderDate;
+
+  @Aggregation("max(orderDate)")     // aggregation property
+  LocalDate maxOrderDate;
+
+  @Aggregation("count(*)")           // aggregation property
+  Long totalCount;
+
+```
+<p>
+  So we can use <em>maxOrderDate</em> and <em>totalCount</em> properties like other query bean properties.
+  Add predicates on these aggregation properties to the having clause like:
+</p>
+
+```java
+List<|Order> orders = new QOrder()
+  .select(o.status, o.maxOrderDate, o.totalCount)
+  .status.notEqualTo(Order.Status.COMPLETE)             // (1) where clause - non aggregate properties
+  .having()
+  .totalCount.greaterThan(1)                            // (2) having clause - aggregate properties
+  .findList();
+
+```
+```sql
+select t0.status, max(t0.order_date), count(*)
+from orders t0
+where t0.status <> ?                                    // (1)
+group by t0.status
+having count(*) > ?                                     // (2)
+```
+
+<p>&nbsp;</p>
+<h3 id="rawSql">RawSql</h3>
+<p>
+  With parsed RawSql we can also add expressions to the having clause.
+</p>
+
+<h5>Example</h5>
 
 ```java
   String sql =
@@ -26,11 +98,11 @@
 
   RawSql rawSql = RawSqlBuilder.parse(sql).columnMapping("order_id", "order.id").create();
 
-  List<OrderAggregate> l2 = Ebean.createQuery(OrderAggregate.class)
+  List<|OrderAggregate> l2 = Ebean.createQuery(OrderAggregate.class)
     .setRawSql(rawSql)
     .where()
       .gt("order.id", 0)
-    .having()
+    .having()                                           // having clause
       .lt("totalItems", 3)
       .gt("totalAmount", 50)
     .findList();

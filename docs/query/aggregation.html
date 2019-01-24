@@ -142,10 +142,10 @@ public class Order extends BaseModel {
 
   LocalDate orderDate;
 
-  @Aggregation("max(orderDate)")     // add aggregation property
+  @Aggregation("max(orderDate)")     // aggregation property
   LocalDate maxOrderDate;
 
-  @Aggregation("count(*)")           // add aggregation property
+  @Aggregation("count(*)")           // aggregation property
   Long totalCount;
 
 ```
