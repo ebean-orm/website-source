@@ -16,7 +16,7 @@
 </p>
 
 <p>&nbsp;</p>
-<h4>Dynamic formula</h4>
+<h3 id="dynamicformula">Dynamic formula</h3>
 
 <h5>Single attribute</h5>
 <p>
@@ -42,7 +42,7 @@ where t1.name = ? ; --bind(Rob)
 </p>
 
 <p>&nbsp;</p>
-<h4>Multiple attributes</h4>
+<h3 id="multiple">Multiple attributes</h3>
 <p>
   When we specify non-aggregate properties (<em>status</em> in the example below) then
   a <code>GROUP BY</code> clause is generated that includes all the non-aggregate properties.
@@ -61,6 +61,246 @@ join customer t1 on t1.id = t0.customer_id
 where t1.name = ?
 group by t0.status  -- group by non-aggregate properties
 ```
+<p>
+  The beans returned by aggregation queries are <em>partially populated</em>.  They don't contain
+  the <em>@Id</em> property and thus do not support lazy loading or persisting.
+</p>
+<p>
+  The order beans in the example above will only have their <em>status</em> and <em>orderDate</em>
+  properties loaded.
+</p>
+
+<p>&nbsp;</p>
+<h3 id="fetch">Fetch</h3>
+<p>
+  Aggregation queries can include <code>fetch</code> or <code>fetchQuery</code> to load related beans.
+</p>
+
+```java
+List<|Order> orders
+  = new QOrder()
+  .select("status, max(orderDate)")
+  .customer.fetch("name")                                // (1) fetch
+  .status.notEqualTo(Order.Status.NEW)
+  .findList();
+```
+```sql
+select t0.status, max(t0.order_date), t1.id, t1.name     -- (1) has customer id and name
+from orders t0
+join customer t1 on t1.id = t0.customer_id
+where t0.status <> ?
+group by t0.status, t1.id, t1.name                       -- (1) has customer id and name
+
+```
+<p>
+  When we use <code>fetchQuery</code> the ORM query is executed as 2 sql queries.
+</p>
+```java
+List<|Order> orders
+  = new QOrder()
+  .select("status, max(orderDate)")
+  .customer.fetchQuery("name")                           // (2) fetchQuery ...
+  .status.notEqualTo(Order.Status.NEW)
+  .findList();
+```
+```sql
+-- Primary query
+select t0.status, max(t0.order_date), t0.customer_id     -- (2) has customer id only
+from orders t0
+where t0.status <> ?
+group by t0.status, t0.customer_id
+```
+```sql
+-- Secondary query
+select t0.id, t0.name                                    -- (2) customer id and name
+from customer t0
+where t0.id in (?, ?, ?, ?, ? )
+```
+<p>
+  Using <em>fetchQuery()</em> can be good when there are many properties on customer that
+  we want to load (as these all go into the secondary sql query rather than the primary
+  query and therefore are not part of the <em>GROUP BY</em>.
+</p>
+
+<p>&nbsp;</p>
+<h3 id="atAggregation">@Aggregation</h3>
+<p>
+  We can model aggregations with properties annotated with <code>@Aggregation</code>.
+  This is an alternative to using dynamic formula.
+</p>
+<p>
+  Properties with <em>@Aggregation</em> must be explicitly included in a query (they are considered Transient).
+</p>
+<h5>Example:</h5>
+```java
+
+@Entity
+@Table(name = "orders")
+public class Order extends BaseModel {
+
+  ...
+
+  LocalDate orderDate;
+
+  @Aggregation("max(orderDate)")     // add aggregation property
+  LocalDate maxOrderDate;
+
+  @Aggregation("count(*)")           // add aggregation property
+  Long totalCount;
+
+```
+<p>
+  Having added the <em>maxOrderDate</em> and <em>totalCount</em> properties we can use
+  them in <code>select</code> and <code>having</code> clauses in our queries.
+</p>
+```java
+QOrder o = QOrder.alias();
+
+List<|Order> orders = new QOrder()
+  .select(o.status, o.maxOrderDate, o.totalCount)
+  .findList();
+
+```
+```sql
+select t0.status, max(t0.order_date), count(*)
+from orders t0
+group by t0.status
+```
+<h4>Having</h4>
+<p>
+  Predicates on aggregation properties should be added to the <code>Having</code> clause.
+</p>
+```java
+List<|Order> orders = new QOrder()
+  .select(o.status, o.maxOrderDate, o.totalCount)
+  .status.notEqualTo(Order.Status.COMPLETE)             // (1) where clause - non aggregate properties
+  .having()
+  .totalCount.greaterThan(1)                            // (2) having clause - aggregate properties
+  .findList();
+
+```
+```sql
+select t0.status, max(t0.order_date), count(*)
+from orders t0
+where t0.status <> ?                                    // (1)
+group by t0.status
+having count(*) > ?                                     // (2)
+```
 
 
+<p>&nbsp;</p>
+<h3 id="beans">Aggregation beans</h3>
+<p>
+  If we only want 1 or 2 aggregation properties we feel ok adding these to the existing entity beans.
+  However, if instead we have many properties we want to aggregate this approach is <em>messing with
+  our model and it starts to look ugly.</em>
+</p>
+<p>
+  We can create <em>aggregation beans</em> to model the properties - model the sum/group by/aggregation
+  view.
+</p>
+<ul>
+  <li>Use @View with the table we want to aggregate on</li>
+  <li>Does not extend Model as we don't save() or delete() these</li>
+  <li>Does not have @Id or @Version properties</li>
+  <li>Has properties we want to Aggregate on (sum, max etc)</li>
+  <li>Has properties we want to group by on (date, status, ManyToOne)</li>
+</ul>
+
+<h4>Example</h4>
+<p>
+  Say we have an entity bean called <em>MachineUse</em> with:
+</p>
+```java
+@Entity
+@Table(name = "machine_use")
+public class MachineUse extends Model {
+
+  @Id
+  private long id;
+
+  @ManyToOne(optional = false)
+  private DMachine machine;
+
+  private LocalDate date;
+
+  private long distanceKms;     // we want to sum() this ...
+
+  private long timeSecs;        // we want to sum() this ...
+
+  private BigDecimal fuel;      // we want to sum() this ...
+
+  @Version
+  private long version;
+  ...
+```
+<p>
+  We can create the aggregate bean for this as:
+</p>
+```java
+@Entity
+@View(name = "machine_use", dependentTables = "machine_use")
+public class MachineUseAggregate {
+
+  @ManyToOne(optional = false)
+  private DMachine machine;              // group by, fetch, fetchQuery on ...
+
+  private LocalDate date;                // group by on ...
+
+  @Aggregation("sum(distanceKms)")
+  private Long distanceKms;
+
+  @Aggregation("sum(timeSecs)")
+  private Long timeSecs;
+
+  @Aggregation("sum(fuel)")
+  private BigDecimal fuel;
+
+  @Aggregation("count(*)")
+  private Long count;
+  ...
+```
+
+
+
+<p>&nbsp;</p>
+<h3 id="atSum">@Sum</h3>
+<p>
+  When we create <em>aggregation beans</em> we very often see the pattern where we sum a property like:
+</p>
+```java
+@Aggregation("sum(<|property name>)")
+Type <|property name>;
+
+```
+<p>&nbsp;</p>
+<p>
+  For example, we see beans like:
+</p>
+```java
+@Aggregation("sum(distanceKms)")
+BigDecimal distanceKms;
+
+@Aggregation("sum(useSeconds)")
+Long useSeconds;
+
+@Aggregation("sum(cost)")
+BigDecimal cost;
+
+```
+<p>&nbsp;</p>
+<p>
+  <code>@Sum</code> is syntatic sugar for this pattern and the above becomes:
+</p>
+```java
+@Sum
+BigDecimal distanceKms;
+
+@Sum
+Long useSeconds;
+
+@Sum
+BigDecimal cost;
+
+```
 </body>

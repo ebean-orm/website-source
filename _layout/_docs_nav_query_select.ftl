@@ -13,7 +13,16 @@
 <@smallnav activeCheck="${fetchgroup!''}" url="/docs/query/fetchgroup" title="FetchGroup"/>
 <@smallnav activeCheck="${filterMany!''}" url="/docs/query/filterMany" title="FilterMany"/>
 
-<@smallnav activeCheck="${aggregation!''}" url="/docs/query/aggregation" title="Aggregation"/>
+<@smallnav activeCheck="${aggregation!''}" url="/docs/query/aggregation" title="Aggregation">
+  <ul class="nav">
+    <li><a href="#dynamicformula">Dynamic formula</a></li>
+    <li><a href="#multiple">Multiple attributes</a></li>
+    <li><a href="#fetch">Fetch</a></li>
+    <li><a href="#atAggregation">@Aggregation</a></li>
+    <li><a href="#beans">Aggregation beans</a></li>
+    <li><a href="#atSum">@Sum</a></li>
+  </ul>
+</@smallnav>
 <@smallnav activeCheck="${having!''}" url="/docs/query/having" title="Having"/>
 <@smallnav activeCheck="${native!''}" url="/docs/query/findNative" title="Native Sql"/>
 <@smallnav activeCheck="${rawsql!''}" url="/docs/query/rawSql" title="RawSql"/>
