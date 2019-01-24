@@ -3152,7 +3152,7 @@
   "url":"/docs/getting-started/kotlin-next-steps"
 }
 ,{
-  "title":"where",
+  "title":"Where",
   "caption":"",
   "category":"Query",
   "priority":"1",
@@ -3160,36 +3160,28 @@
   "url":"/docs/query/where"
 }
 ,{
-  "title":"where - Where",
+  "title":"Where - AND",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/where#where"
+  "url":"/docs/query/where#and"
 }
 ,{
-  "title":"where - AND",
+  "title":"Where - OR",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/where"
+  "url":"/docs/query/where#or"
 }
 ,{
-  "title":"where - OR",
+  "title":"Where - Raw expressions",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/where"
-}
-,{
-  "title":"where - Raw expressions",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/where"
+  "url":"/docs/query/where#raw"
 }
 ,{
   "title":"OrderBy",
@@ -3224,6 +3216,142 @@
   "url":"/docs/query/orderBy#collate"
 }
 ,{
+  "title":"OrderBy - ToMany ordering",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/orderBy#toMany"
+}
+,{
+  "title":"Fetch",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/fetch"
+}
+,{
+  "title":"Fetch - Select + Fetch = query tuning",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#tuning"
+}
+,{
+  "title":"Fetch - ORM query to SQL query rules",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#rules"
+}
+,{
+  "title":"Fetch - FetchQuery",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetchQuery"
+}
+,{
+  "title":"Fetch - FetchLazy",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetchLazy"
+}
+,{
+  "title":"Fetch - Alias Query beans",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#querybean"
+}
+,{
+  "title":"FetchGroup",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/fetchgroup"
+}
+,{
+  "title":"filterMany",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/filterMany"
+}
+,{
+  "title":"filterMany - FilterMany",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/filterMany"
+}
+,{
+  "title":"Aggregation",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/aggregation"
+}
+,{
+  "title":"having",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/having"
+}
+,{
+  "title":"having - Having",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/having"
+}
+,{
+  "title":"Native SQL ( findNative )",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/findNative"
+}
+,{
+  "title":"RawSql",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/rawSql"
+}
+,{
+  "title":"Update query",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/update"
+}
+,{
+  "title":"SqlUpdate",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/sqlupdate"
+}
+,{
   "title":"Select",
   "caption":"",
   "category":"Query",
@@ -3240,7 +3368,7 @@
   "url":"/docs/query/select#formula"
 }
 ,{
-  "title":"Select - As Dto",
+  "title":"Select - asDto",
   "caption":"",
   "category":"Query",
   "priority":"3",
@@ -3256,84 +3384,76 @@
   "url":"/docs/query/select#aggregation"
 }
 ,{
+  "title":"Delete query",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/delete"
+}
+,{
   "title":"DtoQuery",
   "caption":"",
   "category":"Query",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/query/dto"
+  "url":"/docs/query/dtoquery"
 }
 ,{
-  "title":"DtoQuery / findOne",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/findOne"
-}
-,{
-  "title":"DtoQuery / findOne - findOne",
+  "title":"DtoQuery - Mapping",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/dto/findOne"
+  "url":"/docs/query/dtoquery#mapping"
 }
 ,{
-  "title":"DtoQuery / findList",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/findList"
-}
-,{
-  "title":"DtoQuery / findList - findList",
+  "title":"DtoQuery - firstRow / maxRows",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/dto/findList"
+  "url":"/docs/query/dtoquery#maxRows"
 }
 ,{
-  "title":"DtoQuery / findEach",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/findEach"
-}
-,{
-  "title":"DtoQuery / findEach - findEach",
+  "title":"DtoQuery - RelaxedMode",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/dto/findEach"
+  "url":"/docs/query/dtoquery#relaxedMode"
 }
 ,{
-  "title":"DtoQuery / findEachWhile",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/dto/findEachWhile"
-}
-,{
-  "title":"DtoQuery / findEachWhile - findEachWhile",
+  "title":"DtoQuery - findEach",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/dto/findEachWhile"
+  "url":"/docs/query/dtoquery#findEach"
 }
 ,{
-  "title":"Aggregation",
+  "title":"SqlQuery",
   "caption":"",
   "category":"Query",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/query/aggregation"
+  "url":"/docs/query/sqlquery"
+}
+,{
+  "title":"CallableSql",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/callablesql"
+}
+,{
+  "title":"Exists",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/exists"
 }
 ,{
   "title":"findOne",
@@ -3382,22 +3502,6 @@
   "priority":"1",
   "keywords":"",
   "url":"/docs/query/findCount"
-}
-,{
-  "title":"findNative",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/findNative"
-}
-,{
-  "title":"RawSql",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/rawSql"
 }
 ,{
   "title":"findPagedList",
@@ -3560,126 +3664,6 @@
   "url":"/docs/query/findVersionsBetween"
 }
 ,{
-  "title":"Count Distinct",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/countDistinct"
-}
-,{
-  "title":"Count Distinct - Count distinct",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/countDistinct"
-}
-,{
-  "title":"Update",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/update"
-}
-,{
-  "title":"Delete",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/delete"
-}
-,{
-  "title":"Fetch",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/fetch"
-}
-,{
-  "title":"Fetch - Select + Fetch = query tuning",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#tuning"
-}
-,{
-  "title":"Fetch - ORM query to SQL query rules",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#rules"
-}
-,{
-  "title":"Fetch - FetchQuery",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#fetchQuery"
-}
-,{
-  "title":"Fetch - FetchLazy",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#fetchLazy"
-}
-,{
-  "title":"Fetch - Alias Query beans",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/fetch#querybean"
-}
-,{
-  "title":"FetchGroup",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/fetchgroup"
-}
-,{
-  "title":"having",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/having"
-}
-,{
-  "title":"having - having (add expressions to the having clause)",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/having"
-}
-,{
-  "title":"filterMany",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/filterMany"
-}
-,{
-  "title":"filterMany - filterMany (filter properties on a hasMany relation)",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/filterMany"
-}
-,{
   "title":"Option",
   "caption":"",
   "category":"Query",
@@ -3688,124 +3672,108 @@
   "url":"/docs/query/option"
 }
 ,{
-  "title":"SqlQuery",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/sqlquery/"
-}
-,{
-  "title":"SqlQuery / findOne",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/sqlquery/findOne"
-}
-,{
-  "title":"SqlQuery / findOne - findOne",
+  "title":"Option - Alias",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/sqlquery/findOne"
+  "url":"/docs/query/option#alias"
 }
 ,{
-  "title":"SqlQuery / findList",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/sqlquery/findList"
-}
-,{
-  "title":"SqlQuery / findList - findList",
+  "title":"Option - asDraft",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/sqlquery/findList"
+  "url":"/docs/query/option#asDraft"
 }
 ,{
-  "title":"SqlQuery / findEach",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/sqlquery/findEach"
-}
-,{
-  "title":"SqlQuery / findEach - findEach",
+  "title":"Option - As of timestamp",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/sqlquery/findEach"
+  "url":"/docs/query/option#asOf"
 }
 ,{
-  "title":"SqlQuery / findEachWhile",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/sqlquery/findEachWhile"
-}
-,{
-  "title":"SqlQuery / findEachWhile - findEachWhile",
+  "title":"Option - Autotune",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/sqlquery/findEachWhile"
+  "url":"/docs/query/option#autotune"
 }
 ,{
-  "title":"SqlQuery / findEachRow",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/sqlquery/findEachRow"
-}
-,{
-  "title":"SqlQuery / findEachRow - findEachRow",
+  "title":"Option - bufferFetchSizeHint",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/sqlquery/findEachRow"
+  "url":"/docs/query/option#bufferFetchSizeHint"
 }
 ,{
-  "title":"SqlQuery / findSingleAttribute",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/sqlquery/findSingleAttribute"
-}
-,{
-  "title":"SqlQuery / findSingleAttribute - findSingleAttribute",
+  "title":"Option - disableLazyLoading",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/sqlquery/findSingleAttribute"
+  "url":"/docs/query/option#disableLazyLoading"
 }
 ,{
-  "title":"SqlQuery / findSingleAttributeList",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/sqlquery/findSingleAttributeList"
-}
-,{
-  "title":"SqlQuery / findSingleAttributeList - findSingleAttributeList",
+  "title":"Option - disableReadAuditing",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/sqlquery/findSingleAttributeList"
+  "url":"/docs/query/option#disableReadAuditing"
+}
+,{
+  "title":"Option - distinct",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/option#distinct"
+}
+,{
+  "title":"Option - forUpdate",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/option#forUpdate"
+}
+,{
+  "title":"Option - includeSoftDeletes",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/option#includeSoftDeletes"
+}
+,{
+  "title":"Option - lazyLoadBatchSize",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/option#lazyLoadBatchSize"
+}
+,{
+  "title":"Option - persistenceContextScope",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/option#persistenceContextScope"
+}
+,{
+  "title":"Option - readOnly",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/option#readOnly"
 }
 ,{
   "title":"Background / Query Overview",
