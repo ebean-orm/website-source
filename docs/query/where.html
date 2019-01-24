@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="where" href="/docs/query/where"/>
+  <meta name="bread2" content="Where" href="/docs/query/where"/>
   <#assign where= "true">
 </head>
 <body>
@@ -95,7 +95,7 @@ List<Order> orders =
 ```
 
 
-<h2 class="art">AND</h2>
+<h2 id="and" class="art">AND</h2>
 <p>
   By default multiple expressions are added via <code>AND</code>.
 </p>
@@ -143,7 +143,7 @@ where t0.order_date >= ? and t1.status = ? and t2.city = ?
 ```
 
 
-<h2 class="art">OR</h2>
+<h2 id="or" class="art">OR</h2>
 <p>
   When we want to add multiple expressions via <em>OR</em> we use <code>or()</code> and <code>endOr()</code>
   and all the expressions between them are joined by <em>OR</em>.
@@ -188,7 +188,7 @@ where (t0.name is null or t0.name = ? )
 ```
 
 
-<h2 class="art">Raw expressions</h2>
+<h2 id="raw" class="art">Raw expressions</h2>
 <p>
   Sometimes we want to add raw expressions to the where clause.
   We use <code>raw()</code> to include arbitrary SQL, functions and stored procedures
@@ -238,8 +238,8 @@ List<|Order> orders =
 ```sql
   select t0.id, t0.status, t0.order_date, t0.ship_date, ...
   from orders t0
-  left join customer t1 on t1.id = t0.customer_id
-  left join address t2 on t2.id = t1.billing_address_id
+  left join customer t1 on t1.id = t0.customer_id            -- supports customer.name
+  left join address t2 on t2.id = t1.billing_address_id      -- supports customer.billingAddress.city
   where (t1.name = ? or t2.city = ?); --bind(Rob,Auckland)
 ```
 
@@ -262,6 +262,23 @@ select ...
 where t0.status = ?  and (t1.name = ? or t2.city = ?) and t0.order_date > ?
  --bind(NEW,Rob,Auckland,2019-01-17)
 ```
+
+
+<p>&nbsp;</p>
+<h4>Ode to Raw expressions</h4>
+<p>
+  If developer life was simple we would not need raw expressions. Many real world projects often have
+  a few queries where our nice ORM query gets us 90% there but there is that predicate needed that is
+  best expressed in SQL or uses a database specify function or feature.
+</p>
+<p>
+  <em>Raw expressions</em> is this nice little feature that allows us to put that arbitrary SQL
+  expression into the where clause.  We could instead go to findNative etc and provide all the SQL
+  for the query but that is a bigger jump and raw expressions gives us that flexibility.
+</p>
+<p>
+  I'm not sure if I'm allowed a <em>favourite feature</em> but if I was I'd vote for raw expressions.
+</p>
 
 <@next "OrderBy" "/docs/query/orderBy"/>
 <@edit "/docs/query/where"/>

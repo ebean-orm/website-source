@@ -1,5 +1,11 @@
 <@smallnav activeCheck="${querybeans!''}" url="/docs/query/query-beans" title="Query beans"/>
-<@smallnav activeCheck="${where!''}" url="/docs/query/where" title="Where"/>
+<@smallnav activeCheck="${where!''}" url="/docs/query/where" title="Where">
+  <ul class="nav">
+    <li><a href="#and">AND</a></li>
+    <li><a href="#or">OR</a></li>
+    <li><a href="#raw">Raw expressions</a></li>
+  </ul>
+</@smallnav>
 <@smallnav activeCheck="${orderBy!''}" url="/docs/query/orderBy" title="OrderBy"/>
 <@smallnav activeCheck="${select!''}" url="/docs/query/select" title="Select">
   <ul class="nav">
