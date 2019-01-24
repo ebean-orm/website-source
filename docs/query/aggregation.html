@@ -200,7 +200,7 @@ having count(*) > ?                                     // (2)
   view.
 </p>
 <ul>
-  <li>Use @View with the table we want to aggregate on</li>
+  <li>Use @View rather than @Table</li>
   <li>Does not extend Model as we don't save() or delete() these</li>
   <li>Does not have @Id or @Version properties</li>
   <li>Has properties we want to Aggregate on (sum, max etc)</li>
@@ -239,7 +239,7 @@ public class MachineUse extends Model {
 </p>
 ```java
 @Entity
-@View(name = "machine_use", dependentTables = "machine_use")
+@View(name = "machine_use")
 public class MachineUseAggregate {
 
   @ManyToOne(optional = false)
@@ -260,7 +260,6 @@ public class MachineUseAggregate {
   private Long count;
   ...
 ```
-
 
 
 <p>&nbsp;</p>
@@ -303,4 +302,8 @@ Long useSeconds;
 BigDecimal cost;
 
 ```
+
+<@next "Having" "/docs/query/having"/>
+<@edit "/docs/query/filterMany"/>
+
 </body>
