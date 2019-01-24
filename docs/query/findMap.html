@@ -1,5 +1,6 @@
 <html>
 <head>
+  <title>findMap | Query | Ebean</title>
   <meta name="layout" content="_layout/docs_query_find.html"/>
   <meta name="bread2" content="findMap" href="/docs/query/findMap"/>
   <#assign findMap= "true">
@@ -16,9 +17,9 @@
  on the map. If one is not specified then the <code>id</code> property is used.
  The name of the properties is the name they have on the Model, not the name of the database column.
  </p>
- 
+
  ```java
-  
+
  /* Assuming a list of Products exists
  with Product(name: "P1", sku: "I1"), Product(name: "P2", sku: "I2")
  */ the following code:
@@ -28,9 +29,9 @@
      .setMapKey("sku")
      .findMap();
 
- // map.get("I1").getName() <-- This returns P1  
-  
+ // map.get("I1").getName() <-- This returns P1
+
  ```
-  
+
 </body>
 </html>

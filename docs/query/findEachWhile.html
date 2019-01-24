@@ -1,12 +1,13 @@
 <html>
 <head>
+  <title>findEachWhile | Query | Ebean</title>
   <meta name="layout" content="_layout/docs_query_find.html"/>
   <meta name="bread2" content="findEachWhile" href="/docs/query/findEachWhile"/>
   <#assign findEachWhile= "true">
 </head>
 <body>
 <h2>findEachWhile (process large queries, one bean at a time with the ability to stop early)</h2>
-  
+
 <p>
 Execute the query using callbacks to a visitor to process the resulting
 beans one at a time, and allow breaking out of loop (by returning <code>false</code>)
@@ -36,7 +37,7 @@ beans one at a time, and allow breaking out of loop (by returning <code>false</c
        return (customer.getId() < 40);
      });
 
- ``` 
+ ```
 
 </body>
 </html>
