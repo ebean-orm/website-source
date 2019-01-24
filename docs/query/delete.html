@@ -86,6 +86,30 @@ delete from customer where id=?;
 delete from address where id=?;
 ```
 
+<h4>persistCascade false</h4>
+<p>
+  When the transaction has persist cascade turned off then the query will instead just
+  execute the single delete statement.
+</p>
+```java
+try (Transaction transaction = Ebean.beginTransaction()) {
+
+  // turn off persist cascade
+  transaction.setPersistCascade(false);
+
+  int deletedRows =
+    new QCustomer()
+      .name.startsWith("Bad")
+      .delete();
+
+  transaction.commit();
+}
+```
+```sql
+delete from customer where name like ? escape'' ; --bind(Bad%)
+```
+
+
 <h3 class="art">Compare SqlUpdate</h3>
 <p>
   If we want to use <em>SQL</em> directly we can instead use <a href="/docs/query/sqlupdate">SqlUpdate</a>

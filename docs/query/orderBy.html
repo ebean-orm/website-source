@@ -100,6 +100,45 @@ List<|Customer> customers =
     .findList();
 ```
 
+
+<h2 id="toMany" class="art">ToMany ordering</h2>
+<p>
+  Note that when an ORM query is executed as multiple sql queries due to the use of <em>maxRows</em>
+  or <em>fetchQuery</em> (refer to <a href="fetch#rules">fetch rules</a> ) - then the associated orderBy expressions for the <em>toMany</em>
+  relationship is automatically moved to the appropriate sql query.
+</p>
+
+<h5>Example</h5>
+```java
+List<|Customer> customer =
+  new QCustomer()
+    .contacts.fetch("firstName, lastName")
+    .orderBy()
+      .name.asc()
+      .contacts.email.asc()              // (1) automatically moved to secondary sql query
+    .setMaxRows(10)                      // (2) maxRows
+    .findList();
+
+```
+<p>
+  The above ORM query is executed as 2 sql queries due to the <em>maxRows</em> - see <a href="fetch#rules">fetch rules</a>.
+</p>
+```sql
+-- Primary query
+select t0.id, t0.status, t0.name, ...
+from customer t0
+order by t0.name
+limit 10                                -- (2)
+```
+```sql
+-- Secondary query
+select t0.customer_id, t0.id, t0.first_name, t0.last_name
+from contact t0
+where (t0.customer_id) in (? )
+order by t0.email                       -- (1)
+```
+
+
 <@next "Select" "/docs/query/select"/>
 <@edit "/docs/query/orderBy"/>
 
