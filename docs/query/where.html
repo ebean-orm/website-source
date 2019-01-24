@@ -143,6 +143,23 @@ join address t2 on t2.id = t1.billing_address_id
 where t0.order_date >= ? and t1.status = ? and t2.city = ?
 ```
 
+<p>&nbsp;</p>
+<h5>Notes on join type</h5>
+<p>
+  The type of join used (<code>left join</code> or <code>join</code>) is based on the cardinality and
+  optionality of the relationship. For example, if the customer foreign key on order was nullable then
+  that is an optional relationship and a <em>left join</em> is used.
+</p>
+<p>
+  For any path, if a "higher level" join is a <em>left join</em> then all "child joins" (for that path) must also
+  be a <em>left join</em> (i.e. "left joins cascade").  For example, in the example above - if the join from order
+  to customers is a left join then the join from customer to address must also be a left join.
+</p>
+<p>
+  The type of join to use for expression on a <em>ToMany</em> path depends on whether the expression
+  is contained in a <em>OR</em>. If the expression is contained inside an <em>OR</em> then a <em>left join</em>
+  is used.
+</p>
 
 <h2 id="or" class="art">OR</h2>
 <p>
