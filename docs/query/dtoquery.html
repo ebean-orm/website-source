@@ -27,7 +27,7 @@
 // using positioned parameters
 
 List<|CustomerDto> beans =
-  server().findDto(CustomerDto.class, "select id, name from customer where name = ?")
+  ebeanServer.findDto(CustomerDto.class, "select id, name from customer where name = ?")
   .setParameter(1, "Rob")
   .findList();
 ```
@@ -37,7 +37,7 @@ List<|CustomerDto> beans =
 // using named parameters
 
 List<|CustomerDto> beans =
-  server().findDto(CustomerDto.class, "select id, name from customer where name = :name")
+  ebeanServer.findDto(CustomerDto.class, "select id, name from customer where name = :name")
   .setParameter("name", "Rob")
   .findList();
 ```
