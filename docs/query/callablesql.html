@@ -8,8 +8,35 @@
 <body>
 
 <h2>CallableSql</h2>
+<p>
+  With <em>CallableSql</em> we can call stored procedures with IN / OUT parameters.
+</p>
 
-<@edit "/docs/query/sqlupdate"/>
+```java
+CallableSql cs = server.createCallableSql("{call my_stored_procedure(?,?)}");
+cs.setParameter(1, 42);
+cs.setParameter(2, "baz");
+server.execute(cs);
+
+```
+
+<h2 id="l2cache" class="art">L2 cache</h2>
+<p>
+  If we are using L2 caching and the stored procedure modifies data we should
+  inform ebean what tables were modified by insert, update or delete and it
+  can then invalidate appropriate parts of the L2 cache.
+</p>
+
+```java
+CallableSql cs = server.createCallableSql("{call my_stored_procedure(?,?)}");
+...
+// Using L2 cache - updating rows on customer table
+cs.addModification("customer", false, true, false);
+server.execute(cs);
+
+```
+
+<@edit "/docs/query/callablesql"/>
 
 </body>
 </html>

@@ -8,7 +8,95 @@
 <body>
 
 <h2>SqlQuery</h2>
+<p>
+  With SqlQuery we can execute sql queries without any entity beans or dto beans.
+  Instead we can either read the <code>ResultSet</code> directly or get <code>SqlRow</code> objects.
+</p>
 
+<p>&nbsp;</p>
+
+<h5>Example findOne with SqlRow</h5>
+```java
+String sql = "select id, name, when_active from customer where id = :id"
+
+SqlRow row =
+  Ebean.createSqlQuery(sql)
+    .setParameter("id", 42)
+    .findOne();
+
+String name = row.getString("name");
+Timestamp active = row.getTimestamp("when_active");
+```
+
+<p>&nbsp;</p>
+<h5>Example findEachRow with ResultSet</h5>
+
+```java
+String sql = "select id, name, status from customer order by name desc";
+
+Ebean.createSqlQuery(sql)
+  .findEachRow((resultSet, rowNum) -> {
+
+    long id = resultSet.getLong(1);
+    String name = resultSet.getString(2);
+    ...
+  });
+
+```
+
+<h2 id="limit" class="art">firstRow / maxRows</h2>
+<p>
+  We can specify <em>firstRow</em> and <em>maxRows</em> on a SqlQuery and Ebean will modify
+  the SQL based on the database platform to add the appropriate row limit clause.
+</p>
+```java
+String sql = "select id, name, when_active from customer where status = ?";
+
+List<|SqlRow> rows =
+  Ebean.createSqlQuery(sql)
+    .setParameter(1, "NEW")
+    .setFirstRow(10)
+    .setMaxRows(10)
+    .findList();
+```
+
+
+
+<h2 id="rowmapper" class="art">RowMapper</h2>
+<p>
+  We can implement a <em>RowMapper</em> to convert a ResultSet into a dto bean.
+</p>
+```java
+static class CustDtoMapper implements RowMapper<|CustDto> {
+
+  @Override
+  public CustDto map(ResultSet resultSet, int rowNum) throws SQLException {
+
+    long id = resultSet.getLong(1);
+    String name = resultSet.getString(2);
+    String status = resultSet.getString(3);
+
+    return new CustDto(id, name, status);
+  }
+}
+
+...
+static final CustDtoMapper CUST_MAPPER = new CustDtoMapper()
+```
+<p>&nbsp;</p>
+<p>
+  Then we can use it to return DTO beans.
+</p>
+```java
+String sql = "select id, name, status from customer where name = ?";
+
+CustDto rob = Ebean.createSqlQuery(sql)
+  .setParameter(1, "Rob")
+  .findOne(CUST_MAPPER);
+```
+
+
+<@next "SqlUpdate" "/docs/query/sqlupdate"/>
 <@edit "/docs/query/sqlquery"/>
 
 </body>

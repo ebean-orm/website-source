@@ -9,10 +9,37 @@
 
 <h2>SqlUpdate</h2>
 <p>
-  <em>SqlUpdate</em> allows us to execute <em>sql delete</em>, <em>sql insert</em> or <em>sql update</em> statements.
+  <em>SqlUpdate</em> allows us to execute <em>sql insert</em>, <em>sql update</em> or <em>sql delete</em> statements.
 </p>
 
-<h5>Example binding list</h5>
+<p>&nbsp;</p>
+<h5>Example: simple update</h5>
+```java
+String sql = "update audit_log set description = description where id = ?";
+
+int row = Ebean.createSqlUpdate(sql)
+  .setParameter(1, 42)
+  .execute();
+```
+
+<p>&nbsp;</p>
+<h5>Example: insert with getGeneratedKeys</h5>
+```java
+String sql = "insert into e_person_online (email, online_status, when_updated) " +
+             "values (:email, :online, current_time)";
+
+SqlUpdate sqlUpdate = Ebean.createSqlUpdate(sql)
+  .setGetGeneratedKeys(true)
+  .setParameter("email", email)
+  .setParameter("online", false);
+
+sqlUpdate.execute();
+
+Object key = sqlUpdate.getGeneratedKey();
+```
+
+<p>&nbsp;</p>
+<h5>Example: binding list</h5>
 ```java
 String sql = "delete from customer where ref_id in (:ids)";
 
@@ -27,12 +54,12 @@ delete from customer where ref_id in (?,?,?)
 
 <p>&nbsp;</p>
 
-<h5>Example binding multiple lists</h5>
+<h5>Example: binding multiple lists</h5>
 ```java
 String sql = "delete from customer where ref_id in (:ids) and name in (:names)";
 
 int rows =
-  Ebean.createSqlUpdate()
+  Ebean.createSqlUpdate(sql)
     .setParameter("ids", asList(9991, 9992, 9993))
     .setParameter("names", asList("rob", "jim"))
     .execute();
@@ -41,9 +68,66 @@ int rows =
 delete from customer where ref_id in (?,?,?) and name in (?,?)
 ```
 
-<p>&nbsp;</p>
+<h2 id="cte" class="art">CTE - Common table expression</h2>
+<p>
+  When we want to perform a bulk update using a <em>common table expression</em> this is
+  easiest done using SqlUpdate.
+</p>
+<h5>CTE Example</h5>
+```java
+String sql = """
+WITH t AS (
+    SELECT s.id AS _id
+    FROM store_price s
+    JOIN promotion_vw p ...
+    WHERE ...
+)
+UPDATE store_price
+SET promotion_price = null, price = active_price, price_reason = ?,
+    version = version+1, when_modified = current_timestamp
+FROM t
+WHERE id = t._id
+"""
 
-<h3 id="upsert" class="art">Upsert</h3>
+int rows =
+Ebean.createSqlUpdate(sql)
+.setParameter(1, "Expired promotions")
+.execute();
+```
+
+<h2 id="addBatch" class="art">AddBatch and ExecuteBatch</h2>
+<p>
+  We use <em>addBatch()</em> and <em>executeBatch()</em> to explicitly use JDBC batching.
+</p>
+```java
+
+String sql = "insert into audit_log (id, description, modified_description) values (?,?,?)";
+SqlUpdate insert = Ebean.createSqlUpdate(sql);
+
+try (Transaction txn = Ebean.beginTransaction()) {
+
+  insert.setNextParameter(10000);
+  insert.setNextParameter("hello");
+  insert.setNextParameter("foo");
+  insert.addBatch();
+
+  insert.setNextParameter(10001);
+  insert.setNextParameter("goodbye");
+  insert.setNextParameter("bar");
+  insert.addBatch();
+
+  insert.setNextParameter(10002);
+  insert.setNextParameter("chow");
+  insert.setNextParameter("baz");
+  insert.addBatch();
+
+  int[] rows = insert.executeBatch();
+
+  txn.commit();
+}
+```
+
+<h2 id="upsert" class="art">Upsert</h2>
 <p>
   We can execute upsert sql which is generally database specific.
 </p>
@@ -81,8 +165,17 @@ Object key = Ebean.createSqlUpdate(sql)
   .executeGetKey();
 ```
 
+<h2 id="l2cache" class="art">L2 cache</h2>
+<p>
+  If L2 caching is being used Ebean will by default automatically try and determine what
+  table modifications are performed and use this to invalidate appropriate parts of the L2 cache.
+</p>
+<p>
+  Use <code>setAutoTableMod(false)</code> to turn this off.
+</p>
 
 <@edit "/docs/query/sqlupdate"/>
+<@next "CallableSql" "/docs/query/callablesql"/>
 
 </body>
 </html>
