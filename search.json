@@ -3304,6 +3304,54 @@
   "url":"/docs/query/aggregation"
 }
 ,{
+  "title":"Aggregation - Dynamic formula",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/aggregation#dynamicformula"
+}
+,{
+  "title":"Aggregation - Multiple attributes",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/aggregation#multiple"
+}
+,{
+  "title":"Aggregation - Fetch",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/aggregation#fetch"
+}
+,{
+  "title":"Aggregation - @Aggregation",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/aggregation#atAggregation"
+}
+,{
+  "title":"Aggregation - Aggregation beans",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/aggregation#beans"
+}
+,{
+  "title":"Aggregation - @Sum",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/aggregation#atSum"
+}
+,{
   "title":"having",
   "caption":"",
   "category":"Query",
