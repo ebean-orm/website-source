@@ -3400,6 +3400,54 @@
   "url":"/docs/query/sqlupdate"
 }
 ,{
+  "title":"SqlUpdate - CTE - Common table expression",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlupdate#cte"
+}
+,{
+  "title":"SqlUpdate - AddBatch and ExecuteBatch",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlupdate#addBatch"
+}
+,{
+  "title":"SqlUpdate - Upsert",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlupdate#upsert"
+}
+,{
+  "title":"SqlUpdate - L2 cache",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlupdate#l2cache"
+}
+,{
+  "title":"CallableSql",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/callablesql"
+}
+,{
+  "title":"CallableSql - L2 cache",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/callablesql#l2cache"
+}
+,{
   "title":"Select",
   "caption":"",
   "category":"Query",
@@ -3488,12 +3536,20 @@
   "url":"/docs/query/sqlquery"
 }
 ,{
-  "title":"CallableSql",
+  "title":"SqlQuery - firstRow / maxRows",
   "caption":"",
   "category":"Query",
-  "priority":"1",
+  "priority":"3",
   "keywords":"",
-  "url":"/docs/query/callablesql"
+  "url":"/docs/query/sqlquery#limit"
+}
+,{
+  "title":"SqlQuery - RowMapper",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlquery#rowmapper"
 }
 ,{
   "title":"Exists",
