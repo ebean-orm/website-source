@@ -69,7 +69,7 @@ Customer customer = Customer.find.byId(42L);
 // reference bean
 Customer refBean = Customer.find.ref(42L);
 
-List|Customer> customers =
+List<Customer> customers =
   Customer.find
     .where().istartsWith("name", "Rob")
     .findList();
