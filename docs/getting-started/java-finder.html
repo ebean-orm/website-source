@@ -28,7 +28,7 @@ package org.example.domain.finder;
 import io.ebean.Finder;
 import org.example.domain.Customer;
 
-public class CustomerFinder extends Finder<Long,Customer> {
+public class CustomerFinder extends Finder<|Long,Customer> {
 
   /**
    * Construct using the default EbeanServer.
@@ -69,7 +69,7 @@ Customer customer = Customer.find.byId(42L);
 // reference bean
 Customer refBean = Customer.find.ref(42L);
 
-List<Customer> customers =
+List<|Customer> customers =
   Customer.find
     .where().istartsWith("name", "Rob")
     .findList();
@@ -78,7 +78,7 @@ List<Customer> customers =
 // into the CustomerFinder so instead we should create a "byName" method
 // on CustomerFinder and end up with:
 
-List<Customer> customers = Customer.find.byName("Rob");
+List<|Customer> customers = Customer.find.byName("Rob");
 
 ```
 <h2>Finder vs Repository</h2>
