@@ -1960,100 +1960,76 @@
   "url":"/docs/introduction"
 }
 ,{
-  "title":"Why Ebean exists",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/introduction/why"
-}
-,{
-  "title":"Why Ebean exists - JPA Query",
+  "title":"Database",
   "caption":"",
   "category":"Introduction",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/introduction/why"
+  "url":"/docs/introduction#database"
 }
 ,{
-  "title":"Why Ebean exists - JPA Persisting",
+  "title":"DB (io.ebean.DB)",
   "caption":"",
   "category":"Introduction",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/introduction/why"
-}
-,{
-  "title":"Why Ebean exists - Hibernate",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/introduction/why"
-}
-,{
-  "title":"Why Ebean exists - Can Ebean implement JPA?",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/introduction/why"
+  "url":"/docs/introduction#db"
 }
 ,{
   "title":"EbeanServer",
   "caption":"",
   "category":"Introduction",
-  "priority":"1",
+  "priority":"3",
   "keywords":"",
-  "url":"/docs/introduction/ebeanserver"
+  "url":"/docs/introduction#ebeanserver"
 }
 ,{
-  "title":"EbeanServer - Default EbeanServer",
+  "title":"Ebean",
   "caption":"",
   "category":"Introduction",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/introduction/ebeanserver#defaultserver"
+  "url":"/docs/introduction#ebean"
 }
 ,{
-  "title":"EbeanServer - Ebean",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/introduction/ebeanserver#ebean"
-}
-,{
-  "title":"EbeanServer - Global state",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/introduction/ebeanserver#global"
-}
-,{
-  "title":"EbeanServer - Model and Finder",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/introduction/ebeanserver#model"
-}
-,{
-  "title":"ServerConfig",
+  "title":"Model",
   "caption":"",
   "category":"Introduction",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/introduction/serverconfig"
+  "url":"/docs/introduction/model"
 }
 ,{
-  "title":"ServerConfig - ServerConfig and EbeanServerFactory",
+  "title":"Finder",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/introduction/finder"
+}
+,{
+  "title":"Finder - Finder generation via ebeaninit",
   "caption":"",
   "category":"Introduction",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/introduction/serverconfig"
+  "url":"/docs/introduction/finder"
+}
+,{
+  "title":"DatabaseConfig",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/introduction/databaseconfig"
+}
+,{
+  "title":"DatabaseFactory",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/introduction/databasefactory"
 }
 ,{
   "title":"ebean.mf",
@@ -2069,7 +2045,7 @@
   "category":"Tooling",
   "priority":"0",
   "keywords":"",
-  "url":"/docs/tooling/"
+  "url":"/docs/tooling"
 }
 ,{
   "title":"Maven",
@@ -2101,7 +2077,15 @@
   "category":"Tooling",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/tooling/"
+  "url":"/docs/tooling"
+}
+,{
+  "title":"CLI Tool (ebeaninit)",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/cli-tool"
 }
 ,{
   "title":"Enhancement",
@@ -2184,7 +2168,7 @@
   "url":"/docs/tooling/idea"
 }
 ,{
-  "title":"Maven - Video",
+  "title":"Maven - Maven enhancement",
   "caption":"",
   "category":"Tooling",
   "priority":"3",
@@ -2192,7 +2176,7 @@
   "url":"/docs/tooling/maven"
 }
 ,{
-  "title":"Maven - Steps",
+  "title":"Maven - Add maven tile",
   "caption":"",
   "category":"Tooling",
   "priority":"3",
@@ -2200,388 +2184,28 @@
   "url":"/docs/tooling/maven"
 }
 ,{
-  "title":"",
+  "title":"Maven / Maven Plugin",
   "caption":"",
-  "category":"Logging",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/logging"
-}
-,{
-  "title":"Typical logback configuration",
-  "caption":"",
-  "category":"Logging",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/logging#typical"
-}
-,{
-  "title":"DDL",
-  "caption":"",
-  "category":"Logging",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/logging#ddl"
-}
-,{
-  "title":"SQL",
-  "caption":"",
-  "category":"Logging",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/logging#sql"
-}
-,{
-  "title":"Transaction",
-  "caption":"",
-  "category":"Logging",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/logging#txn"
-}
-,{
-  "title":"Summary logging",
-  "caption":"",
-  "category":"Logging",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/logging#summary"
-}
-,{
-  "title":"L2 Cache logging",
-  "caption":"",
-  "category":"Logging",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/logging#l2"
-}
-,{
-  "title":"Elastic logging",
-  "caption":"",
-  "category":"Logging",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/logging#elastic"
-}
-,{
-  "title":"Docker logging",
-  "caption":"",
-  "category":"Logging",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/logging#docker"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/configuration"
-}
-,{
-  "title":"ebean.mf",
-  "caption":"",
-  "category":"Configuration",
+  "category":"Getting started",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/configuration/manifest"
+  "url":"/docs/getting-started/maven-plugin"
 }
 ,{
-  "title":"ServerConfig",
+  "title":"Maven",
   "caption":"",
-  "category":"Configuration",
+  "category":"Getting started",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/configuration/serverconfig"
+  "url":"/docs/getting-started/maven"
 }
 ,{
-  "title":"ServerConfig - ServerConfig and EbeanServerFactory",
+  "title":"Maven - Add maven tile",
   "caption":"",
-  "category":"Configuration",
+  "category":"Getting started",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/configuration/serverconfig"
-}
-,{
-  "title":"ServerConfig - Register",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/serverconfig#register"
-}
-,{
-  "title":"ServerConfig - Default server",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/serverconfig#default"
-}
-,{
-  "title":"ServerConfig - Dependency injection",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/serverconfig#di"
-}
-,{
-  "title":"Reference",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/configuration/reference"
-}
-,{
-  "title":"Spring",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/configuration/spring"
-}
-,{
-  "title":"Spring - Spring boot",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/spring#spring-boot"
-}
-,{
-  "title":"Spring - FactoryBean",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/spring#factorybean"
-}
-,{
-  "title":"Spring - ebean-spring",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/spring#ebean-spring"
-}
-,{
-  "title":"Spring - Provider",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/guice#provider"
-}
-,{
-  "title":"Spring - Module bind",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/guice#module"
-}
-,{
-  "title":"Spring - Inject and ActiveRecord",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/guice#activerecord"
-}
-,{
-  "title":"Eclipse",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse - Eclipse IDE Enhancement plugin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse - Videos",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse - Recommendation",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse#recommendation"
-}
-,{
-  "title":"Eclipse - Query bean generation with Maven and APT",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse - Installing the plugin for Eclipse",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse / APT and Maven",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt"
-}
-,{
-  "title":"Eclipse / APT and Maven - Eclipse, APT and Maven",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt"
-}
-,{
-  "title":"Eclipse / APT and Maven - Videos",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt"
-}
-,{
-  "title":"Eclipse / APT and Maven - Overview",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#overview"
-}
-,{
-  "title":"Eclipse / APT and Maven - 1. Install m2e apt plugin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#m2e-apt"
-}
-,{
-  "title":"Eclipse / APT and Maven - 2. Preferences / Maven / Annotation processing",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#preferences"
-}
-,{
-  "title":"Eclipse / APT and Maven - 3. Project / Java compile / Annotation processing",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#java-compile"
-}
-,{
-  "title":"Eclipse / APT and Maven - 4. Project / Java compile / Annotation processing / Factory Path",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#factory-path"
-}
-,{
-  "title":"Gradle - Ebean plugin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle"
-}
-,{
-  "title":"Gradle - Example project",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle"
-}
-,{
-  "title":"Gradle - Test output",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle"
-}
-,{
-  "title":"Agent",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/tooling/agent"
-}
-,{
-  "title":"Agent - Agent Loader",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/agent#agent_loader"
-}
-,{
-  "title":"Gradle - APT - Query Beans",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle-apt"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Query",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/query"
-}
-,{
-  "title":"Query beans",
-  "caption":"",
-  "category":"Query",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/query-beans"
-}
-,{
-  "title":"Query beans - APT / KAPT (generating query beans)",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/query-beans#apt"
-}
-,{
-  "title":"Query beans - Enhancement",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/query-beans#enhancement"
+  "url":"/docs/getting-started/maven"
 }
 ,{
   "title":"Maven Query beans",
@@ -2768,388 +2392,36 @@
   "url":"/docs/getting-started/java-next-steps"
 }
 ,{
+  "title":"Query beans",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/query-beans"
+}
+,{
+  "title":"Query beans - APT / KAPT (generating query beans)",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/query-beans#apt"
+}
+,{
+  "title":"Query beans - Enhancement",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/query-beans#enhancement"
+}
+,{
   "title":"",
   "caption":"",
-  "category":"Transactions",
+  "category":"Query",
   "priority":"0",
   "keywords":"",
-  "url":"/docs/transactions"
-}
-,{
-  "title":"Transactions",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions#transactions"
-}
-,{
-  "title":"Implicit transactions",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions#implicit"
-}
-,{
-  "title":"Programmatic",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions#programmatic"
-}
-,{
-  "title":"Kotlin transaction.use { }",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions#kotlinUse"
-}
-,{
-  "title":"@Transactional",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions#atTransactional"
-}
-,{
-  "title":"Spring",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/spring"
-}
-,{
-  "title":"JTA",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/jta"
-}
-,{
-  "title":"Batch",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/batch"
-}
-,{
-  "title":"Batch - @Transactional(batchSize)",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/batch#transactionalBatchSize"
-}
-,{
-  "title":"Batch - Batch size",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/batch#batchsize"
-}
-,{
-  "title":"Batch - Flush",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/batch#flush"
-}
-,{
-  "title":"Batch - GetGeneratedKeys",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/batch#getGeneratedKeys"
-}
-,{
-  "title":"Batch - Configuration via ServerConfig",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/batch#serverConfig"
-}
-,{
-  "title":"Scopes",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/scopes"
-}
-,{
-  "title":"Scopes - REQUIRED is default",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/scopes"
-}
-,{
-  "title":"Scopes - Example with beginTransaction",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/scopes"
-}
-,{
-  "title":"Savepoint",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/savepoints"
-}
-,{
-  "title":"Explicit Savepoint",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/transactions/savepoints-explicit"
-}
-,{
-  "title":"Dependencies",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/dependencies"
-}
-,{
-  "title":"Dependencies - Add dependencies",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/dependencies"
-}
-,{
-  "title":"Maven",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/maven"
-}
-,{
-  "title":"Maven - Add maven tile",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/maven"
-}
-,{
-  "title":"Maven / Maven Plugin",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/maven-plugin"
-}
-,{
-  "title":"Gradle",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/gradle"
-}
-,{
-  "title":"Gradle - Example project",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/gradle"
-}
-,{
-  "title":"Gradle - Test output",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/gradle"
-}
-,{
-  "title":"Gradle Query beans",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/gradle-querybeans"
-}
-,{
-  "title":"Gradle Query beans - Query bean generation with Gradle",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/gradle-querybeans"
-}
-,{
-  "title":"Kotlin / First entity",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-first-entity"
-}
-,{
-  "title":"Kotlin / First entity - First Entity",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-first-entity"
-}
-,{
-  "title":"Kotlin / First entity - Add ebean.mf",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-first-entity"
-}
-,{
-  "title":"Kotlin / First entity - Add application-test.yaml",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-first-entity"
-}
-,{
-  "title":"Kotlin / First entity - Add logback-test.xml (optional)",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-first-entity"
-}
-,{
-  "title":"Kotlin / First entity - First Test",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-first-entity"
-}
-,{
-  "title":"Kotlin / First entity - Run test",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-first-entity"
-}
-,{
-  "title":"Kotlin / Constructors",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-constructors"
-}
-,{
-  "title":"Kotlin / Constructors - Constructors",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-constructors"
-}
-,{
-  "title":"Kotlin / Constructors - Kotlin non-null types",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-constructors"
-}
-,{
-  "title":"Kotlin / MappedSuperclass",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-mapped-superclass"
-}
-,{
-  "title":"Kotlin / MappedSuperclass - MappedSuperclass",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-mapped-superclass"
-}
-,{
-  "title":"Kotlin / Model",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-model"
-}
-,{
-  "title":"Kotlin / Model - Model",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-model"
-}
-,{
-  "title":"Kotlin / Model - Model.save()",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-model"
-}
-,{
-  "title":"Kotlin / Finder",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-finder"
-}
-,{
-  "title":"Kotlin / Finder - Finder",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-finder"
-}
-,{
-  "title":"Kotlin / Next steps",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-next-steps"
-}
-,{
-  "title":"Kotlin / Next steps - Next steps ...",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/kotlin-next-steps"
+  "url":"/docs/query/"
 }
 ,{
   "title":"Where",
@@ -4230,6 +3502,750 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/background/typesafe#query-beans"
+}
+,{
+  "title":"Gradle Query beans",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/gradle-querybeans"
+}
+,{
+  "title":"Gradle Query beans - Query bean generation with Gradle",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/gradle-querybeans"
+}
+,{
+  "title":"Dependencies",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/dependencies"
+}
+,{
+  "title":"Dependencies - Add dependencies",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/dependencies"
+}
+,{
+  "title":"Gradle",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/gradle"
+}
+,{
+  "title":"Gradle - Example project",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/gradle"
+}
+,{
+  "title":"Gradle - Test output",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/gradle"
+}
+,{
+  "title":"Kotlin / First entity",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-first-entity"
+}
+,{
+  "title":"Kotlin / First entity - First Entity",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-first-entity"
+}
+,{
+  "title":"Kotlin / First entity - Add ebean.mf",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-first-entity"
+}
+,{
+  "title":"Kotlin / First entity - Add application-test.yaml",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-first-entity"
+}
+,{
+  "title":"Kotlin / First entity - Add logback-test.xml (optional)",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-first-entity"
+}
+,{
+  "title":"Kotlin / First entity - First Test",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-first-entity"
+}
+,{
+  "title":"Kotlin / First entity - Run test",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-first-entity"
+}
+,{
+  "title":"Kotlin / Constructors",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-constructors"
+}
+,{
+  "title":"Kotlin / Constructors - Constructors",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-constructors"
+}
+,{
+  "title":"Kotlin / Constructors - Kotlin non-null types",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-constructors"
+}
+,{
+  "title":"Kotlin / MappedSuperclass",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-mapped-superclass"
+}
+,{
+  "title":"Kotlin / MappedSuperclass - MappedSuperclass",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-mapped-superclass"
+}
+,{
+  "title":"Kotlin / Model",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-model"
+}
+,{
+  "title":"Kotlin / Model - Model",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-model"
+}
+,{
+  "title":"Kotlin / Model - Model.save()",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-model"
+}
+,{
+  "title":"Kotlin / Finder",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-finder"
+}
+,{
+  "title":"Kotlin / Finder - Finder",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-finder"
+}
+,{
+  "title":"Kotlin / Next steps",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-next-steps"
+}
+,{
+  "title":"Kotlin / Next steps - Next steps ...",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/kotlin-next-steps"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/transactions"
+}
+,{
+  "title":"Transactions",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#transactions"
+}
+,{
+  "title":"Implicit transactions",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#implicit"
+}
+,{
+  "title":"Programmatic",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#programmatic"
+}
+,{
+  "title":"Kotlin transaction.use { }",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#kotlinUse"
+}
+,{
+  "title":"@Transactional",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#atTransactional"
+}
+,{
+  "title":"Spring",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/transactions/spring"
+}
+,{
+  "title":"JTA",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/transactions/jta"
+}
+,{
+  "title":"Batch",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/transactions/batch"
+}
+,{
+  "title":"Batch - @Transactional(batchSize)",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#transactionalBatchSize"
+}
+,{
+  "title":"Batch - Batch size",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#batchsize"
+}
+,{
+  "title":"Batch - Flush",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#flush"
+}
+,{
+  "title":"Batch - GetGeneratedKeys",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#getGeneratedKeys"
+}
+,{
+  "title":"Batch - Configuration via ServerConfig",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#serverConfig"
+}
+,{
+  "title":"Scopes",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/transactions/scopes"
+}
+,{
+  "title":"Scopes - REQUIRED is default",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/scopes"
+}
+,{
+  "title":"Scopes - Example with beginTransaction",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/scopes"
+}
+,{
+  "title":"Savepoint",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/transactions/savepoints"
+}
+,{
+  "title":"Explicit Savepoint",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/transactions/savepoints-explicit"
+}
+,{
+  "title":"ebean.mf",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/configuration/manifest"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/configuration/"
+}
+,{
+  "title":"ServerConfig",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/configuration/serverconfig"
+}
+,{
+  "title":"ServerConfig - ServerConfig and EbeanServerFactory",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/serverconfig"
+}
+,{
+  "title":"ServerConfig - Register",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/serverconfig#register"
+}
+,{
+  "title":"ServerConfig - Default server",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/serverconfig#default"
+}
+,{
+  "title":"ServerConfig - Dependency injection",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/serverconfig#di"
+}
+,{
+  "title":"Reference",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/configuration/reference"
+}
+,{
+  "title":"Spring",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/configuration/spring"
+}
+,{
+  "title":"Spring - Spring boot",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/spring#spring-boot"
+}
+,{
+  "title":"Spring - FactoryBean",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/spring#factorybean"
+}
+,{
+  "title":"Spring - ebean-spring",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/spring#ebean-spring"
+}
+,{
+  "title":"Spring - Provider",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/guice#provider"
+}
+,{
+  "title":"Spring - Module bind",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/guice#module"
+}
+,{
+  "title":"Spring - Inject and ActiveRecord",
+  "caption":"",
+  "category":"Configuration",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/configuration/guice#activerecord"
+}
+,{
+  "title":"Maven plugin",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/maven-plugin"
+}
+,{
+  "title":"Gradle - Gradle plugin",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/gradle"
+}
+,{
+  "title":"Gradle - Example project",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/gradle"
+}
+,{
+  "title":"Gradle - Test output",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/gradle"
+}
+,{
+  "title":"Gradle Query beans",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/gradle-querybeans"
+}
+,{
+  "title":"Gradle Query beans - Query bean generation with Gradle",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/gradle-querybeans"
+}
+,{
+  "title":"Agent",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/agent"
+}
+,{
+  "title":"Agent - Agent Loader",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/agent#agent_loader"
+}
+,{
+  "title":"Eclipse",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse"
+}
+,{
+  "title":"Eclipse - Eclipse IDE Enhancement plugin",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse"
+}
+,{
+  "title":"Eclipse - Videos",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse"
+}
+,{
+  "title":"Eclipse - Recommendation",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse#recommendation"
+}
+,{
+  "title":"Eclipse - Query bean generation with Maven and APT",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse"
+}
+,{
+  "title":"Eclipse - Installing the plugin for Eclipse",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse"
+}
+,{
+  "title":"Eclipse / APT and Maven",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse-maven-apt"
+}
+,{
+  "title":"Eclipse / APT and Maven - Eclipse, APT and Maven",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse-maven-apt"
+}
+,{
+  "title":"Eclipse / APT and Maven - Videos",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse-maven-apt"
+}
+,{
+  "title":"Eclipse / APT and Maven - Overview",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse-maven-apt#overview"
+}
+,{
+  "title":"Eclipse / APT and Maven - 1. Install m2e apt plugin",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse-maven-apt#m2e-apt"
+}
+,{
+  "title":"Eclipse / APT and Maven - 2. Preferences / Maven / Annotation processing",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse-maven-apt#preferences"
+}
+,{
+  "title":"Eclipse / APT and Maven - 3. Project / Java compile / Annotation processing",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse-maven-apt#java-compile"
+}
+,{
+  "title":"Eclipse / APT and Maven - 4. Project / Java compile / Annotation processing / Factory Path",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/eclipse-maven-apt#factory-path"
+}
+,{
+  "title":"Maven Querybeans",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/maven-querybeans"
+}
+,{
+  "title":"Maven Querybeans - Query bean generation with Maven",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/tooling/maven-querybeans"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Logging",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/logging"
+}
+,{
+  "title":"Typical logback configuration",
+  "caption":"",
+  "category":"Logging",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/logging#typical"
+}
+,{
+  "title":"DDL",
+  "caption":"",
+  "category":"Logging",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/logging#ddl"
+}
+,{
+  "title":"SQL",
+  "caption":"",
+  "category":"Logging",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/logging#sql"
+}
+,{
+  "title":"Transaction",
+  "caption":"",
+  "category":"Logging",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/logging#txn"
+}
+,{
+  "title":"Summary logging",
+  "caption":"",
+  "category":"Logging",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/logging#summary"
+}
+,{
+  "title":"L2 Cache logging",
+  "caption":"",
+  "category":"Logging",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/logging#l2"
+}
+,{
+  "title":"Elastic logging",
+  "caption":"",
+  "category":"Logging",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/logging#elastic"
+}
+,{
+  "title":"Docker logging",
+  "caption":"",
+  "category":"Logging",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/logging#docker"
 }
 ,{
   "title":"",
