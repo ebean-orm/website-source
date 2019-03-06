@@ -1,0 +1,34 @@
+
+<h3>Install Command line tool</h3>
+```text
+## Linux install
+
+curl -s https://ebean.io/cli-dist/install | bash
+```
+
+<p>
+  The command line tool is optional, we don't strictly need it but it does some useful tasks.
+  We can do all these tasks manually.
+</p>
+<ul>
+  <li>Generates Finders</li>
+  <li>Generates ebean.mf</li>
+  <li>Add GenerateDbMigration (code to generate DB Migrations)</li>
+  <li>Add application-test.yml</li>
+  <li>Add logback-test.xml</li>
+</ul>
+
+
+
+<h4 id="manual">Alternate manual installation (Linux)</h4>
+
+```text
+cd ~/.local/bin
+
+curl https://ebean.io/cli-dist/ebean-init-1.5.jar > ebean-init-1.5.jar
+curl https://ebean.io/cli-dist/ebeaninit > ebeaninit
+
+ln -s ebean-init-1.5.jar ebean-init.jar
+chmod +x ebeaninit
+
+```

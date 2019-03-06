@@ -7,85 +7,9 @@
 </head>
 <body>
 
-<h2>Query bean generation with Maven</h2>
-<p>
-  We can optionally add a Java annotation processor (APT) to generate query beans.
-  This allows us to write type safe queries like:
-</p>
-<pre content="java">
-List<Customer> customers =
-  new QCustomer()
-  .name.startsWith("Rob")
-  .findList();
-</pre>
-<p>
-  Skip this if you don't want to use query beans.
-</p>
+<#include "/_common/maven-querybeans.html">
 
-<h3>Add ebean-querybean dependency</h3>
-
-<@maven "io.ebean" "ebean-querybean" "auto" "1" />
-
-
-<h3>Java APT</h3>
-<p>
-  To generate Java query beans with maven add <code>provided</code> scope dependency for <code>querybean-generator</code>
-</p>
-
-<!-- "io.ebean" "querybean-generator" "auto" "2"  -->
-
-<pre content="xml">
-<!-- annotation processor to generate query beans -->
-<dependency>
-  <groupId>io.ebean</groupId>
-  <artifactId>querybean-generator</artifactId>
-  <version>11.32.1</version>
-  <scope>provided</scope>
-</dependency>
-</pre>
-
-<h5>Example project</h5>
-<p>
-  <a href="https://github.com/ebean-orm-examples/example-java8/blob/master/pom.xml">Full example pom with query bean generation</a>
-</p>
-
-
-<h3>Kotlin KAPT</h3>
-<p>
-  To generate Kotlin query ebeans add the <code>kotlin-kapt</code> maven tile.
-</p>
-<p>
-  This tile brings in the kotlin-maven-plugin with configuration for kotlin-querybean-generator
-  annotation processor. As such <code>remove</code> the kotlin-maven-plugin that will already
-  be in the pom.xml (as the tile will bring in one that is configured to run the annotation processor).
-</p>
-<p>
-  Add the maven tile into the <code>build / plugins</code> section of the pom.xml.
-</p>
-
-<pre content="xml">
-<plugin>
-  <groupId>io.repaint.maven</groupId>
-  <artifactId>tiles-maven-plugin</artifactId>
-  <version>2.12</version>
-  <extensions>true</extensions>
-  <configuration>
-    <tiles>
-      <tile>io.ebean.tile:enhancement:7.4</tile> <!-- ebean enhancement -->
-      <tile>io.ebean.tile:kotlin-kapt:1.5</tile> <!-- kotlin compile with query bean generation -->
-      <!-- other tiles ... -->
-    </tiles>
-  </configuration>
-</plugin>
-</pre>
-
-<h5>Example project</h5>
-<p>
-  <a href="https://github.com/ebean-orm-examples/example-kotlin/blob/master/pom.xml">Full example pom for Kotlin query bean generation</a>
-</p>
-
-
-<@next_edit "CLI Tool" "/docs/getting-started/cli-tool" "/docs/getting-started/cli-tool"/>
+<@next_edit "CLI Tool" "cli-tool" "/docs/getting-started/cli-tool"/>
 
 </body>
 </html>

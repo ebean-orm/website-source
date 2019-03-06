@@ -1,15 +1,17 @@
 <html>
 <head>
-    <title>Introduction</title>
-    <meta name="layout" content="_layout/docs.html"/>
-    <meta name="bread1" content="Tooling" href="/docs/tooling/"/>
-    <meta name="bread2" content="Maven" href="/docs/maven"/>
-    <template id="menuNav"><#include "/_layout/_docs_nav_tooling.ftl"></template>
-    <#assign mavensetup="active">
+    <title>Maven | Tooling | Ebean</title>
+    <meta name="layout" content="_layout/docs_tooling.html"/>
+    <meta name="bread2" content="Maven" href="/docs/tooling/maven"/>
+    <#assign mavenSetup="active">
 </head>
 <body>
 
-<h2>Video</h2>
+<h2>Maven enhancement</h2>
+<p>
+  Build time enhancement using the maven plugin.
+</p>
+
 <div class="row">
     <div class="col-md-6">
         <@video_item "q-SB_X_X-GU" "Maven enhancement" "Enhancement of entity and query beans using the maven
@@ -17,93 +19,12 @@
     </div>
 </div>
 
-<h2>Steps</h2>
-
-<h4>1. Add ebean as a dependency</h4>
-<@maven_replace_version "::version::" "ebean-maven-plugin">
-<pre content="xml">
-<dependency>
-  <groupId>io.ebean</groupId>
-  <artifactId>ebean</artifactId>
-  <version>::version::</version>
-</dependency>
-</pre>
-</@maven_replace_version>
-
-<h4>2. Add the maven tile into the <code>build / plugins</code> section of the pom.xml</h4>
-<pre content="xml">
-<plugin>
-  <groupId>io.repaint.maven</groupId>
-  <artifactId>tiles-maven-plugin</artifactId>
-  <version>2.12</version>
-  <extensions>true</extensions>
-  <configuration>
-    <tiles>
-      <!-- other tiles ... -->
-      <tile>io.ebean.tile:enhancement:7.2</tile>
-    </tiles>
-  </configuration>
-</plugin>
-</pre>
+<p>&nbsp;</p><p>&nbsp;</p>
 
 
-<hr/>
+<#include "/_common/maven.html">
 
-<h3>Maven enhancement tile</h3>
-<p>
-    The maven tile above brings in both the enhancer for entity beans as well
-    as the enhancement for query beans. This is simpler, cleaner less verbose than
-    defining the plugin in the traditional (non-tile) fashion and is the preferred approach.
-</p>
+<@next_edit "Maven Query beans" "maven-querybeans" "/docs/tooling/maven.html"/>
 
-<h5>The ebean enhancement tile brings plugin configuration for:</h5>
-<ul>
-    <li>Entity bean and @Transactional enhancement for main and test</li>
-    <li>Query bean enhancement for main and test</li>
-</ul>
-<p>
-    Use <code>mvn help:effective-pom</code> to view the plugins that the tile brings in.
-</p>
-
-<h3>Maven enhancement plugin</h3>
-<p>
-    If you do not want to use maven tiles you can specify the maven enhancement
-    plugin in 'normal' fashion.
-</p>
-
-<@maven_replace_version "::version::" "ebean-maven-plugin">
-<pre content="xml">
-<plugin>
-  <groupId>io.ebean</groupId>
-  <artifactId>ebean-maven-plugin</artifactId>
-  <version>::version::</version>
-  <executions>
-    <!-- enhance main classes -->
-    <execution>
-      <id>main</id>
-      <phase>process-classes</phase>
-      <goals>
-        <goal>enhance</goal>
-      </goals>
-    </execution>
-
-      <!-- enhance test classes -->
-    <execution>
-      <id>test</id>
-      <phase>process-test-classes</phase>
-      <goals>
-        <goal>testEnhance</goal>
-      </goals>
-    </execution>
-
-  </executions>
-</plugin>
-
-</pre>
-</@maven_replace_version>
-
-<div class="next pull-right">
-    <a href="/docs/logging" class="btn btn-info">Next: Logging</a>
-</div>
 </body>
 </html>

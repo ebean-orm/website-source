@@ -7,57 +7,9 @@
 </head>
 <body>
 
-<h4>Check installed maven version</h4>
+<#include "/_common/maven.html">
 
-<pre content="sh">
-mvn -version
-</pre>
-
-<p>
-  If your installed maven version is older than <code>3.5.3</code> then it might not support
-  maven tiles. If that is the case upgrade maven or use the
-  <a href="/docs/getting-started/maven-plugin">maven plugin</a> directly rather than the tile.
-</p>
-
-<p>&nbsp;</p>
-
-<h2>Add maven tile</h2>
-<p>
-  Add the maven tile into the <code>build / plugins</code> section of the pom.xml.
-</p>
-<p>
-  This performs enhancement of the entity beans, @Transactional methods and query beans at build time.
-</p>
-
-<!-- hardcoded-version enhancement -->
-<pre content="xml">
-<plugin>
-  <groupId>io.repaint.maven</groupId>
-  <artifactId>tiles-maven-plugin</artifactId>
-  <version>2.12</version>
-  <extensions>true</extensions>
-  <configuration>
-    <tiles>
-      <!-- other tiles ... -->
-      <tile>io.ebean.tile:enhancement:7.4</tile>
-    </tiles>
-  </configuration>
-</plugin>
-</pre>
-
-
-<h5>Maven enhancement tile</h5>
-<p>
-  The maven tile above will enhance the code at build time for both <code>src/main</code>
-  and <code>src/test</code>. This is simpler than defining the plugin in the traditional (non-tile)
-  fashion and is the preferred approach.
-</p>
-<p>
-  If you want to specify the maven enhancement plugin in 'normal' non-tile fashion see
-  <a href="/docs/getting-started/maven-plugin">maven plugin</a>.
-</p>
-
-<@next_edit "Maven Query beans" "/docs/getting-started/maven-querybeans" "/docs/getting-started/maven-querybeans"/>
+<@next_edit "Maven Query beans" "maven-querybeans" "/docs/getting-started/maven-querybeans"/>
 
 </body>
 </html>

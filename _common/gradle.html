@@ -1,0 +1,95 @@
+
+<h4>Buildscript dependency</h4>
+<p>
+  Add the <code>ebean-gradle-plugin</code> dependency to the <code>buildscript</code> section.
+</p>
+<pre content="groovy">
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "io.ebean:ebean-gradle-plugin:11.26.1"
+  }
+}
+</pre>
+
+
+<h4>Apply plugin</h4>
+<p>
+  Add <code>'io.ebean'</code> to the apply plugin section like:
+</p>
+<pre content="groovy">
+  apply plugin: 'io.ebean'
+</pre>
+
+<h4>Add ebean section</h4>
+<p>
+  Add a <code>ebean</code> section to control the debug level of the4) t enhancement. This is optional but generally a
+  good idea.
+</p>
+<pre content="groovy">
+ebean {
+  debugLevel = 1
+}
+</pre>
+
+
+<h4>Test output</h4>
+<p>
+  Gradle by default suppresses output logging. If we want to see SQL, DDL, Transaction logging etc we
+  need to set <code>testLogging.showStandardStreams</code> = <code>true</code> in the test section like:
+</p>
+<pre content="groovy">
+test {
+  testLogging.showStandardStreams = true
+}
+</pre>
+
+<h2>Example project</h2>
+<p>
+  Have a look at the <a href="https://github.com/ebean-orm-examples/example-gradle-java">Example Gradle Java</a> for
+  a full example - it's <a href="https://github.com/ebean-orm-examples/example-gradle-java/blob/master/build.gradle">build.gradle</a>.
+</p>
+
+
+<h2>Test output</h2>
+<p>
+  Below is a example output from <code>./gradlew clean test</code>. Specifically we can see:
+</p>
+<ul>
+  <li>The classes being enhanced (due to ebean debugLevel = 1)</li>
+  <li>The DDL, SQL and Transactions (controlled by logback-test.xml in this case)</li>
+</ul>
+<pre>
+$ ./gradlew clean test
+
+> Task :compileJava
+ebean-enhance> cls: org/example/domain/BaseDomain  msg: enhanced
+ebean-enhance> cls: org/example/domain/Customer  msg: enhanced
+
+> Task :test
+enhancement prior to running tests
+
+Gradle suite > Gradle test > org.example.domain.CustomerTest.saveAndFind STANDARD_OUT
+14:48:49.900 [Test worker] INFO  io.ebean.internal.DefaultContainer - DatabasePlatform name:db platform:h2
+14:48:50.063 [Test worker] TRACE io.ebean.TXN - txn[1001] Begin
+14:48:50.064 [Test worker] INFO  io.ebean.DDL - Executing db-create-all.sql - 1 statements
+14:48:50.064 [Test worker] DEBUG io.ebean.DDL - executing 1 of 1 create table customer ( id                            bigint auto_increment not...
+14:48:50.076 [Test worker] DEBUG io.ebean.TXN - txn[1001] Commit
+14:48:50.086 [Test worker] DEBUG io.ebean.SQL - txn[1002] insert into customer (name, start_date, comments, version) values (?,?,?,?); --bind(Hello Rob,2018-01-30,[LOB],1)
+14:48:50.098 [Test worker] DEBUG io.ebean.SUM - txn[1002] Inserted [Customer] [1]
+14:48:50.098 [Test worker] DEBUG io.ebean.TXN - txn[1002] Commit
+14:48:50.122 [Test worker] DEBUG io.ebean.SQL - txn[1003] select t0.id, t0.name, t0.start_date, t0.version from customer t0 where t0.id = ?  ; --bind(1, )
+14:48:50.124 [Test worker] DEBUG io.ebean.SUM - txn[1003] FindBean type[Customer] origin[D88YBi.A.A] exeMicros[3052] rows[1] bind[1, ]
+14:48:50.129 [Test worker] DEBUG io.ebean.SQL - txn[1004] select t0.id, t0.name, t0.start_date, t0.version from customer t0 where t0.id is not null ; --bind()
+14:48:50.130 [Test worker] DEBUG io.ebean.SUM - txn[1004] FindMany type[Customer] origin[D88YBm.A.A] exeMicros[0] rows[0] predicates[t0.id is not null ] bind[]
+hello Hello Rob
+.. started on: 2018-01-30
+14:48:50.136 [Test worker] DEBUG io.ebean.SQL - txn[1005] select t0.id, t0.name, t0.start_date, t0.version from customer t0 where t0.name like ?  and t0.id > ? ; --bind(BatOutOfHell%,1)
+14:48:50.136 [Test worker] DEBUG io.ebean.SUM - txn[1005] FindMany type[Customer] origin[D88YBj.A.A] exeMicros[1619] rows[0] predicates[t0.name like ?  and t0.id > ? ] bind[BatOutOfHell%,1]
+bats:BeanList size[0] list[]
+
+
+BUILD SUCCESSFUL in 1s
+</pre>
