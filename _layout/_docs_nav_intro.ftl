@@ -1,13 +1,14 @@
 
-<@smallnav activeCheck="${why!''}" url="/docs/introduction/why" title="Why Ebean"/>
-<@smallnav activeCheck="${ebeanserver!''}" url="/docs/introduction/ebeanserver" title="EbeanServer">
+<@smallnav activeCheck="${database!''}" url="/docs/introduction" title="Database">
 <ul class="nav">
+  <li><a href="#database">Database</a></li>
+  <li><a href="#db">DB</a></li>
   <li><a href="#ebeanserver">EbeanServer</a></li>
-  <li><a href="#defaultserver">Default server</a></li>
   <li><a href="#ebean">Ebean</a></li>
-  <li><a href="#global">Global state</a></li>
-  <li><a href="#model">Model</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${serverconfig!''}" url="/docs/introduction/serverconfig" title="ServerConfig"/>
+<@smallnav activeCheck="${model!''}" url="/docs/introduction/model" title="Model"/>
+<@smallnav activeCheck="${finder!''}" url="/docs/introduction/finder" title="Finder"/>
+<@smallnav activeCheck="${databaseConfig!''}" url="/docs/introduction/databaseconfig" title="DatabaseConfig"/>
+<@smallnav activeCheck="${databaseFactory!''}" url="/docs/introduction/databasefactory" title="DatabaseFactory"/>
 <@smallnav activeCheck="${ebeanmf!''}" url="/docs/introduction/manifest" title="ebean.mf"/>
