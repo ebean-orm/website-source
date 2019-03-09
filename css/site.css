@@ -211,11 +211,12 @@ pre {
 .main-pg-idx {
   padding-top: 50px;
 }
-.main-pg-idx h4 {
-  font-size: 20px;
-}
+/*.main-pg-idx h4 {*/
+  /*font-size: 20px;*/
+/*}*/
 .main-pg-idx ul {
   list-style: none;
+  padding-left: 0;
 }
 .nav-btn-rhs li {
   /*font-size: 25px;*/
@@ -577,9 +578,9 @@ h3 span.inline-h3 {
 div#main h2.htop {
   margin-top: 25px;
 }
-div#main h4 {
-  margin-top: 25px;
-}
+/*div#main h4 {*/
+  /*margin-top: 25px;*/
+/*}*/
 div#main div.links h4 {
   margin-top: 9px;
 }
