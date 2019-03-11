@@ -24,14 +24,13 @@
 ```java
 ...
 @Entity
-class Customer(
-
-  var name: String
-
-) {
+class Customer(name : String) {
 
   @Id
   var id: Long = 0
+
+  @Length(100)
+  var name: String = name
 
 }
 ```
@@ -41,7 +40,7 @@ class Customer(
 ```java
 
 val customer = Customer("Hello entity bean")
-Ebean.save(customer)
+DB.save(customer)
 
 ```
 
@@ -61,13 +60,12 @@ Ebean.save(customer)
 
 @Entity
 @Table(name="orders")
-class Order(
+class Order(orderDate: LocalDate, customer: Customer) {
 
-  var orderDate: LocalDate,
+  var orderDate: LocalDate = orderDate
 
   @ManyToOne
-  var customer: Customer
-) {
+  var customer: Customer = customer
 
   // other properties
 

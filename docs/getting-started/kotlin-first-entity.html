@@ -111,7 +111,7 @@ ebean:
 ```java
 package org.example.domain
 
-import io.ebean.Ebean
+import io.ebean.DB
 import org.junit.Test
 
 class CustomerTest  {
@@ -123,14 +123,14 @@ class CustomerTest  {
     customer.name  = "Hello entity bean"
 
     // insert
-    Ebean.save(customer)
+    DB.save(customer)
 
     // update
     customer.name = "Goodbye"
-    Ebean.save(customer)
+    DB.save(customer)
 
     // delete the bean
-    Ebean.delete(customer);
+    DB.delete(customer);
   }
 }
 ```

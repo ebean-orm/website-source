@@ -28,7 +28,7 @@ import io.ebean.BeanRepository;
 import org.example.domain.Customer;
 
 @Singleton
-public class CustomerRepository extends BeanRepository<Long,Customer> {
+public class CustomerRepository extends BeanRepository<|Long,Customer> {
 
   @Inject
   public CustomerRepository(EbeanServer server) {
@@ -37,7 +37,7 @@ public class CustomerRepository extends BeanRepository<Long,Customer> {
 
   // ... add customer specific finders and persist logic
 
-  public List<Customer> findByName(String nameStart) {
+  public List<|Customer> findByName(String nameStart) {
     return query().where()
            .istartsWith("name", nameStart)
            .findList();

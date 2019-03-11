@@ -128,8 +128,8 @@ package org.example.domain;
 
 import org.junit.Test;
 
-import io.ebean.Ebean;
-import io.ebean.EbeanServer;
+import io.ebean.DB;
+import io.ebean.Database;
 
 public class CustomerTest {
 
@@ -140,19 +140,19 @@ public class CustomerTest {
   customer.setName("Hello world");
 
 
-  EbeanServer server = Ebean.getDefaultServer();
+  Database database = DB.getDefault();
 
   // insert the customer in the DB
-  server.save(customer);
+  database.save(customer);
 
 
   // Find by Id
-  Customer foundHello = server.find(Customer.class, 1);
+  Customer foundHello = database.find(Customer.class, 1);
 
   System.out.print("hello " + foundHello.getName());
 
   // delete the customer
-  server.delete(customer);
+  database.delete(customer);
  }
 
 }
