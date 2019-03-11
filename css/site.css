@@ -536,6 +536,69 @@ pre.console {
     width: 263px;
   }
 }
+#hero h1 {
+  font-size: 65px;
+}
+#hero h2 {
+  margin-top: 4px;
+  font-style: italic;
+}
+#hero h4 {
+  display: inline-block;
+  margin-right: 25px;
+}
+
+#hero .btn {
+  padding: 0.75em 2em;
+  border-radius: 1em;
+  display: inline-block;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+#search-header {
+  margin-bottom: 4px;
+}
+.btn-h {
+  color: #fff;
+  background-color: #f27818;
+  /*border-color: #f27899;*/
+}
+
+.btn-w {
+  color: #222;
+  background-color: #fff;
+  border-color: #919191;
+}
+.highlights {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.highlights .inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+.highlights .inner.mtl {
+   margin-top: 50px;
+}
+.highlights .point {
+    width: 33%;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    padding: 0 2em;
+}
+.highlights .p2 {
+  width: 66%;
+  text-align: left;
+}
+.highlights .p1 {
+  text-align: left;
+}
+.testimonial p {
+  font-family: 'PT Sans', sans-serif;
+  font-style: italic;
+}
 #search-input {
     margin-top: 15px;
 }
@@ -591,8 +654,7 @@ div#main div.links h4 {
   /*width: 300px;*/
 }
 #nav-search {
-  padding-top: 15px;
-  /*max-width: 500px;*/
+  padding-top: 4px;
 }
 .page-inline-search {
   margin-top: 10px;

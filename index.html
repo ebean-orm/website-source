@@ -5,38 +5,59 @@
 </head>
 
 <body>
-<div class="container">
-  <div class="row">
-    <div class="col-md-9">
-      <div class="jumbotron">
-        <div class="container">
-          <h1>Ebean ORM for Java/Kotlin</h1>
-          <h2 style="margin-left: 30px;">Fast and simple data access on the JVM</h2>
-          <h3>Current version - <span class="ebean-version"></span></h3>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3 main-pg-idx">
-      <ul>
-        <li><h4><a class="bright-link" href="/docs/getting-started"><i class="fas fa-angle-right"></i> Getting started</a></h4></li>
-        <li><h4><a href="/docs"><i class="fas fa-angle-right"></i> Documentation</a></h4></li>
-        <li><h4><a href="/videos"><i class="fas fa-angle-right"></i> Videos</a></h4></li>
-        <li><h4><a href="/support"><i class="fas fa-angle-right"></i> Getting help</a></h4></li>
-        <li><hr/></li>
-        <li>Support Ebean</li>
-
-        <li><h4><a href="/funding"><i class="fas fa-angle-right"></i> Become a sponsor</a></h4></li>
-        <li><h4><a href="/funding"><i class="fas fa-angle-right"></i> Donate</a></h4></li>
-        <li><h4><a target="_blank" href="https://ebean.threadless.com/"><i class="fas fa-angle-right"></i> T-Shirt Shop</a></h4></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
 <div class="container mtl">
   <div class="row">
-    <div class="col-md-9">
-      <div id="nav-search"><#include "/_layout/_searchinput.ftl"></div>
+    <div class="col-md-4">
+      <img src="/images/logo-200.png" width="120" align="right">
+    </div>
+    <div id="hero" class="col-md-8">
+      <h1>Ebean ORM</h1>
+      <h2>Persistence for Java & Kotlin</h2>
+      <p>&nbsp;</p>
+      <!--<a class="btn btn-w" href="/docs/getting-started"><i class="fas fa-angle-right"></i>  Get Started</a>-->
+      <!--<a class="btn btn-w" href="/docs/"> Documentation</a>-->
+      <!--<a class="btn btn-w" href="https://githib.com/ebean-orm"><i class="fab fa-github"></i> Github</a>-->
+
+      <h4><a class="bright-link" href="/docs/getting-started"><i class="fas fa-angle-right"></i> Getting started</a>
+      </h4>
+      <h4><a href="/docs"><i class="fas fa-angle-right"></i> Documentation</a></h4>
+      <h4><a href="https://githib.com/ebean-orm"><i class="fas fa-angle-right"></i> Github</a></h4>
+    </div>
+
+  </div>
+
+  <div class="highlights">
+    <div class="inner">
+      <div class="point">
+        <h2>Simple</h2>
+        <p>
+          Easy to use persistence with save() and delete(), bulk updates,
+          direct use of SQL when needed.
+          <br>
+          <i>Built by developers for developers</i>
+        </p>
+      </div>
+
+      <div class="point">
+        <h2>Performant</h2>
+        <p>
+          Fast queries, batch persisting, bulk updates and deletes, great SQL.
+          N+1 handling out of the box, L2 caching.
+          <br>
+          <i>Enjoy the simplicity at full speed</i>
+        </p>
+      </div>
+
+      <div class="point">
+        <h2>Flexible</h2>
+        <p>
+          Use SQL directly, Soft deletes, Auditing,
+          JSON, Multi-tenant, History,
+          Encryption, Array types ...
+          <br>
+          <i>Can handle the hard stuff</i>
+        </p>
+      </div>
     </div>
   </div>
 </div>
@@ -44,17 +65,80 @@
 <div class="erkbg mtl">
   <div class="container">
 
-    <h2 class="erk ">About Ebean</h2>
+    <div class="highlights">
+      <div class="inner">
+        <div class="point p2">
+          <h4 id="search-header">Search documentation:</h4>
+          <div id="nav-search"><#include "/_layout/_searchinput.ftl"></div>
+        </div>
 
-    <div class="row">
-      <div class="col-md-3 feature">
-        <h3>JPA Mapping</h3>
-        <p>
-          Ebean uses JPA mapping annotations.
-        </p>
+        <div class="point p1 main-pg-idx">
+          <ul>
+            <li>Support Ebean</li>
+            <li><h4><a href="/funding"><i class="fas fa-angle-right"></i> Become a sponsor</a></h4></li>
+            <li><h4><a href="/funding"><i class="fas fa-angle-right"></i> Donate</a></h4></li>
+            <li><h4><a target="_blank" href="https://ebean.threadless.com/"><i class="fas fa-angle-right"></i> T-Shirt
+              Shop</a></h4></li>
+          </ul>
+        </div>
       </div>
-      <div class="col-md-6 feature mtl">
-        ```java
+    </div>
+  </div>
+</div>
+
+<div class="container mtl">
+  <div class="highlights">
+    <div class="inner">
+      <h4 class="text-left">Testimonials:</h4>
+      <div class="point p1 testimonial">
+        <p>
+          After struggling with what I'd call surprising behavior of a JPA implementation,
+          I discovered Ebean. Time and time again I found that Ebean simply works the way
+          I expect it to. Love it!
+        </p>
+        <p>
+          Daryl Stultz <br/>
+          OpenTempo, Inc.
+        </p>
+
+      </div>
+      <div class="point p1">
+
+      </div>
+      <div class="point p1">
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-9">
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+  </div>
+
+</div>
+
+<div class="erkbg mtl">
+  <div class="container">
+
+    <div class="highlights">
+
+      <div class="inner">
+        <h2 class="erk" style="text-align: left;">About Ebean</h2>
+
+        <div class="point p1">
+          <h3>JPA Mapping</h3>
+          <p>
+            Ebean uses JPA mapping annotations.
+          </p>
+        </div>
+        <div class="point p2">
+          ```java
         @Entity
         @Table(name="customer")
         public class Customer extends BaseModel {
@@ -69,21 +153,19 @@
           List<|Contact> contacts;
           ...
           ```
+        </div>
       </div>
-    </div>
 
-
-
-    <div class="row">
-      <div class="col-md-3 feature">
-        <h3>Simple to use</h3>
-        <p>
-          Ebean provides a simple programming model that developers can
-          understand and master quickly.
-        </p>
-      </div>
-      <div class="col-md-6 feature mtl">
-        ```java
+      <div class="inner mtl">
+        <div class="point p1">
+          <h3>Simple to use</h3>
+          <p>
+            Ebean provides a simple programming model that developers can
+            understand and master quickly.
+          </p>
+        </div>
+        <div class="point p2">
+          ```java
         // insert ...
         Customer customer = new Customer("Joe");
         customer.save();
@@ -96,39 +178,33 @@
         customer.save();
 
         ```
+        </div>
       </div>
 
-    </div>
-
-    <div class="row">
-      <div class="col-md-3">
-        <h3>Queries</h3>
-        <p>
-          We can use Query beans to build queries in a type safe manner.
-        </p>
-      </div>
-
-      <div class="col-md-6 mtl">
-
-        ```java
-        List<|Customer> customers
-          = new QCustomer()
-            .name.istartsWith("rob")
-            .billingAddress.city.equalTo("Auckland")
-            .setMaxRows(10)
-            .orderBy()
-              .name.asc()
-            .findList();
+      <div class="inner mtl">
+        <div class="point p1">
+          <h3>Type safe queries</h3>
+          <p>
+            We can use Query beans to build queries in a type safe manner.
+          </p>
+        </div>
+        <div class="point p2">
+          ```java
+          List<|Customer> customers = new QCustomer()
+          .name.istartsWith("rob")
+          .billingAddress.city.equalTo("Auckland")
+          .setMaxRows(10)
+          .orderBy()
+          .name.asc()
+          .findList();
           ```
-
-        <p>
-          more <a href="/docs/query/">details on queries</a>
-        </p>
+          <p>
+            more details on <a href="/docs/query/"> queries</a>
+          </p>
+        </div>
       </div>
 
     </div>
-
-
 
   </div>
 </div>
@@ -137,71 +213,39 @@
 
   <div class="container">
 
-    <h2 class="erk">Getting started</h2>
+    <div class="highlights">
 
-    <div class="row">
-      <div class="col-md-3 feature">
+      <div class="inner mtl">
+        <h2 class="erk" style="text-align: left">Getting started</h2>
+        <div class="point p1">
+          <h3>Getting started</h3>
+          <h5><a href="/docs/getting-started">Getting started</a></h5>
+          <h5><a href="/docs/getting-started/maven">Maven</a></h5>
+          <h5><a href="/docs/getting-started/gradle">Gradle</a></h5>
+        </div>
+
+        <div class="point p1">
+          <h3>Examples</h3>
+          <h5><a href="/docs/examples">Minimal</a></h5>
+          <h5><a href="/docs/examples">Maven and Gradle</a></h5>
+          <h5><a href="/docs/examples">Multi-tenancy</a></h5>
+          <h5><a href="/docs/examples">Elastic Search</a></h5>
+        </div>
+        <div class="point p1">
+          <h3>Features</h3>
+          <h5><a href="/docs/examples">Multi-tenancy</a></h5>
+          <h5><a href="/docs/examples">Elastic Search</a></h5>
+          <h5><a href="/docs/examples">SQL 2011 History</a></h5>
+          <h5><a href="/docs/examples">Draftable</a></h5>
+          <h5><a href="/docs/examples">Postgres GIS</a></h5>
+        </div>
       </div>
-      <div class="col-md-3 feature">
-        <h4><a href="/docs/getting-started"><i class="fas fa-angle-right"></i> Getting started</a></h4>
-      </div>
-      <div class="col-md-3 feature">
-        <h4><a href="/docs/getting-started/maven"><i class="fas fa-angle-right"></i> Maven</a></h4>
-        <h4><a href="/docs/getting-started/gradle"><i class="fas fa-angle-right"></i> Gradle</a></h4>
-      </div>
+
     </div>
-
-    <div class="row">
-      <div class="col-md-3 feature">
-
-      </div>
-      <div class="col-md-3 feature">
-        <h3>Examples</h3>
-        <h5><a href="/docs/examples">Minimal</a></h5>
-        <h5><a href="/docs/examples">Maven and Gradle</a></h5>
-        <h5><a href="/docs/examples">Multi-tenancy</a></h5>
-        <h5><a href="/docs/examples">Elastic Search</a></h5>
-
-      </div>
-      <div class="col-md-3 feature">
-        <p>&nbsp;</p><p>&nbsp;</p>
-        <h5><a href="/docs/examples">SQL 2011 History</a></h5>
-        <h5><a href="/docs/examples">Draftable</a></h5>
-        <h5><a href="/docs/examples">Postgres GIS</a></h5>
-      </div>
-    </div>
-
-    <p>&nbsp;</p><p>&nbsp;</p>
 
   </div>
 
 </div>
-
-<div class="erkbg">
-  <div class="container">
-    <h2 class="erk">Features</h2>
-
-    <div class="row">
-      <div class="col-md-3 feature">
-      </div>
-      <div class="col-md-3 feature mtl">
-        <h5><a href="/docs/features/elasticsearch">Elastic Search</a></h5>
-        <h5><a href="/docs/features/json-in-db">JSON in Database</a></h5>
-        <h5><a href="/docs/features/softdelete">Soft Delete</a></h5>
-        <h5><a href="/docs/features/draftable">Draftable</a></h5>
-        <h5><a href="/docs/features/multi-tenant">Multi-tenancy</a></h5>
-      </div>
-      <div class="col-md-3 feature mtl">
-        <h5><a href="/docs/features/history">SQL 2011 History</a></h5>
-        <h5><a href="/docs/features/encryption">Encryption</a></h5>
-        <h5><a href="/docs/features/who">Who Created / Modified</a></h5>
-        <h5><a href="/docs/features/changelog">Change log</a></h5>
-        <h5><a href="/docs/features/readauditing">Read auditing</a></h5>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 </body>
 </html>
