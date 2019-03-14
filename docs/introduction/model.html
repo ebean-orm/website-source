@@ -39,9 +39,18 @@ public class Customer extends Model {
 </p>
 ```java
 Customer customer = new Customer("Joe", "Montana");
-customer.save();
 
+// save using the default database
+customer.save();
 ```
+
+<h4>Default database</h4>
+<p>
+  When we call the save() and delete() methods on Model it is obtaining the default database
+  and using that to save or delete the entity bean.
+</p>
+
+<p>&nbsp;</p>
 
 <h4>Typical MappedSuperclass</h4>
 <p>
@@ -84,12 +93,6 @@ public class Customer extends BaseDomain {
   ...
 }
 ```
-
-<h4>Default database</h4>
-<p>
-  When we call the save() and delete() methods on Model it is obtaining the default database
-  and using that to save or delete the entity bean.
-</p>
 
 <@next_edit "Finder" "finder" "/docs/introduction/model.html"/>
 

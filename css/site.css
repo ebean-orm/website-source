@@ -42,6 +42,9 @@ html, body {height: 100%;}
     background-image: url(/images/px_by_greg.png);
     padding:5px 10px 15px 10px;
 }
+h4 {
+  margin-top: 1.6em;
+}
 h1 a {
    color: #333;
 }
