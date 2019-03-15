@@ -48,6 +48,19 @@ h4 {
 h1 a {
    color: #333;
 }
+.rbg-light {
+  background: #f3f3f3;
+  padding-bottom: 15px;
+  border-radius: 7px;
+}
+.rbg-index {
+  padding: 15px;
+}
+.rbg h5 {
+  padding-left: 10px;
+  margin: 3px;
+  color: #919191;
+}
 .locationBar h1 a, .locationBar h1 {
     font-size:20px;
     color: #9d9d9d;
