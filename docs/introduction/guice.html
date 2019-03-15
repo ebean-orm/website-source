@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>Guice | Introduction | Ebean</title>
+  <meta name="layout" content="_layout/docs_introduction.html"/>
+  <meta name="bread2" content="Guice" href="/docs/introduction/guice"/>
+  <#assign guice="active">
+</head>
+<body>
+
+<h2 id="provider">Provider</h2>
+<p>
+  Create a Guice Provider that programmatically creates a Database instance.
+</p>
+
+<h4>Example 1</h4>
+<p>
+  Example provider implementation using <code>DatabaseConfig</code> and <code>DatabaseFactory</code>.
+</p>
+```java
+
+import io.ebean.DB;
+import io.ebean.Database;
+import com.google.inject.Provider;
+
+public class DatabaseProvider implements Provider<|Database> {
+
+  @Override
+  public Database get() {
+
+    DatabaseConfig config = new DatabaseConfig();
+    ...
+    // plus any programmatic configuration
+
+    return DatabaseFactory.create(config);
+  }
+}
+```
+
+  <h4>Example 2</h4>
+  <p>
+    Example provider implementation using <code>DB</code> that implicitly creates the
+    <code>default</code> Database using application.yaml.
+  </p>
+```java
+
+import io.ebean.DB;
+import io.ebean.Database;
+import com.google.inject.Provider;
+
+public class DatabaseProvider implements Provider<|Database> {
+
+  @Override
+  public Database get() {
+
+    // Database configured by application.properties
+    return DB.getDefault();
+  }
+}
+```
+<h2 id="module">Module bind</h2>
+<p>
+  In the Guice module bind the provider using eager singleton so that the Database is
+  created eagerly at startup.
+</p>
+```java
+
+// bind the provider as eager singleton
+bind(Database.class).toProvider(DatabaseProvider.class).asEagerSingleton()
+
+```
+
+<h2 id="activerecord">Inject and ActiveRecord</h2>
+<p>
+  As long as  <code>DatabaseConfig.setRegister(true)</code> and <code>DatabaseConfig.setDefaultServer(true)</code>
+  are used in the Guice provider then the Database instance created is also available via the DB
+  singleton and that means both <code>@Inject</code> and the <code>active record</code> style can be used.
+</p>
+
+
+<@next_edit "DInject" "dinject" "/docs/introduction/guice.html"/>
+
+</body>
+</html>

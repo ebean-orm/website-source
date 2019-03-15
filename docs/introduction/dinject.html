@@ -1,0 +1,58 @@
+<html>
+<head>
+  <title>DInject | Introduction | Ebean</title>
+  <meta name="layout" content="_layout/docs_introduction.html"/>
+  <meta name="bread2" content="DInject" href="/docs/introduction/dinject"/>
+  <#assign dinject="active">
+</head>
+<body>
+
+<h2 id="provider">DInject</h2>
+<p>
+  <a href="https://dinject.io">DInject</a> is a dependency injection library that uses APT to generate the dependency
+  injection
+  as source code. It does this so that it can be very fast avoiding any use of classpath scanning,
+  reflection and dynamic properties.
+</p>
+<p>
+  DInject is like Dagger but orientated for server side development with similar features to Spring like
+  lifecycle support, configuration beans etc.
+</p>
+
+<h4>Example 1</h4>
+<p>
+  Example provider implementation using <code>DatabaseConfig</code> and <code>DatabaseFactory</code>.
+</p>
+```java
+
+import io.ebean.DB;
+import io.ebean.Database;
+import javax.inject.Provider;
+
+public class DatabaseProvider implements Provider<|Database> {
+
+  @Override
+  public Database get() {
+
+    DatabaseConfig config = new DatabaseConfig();
+    ...
+    // plus any programmatic configuration
+
+    return DatabaseFactory.create(config);
+  }
+}
+```
+
+
+<h2 id="activerecord">Inject and ActiveRecord</h2>
+<p>
+  As long as <code>DatabaseConfig.setRegister(true)</code> and <code>DatabaseConfig.setDefaultServer(true)</code>
+  are used in the Guice provider then the Database instance created is also available via the DB
+  singleton and that means both <code>@Inject</code> and the <code>active record</code> style can be used.
+</p>
+
+
+<@next_edit "Tooling" "/docs/tooling" "/docs/introduction/dinject.html"/>
+
+</body>
+</html>
