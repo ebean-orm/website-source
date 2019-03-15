@@ -190,13 +190,15 @@
         </div>
         <div class="point p2">
           ```java
-          List<|Customer> customers = new QCustomer()
-          .name.istartsWith("rob")
-          .billingAddress.city.equalTo("Auckland")
-          .setMaxRows(10)
-          .orderBy()
-          .name.asc()
-          .findList();
+          List<|Customer> customers =
+
+            new QCustomer()
+              .name.istartsWith("rob")
+              .billingAddress.city.equalTo("Auckland")
+              .setMaxRows(10)
+              .orderBy()
+                .name.asc()
+              .findList();
           ```
           <p>
             more details on <a href="/docs/query/"> queries</a>
