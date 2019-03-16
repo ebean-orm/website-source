@@ -12,7 +12,7 @@ If you're only interested in the Ids of a given model, you can use the <code>fin
 
 The following code retrieves a list of Ids.
 ```java
-  List<Long> ids = Ebean.createQuery(Customer.class).where().ilike("name", "Rob%"").findIds();
+  List<|Long> ids = DB.find(Customer.class).where().ilike("name", "Rob%"").findIds();
   for (Long id : ids) {
     // Do something with the ID's
   }

@@ -18,8 +18,7 @@ You need to use the <code>select()</code> method to select which column you want
  <h3>Example 1:</h3>
  ```java
 
-  List<String> names =
-    Ebean.find(Customer.class)
+  List<|String> names = DB.find(Customer.class)
       .select("name")
       .orderBy().asc("name")
       .findSingleAttributeList();
@@ -29,8 +28,7 @@ You need to use the <code>select()</code> method to select which column you want
 
  ```java
 
-  List<String> names =
-    Ebean.find(Customer.class)
+  List<|String> names = DB.find(Customer.class)
       .setDistinct(true)
       .select("name")
       .where().eq("status", Customer.Status.NEW)

@@ -14,7 +14,7 @@
 
   ```java
   // find by id
-  Order order = Ebean.find(Order.class, 12);
+  Order order = DB.find(Order.class, 12);
   ```
   executes the sql:
   ```sql
@@ -25,8 +25,8 @@
 
   ```java
   // these are the same
-    Query<Order> query = Ebean.createQuery(Order.class);
-    Query<Order> query = Ebean.find(Order.class);
+    Query<|Order> query = DB.createQuery(Order.class);
+    Query<|Order> query = DB.find(Order.class);
       ```
       These two methods do exactly the same thing. The reason both
       exist is because the createQuery() style is consistent with JPA and could be argued is a
@@ -34,8 +34,8 @@
 
   ```java
   // fluid API style with find()
-  List<Order> list =
-    Ebean.find(Order.class)
+  List<|Order> list =
+    DB.find(Order.class)
     .fetch("customer")
     .where().eq("status.code", "SHIPPED")
     .findList();
@@ -50,7 +50,7 @@
 
   ```java
   // find all the orders shipped since a week ago
-  List<Order> list = Ebean.find(Order.class)
+  List<|Order> list = DB.find(Order.class)
     .where()
     .eq("status", Order.Status.SHIPPED)
     .gt("shipDate", lastWeek)
@@ -91,8 +91,8 @@
           </p>
 
   ```java
-  List<Order> orders =
-    Ebean.find(Order.class)
+  List<|Order> orders =
+    DB.find(Order.class)
     .where().ilike("customer.name", "rob%")
     .findList();
     ```
@@ -188,7 +188,7 @@
   ```java
   String query = "find order where status.code=:status and shipDate > :shipped";
 
-  List<Order> list = Ebean.find(Order.class)
+  List<|Order> list = DB.find(Order.class)
     .setQuery(query)
     .setParameter("status", Order.Status.SHIPPED)
     .setParameter("shipped", lastWeek)
@@ -295,14 +295,14 @@
   ```java
   // find customer 1
   // ... just fetch the customer id, name and version property
-  Customer customer = Ebean.find(Customer.class)
+  Customer customer = DB.find(Customer.class)
   .select("name")
   .where().idEq(1)
   .findOne();
 
   customer.setName("CoolName");
 
-  Ebean.save(customer);
+  DB.save(customer);
   ```
 
   <p>
@@ -483,8 +483,7 @@ Example: Using a "query join" instead of a "fetch join" we instead use 2 SQL que
 
 ```java
 // This will use 2 SQL queries to build this object graph.
-List<Order> list =
-  Ebean.find(Order.class)
+List<|Order> list = DB.find(Order.class)
   .fetch("details", new FetchConfig().query())
   .findList();
   ```
@@ -502,7 +501,7 @@ Example: Using 2 "query joins"
 ```java
 // This will use 3 SQL queries to build this object graph
 List<Order> list =
-  Ebean.find(Order.class)
+  DB.find(Order.class)
   .fetch("details", new FetchConfig().query())
   .fetch("customer", new FetchConfig().queryFirst(5))
   .findList();
@@ -520,8 +519,8 @@ Example: Using "query joins" and partial objects
 
 ```java
 // This will use 3 SQL queries to build this object graph
-List<Order> list =
-  Ebean.find(Order.class)
+List<|Order> list =
+  DB.find(Order.class)
   .select("status, shipDate")
   .fetch("details", "quantity, price", new FetchConfig().query())
   .fetch("details.product", "sku, name")
@@ -550,8 +549,8 @@ and the lazy defines the batch size to use for further lazy loading (if lazy loa
 invoked).
 
 ```java
-List<Order> list =
-  Ebean.find(Order.class)
+List<|Order> list =
+  DB.find(Order.class)
   .fetch("customer", new FetchConfig().query(10).lazy(5))
   .findList();
   ```
@@ -573,7 +572,7 @@ List<Order> list =
     This gives us the ability to optimise the lazy loading query for a given use case.
 
   ```java:
-  List<Order> list = Ebean.find(Order.class)
+  List<|Order> list = DB.find(Order.class)
     .fetch("customer","name", new FetchConfig().lazy(5))
     .fetch("customer.contacts","contactName, phone, email")
     .fetch("customer.shippingAddress")
@@ -600,7 +599,7 @@ List<Order> list =
   <p>Example of wo "Query Joins" results in 3 SQL queries used to build an object graph
     ```java
     // A more advanced example with multiple query joins
-    List<Order> l0 = Ebean.find(Order.class)
+    List<|Order> l0 = DB.find(Order.class)
       .select("status, shipDate")
       .fetch("details", "orderQty, unitPrice", new FetchConfig().query())
       .fetch("details.product", "sku, name")
@@ -684,7 +683,7 @@ List<Order> list =
   </p>
   ```java
   // control the lazy loading of customers ...
-  List<Order> list = Ebean.find(Order.class)
+  List<|Order> list = DB.find(Order.class)
     .fetch("customer","name", new FetchConfig().lazy(5))
     .fetch("customer.contacts","contactName, phone, email")
     .fetch("customer.shippingAddress")
@@ -777,7 +776,7 @@ List<Order> list =
   // ... fetching the order id, orderDate and version property
   // .... nb: the Id and version property are always fetched
 
-  Order order = Ebean.find(Order.class)
+  Order order = DB.find(Order.class)
   .select("orderDate")
   .where().idEq(12)
   .findOne();
@@ -824,7 +823,7 @@ List<Order> list =
     case below we use findOne() as we expect only one object graph returned.</p>
 
     ```java
-    User u = Ebean.createNamedQuery(User.class, "bugsSummary")
+    User u = DB.createNamedQuery(User.class, "bugsSummary")
               .setParameter("id", 1)
               .findOne();
     ```
@@ -842,8 +841,7 @@ List<Order> list =
   // ... in that you can modify them via code
   // ... prior to executing the query
   // you can modify a named query...
-  Set
-  <User> users = Ebean.createQuery(User.class, "bugStatus")
+  Set<|User> users = DB.createQuery(User.class, "bugStatus")
     .setParameter("bugStatus", "NEW")
 
     // you can add to the where clause
@@ -1028,25 +1026,25 @@ public FutureRowCount<T> findFutureRowCount();
 example: shows the use of FutureList:
 
 ```java
-Query<Order> query = Ebean.find(Order.class);
+  Query<|Order> query = DB.find(Order.class);
 
-// find list using a background thread
-FutureList<Order> futureList = query.findFutureList();
+  // find list using a background thread
+  FutureList<|Order> futureList = query.findFutureList();
 
   // do something else ...
 
   if (!futureList.isDone()){
-  // you can cancel the query. If supported by the JDBC
-  // driver and database this will actually cancel the
-  // sql query execution on the database
-  futureList.cancel(true);
+    // you can cancel the query. If supported by the JDBC
+    // driver and database this will actually cancel the
+    // sql query execution on the database
+    futureList.cancel(true);
   }
   // wait for the query to finish ... no timeout
-  List<Order> list = futureList.get();
+  List<|Order> list = futureList.get();
 
-    // wait for the query to finish ... with a 30sec timeout
-    List<Order> list2 = futureList.get(30, TimeUnit.SECONDS);
-      ```
+  // wait for the query to finish ... with a 30sec timeout
+  List<|Order> list2 = futureList.get(30, TimeUnit.SECONDS);
+```
 
 
 <#-------------------------------------------------------------------------------------------------->
@@ -1104,7 +1102,7 @@ FutureList<Order> futureList = query.findFutureList();
       .create();
 
 
-  Query<OrderAggregate> query = Ebean.find(OrderAggregate.class);
+  Query<|OrderAggregate> query = DB.find(OrderAggregate.class);
     query.setRawSql(rawSql)
     // add expressions to the WHERE and HAVING clauses
     .where().gt("order.id", 0)
@@ -1135,7 +1133,7 @@ FutureList<Order> futureList = query.findFutureList();
     .create();
 
 
-  Query<OrderAggregate> query = Ebean.find(OrderAggregate.class);
+  Query<|OrderAggregate> query = DB.find(OrderAggregate.class);
     query.setRawSql(rawSql)
       // get ebean to fetch parts of the order and customer
       // after the raw SQL query is executed
@@ -1231,7 +1229,7 @@ FutureList<Order> futureList = query.findFutureList();
       .tableAliasMapping("p", "details.product")
       .create();
 
-  List<Order> ordersFromRaw = Ebean.find(Order.class)
+  List<|Order> ordersFromRaw = DB.find(Order.class)
       .setRawSql(rawSql)
       .setParameter("maxOrderId", 2)
       .setParameter("productId", 1)
@@ -1273,7 +1271,7 @@ FutureList<Order> futureList = query.findFutureList();
     +"from b_bug b join b_product p on p.id = b.product_id "
     +"where b.id = :id";
 
-    SqlRow bug = Ebean.createSqlQuery(sql)
+    SqlRow bug = DB.sqlQuery(sql)
       .setParameter("id", 1)
       .findOne();
     String prodName = bug.getString("product_name");
@@ -1312,8 +1310,8 @@ per path.</p>
 Example: a program that fetches some orders ... and processes them
 ``` java
 // fetch new orders
-List<Order> orders =
-  Ebean.find(Order.class)
+List<|Order> orders =
+  DB.find(Order.class)
   .where().eq("status", Order.Status.NEW)
   .findList();
 
@@ -1361,20 +1359,19 @@ is not optimal.
     also get the customers name.
   </p>
   ```java
-  List<Order> orders =
-    Ebean.find(Order.class)
+  List<|Order> orders = DB.find(Order.class)
     .where().eq("status", Order.Status.NEW)
     .findList();
 
     for (Order order : orders) {
-    Date orderDate = order.getOrderDate();
-    // also get the ship date
-    Date shipDate = order.getShipDate();
-    // ... and get the customer name
-    Customer customer = order.getCustomer();
-    String customerName = customer.getName();
+      Date orderDate = order.getOrderDate();
+      // also get the ship date
+      Date shipDate = order.getShipDate();
+      // ... and get the customer name
+      Customer customer = order.getCustomer();
+      String customerName = customer.getName();
     }
-    ```
+  ```
   <p>
     The query Ebean will run is optimised for what the program USED to do. This results in
     some lazy loading occuring. The rest of the order is lazy loaded when the shipDate is

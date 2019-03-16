@@ -17,7 +17,7 @@
 ```java
     String sql = "select id, name from customer where name like ?";
 
-    Customer customer = Ebean.findNative(Customer.class, sql)
+    Customer customer = DB.findNative(Customer.class, sql)
         .setParameter(1, "Jo%")
         .findOne();
 ```
@@ -27,7 +27,7 @@
 ```java
   String sql = "select id, name from customer where name like :name order by name desc";
 
-  List<|Customer> customers = Ebean.findNative(Customer.class, sql)
+  List<|Customer> customers = DB.findNative(Customer.class, sql)
       .setParameter("name", "Jo%")
       .findList();
 ```
@@ -43,7 +43,7 @@
 
   String sql = "select * from customer where name like :name order by name desc";
 
-  List<|Customer> customers = Ebean.findNative(Customer.class, sql)
+  List<|Customer> customers = DB.findNative(Customer.class, sql)
       .setParameter("name", "Jo%")
       .findList();
 ```

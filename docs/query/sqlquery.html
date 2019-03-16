@@ -19,8 +19,7 @@
 ```java
 String sql = "select id, name, when_active from customer where id = :id"
 
-SqlRow row =
-  Ebean.createSqlQuery(sql)
+SqlRow row = DB.sqlQuery(sql)
     .setParameter("id", 42)
     .findOne();
 
@@ -34,7 +33,7 @@ Timestamp active = row.getTimestamp("when_active");
 ```java
 String sql = "select id, name, status from customer order by name desc";
 
-Ebean.createSqlQuery(sql)
+DB.sqlQuery(sql)
   .findEachRow((resultSet, rowNum) -> {
 
     long id = resultSet.getLong(1);
@@ -52,8 +51,7 @@ Ebean.createSqlQuery(sql)
 ```java
 String sql = "select id, name, when_active from customer where status = ?";
 
-List<|SqlRow> rows =
-  Ebean.createSqlQuery(sql)
+List<|SqlRow> rows = DB.sqlQuery(sql)
     .setParameter(1, "NEW")
     .setFirstRow(10)
     .setMaxRows(10)
@@ -90,7 +88,7 @@ static final CustDtoMapper CUST_MAPPER = new CustDtoMapper()
 ```java
 String sql = "select id, name, status from customer where name = ?";
 
-CustDto rob = Ebean.createSqlQuery(sql)
+CustDto rob = DB.sqlQuery(sql)
   .setParameter(1, "Rob")
   .findOne(CUST_MAPPER);
 ```

@@ -16,9 +16,8 @@ Execute find row count query in a background thread.
   </p>
 
 ```java
-FutureRowCount<Customer> futureRowCount = Ebean.createQuery(Customer.class)
+FutureRowCount<|Customer> futureRowCount = DB.find(Customer.class)
       .where().ilike("name", "Rob%")
-      .query()
       .findFutureCount()
 
 // do other things

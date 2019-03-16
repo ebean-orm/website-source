@@ -12,8 +12,7 @@ If you want to retrieve the value from a single property of a specific model, yo
 You need to use the <code>select()</code> method to select which column you want to retrieve the value
 
   ```java
-   String name =
-     Ebean.find(Customer.class)
+   String name = DB.find(Customer.class)
        .select("name")
        .where()
        .idEq(42)

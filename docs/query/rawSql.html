@@ -58,7 +58,7 @@ RawSql rawSql = RawSqlBuilder
     .create();
 
 
-Query<|OrderAggregate> query = Ebean.find(OrderAggregate.class);
+Query<|OrderAggregate> query = DB.find(OrderAggregate.class);
   query.setRawSql(rawSql)
   // add expressions to the WHERE and HAVING clauses
   .where().gt("order.id", 0)
@@ -87,7 +87,7 @@ RawSql rawSql = RawSqlBuilder
   .create();
 
 
-Query<|OrderAggregate> query = Ebean.find(OrderAggregate.class);
+Query<|OrderAggregate> query = DB.find(OrderAggregate.class);
   query.setRawSql(rawSql)
     // get ebean to fetch parts of the order and customer
     // after the raw SQL query is executed
@@ -187,7 +187,7 @@ RawSql rawSql = RawSqlBuilder.parse(rs)
     .tableAliasMapping("p", "details.product")
     .create();
 
-List<|Order> ordersFromRaw = Ebean.find(Order.class)
+List<|Order> ordersFromRaw = DB.find(Order.class)
     .setRawSql(rawSql)
     .setParameter("maxOrderId", 2)
     .setParameter("productId", 1)

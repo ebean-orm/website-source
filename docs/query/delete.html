@@ -93,7 +93,7 @@ delete from address where id=?;
   execute the single delete statement.
 </p>
 ```java
-try (Transaction transaction = Ebean.beginTransaction()) {
+try (Transaction transaction = DB.beginTransaction()) {
 
   // turn off persist cascade
   transaction.setPersistCascade(false);
