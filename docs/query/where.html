@@ -24,8 +24,7 @@ Customer rob =
 </p>
 ```java
 // using standard query
-Customer rob =
-  ebeanServer.find(Customer.class)
+Customer rob = DB.find(Customer.class)
     .where().eq("name", "Rob")
     .findOne();
 ```
@@ -68,8 +67,7 @@ List<|Customer> customers =
 
 ```java
 // using standard query
-List<|Customer> customers =
-  ebeanServer.find(Customer.class)
+List<|Customer> customers = DB.find(Customer.class)
   .where()
      .eq("billingAddress.city", "Auckland")
   .findList();
@@ -114,8 +112,7 @@ where t0.status = ? and t0.when_created > ?
 ```
 ```java
 // using standard query
-List<|Customer> customers =
-  ebeanServer.find(Customer.class)
+List<|Customer> customers = DB.find(Customer.class)
   .where()
     .eq("status", Status.NEW)
     .gt("whenCreated", lastWeek)
@@ -184,8 +181,7 @@ from customer t0
 where (t0.name is null or t0.name = ? )
 ```
 ```java
- Customer customer =
-   ebeanServer.find(Customer.class)
+ Customer customer = DB.find(Customer.class)
     .where()
       .or()
         .isNull("name")

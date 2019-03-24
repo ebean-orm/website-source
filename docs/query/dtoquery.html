@@ -28,7 +28,7 @@
 // using positioned parameters
 
 List<|CustomerDto> beans =
-  ebeanServer.findDto(CustomerDto.class, "select id, name from customer where name = ?")
+  database.findDto(CustomerDto.class, "select id, name from customer where name = ?")
   .setParameter(1, "Rob")
   .findList();
 ```
@@ -38,7 +38,7 @@ List<|CustomerDto> beans =
 // using named parameters
 
 List<|CustomerDto> beans =
-  ebeanServer.findDto(CustomerDto.class, "select id, name from customer where name = :name")
+  database.findDto(CustomerDto.class, "select id, name from customer where name = :name")
   .setParameter("name", "Rob")
   .findList();
 ```
@@ -111,7 +111,7 @@ limit 10
 
 String sql = "select id, name from o_customer where id > :id order by id desc";
 
-ebeanServer.findDto(CustomerDto.class, sql)
+database.findDto(CustomerDto.class, sql)
   .setParameter("id", 0)
   .findEach(customer -> {
 

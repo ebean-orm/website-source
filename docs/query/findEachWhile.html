@@ -23,19 +23,19 @@ beans one at a time, and allow breaking out of loop (by returning <code>false</c
  </p>
  ```java
 
-  // Returning false inside the predicate will stop the execution
-  ebeanServer.find(Customer.class)
-     .where().eq("status", Status.NEW)
-     .order().asc("id")
-     .setMaxRows(2000)
-     .findEachWhile((Customer customer) -> {
+// Returning false inside the predicate will stop the execution
+database.find(Customer.class)
+   .where().eq("status", Status.NEW)
+   .order().asc("id")
+   .setMaxRows(2000)
+   .findEachWhile((Customer customer) -> {
 
-       // do something with customer
-       System.out.println("-- visit " + customer);
+     // do something with customer
+     System.out.println("-- visit " + customer);
 
-       // return true to continue processing or false to stop
-       return (customer.getId() < 40);
-     });
+     // return true to continue processing or false to stop
+     return (customer.getId() < 40);
+   });
 
  ```
 

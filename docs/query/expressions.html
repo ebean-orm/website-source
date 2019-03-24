@@ -1,0 +1,80 @@
+<html>
+<head>
+  <title>Query Expressions | Ebean</title>
+  <meta name="layout" content="_layout/docs_query_select.html"/>
+  <meta name="bread2" content="Expressions" href="/docs/query/expressions"/>
+  <#assign expressions= "true">
+</head>
+<body>
+
+<h4 id="convenience">Convenience expressions</h4>
+<p>
+  These are expressions that combine other simple expressions together.
+  We have them because they occur often enough in applications.
+</p>
+
+<h3 id="inRange">inRange()</h3>
+<p>
+  <code>property >= value1 and property < value2</code>
+</p>
+```java
+.orderDate.inRange(today.minusDays(7), today)
+```
+<p>
+  InRange expression is similar to BETWEEN except is "half open interval".
+  The property is <code>strictly less than</code> the top value rather than
+  being less than or equal to.
+</p>
+<p>
+  This makes inRange more practically useful to define intervals on things
+  like timestamps and dates etc.
+</p>
+
+<h3 id="inRangeWith">inRangeWith()</h3>
+<p>
+  <code>property <= ? and ( highProperty > ? or highProperty is null) </code>
+</p>
+```java
+.startDate.inRangeWith(endDate, asAt)
+```
+<p>
+  This is most commonly used for "effective dating" or an "effective range" where you
+  have 2 properties like startDate and endDate that form a range.
+</p>
+
+<h3 id="inOrEmpty">inOrEmpty()</h3>
+<p>
+  This is a "conditional IN" where the IN expression is only added if the collection
+  is not empty.
+</p>
+```java
+List<|Long> customerIds = ...
+
+// only add the expression if the customerIds is not empty
+.customer.id.inOrEmpty(customerIds)
+```
+<p>
+  The above will only add the IN expression if the customerIds collection is not null and not empty.
+</p>
+
+
+<h3 id="rawOrEmpty">rawOrEmpty()</h3>
+
+<p>
+  This is a "conditional raw expression" where the raw expression uses a collection
+  (like a raw subquery expression) and we only add the expression if the collection
+  is not empty.
+</p>
+```java
+List<|String> names = ...
+
+// only add the expression if the names is not empty
+.rawOrEmpty("customer.id in (select c.id from customer c where c.name in (?1))", names)
+
+```
+
+
+<@next "OrderBy" "/docs/query/orderBy"/>
+
+</body>
+</html>

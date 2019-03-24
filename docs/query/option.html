@@ -154,7 +154,7 @@ List<|Customer> beans =
 </p>
 ```java
 
-try (Transaction txn = ebeanServer.beginTransaction()) {
+try (Transaction txn = database.beginTransaction()) {
 
   Customer customer =
     new QContact()
@@ -190,7 +190,7 @@ try (Transaction txn = ebeanServer.beginTransaction()) {
 </p>
 ```java
 
-try (Transaction txn = ebeanServer.beginTransaction()) {
+try (Transaction txn = database.beginTransaction()) {
 
   // when customer is loaded it then is referenced in the
   // transaction scoped persistence context (aka L1 cache)

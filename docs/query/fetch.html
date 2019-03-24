@@ -18,7 +18,7 @@
 
 ```java
 List<|Customer> customers =
-  ebeanServer.find(Customer.class)
+  database.find(Customer.class)
   .select("name, version, whenCreated")    // root level properties
   .fetch("contacts", "email")              // contacts is a OneToMany path
 

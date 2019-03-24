@@ -36,14 +36,14 @@ all the beans have been read.
 
 
  ```java
-  ebeanServer.find(Customer.class)
-     .where().eq("status", Status.NEW)
-     .order().asc("id")
-     .findEach((Customer customer) -> {
+database.find(Customer.class)
+   .where().eq("status", Status.NEW)
+   .order().asc("id")
+   .findEach((Customer customer) -> {
 
-       // do something with customer
-       System.out.println("-- visit " + customer);
-     });
+     // do something with customer
+     System.out.println("-- visit " + customer);
+   });
  ```
 
 </body>

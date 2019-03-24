@@ -47,8 +47,7 @@ List<|Customer> customers =
   which also can be chained. The same query as above is written without query beans as:
 </p>
 ```java
-List<|Customer> customers =
-  ebeanServer.find(Customer.class)
+List<|Customer> customers = database.find(Customer.class)
     .where().in("status"), Status.NEW, Status.ACTIVE)
     .orderBy()
       .desc("name")

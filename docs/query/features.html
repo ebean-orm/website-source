@@ -891,7 +891,7 @@ List<|Order> list =
 
 <p>
   ```java
-  ebeanServer.find(Customer.class)
+  database.find(Customer.class)
   .where().eq("status", Status.NEW)
   .order().asc("id")
   .findEach((Customer customer) -> {
@@ -915,7 +915,7 @@ List<|Order> list =
     the QueryEachWhileConsumer (SAM) interface which is better suited to use with Java8 closures.
   </p>
   ```java
-  ebeanServer.find(Customer.class)
+  database.find(Customer.class)
     .fetch("contacts", new FetchConfig().query(2))
     .where().eq("status", Status.NEW)
     .order().asc("id")
@@ -972,7 +972,7 @@ List<|Order> list =
     // ... page size is 100
 
     PagedList<Order> pagedList
-      = ebeanServer.find(Order.class)
+      = database.find(Order.class)
       .where().eq("status", Order.Status.NEW)
       .order().asc("id")
       .findPagedList(0, 100);
@@ -1066,7 +1066,7 @@ example: shows the use of FutureList:
   <p>
     You can programmatically use raw SQL like the following examples or put the Raw SQL and column
     mappings into ebean-orm.xml file and reference them as 'named queries' - see
-    ebeanServer.createNamedQuery().
+    database.createNamedQuery().
   </p>
 
   <p>You can use RawSql with ebean enhanced entity beans. You can fetch only the properties that are need

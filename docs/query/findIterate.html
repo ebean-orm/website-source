@@ -43,35 +43,33 @@ There are some use cases where <a href='findEach'>findEach</a> and <a href='find
 Example with <code>try-finally</code>
  ```java
 
-  Query<Customer> query =
-    ebeanServer.find(Customer.class)
-     .where().eq("status", Status.NEW)
-     .order().asc("id");
+Query<|Customer> query = database.find(Customer.class)
+   .where().eq("status", Status.NEW)
+   .order().asc("id");
 
-  QueryIterator<Customer> it = query.findIterate();
-  try {
-    while (it.hasNext()) {
-      Customer customer = it.next();
-      // do something with customer ...
-    }
-  } finally {
-    // close the underlying resources
-    it.close();
+QueryIterator<|Customer> it = query.findIterate();
+try {
+  while (it.hasNext()) {
+    Customer customer = it.next();
+    // do something with customer ...
   }
+} finally {
+  // close the underlying resources
+  it.close();
+}
 
  ```
 
 Example with <code>try-with-resources</code>
  ```java
-   try (QueryIterator<Customer> it = query.findIterate()) {
-         while (it.hasNext()) {
-           Customer customer = it.next();
-           customer.getName();
-           count.incrementAndGet();
-         }
+try (QueryIterator<|Customer> it = query.findIterate()) {
+   while (it.hasNext()) {
+     Customer customer = it.next();
+     customer.getName();
+     count.incrementAndGet();
    }
+}
 ```
-
 
 </body>
 </html>
