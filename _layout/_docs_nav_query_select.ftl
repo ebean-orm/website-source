@@ -6,6 +6,50 @@
     <li><a href="#raw">Raw expressions</a></li>
   </ul>
 </@smallnav>
+<@smallnav activeCheck="${expressions!''}" url="/docs/query/expressions" title="Expressions">
+  <#--<ul class="nav">-->
+    <#--<li><a href="#raw">raw</a></li>-->
+    <#--&lt;#&ndash;<li>&nbsp;</li>&ndash;&gt;-->
+    <#--<li><a href="#inRange">inRange</a></li>-->
+    <#--<li><a href="#inRangeWith">inRangeWith</a></li>-->
+    <#--<li><a href="#inOrEmpty">inOrEmpty</a></li>-->
+    <#--<li><a href="#inOrEmpty">rawOrEmpty</a></li>-->
+    <#--&lt;#&ndash;<li>&nbsp;</li>&ndash;&gt;-->
+    <#--<li><a href="#isNull">isNull</a></li>-->
+    <#--<li><a href="#isEmpty">isEmpty</a></li>-->
+
+    <#--<li><a href="#in">in</a></li>-->
+    <#--&lt;#&ndash;<li><a href="#inPairs">inPairs</a></li>&ndash;&gt;-->
+
+    <#--<li><a href="#array">array</a></li>-->
+    <#--&lt;#&ndash;<li><a href="#arrayContains">arrayContains</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#arrayNotContains">arrayNotContains</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#arrayIsEmpty">arrayIsEmpty</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#arrayIsNotEmpty">arrayIsNotEmpty</a></li>&ndash;&gt;-->
+
+    <#--<li><a href="#bitwise">bitwise</a></li>-->
+    <#--&lt;#&ndash;<li><a href="#bitwiseAny">bitwiseAny</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#bitwiseAnd">bitwiseAnd</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#bitwiseAll">bitwiseAll</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#bitwiseNot">bitwiseNot</a></li>&ndash;&gt;-->
+
+    <#--&lt;#&ndash;<li><a href="#eq">eq - equal to</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#ne">ne - not equal</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#gt">gt - greater than</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#ge">ge - greater than or equal</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#lt">lt - less than</a></li>&ndash;&gt;-->
+    <#--&lt;#&ndash;<li><a href="#le">le - less than or equal</a></li>&ndash;&gt;-->
+
+    <#--<li><a href="#like">like</a></li>-->
+    <#--<li><a href="#startsWith">startsWith</a></li>-->
+    <#--<li><a href="#endsWith">endsWith</a></li>-->
+    <#--<li><a href="#contains">contains</a></li>-->
+    <#--<li><a href="#example">example</a></li>-->
+
+    <#--<li><a href="#between">between</a></li>-->
+    <#--<li><a href="#betweenProperties">betweenProperties</a></li>-->
+  <#--</ul>-->
+</@smallnav>
 <@smallnav activeCheck="${orderBy!''}" url="/docs/query/orderBy" title="OrderBy"/>
 <@smallnav activeCheck="${select!''}" url="/docs/query/select" title="Select">
   <ul class="nav">

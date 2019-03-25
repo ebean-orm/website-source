@@ -7,6 +7,24 @@
 </head>
 <body>
 
+<h3 id="raw">raw()</h3>
+<p>
+  The Raw expression lets us use any database specific function or expression
+  in the where clause of a query.
+</p>
+```java
+
+// e.g. use a database function
+.raw("add_days(orderDate, 10) < ?", someDate)
+
+
+// e.g. subquery
+.raw("customer.id in (select o.customer_id from orders o where o.id in (?1))", orderIds);
+
+```
+<p>&nbsp;</p>
+<hr/>
+
 <h4 id="convenience">Convenience expressions</h4>
 <p>
   These are expressions that combine other simple expressions together.
@@ -72,6 +90,67 @@ List<|String> names = ...
 .rawOrEmpty("customer.id in (select c.id from customer c where c.name in (?1))", names)
 
 ```
+
+<p>&nbsp;</p>
+<hr/>
+
+<h4 id="simple">Simple expressions</h4>
+<p>
+  The following expressions are simple expressions.
+</p>
+
+<h3 id="isNull">isNull()</h3>
+<p>
+  IsNull on a associated many property translates to <code>isEmpty()</code>
+</p>
+
+<h3 id="isEmpty">isEmpty()</h3>
+<p>
+  IsEmpty expression should be used on a ToMany property. A sql exists subquery
+  is used to implement the isEmpty expression.
+</p>
+
+
+<h3 id="in">in()</h3>
+
+<h3 id="inPairs">inPairs()</h3>
+
+<h3 id="like">like</h3>
+<h3 id="startsWith">startsWith</h3>
+<h3 id="endsWith">endsWith</h3>
+<h3 id="contains">contains</h3>
+
+
+<h3 id="eq">eq - equal to</h3>
+<h3 id="ne">ne - not equal</h3>
+<h3 id="gt">gt - greater than</h3>
+<h3 id="ge">ge - greater than or equal</h3>
+<h3 id="lt">lt - less than</h3>
+<h3 id="le">le - less than or equal</h3>
+
+<h3 id="between">between</h3>
+<h3 id="betweenProperties">betweenProperties</h3>
+
+<h3 id="example">example</h3>
+
+<span id="bitwise"></span>
+<h3 id="bitwiseAny">bitwiseAny</h3>
+
+<h3 id="bitwiseAnd">bitwiseAnd</h3>
+
+<h3 id="bitwiseAll">bitwiseAll</h3>
+
+<h3 id="bitwiseNot">bitwiseNot</h3>
+
+
+<span id="array"></span>
+<h3 id="arrayContains">arrayContains</h3>
+
+<h3 id="arrayNotContains">arrayNotContains</h3>
+
+<h3 id="arrayIsEmpty">arrayIsEmpty</h3>
+
+<h3 id="arrayIsNotEmpty">arrayIsNotEmpty</h3>
 
 
 <@next "OrderBy" "/docs/query/orderBy"/>
