@@ -393,7 +393,9 @@ a.nav-link {
 .mts {
     margin-top: 10px;
 }
-
+.plm {
+  padding-left: 20px;
+}
 .intro p {
     margin-left:20px;
 }
@@ -551,6 +553,9 @@ pre.console {
   .bs-docs-sidebar.affix {
     width: 263px;
   }
+}
+span.sponsor-space {
+  margin-right: 20px;
 }
 #hero h1 {
   font-size: 65px;
@@ -725,6 +730,15 @@ div#main div.links h4 {
 
 .search-results li.active {
   background: #eee;
+}
+
+ul.sponsor-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+ul.sponsor-list li {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 #search-results-container li a {

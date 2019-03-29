@@ -1,3 +1,7 @@
+<#include "/_layout/_docs_nav_sponsors.ftl">
+
+<p>&nbsp;</p>
+
 <h3><a href="/docs/examples">Examples</a></h3>
 <ul>
   <li><a href="/docs/examples#java-maven">Maven</a></li>
