@@ -1,4 +1,4 @@
-<#include "/_layout/_docs_nav_sponsors.ftl">
+<#include "/_common/sponsor-nav.html">
 
 <p>&nbsp;</p>
 
