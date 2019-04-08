@@ -14,18 +14,18 @@ Order order = new Order();
 order.setOrderDate(new Date());
 ...
 // insert the order
-Ebean.save(order);
+order.save();
 ```
 <p>
 If the bean was fetched it will be updated...
 </p>
 
 ```java
-Order order = Ebean.find(Order.class, 12);
-order.setStatus("SHIPPED");
+Order order = DB.find(Order.class, 42);
+order.setStatus(SHIPPED);
 ...
 // update the order
-Ebean.save(order);
+order.save();
 ```
 <p>
 Save and Delete will CASCADE based on the CascadeType
@@ -36,24 +36,18 @@ By default save and delete will not cascade so you need to
 specify a cascade type (such as the one on details below) for
 save() or delete() to cascade.
 </p>
-
 ```java
 ...
-// the Entity bean with its Mapping Annotations
-...
 @Entity
-@Table(name="or_order")
+@Table(name="orders")
 public class Order {
 
-    ...
-	// no cascading
-    @ManyToOne
-    Customer customer;
+  ...
+  @ManyToOne // no cascading
+  Customer customer;
 
-	// save and delete cascaded
-    @OneToMany(cascade=CascadeType.ALL)
-    List<OrderDetail> details;
-
+  @OneToMany(cascade=CascadeType.ALL) // save and delete cascaded
+  List<|OrderDetail> details;
 	...
 ```
 
@@ -66,23 +60,23 @@ both casade from order to its order details.
 ```java
 ...
 // save the order ...  will cascade also saving the order details
-Ebean.save(order);
+DB.save(order);
 ```
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="deletes">Delete</h2>
 <p>
-Delete is very similar to save. Just call Ebean.delete();
+Delete is very similar to save. Just call DB.delete();
 </p>
 
 ```java
 ...
-Order order = Ebean.find(Order.class, 12);
+Order order = DB.find(Order.class, 12);
 
 // delete the order
 // ... this will cascade also deleting the order details
 // ... with either CascadeType.ALL or CascadeType.REMOVE
-Ebean.delete(order);
+DB.delete(order);
 ```
 
 <#-------------------------------------------------------------------------------------------------->
@@ -99,18 +93,17 @@ an Order the details will be saved as well but the associated customer will not 
 there is no cascade atttribute and the default is to not cascade.</p>
 
 ```java
+...
+@Entity
+@Table(name="orders")
+public class Order {
   ...
-  @Entity
-  @Table(name="or_order")
-  public class Order {
-    ...
-    // no cascading
-    @ManyToOne
-    Customer customer;
 
-    // save and delete cascaded
-    @OneToMany(cascade=CascadeType.ALL)
-    List<OrderDetail> details;
+  @ManyToOne // no cascading
+  Customer customer;
+
+  @OneToMany(cascade=CascadeType.ALL)  // save and delete cascaded
+  List<|OrderDetail> details;
 ```
 
 <h2 id="bulkupdate">Bulk updates</h2>
@@ -127,10 +120,10 @@ names are used in place of column names.</p>
 
 ```java
 // orm bulk delete use bean name and bean properties
-server.createUpdate(OrderDetail.class, "delete from orderDetail").execute();
+DB.createUpdate(OrderDetail.class, "delete from orderDetail").execute();
 
 // sql bulk update uses table and column names
-server.createSqlUpdate("delete from country").execute();
+DB.sqlUpdate("delete from country").execute();
 ````
 
 <h2 id="bulksqlupdate">Bulk SQL updates</h2>
@@ -139,10 +132,10 @@ server.createSqlUpdate("delete from country").execute();
 
 ```java
 String dml = "update b_bug set title=:title where id = :id";
-SqlUpdate update = Ebean.createSqlUpdate(dml)
+int rows = DB.sqlUpdate(dml)
   .setParameter("title", "Updated Again")
-  .setParameter("id", 1);
-int rows = update.execute();
+  .setParameter("id", 1)
+  .execute();
 ```
 
 <h2 id="callablesql">CallableSql</h2>
@@ -151,10 +144,10 @@ int rows = update.execute();
 
 ```java
 String sql = "{call sp_order_mod(?,?)}";
-CallableSql cs = Ebean.createCallableSql(sql);
+CallableSql cs = DB.createCallableSql(sql);
 cs.setParameter(1, "turbo");
 cs.registerOut(2, Types.INTEGER);
-Ebean.execute(cs);
+DB.execute(cs);
 
 // read the out parameter
 Integer returnValue = (Integer) cs.getObject(2);
@@ -175,17 +168,13 @@ perform any raw JDBC calls you like.</p>
 procedure calls (if CallableSql doesn't do the business for you).</p>
 
 ```java
-Transaction transaction = Ebean.beginTransaction();
-try {
+try (Transaction transaction = DB.beginTransaction()) {
+
   Connection connection = transaction.getConnection();
   // use raw JDBC
   ...
-  // assuming we updated the "shipping_detail" table
-  // inform Ebean so it can maintain it's 'L2' cache
-  transaction.addModification("shipping_detail",false,true,false);
-  Ebean.commitTransaction();
-} finally {
-  Ebean.endTransaction();
+
+  transaction.commit();
 }
 ```
 
@@ -198,7 +187,7 @@ manage its "L2" cache as well as maintain Lucene text indexes.</p>
   Ebean provides support for JDBC batch processing.  Batch processing groups related SQL statements into a batch and submits them with one call to the database.
 </p>
 <p>
-  Batch settings can be configured through <a href="properties_config">ebean.properties</a> or through <a href="programmatic_config">ServerConfig</a>, and can be overridden per transaction.
+  Batch settings can be configured through <a href="properties_config">application.properties</a> or through <a href="programmatic_config">ServerConfig</a>, and can be overridden per transaction.
 </p>
 
 <p>
@@ -245,17 +234,16 @@ try {
 
 example using @Transactional
 ```java
-@Transactional(batch = PersistBatch.ALL, batchOnCascade = PersistBatch.ALL, batchSize = 99)
-  public void doWithBatchOptionsSet() {
+@Transactional(batchSize = 50)
+public void goodStuff() {
 
-    Transaction txn = Ebean.currentTransaction();
-    assertEquals(PersistBatch.ALL, txn.getBatch());
-    assertEquals(PersistBatch.ALL, txn.getBatchOnCascade());
-    assertEquals(99, txn.getBatchSize());
+    order.save()
+    customer.save()
 }
 ```
   <div class="next pull-right">
     <a href="/docs/transactions" class="btn btn-info">Next: Transactions</a>
   </div>
+
 </body>
 </html>
