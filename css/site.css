@@ -737,8 +737,8 @@ ul.sponsor-list {
   padding-left: 0;
 }
 ul.sponsor-list li {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 #search-results-container li a {
