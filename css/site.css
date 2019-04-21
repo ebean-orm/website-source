@@ -576,6 +576,10 @@ span.sponsor-space {
   transition: all 0.15s ease;
   box-sizing: border-box;
 }
+#hero .links {
+  padding-top: 1em;
+  display: flex;
+}
 #search-header {
   margin-bottom: 4px;
 }
@@ -602,19 +606,12 @@ span.sponsor-space {
 .highlights .inner.mtl {
    margin-top: 50px;
 }
-.highlights .point {
-    width: 33%;
-    display: inline-block;
-    vertical-align: top;
-    box-sizing: border-box;
-    padding: 0 2em;
-}
 .highlights .p2 {
-  width: 66%;
-  text-align: left;
+  padding: 0;
 }
 .highlights .p1 {
   text-align: left;
+  padding: 0;
 }
 .testimonial p {
   font-family: 'PT Sans', sans-serif;
