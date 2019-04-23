@@ -43,16 +43,16 @@ ebean:
 
 ```text
 -- Dumping metrics for db --
-txn.main                                                  count:10       total:117459   mean:11745    max:32894
+txn.main                                        count:10       total:117459   mean:11745    max:32894
 
 -- ORM queries --
-query:CustomerFinder.findByName                           count:1        total:4089     mean:4089     max:4089
+query:CustomerFinder.findByName                 count:1        total:4089     mean:4089     max:4089
 hash:8c314fa1f6dbecfcdd449ccd021c8980
 loc:CustomerFinder.findByName(CustomerFinder.kt:17)
 
 sql:select t0.id, t0.name from customer t0 where lower(t0.name) like ? escape'|'
 
-query:ProductFinder.findMapBySku                          count:1        total:2364     mean:2364     max:2364
+query:ProductFinder.findMapBySku                count:1        total:2364     mean:2364     max:2364
 hash:aeda919cc69bea1026543d5307276eeb
 loc:ProductFinder.findMapBySku(ProductFinder.kt:12)
 
