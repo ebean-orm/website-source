@@ -19,6 +19,7 @@
   <li><a href="#postgis">Postgis</a></li>
 </ul>
 </@smallnav>
+<@smallnav activeCheck="${mysql!''}" url="/docs/testing/mysql" title="MySql"/>
 <@smallnav activeCheck="${sqlserver!''}" url="/docs/testing/sqlserver" title="SQL Server"/>
 <@smallnav activeCheck="${mocki!''}" url="/docs/testing/mocki" title="Mocki Ebean"/>
 <@smallnav activeCheck="${runner!''}" url="/docs/testing/script-runner" title="Script Runner"/>
