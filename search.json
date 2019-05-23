@@ -2,6 +2,14 @@
 {
   "title":"",
   "caption":"",
+  "category":"Getting started",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/getting-started"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"Videos",
   "priority":"0",
   "keywords":"",
@@ -70,14 +78,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/videos"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/getting-started"
 }
 ,{
   "title":"",
@@ -1272,6 +1272,14 @@
   "url":"/docs/testing/test-properties"
 }
 ,{
+  "title":"MySql",
+  "caption":"",
+  "category":"Testing",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/testing/mysql"
+}
+,{
   "title":"Script Runner",
   "caption":"",
   "category":"Testing",
@@ -1992,38 +2000,6 @@
   "url":"/docs/introduction#ebean"
 }
 ,{
-  "title":"Model",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/introduction/model"
-}
-,{
-  "title":"Finder",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/introduction/finder"
-}
-,{
-  "title":"Finder - Finder generation via ebeaninit",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/introduction/finder"
-}
-,{
-  "title":"DatabaseConfig",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/introduction/databaseconfig"
-}
-,{
   "title":"DatabaseFactory",
   "caption":"",
   "category":"Introduction",
@@ -2032,12 +2008,84 @@
   "url":"/docs/introduction/databasefactory"
 }
 ,{
-  "title":"ebean.mf",
+  "title":"Spring",
   "caption":"",
   "category":"Introduction",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/introduction/manifest"
+  "url":"/docs/introduction/spring"
+}
+,{
+  "title":"Spring - FactoryBean",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/introduction/spring#factorybean"
+}
+,{
+  "title":"Spring - Spring boot",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/introduction/spring#spring-boot"
+}
+,{
+  "title":"Spring - ebean-spring",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/introduction/spring#ebean-spring"
+}
+,{
+  "title":"Guice",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/introduction/guice"
+}
+,{
+  "title":"Guice - Provider",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/introduction/guice#provider"
+}
+,{
+  "title":"Guice - Module bind",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/introduction/guice#module"
+}
+,{
+  "title":"Guice - Inject and ActiveRecord",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/introduction/guice#activerecord"
+}
+,{
+  "title":"DInject",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/introduction/dinject"
+}
+,{
+  "title":"DInject - Inject and ActiveRecord",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/introduction/dinject#activerecord"
 }
 ,{
   "title":"",
@@ -2454,6 +2502,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/where#raw"
+}
+,{
+  "title":"Expressions",
+  "caption":"",
+  "category":"Query",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/query/expressions"
 }
 ,{
   "title":"OrderBy",
@@ -2892,14 +2948,6 @@
   "caption":"",
   "category":"Query",
   "priority":"1",
-  "keywords":"",
-  "url":"/docs/query/findMap"
-}
-,{
-  "title":"findMap - findMap (Execute a query returning the result as a map of the objects)",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
   "keywords":"",
   "url":"/docs/query/findMap"
 }
@@ -3866,122 +3914,42 @@
 ,{
   "title":"ebean.mf",
   "caption":"",
-  "category":"Configuration",
+  "category":"Introduction",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/configuration/manifest"
+  "url":"/docs/introduction/manifest"
 }
 ,{
-  "title":"",
+  "title":"DatabaseConfig",
   "caption":"",
-  "category":"Configuration",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/configuration/"
-}
-,{
-  "title":"ServerConfig",
-  "caption":"",
-  "category":"Configuration",
+  "category":"Introduction",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/configuration/serverconfig"
+  "url":"/docs/introduction/databaseconfig"
 }
 ,{
-  "title":"ServerConfig - ServerConfig and EbeanServerFactory",
+  "title":"Model",
   "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/serverconfig"
-}
-,{
-  "title":"ServerConfig - Register",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/serverconfig#register"
-}
-,{
-  "title":"ServerConfig - Default server",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/serverconfig#default"
-}
-,{
-  "title":"ServerConfig - Dependency injection",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/serverconfig#di"
-}
-,{
-  "title":"Reference",
-  "caption":"",
-  "category":"Configuration",
+  "category":"Introduction",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/configuration/reference"
+  "url":"/docs/introduction/model"
 }
 ,{
-  "title":"Spring",
+  "title":"Finder",
   "caption":"",
-  "category":"Configuration",
+  "category":"Introduction",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/configuration/spring"
+  "url":"/docs/introduction/finder"
 }
 ,{
-  "title":"Spring - Spring boot",
+  "title":"Finder - Finder generation via ebeaninit",
   "caption":"",
-  "category":"Configuration",
+  "category":"Introduction",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/configuration/spring#spring-boot"
-}
-,{
-  "title":"Spring - FactoryBean",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/spring#factorybean"
-}
-,{
-  "title":"Spring - ebean-spring",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/spring#ebean-spring"
-}
-,{
-  "title":"Spring - Provider",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/guice#provider"
-}
-,{
-  "title":"Spring - Module bind",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/guice#module"
-}
-,{
-  "title":"Spring - Inject and ActiveRecord",
-  "caption":"",
-  "category":"Configuration",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/configuration/guice#activerecord"
+  "url":"/docs/introduction/finder"
 }
 ,{
   "title":"Maven plugin",
@@ -4400,12 +4368,36 @@
   "url":"/docs/monitoring"
 }
 ,{
-  "title":"TODO - Monitoring",
+  "title":"Monitoring",
   "caption":"",
   "category":"Monitoring",
   "priority":"3",
   "keywords":"",
   "url":"/docs/monitoring"
+}
+,{
+  "title":"Metrics",
+  "caption":"",
+  "category":"Monitoring",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/monitoring"
+}
+,{
+  "title":"Labels",
+  "caption":"",
+  "category":"Monitoring",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/monitoring/labels"
+}
+,{
+  "title":"Profile Location",
+  "caption":"",
+  "category":"Monitoring",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/monitoring/profile-location"
 }
 ,{
   "title":"@DbEnumValue",
