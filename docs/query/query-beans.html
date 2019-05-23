@@ -90,6 +90,18 @@
   ```
 
 
+  <h2 id="caveats" class="art">Caveats</h2>
+
+  <h4>Refactor rename entity bean</h4>
+  <p>
+    When we refactor rename an entity bean in an IDE the query beans we should trigger a <code>build all</code>.
+    This is because the query beans for the old bean names are kept around until the next <code>build all</code>.
+  </p>
+  <p>
+    Once we do a <code>build all</code> this will effectively delete the old query beans and generate the new ones.
+    At this point we get compiler errors for the queries that we need to adjust (use the new query bean names).
+  </p>
+
   <@next "Where" "/docs/query/where"/>
   <@edit "/docs/query/query-beans"/>
 
