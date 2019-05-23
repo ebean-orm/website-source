@@ -136,6 +136,22 @@
   "url":"/docs/testing"
 }
 ,{
+  "title":"Testing Quickstart",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing"
+}
+,{
+  "title":"ebean-test-config",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing"
+}
+,{
   "title":"Postgres",
   "caption":"",
   "category":"Testing",
