@@ -5,20 +5,6 @@
   <li><a target="_blank" href="https://github.com/ebean-orm/examples/tree/master/example-maven-kotlin">Kotlin maven example</a></li>
 </ul>
 
-<h4>Check installed maven version</h4>
-
-<pre content="sh">
-mvn -version
-</pre>
-
-<p>
-  If your installed maven version is older than <code>3.5.3</code> then it might not support
-  maven tiles. If that is the case upgrade maven or use the
-  <a href="/docs/getting-started/maven-plugin">maven plugin</a> directly rather than the tile.
-</p>
-
-<p>&nbsp;</p>
-
 <h2 id="dependencies">Dependencies</h2>
 <p>
   Add the following dependencies:
@@ -116,29 +102,29 @@ mvn -version
 
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane active" id="h2">
-    ```text
+    <pre content="text">
       com.h2database : h2 : 1.4.191
-    ```
+    </pre>
   </div>
   <div role="tabpanel" class="tab-pane" id="postgres">
-    ```text
+    <pre content="text">
     org.postgresql : postgresql : 42.2.2
-    ```
+    </pre>
   </div>
   <div role="tabpanel" class="tab-pane" id="mysql">
-    ```text
+    <pre content="text">
     mysql : mysql-connector-java : 8.0.11
-    ```
+    </pre>
   </div>
   <div role="tabpanel" class="tab-pane" id="sqlserver">
-    ```text
+    <pre content="text">
     com.microsoft.sqlserver : mssql-jdbc : 6.4.0.jre8
-    ```
+    </pre>
   </div>
   <div role="tabpanel" class="tab-pane" id="oracle">
-    ```text
+    <pre content="text">
     com.oracle.jdbc : ojdbc8 : 12.2.0.1
-    ```
+    </pre>
   </div>
 </div>
 
