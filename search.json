@@ -2104,46 +2104,6 @@
   "url":"/docs/introduction/dinject#activerecord"
 }
 ,{
-  "title":"",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/tooling"
-}
-,{
-  "title":"Maven",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/tooling/maven"
-}
-,{
-  "title":"Gradle",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/tooling/gradle"
-}
-,{
-  "title":"Recommendation",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling#recommendation"
-}
-,{
-  "title":"Videos",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling"
-}
-,{
   "title":"CLI Tool (ebeaninit)",
   "caption":"",
   "category":"Tooling",
@@ -2232,6 +2192,14 @@
   "url":"/docs/tooling/idea"
 }
 ,{
+  "title":"Maven",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/maven"
+}
+,{
   "title":"Maven - Maven enhancement",
   "caption":"",
   "category":"Tooling",
@@ -2272,6 +2240,14 @@
   "url":"/docs/tooling/maven-plugin"
 }
 ,{
+  "title":"Gradle",
+  "caption":"",
+  "category":"Tooling",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/tooling/gradle"
+}
+,{
   "title":"Gradle - Gradle plugin",
   "caption":"",
   "category":"Tooling",
@@ -2302,22 +2278,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/tooling/gradle"
-}
-,{
-  "title":"Gradle Query beans",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/tooling/gradle-querybeans"
-}
-,{
-  "title":"Gradle Query beans - Query bean generation with Gradle",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle-querybeans"
 }
 ,{
   "title":"Agent",
@@ -2446,22 +2406,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/tooling/eclipse-maven-apt#factory-path"
-}
-,{
-  "title":"Maven Querybeans",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/tooling/maven-querybeans"
-}
-,{
-  "title":"Maven Querybeans - Query bean generation with Maven",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/maven-querybeans"
 }
 ,{
   "title":"Model",
