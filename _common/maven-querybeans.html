@@ -40,38 +40,3 @@ List<|Customer> customers =
   <a href="https://github.com/ebean-orm-examples/example-java8/blob/master/pom.xml">Full example pom with query bean generation</a>
 </p>
 
-
-<h3>Kotlin KAPT</h3>
-<p>
-  To generate Kotlin query ebeans add the <code>kotlin-kapt</code> maven tile.
-</p>
-<p>
-  This tile brings in the kotlin-maven-plugin with configuration for kotlin-querybean-generator
-  annotation processor. As such <code>remove</code> the kotlin-maven-plugin that will already
-  be in the pom.xml (as the tile will bring in one that is configured to run the annotation processor).
-</p>
-<p>
-  Add the maven tile into the <code>build / plugins</code> section of the pom.xml.
-</p>
-
-<pre content="xml">
-<plugin>
-  <groupId>io.repaint.maven</groupId>
-  <artifactId>tiles-maven-plugin</artifactId>
-  <version>2.12</version>
-  <extensions>true</extensions>
-  <configuration>
-    <tiles>
-      <tile>io.ebean.tile:enhancement:11.41.1</tile> <!-- ebean enhancement -->
-      <tile>io.ebean.tile:kotlin-kapt:1.5</tile> <!-- kotlin compile with query bean generation -->
-      <!-- other tiles ... -->
-    </tiles>
-  </configuration>
-</plugin>
-</pre>
-
-<h5>Example project</h5>
-<p>
-  <a href="https://github.com/ebean-orm-examples/example-kotlin/blob/master/pom.xml">Full example pom for Kotlin query bean generation</a>
-</p>
-

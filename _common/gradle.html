@@ -1,32 +1,61 @@
 
-<h4>Buildscript dependency</h4>
+<h4>Add the Ebean plugin</h4>
 <p>
-  Add the <code>ebean-gradle-plugin</code> dependency to the <code>buildscript</code> section.
+  Add the <code>ebean</code> plugin that will perform enhancement during the gradle build.
 </p>
 <pre content="groovy">
-buildscript {
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath "io.ebean:ebean-gradle-plugin:11.41.1"
-  }
+plugins {
+    id('idea')
+    id('java')
+    id('io.ebean') version '11.41.1'
 }
 </pre>
 
 
-<h4>Apply plugin</h4>
-<p>
-  Add <code>'io.ebean'</code> to the apply plugin section like:
-</p>
+<h4>Add the Ebean dependencies</h4>
 <pre content="groovy">
-  apply plugin: 'io.ebean'
+dependencies {
+    ...
+    compile 'io.ebean:ebean:11.41.1'
+    compile 'io.ebean:ebean-querybean:11.41.1'
+
+    // query bean generation
+    annotationProcessor 'io.ebean:querybean-generator:11.41.1'
+
+    testImplementation 'io.ebean.test:ebean-test-config:11.41.1'
+    ...
+}
+</pre>
+<ul>
+  <li>ebean-querybean - is to support type safe queries using query beans</li>
+  <li>querybean-generator - APT generation of the query beans</li>
+  <li>ebean-test-config - testing including using docker containers</li>
+</ul>
+
+<h2>Kotlin</h2>
+<p>
+  For Kotlin we change the <em>annotationProcessor</em> to <code>kapt</code> as we see below
+  and use the <code>kotlin-querybean-generator</code> which will generate the query beans as
+  Kotlin rather than Java.
+</p>
+
+<pre content="groovy">
+dependencies {
+    ...
+    compile 'io.ebean:ebean:11.41.1'
+    compile 'io.ebean:ebean-querybean:11.41.1'
+
+    // query bean generation
+    kapt 'io.ebean:kotlin-querybean-generator:11.41.1'
+
+    testImplementation 'io.ebean.test:ebean-test-config:11.41.1'
+    ...
+}
 </pre>
 
-<h4>Add ebean section</h4>
+<h4>Option Ebean section</h4>
 <p>
-  Add a <code>ebean</code> section to control the debug level of the4) t enhancement. This is optional but generally a
-  good idea.
+  Add a <code>ebean</code> section to control the debug level of enhancement.
 </p>
 <pre content="groovy">
 ebean {
@@ -38,7 +67,7 @@ ebean {
 <h4>Test output</h4>
 <p>
   Gradle by default suppresses output logging. If we want to see SQL, DDL, Transaction logging etc we
-  need to set <code>testLogging.showStandardStreams</code> = <code>true</code> in the test section like:
+  need to set <em>testLogging.showStandardStreams</em> = <code>true</code> in the test section like:
 </p>
 <pre content="groovy">
 test {
@@ -46,11 +75,12 @@ test {
 }
 </pre>
 
-<h2>Example project</h2>
-<p>
-  Have a look at the <a href="https://github.com/ebean-orm-examples/example-gradle-java">Example Gradle Java</a> for
-  a full example - it's <a href="https://github.com/ebean-orm-examples/example-gradle-java/blob/master/build.gradle">build.gradle</a>.
-</p>
+<h2>Example projects</h2>
+<ul>
+  <li><a href="https://github.com/ebean-orm-examples/example-gradle-java">Java gradle example</a></li>
+  <li><a href="https://github.com/ebean-orm-examples/example-gradle-kotlin">Kotlin gradle example</a></li>
+</ul>
+
 
 
 <h2>Test output</h2>

@@ -1,9 +1,6 @@
 <@smallnav activeCheck="${ide!''}" url="/docs/getting-started#ide" title="IDE Plugin"/>
-<@smallnav activeCheck="${dependencies!''}" url="/docs/getting-started/dependencies" title="Dependencies"/>
 <@smallnav activeCheck="${maven_build!''}" url="/docs/getting-started/maven" title="Maven"/>
-<@smallnav activeCheck="${maven_querybeans!''}" url="/docs/getting-started/maven-querybeans" title="Maven Query beans"/>
 <@smallnav activeCheck="${gradle_build!''}" url="/docs/getting-started/gradle" title="Gradle"/>
-<@smallnav activeCheck="${gradle_querybeans!''}" url="/docs/getting-started/gradle-querybeans" title="Gradle Query beans"/>
 <@smallnav activeCheck="${clitool!''}" url="/docs/getting-started/cli-tool" title="CLI Tool"/>
 
 <li><b>Java</b></li>
