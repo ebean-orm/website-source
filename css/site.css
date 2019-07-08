@@ -684,6 +684,7 @@ div#main div.links h4 {
 .search-results-inline-container .search-results {
   background: white;
   position: absolute;
+  text-align: left;
   border: 1px solid #f0f0f0;
   width: 100%;
   padding: 4px 8px;
