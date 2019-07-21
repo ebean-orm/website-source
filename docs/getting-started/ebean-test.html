@@ -1,0 +1,67 @@
+<html>
+<head>
+  <title>ebeaninit | Getting started | Ebean</title>
+  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
+  <meta name="bread2" content="Ebean test" href="/docs/getting-started/ebean-test"/>
+  <#assign ebeanTest="active">
+</head>
+<body>
+<h2>Ebean test</h2>
+
+<h3>Add ebean-test-config as a test dependency</h3>
+
+<ul class="nav nav-tabs mytabs">
+  <li role="presentation" class="active"><a href="#maven-tab">Maven</a></li>
+  <li role="presentation"><a href="#gradle-tab">Gradle</a></li>
+</ul>
+
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="maven-tab">
+    <pre content="xml">
+      <dependency>
+        <groupId>io.ebean.test</groupId>
+        <artifactId>ebean-test-config</artifactId>
+        <version>11.41.1</version>
+        <scope>test</scope>
+      </dependency>
+    </pre>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="gradle-tab">
+    <pre content="groovy">
+    dependencies {
+        ...
+        testImplementation 'io.ebean.test:ebean-test-config:11.41.1'
+    }
+    </pre>
+  </div>
+</div>
+
+
+<h3>Add application-test.yaml</h3>
+<p>
+  In <code>src/test/resources</code> add <code>application-test.yaml</code> configuration file
+  like the one below.
+</p>
+```yml
+ebean:
+  test:
+    platform: h2 # h2, postgres, mysql, mariadb, oracle, sqlserver, hana, clickhouse, sqlite
+    ddlMode: dropCreate # none | dropCreate | migration
+    dbName: my_app
+```
+<p>
+  We can change the <code>platform</code> to any of the supported platforms. Ebean test will automatically
+  manage a docker test container setting it up to run tests.
+  Refer to <a href="/docs/testing/platform">testing platforms</a> for more information.
+</p>
+<p>
+  We most often use <code>dropCreate</code> DDL mode during development.
+  Refer to <a href="/docs/testing/ddl-mode">testing DDL mode</a> for more information.
+</p>
+
+
+<@next_edit "CLI Tool" "cli-tool" "/docs/getting-started/cli-tool"/>
+
+
+</body>
+</html>
