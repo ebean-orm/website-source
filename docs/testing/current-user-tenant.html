@@ -1,0 +1,31 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Testing" href="/docs/testing/"/>
+  <meta name="bread2" content="Current User & Tenant" href="/docs/testing/current-user-tenant"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_testing.ftl"></template>
+  <#assign currentUser="active">
+</head>
+<body>
+<h2>Current User and Tenant</h2>
+<p>
+  ebean-test-config will automatically register a <em>current user provider</em> and a
+  <em>current tenant provider</em>.  These are only set if you don't set them yourself.
+</p>
+<p>
+  This means is that without doing anything we can use <code>@WhoCreated / @WhoModified</code>
+  in tests and via <code>io.ebean.test.UserContext</code> we can set current user and tenant in tests.
+</p>
+```java
+// set the current userId which will be put
+// into 'WhoCreated' and 'WhoModified' properties
+
+UserContext.setUserId("U1");
+```
+
+<@next_edit "Test Properties" "test-properties" "/docs/testing/current-user-tenant.html"/>
+
+
+</body>
+</html>

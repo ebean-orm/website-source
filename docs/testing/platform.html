@@ -1,0 +1,135 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs.html"/>
+  <meta name="bread1" content="Testing" href="/docs/testing/"/>
+  <meta name="bread2" content="Platform" href="/docs/testing/platform"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_testing.ftl"></template>
+  <#assign platform="active">
+</head>
+<body>
+
+<h2>Platform</h2>
+<p>
+  The following are the platforms supported and the default configuration used
+  for those platforms.
+</p>
+
+<table class="table">
+  <tr>
+    <th>Platform</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>h2</td>
+    <td>Run using in-memory H2 database.
+      <dl>
+        <dd><b>url:</b> jdbc:h2:mem:{databaseName}</dd>
+        <dd><b>driver:</b> org.h2.Driver</dd>
+      </dl>
+    </td>
+  </tr>
+  <tr>
+    <td>postgres</td>
+    <td>Run against Postgres docker DB.
+      <dl>
+        <dd><b>port:</b> 6432</dd>
+        <dd><b>password:</b> test</dd>
+        <dd><b>url:</b> jdbc:postgresql://localhost:{port}/{databaseName}</dd>
+        <dd><b>driver:</b> org.postgresql.Driver</dd>
+        <dd><b>image:</b> postgres:{version}</dd>
+      </dl>
+    </td>
+  </tr>
+  <tr>
+    <td>postgis</td>
+    <td>Run against Postgres Postgis docker DB.
+      <dl>
+        <dd><b>port:</b> 7432</dd>
+        <dd><b>password:</b> test</dd>
+        <dd><b>url:</b> jdbc:postgresql_lwgis://localhost:{port}/{databaseName}</dd>
+        <dd><b>driver:</b> org.postgis.DriverWrapperLW</dd>
+        <dd><b>image:</b> mdillon/postgis:{version}</dd>
+      </dl>
+    </td>
+  </tr>
+  <tr>
+    <td>mysql</td>
+    <td>Run against MySql docker DB.
+      <dl>
+        <dd><b>port:</b> 4306</dd>
+        <dd><b>password:</b> test</dd>
+        <dd><b>url:</b> jdbc:mysql://localhost:{port}/{databaseName}</dd>
+        <dd><b>driver:</b> com.mysql.jdbc.Driver</dd>
+        <dd><b>image:</b> mysql:{version}</dd>
+      </dl>
+    </td>
+  </tr>
+  <tr>
+    <td>sqlserver</td>
+    <td>Run against SqlServer docker DB with the following defaults.
+      <dl>
+        <dd><b>port:</b> 1433</dd>
+        <dd><b>password:</b> SqlS3rv#r</dd>
+        <dd><b>url:</b> jdbc:sqlserver://localhost:{port};databaseName={databaseName}</dd>
+        <dd><b>driver:</b> com.microsoft.sqlserver.jdbc.SQLServerDriver</dd>
+        <dd><b>image:</b> microsoft/mssql-server-linux:{version}</dd>
+      </dl>
+    </td>
+  </tr>
+  <tr>
+    <td>oracle</td>
+    <td>Run against Oracle docker DB.
+      <dl>
+        <dd><b>port:</b> 1521</dd>
+        <dd><b>password:</b> test</dd>
+        <dd><b>url:</b> jdbc:oracle:thin:@localhost:{port}:XE</dd>
+        <dd><b>driver:</b> oracle.jdbc.driver.OracleDriver</dd>
+        <dd><b>image:</b> oracleinanutshell/oracle-xe-11g:{version}</dd>
+      </dl>
+    </td>
+  </tr>
+  <tr>
+    <td>hana</td>
+    <td>Run against SAP Hana DB.
+      <dl>
+        <dd><b>port:</b> 39017</dd>
+        <dd><b>username:</b> SYSTEM</dd>
+        <dd><b>password:</b> HXEHana1</dd>
+        <dd><b>databaseName:</b> HXE</dd>
+        <dd><b>url:</b> jdbc:sap://localhost:{port}/?databaseName={databaseName}</dd>
+        <dd><b>driver:</b> com.sap.db.jdbc.Driver</dd>
+        <dd><b>image:</b> store/saplabs/hanaexpress:{version}</dd>
+      </dl>
+    </td>
+  </tr>
+  <tr>
+    <td>clickhouse</td>
+    <td>Run against Clickhouse DB.
+      <dl>
+        <dd><b>port:</b> 8123</dd>
+        <dd><b>username: default</b></dd>
+        <dd><b>password:</b> (empty)</dd>
+        <dd><b>url:</b> jdbc:clickhouse://localhost:{port}/{databaseName}</dd>
+        <dd><b>driver:</b> ru.yandex.clickhouse.ClickHouseDriver</dd>
+        <dd><b>image:</b> yandex/clickhouse-server:{version}</dd>
+      </dl>
+    </td>
+  </tr>
+
+  <tr>
+    <td>sqlite</td>
+    <td>Run using Sqlite database.
+      <dl>
+        <dd><b>url:</b> jdbc:sqlite:{databaseName}</dd>
+        <dd><b>driver:</b> org.sqlite.JDBC</dd>
+        <dd><b>isolationlevel:</b> read_uncommitted</dd>
+      </dl>
+    </td>
+  </tr>
+</table>
+
+<@next_edit "Current User & Tenant" "current-user-tenant" "/docs/testing/platform.html"/>
+
+</body>
+</html>

@@ -1,15 +1,16 @@
 
-<@smallnav activeCheck="${testing!''}" url="/docs/testing" title="Quickstart">
-<ul class="nav">
-  <li><a href="#ddlmode">DDL Mode</a></li>
-  <li><a href="#platform">Platform</a></li>
-  <li><a href="#docker">Docker</a></li>
-  <li><a href="#startup">Startup</a></li>
-  <li><a href="#shutdown">Shutdown</a></li>
-  <li><a href="#not-docker">Not Docker</a></li>
-  <li><a href="#current-user">Current User</a></li>
-</ul>
+<@smallnav activeCheck="${testing!''}" url="/docs/testing" title="Ebean test"/>
+<@smallnav activeCheck="${ddlMode!''}" url="/docs/testing/ddl-mode" title="DDL Mode"/>
+<@smallnav activeCheck="${docker!''}" url="/docs/testing/docker" title="Docker">
+  <ul class="nav">
+    <li><a href="#startup">Startup</a></li>
+    <li><a href="#shutdown">Shutdown</a></li>
+    <li><a href="#not-docker">No Docker</a></li>
+  </ul>
 </@smallnav>
+<@smallnav activeCheck="${platform!''}" url="/docs/testing/platform" title="Platform"/>
+<@smallnav activeCheck="${currentUser!''}" url="/docs/testing/current-user-tenant" title="Current User & Tenant"/>
+
 <@smallnav activeCheck="${testproperties!''}" url="/docs/testing/test-properties" title="Test properties"/>
 <@smallnav activeCheck="${elastic!''}" url="/docs/testing/elasticsearch" title="ElasticSearch"/>
 <@smallnav activeCheck="${postgres!''}" url="/docs/testing/postgres" title="Postgres">

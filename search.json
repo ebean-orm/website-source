@@ -37,7 +37,7 @@
   "category":"DDL",
   "priority":"0",
   "keywords":"",
-  "url":"/docs/ddl"
+  "url":"/docs/ddl/"
 }
 ,{
   "title":"",
@@ -54,14 +54,6 @@
   "priority":"0",
   "keywords":"",
   "url":"/docs/mapping"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Kotlin",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/kotlin"
 }
 ,{
   "title":"",
@@ -90,6 +82,14 @@
 ,{
   "title":"",
   "caption":"",
+  "category":"Transactions",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/transactions"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"Persist",
   "priority":"0",
   "keywords":"",
@@ -98,10 +98,10 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"Transactions",
+  "category":"Kotlin",
   "priority":"0",
   "keywords":"",
-  "url":"/docs/transactions"
+  "url":"/docs/kotlin"
 }
 ,{
   "title":"",
@@ -138,10 +138,10 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"JSON in DB",
+  "category":"Elastic",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/features/json-in-db"
+  "url":"/docs/features/elasticsearch"
 }
 ,{
   "title":"",
@@ -186,18 +186,18 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"JSON Marshalling",
+  "category":"JSON in DB",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/features/json"
+  "url":"/docs/features/json-in-db"
 }
 ,{
   "title":"",
   "caption":"",
-  "category":"Elastic",
+  "category":"JSON Marshalling",
   "priority":"1",
   "keywords":"",
-  "url":"/docs/features/elasticsearch"
+  "url":"/docs/features/json"
 }
 ,{
   "title":"",
@@ -1325,7 +1325,7 @@
   "category":"DDL",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/ddl"
+  "url":"/docs/ddl/"
 }
 ,{
   "title":"Criticism",
@@ -1334,6 +1334,22 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/codestyle#criticism"
+}
+,{
+  "title":"Current User & Tenant",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/current-user-tenant"
+}
+,{
+  "title":"Current User & Tenant - Current User and Tenant",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/current-user-tenant"
 }
 ,{
   "title":"Current limitations",
@@ -1485,7 +1501,7 @@
   "category":"DDL",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/ddl"
+  "url":"/docs/ddl/"
 }
 ,{
   "title":"DDL",
@@ -1494,6 +1510,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/logging#ddl"
+}
+,{
+  "title":"DDL Mode",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/ddl-mode"
 }
 ,{
   "title":"DataSource user is null?",
@@ -1534,6 +1558,46 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/delete"
+}
+,{
+  "title":"Docker",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/docker"
+}
+,{
+  "title":"Docker - Container shutdown",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/docker"
+}
+,{
+  "title":"Docker - Container startup",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/docker"
+}
+,{
+  "title":"Docker - Docker test containers",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/docker"
+}
+,{
+  "title":"Docker - Not using Docker",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/docker"
 }
 ,{
   "title":"Docker logging",
@@ -1590,6 +1654,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/dtoquery#maxRows"
+}
+,{
+  "title":"Ebean test",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing"
 }
 ,{
   "title":"Eclipse",
@@ -2594,18 +2666,18 @@
 ,{
   "title":"Mapping",
   "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/mapping"
-}
-,{
-  "title":"Mapping",
-  "caption":"",
   "category":"Draftable",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable#mapping"
+}
+,{
+  "title":"Mapping",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/mapping"
 }
 ,{
   "title":"Mapping - @DocCode - Strings that are codes",
@@ -3018,22 +3090,6 @@
 ,{
   "title":"Overview",
   "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#overview"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"JSON in DB",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json-in-db#overview"
-}
-,{
-  "title":"Overview",
-  "caption":"",
   "category":"History",
   "priority":"3",
   "keywords":"",
@@ -3054,6 +3110,22 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/changelog#overview"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Coding style",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/codestyle#overview"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#overview"
 }
 ,{
   "title":"Overview",
@@ -3080,12 +3152,12 @@
   "url":"/videos"
 }
 ,{
-  "title":"Postgres",
+  "title":"Platform",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing/postgres"
+  "url":"/docs/testing/platform"
 }
 ,{
   "title":"Postgres",
@@ -3094,6 +3166,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#postgres"
+}
+,{
+  "title":"Postgres",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/postgres"
 }
 ,{
   "title":"Postgres expressions",
@@ -3778,26 +3858,18 @@
 ,{
   "title":"Testing",
   "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#testing"
-}
-,{
-  "title":"Testing",
-  "caption":"",
   "category":"Elastic",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch"
 }
 ,{
-  "title":"Testing Quickstart",
+  "title":"Testing",
   "caption":"",
-  "category":"Testing",
+  "category":"Coding style",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing"
+  "url":"/docs/codestyle#testing"
 }
 ,{
   "title":"Transaction",
@@ -4010,18 +4082,18 @@
 ,{
   "title":"Videos",
   "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#videos"
-}
-,{
-  "title":"Videos",
-  "caption":"",
   "category":"Elastic",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch#videos"
+}
+,{
+  "title":"Videos",
+  "caption":"",
+  "category":"History",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features/history#videos"
 }
 ,{
   "title":"Where",

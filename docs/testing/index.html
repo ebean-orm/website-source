@@ -8,7 +8,8 @@
 </head>
 <body>
 
-<h2><a id="quickstart">Testing Quickstart</a></h2>
+<h2>Ebean test</h2>
+
 <h3>1. Add ebean-test-config as a test dependency</h3>
 ```xml
 <dependency>
@@ -19,18 +20,17 @@
 </dependency>
 ```
 
-
-<h3>2. Add application-test.yml</h3>
+<h3>2. Add application-test.yaml</h3>
 <p>
-  Add into <code>src/test/resources</code> a <code>application-test.yml</code> configuration file
+  Add into <code>src/test/resources</code> a <code>application-test.yaml</code> configuration file
   that we use for testing.
 </p>
 ```yml
 ebean:
   test:
-    platform: h2 #, h2, postgres, mysql, oracle, sqlserver
+    platform: h2 #, h2, postgres, mysql, oracle, sqlserver, hana, clickhouse, sqlite
     ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
-    dbName: myapp
+    dbName: my_app
 ```
 <p>
   We can modify this test configuration to control what DDL is executed (create-all.sql or migrations)
@@ -57,281 +57,12 @@ touch ~/.ebean/ignore-docker-shutdown
   ebean-test-config will take care of:
 </p>
 <ul>
-  <li>Properties to control DDL generation and execution</li>
-  <li>Docker container setup and execution based on the database platform</li>
-  <li>JDBC Datasource properties (matching the database docker container)</li>
-  <li>Register a current user and tenant provider if not already specified (to ease testing with @Who properties etc)</li>
+  <li><a href="ddl-mode">DDL generation</a> and execution modes</li>
+  <li><a href="docker">Docker test container</a> setup and execution based on the database platform</li>
+  <li><a href="current-user-tenant">Current user and tenant</a> provider if not already specified (to ease testing with @Who properties etc)</li>
 </ul>
 
-<h3><a id="ddlmode">ddlMode</a></h3>
-<table class="table">
-  <tr>
-    <th>Mode</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>dropCreate</td>
-    <td>Drop and then create all the tables etc. Most commonly used mode.</td>
-  </tr>
-  <tr>
-    <td>none</td>
-    <td>Do not run any DDL. Useful if we want to run 1 particular test without any DDL change.</td>
-  </tr>
-  <tr>
-    <td>migration</td>
-    <td>Run the DB migration. Good for testing migrations run as expected.</td>
-  </tr>
-  <tr>
-    <td>migrationDropCreate</td>
-    <td>Run the DB migration but first delete the database first ensuring the migration runs against a new database.</td>
-  </tr>
-  <tr>
-    <td>create</td>
-    <td>Run the create-all.sql DDL script but delete and recreate the database first.</td>
-  </tr>
-  <tr>
-    <td>createOnly</td>
-    <td>Run the create-all.sql DDL script but without recreating the database first.</td>
-  </tr>
-</table>
-
-
-<h3><a id="platform">platform</a></h3>
-<table class="table">
-  <tr>
-    <th>Platform</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>h2</td>
-    <td>Run using in-memory H2 database.
-      <dl>
-        <dd><b>url:</b> jdbc:h2:mem:{databaseName}</dd>
-        <dd><b>driver:</b> org.h2.Driver</dd>
-      </dl>
-    </td>
-  </tr>
-  <tr>
-    <td>postgres</td>
-    <td>Run against Postgres docker DB.
-      <dl>
-        <dd><b>port:</b> 6432</dd>
-        <dd><b>password:</b> test</dd>
-        <dd><b>url:</b> jdbc:postgresql://localhost:{port}/{databaseName}</dd>
-        <dd><b>driver:</b> org.postgresql.Driver</dd>
-        <dd><b>image:</b> postgres:{version}</dd>
-      </dl>
-    </td>
-  </tr>
-  <tr>
-    <td>postgis</td>
-    <td>Run against Postgres Postgis docker DB.
-      <dl>
-        <dd><b>port:</b> 7432</dd>
-        <dd><b>password:</b> test</dd>
-        <dd><b>url:</b> jdbc:postgresql_lwgis://localhost:{port}/{databaseName}</dd>
-        <dd><b>driver:</b> org.postgis.DriverWrapperLW</dd>
-        <dd><b>image:</b> mdillon/postgis:{version}</dd>
-      </dl>
-    </td>
-  </tr>
-  <tr>
-    <td>mysql</td>
-    <td>Run against MySql docker DB.
-      <dl>
-        <dd><b>port:</b> 4306</dd>
-        <dd><b>password:</b> test</dd>
-        <dd><b>url:</b> jdbc:mysql://localhost:{port}/{databaseName}</dd>
-        <dd><b>driver:</b> com.mysql.jdbc.Driver</dd>
-        <dd><b>image:</b> mysql:{version}</dd>
-      </dl>
-    </td>
-  </tr>
-  <tr>
-    <td>sqlserver</td>
-    <td>Run against SqlServer docker DB with the following defaults.
-      <dl>
-        <dd><b>port:</b> 1433</dd>
-        <dd><b>password:</b> SqlS3rv#r</dd>
-        <dd><b>url:</b> jdbc:sqlserver://localhost:{port};databaseName={databaseName}</dd>
-        <dd><b>driver:</b> com.microsoft.sqlserver.jdbc.SQLServerDriver</dd>
-        <dd><b>image:</b> microsoft/mssql-server-linux:{version}</dd>
-      </dl>
-    </td>
-  </tr>
-  <tr>
-    <td>oracle</td>
-    <td>Run against Oracle docker DB.
-      <dl>
-        <dd><b>port:</b> 1521</dd>
-        <dd><b>password:</b> test</dd>
-        <dd><b>url:</b> jdbc:oracle:thin:@localhost:{port}:XE</dd>
-        <dd><b>driver:</b> oracle.jdbc.driver.OracleDriver</dd>
-        <dd><b>image:</b> sath89/oracle-12c:{version}</dd>
-      </dl>
-    </td>
-  </tr>
-  <tr>
-    <td>sqlite</td>
-    <td>Run using Sqlite database.
-      <dl>
-        <dd><b>url:</b> jdbc:sqlite:{databaseName}</dd>
-        <dd><b>driver:</b> org.sqlite.JDBC</dd>
-        <dd><b>isolationlevel:</b> read_uncommitted</dd>
-      </dl>
-    </td>
-  </tr>
-</table>
-
-<h3><a id="docker">Docker / ebean-test-docker</a></h3>
-<p>
-  For all the platforms apart from H2 and Sqlite this will automatically:
-</p>
-<ul>
-  <li>Start a docker container (if necessary)</li>
-  <li>Wait for the container to be ready</li>
-  <li>Create the database and user setting any permissions as necessary</li>
-  <li>When ready allow the tests to run</li>
-</ul>
-<p>
-  We can see/review what is occurring by increasing the logging for <code>io.ebean.docker</code> to <code>TRACE</code>.
-  When we do that we can see log messages like:
-</p>
-```text
-
-15:15:02.232 [main] INFO  io.ebean.EbeanVersion - ebean version: 11.41.1
-
-
-## PROPERTIES FILE(S)
-
-15:15:02.284 [main] INFO  i.e.config.properties.LoadContext - loaded properties from [application.yml, application-test.yml]
-
-
-## DOCKER COMMANDS
-
-15:15:02.537 INFO  io.ebean.docker.commands.Commands - Container ut_postgres running with port:6432 db:test_ex user:test_ex mode:Create shutdown:
-15:15:02.538 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres pg_isready -h localhost -p 5432
-15:15:02.645 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -c select datname from pg_database
-15:15:02.753 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -c select rolname from pg_roles where rolname = 'test_ex'
-15:15:02.871 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -c select 1 from pg_database where datname = 'test_ex'
-15:15:02.960 DEBUG io.ebean.docker.commands.Commands - create database extensions hstore,pgcrypto
-15:15:02.960 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -d test_ex -c create extension if not exists hstore
-15:15:03.058 DEBUG io.ebean.docker.commands.Commands - docker exec -i ut_postgres psql -U postgres -d test_ex -c create extension if not exists pgcrypto
-15:15:03.143 DEBUG io.ebean.docker.commands.Commands - waitForConnectivity ut_postgres ...
-15:15:03.143 DEBUG io.ebean.docker.commands.Commands - checkConnectivity on ut_postgres ...
-15:15:03.190 DEBUG io.ebean.docker.commands.Commands - connectivity confirmed for ut_postgres
-15:15:03.190 DEBUG io.ebean.docker.commands.Commands - Container ut_postgres ready with port 6432
-
-
-## FOR TESTING ... set a current user and tenant provider
-
-15:15:03.194 [main] INFO  i.e.t.c.provider.ProviderAutoConfig - for testing purposes a current user and tenant provider has been configured. Use io.ebean.test.UserContext to set current user and tenant in tests.
-
-
-## SELECTED PLATFORM
-
-15:15:03.239 [main] INFO  o.a.datasource.pool.ConnectionPool - DataSourcePool [db] autoCommit[false] transIsolation[READ_COMMITTED] min[2] max[200]
-15:15:03.277 [main] INFO  io.ebean.internal.DefaultContainer - DatabasePlatform name:db platform:postgres
-
-
-## EXECUTE DDL
-
-15:15:03.618 [main] INFO  io.ebean.DDL - Executing extra-dll - 0 statements
-15:15:03.618 [main] INFO  io.ebean.DDL - Executing db-drop-all.sql - 26 statements
-15:15:03.649 [main] DEBUG io.ebean.DDL - executing 1 of 26 alter table if exists address drop constraint if exists fk_address_country_code
-15:15:03.651 [main] DEBUG io.ebean.DDL - executing 2 of 26 drop index if exists ix_address_country_code
-...
-15:15:03.701 [main] INFO  io.ebean.DDL - Executing db-create-all.sql - 28 statements
-15:15:03.701 [main] DEBUG io.ebean.DDL - executing 1 of 28 create table address ( id                            bigserial not null, line1...
-15:15:03.709 [main] DEBUG io.ebean.DDL - executing 2 of 28 create table contact ( id                            bigserial not null, first_n...
-...
-15:15:03.841 [main] INFO  io.ebean.DDL - Executing extra-dll - 1 statements
-15:15:03.842 [main] DEBUG io.ebean.DDL - executing 1 of 1 create or replace view order_agg_vw as select d.order_id as id, d.order_id as or...
-```
-
-<h3><a id="startup">Container startup</a></h3>
-<p>
-  To startup the docker containers we hook into the Ebean lifecycle. This means that it will "just work" whether
-  the tests are run from the IDE, maven, gradle or any build tool. In prior iterations the startup of docker
-  containers was hooked specifically into the maven lifecycle but this proved to be less than ideal.
-</p>
-<p>
-  In general this is providing a similar experience to the one we have when using H2 database. That is, we bring up
-  the database (if needed), setup the database, user, roles etc (if needed) get it ready for testing by running DDL
-  ... and then run all tests.
-</p>
-
-<h3><a id="shutdown">Container shutdown</a></h3>
-<p>
-  On developer machines we generally keep the docker container running. We can do this by having a marker file
-  <code>~/.ebean/ignore-docker-shutdown</code>.
-</p>
-<p>
-  On CI servers we want the  docker containers to be stopped and removed at completion of tests. To do this we
-  set <code>shutdown</code> to either <code>remove</code> (to stop and remove the container) or <code>stop</code>
-  (to just stop the container).
-</p>
-```yml
-ebean:
-  test:
-    shutdown: remove  # stop | remove
-    platform: postgres # h2, postgres, mysql, oracle, sqlserver
-    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
-    dbName: myapp
-```
-
-<h3><a id="not-docker">Not using Docker</a></h3>
-<p>
-  If we don't want to start and run a Docker container but instead test against some other existing database we can
-  do that via setting <code>useDocker: false</code>.
-</p>
-<p>
-  The below configuration runs against an existing Postgres database. Typically when not using docker we need to
-  set the username, password and url to appropriate values.
-</p>
-<p>
-  When we are using  <code>useDocker: false</code> the database and user are expected to already exist along with
-  permissions (and Postgres extension).
-</p>
-```yml
-ebean:
-  test:
-    useDocker: false  ## DO NOT USE DOCKER
-    platform: postgres # h2, postgres, mysql, oracle, sqlserver
-    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
-    dbName: test
-    postgres:
-      username: test
-      password: test
-      url: jdbc:postgresql://localhost:5432/test
-```
-
-
-<h3><a id="current-user">Current User and Tenant Providers</a></h3>
-<p>
-  ebean-test-config will automatically register a <code>current user provider</code> and a <code>current tenant provider</code>.
-  These are only set if you don't set them yourself.
-</p>
-<p>
-  What this means is that without doing anything we can use <code>@WhoCreated / @WhoModified</code> in tests and via
-  <code>io.ebean.test.UserContext</code> we can set current user and tenant in tests.
-</p>
-```java
-// set the current userId which will be put
-// into 'WhoCreated' and 'WhoModified' properties
-
-UserContext.setUserId("U1");
-```
-
-
-<h3 id="postgres">Postgis</h3>
-<p>
-  Refer to <a href="postgres#postgis">Postgis docker</a> example.
-</p>
-
-<div class="next pull-right">
-  <a href="/docs/testing/test-properties" class="btn btn-info">Next: Test properties</a>
-</div>
+<@next_edit "DDL Mode" "ddl-mode" "/docs/testing/index.html"/>
 
 </body>
 </html>
