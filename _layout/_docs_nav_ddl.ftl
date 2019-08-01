@@ -1,7 +1,7 @@
 <@smallnav activeCheck="${ddlcreateall!''}" url="/docs/ddl/ddl-create-all" title="Create All">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
-  <li><a href="#test-config">ebean-test-config</a></li>
+  <li><a href="#test-config">ebean-test</a></li>
   <li><a href="#properties">Properties</a></li>
 </ul>
 </@smallnav>

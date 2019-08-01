@@ -1304,7 +1304,7 @@
   "url":"/docs/ddl/ddl-create-all"
 }
 ,{
-  "title":"Create all - Using ebean-test-config",
+  "title":"Create all - Using ebean-test",
   "caption":"",
   "category":"DDL",
   "priority":"3",
@@ -4152,7 +4152,7 @@
   "url":"/docs/features/elasticsearch#why"
 }
 ,{
-  "title":"ebean-test-config",
+  "title":"ebean-test",
   "caption":"",
   "category":"Testing",
   "priority":"3",

@@ -22,14 +22,14 @@ dependencies {
     // query bean generation
     annotationProcessor 'io.ebean:querybean-generator:11.42.1'
 
-    testImplementation 'io.ebean.test:ebean-test-config:11.42.1'
+    testCompile 'io.ebean:ebean-test:11.42.1'
     ...
 }
 </pre>
 <ul>
   <li>ebean-querybean - is to support type safe queries using query beans</li>
   <li>querybean-generator - APT generation of the query beans</li>
-  <li>ebean-test-config - testing including using docker containers</li>
+  <li>ebean-test - testing including using docker containers</li>
 </ul>
 
 <h2>Kotlin</h2>

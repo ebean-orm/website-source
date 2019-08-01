@@ -15,9 +15,9 @@
     When running a test or suite of tests the DB is created entirely from scratch
   </blockquote>
 
-  <h2 id="test-config">Using ebean-test-config</h2>
+  <h2 id="test-config">Using ebean-test</h2>
   <p>
-    The best way to control and run DDL for testing is to use <a href="/docs/testing">ebean-test-config</a>
+    The best way to control and run DDL for testing is to use <a href="/docs/testing">ebean-test</a>
     and the <a href="/docs/testing#ddlmode">ddlMode</a>. Using <code>dropCreate</code> means the DDL for
     create-all and drop-all is generated and run.
   </p>
@@ -32,7 +32,7 @@ ebean:
 
   <h2 id="properties">Using properties</h2>
   <p>
-    If we don't want to use <a href="/docs/testing">ebean-test-config</a> we can instead set both
+    If we don't want to use <a href="/docs/testing">ebean-test</a> we can instead set both
     <code>ebean.ddl.generate</code> and <code>ebean.ddl.run</code> properties to true in
     <code>application-test.yml</code> (which is in src/test/resources) and in this way the <code>CREATE ALL</code>
     DDL is only generated and executed when running tests.
