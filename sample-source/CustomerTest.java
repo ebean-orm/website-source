@@ -1,6 +1,5 @@
 
 import io.ebean.DB;
-import org.example.domain.query.QCustomer;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -15,21 +14,21 @@ public class CustomerTest {
     Customer customer = new Customer("Rob");
     customer.save();
 
-    // find using a query bean
-    final Customer rob = new QCustomer()
-      .name.istartsWith("ro")
-      .findOne();
-
-    assertNotNull(rob);
-    //assertThat(rob.id).isGreaterThan(0)
-
     // find using an expression query
-    final Customer rob2 =
+    final Customer rob =
       DB.find(Customer.class)
         .where().istartsWith("name", "ro")
         .findOne();
 
-    assertNotNull(rob2);
+    assertNotNull(rob);
+
+    // IDE Re-build to generate the QCustomer query bean
+//    // find using a query bean
+//    final Customer rob2 = new QCustomer()
+//      .name.istartsWith("ro")
+//      .findOne();
+//
+//    assertNotNull(rob);
 
     rob.delete();
 

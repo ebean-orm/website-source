@@ -1,8 +1,8 @@
 <@smallnav activeCheck="${ide!''}" url="/docs/getting-started#ide" title="IDE Plugin"/>
+<@smallnav activeCheck="${clitool!''}" url="/docs/getting-started/cli-tool" title="CLI Tool"/>
 <@smallnav activeCheck="${maven_build!''}" url="/docs/getting-started/maven" title="Maven"/>
 <@smallnav activeCheck="${gradle_build!''}" url="/docs/getting-started/gradle" title="Gradle"/>
 <@smallnav activeCheck="${ebeanTest!''}" url="/docs/getting-started/ebean-test" title="Ebean test"/>
-<@smallnav activeCheck="${clitool!''}" url="/docs/getting-started/cli-tool" title="CLI Tool"/>
 
 <li><b>Java</b></li>
 <@smallnav activeCheck="${javafirstentity!''}" url="/docs/getting-started/java-first-entity" title="First entity">

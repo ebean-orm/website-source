@@ -5,30 +5,74 @@
 
 curl -s https://ebean.io/cli-dist/install | bash
 ```
-
 <p>
-  The command line tool is optional, we don't strictly need it but it does some useful tasks.
-  We can do all these tasks manually.
+  This tool can automatically setup a Maven or Gradle project adding test config files,
+  dependencies and plugins.
 </p>
-<ul>
-  <li>Generates Finders</li>
-  <li>Generates ebean.mf</li>
-  <li>Add GenerateDbMigration (code to generate DB Migrations)</li>
-  <li>Add application-test.yml</li>
-  <li>Add logback-test.xml</li>
-</ul>
+<p>
+  If you have trouble with the cli install try the <a href="cli-tool-manualinstall">manual install</a> instructions.
+</p>
 
 
-
-<h4 id="manual">Alternate manual installation (Linux)</h4>
+<h3>Setup project</h3>
+<p>
+  <code>ebeaninit</code> can setup an existing Maven or Gradle project and we are ready
+  to run the sample CustomerTest.
+</p>
+<p>
+  Below shows it being run for a maven project.
+</p>
 
 ```text
-cd ~/.local/bin
+$ ebeaninit
+-------------------------------------------------------------
+ebeaninit  - interactive ebean initialiser - v1.10
+-------------------------------------------------------------
 
-curl https://ebean.io/cli-dist/ebean-init-1.9.jar > ebean-init-1.9.jar
-curl https://ebean.io/cli-dist/ebeaninit > ebeaninit
+It looks like Ebean is not configured for this project.
+Do you want to run project setup to add dependencies and configuration ? [y/n] >
 
-ln -s ebean-init-1.9.jar ebean-init.jar
-chmod +x ebeaninit
+Using Java or Kotlin? [j/k] >
 
+Add dependencies and enhancement plugin to pom? [y/n] >
+Add JDBC driver dependency?
+0 - No, I'll add it myself
+p - Postgres
+m - MySql or MariaDB
+s - SQL Server
+o - Oracle
+h - Hana
+c - Clickhouse
+l - Sqlite
+Select an option: [0/p/m/s/o/h/c/l] >
+...updated pom.xml adding dependencies and enhancement plugin
+
+Add a sample Entity bean? [y/n] >
+Enter a package that will contain the entity beans (e.g. org.myapp.domain) >
+...added sample code - BaseModel.java, Customer.java and CustomerTest.java
+
+Add ebean.mf manifest to control enhancement? [y/n] >
+Select a package that will contain the entity beans
+0 - org.myapp.domain
+1 - Other
+Select an option: [0/1] >
+Select the top level package @Transactional is used
+0 - org.example.myapp
+1 - Other
+2 - None, I don't want to use @Transactional
+Select an option: [0/1/2] >
+... added ebean.mf
+
+Add application-test.yaml to configure testing? [y/n] >
+... added application-test.yaml
+
+Add GenerateDbMigration to generate database migrations? [y/n] >
+... added GenerateDbMigration.java
+
+
+Please re-build the project and then you are all set to go.
+You can re-run ebeaninit later to generate finders if you like.
+
+Try running CustomerTest ...
+Bye
 ```
