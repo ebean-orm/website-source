@@ -7,7 +7,7 @@
 plugins {
     id('idea')
     id('java')
-    id('io.ebean') version '11.41.1'
+    id('io.ebean') version '11.42.1'
 }
 </pre>
 
@@ -16,13 +16,13 @@ plugins {
 <pre content="groovy">
 dependencies {
     ...
-    compile 'io.ebean:ebean:11.41.1'
-    compile 'io.ebean:ebean-querybean:11.41.1'
+    compile 'io.ebean:ebean:11.42.1'
+    compile 'io.ebean:ebean-querybean:11.42.1'
 
     // query bean generation
-    annotationProcessor 'io.ebean:querybean-generator:11.41.1'
+    annotationProcessor 'io.ebean:querybean-generator:11.42.1'
 
-    testImplementation 'io.ebean.test:ebean-test-config:11.41.1'
+    testImplementation 'io.ebean.test:ebean-test-config:11.42.1'
     ...
 }
 </pre>
@@ -42,13 +42,13 @@ dependencies {
 <pre content="groovy">
 dependencies {
     ...
-    compile 'io.ebean:ebean:11.41.1'
-    compile 'io.ebean:ebean-querybean:11.41.1'
+    compile 'io.ebean:ebean:11.42.1'
+    compile 'io.ebean:ebean-querybean:11.42.1'
 
     // query bean generation
-    kapt 'io.ebean:kotlin-querybean-generator:11.41.1'
+    kapt 'io.ebean:kotlin-querybean-generator:11.42.1'
 
-    testImplementation 'io.ebean.test:ebean-test-config:11.41.1'
+    testCompile 'io.ebean:ebean-test:11.42.1'
     ...
 }
 </pre>
