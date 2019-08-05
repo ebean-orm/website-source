@@ -8,27 +8,13 @@
     <div class="navbar" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">
-            <img src="/images/lg5-21x100.png" height="35">
-          </a>
         </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav pull-right nav-btn-rhs">
-            <li <#if home??>class="active"</#if>><a href="/"><span class="fas fa-home"></span>  Home</a></li>
-            <li <#if documentation??>class="active"</#if>><a href="/docs">Docs</a></li>
-            <li <#if getstarted??>class="active"</#if>><a href="/docs/getting-started">Get Started</a></li>
-            <li <#if support??>class="active"</#if>><a href="/support">Help</a></li>
-            <li <#if videos??>class="active"</#if>><a href="/videos">Videos</a></li>
-            <li ><a target="_blank" href="/apidoc/11">ApiDocs</a></li>
-            <li <#if releases??>class="active"</#if>><a href="/releases">Releases</a></li>
-            <li ><a target="_blank" href="https://github.com/ebean-orm/ebean"> <i class="fab fa-github"></i></a></li>
-          </ul>
+          <div class="pull-right">
+            <span class="likeUs">&nbsp;</span>
+            <a class="github-button" href="https://github.com/ebean-orm/ebean/subscription" data-icon="octicon-eye" data-size="large" data-show-count="true" aria-label="Watch ebean-orm/ebean on GitHub">Watch</a>
+            <a class="github-button" href="https://github.com/ebean-orm/ebean" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ebean-orm/ebean on GitHub">Star</a>
+          </div>
         </div><!--/.nav-collapse -->
       </div>
     </div>
