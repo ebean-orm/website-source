@@ -4,6 +4,7 @@
   <#assign home = "active">
 </head>
 <body>
+
 <div class="container mtl">
   <div class="row">
     <div class="col-md-4 hidden-sm hidden-xs">
@@ -19,39 +20,117 @@
       </div>
     </div>
   </div>
-  <div class="highlights">
+  <div class="">
     <div class="row inner">
       <div class="col-md-4">
-        <h2>Simple</h2>
+        <h2>Databases supported</h2>
         <p>
-          Easy to use persistence with save() and delete(), bulk updates,
-          direct use of SQL when needed.
-          <br>
-          <i>Built by developers for developers</i>
+          H2, Postgres, PostGIS, MySql, MariaDB, SQL Server, Oracle, Hana, CockroachDB, Clickhouse, Sqlite.
         </p>
       </div>
 
       <div class="col-md-4">
-        <h2>Performant</h2>
+        <h2>Multiple levels of abstraction</h2>
         <p>
-          Fast queries, batch persisting, bulk updates and deletes, great SQL.
-          N+1 handling out of the box, L2 caching.
-          <br>
-          <i>Enjoy the simplicity at full speed</i>
+          Ebean provides multiple levels of abstraction from ORM, mixing ORM and SQL, to using SQL and right down to raw JDBC.
+        </p>
+        <p>
+          Work at the highest level of abstraction and drop down levels as needed.
         </p>
       </div>
 
       <div class="col-md-4">
-        <h2>Flexible</h2>
+        <h2>Benefits of ORM</h2>
+        <ul>
+          <li>Automatically avoid N+1</li>
+          <li>L2 caching to reduce database load</li>
+          <li>Queries mixing database and L2 cache</li>
+          <li>Automatically tune ORM queries</li>
+          <li>Elasticsearch for search or L3 cache.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row inner">
+      <div class="col-md-4">
+        <h2>Docker test containers</h2>
         <p>
-          Use SQL directly, Soft deletes, Auditing,
-          JSON, Multi-tenant, History,
-          Encryption, Array types ...
-          <br>
-          <i>Can handle the hard stuff</i>
+          ebean-test provides docker test container management for all the supported databases.
+          We love H2 but testing against the real thing takes us to the next level
+          (well, testing against a docker container version of the real thing).
+        </p>
+        <p>
+          Get 100% test coverage on all the features of the database we use.
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <h2>Awesome SQL</h2>
+        <p>
+          Ebean produces SQL that you would hand craft yourself.
+        </p>
+        <p>
+          Use great SQL, be nice to your database and it will be nice to you.
+        </p>
+        <p>
+          No matter how complex the ORM query Ebean produces great SQL.
+          Ebean will never generate SQL cartesian product (it will automatically split an ORM query
+          into multiple sql queries) and will always honor relational limit/offset
+          (because the database loves optimising the query plan for that).
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <h2>Performance isn't optional</h2>
+        <p>
+          Optimise queries to only fetch what we need (partial objects).
+        </p>
+        <p>
+          Automatically avoid N+1 via a smart load context.
+          Developers don't need to worry about this.
+        </p>
+        <p>
+          Use bulk update and delete queries when appropriate.
+          Persisting with JDBC batch is easy with all the control we need over batch size, getGeneratedKeys, cascade
+          and flush behaviour.
         </p>
       </div>
     </div>
+
+
+    <div class="row inner">
+      <div class="col-md-4">
+        <h2>Automated query tuning</h2>
+        <p>
+          For ORM queries Ebean can profile the object graph being used and either automatically tune the query (autotune) or provide code change suggestions.
+        </p>
+        <p>
+          Developers can focus on the query predicates and then use this to tune the queries in a fully automatic or semi-automatic fashion.
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <h2>Database migrations</h2>
+        <p>
+          Get Ebean to generate our database migrations. This will "diff" the model and generate the
+          appropriate migration DDL for the database platform (or multiple platforms).
+        </p>
+        <p>
+          Built in migration runner to run our database migrations.
+        </p>
+        <p>
+          Support for "rebase" migrations as well as repeatable, init and 'normal' migrations.
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <h2>Type safe queries</h2>
+        <p>
+          We can build queries using type safe query beans.  We do this because we can be more productive via IDE auto-complete when writing queries, we get compile time checking of queries and because it's FUN !!        </p>
+        <p>
+      </div>
+    </div>
+
   </div>
 
   <div class="highlights">
