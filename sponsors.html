@@ -4,16 +4,12 @@
   <#assign sponsors = "active">
 </head>
 <body>
-<div class="jumbotron mini">
-  <div class="container">
-    <h1>Ebean sponsors</h1>
-  </div>
-</div>
 
 <div class="container">
-
   <div class="row">
     <div class="col-md-6">
+      <h2>Ebean sponsors</h2>
+      <p>&nbsp;</p>
       <div>
         <#include "/_common/sponsor-list.html">
       </div>
@@ -106,29 +102,44 @@
       <p>&nbsp;</p>
 
     </div>
-    <div class="col-md-2">
+    <div class="col-md-1">
     </div>
-    <div class="col-md-4">
-
-      <h3>Related open source projects</h3>
-      <p><em>... that would also appreciate your support :)</em></p>
-
-      <h3><a href="http://www.h2database.com/"><img width="50" src="http://www.h2database.com/html/images/h2-logo-2.png"> H2database</a></h3>
+    <div class="col-md-5">
+      <h2>Silver Sponsors</h2>
+      <p>&nbsp;</p>
       <p>
-        H2database is a great open source project that a <em>lot</em>
-        of Ebean users use - especially for testing. I'm sure Thomas and the h2database project would
-        greatly appreciate some support.
+        <div class="avatar-circle">
+          <span class="initials">MH</span>
+        </div>
+        <span class="avatar-name">Maximilian Holtzberg</span>
+
+        <span class="avatar-gap"></span>
+
+        <div class="avatar-circle">
+          <span class="initials">SH</span>
+        </div>
+        <span class="avatar-name">Szabolcs Hubai</span>
       </p>
       <p>
-        The donation button is at the bottom of the <a href="http://www.h2database.com/">home page</a>.
-      </p>
-      <p>
-        Ebean is hoping to be a regular donor to h2database.
+        Silver sponsors are people or teams that donate $100 or more to the Ebean project.
       </p>
 
-      <h3><a href="https://www.postgresql.org/about/donate/"><img width="30" src="https://www.postgresql.org/media/img/about/press/elephant.png"> Postgres</a></h3>
+      <h2 id="donate">Donate</h2>
       <p>
-        Postgres provides us with lots to love, why not give a little back ...
+        Donations to the Ebean ORM project are greatly appreciated.
+        These donations help fund ongoing maintenance, documentation and upkeep of the project.
+      </p>
+
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="H6L329ZDD5ZTS">
+        <button class="btn btn-danger" type="submit">Donate to Ebean ORM project</button>
+        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+      </form>
+
+      <p>&nbsp;</p>
+      <p>
+        Goto <b><a target="_blank" href="/funding/donations">donation history</a></b> to view a log of total donations.
       </p>
 
     </div>
