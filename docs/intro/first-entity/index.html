@@ -1,0 +1,126 @@
+<html>
+<head>
+  <title>First entity | Intro | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="bread2" content="First entity" href="/docs/intro/first-entity"/>
+  <#assign firstentity="active">
+</head>
+<body>
+
+<h2>First Entity</h2>
+<p>
+  Create a package <code>org.example.domain</code> and in that create an entity bean
+  like <code>Customer.java</code>
+</p>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+package org.example.domain;
+
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
+public class Customer {
+
+  @Id
+  long id;
+
+  String name;
+
+  // getters and setters
+}
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+package org.example.domain
+
+import javax.persistence.Entity
+import javax.persistence.Id
+
+@Entity
+class Customer {
+
+  @Id
+  var id: Long = 0
+
+  var name: String? = null
+
+}
+  </pre>
+</div>
+
+<h2>First Test</h2>
+<p>
+  Create a test in <code>src/test</code> like <code>CustomerTest.java</code>
+</p>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+package org.example.domain;
+
+import org.junit.Test;
+
+import io.ebean.DB;
+import io.ebean.Database;
+
+public class CustomerTest {
+
+ @Test
+ public void insertFindDelete() {
+
+  Customer customer = new Customer();
+  customer.setName("Hello world");
+
+  // insert the customer in the DB
+  DB.save(customer);
+
+  // Find by Id
+  Customer foundHello = database.find(Customer.class, 1);
+
+  // delete the customer
+  DB.delete(customer);
+ }
+}
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+package org.example.domain
+
+import io.ebean.DB
+import org.junit.Test
+
+class CustomerTest  {
+
+  @Test
+  fun insert_update_delete() {
+
+    val customer = Customer()
+    customer.name  = "Hello entity bean"
+
+    // insert
+    DB.save(customer)
+
+    // find by Id
+    var found = DB.find(Customer::class.java, 1);
+
+    DB.delete(found);
+  }
+}
+  </pre>
+</div>
+
+<h2>Run test</h2>
+<p>
+  Run the test via the IDE and via Maven or Gradle. Check the logs to confirm you see the
+  <code>DDL</code> and <code>SQL</code> that you expect.
+</p>
+
+<@next_edit "Constructors" "/docs/getting-started/java-constructors" "/docs/getting-started/java-first-entity.html"/>
+
+</body>
+</html>

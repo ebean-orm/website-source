@@ -1,0 +1,99 @@
+<html>
+<head>
+  <title>Model | First entity | Intro | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="bread2" content="First entity" href="/docs/intro/first-entity"/>
+  <meta name="bread3" content="Model" href="/docs/intro/model"/>
+  <#assign javamodel="active">
+</head>
+<body>
+
+<h2>Model</h2>
+<p>
+  We can have our entity beans extend <code>io.ebean.Model</code>. They then have
+  <code>save()</code> and <code>delete()</code> methods.
+</p>
+
+<h4>Customer extends Model ...</h4>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+package org.example.domain;
+
+import javax.persistence.Id;
+import javax.persistence.Entity;
+
+@Entity
+public class Customer extends Model {
+
+  @Id
+  long id;
+
+  String name;
+
+  // getters and setters
+}
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+package org.example.domain
+
+import javax.persistence.Entity
+import javax.persistence.Id
+
+@Entity
+class Customer : Model {
+
+  @Id
+  var id: Long = 0
+
+  var name: String? = null
+
+}
+  </pre>
+</div>
+
+<p>
+  Now we can just <code>save()</code> and <code>delete()</code> them:
+</p>
+
+<h2>Model.save()</h2>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+
+  Customer customer = new Customer();
+  customer.setName("Hello world");
+
+  customer.save();
+
+  customer.delete();
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+
+  val customer = Customer()
+  customer.name  = "Hello entity bean"
+
+  customer.save()
+
+  customer.delete();
+
+  </pre>
+</div>
+
+<p>
+  Note that <code>Model.save()</code> and <code>Model.delete()</code> use the <code>default database</code>.
+  We obtain the default database via <code>DB.getDefault()</code>.
+</p>
+
+
+<@next_edit "MappedSuperclass" "mapped-superclass" "/docs/intro/first-entity/model.html"/>
+
+</body>
+</html>

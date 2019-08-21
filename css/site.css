@@ -315,6 +315,9 @@ footer {
 .syntax {
   font-weight:700;
 }
+.syntax.kotlin pre {
+  background: #f0f0f0;
+}
 .syntax.java pre {
   background: #F6F6F6;
 }
@@ -814,3 +817,10 @@ a.bright-link {
 .header-inline {
   display: inline-block;
 }
+
+.code.nav > li > a {
+  padding: 2px 15px;
+}
+/*.code.nav-tabs {*/
+/*  border-bottom: 1px solid #eee;*/
+/*}*/

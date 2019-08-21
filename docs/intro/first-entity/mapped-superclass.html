@@ -1,0 +1,143 @@
+<html>
+<head>
+  <title>Model | First entity | Intro | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="bread2" content="First entity" href="/docs/intro/first-entity"/>
+  <meta name="bread3" content="MappedSuperclass" href="/docs/intro/mapped-superclass"/>
+  <#assign mappedsuper="active">
+</head>
+<body>
+
+<h2>MappedSuperclass</h2>
+<p>
+  We use <code>@MappedSuperclass</code> for common properties across many entity beans.
+</p>
+<p>
+  It is common to have a mapped superclass with <code>@Id</code>, <code>@Version</code> and <code>@WhenModified</code>
+  properties like:
+</p>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+
+package org.example.domain;
+
+import io.ebean.Model;
+import io.ebean.annotation.WhenCreated;
+import io.ebean.annotation.WhenModified;
+
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
+import java.time.Instant;
+
+/**
+ * Base domain object with Id, version, whenCreated and whenModified.
+ */
+@MappedSuperclass
+public abstract class BaseDomain extends Model {
+
+  @Id
+  long id;
+
+  @Version
+  Long version;
+
+  @WhenCreated
+  Instant whenCreated;
+
+  @WhenModified
+  Instant whenModified;
+
+  // getters and setters
+  ...
+
+}
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+
+package org.example.domain
+
+import io.ebean.annotation.WhenCreated
+import io.ebean.annotation.WhenModified
+import java.time.Instant
+import javax.persistence.Id
+import javax.persistence.MappedSuperclass
+import javax.persistence.Version
+
+@MappedSuperclass
+open class BaseDomain : Model {
+
+  @Id
+  var id: Long = 0
+
+  @Version
+  var version: Long = 0
+
+  @WhenModified
+  lateinit var whenModified: Instant
+
+  @WhenCreated
+  lateinit var whenCreated: Instant
+
+}
+  </pre>
+</div>
+
+
+<p>
+  Our entity beans then extend this to inherit the common properties.
+</p>
+
+<h4>Customer extends BaseDomain</h4>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+...
+@Entity
+public class Customer extends BaseDomain {
+
+  String name;
+
+  LocalDate registered;
+  ...
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+package org.example.domain
+
+import javax.persistence.Entity
+
+@Entity
+class Customer(name: String) : BaseDomain() {
+
+  var name: String = name
+}
+  </pre>
+</div>
+
+<p class="code-kt">
+  Kotlin has multiple constructor styles. See <a href="/docs/kotlin/constructors">here</a> for more information
+  on the preferred constructor style for entity beans.
+</p>
+
+
+<@next_edit "MappedSuperclass" "mapped-superclass" "/docs/intro/first-entity/model.html"/>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+  </pre>
+</div>
+
+</body>
+</html>
