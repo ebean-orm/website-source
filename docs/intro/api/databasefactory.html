@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>Introduction</title>
+  <meta name="layout" content="_layout/docs_introduction.html"/>
+  <meta name="bread2" content="DatabaseFactory" href="/docs/introduction/databasefactory"/>
+  <#assign databaseFactory="active">
+</head>
+<body>
+<h2>DatabaseFactory</h2>
+<p>
+  <code>io.ebean.DatabaseFactory</code> has the static factory method that takes a DatabaseConfig
+  and creates a Database instance.
+</p>
+
+```java
+
+DatabaseConfig config = new DatabaseConfig();
+
+// set configuration options
+config.set...
+...
+// and/or load configuration properties file
+config.loadFromProperties();
+
+// create the Database instance
+Database database = DatabaseFactory.create(config);
+```
+
+<@next_edit "Spring" "spring" "/docs/introduction/databasefactory.html"/>
+
+</body>
+</html>

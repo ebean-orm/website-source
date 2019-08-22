@@ -1,0 +1,168 @@
+<html>
+<head>
+  <title>Logging | Intro | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="bread2" content="API - DB & Database" href="/docs/intro/api"/>
+  <#assign api="active">
+</head>
+<body>
+
+<h2>API - DB and Database</h2>
+
+<h2 id="database">Database</h2>
+<p>
+  The <a target="_blank" href="/apidoc/11/io/ebean/Database.html">Database API</a> provides almost all of the functionality including
+  <code>queries</code>, <code>saving</code>, <code>deleting</code> and <code>transactions</code>.
+</p>
+```java
+// persist ...
+Customer customer  = ...
+database.save(customer);
+
+
+// fetch ...
+List<|Customer> customers =
+  database.find(Customer.class)
+  .findList();
+
+
+// transactions ...
+try (Transaction transaction = database.beginTransaction()) {
+
+  // fetch and persist beans etc ...
+
+  transaction.commit();
+}
+
+```
+<h4>javax.sql.DataSource</h4>
+<p>
+  A Database instance has an JDBC DataSource associating it one to one to an actual database.
+</p>
+<p>
+  Note that a Database can have a second read only DataSource that can be used for
+  performance reasons (for read only queries) and potentially connect to database read replicas.
+</p>
+
+<h4>Default database</h4>
+<p>
+  One database can be specified as the <code>default database</code>. The default Database
+  instance is registered with <code>DB</code> and then can be obtained via <code>DB.getDefault()</code>.
+</p>
+
+```java
+// obtain the "default" database
+Database database = DB.getDefault();
+```
+
+<h4>Named database</h4>
+<p>
+  Each Database instance has a name and can be registered with <code>DB</code> and then obtained by
+  it's name via <code>DB.byName()</code>
+</p>
+
+```java
+// obtain a database by it's name
+Database hrDatabase = DB.byName("hr");
+```
+
+<h4>Create database</h4>
+<p>
+  We can programmatically create a Database instance using <a href="databasefactory">DatabaseFactory</a>
+  and <a href="databaseconfig">DatabaseConfig</a> or it can be created automatically from properties
+  file configuration (for testing we often use application-test.yaml and have the database instance created automatically).
+</p>
+```java
+// configuration ...
+DatabaseConfig config = new DatabaseConfig();
+config.addClass(MyEntityBean.class);
+...
+
+// create database instance
+Database database = DatabaseFactory.create(config);
+```
+<p>
+  Refer to <a href="databasefactory">DatabaseFactory</a> for more details.
+</p>
+
+<p>&nbsp;</p>
+
+<h2 id="db" class="tg">DB (io.ebean.DB)</h2>
+<ul>
+  <li>DB holds a <b>registry</b> of database instances (keyed by name)</li>
+  <li>DB holds one Database instance known as the <b>default database</b></li>
+  <li>DB has <b>convenience</b> methods to operate on the default database</li>
+</ul>
+<p>&nbsp;</p>
+
+<h4>Obtain default or named database instance</h4>
+<p>
+  When an Database instance is created it can be registered with DB. We can then
+  use <code>DB</code> to obtain those Database instances by name and we can obtain
+  the default database via <code>DB.getDefault()</code>.
+</p>
+```java
+// obtain the "default" database
+Database server = DB.getDefault();
+
+// obtain the HR database by name
+Database hrDB = DB.byName("hr");
+```
+
+<h4>DB convenience methods</h4>
+<p>
+  DB has convenience methods that effectively proxy through to the default database.
+  This is useful and convenient as many applications only use a single database.
+</p>
+
+```java
+Customer customer  = ...
+
+// save using the 'default' database
+DB.save(customer);
+
+// which is the same as
+Database defaultDatabase = DB.getDefault()
+defaultDatabase.save(customer);
+```
+
+<h4>DB is optional</h4>
+<p>
+  Note that you don't have to use the DB singleton in your application at all - it's use is
+  completely optional. Instead we can create the Database instance(s) and <code>inject</code>
+  them where needed. We typically do this using <code>Spring</code> or <code>Guice</code>
+  or a similar DI framework.
+</p>
+<p>
+  When we do this (inject Database and don't use the DB singleton) we will likely have the application
+  code following a <a href="/docs/codestyle">DI / Repository pattern</a> convention.
+</p>
+
+<p>&nbsp;</p>
+<h2 id="ebeanserver">EbeanServer</h2>
+<p>
+  Database and EbeanServer are the same thing.
+</p>
+<p>
+  <code>io.ebean.EbeanServer</code> is the older original name for <code>io.ebean.Database</code>.
+  They can be used interchangably. In time EbeanServer will be deprecated and code should migrate
+  to use io.ebean.Database.
+</p>
+
+
+<p>&nbsp;</p>
+<h2 id="ebean">Ebean</h2>
+<p>
+  DB and Ebean are the same thing.
+</p>
+<p>
+  <code>io.ebean.Ebean</code> is the older original name for <code>io.ebean.DB</code>.
+  They can be used interchangably. In time use of Ebean will be deprecated and code should migrate
+  to use io.ebean.DB.
+</p>
+
+
+<@next_edit "Introduction" "/docs/intro" "/docs/intro/api/index.html"/>
+
+</body>
+</html>

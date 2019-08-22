@@ -1,0 +1,79 @@
+<html>
+<head>
+  <title>Finder | Introduction</title>
+  <meta name="layout" content="_layout/docs_introduction.html"/>
+  <meta name="bread2" content="Finder" href="/docs/introduction/finder"/>
+  <#assign finder="active">
+</head>
+<body>
+<h2>Finder</h2>
+<p>
+  <code>io.ebean.Finder</code> is a base class that we can extend to create "finders"
+  for each entity bean. The purpose of "finders" is to group all the queries for the
+  given bean type together in one place rather than have the queries spread out across
+  the cost base.
+</p>
+<p>
+  We don't have to use Finders and when we don't we typically either put queries in the
+  service layer code or use <code>repositories</code>.
+</p>
+
+<h4>Example</h4>
+
+```java
+
+ public class CustomerFinder extends Finder<|Long,Customer> {
+
+   public CustomerFinder() {
+     super(Customer.class);
+   }
+
+   // Add customer finder methods ...
+
+   public Customer byName(String name) {
+     return query().eq("name", name).findOne();
+   }
+
+   public List<|Customer> findNew() {
+     return query().where()
+       .eq("status", Customer.Status.NEW)
+       .orderBy("name")
+       .findList()
+   }
+ }
+
+ @Entity
+ public class Customer extends BaseModel {
+
+   public static final CustomerFinder find = new CustomerFinder();
+   ...
+  }
+```
+<p>
+  Once we have a finder as a field on an entity bean we can then use it via.
+</p>
+```java
+Customer rob = Customer.find.byName("Rob");
+
+List<|Customer> customers = Customer.find.findNew();
+
+```
+
+<h4>Testing with mocki-ebean</h4>
+<p>
+  For testing purposes we can use mocki-ebean to replace the finder implementation with
+  a test double.  Note that with docker based testing this is rarely used now and instead
+  component testing against real databases (docker based) is used instead.
+</p>
+
+
+<h2>Finder generation via ebeaninit</h2>
+<p>
+  We can use the <a href="/docs/tooling/cli-tool">ebeaninit</a> command line tool to generate
+  finders for us (both for Java and Kotlin).
+</p>
+
+<@next_edit "ebean.mf" "manifest" "/docs/introduction/finder.html"/>
+
+</body>
+</html>

@@ -7,9 +7,18 @@
 </head>
 <body>
 <h2>ORM Query</h2>
-
+<p>
+  There are several forms of ORM query.
+</p>
 
 <h3 id="pure">"Pure" ORM Query</h3>
+<p>
+  Below are examples of pure ORM queries. We specify no SQL functions explicitly and all the SQL is generated.
+</p>
+<p>
+  In typical recent applications around <code>85%</code> of queries were "pure" ORM queries.
+</p>
+
 <#include "/_common/lang-buttons.html">
 <div class="code-java">
   <pre content="java">
@@ -41,12 +50,6 @@
 
   </pre>
 </div>
-<p>
-  The above are pure ORM queries, we specify no SQL functions explicitly etc.
-</p>
-<p>
-  In typical recent applications around <code>85%</code> of queries were "pure" ORM queries.
-</p>
 
 <h3 id="sql-select">ORM Query with SQL in Select</h3>
 <p>
@@ -105,7 +108,9 @@ List<|Order> orders =
   .findList();
 
 // SQL sub-query - often easiest to specify the subquery in sql form
-String subQuery  = "t0.customer_id in (select customer_id from customer_group where group_id = any(?::uuid[]))";
+String subQuery
+    = "t0.customer_id in " +
+      "(select customer_id from customer_group where group_id = any(?::uuid[]))";
 
 List<|Order> orders =
   new QOrder()
@@ -125,7 +130,9 @@ var orders =
   .findList()
 
 // SQL sub-query - often easiest to specify the subquery in sql form
-val subQuery = "t0.customer_id in (select customer_id from customer_group where group_id = any(?::uuid[]))"
+val subQuery =
+    "t0.customer_id in " +
+    "(select customer_id from customer_group where group_id = any(?::uuid[]))"
 
 var orders =
   QOrder()
@@ -177,7 +184,6 @@ val contacts =
 
   </pre>
 </div>
-
 
 <h3 id="native">SQL - aka find native</h3>
 <p>

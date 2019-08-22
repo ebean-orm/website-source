@@ -14,19 +14,24 @@
 
 <h3>Generating migrations</h3>
 <p>
-  Use the <a href="/docs/getting-started/cli-tool">ebeaninit</a> tool to add
-  <em>GenerateDbMigration</em> to your project.
+  Note that we can use <a href="/docs/getting-started/cli-tool">ebeaninit</a> to add
+  <em>GenerateDbMigration</em> (the code below) to your project.
 </p>
 <div class="code-java">
   <p>
-    In <code>src/test/java</code> add code to generate migrations.
+    In <code>src/test/java</code> add the code below to generate migrations.
   </p>
 </div>
 <div class="code-kt">
   <p>
-    In <code>src/test/kotlin</code> add code to generate migrations.
+    In <code>src/test/kotlin</code> add the code below to generate migrations.
   </p>
 </div>
+<p>
+  To generate a DB migration we run this main method. The migration DDL for the
+  given platform will be generated based on the changes to the model
+  (e.g. alter table add column etc).
+</p>
 
 <#include "/_common/lang-buttons.html">
 <div class="code-java">
@@ -72,10 +77,6 @@ fun main(args : Array<!String>) {
 }
   </pre>
 </div>
-
-<p>
-  To generate a migration we run this main method.
-</p>
 <p>
   We run this manually when we have completed some work and consider it ready to be released.
   Running the generation starts the EbeanServer in offline mode, performs a DIFF of the
