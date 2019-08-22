@@ -1,19 +1,74 @@
 <html>
 <head>
   <title>JDBC query | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="Query abstractions" href="/docs/intro/query-abstractions"/>
-  <meta name="bread3" content="JDBC Query" href="/docs/intro/query-abstractions/jdbc-query"/>
+  <meta name="layout" content="_layout/docs_intro_query.html"/>
+  <meta name="bread2" content="JDBC Query" href="/docs/intro/query-abstractions/jdbc-query"/>
   <#assign jdbcQuery="active">
 </head>
 <body>
 
 <h2>JDBC Query</h2>
 <p>
-
+  If we need to we can get the JDBC Connection and use raw JDBC.
+</p>
+<p>
+  Note that this in practice is rare (occurring less than <code>1%</code> in recent applications).
+  It is nice that we can go to raw JDBC if we need to but yes, most applications won't need to
+  go down to raw JDBC level.
 </p>
 
-<@next_edit "Model" "/docs/intro/first-entity/model" "/docs/intro/first-entity/index.html"/>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+    try (Transaction transaction = DB.beginTransaction()) {
+
+      // obtain the JDBC connection from the transaction
+      final Connection connection = transaction.getConnection();
+
+      // use PreparedStatement etc
+      String sql = "select id, name from customer where name like ?";
+      try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+       stmt.setString(1, "Rob");
+        try (ResultSet rset = stmt.executeQuery()) {
+          while (rset.next()) {
+            final long id = rset.getLong(1);
+            final String name = rset.getString(2);
+            ...
+          }
+        }
+      }
+
+      transaction.commit();
+    }
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+    DB.beginTransaction().use { transaction ->
+
+      // obtain the JDBC connection from the transaction
+      val connection = transaction.connection
+
+      // use PreparedStatement etc
+      val sql = "select id, name from customer where name like ?"
+      connection.prepareStatement(sql).use { stmt ->
+
+        stmt.setString(1, "Rob")
+        stmt.executeQuery().use { rset ->
+          while (rset.next()) {
+            val id = rset.getLong(1)
+            val name = rset.getString(2)
+            ...
+          }
+        }
+      }
+
+      transaction.commit()
+    }
+  </pre>
+</div>
+
+<@next_edit "Introduction" "/docs/intro" "/docs/intro/query-abstractions/jdbc-query.html"/>
 
 </body>
 </html>

@@ -1,18 +1,56 @@
 <html>
 <head>
   <title>DTO Query | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="Query abstractions" href="/docs/intro/query-abstractions"/>
-  <meta name="bread3" content="DTO Query" href="/docs/intro/query-abstractions/dto-query"/>
+  <meta name="layout" content="_layout/docs_intro_query.html"/>
+  <meta name="bread2" content="DTO Query" href="/docs/intro/query-abstractions/dto-query"/>
   <#assign dtoQuery="active">
 </head>
 <body>
 
 <h2>DTO Query</h2>
 <p>
+  We can specify the query as SQL and have that automatically mapped into DTO beans.
+</p>
+<p>
+  In typical recent applications around <code>10%</code> of queries were DTO queries.
 </p>
 
-<@next_edit "Model" "/docs/intro/first-entity/model" "/docs/intro/first-entity/index.html"/>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+public class CustomerDto {
+
+  Integer id;
+  String name;
+
+  ... // getters & setters
+}
+
+List<|CustomerDto> beans =
+  DB.findDto(CustomerDto.class, "select id, name from customer where name = ?")
+  .setParameter(1, "Rob")
+  .findList();
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+class CustomerDto {
+
+  var id: Int = 0;
+  var name: String? = null
+
+}
+
+val beans =
+  DB.findDto(CustomerDto::class.java, "select id, name from customer where name = ?")
+  .setParameter(1, "Rob")
+  .findList()
+
+  </pre>
+</div>
+
+<@next_edit "SQL Query" "sql-query" "/docs/intro/query-abstractions/dto-query.html"/>
 
 </body>
 </html>

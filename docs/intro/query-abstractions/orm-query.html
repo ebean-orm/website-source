@@ -1,19 +1,215 @@
 <html>
 <head>
   <title>ORM query | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="Query abstractions" href="/docs/intro/query-abstractions"/>
-  <meta name="bread3" content="ORM Query" href="/docs/intro/query-abstractions/orm-query"/>
+  <meta name="layout" content="_layout/docs_intro_query.html"/>
+  <meta name="bread2" content="ORM Query" href="/docs/intro/query-abstractions/orm-query"/>
   <#assign ormQuery="active">
 </head>
 <body>
-
 <h2>ORM Query</h2>
-<p>
 
+
+<h3 id="pure">"Pure" ORM Query</h3>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+  Customer rob =
+    new QCustomer()
+    .name.equalTo("Rob")
+    .findOne();
+
+  List<|Customer> customers =
+    new QCustomer()
+      .status.equalTo(Status.NEW)
+      .billingAddress.city.equalTo("Auckland")
+      .findList();
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+  val rob =
+    new QCustomer()
+    .name.equalTo("Rob")
+    .findOne()
+
+  val customers =
+    QCustomer()
+      .status.equalTo(Status.NEW)
+      .billingAddress.city.equalTo("Auckland")
+      .findList()
+
+  </pre>
+</div>
+<p>
+  The above are pure ORM queries, we specify no SQL functions explicitly etc.
+</p>
+<p>
+  In typical recent applications around <code>85%</code> of queries were "pure" ORM queries.
 </p>
 
-<@next_edit "Model" "/docs/intro/first-entity/model" "/docs/intro/first-entity/index.html"/>
+<h3 id="sql-select">ORM Query with SQL in Select</h3>
+<p>
+  We can use SQL in the select clause. Some examples of this type of query are:
+</p>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+// using sql functions in the select clause
+
+List<|String> names =
+  new QContact()
+    .select("concat(lastName,', ',firstName)")
+    .lastName.startsWith("A")
+    .findSingleAttributeList();
+
+BigDecimal routeDistance =
+  new QTrip()
+    .select("ST_Distance(ST_StartPoint(route), ST_EndPoint(route))::BigDecimal")
+    .id.equalTo(tripId)
+    .findSingleAttribute();
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+// using sql functions in the select clause
+
+var names: List<|String> =
+  QContact()
+    .select("concat(lastName,' ',firstName)")
+    .lastName.startsWith("A")
+    .findSingleAttributeList()
+
+val routeDistance: BigDecimal =
+  QTrip()
+    .select("ST_Distance(ST_StartPoint(route), ST_EndPoint(route))::BigDecimal")
+    .id.equalTo(tripId)
+    .findSingleAttribute()
+
+  </pre>
+</div>
+
+<h3 id="sql-where">ORM Query with SQL in Where</h3>
+<p>
+  We can also use SQL in the where clause. Frequently this is for specifying sql sub-queries.
+</p>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+
+// sql functions used in predicates
+List<|Order> orders =
+  new QOrder()
+  .raw("add_days(orderDate, 10) < ?", someDate)
+  .findList();
+
+// SQL sub-query - often easiest to specify the subquery in sql form
+String subQuery  = "t0.customer_id in (select customer_id from customer_group where group_id = any(?::uuid[]))";
+
+List<|Order> orders =
+  new QOrder()
+   .status.equalTo(Status.NEW)
+   .raw(subQuery, groupIds)   // use raw SQL in where clause
+   .findList();
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+
+// sql functions used in predicates
+var orders =
+  QOrder()
+  .raw("add_days(orderDate, 10) < ?", someDate)
+  .findList()
+
+// SQL sub-query - often easiest to specify the subquery in sql form
+val subQuery = "t0.customer_id in (select customer_id from customer_group where group_id = any(?::uuid[]))"
+
+var orders =
+  QOrder()
+   .status.equalTo(Status.NEW)
+   .raw(subQuery, groupIds)   // use raw SQL in where clause
+   .findList()
+
+  </pre>
+</div>
+<p>
+  In typical recent applications around <code>5%</code> of queries were ORM queries with some SQL (mostly subqueries).
+</p>
+
+<h3 id="dto">ORM to DTO Query</h3>
+<p>
+  We can define an ORM query and then use <code>asDto</code> to turn it into a DTO query.
+  We are using the ORM to generate the SQL but then want that mapped directly into a DTO bean.
+</p>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+// ContactDto is a plain bean with email and fullName properties
+
+List<|ContactDto> contacts =
+  new QContact()
+    .select("email, concat(lastName, ', ', firstName) as fullName")
+    .lastName.startsWith("A")
+    .orderBy()
+      .lastName.asc()
+    .setMaxRows(10)
+    .asDto(ContactDto.class)
+    .findList();
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+// ContactDto is a plain bean with email and fullName properties
+
+val contacts =
+  new QContact()
+    .select("email, concat(lastName, ', ', firstName) as fullName")
+    .lastName.startsWith("A")
+    .orderBy()
+      .lastName.asc()
+    .setMaxRows(10)
+    .asDto(ContactDto::class.java)
+    .findList()
+
+  </pre>
+</div>
+
+
+<h3 id="native">SQL - aka find native</h3>
+<p>
+  We can also specify the query in SQL and have that automatically mapped to
+  entity beans (like this) or <a href="dto-query">DTO beans</a>.
+</p>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+
+String sql = "select id, name from customer where name like ?";
+
+Customer customer = DB.findNative(Customer.class, sql)
+    .setParameter(1, "Jo%")
+    .findOne();
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+
+String sql = "select id, name from customer where name like ?";
+
+val customer = DB.findNative(Customer::class.java, sql)
+    .setParameter(1, "Jo%")
+    .findOne()
+
+  </pre>
+</div>
+
+
+<@next_edit "DTO Query" "dto-query" "/docs/intro/query-abstractions/orm-query.html"/>
 
 </body>
 </html>

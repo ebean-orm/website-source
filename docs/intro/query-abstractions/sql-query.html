@@ -1,19 +1,110 @@
 <html>
 <head>
   <title>SQL query | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="Query abstractions" href="/docs/intro/query-abstractions"/>
-  <meta name="bread3" content="SQL Query" href="/docs/intro/query-abstractions/sql-query"/>
+  <meta name="layout" content="_layout/docs_intro_query.html"/>
+  <meta name="bread2" content="SQL Query" href="/docs/intro/query-abstractions/sql-query"/>
   <#assign sqlQuery="active">
 </head>
 <body>
 
 <h2>SQL Query</h2>
 <p>
-
+  Sometimes it is useful to not use entity beans or dto beans but instead execute sql queries
+  producing <code>SqlRow</code> objects.
+</p>
+<p>
+  In typical recent applications around <code>2%</code> of queries were SqlQuery type queries.
 </p>
 
-<@next_edit "Model" "/docs/intro/first-entity/model" "/docs/intro/first-entity/index.html"/>
+<h3>SqlQuery and SqlRow</h3>
+<p>
+  Note that with SqlQuery we can get Ebean to add <code>limit/offset</code> clause appropriate to the database
+  platform.
+</p>
+<p>
+  For more information goto <a href="/docs/query/sqlquery">docs / query / sqlquery</a>
+</p>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+String sql = "select id, name, when_active from customer where status = ?";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+  .setParameter(1, "NEW")
+  .setMaxRows(100)
+  .findList();
+
+for (SqlRow sqlRow : rows) {
+  Long id = row.getLong("id")
+  String name = row.getString("name")
+  Timestamp whenActivated = row.getTimestamp("when_activated")
+}
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+    val sql = """
+      select id, name, when_activated
+      from customer
+      where name like ?
+    """.trimIndent()
+
+    val rows = DB.sqlQuery(sql)
+      .setParameter(1, "Rob%")
+      .setMaxRows(100)
+      .findList()
+
+    for (row in rows) {
+      val id = row.getLong("id")
+      val name = row.getString("name")
+      val whenActivated = row.getTimestamp("when_activated")
+    }
+
+  </pre>
+</div>
+
+<h3>SqlQuery and RowMapper</h3>
+<p>
+  Alternatively we can use a RowMapper to read from the JDBC <em>ResultSet</em>.
+</p>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+  String sql = "select id, name, status from customer order by name desc";
+
+  DB.sqlQuery(sql)
+    .findEachRow((resultSet, rowNum) -> {
+
+     // read directly from ResultSet
+
+     long id = resultSet.getLong(1);
+     String name = resultSet.getString(2);
+
+     // do something interesting with the data
+   });
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+val sql = "select id, name, status from customer order by name desc"
+
+DB.sqlQuery(sql)
+  .findEachRow { resultSet, rowNum ->
+
+    // read directly from ResultSet
+
+    val id = resultSet.getLong(1)
+    val name = resultSet.getString(2)
+
+    // do something interesting with the data
+  }
+  </pre>
+</div>
+
+<@next_edit "JDBC Query" "/docs/intro/query-abstractions/jdbc-query" "/docs/intro/query-abstractions/sql-query.html"/>
 
 </body>
 </html>
