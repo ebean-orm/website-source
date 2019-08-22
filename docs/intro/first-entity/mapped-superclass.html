@@ -1,8 +1,7 @@
 <html>
 <head>
   <title>Model | First entity | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="First entity" href="/docs/intro/first-entity"/>
+  <meta name="layout" content="_layout/docs_intro_firstentity.html"/>
   <meta name="bread3" content="MappedSuperclass" href="/docs/intro/mapped-superclass"/>
   <#assign mappedsuper="active">
 </head>
@@ -69,7 +68,7 @@ import javax.persistence.MappedSuperclass
 import javax.persistence.Version
 
 @MappedSuperclass
-open class BaseDomain : Model {
+open class BaseDomain : Model() {
 
   @Id
   var id: Long = 0
@@ -114,9 +113,9 @@ package org.example.domain
 import javax.persistence.Entity
 
 @Entity
-class Customer(name: String) : BaseDomain() {
+class Customer : BaseDomain() {
 
-  var name: String = name
+  var name: String? = null
 }
   </pre>
 </div>
@@ -126,18 +125,7 @@ class Customer(name: String) : BaseDomain() {
   on the preferred constructor style for entity beans.
 </p>
 
-
-<@next_edit "MappedSuperclass" "mapped-superclass" "/docs/intro/first-entity/model.html"/>
-
-<#include "/_common/lang-buttons.html">
-<div class="code-java">
-  <pre content="java">
-  </pre>
-</div>
-<div class="code-kt">
-  <pre content="kotlin">
-  </pre>
-</div>
+<@next_edit "Constructors" "constructors" "/docs/intro/first-entity/mapped-superclass.html"/>
 
 </body>
 </html>

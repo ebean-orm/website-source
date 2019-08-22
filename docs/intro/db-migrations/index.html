@@ -1,0 +1,107 @@
+<html>
+<head>
+  <title>DB Migrations | Intro | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="bread2" content="DB Migrations" href="/docs/intro/db-migrations"/>
+  <#assign dbMigrations="active">
+</head>
+<body>
+
+<h2>DB Migrations</h2>
+<p>
+  Ebean has built in support for generating DB migrations and running them
+</p>
+
+<h3>Generating migrations</h3>
+<p>
+  Use the <a href="/docs/getting-started/cli-tool">ebeaninit</a> tool to add
+  <em>GenerateDbMigration</em> to your project.
+</p>
+<div class="code-java">
+  <p>
+    In <code>src/test/java</code> add code to generate migrations.
+  </p>
+</div>
+<div class="code-kt">
+  <p>
+    In <code>src/test/kotlin</code> add code to generate migrations.
+  </p>
+</div>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+package main;
+
+import io.ebean.annotation.Platform;
+import io.ebean.dbmigration.DbMigration;
+import java.io.IOException;
+
+public class GenerateDbMigration {
+
+  /**
+   * Generate the DDL for the next DB migration.
+   */
+  public static void main(String[] args) throws IOException {
+
+    DbMigration dbMigration = DbMigration.create();
+    dbMigration.setPlatform(Platform.POSTGRES);
+
+    dbMigration.generateMigration();
+  }
+}
+</pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+package main
+
+import io.ebean.annotation.Platform
+import io.ebean.dbmigration.DbMigration
+
+/**
+ * Generate the DDL for the next DB migration.
+ */
+fun main(args : Array<!String>) {
+
+  // requires jvmTarget 1.8
+  val dbMigration = DbMigration.create()
+  dbMigration.setPlatform(Platform.POSTGRES)
+
+  dbMigration.generateMigration()
+}
+  </pre>
+</div>
+
+<p>
+  To generate a migration we run this main method.
+</p>
+<p>
+  We run this manually when we have completed some work and consider it ready to be released.
+  Running the generation starts the EbeanServer in offline mode, performs a DIFF of the
+  model and generates the migration script.
+</p>
+
+<h2 id="run">Running Migration</h2>
+<p>
+  To run the migration using the built in migration runner, set <code>ebean.migration.run</code> to true.
+</p>
+
+<h5>In application.yaml</h5>
+```yml
+## run migrations when the EbeanServer starts
+ebean:
+  migration:
+    run: true
+```
+<p>
+  With <code>ebean.migration.run=true</code> then when the EbeanServer starts it will look at the
+  migrations and run any that need to be run.  The migration runner will by default create a table
+  called <code>db_migration</code> that holds the meta data about the migrations that have been run
+  and inserts into this table when migrations are successfully executed.
+</p>
+
+<@next_edit "ORM Query" "/docs/intro/query-abstractions/orm-query" "/docs/intro/query-abstractions/index.html"/>
+
+</body>
+</html>

@@ -2,13 +2,16 @@
 <head>
   <title>ebeaninit | Getting started | Ebean</title>
   <meta name="layout" content="_layout/docs_gettingstarted.html"/>
-  <meta name="bread2" content="Ebean test" href="/docs/getting-started/ebean-test"/>
+  <meta name="bread2" content="ebean-test" href="/docs/getting-started/ebean-test"/>
   <#assign ebeanTest="active">
 </head>
 <body>
-<h2>Ebean test</h2>
+<h2>ebean-test</h2>
+<p>
+  <em>ebean-test</em> is used to setup and configure Ebean for running tests.
+</p>
 
-<h3>Add ebean-test as a test dependency</h3>
+<h3>1. Add ebean-test as a test dependency</h3>
 
 <ul class="nav nav-tabs mytabs">
   <li role="presentation" class="active"><a href="#maven-tab">Maven</a></li>
@@ -37,7 +40,7 @@
 </div>
 
 
-<h3>Add application-test.yaml</h3>
+<h3>2. Add application-test.yaml</h3>
 <p>
   In <code>src/test/resources</code> add <code>application-test.yaml</code> configuration file
   like the one below.
@@ -59,11 +62,7 @@ ebean:
   Refer to <a href="/docs/testing/ddl-mode">testing DDL mode</a> for more information.
 </p>
 
-<p class="pull-right">
-  <b>Next:</b> Write an entity bean using
-  <a class="btn btn-info" href="/docs/getting-started/java-first-entity">Java</a>
-  <a class="btn btn-info" href="/docs/getting-started/kotlin-first-entity">Kotlin</a>
-</p>
+<@next_edit "Introduction" "/docs/intro" "/docs/getting-started/ebean-test.html"/>
 
 </body>
 </html>

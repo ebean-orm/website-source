@@ -1,0 +1,53 @@
+<html>
+<head>
+  <title>Limitations | Intro | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="bread2" content="Limitations" href="/docs/intro/limitations"/>
+  <#assign limitations="active">
+</head>
+<body>
+
+<h2>JPA Mapping limitations</h2>
+<p>
+  There are 2 known JPA mappings that Ebean does not support.
+</p>
+
+<table class="table">
+
+  <tr>
+    <td><a href="https://github.com/ebean-orm/ebean/issues/116">116</a></td>
+    <td>
+      <p>
+        Only single table inheritance is supported.
+      </p>
+      <p>
+        There is no planned support
+        for JOINED or TABLE PER CLASS inheritance strategies.
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/ebean-orm/ebean/issues/1777">1777</a></td>
+    <td>
+      <p>
+        Only a single type converter per type is supported.
+      </p>
+      <p>
+        JPA @Converter autoApply false is not honoured. This means that we expect
+        a type to be mapped consistently for all properties that it is used.
+        For example, we can't have to Converters mapping Boolean two different ways
+        in the same Ebean database instance.
+      </p>
+    </td>
+  </tr>
+</table>
+<p>
+  Refer to github issues marked with the
+  <a href="https://github.com/ebean-orm/ebean/issues?q=is%3Aissue+is%3Aclosed+label%3ALimitation">Limitation</a>
+  tag.
+</p>
+
+<@next_edit "ORM Query" "/docs/intro/query-abstractions/orm-query" "/docs/intro/query-abstractions/index.html"/>
+
+</body>
+</html>

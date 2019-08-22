@@ -1,0 +1,89 @@
+<html>
+<head>
+  <title>Constructors | First entity | Intro | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro_firstentity.html"/>
+  <meta name="bread3" content="Constructors" href="/docs/intro/first-entity/constructors"/>
+  <#assign constructors="active">
+</head>
+<body>
+
+<h2>Constructors</h2>
+<p>
+  We don't need a default constructor and this means we can give our entity beans a constructor
+  that takes arguments. Typically the arguments are properties that should always be supplied
+  when creating a new bean of that type.
+</p>
+
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+@Entity
+public class Customer {
+
+  @Id
+  long id;
+
+  String name;
+
+  public Customer(String name) {
+    this.name = name;
+  }
+
+  // getters and setters
+
+}
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+...
+@Entity
+class Customer(name : String) {
+
+  @Id
+  var id: Long = 0
+
+  @Length(100)
+  var name: String = name
+
+}
+  </pre>
+</div>
+
+<p>
+  Now when we create a new Customer we know we must create it with a name.
+</p>
+<p class="code-kt">
+  For Kotlin we can now make <em>name</em> a <code>non-nullable type</code>. Ebean will treat Kotlin non-nullable
+  types as <em>NOT NULL</em> from a database perspective as well giving us a tighter model.
+</p>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+
+    Customer customer = new Customer("Hello entity bean")
+    customer.save()
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+
+    val customer = Customer("Hello entity bean")
+    customer.save()
+
+  </pre>
+</div>
+
+<p class="code-kt">
+  Kotlin has multiple constructor styles. See <a href="/docs/kotlin/constructors">here</a> for more information
+  on the preferred constructor style for entity beans.
+</p>
+
+
+<@next_edit "Query Abstractions" "/docs/intro/query-abstractions" "/docs/intro/first-entity/constructors.html"/>
+
+</body>
+</html>
