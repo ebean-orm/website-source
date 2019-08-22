@@ -30,10 +30,11 @@ pre .na { color: #2C5F92 } /* Name.Attribute */
 pre .na.field { color: #6f4297 } /* Name.Attribute #7D2E2D */
 pre .n.field { color: #6f4297 }
 
+pre .nx { color: #575757; font-weight: normal } /* Name.Attribute */
 pre .nb { color: #007020 } /* Name.Builtin */
 pre .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
 pre .no { color: #60add5 } /* Name.Constant */
-pre .nd { color: #555555; font-weight: bold } /* Name.Decorator */
+pre .nd { color: #b88a24; font-weight: normal } /* Name.Decorator #555555 */
 pre .ni { color: #d55537; font-weight: bold } /* Name.Entity */
 pre .ne { color: #007020 } /* Name.Exception */
 pre .nf { color: #06287e } /* Name.Function */
