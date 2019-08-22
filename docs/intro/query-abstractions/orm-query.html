@@ -8,7 +8,7 @@
 <body>
 <h2>ORM Query</h2>
 <p>
-  There are several forms of ORM query.
+  There are several forms of ORM query. For detailed information on queries goto <a href="/docs/query">docs / query</a>
 </p>
 
 <h3 id="pure">"Pure" ORM Query</h3>
@@ -24,8 +24,8 @@
   <pre content="java">
   Customer rob =
     new QCustomer()
-    .name.equalTo("Rob")
-    .findOne();
+      .name.equalTo("Rob")
+      .findOne();
 
   List<|Customer> customers =
     new QCustomer()
@@ -38,9 +38,9 @@
 <div class="code-kt">
   <pre content="kotlin">
   val rob =
-    new QCustomer()
-    .name.equalTo("Rob")
-    .findOne()
+    QCustomer()
+      .name.equalTo("Rob")
+      .findOne()
 
   val customers =
     QCustomer()

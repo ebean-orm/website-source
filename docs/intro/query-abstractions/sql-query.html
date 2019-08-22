@@ -10,7 +10,7 @@
 <h2>SQL Query</h2>
 <p>
   Sometimes it is useful to not use entity beans or dto beans but instead execute sql queries
-  producing <code>SqlRow</code> objects.
+  producing <code>SqlRow</code> objects or reading directly from JDBC ResultSet.
 </p>
 <p>
   In typical recent applications around <code>2%</code> of queries were SqlQuery type queries.
@@ -18,8 +18,9 @@
 
 <h3>SqlQuery and SqlRow</h3>
 <p>
-  Note that with SqlQuery we can get Ebean to add <code>limit/offset</code> clause appropriate to the database
-  platform.
+  Note that with SqlQuery we can get Ebean to add <code>limit/offset</code> clause appropriate
+  to the database platform and we can bind parameters using all the mapped types
+  (Enums, java.time, array types etc).
 </p>
 <p>
   For more information goto <a href="/docs/query/sqlquery">docs / query / sqlquery</a>

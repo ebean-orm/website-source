@@ -41,8 +41,13 @@
       <div class="col-md-4">
         <h3>Multiple abstraction levels</h3>
         <p>
-          Ebean provides multiple levels of abstraction from ORM, mixing ORM and SQL, to using SQL and right down to raw JDBC.
+          Ebean provides multiple levels of query abstraction.
         </p>
+        <ul>
+          <li><a href="/docs/intro/query-abstractions/orm-query">ORM Queries, mixed with SQL</a></li>
+          <li><a href="/docs/intro/query-abstractions/dto-query">DTO Queries</a></li>
+          <li><a href="/docs/intro/query-abstractions/sql-query">SqlQuery and JDBC</a></li>
+        </ul>
         <p>
           Work at the highest level of abstraction and drop down levels as needed.
         </p>
@@ -64,68 +69,17 @@
       <div class="col-md-4">
         <h3>Docker test containers</h3>
         <p>
-          ebean-test provides docker test container management for all the supported databases.
-          We love H2 but testing against the real thing takes us to the next level
-          (well, testing against a docker container version of the real thing).
+          <a href="/docs/testing>">Docker test containers</a> for all the supported databases.
         </p>
         <p>
           Get 100% test coverage on all the features of the database we use.
         </p>
       </div>
-
-      <div class="col-md-4">
-        <h3>Awesome SQL</h3>
-        <p>
-          Ebean produces SQL that you would hand craft yourself.
-        </p>
-        <p>
-          Use great SQL, be nice to your database and it will be nice to you.
-        </p>
-        <p>
-          No matter how complex the ORM query Ebean produces great SQL.
-          Ebean will never generate SQL cartesian product (it will automatically split an ORM query
-          into multiple sql queries) and will always honor relational limit/offset
-          (because the database loves optimising the query plan for that).
-        </p>
-      </div>
-
-      <div class="col-md-4">
-        <h3>Performance isn't optional</h3>
-        <p>
-          Optimise queries to only fetch what we need (partial objects).
-        </p>
-        <p>
-          Automatically avoid N+1 via a smart load context.
-          Developers don't need to worry about this.
-        </p>
-        <p>
-          Use bulk update and delete queries when appropriate.
-          Persisting with JDBC batch is easy with all the control we need over batch size, getGeneratedKeys, cascade
-          and flush behaviour.
-        </p>
-      </div>
-    </div>
-
-
-    <div class="row inner">
-      <div class="col-md-4">
-        <h3>Automated query tuning</h3>
-        <p>
-          For ORM queries Ebean can profile the object graph being used and either automatically tune the query (autotune) or provide code change suggestions.
-        </p>
-        <p>
-          Developers can focus on the query predicates and then use this to tune the queries in a fully automatic or semi-automatic fashion.
-        </p>
-      </div>
-
       <div class="col-md-4">
         <h3>Database migrations</h3>
         <p>
-          Get Ebean to generate our database migrations. This will "diff" the model and generate the
-          appropriate migration DDL for the database platform (or multiple platforms).
-        </p>
-        <p>
-          Built in migration runner to run our database migrations.
+          Built in DB migration <a href="/docs/intro/db-migrations">generation</a>
+          and <a href="/docs/intro/db-migrations">running</a>.
         </p>
         <p>
           Support for "rebase" migrations as well as repeatable, init and 'normal' migrations.
@@ -135,8 +89,43 @@
       <div class="col-md-4">
         <h3>Type safe queries</h3>
         <p>
-          We can build queries using type safe query beans.  We do this because we can be more productive via IDE auto-complete when writing queries, we get compile time checking of queries and because it's FUN !!        </p>
+          We can build queries using <a href="/docs/query/query-beans">type safe query beans</a>.
         <p>
+        <p>
+          IDE auto-complete when writing queries, compile time checking and it's FUN.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div class="row inner">
+      <div class="col-md-4">
+        <h3>Automated query tuning</h3>
+        <p>
+          For ORM queries Ebean can profile the object graph being used and either
+          <a href="/docs/query/background/autotune">automatically tune the query</a>.
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <h3>Awesome SQL</h3>
+        <p>
+          Ebean produces SQL that you would hand craft yourself.
+        </p>
+        <p>
+          Use great SQL, never generate SQL cartesian product, always honor relational limit/offset.
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <h3>Performance isn't optional</h3>
+        <p>
+          <a href="/docs/query/fetchgroup">Optimise queries</a> to only fetch what we need (partial objects).
+        </p>
+        <p>
+          Automatically avoid N+1 via a smart load context.
+        </p>
       </div>
     </div>
 
