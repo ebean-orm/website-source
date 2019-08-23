@@ -1,25 +1,72 @@
 <html>
 <head>
   <title>Postgres | Ebean ORM</title>
-  <meta name="layout" content="_layout/database.html"/>
+  <meta name="layout" content="_layout/docs_database.html"/>
   <meta name="bread2" content="Postgres" href="/docs/database/postgres"/>
   <template id="menuNav"><#include "/_layout/_docs_nav_database_postgres.ftl"></template>
-  <#assign introduction="active">
+  <#assign postgres="active">
 </head>
 <body>
 
+
 <h2>Postgres</h2>
 
-<h3>Schema</h3>
+<h3>Testing</h3>
+<p>
+  To test against Postgres docker test container set the <em>platform</em> to <code>postgres</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+```yml
+ebean:
+  test:
+  platform: postgres # h2, postgres, mysql, nuodb ...
+    ddlMode: dropCreate # none | dropCreate | migration
+    dbName: my_app
+```
+<p>
+  That is all we need to do. Running tests via IDE, maven or gradle will all automatically setup
+  a docker test container for postgres including creating the database and user etc.
+</p>
+<p>
+  We generally run with <em>ddlMode</em> <code>dropCreate</code> which will drop and re-create
+  all the database tables prior to running all the tests.
+</p>
+<p>
+  Refer to <a href="/docs/logging">docs / logging</a> to see how to get logging for SQL, DDL and docker.
+</p>
+<p>
+  Note that DDL is generated into <em>maven target</em>, <em>gradle build</em> or current directory.
+  We see <code>db-create-all.sql</code> and <code>db-drop-all.sql</code> there.
+</p>
 
 <h3>Types</h3>
 
-<h3>JSON / JSONB</h3>
+<h5>UUID</h5>
+<p>
+  UUID is mapped to native Postgres UUID type.
+</p>
+<h5>INET</h5>
+<p>
+  <em>java.net.InetAddress</em> and <em>io.ebean.types.Inet</em> are both automatically mapped to native
+  Postgres INET type. When using InetAddress we need to take care that it doesn't perform unwanted
+  DNS lookup validating addresses. <em>io.ebean.types.Inet</em> is a simple value type.
+</p>
+<h5>Array types</h5>
+<p>
+  We use <code>@DbArray</code> to map Lists or Sets of UUID, String, Enums, Number types.
+  These are mapped to Postgres array types like <em>uuid[], varchar[], integer[] ...</em>
+</p>
+<h5>JSON / JSONB</h5>
+
+
+
 
 <h3>History support</h3>
 
 <h3>Partitioning</h3>
-
 
 
 <div class="next pull-right">
