@@ -42,7 +42,7 @@ import javax.persistence.Entity
 import javax.persistence.Id
 
 @Entity
-class Customer : Model {
+class Customer : Model() {
 
   @Id
   var id: Long = 0
@@ -55,6 +55,10 @@ class Customer : Model {
 
 <p>
   Now we can just <code>save()</code> and <code>delete()</code> them:
+</p>
+<p>
+  Note that it would be nice if we have a constructor that takes name. We will
+  do that shortly and that means we can make name a non-nullable property.
 </p>
 
 <h2>Model.save()</h2>
@@ -86,8 +90,8 @@ class Customer : Model {
 </div>
 
 <p>
-  Note that <code>Model.save()</code> and <code>Model.delete()</code> use the <code>default database</code>.
-  We obtain the default database via <code>DB.getDefault()</code>.
+  Note that <code>save()</code> and <code>delete()</code> use the <code>default database</code>.
+  We obtain the default database via <a href="/docs/intro/api#db">DB.getDefault()</a>.
 </p>
 
 

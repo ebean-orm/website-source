@@ -66,6 +66,54 @@ Database database = DB.getDefault();
 Database hrDatabase = DB.byName("hr");
 ```
 
+<h4>Model uses default database</h4>
+<p>
+  When our entity beans extend <a href="/docs/intro/first-entity/model">Model</a> and we use <em>save()</em>
+  that is actually using the default database.
+</p>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+    Customer customer = new Customer("Roberto")
+
+    // use the default database
+    customer.save()
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+    val customer = Customer("Roberto")
+
+    // use the default database
+    customer.save()
+  </pre>
+</div>
+
+<h4>Query beans use default database</h4>
+<p>
+  When we create a Query bean and execute the query that also is actually using the default database.
+</p>
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+  // use the default database
+  List<|Customer> customers = new QCustomer()
+      .status.equalTo(Status.NEW)
+      .billingAddress.city.equalTo("Auckland")
+      .findList();
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+  // use the default database
+  val customers = QCustomer()
+      .status.equalTo(Status.NEW)
+      .billingAddress.city.equalTo("Auckland")
+      .findList()
+  </pre>
+</div>
+
+
 <h4>Create database</h4>
 <p>
   We can programmatically create a Database instance using <a href="databasefactory">DatabaseFactory</a>
