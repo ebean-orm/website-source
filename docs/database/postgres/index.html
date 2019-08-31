@@ -22,7 +22,7 @@
 ```yml
 ebean:
   test:
-  platform: postgres # h2, postgres, mysql, nuodb ...
+  platform: postgres # h2, postgres, ...
     ddlMode: dropCreate # none | dropCreate | migration
     dbName: my_app
 ```
@@ -48,30 +48,41 @@ ebean:
 <p>
   UUID is mapped to native Postgres UUID type.
 </p>
+
 <h5>INET</h5>
 <p>
   <em>java.net.InetAddress</em> and <em>io.ebean.types.Inet</em> are both automatically mapped to native
   Postgres INET type. When using InetAddress we need to take care that it doesn't perform unwanted
   DNS lookup validating addresses. <em>io.ebean.types.Inet</em> is a simple value type.
 </p>
+
 <h5>Array types</h5>
 <p>
-  We use <code>@DbArray</code> to map Lists or Sets of UUID, String, Enums, Number types.
+  We use <code><a href="arraytype">@DbArray</a></code> to map Lists or Sets of UUID, String, Enums, Number types.
   These are mapped to Postgres array types like <em>uuid[], varchar[], integer[] ...</em>
 </p>
+<p>
+  For more on <a href="arraytype">Postgres Array types</a>.
+</p>
+
 <h5>JSON / JSONB</h5>
-
-
-
+<p>
+  We can use <code>@DbJson</code> and <code>@DbJsonB</code> to map content to Postgres JSON or JSONB
+  types.
+</p>
 
 <h3>History support</h3>
+<p>
+  History support for Postgres is provided by generating triggers and history table.
+</p>
 
-<h3>Partitioning</h3>
+<h3>Table Partitioning</h3>
+<p>
+  Postgres 10 added support for table partitioning. We use <code>@DbPartition</code> to define the
+  table should have range partitioning based on DAY, WEEK, MONTH or YEAR.
+</p>
 
-
-<div class="next pull-right">
-  <a href="/docs/testing/" class="btn btn-info">Next: Testing</a>
-</div>
+<@next_edit "Testing" "/docs/testing" "/docs/database/postgres/index.html"/>
 
 </body>
 </html>

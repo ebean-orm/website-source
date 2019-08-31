@@ -1,0 +1,77 @@
+<html>
+<head>
+  <title>NuoDB | Ebean ORM</title>
+  <meta name="layout" content="_layout/docs_database.html"/>
+  <meta name="bread2" content="NuoDB" href="/docs/database/nuodb"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_database_nuodb.ftl"></template>
+  <#assign nuodb="active">
+</head>
+<body>
+
+
+<h2>NuoDB</h2>
+
+<h3>Testing</h3>
+<p>
+  To test against NuoDB docker test container set the <em>platform</em> to <code>postgres</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+```yml
+ebean:
+  test:
+  platform: nuodb # h2, nuodb, postgres, ...
+    ddlMode: dropCreate # none | dropCreate | migration
+    dbName: my_app
+```
+<p>
+  That is all we need to do. Running tests via IDE, maven or gradle will all automatically setup
+  a docker test container for postgres including creating the database and user etc.
+</p>
+<p>
+  We generally run with <em>ddlMode</em> <code>dropCreate</code> which will drop and re-create
+  all the database tables prior to running all the tests.
+</p>
+<p>
+  Refer to <a href="/docs/logging">docs / logging</a> to see how to get logging for SQL, DDL and docker.
+</p>
+<p>
+  Note that DDL is generated into <em>maven target</em>, <em>gradle build</em> or current directory.
+  We see <code>db-create-all.sql</code> and <code>db-drop-all.sql</code> there.
+</p>
+
+<h3>Types</h3>
+
+<h5>UUID</h5>
+<p>
+  NuoDB does not have a native UUID type. Instead this will be mapped to database <em>binary(16)</em> or
+  <em>varchar(40)</em> based on the setting of PlatformConfig.DbUuid.
+</p>
+
+<h5>Array types</h5>
+<p>
+  NuoDB does not have array types and these types are instead simulated.
+</p>
+
+<h5>JSON</h5>
+<p>
+  Properties with <code>@DbJson</code> and <code>@DbJsonB</code> are mapped to database varchar or clob.
+</p>
+
+
+<h3>History support</h3>
+<p>
+  History support for NuoDB is provided by generating triggers and history table.
+</p>
+
+<h3>Table Partitioning</h3>
+<p>
+  NuoDB supports table partitioning but this is not supported by Ebean yet (via <em>@DbPartition</em>).
+</p>
+
+<@next_edit "Testing" "/docs/testing" "/docs/database/postgres/index.html"/>
+
+</body>
+</html>

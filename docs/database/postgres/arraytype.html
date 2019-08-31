@@ -1,0 +1,106 @@
+<html>
+<head>
+  <title>Postgres Array | Ebean ORM</title>
+  <meta name="layout" content="_layout/docs_database.html"/>
+  <meta name="bread2" content="Postgres" href="/docs/database/postgres"/>
+  <meta name="bread3" content="Array type" href="/docs/database/postgres/arraytype"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_database_postgres.ftl"></template>
+  <#assign arrayType="active">
+</head>
+<body>
+
+<h2>Array type</h2>
+<p>
+  We can use <code>@DbArray</code> to map a Set or List of String, UUID, Integer or Long.
+</p>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+
+@Entity
+public class Customer {
+
+  @Id
+  private long id;
+
+  private String name;
+
+  @DbArray
+  private Set<|String> tags = new LinkedHashSet<>();
+
+  // getters and setters
+}
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+
+@Entity
+class Customer(name: String) {
+
+  @Id
+  var id: Long = 0
+
+  var name: String = name
+
+  @DbArray
+  var tags = emptyMutableSet<>();
+
+}
+  </pre>
+</div>
+
+<h3>DDL for Array types</h3>
+<p>
+  In the above example the <em>tags</em> property maps to a <em>varchar[]</em>.
+</p>
+<pre content="sql">
+create table customer (
+  id                            bigserial not null,
+  name                          varchar(255) not null,
+  registered                    date,
+  tags                          varchar[],
+  version                       bigint not null,
+  when_created                  timestamptz not null,
+  when_modified                 timestamptz not null,
+  constraint pk_customer primary key (id)
+);
+</pre>
+
+<h3>Array contains expression</h3>
+<p>
+  Commonly we want to use the <em>contains</em> expression.
+</p>
+
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+  <pre content="java">
+
+  final List<|Customer> customers
+    = new QCustomer()
+    .tags.contains("BLUE")
+    .findList();
+
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+
+  val customers
+    = QCustomer()
+    .tags.contains("BLUE")
+    .findList()
+  </pre>
+</div>
+<p>
+  The SQL for the above query is:
+</p>
+<pre content="sql">
+  select t0.id, t0.name, t0.registered, t0.tags, t0.version, t0.when_created, t0.when_modified
+    from customer t0
+   where t0.tags @> array[?]; --bind(BLUE)
+</pre>
+
+</body>
+</html>
