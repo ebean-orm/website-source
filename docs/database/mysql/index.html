@@ -1,0 +1,66 @@
+<html>
+<head>
+  <title>Postgres | Ebean ORM</title>
+  <meta name="layout" content="_layout/docs_database.html"/>
+  <meta name="bread2" content="MySQL" href="/docs/database/mysql"/>
+  <template id="menuNav"><#include "/_layout/_docs_nav_database_mysql.ftl"></template>
+  <#assign mysql="active">
+</head>
+<body>
+
+
+<h2>MySQL</h2>
+
+<h3>Testing</h3>
+<p>
+  To test against MySQL docker test container set the <em>platform</em> to <code>mysql</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+```yml
+ebean:
+  test:
+  platform: mysql # h2, mysql, ...
+    ddlMode: dropCreate # none | dropCreate | migration
+    dbName: my_app
+```
+<p>
+  That is all we need to do. Running tests via IDE, maven or gradle will all automatically setup
+  a docker test container for mysql including creating the database and user etc.
+</p>
+<p>
+  We generally run with <em>ddlMode</em> <code>dropCreate</code> which will drop and re-create
+  all the database tables prior to running all the tests.
+</p>
+<p>
+  Refer to <a href="/docs/logging">docs / logging</a> to see how to get logging for SQL, DDL and docker.
+</p>
+<p>
+  Note that DDL is generated into <em>maven target</em>, <em>gradle build</em> or current directory.
+  We see <code>db-create-all.sql</code> and <code>db-drop-all.sql</code> there.
+</p>
+
+<h3>Types</h3>
+
+<h5>UUID</h5>
+<p>
+  UUID is not a native MySQL type and can be mapped to either BINARY(16) or VARCHAR(36).
+</p>
+
+<h5>JSON</h5>
+<p>
+  We can use <code>@DbJson</code> to map content.
+</p>
+
+<h3>History support</h3>
+<p>
+  History support for MySQL is provided by generating triggers and history table.
+</p>
+
+
+<@next_edit "Testing" "/docs/testing" "/docs/database/mysql/index.html"/>
+
+</body>
+</html>
