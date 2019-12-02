@@ -14,7 +14,8 @@
   The <a target="_blank" href="/apidoc/11/io/ebean/Database.html">Database API</a> provides almost all of the functionality including
   <code>queries</code>, <code>saving</code>, <code>deleting</code> and <code>transactions</code>.
 </p>
-```java
+<div class="code-java">
+  <pre content="java">
 // persist ...
 Customer customer  = ...
 database.save(customer);
@@ -33,8 +34,9 @@ try (Transaction transaction = database.beginTransaction()) {
 
   transaction.commit();
 }
-
-```
+  </pre>
+</div>
+  
 <h4>javax.sql.DataSource</h4>
 <p>
   A Database instance has an JDBC DataSource associating it one to one to an actual database.
@@ -50,10 +52,12 @@ try (Transaction transaction = database.beginTransaction()) {
   instance is registered with <code>DB</code> and then can be obtained via <code>DB.getDefault()</code>.
 </p>
 
-```java
+<div class="code-java">
+  <pre content="java">
 // obtain the "default" database
 Database database = DB.getDefault();
-```
+  </pre>
+</div>
 
 <h4>Named database</h4>
 <p>
@@ -61,10 +65,12 @@ Database database = DB.getDefault();
   it's name via <code>DB.byName()</code>
 </p>
 
-```java
+<div class="code-java">
+  <pre content="java">
 // obtain a database by it's name
 Database hrDatabase = DB.byName("hr");
-```
+  </pre>
+</div>
 
 <h4>Model uses default database</h4>
 <p>
@@ -120,7 +126,8 @@ Database hrDatabase = DB.byName("hr");
   and <a href="databaseconfig">DatabaseConfig</a> or it can be created automatically from properties
   file configuration (for testing we often use application-test.yaml and have the database instance created automatically).
 </p>
-```java
+<div class="code-java">
+  <pre content="java">
 // configuration ...
 DatabaseConfig config = new DatabaseConfig();
 config.addClass(MyEntityBean.class);
@@ -128,7 +135,9 @@ config.addClass(MyEntityBean.class);
 
 // create database instance
 Database database = DatabaseFactory.create(config);
-```
+  </pre>
+</div>
+  
 <p>
   Refer to <a href="databasefactory">DatabaseFactory</a> for more details.
 </p>
@@ -149,13 +158,15 @@ Database database = DatabaseFactory.create(config);
   use <code>DB</code> to obtain those Database instances by name and we can obtain
   the default database via <code>DB.getDefault()</code>.
 </p>
-```java
+<div class="code-java">
+  <pre content="java">
 // obtain the "default" database
 Database server = DB.getDefault();
 
 // obtain the HR database by name
 Database hrDB = DB.byName("hr");
-```
+  </pre>
+</div>
 
 <h4>DB convenience methods</h4>
 <p>
@@ -163,7 +174,8 @@ Database hrDB = DB.byName("hr");
   This is useful and convenient as many applications only use a single database.
 </p>
 
-```java
+<div class="code-java">
+  <pre content="java">
 Customer customer  = ...
 
 // save using the 'default' database
@@ -172,7 +184,8 @@ DB.save(customer);
 // which is the same as
 Database defaultDatabase = DB.getDefault()
 defaultDatabase.save(customer);
-```
+  </pre>
+</div>
 
 <h4>DB is optional</h4>
 <p>
