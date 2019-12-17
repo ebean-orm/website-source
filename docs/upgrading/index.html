@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Introduction</title>
+  <title>Upgrading Ebean version</title>
   <meta name="layout" content="_layout/docs.html"/>
   <meta name="bread1" content="Upgrading" href="/docs/upgrading/"/>
   <template id="menuNav"><#include "/_layout/_docs_nav.ftl"></template>
@@ -11,6 +11,17 @@
 <p>
   A summary of changes needed in migrating to a later version of Ebean.
 </p>
+
+<h2>Upgrading to 12.x from 11.x</h2>
+<ul>
+  <li>
+    #1826 Removed <code>@PrivateOwned</code>, migrate to orphanRemoval=true attribute on <code>@OneToMany</code>
+  </li>
+  <li>
+    #1824 Stateless updates - Removed update deleteMissingChildren option, instead always use orphanRemoval behaviour
+    change breaking-api
+  </li>
+</ul>
 
 <h2>Upgrading to 11.x from 10.x</h2>
 <ul>
