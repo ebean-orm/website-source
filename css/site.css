@@ -806,6 +806,9 @@ a.bright-link {
   font-family: "Courier New", monospace;
   font-weight: bold;
 }
+.initials.small {
+  font-size: 13px;
+}
 .avatar-name {
   position: relative;
   top: 11px;
