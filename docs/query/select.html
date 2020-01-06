@@ -1,13 +1,15 @@
 <html>
 <head>
   <title>Query Select | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="Select" href="/docs/query/select"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="select" href="/docs/query/select"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign select= "true">
 </head>
 <body>
-
-<h2 id="select">Select</h2>
+<h2 id="select" about="sum, max, min">Select</h2>
 <p>
   <code>select</code> allows us to control the properties that are fetched. We can specify only selected
   properties to fetch.
@@ -183,9 +185,6 @@ group by t0.machine_id, t0.date
 having max(t0.rate) > ?
 ```
 
-
-<@next "Fetch" "/docs/query/fetch"/>
-<@edit "/docs/query/select"/>
-
+<@next_edit "Fetch" "/docs/query/fetch" "/docs/query/select"/>
 </body>
 </html>

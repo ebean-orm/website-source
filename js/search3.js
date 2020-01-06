@@ -72,13 +72,13 @@ $(document).ready(function() {
   var hideTimeout = 0;
   $('#searchinput').on('focus', function() {
     clearTimeout(hideTimeout);
-    $('.search-results-inline-container').css('display', 'block');
+    $('#page-search-results').css('display', 'block');
     $(this).attr('placeholder', $(this).attr('data-placeholder-focus'));
     $(this).select();
   }).on('blur', function() {
     clearTimeout(hideTimeout);
     hideTimeout = setTimeout(function() {
-      $('.search-results-inline-container').css('display', 'none');
+      $('#page-search-results').css('display', 'none');
     }, 250);
     $(this).attr('placeholder', $(this).attr('data-placeholder-blur'));
   });
@@ -108,9 +108,6 @@ $(document).ready(function() {
 
   function matchSearch(search, tokens) {
     let m = tokens.every(token => String(search).match(token));
-    //if (!m) {
-    //  console.log('no match ' + search)
-    //}
     return m;
   }
   async function updateSearchResults() {
@@ -146,16 +143,15 @@ $(document).ready(function() {
     for (const result of filteredResults) {
       const capHtml = (result.caption && result.caption.escapeHTML()) ? `- ${result.caption.escapeHTML()}`: '';
       if (result.title === '') {
-        //const catHtml = (result.category && result.category.escapeHTML()) ? `<span style="color:#777;">${result.category.escapeHTML()}</span> -`: '';
         lines.push(`<a href="${result.url.escapeHTML()}" title="${result.category.escapeHTML()}">${result.category.escapeHTML()} ${capHtml}</a>`);
       } else {
-        const catHtml = (result.category && result.category.escapeHTML()) ? `<span style="color:#777;">${result.category.escapeHTML()}</span> -`: '';
+        const catHtml = (result.category && result.category.escapeHTML()) ? `<span class="category;">${result.category.escapeHTML()}</span> -`: '';
         lines.push(`<a href="${result.url.escapeHTML()}" title="${result.title.escapeHTML()}">${catHtml} ${result.title.escapeHTML()} ${capHtml}</a>`);
       }
     }
     if (filteredResults.length < filteredResultsAll.length) {
       const invisibleLinks = filteredResultsAll.length - filteredResults.length;
-      lines.push(`<small style="color:#999;">And ${invisibleLinks} more...</small>`);
+      lines.push(`<small class="and-results">And ${invisibleLinks} more...</small>`);
     }
     if (query !== '' && !containsHash) {
       lines.push(`<a href="https://www.google.com/search?q=site:ebean.io+${encodeURIComponent(query.trim())}">Search <code>${query.trim().escapeHTML()}</code> in google site:ebean.io</a>`)

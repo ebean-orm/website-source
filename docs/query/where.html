@@ -1,12 +1,14 @@
 <html>
 <head>
   <title>Query Where | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="Where" href="/docs/query/where"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="where" href="/docs/query/where"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign where= "true">
 </head>
 <body>
-
 <h2 id="where">Where</h2>
 <p>
   Query bean properties provide a nice type safe way to add expressions to the <code>where</code> clause.
@@ -294,8 +296,6 @@ where t0.status = ?  and (t1.name = ? or t2.city = ?) and t0.order_date > ?
   I'm not sure if I'm allowed a <em>favourite feature</em> but if I was I'd vote for raw expressions.
 </p>
 
-<@next "Expressions" "/docs/query/expressions"/>
-<@edit "/docs/query/where"/>
-
+<@next_edit "Expressions" "/docs/query/expressions" "/docs/query/where"/>
 </body>
 </html>

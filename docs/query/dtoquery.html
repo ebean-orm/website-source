@@ -1,12 +1,14 @@
 <html>
 <head>
   <title>DtoQuery | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="DtoQuery" href="/docs/query/dtoquery"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="dtoquery" href="/docs/query/dtoquery"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign dtoquery = "true">
 </head>
 <body>
-
 <h2 id="dto">DtoQuery</h2>
 <p>
   DtoQuery is where we use SQL and map it into plain beans. These plain beans are just
@@ -121,9 +123,7 @@ database.findDto(CustomerDto.class, sql)
   });
 ```
 
-
-<@next "Queries" "/docs/query/"/>
-<@edit "/docs/query/dto"/>
+<@next_edit "Queries" "/docs/query/" "/docs/query/dto"/>
 
 </body>
 </html>

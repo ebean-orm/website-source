@@ -1,0 +1,33 @@
+<html>
+<head>
+  <meta name="layout" content="_layout2/base.html"/>
+  <meta name="bread0" content="docs" href="/docs"/>
+</head>
+<body data-theme="light">
+<div id="banner">
+  <header>
+    <nav id="top">
+      <div class="breadcrumb">
+        <a class="nav-logo" href="/"><img src="/images/logo-200.png" height="35"></a>&nbsp;&nbsp;$breadcrumb
+      </div>
+      <ul>
+        <li><a href="https://github.com/ebean-orm/ebean" title="github source"><i class="fab fa-github"></i></a></li>
+        <li><a onclick="toggleTheme();" title="switch dark light theme"><i class="fas fa-adjust"></i></a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<div class="grid grid-docs">
+  <aside>
+    <#include "/_nav/docs.ftl">
+  </aside>
+  <article>
+    <#include "/_layout2/_searchinput.ftl">
+    <div id="layout-body"></div>
+  </article>
+</div>
+<footer id="footer">
+  <div><p>In the footer</p></div>
+</footer>
+</body>
+</html>

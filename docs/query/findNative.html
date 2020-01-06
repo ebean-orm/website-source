@@ -1,8 +1,11 @@
 <html>
 <head>
   <title>Native SQL (findNative) | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="Native SQL ( findNative )" href="/docs/query/findNative"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="native sql ( findNative )" href="/docs/query/findNative"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign native="true">
 </head>
 <body>
@@ -115,8 +118,6 @@
   use <a href="/docs/query/rawSql">RawSql</a> with more explicit mapping of columns to properties.
 </p>
 
-<@next "RawSql" "/docs/query/rawSql"/>
-<@edit "/docs/query/findNative"/>
-
+<@next_edit "RawSql" "/docs/query/rawSql" "/docs/query/findNative"/>
 </body>
 </html>

@@ -1,13 +1,15 @@
 <html>
 <head>
   <title>Query RawSql | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="RawSql" href="/docs/query/rawSql"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="rawsql" href="/docs/query/rawSql"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign rawsql= "true">
 </head>
 <body>
-
-<h3>RawSql</h3>
+<h2>RawSql</h2>
 <p>
   You can explicitly specify the SQL to use and have that mapped into Objects. You
   may want to do this so use aggregate functions like sum() max() etc or in cases
@@ -209,6 +211,5 @@ RawSql rawSql = RawSqlBuilder.parse(rs)
     .create();
 ```
 
-<@next "Update query" "/docs/query/update"/>
-<@edit "/docs/query/rawSql"/>
+<@next_edit "Update query" "/docs/query/update" "/docs/query/rawSql"/>
 </body>

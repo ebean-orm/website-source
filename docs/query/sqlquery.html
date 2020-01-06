@@ -1,12 +1,14 @@
 <html>
 <head>
   <title>SqlQuery | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="SqlQuery" href="/docs/query/sqlquery"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="sqlquery" href="/docs/query/sqlquery"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign sqlquery= "true">
 </head>
 <body>
-
 <h2>SqlQuery</h2>
 <p>
   With SqlQuery we can execute sql queries without any entity beans or dto beans.
@@ -93,9 +95,7 @@ CustDto rob = DB.sqlQuery(sql)
   .findOne(CUST_MAPPER);
 ```
 
-
-<@next "SqlUpdate" "/docs/query/sqlupdate"/>
-<@edit "/docs/query/sqlquery"/>
+<@next_edit "SqlUpdate" "/docs/query/sqlupdate" "/docs/query/sqlquery"/>
 
 </body>
 </html>

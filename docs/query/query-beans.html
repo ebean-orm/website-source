@@ -1,19 +1,20 @@
 <html>
 <head>
   <title>Query beans | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="Query beans" href="/docs/query/query-beans"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="query beans" href="/docs/query/query-beans"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign querybeans="true">
 </head>
 <body>
-
   <h2 id="querybeans">Query beans</h2>
   <p>
     Query beans are optional but they provide a nice way to write queries with <code>type safe
     compile time checking</code>. They are also easy to use and learn with <code>IDE auto-completion</code>
     on properties and expressions.
   </p>
-
   <p>
     Query beans are generated using a Java annotation processing (<em>APT</em>) or
     Kotlin annotation processing (<em>KAPT</em>).
@@ -89,7 +90,6 @@
   querybean-packages: org.example
   ```
 
-
   <h2 id="caveats" class="art">Caveats</h2>
 
   <h4>Refactor rename entity bean</h4>
@@ -102,8 +102,6 @@
     At this point we get compiler errors for the queries that we need to adjust (use the new query bean names).
   </p>
 
-  <@next "Where" "/docs/query/where"/>
-  <@edit "/docs/query/query-beans"/>
-
+  <@next_edit "Where" "/docs/query/where" "/docs/query/query-beans"/>
 </body>
 </html>

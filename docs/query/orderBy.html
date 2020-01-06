@@ -1,12 +1,14 @@
 <html>
 <head>
   <title>OrderBy | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="OrderBy" href="/docs/query/orderBy"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="orderby" href="/docs/query/orderBy"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign orderBy= "true">
 </head>
 <body>
-
 <h2 id="orderby">OrderBy</h2>
 <p>
   Query bean properties have <code>asc()</code> and <code>desc()</code> methods such that they
@@ -138,9 +140,6 @@ where (t0.customer_id) in (? )
 order by t0.email                       -- (1)
 ```
 
-
-<@next "Select" "/docs/query/select"/>
-<@edit "/docs/query/orderBy"/>
-
+<@next_edit "Select" "/docs/query/select" "/docs/query/orderBy"/>
 </body>
 </html>

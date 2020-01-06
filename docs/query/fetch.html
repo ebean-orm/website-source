@@ -1,12 +1,15 @@
 <html>
 <head>
   <title>Fetch | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="Fetch" href="/docs/query/fetch"/>
-  <#assign fetch= "true">
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="fetch" href="/docs/query/fetch"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
+  <#assign fetch="true">
 </head>
 <body>
-<h2>Fetch</h2>
+<h2 id="fetch">Fetch</h2>
 <p>
   With fetch we specify the properties that should be fetched on associated beans. Beans that
   are related by <em>OneToOne, OneToMany, ManyToOne and ManyToMany</em>.
@@ -225,8 +228,6 @@ val cust = QCustomer._alias
 val con = QContact._alias
 ```
 
-<@next "FetchGroup" "/docs/query/fetchgroup"/>
-<@edit "/docs/query/fetch"/>
-
+<@next_edit "FetchGroup" "/docs/query/fetchgroup" "/docs/query/fetch"/>
 </body>
 </html>

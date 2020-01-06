@@ -1,12 +1,14 @@
 <html>
 <head>
   <title>SqlUpdate | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="SqlUpdate" href="/docs/query/sqlupdate"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="sqlupdate" href="/docs/query/sqlupdate"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign sqlupdate= "true">
 </head>
 <body>
-
 <h2>SqlUpdate</h2>
 <p>
   <em>SqlUpdate</em> allows us to execute <em>sql insert</em>, <em>sql update</em> or <em>sql delete</em> statements.
@@ -171,8 +173,6 @@ Object key = DB.sqlUpdate(sql)
   Use <code>setAutoTableMod(false)</code> to turn this off.
 </p>
 
-<@edit "/docs/query/sqlupdate"/>
-<@next "CallableSql" "/docs/query/callablesql"/>
-
+<@next_edit "CallableSql" "/docs/query/callablesql" "/docs/query/sqlupdate"/>
 </body>
 </html>

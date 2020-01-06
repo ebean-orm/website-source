@@ -1,13 +1,15 @@
 <html>
 <head>
   <title>Query Expressions | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="Expressions" href="/docs/query/expressions"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="expressions" href="/docs/query/expressions"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign expressions= "true">
 </head>
 <body>
-
-<h3 id="raw">raw()</h3>
+<h2 id="raw">raw()</h2>
 <p>
   The Raw expression lets us use any database specific function or expression
   in the where clause of a query.
@@ -31,7 +33,7 @@
   We have them because they occur often enough in applications.
 </p>
 
-<h3 id="inRange">inRange()</h3>
+<h2 id="inRange">inRange()</h2>
 <p>
   <code>property >= value1 and property < value2</code>
 </p>
@@ -48,7 +50,7 @@
   like timestamps and dates etc.
 </p>
 
-<h3 id="inRangeWith">inRangeWith()</h3>
+<h2 id="inRangeWith">inRangeWith()</h2>
 <p>
   <code>property <= ? and ( highProperty > ? or highProperty is null) </code>
 </p>
@@ -60,7 +62,7 @@
   have 2 properties like startDate and endDate that form a range.
 </p>
 
-<h3 id="inOrEmpty">inOrEmpty()</h3>
+<h2 id="inOrEmpty">inOrEmpty()</h2>
 <p>
   This is a "conditional IN" where the IN expression is only added if the collection
   is not empty.
@@ -76,7 +78,7 @@ List<|Long> customerIds = ...
 </p>
 
 
-<h3 id="rawOrEmpty">rawOrEmpty()</h3>
+<h2 id="rawOrEmpty">rawOrEmpty()</h2>
 
 <p>
   This is a "conditional raw expression" where the raw expression uses a collection
@@ -99,61 +101,60 @@ List<|String> names = ...
   The following expressions are simple expressions.
 </p>
 
-<h3 id="isNull">isNull()</h3>
+<h2 id="isNull">isNull()</h2>
 <p>
   IsNull on a associated many property translates to <code>isEmpty()</code>
 </p>
 
-<h3 id="isEmpty">isEmpty()</h3>
+<h2 id="isEmpty">isEmpty()</h2>
 <p>
   IsEmpty expression should be used on a ToMany property. A sql exists subquery
   is used to implement the isEmpty expression.
 </p>
 
 
-<h3 id="in">in()</h3>
+<h2 id="in">in()</h2>
 
-<h3 id="inPairs">inPairs()</h3>
+<h2 id="inPairs">inPairs()</h2>
 
-<h3 id="like">like</h3>
-<h3 id="startsWith">startsWith</h3>
-<h3 id="endsWith">endsWith</h3>
-<h3 id="contains">contains</h3>
+<h2 id="like">like</h2>
+<h2 id="startsWith">startsWith</h2>
+<h2 id="endsWith">endsWith</h2>
+<h2 id="contains">contains</h2>
 
 
-<h3 id="eq">eq - equal to</h3>
-<h3 id="ne">ne - not equal</h3>
-<h3 id="gt">gt - greater than</h3>
-<h3 id="ge">ge - greater than or equal</h3>
-<h3 id="lt">lt - less than</h3>
-<h3 id="le">le - less than or equal</h3>
+<h2 id="eq">eq - equal to</h2>
+<h2 id="ne">ne - not equal</h2>
+<h2 id="gt">gt - greater than</h2>
+<h2 id="ge">ge - greater than or equal</h2>
+<h2 id="lt">lt - less than</h2>
+<h2 id="le">le - less than or equal</h2>
 
-<h3 id="between">between</h3>
-<h3 id="betweenProperties">betweenProperties</h3>
+<h2 id="between">between</h2>
+<h2 id="betweenProperties">betweenProperties</h2>
 
-<h3 id="example">example</h3>
+<h2 id="example">example</h2>
 
 <span id="bitwise"></span>
-<h3 id="bitwiseAny">bitwiseAny</h3>
+<h2 id="bitwiseAny">bitwiseAny</h2>
 
-<h3 id="bitwiseAnd">bitwiseAnd</h3>
+<h2 id="bitwiseAnd">bitwiseAnd</h2>
 
-<h3 id="bitwiseAll">bitwiseAll</h3>
+<h2 id="bitwiseAll">bitwiseAll</h2>
 
-<h3 id="bitwiseNot">bitwiseNot</h3>
+<h2 id="bitwiseNot">bitwiseNot</h2>
 
 
 <span id="array"></span>
-<h3 id="arrayContains">arrayContains</h3>
+<h2 id="arrayContains">arrayContains</h2>
 
-<h3 id="arrayNotContains">arrayNotContains</h3>
+<h2 id="arrayNotContains">arrayNotContains</h2>
 
-<h3 id="arrayIsEmpty">arrayIsEmpty</h3>
+<h2 id="arrayIsEmpty">arrayIsEmpty</h2>
 
-<h3 id="arrayIsNotEmpty">arrayIsNotEmpty</h3>
+<h2 id="arrayIsNotEmpty">arrayIsNotEmpty</h2>
 
 
 <@next "OrderBy" "/docs/query/orderBy"/>
-
 </body>
 </html>

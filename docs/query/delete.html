@@ -1,9 +1,12 @@
 <html>
 <head>
   <title>Delete query | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="Delete query" href="/docs/query/delete"/>
-  <#assign delete= "true">
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="delete query" href="/docs/query/delete"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
+  <#assign delete="true">
 </head>
 <body>
 <h2>Delete query</h2>
@@ -118,13 +121,13 @@ delete from customer where name like ? escape'' ; --bind(Bad%)
 </p>
 
 
-<p class="pull-right">
-  Related:
-  <a class="btn btn-info" href="/docs/query/update">Update query</a>
-  <a class="btn btn-info" href="/docs/query/sqlupdate">SqlUpdate</a>
-</p>
+<nav class="next">
+  <p class="next">
+    <a class="btn" href="/docs/query/update">Update query</a>
+    <a class="btn" href="/docs/query/sqlupdate">SqlUpdate</a>
+  </p>
+</nav>
 
 <@edit "/docs/query/update"/>
-
 </body>
 </html>

@@ -1,13 +1,13 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_query.html"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_query_index.ftl"></template>
-  <#assign documentation="active">
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <#assign n0_docs="active">
+  <#assign n1_query="active">
 </head>
 <body>
 
 <div class="container">
-
   <div class="row">
     <div class="col-md-3">
       <h4><a href="/docs/query/query-beans">Query beans</a></h4>
@@ -15,7 +15,6 @@
       <h4><a href="/docs/query/expressions">Expressions</a></h4>
       <h4><a href="/docs/query/orderBy">OrderBy</a></h4>
     </div>
-
     <div class="col-md-3">
       <h4><a href="/docs/query/select">Select</a></h4>
       <h4><a href="/docs/query/fetch">Fetch</a></h4>

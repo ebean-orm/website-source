@@ -1,8 +1,11 @@
 <html>
 <head>
   <title>Aggregation | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
-  <meta name="bread2" content="Aggregation" href="/docs/query/aggregation"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="aggregation" href="/docs/query/aggregation"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign aggregation= "true">
 </head>
 <body>
@@ -304,7 +307,5 @@ BigDecimal cost;
 
 ```
 
-<@next "Having" "/docs/query/having"/>
-<@edit "/docs/query/filterMany"/>
-
+<@next_edit "Having" "/docs/query/having" "/docs/query/filterMany"/>
 </body>

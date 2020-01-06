@@ -1,12 +1,14 @@
 <html>
 <head>
   <title>Having | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_select.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
   <meta name="bread2" content="having" href="/docs/query/having"/>
+  <#assign n0_docs="true">
+  <#assign n1_query="true">
   <#assign having= "true">
 </head>
 <body>
-
 <h2>Having</h2>
 <p>
   We can add expressions to the <em>having clause</em> when we use Dynamic formula, @Aggregation properties
@@ -109,8 +111,6 @@ having count(*) > ?                                     // (2)
     .findList();
 ```
 
-<@next "Native SQL" "/docs/query/findNative"/>
-<@edit "/docs/query/having"/>
-
+<@next_edit "Native SQL" "/docs/query/findNative" "/docs/query/having"/>
 </body>
 </html>
