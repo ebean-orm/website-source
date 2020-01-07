@@ -321,11 +321,13 @@ nav.next p.next {
 .btn:hover {
   background-color: var(--fg-link1-color);
 }
-.breadcrumb, .breadcrumb a, .breadcrumb a:visited {
+#breadcrumb, #breadcrumb a, #breadcrumb a:visited {
   color: var(--fg-banner-nav);
   text-decoration: none;
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.5rem;
+  font-weight: normal;
+  text-transform: lowercase;
 }
 .nav-index {
   margin-top: 3rem;
