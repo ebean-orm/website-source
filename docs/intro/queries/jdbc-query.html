@@ -1,18 +1,21 @@
 <html>
 <head>
   <title>JDBC query | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro_query.html"/>
-  <meta name="bread2" content="JDBC Query" href="/docs/intro/query-abstractions/jdbc-query"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="queries" href="/docs/intro/queries"/>
+  <meta name="bread3" content="jdbc query" href="/docs/intro/queries/jdbc-query"/>
+  <#assign n0_intro="active">
+  <#assign n1_queries="active">
   <#assign jdbcQuery="active">
 </head>
 <body>
-
 <h2>JDBC Query</h2>
 <p>
   If we need to we can get the JDBC Connection and use raw JDBC.
 </p>
 <p>
-  Note that this in practice is rare (occurring less than <code>1%</code> in recent applications).
+  Note that this in practice is rare occurring less than <code>1%</code> in recent applications.
   It is nice that we can go to raw JDBC if we need to but yes, most applications won't need to
   go down to raw JDBC level.
 </p>
@@ -68,7 +71,7 @@
   </pre>
 </div>
 
-<@next_edit "Introduction" "/docs/intro" "/docs/intro/query-abstractions/jdbc-query.html"/>
+<@next_edit "Database and DB" "/docs/intro/api" "/docs/intro/queries/jdbc-query.html"/>
 
 </body>
 </html>

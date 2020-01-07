@@ -1,35 +1,32 @@
 <html>
 <head>
-  <title>First entity | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <#assign introIndex="active">
+  <title>Intro | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <#assign n0_intro="active">
+  <#assign n1_index="active">
 </head>
 <body>
 
-<h2>Introduction</h2>
-<p>
+<section class="nav-index">
+  <div class="grid g3">
+    <div>
+      <h4><a href="first-entity">First entity</a></h4>
+      <h4><a href="logging">Logging</a></h4>
+    </div>
 
-</p>
-<div class="rbg-index">
+    <div>
+      <h4><a href="queries">Query abstractions</a></h4>
+      <h4><a href="db-migrations">DB Migrations</a></h4>
+    </div>
 
-<div class="row rbg">
-  <!--<h5>main</h5>-->
-  <div class="col-md-4 docs-index" role="main">
-    <h3><a href="first-entity">First entity</a></h3>
-    <h3><a href="logging">Logging</a></h3>
+    <div>
+      <h4><a href="api">Database & DB API</a></h4>
+      <h4><a href="limitations">Limitations</a></h4>
+    </div>
   </div>
+</section>
 
-  <div class="col-md-4 docs-index" role="main">
-    <h3><a href="query-abstractions">Query abstractions</a></h3>
-    <h3><a href="db-migrations">DB Migrations</a></h3>
-  </div>
-
-  <div class="col-md-4 docs-index" role="main">
-    <h3><a href="api">Database & DB API</a></h3>
-    <h3><a href="limitations">Limitations</a></h3>
-  </div>
-</div>
-</div>
 <@next_edit "First entity" "/docs/intro/first-entity" "/docs/intro/index.html"/>
 
 </body>

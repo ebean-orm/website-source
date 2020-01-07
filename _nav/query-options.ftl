@@ -17,5 +17,4 @@
 
   <@smallnav activeCheck="${persistenceContextScope!''}" url="#persistenceContextScope" title="persistenceContextScope"/>
   <@smallnav activeCheck="${readOnly!''}" url="#readOnly" title="readOnly"/>
-
 </ul>

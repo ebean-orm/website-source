@@ -1,18 +1,19 @@
 <html>
 <head>
   <title>Logging | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="API - DB & Database" href="/docs/intro/api"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="Database & DB" href="/docs/intro/api"/>
+  <#assign n0_intro="active">
+  <#assign n1_api="active">
   <#assign api="active">
 </head>
 <body>
-
-<h2>API - DB and Database</h2>
-
 <h2 id="database">Database</h2>
 <p>
-  The <a target="_blank" href="/apidoc/11/io/ebean/Database.html">Database API</a> provides almost all of the functionality including
-  <code>queries</code>, <code>saving</code>, <code>deleting</code> and <code>transactions</code>.
+  The <a target="_blank" href="/apidoc/11/io/ebean/Database.html">Database API</a> provides almost
+  all of the functionality including <code>queries</code>, <code>saving</code>,
+  <code>deleting</code> and <code>transactions</code>.
 </p>
 <div class="code-java">
   <pre content="java">
@@ -36,7 +37,11 @@ try (Transaction transaction = database.beginTransaction()) {
 }
   </pre>
 </div>
-  
+<p>
+  When using Model, "Query beans" and <code>@Transactional</code> these under the hood are using
+  the <code>Database</code> API.
+</p>
+
 <h4>javax.sql.DataSource</h4>
 <p>
   A Database instance has an JDBC DataSource associating it one to one to an actual database.
@@ -137,7 +142,7 @@ config.addClass(MyEntityBean.class);
 Database database = DatabaseFactory.create(config);
   </pre>
 </div>
-  
+
 <p>
   Refer to <a href="databasefactory">DatabaseFactory</a> for more details.
 </p>

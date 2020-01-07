@@ -1,12 +1,15 @@
 <html>
 <head>
   <title>Constructors | First entity | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro_firstentity.html"/>
-  <meta name="bread2" content="Constructors" href="/docs/intro/first-entity/constructors"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="first entity" href="/docs/intro/first-entity"/>
+  <meta name="bread3" content="constructors" href="/docs/intro/first-entity/constructors"/>
+  <#assign n0_intro="active">
+  <#assign n1_firstentity="active">
   <#assign constructors="active">
 </head>
 <body>
-
 <h2>Constructors</h2>
 <p>
   We don't need a default constructor and this means we can give our entity beans a constructor
@@ -81,8 +84,7 @@ class Customer(name : String) {
   on the preferred constructor style for entity beans.
 </p>
 
-
-<@next_edit "Query Abstractions" "/docs/intro/query-abstractions" "/docs/intro/first-entity/constructors.html"/>
+<@next_edit "Queries" "/docs/intro/queries" "/docs/intro/first-entity/constructors.html"/>
 
 </body>
 </html>

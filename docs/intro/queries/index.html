@@ -1,0 +1,51 @@
+<html>
+<head>
+  <title>Queries | Intro | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="queries" href="/docs/intro/queries"/>
+  <#assign n0_intro="active">
+  <#assign n1_queries="active">
+</head>
+<body>
+<h2>Queries</h2>
+<p>
+  Ebean provides multiple query options from <a href="orm-query">ORM Queries</a> to
+  using a bit of SQL in our ORM query and all the way to using straight SQL queries
+  with beans and direct use of JDBC.
+</p>
+<p>
+  As developers we want to stay at the highest level of abstraction that we can
+  (ORM queries) but as needs occur we can drop down to using bits of SQL with our ORM query
+  and then down further to using full SQL as needed.
+</p>
+
+<h5><a href="orm-query">ORM queries</a></h5>
+<ul>
+  <li>Pure ORM queries, all SQL is generated</li>
+  <li>Some SQL in the select or where clause</li>
+  <li>Using SQL aka <a href="/docs/query/findNative">findNative</a></li>
+</ul>
+
+<h5><a href="dto-query">DTO queries</a></h5>
+<ul>
+  <li>Using SQL that we provide with non-entity beans - "dto beans"</li>
+</ul>
+
+<h5><a href="sql-query">SqlQuery</a></h5>
+<ul>
+  <li>Using SQL with a row mapper or SqlRow's - not DTO or Entity beans</li>
+  <li>SqlQuery using SqlRow</li>
+  <li>SqlQuery using RowMappers</li>
+</ul>
+
+<h5><a href="jdbc-query">JDBC queries</a></h5>
+<ul>
+  <li>Straight use of JDBC</li>
+  <li>Very rarely do we need to use raw JDBC</li>
+</ul>
+
+<@next_edit "ORM Query" "/docs/intro/queries/orm-query" "/docs/intro/queries/index.html"/>
+
+</body>
+</html>

@@ -1,8 +1,12 @@
 <html>
 <head>
   <title>ORM query | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro_query.html"/>
-  <meta name="bread2" content="ORM Query" href="/docs/intro/query-abstractions/orm-query"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="queries" href="/docs/intro/queries"/>
+  <meta name="bread3" content="orm query" href="/docs/intro/queries/orm-query"/>
+  <#assign n0_intro="active">
+  <#assign n1_queries="active">
   <#assign ormQuery="active">
 </head>
 <body>
@@ -10,7 +14,6 @@
 <p>
   There are several forms of ORM query. For detailed information on queries goto <a href="/docs/query">docs / query</a>
 </p>
-
 <h3 id="pure">"Pure" ORM Query</h3>
 <p>
   Below are examples of pure ORM queries. We specify no SQL functions explicitly and all the SQL is generated.
@@ -214,8 +217,7 @@ val customer = DB.findNative(Customer::class.java, sql)
   </pre>
 </div>
 
-
-<@next_edit "DTO Query" "dto-query" "/docs/intro/query-abstractions/orm-query.html"/>
+<@next_edit "DTO Query" "dto-query" "/docs/intro/queries/orm-query.html"/>
 
 </body>
 </html>
