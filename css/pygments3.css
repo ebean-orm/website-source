@@ -22,10 +22,10 @@
 [data-theme="dark"] {
   --py-keyword-type: #0e8fbf;
   --py-comment: #8d8d8d;
-  --py-keyword: #0e8fbf;
-  --py-namefun: #0e8fbf;
-  --py-nametag: #0e8fbf;
-  --py-nameattr: #0e8fbf;
+  --py-keyword: #5ea4bd;
+  --py-namefun: #5ea4bd;
+  --py-nametag: #5ea4bd;
+  --py-nameattr: #5ea4bd;
   --py-param: #a38ab5; /* Kotlin var */
   --py-literal: #10a519;
   --py-literal-number: #b953ed
