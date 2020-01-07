@@ -22,9 +22,9 @@
         <@nav1 activeCheck="${sect_persist!''}" url="/docs/persist" title="Persist"/>
         <@nav1 activeCheck="${sect_transactions!''}" url="/docs/transactions" title="Transactions"/>
         <li><a href="/docs/mapping">Mapping</a></li>
-        <li><a href="/docs/ddl">DDL Generation</a></li>
-        <li><a href="/docs/ddl/dbmigration">DB Migration</a></li>
-        <li><a href="/docs/logging">Logging</a></li>
+        <@nav1 activeCheck="${n2_ddlcreateall!''}" url="/docs/ddl/ddl-create-all" title="DDL Generation"/>
+        <@nav1 activeCheck="${n2_dbmigration!''}" url="/docs/ddl/dbmigration" title="DB Migration"/>
+        <@nav1 activeCheck="${n1_logging!''}" url="/docs/logging" title="Logging"/>
         <li><a href="/docs/testing">Testing</a></li>
         <li><a href="/docs/tuning">Tuning</a></li>
         <li><a href="/docs/features">Features</a></li>

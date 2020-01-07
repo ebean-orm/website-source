@@ -1,9 +1,14 @@
 <html>
 <head>
   <title>DB Migration Details | Docs | Ebean</title>
-  <meta name="layout" content="_layout/docs_ddl.html"/>
-  <meta name="bread2" content="DB Migration Details" href="/docs/ddl/"/>
-<#assign migrationdetail = "true">
+  <title>DB Migration | Docs | Ebean</title>
+  <title>Create All DDL | Docs | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="ddl" href="/docs/ddl/"/>
+  <meta name="bread2" content="db migrations" href="/docs/ddl/"/>
+  <#assign n0_docs="active">
+  <#assign n2_dbmigration="active">
+  <#assign migrationdetail = "true">
 </head>
 <body>
   <h2>Output files</h2>
@@ -258,9 +263,11 @@ public class GenerateDbMigration {
   ebean.migration.applyPrefix=V
   ```
 
-  <div class="next pull-right">
-    <a href="/docs/codestyle" class="btn btn-info">Next: Coding style</a>
-  </div>
+<!--<nav class="next">-->
+<!--  <p class="next">-->
+<!--    <a href="/docs/codestyle" class="btn btn-info">Next: Coding style</a>-->
+<!--  </p>-->
+<!--</nav>-->
 
 </body>
 </html>

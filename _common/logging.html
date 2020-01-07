@@ -1,0 +1,110 @@
+
+<h2>Logging</h2>
+<p>
+  Ebean uses <a href="//www.slf4j.org/">SLF4J</a> for logging.
+</p>
+
+<h2 id="typical">Typical logback configuration</h2>
+
+<pre content="xml">
+  <logger name="io.ebean.DDL" level="TRACE"/>
+
+  <logger name="io.ebean.SQL" level="TRACE"/>
+  <logger name="io.ebean.TXN" level="TRACE"/>
+  <logger name="io.ebean.SUM" level="TRACE"/>
+
+  <!-- L2 logging -->
+  <logger name="io.ebean.cache.QUERY" level="TRACE"/>
+  <logger name="io.ebean.cache.BEAN" level="TRACE"/>
+  <logger name="io.ebean.cache.COLL" level="TRACE"/>
+  <logger name="io.ebean.cache.NATKEY" level="TRACE"/>
+
+  <!-- Testing with Docker containers -->
+  <logger name="io.ebean.docker" level="TRACE"/>
+</pre>
+
+<h2 id="sql">SQL</h2>
+<p>
+  During development it is expected that you include logging of
+  <code>io.ebean.SQL</code> and <code>io.ebean.TXN</code>.
+  These log the sql statements executed, bind values for statement execution.
+</p>
+<pre content="xml">
+
+<!-- SQL and bind values -->
+<logger name="io.ebean.SQL" level="TRACE"/>
+</pre>
+
+<h2 id="txn">Transaction</h2>
+<p>
+  During development it is expected that you include logging of
+  <code>io.ebean.SQL</code> and <code>io.ebean.TXN</code>.
+  These log the transaction demarcation.
+</p>
+<pre content="xml">
+
+<!-- Transaction Commit and Rollback events -->
+<logger name="io.ebean.TXN" level="TRACE"/>
+</pre>
+
+
+<h2 id="ddl">DDL</h2>
+<pre content="xml">
+  <logger name="io.ebean.DDL" level="TRACE"/>
+</pre>
+
+<h2 id="docker">Docker logging</h2>
+<p>
+  Logging of docker commands used to start test containers with <a href="/docs/testing">ebean-test</a>.
+</p>
+
+<pre content="xml">
+
+<!-- Docker commands for starting test containers  -->
+<logger name="io.ebean.docker" level="TRACE"/>
+</pre>
+
+
+<h2 id="summary">Summary logging</h2>
+<p>
+  The summary logging of <code>io.ebean.SUM</code> is useful for showing lazy loading queries and how they relate
+  back to origin queries. This is useful when looking at more complex object graphs are
+  built. In tuning queries for N+1 etc.
+</p>
+
+<pre content="xml">
+
+<!-- Summary level details -->
+<logger name="io.ebean.SUM" level="TRACE"/>
+</pre>
+
+<h2 id="l2">L2 Cache logging</h2>
+
+<p>The L2 cache events can be logged using the logger entries below.
+  This is useful when you are starting out using the L2 cache and looking
+  at the behaviour with L2 caching.
+</p>
+
+
+<pre content="xml">
+
+<!-- L2 logging -->
+<logger name="io.ebean.cache.QUERY" level="TRACE"/>
+<logger name="io.ebean.cache.BEAN" level="TRACE"/>
+<logger name="io.ebean.cache.COLL" level="TRACE"/>
+<logger name="io.ebean.cache.NATKEY" level="TRACE"/>
+
+</pre>
+
+<h2 id="elastic">Elastic logging</h2>
+<p>
+  Logging queries and updates to ElasticSearch.
+</p>
+
+<pre content="xml">
+
+<!-- Elastic logging -->
+<logger name="io.ebean.ELA" level="TRACE"/>
+<logger name="io.ebean.ELQ" level="TRACE"/>
+<logger name="io.ebean.BULK" level="TRACE"/>
+</pre>
