@@ -1,123 +1,16 @@
 <html>
 <head>
-  <title>Native SQL (findNative) | Query | Ebean</title>
+  <title>findNative | Query | Ebean</title>
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="query" href="/docs/query/"/>
-  <meta name="bread2" content="native sql ( findNative )" href="/docs/query/findNative"/>
+  <meta name="bread2" content="findNative" href="/docs/query/findNative"/>
   <#assign n0_docs="true">
-  <#assign n1_query="true">
-  <#assign native="true">
+  <#assign n1_query_find="true">
+  <#assign findNative="true">
 </head>
 <body>
-<h2>Native SQL ( findNative )</h2>
-<p>
-  With <code>findNative</code> we supply the SQL.  The SQL can contain positioned parameters with <code>?</code>
-  or named parameters like <code>:foo</code>
-</p>
-<p>
-  With <em>findNative</em> the columns are automatically mapped to bean properties.
-</p>
-```java
-    String sql = "select id, name from customer where name like ?";
+<h2>findNative</h2>
+<#include "/_common/findNative.html">
 
-    Customer customer = DB.findNative(Customer.class, sql)
-        .setParameter(1, "Jo%")
-        .findOne();
-```
-<p>
-  An example using named parameters.
-</p>
-```java
-  String sql = "select id, name from customer where name like :name order by name desc";
-
-  List<|Customer> customers = DB.findNative(Customer.class, sql)
-      .setParameter("name", "Jo%")
-      .findList();
-```
-<p>
-  With the above examples we are selecting <b>some</b> columns and as a result getting
-  <b>partially populated entity beans</b> (which is good - we should only fetch things out of the DB
-  that we need).
-</p>
-<p>
-  We can use <code>select *</code> if we desire all the columns.
-</p>
-```java
-
-  String sql = "select * from customer where name like :name order by name desc";
-
-  List<|Customer> customers = DB.findNative(Customer.class, sql)
-      .setParameter("name", "Jo%")
-      .findList();
-```
-<h5>Internal workings</h5>
-<p>
-  The way this works is that when a query is first run the JDBC meta data is read for the
-  columns in the resultSet and then these columns are automatically mapped to bean properties.
-</p>
-<p>
-  This only needs to be done for the first execution of the query. How the query is mapped to
-  beans is cached so we only need to read the JDBC resultSet meta data once per query.
-</p>
-
-<h3>Limitations</h3>
-
-<p>
-  The limitation with using findNative (excluding Oracle) is that it can only map multiple tables when the path
-  for a given table is <em>unique</em>.
-</p>
-<p>
-  For example, lets say we have Customer that maps both a billingAddress and shippingAddress
-  to the Address. When ebean tries to map a column for the address table it does not know
-  which path (billingAddress or shippingAddress) the column maps to.
-</p>
-<p>
-  When we hit this limitation we need to use <a href="/docs/query/rawSql">RawSql</a> instead
-  where we can map the columns more explicitly to bean paths/properties.
-</p>
-
-<h4>Multiple tables</h4>
-<p>
-  Excluding Oracle (see oracle limitation below) our SQL can select from multiple tables and these
-  can automatically be mapped.
-</p>
-<p>
-  For example, we can fetch and populate 2 related beans like Customer and Contact.
-</p>
-```java
-  // Contacts + Customer
-  String sql
-    = "select con.id, con.first_name, con.last_name, cust.id, cust.name " +
-     " from contact con " +
-     " join customer cust on cust.id = con.customer_id " +
-     " order by con.first_name desc";
-
-  List<|Contact> contacts =
-
-    nativeSql(sql)
-      .findList();
-```
-
-<h5>Oracle limitation</h5>
-<p>
-  There is a limitation with the Oracle JDBC driver in that the meta data currently does not include
-  the table that a column relates to. This means that with Oracle we can only map a single table
-  and not multiple tables (and would have to use <a href="/docs/query/rawSql">RawSql</a> instead).
-</p>
-
-
-<h3 id="rawSql">RawSql</h3>
-<p>
-  Using findNative is preferred over <em>RawSql</em> as the way to execute <code>SQL</code> queries with
-  <code>entity beans</code> because it is nice and simple as the columns are mapped to properties
-  automatically for us.
-</p>
-<p>
-  However, findNative has some limitations when we want the select clause to include columns from
-  multiple tables (limitations described above).  When we hit those limitations we then need to
-  use <a href="/docs/query/rawSql">RawSql</a> with more explicit mapping of columns to properties.
-</p>
-
-<@next_edit "RawSql" "/docs/query/rawSql" "/docs/query/findNative"/>
 </body>
 </html>

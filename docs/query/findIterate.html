@@ -1,42 +1,49 @@
 <html>
 <head>
   <title>findIterate | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_find.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
   <meta name="bread2" content="findIterate" href="/docs/query/findIterate"/>
+  <#assign n0_docs="true">
+  <#assign n1_query_find="true">
   <#assign findIterate= "true">
 </head>
 <body>
-<h3>findIterate (Execute a query iterating over the results)</h3>
-
+<h2>findIterate</h2>
 <p>
-Execute the query iterating over the results. This is good for processing large results where we want to avoid holding all the beans/results in memory but instead iterator through them.
+  Execute the query iterating over the results. This is good for processing large results where we
+  want to avoid holding all the beans/results in memory but instead iterator through them.
 </p>
  <p>
- Note that <code>findIterate</code> (and <a href='findEach'>findEach</a> and <a href='findEachWhile'>findEachWhile</a>) uses a "per graph"
- persistence context scope and adjusts <code>jdbc</code> fetch buffer size for large
- queries. As such it is better to use <a href='findList'>findList</a> for small queries.
+   Note that <code>findIterate</code> (and <a href='findEach'>findEach</a> and
+   <a href='findEachWhile'>findEachWhile</a>) uses a "per graph"
+   persistence context scope and adjusts <code>jdbc</code> fetch buffer size for large
+   queries. As such it is better to use <a href='findList'>findList</a> for small queries.
  </p>
  <p>
- Remember that with <a href='/apidoc/current/io/ebean/QueryIterator.html'>QueryIterator</a> you must call <code>close()</code>
- when you have finished iterating the results (typically in a finally block).
+   Remember that with <a href='/apidoc/current/io/ebean/QueryIterator.html'>QueryIterator</a> you must call <code>close()</code>
+   when you have finished iterating the results (typically in a finally block).
  </p>
  <p>
- <a href='findEach'>findEach()</a> and <a href='findEachWhile'>findEachWhile()</a> are preferred to <code>findIterate</code> as they ensure
- the <code>jdbc</code> statement and <code>resultSet</code> are closed at the end of the iteration.
+   <a href='findEach'>findEach()</a> and <a href='findEachWhile'>findEachWhile()</a> are preferred to <code>findIterate</code> as they ensure
+   the <code>jdbc</code> statement and <code>resultSet</code> are closed at the end of the iteration.
  </p>
  <p>
- This query will execute against the <code>Database</code> that was used to create it.
+   This query will execute against the <code>Database</code> that was used to create it.
  </p>
 
 <h3>Closing Resources</h3>
 
 <b>As stated before, we must ensure the iterator is closed</b> as it holds <code>JDBC</code> resources.
 
-We should use <code>try-with-resources</code> or a <code>try-finally</code> block to make sure that the <a href='/apidoc/11/io/ebean/QueryIterator.html'>QueryIterator</a> is closed regardless of exceptions thrown during processing.
+We should use <code>try-with-resources</code> or a <code>try-finally</code> block to make sure that the
+<a href='/apidoc/11/io/ebean/QueryIterator.html'>QueryIterator</a> is closed regardless of exceptions thrown during processing.
 
-Note that <a href='findEach'>findEach</a> and <a href='findEachWhile'>findEachWhile</a> ensure all resources are closed regardless and for this reason they are recommended over <code>findIterate</code>.
+Note that <a href='findEach'>findEach</a> and <a href='findEachWhile'>findEachWhile</a> ensure all resources are closed
+regardless and for this reason they are recommended over <code>findIterate</code>.
 
-There are some use cases where <a href='findEach'>findEach</a> and <a href='findEachWhile'>findEachWhile</a> don't naturally fit and that is when we would look to use <code>findIterate</code>.
+There are some use cases where <a href='findEach'>findEach</a> and <a href='findEachWhile'>findEachWhile</a> don't naturally
+fit and that is when we would look to use <code>findIterate</code>.
 
 <h3> Example Code </h3>
 
@@ -70,6 +77,5 @@ try (QueryIterator<|Customer> it = query.findIterate()) {
    }
 }
 ```
-
 </body>
 </html>

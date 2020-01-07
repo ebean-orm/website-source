@@ -1,12 +1,15 @@
 <html>
 <head>
   <title>findIds | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_find.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
   <meta name="bread2" content="findIds" href="/docs/query/findIds"/>
+  <#assign n0_docs="true">
+  <#assign n1_query_find="true">
   <#assign findIds= "true">
 </head>
 <body>
-<h2>findIds (find the list of ids of a given query)</h2>
+<h2>findIds</h2>
 
 If you're only interested in the Ids of a given model, you can use the <code>findIds</code> method on the query
 
@@ -23,7 +26,6 @@ The generated <code>SQL</code> only selects the id from the table (even if you u
 ```sql
 select t0.id from Customer t0 where lower(t0.name) like 'Rob%'
 ```
-
 </body>
 </html>
 

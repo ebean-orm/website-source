@@ -1,44 +1,47 @@
 <html>
 <head>
   <title>findEach | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_find.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
   <meta name="bread2" content="findEach" href="/docs/query/findEach"/>
+  <#assign n0_docs="true">
+  <#assign n1_query_find="true">
   <#assign findEach= "true">
 </head>
 <body>
-<h2>findEach (process large queries, one bean at a time)</h2>
-
+<h2>findEach</h2>
 <p>
-This method is appropriate to process very large query results as the
-beans are consumed one at a time and do not need to be held in memory
-  (unlike <a href="/docs/query/findList">findList</a> <a href='/docs/query/findSet'>findSet</a> etc)
+  This method is appropriate to process a potentially large query result as the
+  beans are consumed one at a time and do not need to be held in memory
+  (unlike <a href="/docs/query/findList">findList</a>,
+  <a href='/docs/query/findSet'>findSet</a>, <a href='/docs/query/findMap'>findMap</a> )
 </p>
 <p>
-  Note that <code>findEach</code> (and <a href="/docs/query/findEachWhile">findEachWhile</a> and <a href="/docs/query/findIterate">findIterate</a>) uses a "per graph"
-persistence context scope and adjusts jdbc fetch buffer size for large
-queries. As such it is better to use findList for small queries.
+  Note that <code>findEach</code> (and <a href="/docs/query/findEachWhile">findEachWhile</a>
+  and <a href="/docs/query/findIterate">findIterate</a>) uses a "per graph"
+  persistence context scope and adjusts jdbc fetch buffer size for large
+  queries. As such it is better to use findList for small queries.
 </p>
 <p>
-Note that internally Ebean can inform the JDBC driver that it is expecting larger
-resultSet and specifically for <code>MySQL</code> this hint is required to stop it's JDBC driver
-from buffering the entire resultSet. As such, for smaller resultSets <a href="/docs/query/findList">findList()</a> is
-generally preferable.
+  Note that internally Ebean can inform the JDBC driver that it is expecting larger
+  resultSet and specifically for <code>MySQL</code> this hint is required to stop it's JDBC driver
+  from buffering the entire resultSet. As such, for smaller resultSets <a href="/docs/query/findList">findList()</a> is
+  generally preferable.
 </p>
 <p>
   Compared with <a href="/docs/query/findEachWhile">findEachWhile</a> this will always process all the beans where as
   <a href="/docs/query/findEachWhile">findEachWhile</a> provides a way to stop processing the query result early before
-all the beans have been read.
+  all the beans have been read.
 </p>
 <p>
   This method is functionally equivalent to <a href="/docs/query/findIterate">findIterate()</a> but instead of using an
   iterator uses the <code>Consumer<T></code> interface which is better suited to use with Java8 closures.
 </p>
 
-
  ```java
-database.find(Customer.class)
-   .where().eq("status", Status.NEW)
-   .order().asc("id")
+new QCustomer()
+   .status.equalTo(Status.NEW)
+   .order().id.asc()
    .findEach((Customer customer) -> {
 
      // do something with customer

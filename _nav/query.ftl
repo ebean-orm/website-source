@@ -81,7 +81,7 @@
   </ul>
 </@smallnav>
 <@smallnav activeCheck="${having!''}" url="/docs/query/having" title="Having"/>
-<@smallnav activeCheck="${native!''}" url="/docs/query/findNative" title="Native Sql"/>
+<@smallnav activeCheck="${native!''}" url="/docs/query/native-sql" title="Native Sql"/>
 <@smallnav activeCheck="${rawsql!''}" url="/docs/query/rawSql" title="RawSql"/>
 
 <@smallnav activeCheck="${update!''}" url="/docs/query/update" title="Update query"/>

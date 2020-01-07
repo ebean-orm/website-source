@@ -1,8 +1,11 @@
 <html>
 <head>
   <title>findPagedList | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_find.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
   <meta name="bread2" content="findPagedList" href="/docs/query/findPagedList"/>
+  <#assign n0_docs="true">
+  <#assign n1_query_find="true">
   <#assign findPagedList= "true">
 </head>
 <body>
@@ -34,7 +37,7 @@
 ```java
 // Find the first 100 new orders
 
-PagedList<Order> pagedOrders
+PagedList<|Order> pagedOrders
   = Order.find.where()
     .status.equalTo(Order.Status.NEW)
     .order()
@@ -47,12 +50,11 @@ PagedList<Order> pagedOrders
 pagedOrders.loadRowCount();
 
 // fetch and return the list in the foreground thread
-List<Order> orders = pagedOrders.getList();
+List<|Order> orders = pagedOrders.getList();
 
   // get the total row count (from the future)
 int totalRowCount = pagedOrders.getTotalRowCount();
 ```
-
 
 </body>
 </html>

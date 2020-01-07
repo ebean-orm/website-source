@@ -13,9 +13,21 @@
     </@nav0>
     <@nav0 activeCheck="${n0_docs!''}" url="/docs" title="Documentation">
       <ul>
-        <@nav1 activeCheck="${n1_query!''}" url="/docs/query" title="Query">
+        <#if n1_query_find??>
+          <@nav1 activeCheck="true" url="/docs/query" title="Query">
+            <#include "/_nav/query-find.ftl">
+          </@nav1>
+        <#elseif n1_query_options??>
+          <@nav1 activeCheck="true" url="/docs/query" title="Query">
+          <#include "/_nav/query-options.ftl">
+          </@nav1>
+        <#elseif n1_query??>
+          <@nav1 activeCheck="true" url="/docs/query" title="Query">
           <#include "/_nav/query.ftl">
-        </@nav1>
+          </@nav1>
+        <#else>
+          <@nav1 activeCheck="${n1_query_index!''}" url="/docs/query" title="Query"/>
+        </#if>
         <@nav1 activeCheck="${sect_persist!''}" url="/docs/persist" title="Persist"/>
         <@nav1 activeCheck="${sect_transactions!''}" url="/docs/transactions" title="Transactions"/>
         <li><a href="/docs/mapping">Mapping</a></li>

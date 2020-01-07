@@ -3,131 +3,100 @@
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="query" href="/docs/query/"/>
   <#assign n0_docs="active">
-  <#assign n1_query="active">
+  <#assign n1_query_index="active">
 </head>
 <body>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <h4><a href="/docs/query/query-beans">Query beans</a></h4>
-      <h4><a href="/docs/query/where">Where</a></h4>
-      <h4><a href="/docs/query/expressions">Expressions</a></h4>
-      <h4><a href="/docs/query/orderBy">OrderBy</a></h4>
-    </div>
-    <div class="col-md-3">
-      <h4><a href="/docs/query/select">Select</a></h4>
-      <h4><a href="/docs/query/fetch">Fetch</a></h4>
-      <h4><a href="/docs/query/fetchgroup">FetchGroup</a></h4>
-      <h4><a href="/docs/query/filterMany">FilterMany</a></h4>
-    </div>
-
-    <div class="col-md-3">
-      <h4><a href="/docs/query/aggregation">Aggregation</a></h4>
-      <h4><a href="/docs/query/having">Having</a></h4>
-      <h4><a href="/docs/query/findNative">Native Sql</a></h4>
-      <h4><a href="/docs/query/rawSql">RawSql</a></h4>
-    </div>
-
+<section class="nav-index">
+<div class="grid g3">
+  <div>
+    <h4><a href="/docs/query/query-beans">Query beans</a></h4>
+    <h4><a href="/docs/query/where">Where</a></h4>
+    <h4><a href="/docs/query/expressions">Expressions</a></h4>
+    <h4><a href="/docs/query/orderBy">OrderBy</a></h4>
+  </div>
+  <div>
+    <h4><a href="/docs/query/select">Select</a></h4>
+    <h4><a href="/docs/query/fetch">Fetch</a></h4>
+    <h4><a href="/docs/query/fetchgroup">FetchGroup</a></h4>
+    <h4><a href="/docs/query/filterMany">FilterMany</a></h4>
+  </div>
+  <div>
+    <h4><a href="/docs/query/aggregation">Aggregation</a></h4>
+    <h4><a href="/docs/query/having">Having</a></h4>
+    <h4><a href="/docs/query/native-sql">Native Sql</a></h4>
+    <h4><a href="/docs/query/rawSql">RawSql</a></h4>
   </div>
 
-  <p>&nbsp;</p>
-
-  <div class="row">
-    <div class="col-md-3">
-      <h4><a href="/docs/query/update">Update query</a></h4>
-      <h4><a href="/docs/query/delete">Delete query</a></h4>
-    </div>
-
-    <div class="col-md-3">
-      <h4><a href="/docs/query/dtoquery">DtoQuery</a></h4>
-      <h4><a href="/docs/query/sqlquery">SqlQuery</a></h4>
-    </div>
-
-    <div class="col-md-3">
-      <h4><a href="/docs/query/sqlupdate">SqlUpdate</a></h4>
-      <h4><a href="/docs/query/callablesql">CallableSql</a></h4>
-    </div>
-
+  <div>
+    <h4><a href="/docs/query/update">Update query</a></h4>
+    <h4><a href="/docs/query/delete">Delete query</a></h4>
   </div>
-
-
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-
-  <hr/>
-
-  <h4>Find methods:</h4>
-  <div class="row">
-    <div class="col-md-3">
-    </div>
-
-    <div class="col-md-3 links">
-      <h4><a href="/docs/query/exists">exists</a></h4>
-      <h4><a href="/docs/query/findOne">findOne</a></h4>
-      <h4><a href="/docs/query/findList">findList</a></h4>
-      <h4><a href="/docs/query/findMap">findMap</a></h4>
-      <h4><a href="/docs/query/findEach">findEach</a> ( large query )</h4>
-      <h4><a href="/docs/query/findIterate">findIterate</a> ( large query )</h4>
-      <h4><a href="/docs/query/findNative">findNative</a> ( sql )</h4>
-    </div>
-
-    <div class="col-md-3 links">
-      <h4><a href="/docs/query/findIds">findIds</a></h4>
-      <h4><a href="/docs/query/findCount">findCount</a></h4>
-      <h4><a href="/docs/query/findPagedList">findPagedList</a></h4>
-      <h4><a href="/docs/query/findSingleAttribute">findSingleAttribute</a></h4>
-      <h4><a href="/docs/query/findSingleAttributeList">findSingleAttributeList</a></h4>
-      <h4><a href="/docs/query/findVersions">findVersions</a></h4>
-    </div>
-
+  <div>
+    <h4><a href="/docs/query/dtoquery">DtoQuery</a></h4>
+    <h4><a href="/docs/query/sqlquery">SqlQuery</a></h4>
   </div>
-
-  <p>&nbsp;</p>
-  <hr/>
-
-
-  <h4>Query options</h4>
-
-  <div class="row">
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-3 links">
-      <h4><a href="/docs/query/option#distinct">distinct</a></h4>
-      <h4><a href="/docs/query/option#forUpdate">forUpdate</a></h4>
-      <h4><a href="/docs/query/option#disableLazyLoading">disableLazyLoading</a></h4>
-    </div>
-    <div class="col-md-3 links">
-      <h4><a href="/docs/query/option#includeSoftDeletes">includeSoftDeletes</a></h4>
-      <h4><a href="/docs/query/option#persistenceContextScope">persistenceContextScope</a></h4>
-      <h4><a href="/docs/query/option">all options</a></h4>
-    </div>
-  </div>
-
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <hr/>
-
-
-  <h4>Background</h4>
-
-  <div class="row">
-    <div class="col-md-3">
-    </div>
-
-    <div class="col-md-3 links">
-      <h4><a href="/docs/query/background/overview">Overview</a></h4>
-      <h4><a href="/docs/query/background/partialobjects">Partial Objects</a></h4>
-    </div>
-
-    <div class="col-md-3 links">
-      <h4><a href="/docs/query/background/nplus1">N plus 1</a></h4>
-      <h4><a href="/docs/query/background/typesafe">Query beans</a></h4>
-      <h4><a href="/docs/query/background/autotune">Automatic query tuning</a></h4>
-    </div>
+  <div>
+    <h4><a href="/docs/query/sqlupdate">SqlUpdate</a></h4>
+    <h4><a href="/docs/query/callablesql">CallableSql</a></h4>
   </div>
 
 </div>
 
+<hr/>
+<h4>Find methods:</h4>
+<div class="grid g3">
+  <div></div>
+  <div class="links">
+    <h4><a href="/docs/query/exists">exists</a></h4>
+    <h4><a href="/docs/query/findOne">findOne</a></h4>
+    <h4><a href="/docs/query/findList">findList</a></h4>
+    <h4><a href="/docs/query/findMap">findMap</a></h4>
+    <h4><a href="/docs/query/findEach">findEach</a> (large query)</h4>
+    <h4><a href="/docs/query/findIterate">findIterate</a> (large query)</h4>
+    <h4><a href="/docs/query/findNative">findNative</a> (sql)</h4>
+  </div>
+  <div class="links">
+    <h4><a href="/docs/query/findIds">findIds</a></h4>
+    <h4><a href="/docs/query/findCount">findCount</a></h4>
+    <h4><a href="/docs/query/findPagedList">findPagedList</a></h4>
+    <h4><a href="/docs/query/findSingleAttribute">findSingleAttribute</a></h4>
+    <h4><a href="/docs/query/findSingleAttributeList">findSingleAttributeList</a></h4>
+    <h4><a href="/docs/query/findVersions">findVersions</a></h4>
+  </div>
+</div>
+
+<hr/>
+<h4>Query options</h4>
+<div class="grid g3">
+  <div></div>
+  <div class="links">
+    <h4><a href="/docs/query/option#distinct">distinct</a></h4>
+    <h4><a href="/docs/query/option#forUpdate">forUpdate</a></h4>
+    <h4><a href="/docs/query/option#disableLazyLoading">disableLazyLoading</a></h4>
+  </div>
+  <div class="links">
+    <h4><a href="/docs/query/option#includeSoftDeletes">includeSoftDeletes</a></h4>
+    <h4><a href="/docs/query/option#persistenceContextScope">persistenceContextScope</a></h4>
+    <h4><a href="/docs/query/option">all options</a></h4>
+  </div>
+</div>
+
+
+<hr/>
+<h4>Background</h4>
+<div class="grid g3">
+  <div></div>
+  <div class="links">
+    <h4><a href="/docs/query/background/overview">Overview</a></h4>
+    <h4><a href="/docs/query/background/partialobjects">Partial Objects</a></h4>
+  </div>
+  <div class="links">
+    <h4><a href="/docs/query/background/nplus1">N plus 1</a></h4>
+    <h4><a href="/docs/query/background/typesafe">Query beans</a></h4>
+    <h4><a href="/docs/query/background/autotune">Automatic query tuning</a></h4>
+  </div>
+</div>
+</section>
 </body>
 </html>

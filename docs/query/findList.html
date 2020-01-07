@@ -1,17 +1,20 @@
 <html>
 <head>
   <title>findList | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_find.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
   <meta name="bread2" content="findList" href="/docs/query/findList"/>
+  <#assign n0_docs="true">
+  <#assign n1_query_find="true">
   <#assign findList = "true">
 </head>
 <body>
-<h3>findList</h3>
+<h2>findList</h2>
 <p>
   Returns a list of beans for the query.
 </p>
 ```java
-List<Customer> customers =
+List<|Customer> customers =
 
   where()
     .email.istartsWith("rob")

@@ -1,12 +1,15 @@
 <html>
 <head>
   <title>findOne | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_find.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
   <meta name="bread2" content="findOne" href="/docs/query/findOne"/>
+  <#assign n0_docs="true">
+  <#assign n1_query_find="true">
   <#assign findOne = "true">
 </head>
 <body>
-<h3>findOne</h3>
+<h2>findOne</h2>
 <p>
   Used when a query is expected to return 1 or zero beans.
 </p>
@@ -18,7 +21,7 @@ Contact contact =
 
 ```
 
-<h3>findOneOrEmpty</h3>
+<h2>findOneOrEmpty</h2>
 <p>
   The same as findOne but returns an <code>Optional</code> holding the bean.
 </p>

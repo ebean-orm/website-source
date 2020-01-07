@@ -1,12 +1,14 @@
 <html>
 <head>
   <title>Options | Query | Ebean</title>
-  <meta name="layout" content="_layout/docs_query_option.html"/>
-  <meta name="bread2" content="Option" href="/docs/query/options"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="query" href="/docs/query/"/>
+  <meta name="bread2" content="option" href="/docs/query/options"/>
+  <#assign n0_docs="true">
+  <#assign n1_query_options="true">
   <#assign options = "true">
 </head>
 <body>
-
 <h2 id="alias">Alias</h2>
 <p>
   Sets the table alias to use on the base table.
@@ -64,12 +66,12 @@ Document documentDraft =
   For entities with <a href="/docs/features/history">@History</a> fetch the entities <code>AS OF</code> the
   given timestamp.
 </p>
-```
-Timestamp past = ...;
+```java
+Timestamp timeInPast = ...;
 
 List<|Customer> customers
   = new QCustomer()
-  .asOf(past)
+  .asOf(timeInPast)
   .findList();
 ```
 
@@ -79,10 +81,10 @@ List<|Customer> customers
 </p>
 ```
 List<|Customer> customers
-    = new QCustomer()
-    .setAutoTune(true)              // automatically tune the query
-    .status.equalTo(Status.NEW)
-    .findList();
+= new QCustomer()
+.setAutoTune(true)              // automatically tune the query
+.status.equalTo(Status.NEW)
+.findList();
 ```
 
 <h2 id="bufferFetchSizeHint" class="art">bufferFetchSizeHint</h2>
@@ -220,8 +222,7 @@ try (Transaction txn = database.beginTransaction()) {
   throw an exception.
 </p>
 
-<@next "Queries" "/docs/query/"/>
-<@edit "/docs/query/option"/>
 
+<@next_edit "Queries" "/docs/query/" "/docs/query/option"/>
 </body>
 </html>
