@@ -26,6 +26,7 @@
   --bg-btn-border: #f9f9f9;
   --fg-placeholder: #bbb;
   --bg-footer: #dddddd;
+  --hr-color: #ddd;
 }
 [data-theme="dark"] {
   /*--bg-hero: url(/images/bg-hero-dark.png);*/
@@ -53,10 +54,14 @@
   --bg-btn-border: #555;
   --fg-placeholder: #555;
   --bg-footer: #202020;
+  --hr-color: #444;
 }
 
 body {
   margin: 0 auto;
+}
+hr {
+  border: 1px solid var(--hr-color);
 }
 table.table td, table.table th {
   vertical-align: top;

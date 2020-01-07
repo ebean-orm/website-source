@@ -1,78 +1,103 @@
 <html>
 <head>
-<meta name="layout" content="_layout/main.html" />
-<#assign releases = "active">
+  <title>Releases | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="releases" href="/docs/support"/>
+  <#assign n0_releases="active">
 </head>
 <body>
-  <div class="jumbotron mini">
-    <div class="container">
-      <h1>Releases</h1>
-    </div>
-  </div>
+<h2>Releases</h2>
 
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-6">
-        <h2>Source Code / Release Notes</h2>
-        <p>Please see the <a target="_blank" href="https://github.com/ebean-orm/ebean/releases">project's github release page</a> for details of the releases.</p>
+<h2>Source Code / Release Notes</h2>
+<p>
+  Please see the <a target="_blank" href="https://github.com/ebean-orm/ebean/releases">project's github release
+  page</a> for details of the releases.
+</p>
 
 
-        <h2>Maven</h2>
-        <@maven "io.ebean" "ebean" "auto" "1" />
+<h2>Latest</h2>
+<p>
+  View the latest artifacts for <code>io.ebean</code> in
+  <a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.ebean%22">maven central</a>.
+</p>
 
-        <h2>Latest</h2>
-        <p>
-          View the latest artifacts for <code>io.ebean</code> in <a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.ebean%22">maven central</a>.
-        </p>
+<h3 class="mtm">Older versions</h3>
+<p>
+  Past versions of Ebean artifacts where released using the groupId: <code>org.avaje.ebean</code> and
+  prior to that <code>org.avaje.ebeanorm</code>.
+  These artifacts can be found <a target="_blank"
+                                  href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.avaje.ebean%22">here</a>
+  and <a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.avaje.ebeanorm%22">here</a>.
+</p>
 
-        <h3 class="mtm">Older versions</h3>
-        <p>
-          Past versions of Ebean artifacts where released using the groupId: <code>org.avaje.ebean</code> and
-          prior to that <code>org.avaje.ebeanorm</code>.
-          These artifacts can be found <a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.avaje.ebean%22">here</a>
-          and <a target="_blank" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.avaje.ebeanorm%22">here</a>.
-        </p>
+<h4 class="mtm">ArtifactId changes</h4>
+<p>
+  In moving to the <code>io.ebean</code> groupId the artifactId's where changed to follow a simpler
+  naming convention.
+</p>
 
-        <h4 class="mtm">ArtifactId changes</h4>
-        <p>
-          In moving to the <code>io.ebean</code> groupId the artifactId's where changed to follow a simpler
-          naming convention.
-        </p>
+<table class="table">
+  <tr>
+    <th>New artifactId</th>
+    <th>Old artifactId</th>
+  </tr>
+  <tr>
+    <td>ebean</td>
+    <td>avaje-ebeanorm</td>
+  </tr>
+  <tr>
+    <td>ebean-agent</td>
+    <td>avaje-ebeanorm-agent</td>
+  </tr>
+  <tr>
+    <td>ebean-mocker</td>
+    <td>avaje-ebeanorm-mocker</td>
+  </tr>
+  <tr>
+    <td>ebean-maven-plugin</td>
+    <td>avaje-ebeanorm-mavenenhancer</td>
+  </tr>
+  <tr>
+    <td>ebean-querybean</td>
+    <td>avaje-ebeanorm-querybean</td>
+  </tr>
+  <tr>
+    <td>ebean-hazelcast</td>
+    <td>avaje-ebeanorm-hazelcast</td>
+  </tr>
+  <tr>
+    <td>ebean-ignite</td>
+    <td>avaje-ebeanorm-ignite</td>
+  </tr>
+  <tr>
+    <td>ebean-elastic</td>
+    <td>avaje-ebeanorm-elastic</td>
+  </tr>
+  <tr>
+    <td>ebean-spring</td>
+    <td>avaje-ebeanorm-spring</td>
+  </tr>
+  <tr>
+    <td>ebean-jackson</td>
+    <td>avaje-ebeanorm-jackson</td>
+  </tr>
+  <tr>
+    <td>ebean-cluster</td>
+    <td>avaje-ebeanorm-cluster</td>
+  </tr>
+</table>
 
-        <table class="table">
-          <tr><th>New artifactId</th><th>Old artifactId</th></tr>
-          <tr><td>ebean</td><td>avaje-ebeanorm</td></tr>
-          <tr><td>ebean-agent</td><td>avaje-ebeanorm-agent</td></tr>
-          <tr><td>ebean-mocker</td><td>avaje-ebeanorm-mocker</td></tr>
-          <tr><td>ebean-maven-plugin</td><td>avaje-ebeanorm-mavenenhancer</td></tr>
-          <tr><td>ebean-querybean </td><td>avaje-ebeanorm-querybean</td></tr>
-          <tr><td>ebean-hazelcast</td><td>avaje-ebeanorm-hazelcast</td></tr>
-          <tr><td>ebean-ignite</td><td>avaje-ebeanorm-ignite</td></tr>
-          <tr><td>ebean-elastic</td><td>avaje-ebeanorm-elastic</td></tr>
-          <tr><td>ebean-spring</td><td>avaje-ebeanorm-spring</td></tr>
-          <tr><td>ebean-jackson</td><td>avaje-ebeanorm-jackson</td></tr>
-          <tr><td>ebean-cluster</td><td>avaje-ebeanorm-cluster</td></tr>
-        </table>
-      </div>
 
-      <div class="col-md-6">
-        <h2>Donate</h2>
-        <p>
-          Help the Ebean project maintain releases and documentation.
-        </p>
-        <p>
-          Every donation helps the project maintain a high
-          level of quality in both code and documentation and donations help the ongoing effort.
-        </p>
-        <a type="button" class="btn btn-sm btn-warning" href="/funding">$Donate</a>
+<h2>Donate</h2>
+<p>
+  Help the Ebean project maintain releases and documentation.
+</p>
+<p>
+  Every donation helps the project maintain a high
+  level of quality in both code and documentation and donations help the ongoing effort.
+</p>
+<a type="btn" class="btn" href="/funding">$Donate</a>
 
-      </div>
-
-    </div> <!-- ./row -->
-    <div class="row">
-
-    </div>
-  </div> <!-- /.container -->
 </body>
 </html>

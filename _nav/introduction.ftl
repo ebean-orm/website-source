@@ -40,5 +40,6 @@
       </ul>
     </@nav1>
     <@nav1 activeCheck="${n1_limitations!''}" url="/docs/intro/limitations" title="Limitations"/>
+    <@nav1 activeCheck="${n1_trouble!''}" url="/docs/trouble-shooting" title="Trouble shooting"/>
   </ul>
 </@nav0>

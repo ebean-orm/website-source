@@ -28,8 +28,15 @@
         <li><a href="/docs/testing">Testing</a></li>
         <li><a href="/docs/tuning">Tuning</a></li>
         <li><a href="/docs/features">Features</a></li>
-        <li><a href="/docs/upgrading">Upgrading</a></li>
       </ul>
     </@nav0>
+    <@nav0 activeCheck="${n0_support!''}" url="/support" title="Getting help"/>
+    <li class="nav0 ">
+      <a target="_blank" href="/apidoc/11">API Javadoc</a>
+    </li>
+    <@nav0 activeCheck="${n0_videos!''}" url="/videos" title="Videos"/>
+    <@nav0 activeCheck="${n0_upgrading!''}" url="/docs/upgrading" title="Upgrading"/>
+    <@nav0 activeCheck="${n0_releases!''}" url="/releases" title="Releases"/>
+
   </ul>
 </nav>

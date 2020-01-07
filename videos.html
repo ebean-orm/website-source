@@ -1,49 +1,39 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/main.html"/>
-<#assign videos = "active">
+  <title>Videos | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="videos" href="/docs/support"/>
+  <#assign n0_videos="active">
 </head>
 <body>
-<div class="jumbotron mini">
-  <div class="container">
-    <h1>Videos</h1>
-  </div>
-</div>
+<h2>Videos</h2>
 
-<div class="container row-space">
-  <h2>Architecture</h2>
- <#include "/_vids/architecture_1.ftl">
+<h2>Architecture</h2>
+<#include "/_vids/architecture_1.ftl">
 
-  <hr/>
-  <h2>Enhancement</h2>
+<h2>Enhancement</h2>
 <#include "/_vids/enhancement_1.ftl">
 
-  <hr/>
-  <h2>DB Migration</h2>
+<h2>DB Migration</h2>
 <#include "/_vids/dbmigration_1.ftl">
 
-  <hr/>
-  <h2>Testing</h2>
-  <h4>ebean-mocker</h4>
+<h2>Testing</h2>
+<h4>ebean-mocker</h4>
 <#include "/_vids/testing_1.ftl">
 <#include "/_vids/testing_2.ftl">
 
-  <hr/>
-  <h2>Query</h2>
+<h2>Query</h2>
 <#include "/_vids/query_1.ftl">
 
-  <hr/>
-  <h2>Persisting</h2>
+<h2>Persisting</h2>
 <#include "/_vids/persist_1.ftl">
 
-  <hr/>
-  <h2>ElasticSearch</h2>
+<h2>ElasticSearch</h2>
 <#include "/_vids/elastic_1.ftl">
 
-  <hr/>
-  <h2>@History / SQL2011</h2>
+<h2>@History / SQL2011</h2>
 <#include "/_vids/history_1.ftl">
 
-</div>
 </body>
 </html>

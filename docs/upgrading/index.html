@@ -1,10 +1,10 @@
 <html>
 <head>
   <title>Upgrading Ebean version</title>
-  <meta name="layout" content="_layout/docs.html"/>
-  <meta name="bread1" content="Upgrading" href="/docs/upgrading/"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav.ftl"></template>
-  <#assign upgrading="active">
+  <title>Getting help | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="upgrading" href="/docs/upgrading/"/>
+  <#assign n0_upgrading="active">
 </head>
 <body>
 <h2>Summary of changes</h2>
@@ -52,7 +52,7 @@
 
 <h2>Upgrading to 10.x from 9.x</h2>
 <ul>
-  <li><h4 style="color: red;font-weight: bold">Change package to io.ebean</h4></li>
+  <li><h4 style="font-weight: bold">Change package to io.ebean</h4></li>
   <li>Remove DbMigrationConfig.generateOnStart() ... migrate to offline generation</li>
 </ul>
 

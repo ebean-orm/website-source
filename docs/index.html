@@ -1,129 +1,94 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_idx.html"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_index.ftl"></template>
-  <#assign documentation="active">
+  <title>Docs | Ebean</title>
+  <meta name="layout" content="_layout/docs_intro.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <#assign n0_docs="active">
 </head>
 <body>
-<!-- container -->
-<div class="rbg-index">
-  <div class="row rbg rbg-light">
-    <h5>start</h5>
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/getting-started/">Getting started</a></h3>
+<section class="nav-index">
+  <div class="grid g3">
+    <div>
+      <h4><a href="/docs/query">Query</a></h4>
+      <h4><a href="/docs/logging">Logging</a></h4>
     </div>
 
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/intro">Introduction</a></h3>
+    <div>
+      <h4><a href="/docs/persist">Persisting</a></h4>
+      <h4><a href="/docs/transactions">Transactions</a></h4>
     </div>
 
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/trouble-shooting">Trouble shooting</a></h3>
-    </div>
-  </div>
-
-  <p>&nbsp;</p>
-  <div class="row rbg">
-    <!--<h5>main</h5>-->
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/query">Query</a></h3>
-      <h3><a href="/docs/logging">Logging</a></h3>
+    <div>
+      <h4><a href="/docs/mapping">Mapping</a></h4>
     </div>
 
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/persist">Persisting</a></h3>
-      <h3><a href="/docs/transactions">Transactions</a></h3>
+    <div>
+      <h4><a href="/docs/ddl">DDL generation</a></h4>
+      <h4><a href="/docs/ddl">DB Migration</a></h4>
     </div>
 
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/mapping">Mapping</a></h3>
-    </div>
-  </div>
-
-  <p>&nbsp;</p>
-
-  <div class="row">
-
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/ddl">DDL generation</a></h3>
-      <h3><a href="/docs/ddl">DB Migration</a></h3>
+    <div>
+      <h4><a href="/docs/testing">Testing</a></h4>
+      <h4><a href="/docs/monitoring">Monitoring</a></h4>
     </div>
 
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/testing">Testing</a></h3>
-      <h3><a href="/docs/monitoring">Monitoring</a></h3>
+    <div>
+      <h4><a href="/docs/kotlin">Kotlin</a></h4>
+      <h4><a href="/docs/tuning">Tuning</a></h4>
     </div>
-
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/kotlin">Kotlin</a></h3>
-      <h3><a href="/docs/tuning">Tuning</a></h3>
-    </div>
-
-  </div>
-
-  <p>&nbsp;</p>
-
-  <div class="row rbg rbg-light">
-    <h5>advanced</h5>
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/features/l2cache">L2 Cache</a></h3>
-    </div>
-
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/upgrading">Upgrading</a></h3>
-    </div>
-
-    <div class="col-md-4 docs-index" role="main">
-    </div>
-
-  </div>
-
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-
-  <hr/>
-
-  <h4>Features</h4>
-
-  <div class="row">
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/features/elasticsearch">ElasticSearch</a></h3>
-      <h3><a href="/docs/features/history">History</a></h3>
-      <h3><a href="/docs/features/eventlistening">Event listening</a></h3>
-      <h3><a href="/docs/features/softdelete">Soft delete</a></h3>
-    </div>
-
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/features/who">Who auditing</a></h3>
-      <h3><a href="/docs/features/changelog">Change log</a></h3>
-      <h3><a href="/docs/features/readauditing">Read auditing</a></h3>
-    </div>
-
-    <div class="col-md-4 docs-index" role="main">
-      <h3><a href="/docs/features/json-in-db">JSON in DB</a></h3>
-      <h3><a href="/docs/features/json">JSON</a></h3>
-      <h3><a href="/docs/features/draftable">Draftable</a></h3>
-    </div>
-
   </div>
 
   <hr/>
-
-  <div class="row">
-    <div class="col-md-4 docs-index" role="main">
-      <h2>Architecture</h2>
-      <h3><a href="/docs/architecture/compare-jpa">JPA comparison</a></h3>
-      <h3><a href="/docs/architecture/compare-hibernate">Hibernate comparison</a></h3>
-      <h3><a href="/docs/architecture/persistence-context">Persistence context</a></h3>
-      <h3><a href="/docs/architecture/load-context">Load context</a></h3>
-
+  <h5>Advanced</h5>
+  <div class="grid g3">
+    <div>
+      <h4><a href="/docs/features/l2cache">L2 Cache</a></h4>
     </div>
-
-    <div class="col-md-4 docs-index" role="main">
-      <h2>Funding</h2>
-      <h3><a href="/funding">Funding &amp; Sponsorship</a></h3>
+    <div>
+      <h4><a href="/docs/upgrading">Upgrading</a></h4>
+    </div>
+    <div>
     </div>
   </div>
-</div>
+
+  <hr/>
+  <h5>Features</h5>
+  <div class="grid g3">
+    <div>
+      <h4><a href="/docs/features/elasticsearch">ElasticSearch</a></h4>
+      <h4><a href="/docs/features/history">History</a></h4>
+      <h4><a href="/docs/features/eventlistening">Event listening</a></h4>
+      <h4><a href="/docs/features/softdelete">Soft delete</a></h4>
+    </div>
+    <div>
+      <h4><a href="/docs/features/who">Who auditing</a></h4>
+      <h4><a href="/docs/features/changelog">Change log</a></h4>
+      <h4><a href="/docs/features/readauditing">Read auditing</a></h4>
+    </div>
+    <div>
+      <h4><a href="/docs/features/json-in-db">JSON in DB</a></h4>
+      <h4><a href="/docs/features/json">JSON</a></h4>
+      <h4><a href="/docs/features/draftable">Draftable</a></h4>
+    </div>
+  </div>
+
+  <hr/>
+  <div class="grid g3">
+    <div>
+      <h5>Architecture</h5>
+      <h4><a href="/docs/architecture/compare-jpa">JPA comparison</a></h4>
+      <h4><a href="/docs/architecture/compare-hibernate">Hibernate comparison</a></h4>
+      <h4><a href="/docs/architecture/persistence-context">Persistence context</a></h4>
+      <h4><a href="/docs/architecture/load-context">Load context</a></h4>
+    </div>
+    <div>
+      <h5>Funding</h5>
+      <h4><a href="/funding">Funding &amp; Sponsorship</a></h4>
+    </div>
+    <div>
+    </div>
+  </div>
+</section>
+
 </body>
 </html>
