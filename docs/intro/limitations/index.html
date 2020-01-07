@@ -2,18 +2,19 @@
 <head>
   <title>Limitations | Intro | Ebean</title>
   <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="Limitations" href="/docs/intro/limitations"/>
-  <#assign limitations="active">
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="limitations" href="/docs/intro/limitations"/>
+  <#assign n0_intro="active">
+  <#assign n1_limitations="active">
 </head>
 <body>
-
 <h2>JPA Mapping limitations</h2>
 <p>
   There are 2 known JPA mappings that Ebean does not support.
 </p>
 
 <table class="table">
-
   <tr>
     <td><a href="https://github.com/ebean-orm/ebean/issues/116">116</a></td>
     <td>
@@ -47,7 +48,7 @@
   tag.
 </p>
 
-<@next_edit "Introduction" "/docs/intro" "/docs/intro/query-abstractions/index.html"/>
+<@next_edit "Documentation" "/docs/" "/docs/intro/limitations/index.html"/>
 
 </body>
 </html>

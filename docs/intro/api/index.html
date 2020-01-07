@@ -3,7 +3,7 @@
   <title>Logging | Intro | Ebean</title>
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="introduction" href="/docs/intro/"/>
-  <meta name="bread2" content="Database & DB" href="/docs/intro/api"/>
+  <meta name="bread2" content="database & db" href="/docs/intro/api"/>
   <#assign n0_intro="active">
   <#assign n1_api="active">
   <#assign api="active">
@@ -227,8 +227,40 @@ defaultDatabase.save(customer);
   to use io.ebean.DB.
 </p>
 
+<h2 id="config">DatabaseConfig</h2>
+<p>
+  <code>io.ebean.DatabaseConfig</code> has the configuration used to create a Database instance.
+</p>
 
-<@next_edit "Introduction" "/docs/intro" "/docs/intro/api/index.html"/>
+```java
+
+DatabaseConfig config = new DatabaseConfig();
+
+// set configuration options
+config.set...
+...
+// and/or load configuration properties file
+config.loadFromProperties();
+
+// create the Database instance
+Database database = DatabaseFactory.create(config);
+```
+
+<h2 id="factory">DatabaseFactory</h2>
+<p>
+  <code>io.ebean.DatabaseFactory</code> has the static factory method that
+  takes a DatabaseConfig creating a Database instance.
+</p>
+
+```java
+// set configuration options
+DatabaseConfig config = new DatabaseConfig();
+config.set...
+
+Database database = DatabaseFactory.create(config);
+```
+
+<@next_edit "Logging" "/docs/intro/logging" "/docs/intro/api/index.html"/>
 
 </body>
 </html>

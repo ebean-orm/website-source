@@ -29,8 +29,8 @@
 }
 [data-theme="dark"] {
   /*--bg-hero: url(/images/bg-hero-dark.png);*/
-  --bg-banner: #363636;
-  --bg-banner2: #222;
+  --bg-banner: #2b2b2b;
+  --bg-banner2: #333;
   --fg-banner: #999;
   --fg-banner-nav: #888;
   --body-color: #bbb;
@@ -46,8 +46,8 @@
   --bg-code-tab: #636363;
   --cd-bg: #333;
   --cd-fg: #f9f9f9;
-  --bg-sidenav: #363636;
-  --bg-sidenav-border: #222;
+  --bg-sidenav: #2b2b2b;
+  --bg-sidenav-border: #333;
   --fg-btn:  #f9f9f9;
   --bg-btn:  #d07f34;
   --bg-btn-border: #555;
@@ -57,6 +57,10 @@
 
 body {
   margin: 0 auto;
+}
+table.table td, table.table th {
+  vertical-align: top;
+  padding: 1rem;
 }
 article>h2[id]::before, article>h3[id]::before, article>h4[id]::before {
   display: block;
@@ -318,8 +322,11 @@ nav.next p.next {
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.5rem;
 }
+.nav-index {
+  margin-top: 3rem;
+}
 .nav-index h4 {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: normal;
 }
 .nav-index hr {

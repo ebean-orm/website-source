@@ -1,8 +1,11 @@
 <html>
 <head>
   <title>Logging | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="Logging" href="/docs/intro/logging"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="logging" href="/docs/intro/logging"/>
+  <#assign n0_intro="active">
+  <#assign n1_logging="active">
   <#assign logging="active">
 </head>
 <body>
@@ -31,11 +34,6 @@
   <logger name="io.ebean.docker" level="TRACE"/>
 </pre>
 
-<h2 id="ddl">DDL</h2>
-<pre content="xml">
-  <logger name="io.ebean.DDL" level="TRACE"/>
-</pre>
-
 <h2 id="sql">SQL</h2>
 <p>
   During development it is expected that you include logging of
@@ -59,6 +57,24 @@
 <!-- Transaction Commit and Rollback events -->
 <logger name="io.ebean.TXN" level="TRACE"/>
 </pre>
+
+
+<h2 id="ddl">DDL</h2>
+<pre content="xml">
+  <logger name="io.ebean.DDL" level="TRACE"/>
+</pre>
+
+<h2 id="docker">Docker logging</h2>
+<p>
+  Logging of docker commands used to start test containers with <a href="/docs/testing">ebean-test</a>.
+</p>
+
+<pre content="xml">
+
+<!-- Docker commands for starting test containers  -->
+<logger name="io.ebean.docker" level="TRACE"/>
+</pre>
+
 
 <h2 id="summary">Summary logging</h2>
 <p>
@@ -104,18 +120,7 @@
 <logger name="io.ebean.BULK" level="TRACE"/>
 </pre>
 
-<h2 id="docker">Docker logging</h2>
-<p>
-  Logging of docker commands used to start test containers with <a href="/docs/testing">ebean-test</a>.
-</p>
-
-<pre content="xml">
-
-<!-- Docker commands for starting test containers  -->
-<logger name="io.ebean.docker" level="TRACE"/>
-</pre>
-
-<@next_edit "Query" "/docs/query" "/docs/logging/index.html"/>
+<@next_edit "DB Migrations" "/docs/intro/db-migrations" "/docs/logging/index.html"/>
 
 </body>
 </html>

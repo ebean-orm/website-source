@@ -15,9 +15,30 @@
         <@smallnav activeCheck="${jdbcQuery!''}" url="/docs/intro/queries/jdbc-query" title="JDBC query"/>
       </ul>
     </@nav1>
-    <@nav1 activeCheck="${n1_api!''}" url="/docs/intro/api" title="Database & DB"/>
-    <@nav1 activeCheck="${n1_logging!''}" url="/docs/intro/logging" title="Logging"/>
-    <@nav1 activeCheck="${n1_dbMigrations!''}" url="/docs/intro/db-migrations" title="DB Migrations"/>
+    <@nav1 activeCheck="${n1_api!''}" url="/docs/intro/api" title="Database & DB">
+      <ul class="nav nav-scroll">
+        <@smallnav activeCheck="" url="#database" title="Database"/>
+        <@smallnav activeCheck="" url="#db" title="DB"/>
+        <@smallnav activeCheck="" url="#config" title="DatabaseConfig"/>
+        <@smallnav activeCheck="" url="#factory" title="DatabaseFactory"/>
+      </ul>
+    </@nav1>
+    <@nav1 activeCheck="${n1_logging!''}" url="/docs/intro/logging" title="Logging">
+      <ul class="nav nav-scroll">
+        <@smallnav activeCheck="" url="#sql" title="SQL"/>
+        <@smallnav activeCheck="" url="#txn" title="Transactions"/>
+        <@smallnav activeCheck="" url="#ddl" title="DDL"/>
+        <@smallnav activeCheck="" url="#docker" title="Docker"/>
+        <@smallnav activeCheck="" url="#l2" title="L2"/>
+        <@smallnav activeCheck="" url="#elastic" title="ElasticSearch"/>
+      </ul>
+    </@nav1>
+    <@nav1 activeCheck="${n1_dbmigrations!''}" url="/docs/intro/db-migrations" title="DB Migrations">
+      <ul class="nav nav-scroll">
+        <@smallnav activeCheck="" url="#generate" title="Generate migrations"/>
+        <@smallnav activeCheck="" url="#run" title="Run migrations"/>
+      </ul>
+    </@nav1>
     <@nav1 activeCheck="${n1_limitations!''}" url="/docs/intro/limitations" title="Limitations"/>
   </ul>
 </@nav0>

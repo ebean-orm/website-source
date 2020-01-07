@@ -1,8 +1,11 @@
 <html>
 <head>
   <title>DB Migrations | Intro | Ebean</title>
-  <meta name="layout" content="_layout/docs_intro.html"/>
-  <meta name="bread2" content="DB Migrations" href="/docs/intro/db-migrations"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="db migrations" href="/docs/intro/db-migrations"/>
+  <#assign n0_intro="active">
+  <#assign n1_dbmigrations="active">
   <#assign dbMigrations="active">
 </head>
 <body>
@@ -12,7 +15,7 @@
   Ebean has built in support for generating DB migrations and running them
 </p>
 
-<h3>Generating migrations</h3>
+<h2 id="generate">Generating DB Migrations</h2>
 <p>
   Note that we can use <a href="/docs/getting-started/cli-tool">ebeaninit</a> to add
   <em>GenerateDbMigration</em> (the code below) to your project.
@@ -79,8 +82,10 @@ fun main(args : Array<!String>) {
 </div>
 <p>
   We run this manually when we have completed some work and consider it ready to be released.
+</p>
+<p>
   Running the generation starts the EbeanServer in offline mode, performs a DIFF of the
-  model and generates the migration script.
+  model and generates the migration DDL script.
 </p>
 
 <h2 id="run">Running Migration</h2>
@@ -90,19 +95,19 @@ fun main(args : Array<!String>) {
 
 <h5>In application.yaml</h5>
 ```yml
-## run migrations when the EbeanServer starts
+## run migrations when the Ebean starts
 ebean:
   migration:
     run: true
 ```
 <p>
-  With <code>ebean.migration.run=true</code> then when the EbeanServer starts it will look at the
+  With <code>ebean.migration.run=true</code> then when the Ebean starts it will look at the
   migrations and run any that need to be run.  The migration runner will by default create a table
   called <code>db_migration</code> that holds the meta data about the migrations that have been run
   and inserts into this table when migrations are successfully executed.
 </p>
 
-<@next_edit "ORM Query" "/docs/intro/query-abstractions/orm-query" "/docs/intro/query-abstractions/index.html"/>
+<@next_edit "Limitations" "/docs/intro/limitations" "/docs/intro/query-abstractions/index.html"/>
 
 </body>
 </html>
