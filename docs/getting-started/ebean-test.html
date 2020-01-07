@@ -1,44 +1,39 @@
 <html>
 <head>
   <title>ebeaninit | Getting started | Ebean</title>
-  <meta name="layout" content="_layout/docs_gettingstarted.html"/>
-  <meta name="bread2" content="ebean-test" href="/docs/getting-started/ebean-test"/>
-  <#assign ebeanTest="active">
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="getting started" href="/docs/getting-started/"/>
+  <meta name="bread2" content="test setup" href="/docs/getting-started/ebean-test"/>
+  <#assign n0_start="active">
+  <#assign n1_test="active">
 </head>
 <body>
-<h2>ebean-test</h2>
+<h2>test setup</h2>
 <p>
-  <em>ebean-test</em> is used to setup and configure Ebean for running tests.
+  <code>ebean-test</code> is used to setup and configure Ebean for running tests.
 </p>
 
 <h3>1. Add ebean-test as a test dependency</h3>
 
-<ul class="nav nav-tabs mytabs">
-  <li role="presentation" class="active"><a href="#maven-tab">Maven</a></li>
-  <li role="presentation"><a href="#gradle-tab">Gradle</a></li>
-</ul>
-
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="maven-tab">
-    <pre content="xml">
-      <dependency>
-        <groupId>io.ebean</groupId>
-        <artifactId>ebean-test</artifactId>
-        <version>12.1.8</version>
-        <scope>test</scope>
-      </dependency>
-    </pre>
-  </div>
-  <div role="tabpanel" class="tab-pane" id="gradle-tab">
-    <pre content="groovy">
-    dependencies {
-        ...
-        testCompile 'io.ebean:ebean-test:12.1.8'
-    }
-    </pre>
-  </div>
+<#include "/_common/tab-buildtool-buttons.html">
+<div class="build-maven">
+  <pre content="xml">
+    <dependency>
+      <groupId>io.ebean</groupId>
+      <artifactId>ebean-test</artifactId>
+      <version>12.1.8</version>
+      <scope>test</scope>
+    </dependency>
+  </pre>
 </div>
-
+<div class="build-gradle">
+  <pre content="groovy">
+  dependencies {
+      ...
+      testCompile 'io.ebean:ebean-test:12.1.8'
+  }
+  </pre>
+</div>
 
 <h3>2. Add application-test.yaml</h3>
 <p>

@@ -1,0 +1,54 @@
+<html>
+<head>
+  <title>Getting started | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="getting started" href="/docs/getting-started/"/>
+  <meta name="bread2" content="eclipse ide" href="/"/>
+  <#assign n0_start="active">
+  <#assign n1_eclipse="active">
+</head>
+<body>
+<h2 id="eclipse">Eclipse IDE</h2>
+<p>
+  Ebean uses bytecode enhancement to provide <code>dirty checking</code> and <code>lazy loading</code>.
+  Setup Eclipse to use the Ebean agent to enhance entity beans and transactional methods
+  when we develop and run tests in the IDE.
+</p>
+<p>
+  Install the Plugin for IntelliJ IDEA or Eclipse IDE.
+</p>
+
+<h4>Eclipse IDE</h4>
+<div class="grid g2">
+  <div>
+    <p>
+      <b>Preferences</b> > <b>Installed JREs</b>
+    </p>
+    <p>
+      Goto the installed JRE's and hit <b>Edit</b>
+    </p>
+  </div>
+  <div>
+    <img src="/images/eclipse-pref-jres.png" width="450">
+  </div>
+</div>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="grid g2">
+  <div>
+    <h4>Add -javaagent</h4>
+    <p>
+      Add the ebean-agent as a VM -javaagent argument to the JRE.
+      Use this JRE for your project.
+    </p>
+  </div>
+  <div>
+    <img src="/images/eclipse-jre-agent.png" width="450">
+  </div>
+</div>
+
+<@next_edit "CLI Tool" "cli-tool" "/docs/getting-started/cli-tool"/>
+
+</body>
+</html>

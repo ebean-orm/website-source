@@ -4,20 +4,14 @@ $(function () {
 function init() {
   setTheme(localStorage.getItem('theme'));
   showCodeLang(localStorage.getItem('lang'));
+  showBuildTool(localStorage.getItem('buildTool'));
   scroll.init();
 }
-
-function setLang(lang) {
-  localStorage.setItem('lang', lang);
-  showCodeLang(lang);
-}
-
 function toggleTheme() {
   const theme = localStorage.getItem('theme') === 'dark' ? 'light' : 'dark';
   localStorage.setItem('theme', theme);
   setTheme(theme);
 }
-
 function setTheme(theme) {
   if (theme === 'dark') {
     document.body.setAttribute("data-theme", "dark");
@@ -25,7 +19,27 @@ function setTheme(theme) {
     document.body.setAttribute("data-theme", "light")
   }
 }
-
+function setBuildTool(tool) {
+  localStorage.setItem('buildTool', tool);
+  showBuildTool(tool);
+}
+function setLang(lang) {
+  localStorage.setItem('lang', lang);
+  showCodeLang(lang);
+}
+function showBuildTool(tool) {
+  if (tool === 'gradle') {
+    $('.build-maven').hide();
+    $('.build-gradle').show();
+    $('.gradleActive').addClass('active');
+    $('.mavenActive').removeClass('active');
+  } else {
+    $('.build-gradle').hide();
+    $('.build-maven').show();
+    $('.gradleActive').removeClass('active');
+    $('.mavenActive').addClass('active');
+  }
+}
 function showCodeLang(lang) {
   if (lang === 'kt') {
     $('.code-java').hide();

@@ -4,115 +4,38 @@
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="getting started" href="/docs/getting-started/"/>
   <#assign n0_start="active">
-  <#assign n1_ide="active">
 </head>
 <body>
-<h3 id="prerequisites">Prerequisite - Java 8</h3>
+<h2 id="prerequisites">Prerequisite - Java 8</h2>
 <p>
-  <code>Java 8</code> or later is expected to be already installed.
-</p>
-<h3 id="examples">Example projects</h3>
-<p>
-  Explore example Java projects for <a href="https://github.com/ebean-orm-examples/example-java8">Maven</a>,
-  <a href="https://github.com/ebean-orm-examples/example-gradle-java">Gradle</a>
-  or Kotlin projects using <a href="https://github.com/ebean-orm-examples/example-kotlin">Maven</a> or
-  <a href="https://github.com/ebean-orm-examples/example-gradle-kotlin">Gradle</a>.
-</p>
-<p>
-  For all example projects including ElasticSearch, PostGIS etc goto <a href="/docs/examples">/docs/examples</a>.
+  Java 8 or later is expected to be already installed.
 </p>
 
 <p>&nbsp;</p>
-
-<h3 id="ide">Step 1: Install IDE Plugin</h3>
+<h3 id="examples">Example projects</h3>
 <p>
-  Ebean uses bytecode enhancement to provide <code>dirty checking</code> and <code>lazy loading</code>
-  among other things. We using tooling via IDEA, Eclipse, Maven and Gradle plugins to perform this enhancement.
+  You can explore example Java projects for
+  <a href="https://github.com/ebean-orm-examples/example-java8">Maven</a>,
+  <a href="https://github.com/ebean-orm-examples/example-gradle-java">Gradle</a>
+  or example Kotlin projects using
+  <a href="https://github.com/ebean-orm-examples/example-kotlin">Maven</a> or
+  <a href="https://github.com/ebean-orm-examples/example-gradle-kotlin">Gradle</a>.
 </p>
 <p>
-  Install the Plugin for IntelliJ IDEA or Eclipse IDE.
+  For other example projects including ElasticSearch, PostGIS etc goto <a href="/docs/examples">/docs/examples</a>.
 </p>
 
-<ul class="nav nav-tabs mytabs">
-  <li role="presentation" class="active"><a href="#idea-tab">IntelliJ IDEA</a></li>
-  <li role="presentation"><a href="#eclipse-tab">Eclipse IDE</a></li>
-</ul>
+<p>&nbsp</p>
 
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="idea-tab">
-
-    <h4>IntelliJ IDEA</h4>
-    <div class="container">
-
-      <div class="row">
-        <div class="col-md-4">
-          <p>
-            <b>File</b> > <b>Settings</b> > <b>Plugins</b> > <b>"Ebean 11"</b>
-          </p>
-          <p>Install Ebean 11 IDEA Plugin</p>
-        </div>
-        <div class="col-md-4">
-          <img src="/images/scn-idea-plugin.png" width="300">
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          <img src="/images/scn-idea-plugin-selected.png" width="300">
-        </div>
-        <div class="col-md-4">
-          <h4>Turn on plugin per project</h4>
-          <p>
-            The plugin is turned on and off per project. We need to turn it on for it to perform enhancement
-            on the current project.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-  <div role="tabpanel" class="tab-pane" id="eclipse-tab">
-
-    <h4>Eclipse IDE</h4>
-    <div class="container">
-
-      <div class="row">
-        <div class="col-md-3">
-          <p>
-            <b>Preferences</b> > <b>Installed JREs</b>
-          </p>
-          <p>
-            Goto the installed JRE's and hit <b>Edit</b>
-          </p>
-        </div>
-        <div class="col-md-5">
-          <img src="/images/eclipse-pref-jres.png" width="450">
-        </div>
-      </div>
-
-      <p>&nbsp;</p>
-      <div class="row">
-
-        <div class="col-md-3">
-          <h4>Add -javaagent</h4>
-          <p>
-            Add the ebean-agent as a VM -javaagent argument to the JRE.
-            Use this JRE for your project.
-          </p>
-        </div>
-        <div class="col-md-5">
-          <img src="/images/eclipse-jre-agent.png" width="450">
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-<@next_edit "CLI Tool" "cli-tool" "/docs/getting-started/cli-tool"/>
+<h2 id="ide">Install IDE Plugin</h2>
+<p>
+  Ebean uses bytecode enhancement to provide <code>dirty checking</code> and <code>lazy loading</code>.
+  We using tooling via IDEA, Eclipse, Maven and Gradle plugins to perform this enhancement.
+</p>
+<p>
+  Install the Plugin for <a class="btn" href="intellij-idea">IntelliJ IDEA</a>  or
+  <a class="btn" href="eclipse-ide">Eclipse IDE</a>.
+</p>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 :root {
-  --bg-hero: url(/images/bg-hero.png);
+  /*--bg-hero: url(/images/bg-hero.png);*/
   --body-color: #212529;
   --body-bg-color: #fff;
   --bg-banner: #132d45;
@@ -20,9 +20,10 @@
   --bg-btn:  #d07f34;
   --bg-btn-border: #f9f9f9;
   --fg-placeholder: #bbb;
+  --bg-footer: #dddddd;
 }
 [data-theme="dark"] {
-  --bg-hero: url(/images/bg-hero-dark.png);
+  /*--bg-hero: url(/images/bg-hero-dark.png);*/
   --bg-banner: #202020;
   --bg-banner2: #2f2f2f;
   --body-color: #cecece;
@@ -40,6 +41,7 @@
   /*--bg-btn:  #d07f34;*/
   /*--bg-btn-border: #f9f9f9;*/
   --fg-placeholder: #555;
+  --bg-footer: #202020;
 }
 
 body {
@@ -53,9 +55,13 @@ article>h2[id]::before, article>h3[id]::before, article>h4[id]::before {
   content: "";
 }
 #banner header, #footer div {
-  max-width: 90rem;
-  margin: 0 auto;
+  /*max-width: 90rem;*/
+  /*margin: 0 auto;*/
   padding: 0.3rem 1rem 0.3rem 1rem;
+}
+footer#footer {
+  background-color: var(--bg-footer);
+  min-height: 5rem;
 }
 .grid {
   max-width: 90rem;
@@ -65,7 +71,7 @@ article>h2[id]::before, article>h3[id]::before, article>h4[id]::before {
   grid-template-columns: auto 20rem;
 }
 .g2 {
-  grid-template-columns: 35em 35rem;
+  grid-template-columns: 1fr 1fr;
 }
 .g3 {
   grid-template-columns: 1fr 1fr 1fr;
@@ -106,7 +112,7 @@ header, footer {
   justify-content: center;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 1000px) {
   aside, article {
     grid-column: 1 / 3;
   }
@@ -114,11 +120,11 @@ header, footer {
     display: none;
   }
 }
-@media all and (max-width: 1000px) {
-  .g3 {
-    grid-template-columns: auto 30rem;
-  }
-}
+/*@media all and (max-width: 1000px) {*/
+/*  .g3 {*/
+/*    grid-template-columns: auto 30rem;*/
+/*  }*/
+/*}*/
 #hero {
   color: var(--fg-banner);
   background-color: #132d45;
