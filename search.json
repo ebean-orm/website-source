@@ -74,14 +74,6 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"Tooling",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/tooling"
-}
-,{
-  "title":"",
-  "caption":"",
   "category":"Coding style",
   "priority":"0",
   "keywords":"",
@@ -1208,22 +1200,6 @@
   "url":"/docs/mapping/who-modified"
 }
 ,{
-  "title":"Agent",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/agent"
-}
-,{
-  "title":"Agent - Agent Loader",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/agent#agent_loader"
-}
-,{
   "title":"Aggregation",
   "caption":"",
   "category":"Query",
@@ -1382,22 +1358,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/persist#bulkupdate"
-}
-,{
-  "title":"CLI Tool (ebeaninit)",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/cli-tool"
-}
-,{
-  "title":"CLI Tool (ebeaninit) - CLI Tool - ebeaninit",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/cli-tool"
 }
 ,{
   "title":"CLI tool - ebeaninit",
@@ -1960,118 +1920,6 @@
   "url":"/docs/testing"
 }
 ,{
-  "title":"Eclipse",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse - Eclipse IDE Enhancement plugin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse - Installing the plugin for Eclipse",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse - Query bean generation with Maven and APT",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse - Recommendation",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse#recommendation"
-}
-,{
-  "title":"Eclipse - Videos",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse"
-}
-,{
-  "title":"Eclipse / APT and Maven",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt"
-}
-,{
-  "title":"Eclipse / APT and Maven - 1. Install m2e apt plugin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#m2e-apt"
-}
-,{
-  "title":"Eclipse / APT and Maven - 2. Preferences / Maven / Annotation processing",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#preferences"
-}
-,{
-  "title":"Eclipse / APT and Maven - 3. Project / Java compile / Annotation processing",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#java-compile"
-}
-,{
-  "title":"Eclipse / APT and Maven - 4. Project / Java compile / Annotation processing / Factory Path",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#factory-path"
-}
-,{
-  "title":"Eclipse / APT and Maven - Eclipse, APT and Maven",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt"
-}
-,{
-  "title":"Eclipse / APT and Maven - Overview",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt#overview"
-}
-,{
-  "title":"Eclipse / APT and Maven - Videos",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/eclipse-maven-apt"
-}
-,{
   "title":"Eclipse IDE",
   "caption":"",
   "category":"Getting started",
@@ -2102,46 +1950,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/testing/elasticsearch"
-}
-,{
-  "title":"Enhancement",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/enhancement"
-}
-,{
-  "title":"Enhancement - Overview",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/enhancement#overview"
-}
-,{
-  "title":"Enhancement - Recommendation",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/enhancement#recommendation"
-}
-,{
-  "title":"Enhancement - Using multiple enhancers",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/enhancement#multiple"
-}
-,{
-  "title":"Enhancement - Videos",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/enhancement"
 }
 ,{
   "title":"Example Application",
@@ -2544,36 +2352,12 @@
   "url":"/docs/getting-started/gradle"
 }
 ,{
-  "title":"Gradle",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling"
-}
-,{
   "title":"Gradle - Example projects",
   "caption":"",
   "category":"Getting started",
   "priority":"3",
   "keywords":"",
   "url":"/docs/getting-started/gradle"
-}
-,{
-  "title":"Gradle - Example projects",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle"
-}
-,{
-  "title":"Gradle - Gradle plugin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle"
 }
 ,{
   "title":"Gradle - Kotlin",
@@ -2584,28 +2368,12 @@
   "url":"/docs/getting-started/gradle"
 }
 ,{
-  "title":"Gradle - Kotlin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle"
-}
-,{
   "title":"Gradle - Test output",
   "caption":"",
   "category":"Getting started",
   "priority":"3",
   "keywords":"",
   "url":"/docs/getting-started/gradle"
-}
-,{
-  "title":"Gradle - Test output",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/gradle"
 }
 ,{
   "title":"Guice",
@@ -2638,46 +2406,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history"
-}
-,{
-  "title":"IDEA",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/idea"
-}
-,{
-  "title":"IDEA - Installing the plugin for IDEA",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/idea"
-}
-,{
-  "title":"IDEA - IntelliJ IDEA enhancement plugin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/idea"
-}
-,{
-  "title":"IDEA - Recommendation",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/idea#recommendation"
-}
-,{
-  "title":"IDEA - Videos",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/idea"
 }
 ,{
   "title":"Implicit transactions",
@@ -2968,28 +2696,12 @@
   "url":"/docs/getting-started/maven"
 }
 ,{
-  "title":"Maven",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling"
-}
-,{
   "title":"Maven - Add maven tile",
   "caption":"",
   "category":"Getting started",
   "priority":"3",
   "keywords":"",
   "url":"/docs/getting-started/maven#tile"
-}
-,{
-  "title":"Maven - Add maven tile",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/maven#tile"
 }
 ,{
   "title":"Maven - Dependencies",
@@ -3000,14 +2712,6 @@
   "url":"/docs/getting-started/maven#dependencies"
 }
 ,{
-  "title":"Maven - Dependencies",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/maven#dependencies"
-}
-,{
   "title":"Maven - Examples",
   "caption":"",
   "category":"Getting started",
@@ -3016,36 +2720,12 @@
   "url":"/docs/getting-started/maven"
 }
 ,{
-  "title":"Maven - Examples",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/maven"
-}
-,{
-  "title":"Maven - Maven enhancement",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/maven"
-}
-,{
   "title":"Maven / Plugin",
   "caption":"",
   "category":"Getting started",
   "priority":"3",
   "keywords":"",
   "url":"/docs/getting-started/maven-plugin"
-}
-,{
-  "title":"Maven plugin",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling/maven-plugin"
 }
 ,{
   "title":"Metrics",
@@ -3670,14 +3350,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/l2cache#read-consistency"
-}
-,{
-  "title":"Recommendation",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling#recommendation"
 }
 ,{
   "title":"Rob's view: Active record benefits",
@@ -4318,14 +3990,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/history#videos"
-}
-,{
-  "title":"Videos",
-  "caption":"",
-  "category":"Tooling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/tooling"
 }
 ,{
   "title":"Where",
