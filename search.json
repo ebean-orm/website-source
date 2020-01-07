@@ -240,30 +240,6 @@
   "url":"/docs/introduction#db"
 }
 ,{
-  "title":"DB migrations - DB Migrations",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/db-migrations"
-}
-,{
-  "title":"DB migrations - Generating DB Migrations",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/db-migrations#generate"
-}
-,{
-  "title":"DB migrations - Running Migration",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/db-migrations#run"
-}
-,{
   "title":"DInject",
   "caption":"",
   "category":"Introduction",
@@ -478,46 +454,6 @@
   "priority":"2",
   "keywords":"",
   "url":"/docs/introduction/model"
-}
-,{
-  "title":"Queries",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/queries"
-}
-,{
-  "title":"Queries / DTO query - DTO Query",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/queries/dto-query"
-}
-,{
-  "title":"Queries / JDBC query - JDBC Query",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/queries/jdbc-query"
-}
-,{
-  "title":"Queries / ORM query - ORM Query",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/queries/orm-query"
-}
-,{
-  "title":"Queries / SQL query - SQL Query",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/queries/sql-query"
 }
 ,{
   "title":"Spring - FactoryBean",
@@ -1566,14 +1502,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/ddl/"
-}
-,{
-  "title":"DB migrations",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/db-migrations"
 }
 ,{
   "title":"DB migrations",
@@ -3030,38 +2958,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable#publish"
-}
-,{
-  "title":"Queries / DTO query",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/queries/dto-query"
-}
-,{
-  "title":"Queries / JDBC query",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/queries/jdbc-query"
-}
-,{
-  "title":"Queries / ORM query",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/queries/orm-query"
-}
-,{
-  "title":"Queries / SQL query",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/queries/sql-query"
 }
 ,{
   "title":"Query",
