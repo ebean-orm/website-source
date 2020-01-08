@@ -12,9 +12,9 @@
 <body>
 <h2>Constructors</h2>
 <p>
-  We don't need a default constructor and this means we can give our entity beans a constructor
+  Ebean does not need a default constructor and this means we can give our entity bean a constructor
   that takes arguments. Typically the arguments are properties that should always be supplied
-  when creating a new bean of that type.
+  when creating a new bean of that type (and by implication are typically non-nullable).
 </p>
 
 <#include "/_common/lang-buttons.html">
@@ -26,6 +26,7 @@ public class Customer {
   @Id
   long id;
 
+  @NotNull @Length(100)
   String name;
 
   public Customer(String name) {
