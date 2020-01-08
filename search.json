@@ -528,30 +528,6 @@
   "url":"/docs/introduction/manifest"
 }
 ,{
-  "title":"Caveats",
-  "caption":"",
-  "category":"Change log",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/changelog#caveats"
-}
-,{
-  "title":"Getting started",
-  "caption":"",
-  "category":"Change log",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/changelog#getting-started"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"Change log",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/changelog#overview"
-}
-,{
   "title":"DB Migrations",
   "caption":"",
   "category":"DB migrations",
@@ -704,78 +680,6 @@
   "url":"/docs/ddl-generation#create-all"
 }
 ,{
-  "title":"Draft Restore",
-  "caption":"",
-  "category":"Draftable",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/draftable#draft-restore"
-}
-,{
-  "title":"Example Application",
-  "caption":"",
-  "category":"Draftable",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/draftable#example-app"
-}
-,{
-  "title":"L2 Cache",
-  "caption":"",
-  "category":"Draftable",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/draftable"
-}
-,{
-  "title":"Mapping",
-  "caption":"",
-  "category":"Draftable",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/draftable#mapping"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"Draftable",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/draftable#overview"
-}
-,{
-  "title":"Publish",
-  "caption":"",
-  "category":"Draftable",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/draftable#publish"
-}
-,{
-  "title":"Query As Draft",
-  "caption":"",
-  "category":"Draftable",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/draftable#query-as-draft"
-}
-,{
-  "title":"Automatic sync",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch#automatic-sync"
-}
-,{
-  "title":"Currently out of scope",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch#out-of-scope"
-}
-,{
   "title":"Getting started",
   "caption":"",
   "category":"Elastic",
@@ -784,103 +688,7 @@
   "url":"/docs/features/elasticsearch/get-started"
 }
 ,{
-  "title":"Getting started - Bean mapping",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/get-started#bean-mapping"
-}
-,{
-  "title":"Getting started - Dependencies",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/get-started#dependencies"
-}
-,{
-  "title":"Getting started - Example application",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/get-started#example-application"
-}
-,{
-  "title":"Getting started - Generated index mapping",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/get-started"
-}
-,{
-  "title":"Getting started - Review issues on github",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/get-started#issues"
-}
-,{
   "title":"Indexes",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/indexes"
-}
-,{
-  "title":"Indexes - Aliases",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/indexes#aliases"
-}
-,{
-  "title":"Indexes - Copy index",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/indexes#copyIndex"
-}
-,{
-  "title":"Indexes - Create index",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/indexes#createIndex"
-}
-,{
-  "title":"Indexes - Drop index",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/indexes#dropIndex"
-}
-,{
-  "title":"Indexes - Index all",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/indexes#indexAll"
-}
-,{
-  "title":"Indexes - Index by query",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/indexes#indexByQuery"
-}
-,{
-  "title":"Indexes - Indexing by partition",
   "caption":"",
   "category":"Elastic",
   "priority":"3",
@@ -896,172 +704,12 @@
   "url":"/docs/features/elasticsearch/mapping"
 }
 ,{
-  "title":"Mapping - @DocCode - Strings that are codes",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/mapping#DocCode"
-}
-,{
-  "title":"Mapping - @DocEmbedded - Embedded documents",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/mapping#DocEmbedded"
-}
-,{
-  "title":"Mapping - @DocProperty",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/mapping#DocProperty"
-}
-,{
-  "title":"Mapping - @DocSortable - Analysed and not analysed",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/mapping#DocSortable"
-}
-,{
-  "title":"Mapping - @DocStore - Entities to map",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/mapping#DocStore"
-}
-,{
-  "title":"Mapping - Mapping generation",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/mapping#mapping-generation"
-}
-,{
-  "title":"Mapping - Overview",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/mapping#overview"
-}
-,{
-  "title":"ORM graphs as JSON documents",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch#graphs-as-json"
-}
-,{
   "title":"Query",
   "caption":"",
   "category":"Elastic",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/features/elasticsearch#query"
-}
-,{
-  "title":"Query - Explicit useDocStore(true)",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#use-doc-store"
-}
-,{
-  "title":"Query - Full text",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch#query-full-text"
-}
-,{
-  "title":"Query - Implied useDocStore(true)",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#implied-use-doc-store"
-}
-,{
-  "title":"Query - Match",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#match"
-}
-,{
-  "title":"Query - Multi match, Text simple etc",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#multi-match"
-}
-,{
-  "title":"Query - Must, must not, should",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#must-must-not-should"
-}
-,{
-  "title":"Query - Text expressions",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#text-expressions"
-}
-,{
-  "title":"Query - firstRows/maxRows -> from/size",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#max-rows"
-}
-,{
-  "title":"Query - orderBy -> sort",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#order-by"
-}
-,{
-  "title":"Query - select/fetch -> fields/include",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#select"
-}
-,{
-  "title":"Query - text -> query context",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#query-context"
-}
-,{
-  "title":"Query - where -> filter context",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/query#filter-context"
+  "url":"/docs/features/elasticsearch/query"
 }
 ,{
   "title":"Simple query comparison",
@@ -1072,156 +720,12 @@
   "url":"/docs/features/elasticsearch/simple-query-comparison"
 }
 ,{
-  "title":"Simple query comparison - Appendix - Bean mapping",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#appendix-bean"
-}
-,{
-  "title":"Simple query comparison - Appendix: Index mapping",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#appendix-index"
-}
-,{
-  "title":"Simple query comparison - Caveats",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#caveats"
-}
-,{
-  "title":"Simple query comparison - Elastic query",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison"
-}
-,{
-  "title":"Simple query comparison - Run mode 1",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#run1"
-}
-,{
-  "title":"Simple query comparison - Run mode 2 - Denormalisation effect",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#run2"
-}
-,{
-  "title":"Simple query comparison - Run mode 3 - less selective",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#run3"
-}
-,{
-  "title":"Simple query comparison - SQL query",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison"
-}
-,{
-  "title":"Simple query comparison - Setup",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#setup"
-}
-,{
-  "title":"Simple query comparison - The query",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/simple-query-comparison#query"
-}
-,{
   "title":"Syncing",
   "caption":"",
   "category":"Elastic",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch/syncing"
-}
-,{
-  "title":"Syncing - Delete",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/syncing#delete"
-}
-,{
-  "title":"Syncing - Insert",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/syncing#insert"
-}
-,{
-  "title":"Syncing - Post commit",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/syncing#post-commit"
-}
-,{
-  "title":"Syncing - Transaction DocStoreMode.IGNORE",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/syncing#transaction-ignore"
-}
-,{
-  "title":"Syncing - Update",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch/syncing#update"
-}
-,{
-  "title":"Testing",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch"
-}
-,{
-  "title":"Videos",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch#videos"
-}
-,{
-  "title":"Why integrate?",
-  "caption":"",
-  "category":"Elastic",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/elasticsearch#why"
 }
 ,{
   "title":"Example projects",
@@ -1384,118 +888,6 @@
   "url":"/docs/getting-started/ebean-test"
 }
 ,{
-  "title":"@History",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#history"
-}
-,{
-  "title":"@HistoryExclude",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#history-exclude"
-}
-,{
-  "title":"As of query",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#as-of-query"
-}
-,{
-  "title":"Compared to Change Log",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history"
-}
-,{
-  "title":"H2",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#h2"
-}
-,{
-  "title":"History tables",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history"
-}
-,{
-  "title":"ManyToMany intersection",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#manytomany"
-}
-,{
-  "title":"MySql",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#mysql"
-}
-,{
-  "title":"Oracle",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#oracle"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#overview"
-}
-,{
-  "title":"Postgres",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#postgres"
-}
-,{
-  "title":"Versions between",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#versions-between-query"
-}
-,{
-  "title":"Videos",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#videos"
-}
-,{
-  "title":"Who and When",
-  "caption":"",
-  "category":"History",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/history#who-when"
-}
-,{
   "title":"Database & DB",
   "caption":"",
   "category":"Introduction",
@@ -1568,78 +960,6 @@
   "url":"/docs/trouble-shooting"
 }
 ,{
-  "title":"JsonContext",
-  "caption":"",
-  "category":"JSON Marshalling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json#json-context"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"JSON Marshalling",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json#overview"
-}
-,{
-  "title":"Mapping",
-  "caption":"",
-  "category":"JSON in DB",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json-in-db#mapping"
-}
-,{
-  "title":"Oracle expressions",
-  "caption":"",
-  "category":"JSON in DB",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json-in-db#oracle"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"JSON in DB",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json-in-db#overview"
-}
-,{
-  "title":"Postgres expressions",
-  "caption":"",
-  "category":"JSON in DB",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json-in-db#postgres"
-}
-,{
-  "title":"Query expressions",
-  "caption":"",
-  "category":"JSON in DB",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json-in-db#query"
-}
-,{
-  "title":"Raw expression",
-  "caption":"",
-  "category":"JSON in DB",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json-in-db#raw"
-}
-,{
-  "title":"Save and Find",
-  "caption":"",
-  "category":"JSON in DB",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/json-in-db#save-find"
-}
-,{
   "title":"TODO - Kotlin",
   "caption":"",
   "category":"Kotlin",
@@ -1656,28 +976,12 @@
   "url":"/docs/features/l2cache/apache-ignite"
 }
 ,{
-  "title":"Bean IUD invalidation",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/l2cache#bean-iud-invalidation"
-}
-,{
   "title":"Bean cache",
   "caption":"",
   "category":"L2 Cache",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/l2cache/bean-cache"
-}
-,{
-  "title":"External invalidation",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/l2cache#external-invalidation"
 }
 ,{
   "title":"Hazelcast",
@@ -1688,52 +992,12 @@
   "url":"/docs/features/l2cache/hazelcast"
 }
 ,{
-  "title":"L2 Cache",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/l2cache#overview"
-}
-,{
-  "title":"L2/local and L3/remote",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/l2cache#l2-l3"
-}
-,{
   "title":"Query cache",
   "caption":"",
   "category":"L2 Cache",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/l2cache/query-cache"
-}
-,{
-  "title":"Read consistency",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/l2cache#read-consistency"
-}
-,{
-  "title":"TODO",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/l2cache/elasticsearch"
-}
-,{
-  "title":"Table IUD invalidation (Bulk updates)",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/l2cache#table-iud-invalidation"
 }
 ,{
   "title":"DDL",
@@ -2558,14 +1822,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/monitoring/profile-location"
-}
-,{
-  "title":"Examples",
-  "caption":"",
-  "category":"Multi-Tenant",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/multi-tenant"
 }
 ,{
   "title":"Bulk SQL updates",
@@ -3616,102 +2872,6 @@
   "url":"/docs/query/select#asDto"
 }
 ,{
-  "title":"Caveats",
-  "caption":"",
-  "category":"Read Auditing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/readauditing#caveats"
-}
-,{
-  "title":"Getting started",
-  "caption":"",
-  "category":"Read Auditing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/readauditing#getting-started"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"Read Auditing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/readauditing#overview"
-}
-,{
-  "title":"Query.setDisableReadAuditing()",
-  "caption":"",
-  "category":"Read Auditing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/readauditing#query"
-}
-,{
-  "title":"@SoftDelete",
-  "caption":"",
-  "category":"SoftDelete",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/softdelete#softdelete"
-}
-,{
-  "title":"Cascading behavior",
-  "caption":"",
-  "category":"SoftDelete",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/softdelete#cascade"
-}
-,{
-  "title":"Change Log",
-  "caption":"",
-  "category":"SoftDelete",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/softdelete#changelog"
-}
-,{
-  "title":"Delete",
-  "caption":"",
-  "category":"SoftDelete",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/softdelete#delete"
-}
-,{
-  "title":"Delete Permanent",
-  "caption":"",
-  "category":"SoftDelete",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/softdelete#deletepermanent"
-}
-,{
-  "title":"Notifications",
-  "caption":"",
-  "category":"SoftDelete",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/softdelete#notifications"
-}
-,{
-  "title":"Query (normal)",
-  "caption":"",
-  "category":"SoftDelete",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/softdelete#query"
-}
-,{
-  "title":"Query - includeSoftDeletes",
-  "caption":"",
-  "category":"SoftDelete",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/features/softdelete#includeSoftDeletes"
-}
-,{
   "title":"Current User & Tenant",
   "caption":"",
   "category":"Testing",
@@ -4088,12 +3248,748 @@
   "url":"/docs/upgrading"
 }
 ,{
-  "title":"Who Created/Who Modified",
+  "title":"Caveats",
   "caption":"",
-  "category":"Who Created Modified",
-  "priority":"3",
+  "category":"Change log",
+  "priority":"4",
   "keywords":"",
-  "url":"/docs/features/who#overview"
+  "url":"/docs/features/changelog#caveats"
+}
+,{
+  "title":"Getting started",
+  "caption":"",
+  "category":"Change log",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/changelog#getting-started"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Change log",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/changelog#overview"
+}
+,{
+  "title":"Draft Restore",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/draftable#draft-restore"
+}
+,{
+  "title":"Example Application",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/draftable#example-app"
+}
+,{
+  "title":"L2 Cache",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/draftable"
+}
+,{
+  "title":"Mapping",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/draftable#mapping"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/draftable#overview"
+}
+,{
+  "title":"Publish",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/draftable#publish"
+}
+,{
+  "title":"Query As Draft",
+  "caption":"",
+  "category":"Draftable",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/draftable#query-as-draft"
+}
+,{
+  "title":"Automatic sync",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch#automatic-sync"
+}
+,{
+  "title":"Currently out of scope",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch#out-of-scope"
+}
+,{
+  "title":"Getting started - Bean mapping",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/get-started#bean-mapping"
+}
+,{
+  "title":"Getting started - Dependencies",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/get-started#dependencies"
+}
+,{
+  "title":"Getting started - Example application",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/get-started#example-application"
+}
+,{
+  "title":"Getting started - Generated index mapping",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/get-started"
+}
+,{
+  "title":"Getting started - Review issues on github",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/get-started#issues"
+}
+,{
+  "title":"Indexes - Aliases",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/indexes#aliases"
+}
+,{
+  "title":"Indexes - Copy index",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/indexes#copyIndex"
+}
+,{
+  "title":"Indexes - Create index",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/indexes#createIndex"
+}
+,{
+  "title":"Indexes - Drop index",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/indexes#dropIndex"
+}
+,{
+  "title":"Indexes - Index all",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/indexes#indexAll"
+}
+,{
+  "title":"Indexes - Index by query",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/indexes#indexByQuery"
+}
+,{
+  "title":"Indexes - Indexing by partition",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/indexes"
+}
+,{
+  "title":"Mapping - @DocCode - Strings that are codes",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/mapping#DocCode"
+}
+,{
+  "title":"Mapping - @DocEmbedded - Embedded documents",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/mapping#DocEmbedded"
+}
+,{
+  "title":"Mapping - @DocProperty",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/mapping#DocProperty"
+}
+,{
+  "title":"Mapping - @DocSortable - Analysed and not analysed",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/mapping#DocSortable"
+}
+,{
+  "title":"Mapping - @DocStore - Entities to map",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/mapping#DocStore"
+}
+,{
+  "title":"Mapping - Mapping generation",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/mapping#mapping-generation"
+}
+,{
+  "title":"Mapping - Overview",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/mapping#overview"
+}
+,{
+  "title":"ORM graphs as JSON documents",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch#graphs-as-json"
+}
+,{
+  "title":"Query - Explicit useDocStore(true)",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#use-doc-store"
+}
+,{
+  "title":"Query - Full text",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch#query-full-text"
+}
+,{
+  "title":"Query - Implied useDocStore(true)",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#implied-use-doc-store"
+}
+,{
+  "title":"Query - Match",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#match"
+}
+,{
+  "title":"Query - Multi match, Text simple etc",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#multi-match"
+}
+,{
+  "title":"Query - Must, must not, should",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#must-must-not-should"
+}
+,{
+  "title":"Query - Text expressions",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#text-expressions"
+}
+,{
+  "title":"Query - firstRows/maxRows -> from/size",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#max-rows"
+}
+,{
+  "title":"Query - orderBy -> sort",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#order-by"
+}
+,{
+  "title":"Query - select/fetch -> fields/include",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#select"
+}
+,{
+  "title":"Query - text -> query context",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#query-context"
+}
+,{
+  "title":"Query - where -> filter context",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/query#filter-context"
+}
+,{
+  "title":"Simple query comparison - Appendix - Bean mapping",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison#appendix-bean"
+}
+,{
+  "title":"Simple query comparison - Appendix: Index mapping",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison#appendix-index"
+}
+,{
+  "title":"Simple query comparison - Caveats",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison#caveats"
+}
+,{
+  "title":"Simple query comparison - Elastic query",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison"
+}
+,{
+  "title":"Simple query comparison - Run mode 1",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison#run1"
+}
+,{
+  "title":"Simple query comparison - Run mode 2 - Denormalisation effect",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison#run2"
+}
+,{
+  "title":"Simple query comparison - Run mode 3 - less selective",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison#run3"
+}
+,{
+  "title":"Simple query comparison - SQL query",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison"
+}
+,{
+  "title":"Simple query comparison - Setup",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison#setup"
+}
+,{
+  "title":"Simple query comparison - The query",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/simple-query-comparison#query"
+}
+,{
+  "title":"Syncing - Delete",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/syncing#delete"
+}
+,{
+  "title":"Syncing - Insert",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/syncing#insert"
+}
+,{
+  "title":"Syncing - Post commit",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/syncing#post-commit"
+}
+,{
+  "title":"Syncing - Transaction DocStoreMode.IGNORE",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/syncing#transaction-ignore"
+}
+,{
+  "title":"Syncing - Update",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch/syncing#update"
+}
+,{
+  "title":"Testing",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch"
+}
+,{
+  "title":"Videos",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch#videos"
+}
+,{
+  "title":"Why integrate?",
+  "caption":"",
+  "category":"Elastic",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/elasticsearch#why"
+}
+,{
+  "title":"@History",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#history"
+}
+,{
+  "title":"@HistoryExclude",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#history-exclude"
+}
+,{
+  "title":"As of query",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#as-of-query"
+}
+,{
+  "title":"Compared to Change Log",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history"
+}
+,{
+  "title":"H2",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#h2"
+}
+,{
+  "title":"History tables",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history"
+}
+,{
+  "title":"ManyToMany intersection",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#manytomany"
+}
+,{
+  "title":"MySql",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#mysql"
+}
+,{
+  "title":"Oracle",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#oracle"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#overview"
+}
+,{
+  "title":"Postgres",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#postgres"
+}
+,{
+  "title":"Versions between",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#versions-between-query"
+}
+,{
+  "title":"Videos",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#videos"
+}
+,{
+  "title":"Who and When",
+  "caption":"",
+  "category":"History",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/history#who-when"
+}
+,{
+  "title":"JsonContext",
+  "caption":"",
+  "category":"JSON Marshalling",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json#json-context"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"JSON Marshalling",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json#overview"
+}
+,{
+  "title":"Mapping",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#mapping"
+}
+,{
+  "title":"Oracle expressions",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#oracle"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#overview"
+}
+,{
+  "title":"Postgres expressions",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#postgres"
+}
+,{
+  "title":"Query expressions",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#query"
+}
+,{
+  "title":"Raw expression",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#raw"
+}
+,{
+  "title":"Save and Find",
+  "caption":"",
+  "category":"JSON in DB",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/json-in-db#save-find"
+}
+,{
+  "title":"Bean IUD invalidation",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#bean-iud-invalidation"
+}
+,{
+  "title":"External invalidation",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#external-invalidation"
+}
+,{
+  "title":"L2 Cache",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#overview"
+}
+,{
+  "title":"L2/local and L3/remote",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#l2-l3"
+}
+,{
+  "title":"Read consistency",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#read-consistency"
+}
+,{
+  "title":"TODO",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache/elasticsearch"
+}
+,{
+  "title":"Table IUD invalidation (Bulk updates)",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#table-iud-invalidation"
+}
+,{
+  "title":"Examples",
+  "caption":"",
+  "category":"Multi-Tenant",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/multi-tenant"
 }
 ,{
   "title":"Background / Automatic Tuning",
@@ -4104,100 +4000,12 @@
   "url":"/docs/query/background/autotune"
 }
 ,{
-  "title":"Background / Automatic Tuning - Origin point",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/autotune#origin"
-}
-,{
-  "title":"Background / Automatic Tuning - Overview",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/autotune#overview"
-}
-,{
-  "title":"Background / Automatic Tuning - Profiling",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/autotune#profiling"
-}
-,{
-  "title":"Background / Automatic Tuning - Tuning",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/autotune#tuning"
-}
-,{
   "title":"Background / N + 1",
   "caption":"",
   "category":"Query",
   "priority":"4",
   "keywords":"",
   "url":"/docs/query/background/nplus1"
-}
-,{
-  "title":"Background / N + 1 - Eager loading",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/nplus1#eager-loading"
-}
-,{
-  "title":"Background / N + 1 - Lazy load batch size",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/nplus1#lazy-batch-size"
-}
-,{
-  "title":"Background / N + 1 - N is per path",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/nplus1#per-path"
-}
-,{
-  "title":"Background / N + 1 - NPlus1",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/nplus1#overview"
-}
-,{
-  "title":"Background / N + 1 - ORM query to SQL Query",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/nplus1#orm-query-conversion"
-}
-,{
-  "title":"Background / N + 1 - Question and Answer",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/nplus1#question-answer"
-}
-,{
-  "title":"Background / N + 1 - What is N?",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/nplus1#what-is-n"
 }
 ,{
   "title":"Background / Partial Objects",
@@ -4208,148 +4016,12 @@
   "url":"/docs/query/background/partialobjects"
 }
 ,{
-  "title":"Background / Partial Objects - AutoTune",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#autotune"
-}
-,{
-  "title":"Background / Partial Objects - Database buffers",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#database"
-}
-,{
-  "title":"Background / Partial Objects - Index only join",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#index-join"
-}
-,{
-  "title":"Background / Partial Objects - Index only query",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#index-query"
-}
-,{
-  "title":"Background / Partial Objects - JDBC buffers",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#jdbc"
-}
-,{
-  "title":"Background / Partial Objects - Network",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#network"
-}
-,{
-  "title":"Background / Partial Objects - Overview",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#overview"
-}
-,{
-  "title":"Background / Partial Objects - Select / Fetch",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#select-fetch"
-}
-,{
-  "title":"Background / Partial Objects - Videos",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/partialobjects#videos"
-}
-,{
   "title":"Background / Query Beans",
   "caption":"",
   "category":"Query",
   "priority":"4",
   "keywords":"",
   "url":"/docs/query/background/typesafe"
-}
-,{
-  "title":"Background / Query Beans - Benefits",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#benefits"
-}
-,{
-  "title":"Background / Query Beans - Dependencies",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#dependencies"
-}
-,{
-  "title":"Background / Query Beans - Enhancement",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#enhancement"
-}
-,{
-  "title":"Background / Query Beans - Examples",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#query-examples"
-}
-,{
-  "title":"Background / Query Beans - Generation",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#generation"
-}
-,{
-  "title":"Background / Query Beans - Manual generation",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#manual-generation"
-}
-,{
-  "title":"Background / Query Beans - Overview",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#overview"
-}
-,{
-  "title":"Background / Query Beans - Query bean source",
-  "caption":"",
-  "category":"Query",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#query-beans"
 }
 ,{
   "title":"Background / Query Overview",
@@ -4360,10 +4032,338 @@
   "url":"/docs/query/background/overview"
 }
 ,{
+  "title":"Caveats",
+  "caption":"",
+  "category":"Read Auditing",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/readauditing#caveats"
+}
+,{
+  "title":"Getting started",
+  "caption":"",
+  "category":"Read Auditing",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/readauditing#getting-started"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Read Auditing",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/readauditing#overview"
+}
+,{
+  "title":"Query.setDisableReadAuditing()",
+  "caption":"",
+  "category":"Read Auditing",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/readauditing#query"
+}
+,{
+  "title":"@SoftDelete",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/softdelete#softdelete"
+}
+,{
+  "title":"Cascading behavior",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/softdelete#cascade"
+}
+,{
+  "title":"Change Log",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/softdelete#changelog"
+}
+,{
+  "title":"Delete",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/softdelete#delete"
+}
+,{
+  "title":"Delete Permanent",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/softdelete#deletepermanent"
+}
+,{
+  "title":"Notifications",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/softdelete#notifications"
+}
+,{
+  "title":"Query (normal)",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/softdelete#query"
+}
+,{
+  "title":"Query - includeSoftDeletes",
+  "caption":"",
+  "category":"SoftDelete",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/softdelete#includeSoftDeletes"
+}
+,{
+  "title":"Who Created/Who Modified",
+  "caption":"",
+  "category":"Who Created Modified",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/who#overview"
+}
+,{
+  "title":"Background / Automatic Tuning - Origin point",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/autotune#origin"
+}
+,{
+  "title":"Background / Automatic Tuning - Overview",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/autotune#overview"
+}
+,{
+  "title":"Background / Automatic Tuning - Profiling",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/autotune#profiling"
+}
+,{
+  "title":"Background / Automatic Tuning - Tuning",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/autotune#tuning"
+}
+,{
+  "title":"Background / N + 1 - Eager loading",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/nplus1#eager-loading"
+}
+,{
+  "title":"Background / N + 1 - Lazy load batch size",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/nplus1#lazy-batch-size"
+}
+,{
+  "title":"Background / N + 1 - N is per path",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/nplus1#per-path"
+}
+,{
+  "title":"Background / N + 1 - NPlus1",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/nplus1#overview"
+}
+,{
+  "title":"Background / N + 1 - ORM query to SQL Query",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/nplus1#orm-query-conversion"
+}
+,{
+  "title":"Background / N + 1 - Question and Answer",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/nplus1#question-answer"
+}
+,{
+  "title":"Background / N + 1 - What is N?",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/nplus1#what-is-n"
+}
+,{
+  "title":"Background / Partial Objects - AutoTune",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#autotune"
+}
+,{
+  "title":"Background / Partial Objects - Database buffers",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#database"
+}
+,{
+  "title":"Background / Partial Objects - Index only join",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#index-join"
+}
+,{
+  "title":"Background / Partial Objects - Index only query",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#index-query"
+}
+,{
+  "title":"Background / Partial Objects - JDBC buffers",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#jdbc"
+}
+,{
+  "title":"Background / Partial Objects - Network",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#network"
+}
+,{
+  "title":"Background / Partial Objects - Overview",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#overview"
+}
+,{
+  "title":"Background / Partial Objects - Select / Fetch",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#select-fetch"
+}
+,{
+  "title":"Background / Partial Objects - Videos",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/partialobjects#videos"
+}
+,{
+  "title":"Background / Query Beans - Benefits",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#benefits"
+}
+,{
+  "title":"Background / Query Beans - Dependencies",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#dependencies"
+}
+,{
+  "title":"Background / Query Beans - Enhancement",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#enhancement"
+}
+,{
+  "title":"Background / Query Beans - Examples",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#query-examples"
+}
+,{
+  "title":"Background / Query Beans - Generation",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#generation"
+}
+,{
+  "title":"Background / Query Beans - Manual generation",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#manual-generation"
+}
+,{
+  "title":"Background / Query Beans - Overview",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#overview"
+}
+,{
+  "title":"Background / Query Beans - Query bean source",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#query-beans"
+}
+,{
   "title":"Background / Query Overview - Arbitrarily complex graphs",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#complex-graphs"
 }
@@ -4371,7 +4371,7 @@
   "title":"Background / Query Overview - Automatic joins",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#automatic-joins"
 }
@@ -4379,7 +4379,7 @@
   "title":"Background / Query Overview - Avoiding Cartesian product",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#cartesian-product"
 }
@@ -4387,7 +4387,7 @@
   "title":"Background / Query Overview - FirstRows MaxRows",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#firstrows-maxrows"
 }
@@ -4395,7 +4395,7 @@
   "title":"Background / Query Overview - Load Context",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#load-context"
 }
@@ -4403,7 +4403,7 @@
   "title":"Background / Query Overview - Loading",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#loading"
 }
@@ -4411,7 +4411,7 @@
   "title":"Background / Query Overview - Not a SQL replacement",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#notsqlreplacement"
 }
@@ -4419,7 +4419,7 @@
   "title":"Background / Query Overview - Object graph construction",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#construction"
 }
@@ -4427,7 +4427,7 @@
   "title":"Background / Query Overview - Origin queries",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#origin-queries"
 }
@@ -4435,7 +4435,7 @@
   "title":"Background / Query Overview - Predicates",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#predicates"
 }
@@ -4443,7 +4443,7 @@
   "title":"Background / Query Overview - Secondary queries",
   "caption":"",
   "category":"Query",
-  "priority":"4",
+  "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#secondary-queries"
 }
