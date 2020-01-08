@@ -7,6 +7,66 @@
   <#assign n1_testing="active">
 </head>
 <body>
+<h2 id="third-age">Third age of testing</h2>
+<p>
+  Rob Opinion: I believe with respect to testing and persistence we are now in
+  the "3rd age" of testing.
+</p>
+<h3>(I) First age - all persistence mocked/stubbed</h3>
+<p>
+  In the first age testing against real databases was generally too slow,
+  expensive and difficult. Tests mocked/stubbed out all persistence
+  (often via Repository API's). Tests only ran against real databases
+  on an "integration server".
+</p>
+<h3>(II) Second age - in memory DB's</h3>
+<p>
+  In the second age of testing in memory databases like H2 became available.
+  This allowed developers to use these in memory databases rather than mocking
+  out all persistence API's.
+</p>
+<p>
+  This resulted in far less mocking/stubbing used in tests.
+</p>
+<p>
+  The limitations of testing using in memory DB's like H2 for testing is around
+  the functional difference compared to the "real" target database like Postgres
+  or Oracle etc. Differences in types (e.g. UUID, Array, Json, Hstore, Range types)
+  and features (sql functions, advanced locking, table partitioning etc).
+</p>
+
+<h3>(III) Third age - testing using docker DB's</h3>
+<p>
+  The limitations with testing against H2 can now be addressed in this
+  "third age" of persistence testing. Docker has made it easier to automate
+  the install/setup of databases on developer machines. Developer machines
+  are powerful enough to run tests fast enough against the "real" target database
+  (where docker versions of databases are functionally the same as the real thing).
+</p>
+<ul>
+  <li>Tests can cover database specific functionality and types (no excuses on test coverage)</li>
+  <li>The ease of using docker test containers needs to match the ease of using H2</li>
+  <li>We want tests to run against new/clean ephemeral databases</li>
+  <li>We need tests to run fast - match in memory database experience</li>
+  <li>build/tests run on the CI server match build/tests run on the developer machine</li>
+</ul>
+<p>
+  <code>ebean-test</code> is provided to make testing against docker test containers
+  as simple and good as using H2.
+</p>
+<p>
+  For Postgres, MySql, SQL Server we can very successfully use docker test containers today.
+  For the relatively heavier databases like Oracle, SAP Hana and DB2 we can be successful but
+  there can be some argument for staying with H2 for testing depending on the situation.
+</p>
+<p>
+  Rob Note: Personally I have had great results using ebean-test / docker test containers
+  over the last few years (largely Postgres). I highly recommend people look at this
+  approach aiming for great test coverage, simpler test code and reduced variation between
+  developer, CI and Production.
+</p>
+
+
 <h2 id="ebean-test">ebean-test dependency</h2>
 
 <h3>1. Add ebean-test as a test dependency</h3>
@@ -55,9 +115,9 @@ touch ~/.ebean/ignore-docker-shutdown
   ebean-test will take care of:
 </p>
 <ul>
-  <li><a href="ddl-mode">DDL generation</a> and execution modes</li>
-  <li><a href="docker">Docker test container</a> setup and execution based on the database platform</li>
-  <li><a href="current-user-tenant">Current user and tenant</a> provider if not already specified (to ease testing with @Who properties etc)</li>
+  <li>DDL generation and execution modes</li>
+  <li>Docker test container setup and execution based on the database platform</li>
+  <li>Current user and tenant provider if not already specified (to ease testing with @Who properties etc)</li>
 </ul>
 
 <h2 id="ddlmode">DDL Mode</h2>
@@ -91,6 +151,12 @@ touch ~/.ebean/ignore-docker-shutdown
     <td>Run the create-all.sql DDL script but delete and recreate the database first.</td>
   </tr>
 </table>
+
+<p class="mtm">
+  Note that <code>dropCreate</code> will generate <code>db-create-all.sql</code>
+  and <code>db-drop-all.sql</code> scripts and these can be found in the maven <code>target</code>
+  or gradle <code>build</code> directory.
+</p>
 
 <h2 id="docker">Docker test containers</h2>
 <p>
@@ -324,7 +390,7 @@ database.script().run("/scripts/test-script.sql", placeholders);
   available in the class path.
 </p>
 
-<@next_edit "DDL Mode" "ddl-mode" "/docs/testing/index.html"/>
+<@next_edit "Database platforms" "/docs/database" "/docs/testing/index.html"/>
 
 </body>
 </html>

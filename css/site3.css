@@ -1,6 +1,7 @@
 :root {
   /*--bg-hero: url(/images/bg-hero.png);*/
   --body-color: #212529;
+  --body-color2: #202020;
   --body-bg-color: #fff;
   --search-bg: #fff;
   --search-fg: #999;
@@ -35,6 +36,7 @@
   --fg-banner: #999;
   --fg-banner-nav: #888;
   --body-color: #bbb;
+  --body-color2: #fff;
   --body-bg-color: #2d2d2d;
   --search-bg: #363636;
   --search-fg: #666;
@@ -66,6 +68,12 @@ hr {
 table.compact td, table.compact th {
   vertical-align: top;
   padding: 0 0.3rem 0 0.3rem;
+}
+.mtl {
+  margin-top: 3rem;
+}
+.mtm {
+  margin-top: 2rem;
 }
 .w100 {
   width: 100%;
@@ -367,6 +375,10 @@ article h2 {
 }
 article h2:first-of-type {
   margin-top: 2rem;
+}
+article h3, article h4 {
+  color: var(--body-color2);
+  font-weight: normal;
 }
 ::placeholder {
   color: var(--fg-placeholder);
