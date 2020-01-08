@@ -3200,28 +3200,20 @@
   "url":"/docs/testing#docker"
 }
 ,{
-  "title":"ElasticSearch",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/elasticsearch"
-}
-,{
-  "title":"ElasticSearch - Elastic",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/elasticsearch"
-}
-,{
   "title":"Not using Docker",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
   "url":"/docs/testing#not-docker"
+}
+,{
+  "title":"Third age of testing",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing#third-age"
 }
 ,{
   "title":"ebean-test dependency",

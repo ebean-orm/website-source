@@ -78,7 +78,7 @@
   <li><a href="#draft-restore">Draft Restore</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${l2caching!''}" url="/docs/features/l2caching" title="L2 caching">
+<@smallnav activeCheck="${l2caching!''}" url="/docs/features/l2cache" title="L2 caching">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
   <li><a href="#l2-l3">L2/local and L3/remote</a></li>
