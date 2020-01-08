@@ -2872,20 +2872,28 @@
   "url":"/docs/query/select#asDto"
 }
 ,{
-  "title":"Current User & Tenant",
+  "title":"Container shutdown",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing/current-user-tenant"
+  "url":"/docs/testing#container-shutdown"
 }
 ,{
-  "title":"Current User & Tenant - Current User and Tenant",
+  "title":"Container startup",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing/current-user-tenant"
+  "url":"/docs/testing#container-startup"
+}
+,{
+  "title":"Current User and Tenant",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing#current-user"
 }
 ,{
   "title":"DDL Mode",
@@ -2893,55 +2901,31 @@
   "category":"Testing",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing/ddl-mode"
+  "url":"/docs/testing#ddlmode"
 }
 ,{
-  "title":"Docker",
+  "title":"DDL generation properties",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing/docker"
+  "url":"/docs/testing#ddl-generation-properties"
 }
 ,{
-  "title":"Docker - Container shutdown",
+  "title":"DDL/SQL Script Runner",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing/docker"
+  "url":"/docs/testing#scriptRunner"
 }
 ,{
-  "title":"Docker - Container startup",
+  "title":"Docker test containers",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing/docker"
-}
-,{
-  "title":"Docker - Docker test containers",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/docker"
-}
-,{
-  "title":"Docker - Not using Docker",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/docker"
-}
-,{
-  "title":"Ebean test",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing"
+  "url":"/docs/testing#docker"
 }
 ,{
   "title":"ElasticSearch",
@@ -2960,28 +2944,20 @@
   "url":"/docs/testing/elasticsearch"
 }
 ,{
-  "title":"Mocki",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/mocki"
-}
-,{
-  "title":"Mocki - MockiEbean",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/mocki#mockibean"
-}
-,{
   "title":"MySql",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
   "url":"/docs/testing/mysql"
+}
+,{
+  "title":"Not using Docker",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing#not-docker"
 }
 ,{
   "title":"Platform",
@@ -3008,36 +2984,12 @@
   "url":"/docs/testing/sqlserver"
 }
 ,{
-  "title":"Script Runner",
+  "title":"ebean-test dependency",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/testing/script-runner"
-}
-,{
-  "title":"Script Runner - Script Runner (Run DDL/SQL Scripts)",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/script-runner#scriptRunner"
-}
-,{
-  "title":"Test properties",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/test-properties"
-}
-,{
-  "title":"ebean-test",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing"
+  "url":"/docs/testing#ebean-test"
 }
 ,{
   "title":"@Transactional",

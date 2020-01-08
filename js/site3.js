@@ -65,7 +65,12 @@ var scroll = {
       navItem.click(function() {
         scroll.navigate(navItem.parent());
       });
-      scroll.list.push({'navItem': navItem.parent(), 'anchor': $(navItem.attr("href"))})
+      const navAnchor = $(navItem.attr("href"));
+      if (navAnchor.length === 0) {
+        // /alert("empty for "+navItem.attr("href"));
+      } else {
+        scroll.list.push({'navItem': navItem.parent(), 'anchor': navAnchor})
+      }
     });
     $(window).scroll(function () {
       scroll.update();
@@ -91,7 +96,7 @@ var scroll = {
       const _top = $(window).scrollTop();
       let last = null;
       this.list.forEach(function (el) {
-        if (_top > el.anchor.offset().top) {
+        if (el && _top > el.anchor.offset().top) {
           last = el;
         }
       });
