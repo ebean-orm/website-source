@@ -1,15 +1,13 @@
 <html>
 <head>
-  <title>Introduction</title>
-  <meta name="layout" content="_layout/docs.html"/>
-  <meta name="bread1" content="Database" href="/docs/database/"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_database.ftl"></template>
-  <#assign introduction="active">
+  <title>Database platforms | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
 </head>
 <body>
-
 <h2>Database Platforms</h2>
-
 
 <table class="table">
   <tr>
@@ -118,10 +116,11 @@ ebean.dbSchema=myapp
   (via docker) - refer to <a href="/docs/testing/postgres">testing with Postgres</a>.
 </p>
 
-
-<div class="next pull-right">
-  <a href="/docs/testing/" class="btn btn-info">Next: Testing</a>
-</div>
+<nav class="next">
+  <p class="next">
+    <a href="/docs/database/postgres" class="btn">Next: Postgres</a>
+  </p>
+</nav>
 
 </body>
 </html>

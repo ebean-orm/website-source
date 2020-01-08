@@ -1,3 +1,4 @@
+<ul class="nav nav-scroll">
 <li><a href="#ebean-test">ebean-test dependency</a></li>
 <li><a href="#ddlmode">DDL Mode</a></li>
 <li><a href="#docker">Docker test containers</a></li>
@@ -7,3 +8,4 @@
 <@smallnav activeCheck="${currentUser!''}" url="#current-user" title="Current User & Tenant"/>
 <@smallnav activeCheck="${testproperties!''}" url="#-generation-properties" title="DDL generation properties"/>
 <@smallnav activeCheck="${runner!''}" url="#scriptRunner" title="DDL/SQL Script runner"/>
+</ul>

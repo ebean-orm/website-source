@@ -1,0 +1,64 @@
+<html>
+<head>
+  <title>PostGIS | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="Postgres" href="/docs/database/postgres"/>
+  <meta name="bread3" content="PostGIS" href="/docs/database/postgres/postgis"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_postgres="active">
+  <#assign postgis="active">
+</head>
+<body>
+<h2 id="postgis">PostGIS</h2>
+<p>
+  Below is a test setup using the <code>mdillon/postgis</code> docker container that
+  has PostGIS extension installed.
+</p>
+<p>
+  This will automatically download and run the container making live a little easier.
+  Note the use of the Postgis specfic driver and url.
+</p>
+```yml
+ebean:
+  geometrySRID: 4674  # If we don't want the default geometrySRID of 4326
+
+  test:
+    shutdown: none # stop | remove | none
+    platform: postgis
+    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    dbName: my_gisapp
+```
+<p>
+  The above <code>postgis</code> platform is equivalent to the setup below which uses:
+</p>
+<ul>
+  <li>Port <code>7432</code> by default (so as not to clash with local or non-gis postgres)</li>
+  <li>The <code>org.postgis.DriverWrapperLW</code> driver for binary encoded Geometry types</li>
+  <li>URL <code>postgresql_lwgis</code> in the connection url to use the LW driver </li>
+  <li>Uses <code>mdillon/postgis</code> docker image with PostGIS installed</li>
+</ul>
+
+```yml
+ebean:
+  geometrySRID: 4674
+
+  test:
+    shutdown: none # stop | remove | none
+    platform: postgres
+    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    dbName: my_gisapp
+    postgres:
+      containerName: postgis
+      image: mdillon/postgis
+      extensions: postgis
+      url: jdbc:postgresql_lwgis://127.0.0.1:7432/my_gisapp
+      driver: org.postgis.DriverWrapperLW
+
+```
+
+<@next_edit "MySql" "/docs/database/mysql" "/docs/database/postgres/postgis.html"/>
+
+</body>
+</html>

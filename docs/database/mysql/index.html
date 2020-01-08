@@ -1,15 +1,15 @@
 <html>
 <head>
-  <title>Postgres | Ebean ORM</title>
-  <meta name="layout" content="_layout/docs_database.html"/>
-  <meta name="bread2" content="MySQL" href="/docs/database/mysql"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_database_mysql.ftl"></template>
-  <#assign mysql="active">
+  <title>MySql | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="MySql" href="/docs/database/mysql"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_mysql="active">
 </head>
 <body>
-
-
-<h2>MySQL</h2>
+<h2>MySql</h2>
 
 <h3>Testing</h3>
 <p>
@@ -19,31 +19,65 @@
 <p>
   Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
 </p>
+
+<h3>Collation</h3>
+<p>
+  With MySql can (and probably should) specify the collation and character set we want the
+  database to use. In the example below we specify the collation as <code>utf8mb4_unicode_ci</code>.
+</p>
 ```yml
 ebean:
   test:
-  platform: mysql # h2, mysql, ...
-    ddlMode: dropCreate # none | dropCreate | migration
-    dbName: my_app
+    platform: mysql #, h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    dbName: test
+    mysql:
+      collation: utf8mb4_unicode_ci
+      characterSet: utf8mb4
+```
+
+<p>
+  The above will use the following defaults:
+</p>
+<table class="compact">
+  <tr><th>username:</th><td>{databaseName}</td></tr>
+  <tr><th>password:</th><td>test</td></tr>
+  <tr><th>port:</th><td>4306</td></tr>
+  <tr><th>url:</th><td>jdbc:mysql://localhost:{port}/{databaseName}</td></tr>
+  <tr><th>driver:</th><td>com.mysql.jdbc.Driver</td></tr>
+  <tr><th>image:</th><td>mysql:{version}</td></tr>
+</table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>"default" - Collation</h3>
+<p>
+  We can specify the collation to be <code>default</code> and with that the collection will be left up
+  to the default that MySql would use.
+</p>
+```yml
+ebean:
+  test:
+    platform: mysql #, h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    dbName: test
+    mysql:
+      version: 8.0
+      collation: default
+
 ```
 <p>
-  That is all we need to do. Running tests via IDE, maven or gradle will all automatically setup
-  a docker test container for mysql including creating the database and user etc.
+  In the logs with logging DEBUG level for <code>io.ebean.docker</code> we can see:
+  <code>--character-set-server</code> and <code>--collation-server</code>
 </p>
-<p>
-  We generally run with <em>ddlMode</em> <code>dropCreate</code> which will drop and re-create
-  all the database tables prior to running all the tests.
-</p>
-<p>
-  Refer to <a href="/docs/logging">docs / logging</a> to see how to get logging for SQL, DDL and docker.
-</p>
-<p>
-  Note that DDL is generated into <em>maven target</em>, <em>gradle build</em> or current directory.
-  We see <code>db-create-all.sql</code> and <code>db-drop-all.sql</code> there.
-</p>
+```text
+... INFO  io.ebean.docker.commands.Commands - Run container ut_mysql with port:4306 db:my_app user:my_app mode:Create shutdown:
+... DEBUG io.ebean.docker.commands.Commands - docker run -d --name ut_mysql -p 4306:3306 -e MYSQL_ROOT_PASSWORD=admin mysql:5.6
 
-<h3>Types</h3>
+```
 
+
+<h2 id="types">Types</h2>
 <h5>UUID</h5>
 <p>
   UUID is not a native MySQL type and can be mapped to either BINARY(16) or VARCHAR(36).
@@ -54,7 +88,7 @@ ebean:
   We can use <code>@DbJson</code> to map content.
 </p>
 
-<h3>History support</h3>
+<h2 id="history">History support</h2>
 <p>
   History support for MySQL is provided by generating triggers and history table.
 </p>

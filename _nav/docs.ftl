@@ -40,9 +40,10 @@
         </@nav1>
         <@nav1 activeCheck="${n1_logging!''}" url="/docs/logging" title="Logging"/>
         <@nav1 activeCheck="${n1_testing!''}" url="/docs/testing" title="Testing">
-          <ul class="nav nav-scroll">
             <#include "/_nav/testing.ftl">
-          </ul>
+        </@nav1>
+        <@nav1 activeCheck="${n1_platforms!''}" url="/docs/database" title="Database platforms">
+            <#include "/_nav/database-platforms.ftl">
         </@nav1>
         <li><a href="/docs/tuning">Tuning</a></li>
         <li><a href="/docs/features">Features</a></li>
