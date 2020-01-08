@@ -50,22 +50,6 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"Coding style",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/codestyle"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/mapping"
-}
-,{
-  "title":"",
-  "caption":"",
   "category":"Logging",
   "priority":"0",
   "keywords":"",
@@ -94,6 +78,14 @@
   "priority":"0",
   "keywords":"",
   "url":"/docs/transactions"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/mapping"
 }
 ,{
   "title":"",
@@ -1400,14 +1392,6 @@
   "url":"/docs/mapping/constructors#kotlin"
 }
 ,{
-  "title":"Criticism",
-  "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#criticism"
-}
-,{
   "title":"Current User & Tenant",
   "caption":"",
   "category":"Testing",
@@ -2016,14 +2000,6 @@
   "url":"/docs/features/l2cache#external-invalidation"
 }
 ,{
-  "title":"Finder",
-  "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#finder"
-}
-,{
   "title":"First entity",
   "caption":"",
   "category":"Introduction",
@@ -2544,14 +2520,6 @@
   "url":"/docs/testing/mocki#mockibean"
 }
 ,{
-  "title":"Model",
-  "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#model"
-}
-,{
   "title":"Monitoring",
   "caption":"",
   "category":"Monitoring",
@@ -2822,14 +2790,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable#overview"
-}
-,{
-  "title":"Overview",
-  "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#overview"
 }
 ,{
   "title":"Platform",
@@ -3110,30 +3070,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/l2cache#read-consistency"
-}
-,{
-  "title":"Rob's view: Active record benefits",
-  "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#benefits"
-}
-,{
-  "title":"Rob's view: Ebean and active record",
-  "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#ebean"
-}
-,{
-  "title":"Rob's view: JPA and active record",
-  "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#jpa"
 }
 ,{
   "title":"Running migrations",
@@ -3518,14 +3454,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch"
-}
-,{
-  "title":"Testing",
-  "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#testing"
 }
 ,{
   "title":"Transaction",
