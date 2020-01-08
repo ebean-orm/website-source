@@ -1,0 +1,94 @@
+<html>
+<head>
+  <title>Redis - L2 cache | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="Redis - L2 cache" href="/docs/database/elasticsearch"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_redis="active">
+</head>
+<body>
+<h2>Redis - L2 cache</h2>
+<p>
+  To use Redis for L2 caching set the <code>ebean.test.redis</code> property
+  to <code>latest</code> in application-test.yaml like the example below.
+  This will automatically start a redis docker container for use with L2 caching.
+</p>
+<pre content="yml">
+ebean:
+  test:
+    redis: latest
+    platform: h2 # h2, postgres, mysql, oracle, sqlserver, sqlite
+    ddlMode: dropCreate # none | dropCreate | migrations | create
+    dbName: my_app
+</pre>
+
+<h2>ebean-redis dependency</h2>
+<p>
+  Add <code>ebean-redis</code> as a dependency. ebean-redis will
+  automatically register itself with ebean as the L2 cache service.
+</p>
+<pre content="xml">
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-redis</artifactId>
+    <version>12.1.1</version>
+  </dependency>
+</pre>
+
+
+<h2>configuration</h2>
+<p>
+  To configure the redis server to use in <code>main/resources/application.yaml</code>
+  we configure the following properties:
+</p>
+<pre content="yml">
+ebean:
+  redis:
+    server: test-server
+    port: 99
+    minIdle: 2
+    maxIdle: 20
+    maxTotal: 20
+    maxWaitMillis: 300
+</pre>
+
+<h2>@Cache</h2>
+<p>
+  Entity beans annotated with <code>@Cache</code> will now use redis for
+  caching.
+</p>
+<pre content="java">
+
+@Cache(enableQueryCache = true, nearCache = true, naturalKey = "name")
+@Entity
+public class Person extends EBase {
+
+  public enum Status {
+    NEW,
+    ACTIVE,
+    INACTIVE
+  }
+
+  @Index(unique = true)
+  String name;
+
+  Status status;
+
+  LocalDate localDate;
+
+  String notes;
+
+  public Person(String name) {
+    this.name = name;
+    this.status = Status.NEW;
+  }
+  ...
+}
+</pre>
+
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/elasticsearch/index.html"/>
+
+</body>
+</html>

@@ -17,8 +17,6 @@
 ```yml
 ebean:
   test:
-#    useDocker: false
-#    shutdown: stop # stop | remove
     platform: h2
     ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: myapp
@@ -32,7 +30,6 @@ ebean:
     elastic:
       version: 5.6.0
       port: 9201
-
 ```
 <p>
   In terms of logging we can see:
@@ -40,9 +37,23 @@ ebean:
 ```text
 21:57:06.587 INFO  io.ebean.docker.commands.Commands - Start container ut_elastic with port:9201
 ```
+<p>
+  When using ElasticSearch by itself and not with another database leave out the <code>ebean.test.platform</code>
+  section like:
+</p>
+```yml
+ebean:
+  docstore:
+    url: http://127.0.0.1:9201
+    active: true
+    generateMapping: true
+    dropCreate: true
 
-
-<h3><a id="options">Properties</a></h3>
+    elastic:
+      version: 5.6.0
+      port: 9201
+```
+<h3 id="options">Properties</h3>
 
 <table class="w100">
   <tr>
@@ -67,8 +78,7 @@ ebean:
   </tr>
 </table>
 
-<p>&nbsp;</p>
-<p>
+<p class="mtm">
   For more <a href="/docs/features/elasticsearch">details on the ElasticSearch</a>.
 </p>
 

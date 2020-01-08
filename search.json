@@ -784,6 +784,38 @@
   "url":"/docs/database/postgres/postgis#postgis"
 }
 ,{
+  "title":"Redis - L2 cache",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/redis"
+}
+,{
+  "title":"Redis - L2 cache - @Cache",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/redis"
+}
+,{
+  "title":"Redis - L2 cache - configuration",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/redis"
+}
+,{
+  "title":"Redis - L2 cache - ebean-redis dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/redis"
+}
+,{
   "title":"SAP Hana",
   "caption":"",
   "category":"Database platforms",
@@ -3040,12 +3072,28 @@
   "url":"/docs/testing#docker"
 }
 ,{
+  "title":"ElasticSearch",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing#elasticsearch"
+}
+,{
   "title":"Not using Docker",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
   "url":"/docs/testing#not-docker"
+}
+,{
+  "title":"Redis",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing#redis"
 }
 ,{
   "title":"Third age of testing",

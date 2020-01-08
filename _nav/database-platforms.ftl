@@ -12,4 +12,5 @@
   <@smallnav activeCheck="${n2_cockroach!''}" url="/docs/database/cockroach" title="Cockroach"/>
   <@smallnav activeCheck="${n2_nuodb!''}" url="/docs/database/nuodb" title="NuoDB"/>
   <@smallnav activeCheck="${n2_elasticsearch!''}" url="/docs/database/elasticsearch" title="ElasticSearch"/>
+  <@smallnav activeCheck="${n2_redis!''}" url="/docs/database/redis" title="Redis"/>
 </ul>
