@@ -1,0 +1,85 @@
+<html>
+<head>
+  <title>DB Migration | Docs | Ebean</title>
+  <title>Create All DDL | Docs | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="DB migrations" href="/docs/db-migrations"/>
+  <#assign n0_docs="active">
+  <#assign n1_dbmigration="active">
+</head>
+<body>
+<h2 id="db-migrations">DB Migrations</h2>
+<p>
+  DB Migrations are DDL changes that are applied typically when the application is started.
+</p>
+<p>
+  Ebean can generate the migrations for us by performing a <code>diff</code> on the model and
+  then generating database platform specific DDL for the change.
+</p>
+<p>
+  Ebean can also run the migrations (similar to FlywayDb).  It is recommended to use Ebean's built
+  in migration runner rather than <code>FlywayDb</code> or <code>LiquiBase</code>.
+</p>
+
+
+<h2 id="generate">Generate a Migration</h2>
+<p>
+  In <code>src/test/java</code> add code to generate migrations.
+</p>
+  ```java
+package main;
+
+import io.ebean.annotation.Platform;
+import io.ebean.dbmigration.DbMigration;
+import java.io.IOException;
+
+public class GenerateDbMigration {
+
+  /**
+   * Generate the next "DB schema DIFF" migration.
+   */
+  public static void main(String[] args) throws IOException {
+
+
+    DbMigration dbMigration = DbMigration.create();
+    dbMigration.setPlatform(Platform.POSTGRES);
+
+    dbMigration.generateMigration();
+  }
+}
+```
+<p>
+  To generate a migration we run this main method.
+</p>
+<p>
+  We run this manually when we have completed some work and consider it ready to be released.
+  Running the generation starts the EbeanServer in offline mode, performs a DIFF of the
+  model and generates the migration DDL script.
+</p>
+
+<h2 id="run">Running migrations</h2>
+<p>
+  To get Ebean to run the DB migrations on startup set <code>ebean.migration.run</code> to true.
+</p>
+<h5>In application.yml</h5>
+```yml
+## run migrations when the EbeanServer starts
+ebean:
+  migration:
+    run: true
+```
+<p>
+  With <code>ebean.migration.run=true</code> then when Ebean starts it will look at the
+  migrations and run any that need to be run.  The migration runner will by default create a table
+  called <code>db_migration</code> that holds the meta data about the migrations that have been run
+  and inserts into this table when migrations are successfully executed.
+</p>
+
+<nav class="next">
+  <p class="next">
+    <a href="/docs/db-migrations/detail" class="btn">Next: DB Migration details</a>
+  </p>
+</nav>
+
+</body>
+</html>

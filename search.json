@@ -42,34 +42,10 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"DDL",
+  "category":"Kotlin",
   "priority":"0",
   "keywords":"",
-  "url":"/docs/ddl/"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Query",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/query"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Persist",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/persist"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/transactions"
+  "url":"/docs/kotlin"
 }
 ,{
   "title":"",
@@ -98,18 +74,50 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"Tuning",
+  "category":"Query",
   "priority":"0",
   "keywords":"",
-  "url":"/docs/tuning"
+  "url":"/docs/query"
 }
 ,{
   "title":"",
   "caption":"",
-  "category":"Kotlin",
+  "category":"Persist",
   "priority":"0",
   "keywords":"",
-  "url":"/docs/kotlin"
+  "url":"/docs/persist"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/transactions"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"DDL Generation",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/ddl-generation"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/db-migrations"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Tuning",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/tuning"
 }
 ,{
   "title":"",
@@ -1392,70 +1400,6 @@
   "url":"/docs/mapping/constructors#kotlin"
 }
 ,{
-  "title":"Create all",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/ddl-create-all"
-}
-,{
-  "title":"Create all - DB Migration",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/ddl-create-all"
-}
-,{
-  "title":"Create all - Initial DDL",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/ddl-create-all"
-}
-,{
-  "title":"Create all - Overview",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/ddl-create-all#overview"
-}
-,{
-  "title":"Create all - Seed DDL",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/ddl-create-all"
-}
-,{
-  "title":"Create all - Using ebean-test",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/ddl-create-all#test-config"
-}
-,{
-  "title":"Create all - Using properties",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/ddl-create-all#properties"
-}
-,{
-  "title":"Create all DDL",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/"
-}
-,{
   "title":"Criticism",
   "caption":"",
   "category":"Coding style",
@@ -1498,122 +1442,10 @@
 ,{
   "title":"DB Migrations",
   "caption":"",
-  "category":"DDL",
+  "category":"DB migrations",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/ddl/"
-}
-,{
-  "title":"DB migrations",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration"
-}
-,{
-  "title":"DB migrations - Apply DDL",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail#apply-ddl"
-}
-,{
-  "title":"DB migrations - Applying pending drops",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail"
-}
-,{
-  "title":"DB migrations - DB Migrations",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration#db-migrations"
-}
-,{
-  "title":"DB migrations - Generate offline",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail#programmatic"
-}
-,{
-  "title":"DB migrations - How to generate a Migration",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration#generate"
-}
-,{
-  "title":"DB migrations - How to run a Migration",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration#run"
-}
-,{
-  "title":"DB migrations - Migration version and name",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail#version"
-}
-,{
-  "title":"DB migrations - Migration xml",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail#migration-xml"
-}
-,{
-  "title":"DB migrations - Output files",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail"
-}
-,{
-  "title":"DB migrations - Overview",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration#overview"
-}
-,{
-  "title":"DB migrations - Repeatable migrations",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail#repeatable"
-}
-,{
-  "title":"DB migrations - Running migration",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail#running"
-}
-,{
-  "title":"DB migrations - Version format",
-  "caption":"",
-  "category":"DDL",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ddl/dbmigration-detail#version-format"
+  "url":"/docs/db-migrations#db-migrations"
 }
 ,{
   "title":"DDL",
@@ -1622,6 +1454,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/logging#ddl"
+}
+,{
+  "title":"DDL Generation",
+  "caption":"",
+  "category":"DDL Generation",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/ddl-generation#overview"
 }
 ,{
   "title":"DDL Mode",
@@ -1642,18 +1482,18 @@
 ,{
   "title":"Delete",
   "caption":"",
-  "category":"Persist",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/persist#deletes"
-}
-,{
-  "title":"Delete",
-  "caption":"",
   "category":"SoftDelete",
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/softdelete#delete"
+}
+,{
+  "title":"Delete",
+  "caption":"",
+  "category":"Persist",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/persist#deletes"
 }
 ,{
   "title":"Delete Permanent",
@@ -1670,6 +1510,86 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/delete"
+}
+,{
+  "title":"Details",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail"
+}
+,{
+  "title":"Details - Apply DDL",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail#apply-ddl"
+}
+,{
+  "title":"Details - Applying pending drops",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail"
+}
+,{
+  "title":"Details - Generate offline",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail#programmatic"
+}
+,{
+  "title":"Details - Migration version and name",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail#version"
+}
+,{
+  "title":"Details - Migration xml",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail#migration-xml"
+}
+,{
+  "title":"Details - Output files",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail"
+}
+,{
+  "title":"Details - Repeatable migrations",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail#repeatable"
+}
+,{
+  "title":"Details - Running migration",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail#running"
+}
+,{
+  "title":"Details - Version format",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations/detail#version-format"
 }
 ,{
   "title":"Docker",
@@ -2136,6 +2056,14 @@
   "url":"/docs/intro/first-entity/model"
 }
 ,{
+  "title":"Generate a Migration",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations#generate"
+}
+,{
   "title":"Getting started",
   "caption":"",
   "category":"Read Auditing",
@@ -2334,6 +2262,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch/indexes"
+}
+,{
+  "title":"Initial DDL",
+  "caption":"",
+  "category":"DDL Generation",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/ddl-generation#initSql"
 }
 ,{
   "title":"Install IDE Plugin",
@@ -2866,14 +2802,6 @@
 ,{
   "title":"Overview",
   "caption":"",
-  "category":"Coding style",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/codestyle#overview"
-}
-,{
-  "title":"Overview",
-  "caption":"",
   "category":"JSON in DB",
   "priority":"3",
   "keywords":"",
@@ -2894,6 +2822,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/draftable#overview"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"Coding style",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/codestyle#overview"
 }
 ,{
   "title":"Platform",
@@ -3200,6 +3136,14 @@
   "url":"/docs/codestyle#jpa"
 }
 ,{
+  "title":"Running migrations",
+  "caption":"",
+  "category":"DB migrations",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/db-migrations#run"
+}
+,{
   "title":"SQL",
   "caption":"",
   "category":"Logging",
@@ -3278,6 +3222,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/testing/script-runner#scriptRunner"
+}
+,{
+  "title":"Seed DDL",
+  "caption":"",
+  "category":"DDL Generation",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/ddl-generation#seedSql"
 }
 ,{
   "title":"Simple query comparison",
@@ -3370,18 +3322,18 @@
 ,{
   "title":"Spring",
   "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions/spring"
-}
-,{
-  "title":"Spring",
-  "caption":"",
   "category":"Introduction",
   "priority":"3",
   "keywords":"",
   "url":"/docs/introduction/spring"
+}
+,{
+  "title":"Spring",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/spring"
 }
 ,{
   "title":"SqlQuery",
@@ -3792,6 +3744,22 @@
   "url":"/docs/upgrading"
 }
 ,{
+  "title":"Using ebean-test",
+  "caption":"",
+  "category":"DDL Generation",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/ddl-generation#test-config"
+}
+,{
+  "title":"Using properties",
+  "caption":"",
+  "category":"DDL Generation",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/ddl-generation#properties"
+}
+,{
   "title":"Versions between",
   "caption":"",
   "category":"History",
@@ -3870,6 +3838,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch#why"
+}
+,{
+  "title":"db-create-all.sql",
+  "caption":"",
+  "category":"DDL Generation",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/ddl-generation#create-all"
 }
 ,{
   "title":"ebean-test",

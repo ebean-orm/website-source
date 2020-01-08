@@ -12,7 +12,7 @@
   <li><a href="#run">Run</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${migrationdetail!''}" url="/docs/ddl/dbmigration-detail" title="Migration details">
+<@smallnav activeCheck="${migrationdetail!''}" url="/docs/dbmigrations/detail" title="Migration details">
 <ul class="nav">
   <li><a href="#migration-xml">Migration XML</a></li>
   <li><a href="#apply-ddl">Apply DDL</a></li>

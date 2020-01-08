@@ -4,8 +4,8 @@
 <@smallnav activeCheck="${configuration!''}" url="/docs/configuration" title="Configuration"/>
 <@smallnav activeCheck="${testing!''}" url="/docs/testing" title="Testing"/>
 
-<@smallnav activeCheck="${ddl!''}" url="/docs/ddl" title="DDL generation"/>
-<@smallnav activeCheck="${ddl!''}" url="/docs/ddl" title="DB migrations"/>
+<@smallnav activeCheck="${ddl!''}" url="/docs/ddl-generation" title="DDL generation"/>
+<@smallnav activeCheck="${ddl!''}" url="/docs/db-migrations" title="DB migrations"/>
 
 <@smallnav activeCheck="${codestyle!''}" url="/docs/codestyle" title="Coding style"/>
 

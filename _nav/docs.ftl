@@ -22,8 +22,22 @@
         <@nav1 activeCheck="${sect_persist!''}" url="/docs/persist" title="Persist"/>
         <@nav1 activeCheck="${sect_transactions!''}" url="/docs/transactions" title="Transactions"/>
         <li><a href="/docs/mapping">Mapping</a></li>
-        <@nav1 activeCheck="${n2_ddlcreateall!''}" url="/docs/ddl/ddl-create-all" title="DDL Generation"/>
-        <@nav1 activeCheck="${n2_dbmigration!''}" url="/docs/ddl/dbmigration" title="DB Migration"/>
+        <@nav1 activeCheck="${n1_ddlcreateall!''}" url="/docs/ddl-generation" title="DDL Generation">
+          <ul class="nav nav-scroll">
+            <@smallnav activeCheck="" url="#test-config" title="Using ebean-test"/>
+            <@smallnav activeCheck="" url="#properties" title="Using properties"/>
+            <@smallnav activeCheck="" url="#create-all" title="db-create-all.sql"/>
+
+            <@smallnav activeCheck="" url="#initSql" title="initSql"/>
+            <@smallnav activeCheck="" url="#seedSql" title="seedSql"/>
+          </ul>
+        </@nav1>
+        <@nav1 activeCheck="${n1_dbmigration!''}" url="/docs/db-migrations" title="DB Migrations">
+          <ul class="nav nav-scroll">
+            <@smallnav activeCheck="" url="#generate" title="Generate a Migration"/>
+            <@smallnav activeCheck="" url="#run" title="Run migrations"/>
+          </ul>
+        </@nav1>
         <@nav1 activeCheck="${n1_logging!''}" url="/docs/logging" title="Logging"/>
         <li><a href="/docs/testing">Testing</a></li>
         <li><a href="/docs/tuning">Tuning</a></li>

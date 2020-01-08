@@ -2,13 +2,12 @@
 <head>
   <title>Create All DDL | Docs | Ebean</title>
   <meta name="layout" content="_layout2/base-docs.html"/>
-  <meta name="bread1" content="DDL" href="/docs/ddl/"/>
-  <meta name="bread2" content="Create all" href="/docs/ddl/"/>
+  <meta name="bread1" content="DDL Generation" href="/docs/ddl/"/>
   <#assign n0_docs="active">
-  <#assign n2_ddlcreateall="active">
+  <#assign n1_ddlcreateall="active">
 </head>
 <body>
-  <h2 id="overview">Overview</h2>
+  <h2 id="overview">DDL Generation</h2>
   <p>
     Ebean can generate and execute <code>CREATE ALL</code> and <code>DROP ALL</code> DDL
     scripts which create all the tables. This is used for testing purposes.
@@ -36,8 +35,8 @@ ebean:
   <p>
     If we don't want to use <a href="/docs/testing">ebean-test</a> we can instead set both
     <code>ebean.ddl.generate</code> and <code>ebean.ddl.run</code> properties to true in
-    <code>application-test.yml</code> (which is in src/test/resources) and in this way the <code>CREATE ALL</code>
-    DDL is only generated and executed when running tests.
+    <code>application-test.yml</code> (which is in src/test/resources) and in this way the
+    <code>CREATE ALL</code>  DDL is only generated and executed when running tests.
   </p>
 
   <h5>In application-test.yml</h5>
@@ -54,31 +53,47 @@ ebean.ddl.generate=true
 ebean.ddl.run=true
 ```
 
-  <h2>Initial DDL</h2>
+  <h2 id="create-all">db-create-all.sql</h2>
   <p>
-    We can specify DDL to execute prior to running the `create-all` DDL.
+    When DDL is generated <code>db-create-all.sql</code> and <code>db-drop-all.sql</code> are generated
+    and put into the maven <code>target</code> or gradle <code>build</code> directory.
+  </p>
+  <p>
+    When tests are run Ebean automatically regenerates these ddl script files and executes them
+    prior to running the tests. This effectively recreates the database prior to running tests.
+  </p>
+
+  <h2 id="initSql">Initial DDL</h2>
+  <p>
+    We can additionally specify DDL to execute prior to running the "create-all" DDL via the
+    <code>initSql</code> property.
   </p>
   ```properties
   ebean.ddl.initSql=testInitialDdl.sql
   ```
 
-  <h2>Seed DDL</h2>
+  <h2 id="seedSql">Seed DDL</h2>
   <p>
-    We can specify DDL to execute after running the `create-all` DDL which we typically use to seed the database.
+    We can additionally specify DDL to execute after running the "create-all" DDL which we typically
+    use to seed the database via the <code>seedSql</code> property.
   </p>
   ```properties
   ebean.ddl.seedSql=testSeedData.sql
   ```
 
-  <h2>DB Migration</h2>
+  <p>&nbsp;</p>
+  <h4>Compared to DB Migrations</h4>
   <p>
     <a href="dbmigration">DB Migration</a> is different in that <code>DIFF</code> DDL scripts are generated for the
-    changes to the model and these <code>DIFF</code> DDL scripts can be applied to the target database typically at
-    runtime.
+    changes to the model and these <code>DIFF</code> DDL scripts can be applied to the target database typically when
+    Ebean starts.
+  </p>
+  <p>
+
   </p>
 
-  <div class="next pull-right">
-    <a href="/docs/ddl/dbmigration" class="btn btn-info">Next: DB Migrations</a>
-  </div>
+  <nav class="next">
+    <a href="/docs/ddl/dbmigration" class="next btn">Next: DB Migrations</a>
+  </nav>
 </body>
 </html>
