@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title>Oracle | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="Oracle" href="/docs/database/oracle"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_oracle="active">
+</head>
+<body>
+<h2>Oracle</h2>
+
+<h3>Testing</h3>
+<p>
+  To test using Oracle set the <em>platform</em> to <code>oracle</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+
+```yml
+ebean:
+  test:
+    platform: oracle # h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | migrations
+    dbName: test
+```
+
+<p>
+  The above will use the following defaults:
+</p>
+<p>
+  The above will use the following defaults:
+</p>
+<table class="compact w100">
+  <tr><th>username:</th><td>{databaseName}</td></tr>
+  <tr><th>password:</th><td>test</td></tr>
+  <tr><th>port:</th><td>1521</td></tr>
+  <tr><th>url:</th><td>jdbc:oracle:thin:@localhost:{port}:XE</td></tr>
+  <tr><th>driver:</th><td>oracle.jdbc.driver.OracleDriver</td></tr>
+  <tr><th>image:</th><td>oracleinanutshell/oracle-xe-11g:{version}</td></tr>
+</table>
+
+
+<h2 id="types">Types</h2>
+<h5>UUID</h5>
+<p>
+  UUID is not a native Oracle type and can be mapped to either BINARY(16) or VARCHAR(36)..
+</p>
+
+<h2 id="history">History support</h2>
+<p>
+  Oracle has native SQL2011 History support.
+</p>
+
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/oracle/index.html"/>
+
+</body>
+</html>

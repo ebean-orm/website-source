@@ -1,0 +1,54 @@
+<html>
+<head>
+  <title>H2 | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="H2" href="/docs/database/h2"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_h2="active">
+</head>
+<body>
+<h2>H2</h2>
+
+<h3>Testing</h3>
+<p>
+  To test using H2 set the <em>platform</em> to <code>h2</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+
+```yml
+ebean:
+  test:
+    platform: h2 # h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | migrations
+    dbName: test
+```
+
+<p>
+  The above will use the following defaults:
+</p>
+<table class="compact w100">
+  <tr><th>url:</th><td>jdbc:h2:mem:{databaseName}</td></tr>
+  <tr><th>driver:</th><td>org.h2.Driver</td></tr>
+</table>
+
+
+<h2 id="types">Types</h2>
+<h5>UUID</h5>
+<p>
+  UUID is a native H2 type.
+</p>
+
+<h2 id="history">History support</h2>
+<p>
+  History support for H2 is provided by generating triggers and history table.
+</p>
+
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/nuodb/index.html"/>
+
+</body>
+</html>

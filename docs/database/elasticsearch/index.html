@@ -1,14 +1,15 @@
 <html>
 <head>
-  <title>Testing with ElasticSearch</title>
-  <meta name="layout" content="_layout/docs.html"/>
-  <meta name="bread1" content="Testing" href="/docs/testing/"/>
-  <meta name="bread2" content="ElasticSearch" href="/docs/testing/"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_testing.ftl"></template>
-  <#assign elastic="active">
+  <title>ElasticSearch | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="ElasticSearch" href="/docs/database/elasticsearch"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_elasticsearch="active">
 </head>
 <body>
-<h2>Elastic</h2>
+<h2>ElasticSearch</h2>
 <p>
   To test against ElasticSearch we can set the <code>elastic version</code> property like
   the example below which will then start Elastic as a docker container automatically.
@@ -18,7 +19,7 @@ ebean:
   test:
 #    useDocker: false
 #    shutdown: stop # stop | remove
-    platform: h2 # h2, postgres, mysql, oracle, sqlserver, sqlite
+    platform: h2
     ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: myapp
 
@@ -43,7 +44,7 @@ ebean:
 
 <h3><a id="options">Properties</a></h3>
 
-<table class="table">
+<table class="w100">
   <tr>
     <th>Property</th>
     <th>Description</th>
@@ -66,13 +67,12 @@ ebean:
   </tr>
 </table>
 
+<p>&nbsp;</p>
 <p>
   For more <a href="/docs/features/elasticsearch">details on the ElasticSearch</a>.
 </p>
 
-<div class="next pull-right">
-  <a href="/docs/testing/postgres" class="btn btn-info">Next: Postgres</a>
-</div>
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/elasticsearch/index.html"/>
 
 </body>
 </html>

@@ -1,14 +1,14 @@
 <html>
 <head>
   <title>NuoDB | Ebean ORM</title>
-  <meta name="layout" content="_layout/docs_database.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
   <meta name="bread2" content="NuoDB" href="/docs/database/nuodb"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_database_nuodb.ftl"></template>
-  <#assign nuodb="active">
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_nuodb="active">
 </head>
 <body>
-
-
 <h2>NuoDB</h2>
 
 <h3>Testing</h3>
@@ -23,26 +23,12 @@
 ebean:
   test:
   platform: nuodb # h2, nuodb, postgres, ...
-    ddlMode: dropCreate # none | dropCreate | migration
+    ddlMode: dropCreate # none | dropCreate | migrations
     dbName: my_app
 ```
-<p>
-  That is all we need to do. Running tests via IDE, maven or gradle will all automatically setup
-  a docker test container for postgres including creating the database and user etc.
-</p>
-<p>
-  We generally run with <em>ddlMode</em> <code>dropCreate</code> which will drop and re-create
-  all the database tables prior to running all the tests.
-</p>
-<p>
-  Refer to <a href="/docs/logging">docs / logging</a> to see how to get logging for SQL, DDL and docker.
-</p>
-<p>
-  Note that DDL is generated into <em>maven target</em>, <em>gradle build</em> or current directory.
-  We see <code>db-create-all.sql</code> and <code>db-drop-all.sql</code> there.
-</p>
 
-<h3>Types</h3>
+
+<h2 id="types">Types</h2>
 
 <h5>UUID</h5>
 <p>
@@ -61,17 +47,17 @@ ebean:
 </p>
 
 
-<h3>History support</h3>
+<h2 id="history">History support</h2>
 <p>
   History support for NuoDB is provided by generating triggers and history table.
 </p>
 
-<h3>Table Partitioning</h3>
+<h2 id="partitioning">Table Partitioning</h2>
 <p>
   NuoDB supports table partitioning but this is not supported by Ebean yet (via <em>@DbPartition</em>).
 </p>
 
-<@next_edit "Testing" "/docs/testing" "/docs/database/postgres/index.html"/>
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/nuodb/index.html"/>
 
 </body>
 </html>

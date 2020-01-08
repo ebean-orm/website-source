@@ -1,0 +1,48 @@
+<html>
+<head>
+  <title>SAP Hana | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="SAP Hana" href="/docs/database/hana"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_hana="active">
+</head>
+<body>
+<h2>SAP Hana</h2>
+
+<h3>Testing</h3>
+<p>
+  To test using SAP Hana set the <em>platform</em> to <code>hana</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+
+```yml
+ebean:
+  test:
+    platform: hana # h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | migrations
+    dbName: test
+```
+
+<p>
+  The above will use the following defaults:
+</p>
+<table class="compact w100">
+  <tr><th>username:</th><td>SYSTEM</td></tr>
+  <tr><th>password:</th><td>HXEHana1</td></tr>
+  <tr><th>databaseName:</th><td>HXE</td></tr>
+  <tr><th>port:</th><td>39017</td></tr>
+  <tr><th>url:</th><td>jdbc:sap://localhost:{port}/?databaseName={databaseName}</td></tr>
+  <tr><th>driver:</th><td>com.sap.db.jdbc.Driver</td></tr>
+  <tr><th>image:</th><td>store/saplabs/hanaexpress:{version}</td></tr>
+</table>
+
+
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/nuodb/index.html"/>
+
+</body>
+</html>

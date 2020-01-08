@@ -1,0 +1,44 @@
+<html>
+<head>
+  <title>Sqlite | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="Sqlite" href="/docs/database/sqlite"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_sqlite="active">
+</head>
+<body>
+<h2>Sqlite</h2>
+
+<h3>Testing</h3>
+<p>
+  To test using Sqlite set the <em>platform</em> to <code>sqlite</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+
+```yml
+ebean:
+  test:
+    platform: sqlite # h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | migrations
+    dbName: test
+```
+
+<p>
+  The above will use the following defaults:
+</p>
+<table class="compact w100">
+  <tr><th>url:</th><td>jdbc:sqlite:{databaseName}</td></tr>
+  <tr><th>driver:</th><td>org.sqlite.JDBC</td></tr>
+  <tr><th>isolationlevel:</th><td>read_uncommitted</td></tr>
+
+</table>
+
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/nuodb/index.html"/>
+
+</body>
+</html>

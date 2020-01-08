@@ -8,8 +8,32 @@
 </head>
 <body>
 <h2>Database Platforms</h2>
-
-<table class="table">
+<p>&nbsp;</p>
+<div class="grid g3">
+  <div>
+    <h4><a href="/docs/database/postgres">Postgres</a></h4>
+    <h4><a href="/docs/database/mysql">MySql</a></h4>
+    <h4><a href="/docs/database/mysql">MariaDB</a></h4>
+    <h4><a href="/docs/database/h2">H2</a></h4>
+    <h4><a href="/docs/database/elasticsearch">ElasticSearch</a></h4>
+  </div>
+  <div>
+    <h4><a href="/docs/database/sqlserver">SQL Server</a></h4>
+    <h4><a href="/docs/database/oracle">Oracle</a></h4>
+    <h4><a href="/docs/database/db2">DB2</a></h4>
+    <h4><a href="/docs/database/hana">SAP Hana</a></h4>
+  </div>
+  <div>
+    <h4><a href="/docs/database/sqlite">SQLite</a></h4>
+    <h4><a href="/docs/database/clickhouse">ClickHouse</a></h4>
+    <h4><a href="/docs/database/cockroach">Cockroach</a></h4>
+    <h4><a href="/docs/database/nuodb">NuoDB</a></h4>
+  </div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3>Summary</h3>
+<table class="" style="width: 100%;">
   <tr>
     <th>Platform</th>
     <th>Identity</th>
@@ -20,7 +44,7 @@
   </tr>
 
   <tr>
-    <td>H2</td>
+    <td><a href="/docs/database/h2">H2</a></td>
     <td>*Identity & Sequence</td>
     <td>Partial</td>
     <td>Simulated</td>
@@ -29,7 +53,7 @@
   </tr>
 
   <tr>
-    <td>Postgres</td>
+    <td><a href="/docs/database/postgres">Postgres</a></td>
     <td>*Identity & Sequence</td>
     <td>Full</td>
     <td>Full</td>
@@ -38,7 +62,7 @@
   </tr>
 
   <tr>
-    <td>MySQL</td>
+    <td><a href="/docs/database/mysql">MySql</a></td>
     <td>Identity</td>
     <td>Simulated</td>
     <td>Full</td>
@@ -47,16 +71,7 @@
   </tr>
 
   <tr>
-    <td>Oracle</td>
-    <td>*Sequence & Identity</td>
-    <td>Simulated</td>
-    <td>Full</td>
-    <td></td>
-    <td>Native</td>
-  </tr>
-
-  <tr>
-    <td>SQL Server 17</td>
+    <td><a href="/docs/database/sqlserver">SQL Server 17</a></td>
     <td>*Sequence & Identity</td>
     <td>Simulated</td>
     <td>Full</td>
@@ -65,7 +80,7 @@
   </tr>
 
   <tr>
-    <td>SQL Server 16</td>
+    <td><a href="/docs/database/sqlserver">SQL Server 16</a></td>
     <td>*Identity</td>
     <td>Simulated</td>
     <td>Full</td>
@@ -74,7 +89,34 @@
   </tr>
 
   <tr>
-    <td>SQLite</td>
+    <td><a href="/docs/database/oracle">Oracle</a></td>
+    <td>*Sequence & Identity</td>
+    <td>Simulated</td>
+    <td>Full</td>
+    <td></td>
+    <td>Native</td>
+  </tr>
+
+  <tr>
+    <td><a href="/docs/database/db2">DB2</a></td>
+    <td>*Identity & Sequence</td>
+    <td>None</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td><a href="/docs/database/hana">SAP Hana</a></td>
+    <td>-</td>
+    <td>-</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td><a href="/docs/database/sqlite">SQLite</a></td>
     <td>*Identity</td>
     <td>Partial</td>
     <td>Simulated</td>
@@ -83,38 +125,33 @@
   </tr>
 
   <tr>
-    <td>DB2</td>
-    <td>*Identity & Sequence</td>
-    <td>None</td>
+    <td><a href="/docs/database/clickhouse">ClickHouse</a></td>
+    <td>-</td>
+    <td>-</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td><a href="/docs/database/cockroach">Cockroach</a></td>
+    <td>-</td>
+    <td>-</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td><a href="/docs/database/nuodb">NuoDB</a></td>
+    <td>-</td>
+    <td>-</td>
     <td></td>
     <td></td>
     <td></td>
   </tr>
 
 </table>
-
-<h3><a href="/docs/database/postgres">Postgres</a></h3>
-
-<h5>Schema</h5>
-<p>
-  Often with Postgres we want to have the database objects created in a named schema rather than the
-  public schema. We can do this be setting:
-</p>
-```text
-ebean.dbSchema=myapp
-```
-<p>
-  When using a named schema with Postgres it is common that we connect using a DB user which is the same
-  as the schema such that the default <code>search path</code> finds the DB tables/objects and we do not
-  need to specify a custom search path (via the connection url etc).
-</p>
-
-<h5>Extensions</h5>
-<p>
-  We also often want to use extensions.  When testing using <a href="/docs/testing">ebean-test</a>
-  we can specify a list of extensions that we want to be installed as part of the test database setup
-  (via docker) - refer to <a href="/docs/testing/postgres">testing with Postgres</a>.
-</p>
 
 <nav class="next">
   <p class="next">

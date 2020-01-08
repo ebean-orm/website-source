@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>DB2 | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="DB2" href="/docs/database/db2"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_db2="active">
+</head>
+<body>
+<h2>DB2</h2>
+
+<h3>Testing</h3>
+<p>
+  To test using DB2 set the <em>platform</em> to <code>db2</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+
+```yml
+ebean:
+  test:
+    platform: db2 # h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | migrations
+    dbName: test
+```
+
+
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/nuodb/index.html"/>
+
+</body>
+</html>

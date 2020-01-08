@@ -18,6 +18,14 @@
 ,{
   "title":"",
   "caption":"",
+  "category":"Database platforms",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/database"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"Documentation",
   "priority":"0",
   "keywords":"",
@@ -678,6 +686,270 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/ddl-generation#create-all"
+}
+,{
+  "title":"ClickHouse",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/clickhouse"
+}
+,{
+  "title":"Cockroach",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/cockroach"
+}
+,{
+  "title":"DB2",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/db2"
+}
+,{
+  "title":"Database Platforms",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database"
+}
+,{
+  "title":"ElasticSearch",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/elasticsearch"
+}
+,{
+  "title":"H2",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/h2"
+}
+,{
+  "title":"H2 - History support",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/h2#history"
+}
+,{
+  "title":"H2 - Types",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/h2#types"
+}
+,{
+  "title":"MariaDB",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mariadb"
+}
+,{
+  "title":"MySql",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mysql"
+}
+,{
+  "title":"MySql - History support",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mysql#history"
+}
+,{
+  "title":"MySql - Types",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mysql#types"
+}
+,{
+  "title":"NuoDB",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/nuodb"
+}
+,{
+  "title":"NuoDB - History support",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/nuodb#history"
+}
+,{
+  "title":"NuoDB - Table Partitioning",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/nuodb#partitioning"
+}
+,{
+  "title":"NuoDB - Types",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/nuodb#types"
+}
+,{
+  "title":"Oracle",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/oracle"
+}
+,{
+  "title":"Oracle - History support",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/oracle#history"
+}
+,{
+  "title":"Oracle - Types",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/oracle#types"
+}
+,{
+  "title":"Postgres",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres"
+}
+,{
+  "title":"Postgres - Extensions",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#extensions"
+}
+,{
+  "title":"Postgres - History support",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#history"
+}
+,{
+  "title":"Postgres - PostGIS",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#postgis"
+}
+,{
+  "title":"Postgres - Postgres types",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#types"
+}
+,{
+  "title":"Postgres - Schema",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#schema"
+}
+,{
+  "title":"Postgres - Table Partitioning",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#partitioning"
+}
+,{
+  "title":"Postgres / Array type",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres/arraytype"
+}
+,{
+  "title":"Postgres / Array type - Array type",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres/arraytype"
+}
+,{
+  "title":"Postgres / PostGIS",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres/postgis"
+}
+,{
+  "title":"Postgres / PostGIS - PostGIS",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres/postgis#postgis"
+}
+,{
+  "title":"SAP Hana",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/hana"
+}
+,{
+  "title":"SQL Server",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/sqlserver"
+}
+,{
+  "title":"Sqlite",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/sqlite"
 }
 ,{
   "title":"Getting started",
@@ -2944,44 +3216,12 @@
   "url":"/docs/testing/elasticsearch"
 }
 ,{
-  "title":"MySql",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/mysql"
-}
-,{
   "title":"Not using Docker",
   "caption":"",
   "category":"Testing",
   "priority":"3",
   "keywords":"",
   "url":"/docs/testing#not-docker"
-}
-,{
-  "title":"Platform",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/platform"
-}
-,{
-  "title":"Postgres",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/postgres"
-}
-,{
-  "title":"SQL Server",
-  "caption":"",
-  "category":"Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/testing/sqlserver"
 }
 ,{
   "title":"ebean-test dependency",

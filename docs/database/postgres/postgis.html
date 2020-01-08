@@ -27,18 +27,21 @@ ebean:
   test:
     shutdown: none # stop | remove | none
     platform: postgis
-    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: my_gisapp
 ```
 <p>
   The above <code>postgis</code> platform is equivalent to the setup below which uses:
 </p>
-<ul>
-  <li>Port <code>7432</code> by default (so as not to clash with local or non-gis postgres)</li>
-  <li>The <code>org.postgis.DriverWrapperLW</code> driver for binary encoded Geometry types</li>
-  <li>URL <code>postgresql_lwgis</code> in the connection url to use the LW driver </li>
-  <li>Uses <code>mdillon/postgis</code> docker image with PostGIS installed</li>
-</ul>
+<table class="compact w100">
+  <tr><th>username:</th><td>{databaseName}</td></tr>
+  <tr><th>password:</th><td>test</td></tr>
+  <tr><th>port:</th><td>7432</td></tr>
+  <tr><th>url:</th><td>jdbc:postgresql_lwgis://localhost:{port}/{databaseName}</td></tr>
+  <tr><th>driver:</th><td>org.postgis.DriverWrapperLW</td></tr>
+  <tr><th>image:</th><td>mdillon/postgis:{version}</td></tr>
+</table>
+
 
 ```yml
 ebean:
@@ -47,7 +50,7 @@ ebean:
   test:
     shutdown: none # stop | remove | none
     platform: postgres
-    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: my_gisapp
     postgres:
       containerName: postgis

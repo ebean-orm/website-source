@@ -29,7 +29,7 @@
 ebean:
   test:
     platform: mysql #, h2, postgres, mysql, oracle, sqlserver
-    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: test
     mysql:
       collation: utf8mb4_unicode_ci
@@ -39,7 +39,7 @@ ebean:
 <p>
   The above will use the following defaults:
 </p>
-<table class="compact">
+<table class="compact w100">
   <tr><th>username:</th><td>{databaseName}</td></tr>
   <tr><th>password:</th><td>test</td></tr>
   <tr><th>port:</th><td>4306</td></tr>
@@ -59,7 +59,7 @@ ebean:
 ebean:
   test:
     platform: mysql #, h2, postgres, mysql, oracle, sqlserver
-    ddlMode: dropCreate # none | dropCreate | create | migration | createOnly | migrationDropCreate
+    ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: test
     mysql:
       version: 8.0
@@ -94,7 +94,7 @@ ebean:
 </p>
 
 
-<@next_edit "Testing" "/docs/testing" "/docs/database/mysql/index.html"/>
+<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/mysql/index.html"/>
 
 </body>
 </html>

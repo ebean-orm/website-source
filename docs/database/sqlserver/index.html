@@ -1,0 +1,65 @@
+<html>
+<head>
+  <title>SQL Server | Ebean ORM</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Database platforms" href="/docs/database"/>
+  <meta name="bread2" content="SQL Server" href="/docs/database/sqlserver"/>
+  <#assign n0_docs="active">
+  <#assign n1_platforms="active">
+  <#assign n2_sqlserver="active">
+</head>
+<body>
+<h2>SQL Server</h2>
+<p>
+  With SQL Server we have to decide if we are going to use the <code>sqlserver17</code> or the default older one.
+</p>
+<h3 id="sqlserver17">sqlserver17</h3>
+<p>
+  To setup to use sqlserver17 we should set the <code>databasePlatformName</code> to sqlserver17 at either the
+  <code>ebean.databasePlatformName</code>> level or at <code>ebean.test.sqlserver.databasePlatformName</code>> level.
+</p>
+```yml
+ebean:
+  databasePlatformName: sqlserver17  ## only using sql server
+  test:
+    platform: sqlserver # h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | migrations
+    dbName: test
+    sqlserver:
+      #collation: SQL_Latin1_General_CP1_CS_AS  ## use an explicit collation
+      #collation: default                       ## use the sql server default
+
+```
+<p>
+  When testing against multiple database platforms put <code>databasePlatformName: sqlserver17</code>
+  under <code>sqlserver</code> like the example below:
+</p>
+```yml
+ebean:
+  test:
+    platform: sqlserver # h2, postgres, mysql, oracle, sqlserver
+    ddlMode: dropCreate # none | dropCreate | migrations | create
+    dbName: test
+
+    sqlserver:
+      databasePlatformName: sqlserver17         ## put here when testing multiple platforms
+      #collation: SQL_Latin1_General_CP1_CS_AS  ## use an explicit collation
+      #collation: default                       ## use the sql server default
+
+```
+<p>
+  The above will use the following defaults:
+</p>
+<table class="compact w100">
+  <tr><th>username:</th><td>{databaseName}</td></tr>
+  <tr><th>password:</th><td>SqlS3rv#r</td></tr>
+  <tr><th>port:</th><td>1433</td></tr>
+  <tr><th>url:</th><td>jdbc:sqlserver://localhost:{port};databaseName={databaseName}</td></tr>
+  <tr><th>driver:</th><td>com.microsoft.sqlserver.jdbc.SQLServerDriver</td></tr>
+  <tr><th>image:</th><td>microsoft/mssql-server-linux:{version}</td></tr>
+</table>
+
+<@next_edit "Oracle" "/docs/database/oracle" "/docs/database/sqlserver/index.html"/>
+
+</body>
+</html>
