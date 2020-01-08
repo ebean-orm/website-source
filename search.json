@@ -240,38 +240,6 @@
   "url":"/docs/features/who"
 }
 ,{
-  "title":"DB (io.ebean.DB)",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction#db"
-}
-,{
-  "title":"DInject",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/dinject#provider"
-}
-,{
-  "title":"DInject - Inject and ActiveRecord",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/dinject#activerecord"
-}
-,{
-  "title":"Database",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction#database"
-}
-,{
   "title":"Database & DB - DB (io.ebean.DB)",
   "caption":"",
   "category":"Introduction",
@@ -318,54 +286,6 @@
   "priority":"2",
   "keywords":"",
   "url":"/docs/intro/api#ebeanserver"
-}
-,{
-  "title":"DatabaseConfig",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/databaseconfig"
-}
-,{
-  "title":"DatabaseFactory",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/databasefactory"
-}
-,{
-  "title":"Ebean",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction#ebean"
-}
-,{
-  "title":"EbeanServer",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction#ebeanserver"
-}
-,{
-  "title":"Finder",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/finder"
-}
-,{
-  "title":"Finder - Finder generation via ebeaninit",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/finder"
 }
 ,{
   "title":"First entity - First Entity",
@@ -424,68 +344,12 @@
   "url":"/docs/intro/first-entity/model"
 }
 ,{
-  "title":"Guice - Inject and ActiveRecord",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/guice#activerecord"
-}
-,{
-  "title":"Guice - Module bind",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/guice#module"
-}
-,{
-  "title":"Guice - Provider",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/guice#provider"
-}
-,{
   "title":"Limitations - JPA Mapping limitations",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
   "url":"/docs/intro/limitations"
-}
-,{
-  "title":"Model",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/model"
-}
-,{
-  "title":"Spring - FactoryBean",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/spring#factorybean"
-}
-,{
-  "title":"Spring - Spring boot",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/spring#spring-boot"
-}
-,{
-  "title":"Spring - ebean-spring",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/spring#ebean-spring"
 }
 ,{
   "title":"Trouble shooting - Can't find a solution?",
@@ -526,14 +390,6 @@
   "priority":"2",
   "keywords":"",
   "url":"/docs/trouble-shooting#not-enhanced"
-}
-,{
-  "title":"ebean.mf",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/introduction/manifest"
 }
 ,{
   "title":"DB Migrations",
@@ -1200,28 +1056,12 @@
   "url":"/docs/intro/first-entity/model"
 }
 ,{
-  "title":"Guice",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/introduction/guice"
-}
-,{
   "title":"Limitations",
   "caption":"",
   "category":"Introduction",
   "priority":"3",
   "keywords":"",
   "url":"/docs/intro/limitations"
-}
-,{
-  "title":"Spring",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/introduction/spring"
 }
 ,{
   "title":"Trouble shooting",
