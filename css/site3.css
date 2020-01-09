@@ -67,6 +67,9 @@ table.compact td, table.compact th {
   vertical-align: top;
   padding: 0 0.3rem 0 0.3rem;
 }
+.mtx {
+  margin-top: 5rem;
+}
 .mtl {
   margin-top: 3rem;
 }
@@ -159,20 +162,38 @@ header, footer {
   }
 }
 #hero {
-  color: var(--fg-banner);
-  background-color: #132d45;
+  /*color: var(--fg-banner);*/
+  /*background-color: #132d45;*/
   /*background-image: var(--bg-hero);*/
   text-align: center;
   padding: 2rem;
   margin-bottom: 1.5rem;
 }
+#home-article {
+  margin: 0 auto;
+  max-width: 60rem;
+}
+.summary aside {
+  padding-right: 6rem;
+}
 #hero h1 {
   font-family: 'Ubuntu', sans-serif;
   font-size: 4rem;
-  color: var(--fg-banner);
   text-align: center;
 }
-
+/*#hero h2 {*/
+/*  !*color: var(--body-color);*!*/
+/*}*/
+#hero .links h4 {
+  display: inline-block;
+  padding: 1rem;
+}
+#home-article h3 {
+  color: var(--fg-article);
+}
+#sponsors {
+  margin-top: 4rem;
+}
 body {
   color: var(--body-color);
   background-color: var(--body-bg-color);
@@ -448,5 +469,32 @@ article h3, article h4 {
   color:#3b5998;
 }
 
-
-
+.initials {
+  position: relative;
+  top: 11px;
+  font-size: 20px;
+  line-height: 22px;
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+}
+.initials.small {
+  font-size: 13px;
+}
+.avatar-name {
+  position: relative;
+  top: 11px;
+}
+.avatar-gap {
+  display: inline-block;
+  width: 20px;
+}
+.avatar-circle {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #337ab7;
+  text-align: center;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+}

@@ -1,187 +1,165 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/home.html"/>
-  <#assign home = "active">
+  <title>Ebean ORM for Java & Kotlin</title>
+  <meta name="layout" content="_layout2/base-home.html"/>
 </head>
 <body>
-<div class="container mtl">
-
-  <div class="row">
-    <div class="col-md-4 hidden-sm hidden-xs">
-      <img src="/images/logo-200.png" width="120" align="right">
-    </div>
-    <div id="hero" class="col-md-8 col-sm-12 col-xs-12">
-      <h1>Ebean ORM</h1>
-      <h2>Persistence for Java & Kotlin</h2>
-      <div class="links">
-        <h4><a class="bright-link" href="/docs/getting-started"><i class="fas fa-angle-right"></i> Getting started</a></h4>
-        <h4><a href="/docs"><i class="fas fa-angle-right"></i> Documentation</a></h4>
-        <h4><a href="https://github.com/ebean-orm"><i class="fas fa-angle-right"></i> Github</a></h4>
-      </div>
-    </div>
-  </div>
-  <div class="">
-
-    <div class="highlights">
-      <div class="inner">
-        <h4><a href="/sponsors">sponsors</a></h4>
-        <#include "/_common/sponsor-list.html">
-      </div>
+<article id="home-article">
+  <div id="hero">
+    <h1><img src="/images/logo-200.png" width="120"> Ebean ORM</h1>
+    <h2>Persistence for Java & Kotlin</h2>
+    <div class="links">
+      <h4><a class="bright-link" href="/docs/getting-started"><i class="fas fa-angle-right"></i> Getting started</a></h4>
+      <h4><a href="/docs"><i class="fas fa-angle-right"></i> Documentation</a></h4>
+      <h4><a href="https://github.com/ebean-orm"><i class="fas fa-angle-right"></i> Github</a></h4>
     </div>
 
-    <div class="row inner">
-      <div class="col-md-4">
-        <h3>Databases supported</h3>
-        <p>
-          H2, <a href="/docs/database/postgres">Postgres</a>, <a href="/docs/database/mysql">MySql</a>,
-          <a href="/docs/database/nuodb">NuoDB</a>,
-          PostGIS, MariaDB, SQL Server, Oracle, Hana, CockroachDB, Clickhouse, Sqlite.
-        </p>
-      </div>
-
-      <div class="col-md-4">
-        <h3>Multiple abstraction levels</h3>
-        <p>
-          Ebean provides multiple levels of query abstraction.
-        </p>
-        <ul>
-          <li><a href="/docs/intro/queries/orm-query">ORM Queries, mixed with SQL</a></li>
-          <li><a href="/docs/intro/queries/dto-query">DTO Queries</a></li>
-          <li><a href="/docs/intro/queries/sql-query">SqlQuery and JDBC</a></li>
-        </ul>
-        <p>
-          Work at the highest level of abstraction and drop down levels as needed.
-        </p>
-      </div>
-
-      <div class="col-md-4">
-        <h3>Benefits of ORM</h3>
-        <ul>
-          <li>Automatically avoid N+1</li>
-          <li>L2 caching to reduce database load</li>
-          <li>Queries mixing database and L2 cache</li>
-          <li>Automatically tune ORM queries</li>
-          <li>Elasticsearch for search or L3 cache.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="row inner">
-      <div class="col-md-4">
-        <h3>Docker test containers</h3>
-        <p>
-          <a href="/docs/testing">Docker test containers</a> for all the supported databases.
-        </p>
-        <p>
-          Get 100% test coverage on all the features of the database we use.
-        </p>
-      </div>
-      <div class="col-md-4">
-        <h3>Database migrations</h3>
-        <p>
-          Built in DB migration <a href="/docs/intro/db-migrations">generation</a>
-          and <a href="/docs/intro/db-migrations">running</a>.
-        </p>
-        <p>
-          Support for "rebase" migrations as well as repeatable, init and 'normal' migrations.
-        </p>
-      </div>
-
-      <div class="col-md-4">
-        <h3>Type safe queries</h3>
-        <p>
-          We can build queries using <a href="/docs/query/query-beans">type safe query beans</a>.
-        <p>
-        <p>
-          IDE auto-complete when writing queries, compile time checking and it's FUN.
-        </p>
-      </div>
-
-    </div>
-
-
-    <div class="row inner">
-      <div class="col-md-4">
-        <h3>Automated query tuning</h3>
-        <p>
-          For ORM queries Ebean can profile the object graph being used and either
-          <a href="/docs/query/background/autotune">automatically tune the query</a>.
-        </p>
-      </div>
-
-      <div class="col-md-4">
-        <h3>Awesome SQL</h3>
-        <p>
-          Ebean produces SQL that you would hand craft yourself.
-        </p>
-        <p>
-          Use great SQL, never generate SQL cartesian product, always honor relational limit/offset.
-        </p>
-      </div>
-
-      <div class="col-md-4">
-        <h3>Performance isn't optional</h3>
-        <p>
-          <a href="/docs/query/fetchgroup">Optimise queries</a> to only fetch what we need (partial objects).
-        </p>
-        <p>
-          Automatically avoid N+1 via a smart load context.
-        </p>
-      </div>
-    </div>
-
-  </div>
-  <div class="highlights">
-    <div class="inner">
-      <h4><a href="/sponsors">silver sponsors</a></h4>
-
-      <span class="avatar-gap"></span>
-      <div class="avatar-circle">
-        <span class="initials">MH</span>
-      </div>
-      <span class="avatar-name">Maximilian Holtzberg</span>
-
-      <span class="avatar-gap"></span>
-      <div class="avatar-circle">
-        <span class="initials">SH</span>
-      </div>
-      <span class="avatar-name">Szabolcs Hubai</span>
-
-      <span class="avatar-gap"></span>
-      <div class="avatar-circle">
-        <span class="initials small">AMAH</span>
-      </div>
-      <span class="avatar-name">Al-Mothafar Al-Hasan</span>
-
+    <div id="sponsors">
+      <h4 class="mtx"><a href="/sponsors">sponsors</a></h4>
+      <#include "/_common/sponsor-list.html">
     </div>
   </div>
 
+  <section class="mtx">
+    <h3>Search documentation</h3>
+    <div id="nav-search">
+      <#include "/_layout2/_searchinput.ftl">
+    </div>
+  </section>
 
-</div>
+  <section class="grid g3 mtx">
+    <div class="col-md-4">
+      <h3>Databases supported</h3>
+      <p>
+        H2, <a href="/docs/database/postgres">Postgres</a>, <a href="/docs/database/mysql">MySql</a>,
+        <a href="/docs/database/nuodb">NuoDB</a>,
+        PostGIS, MariaDB, SQL Server, Oracle, Hana, CockroachDB, Clickhouse, Sqlite.
+      </p>
+    </div>
 
-<div class="erkbg mtl">
-  <div class="container">
+    <div class="col-md-4">
+      <h3>Multiple abstraction levels</h3>
+      <p>
+        Ebean provides multiple levels of query abstraction.
+      </p>
+      <ul>
+        <li><a href="/docs/intro/queries/orm-query">ORM Queries, mixed with SQL</a></li>
+        <li><a href="/docs/intro/queries/dto-query">DTO Queries</a></li>
+        <li><a href="/docs/intro/queries/sql-query">SqlQuery and JDBC</a></li>
+      </ul>
+      <p>
+        Work at the highest level of abstraction and drop down levels as needed.
+      </p>
+    </div>
 
-    <div class="highlights">
+    <div class="col-md-4">
+      <h3>Benefits of ORM</h3>
+      <ul>
+        <li>Automatically avoid N+1</li>
+        <li>L2 caching to reduce database load</li>
+        <li>Queries mixing database and L2 cache</li>
+        <li>Automatically tune ORM queries</li>
+        <li>Elasticsearch for search or L3 cache.</li>
+      </ul>
+    </div>
 
-      <div class="inner">
-        <h2 class="erk" style="text-align: left;">Search documentation</h2>
-        <div id="nav-search"><#include "/_layout/_searchinput.ftl"></div>
-      </div>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
 
-      <div class="row inner">
-        <h2 class="erk" style="text-align: left;">About Ebean</h2>
+    <div class="col-md-4">
+      <h3>Docker test containers</h3>
+      <p>
+        <a href="/docs/testing">Docker test containers</a> for all the supported databases.
+      </p>
+      <p>
+        Get 100% test coverage on all the features of the database we use.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <h3>Database migrations</h3>
+      <p>
+        Built in DB migration <a href="/docs/intro/db-migrations">generation</a>
+        and <a href="/docs/intro/db-migrations">running</a>.
+      </p>
+      <p>
+        Support for "rebase" migrations as well as repeatable, init and 'normal' migrations.
+      </p>
+    </div>
 
-        <div class="col-md-4 p1">
-          <h3>JPA Mapping</h3>
-          <p>
-            Ebean uses JPA mapping annotations.
-          </p>
-        </div>
-        <div class="col-md-8 p2">
-          ```java
+    <div class="col-md-4">
+      <h3>Type safe queries</h3>
+      <p>
+        We can build queries using <a href="/docs/query/query-beans">type safe query beans</a>.
+      <p>
+      <p>
+        IDE auto-complete when writing queries, compile time checking and it's FUN.
+      </p>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Automated query tuning</h3>
+      <p>
+        For ORM queries Ebean can profile the object graph being used and either
+        <a href="/docs/query/background/autotune">automatically tune the query</a>.
+      </p>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Awesome SQL</h3>
+      <p>
+        Ebean produces SQL that you would hand craft yourself.
+      </p>
+      <p>
+        Use great SQL, never generate SQL cartesian product, always honor relational limit/offset.
+      </p>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Performance isn't optional</h3>
+      <p>
+        <a href="/docs/query/fetchgroup">Optimise queries</a> to only fetch what we need (partial objects).
+      </p>
+      <p>
+        Automatically avoid N+1 via a smart load context.
+      </p>
+    </div>
+
+  </section>
+
+
+  <section class="mtx" style="text-align: center;">
+    <h4><a href="/sponsors">silver sponsors</a></h4>
+
+    <span class="avatar-gap"></span>
+    <div class="avatar-circle">
+      <span class="initials">MH</span>
+    </div>
+    <span class="avatar-name">Maximilian Holtzberg</span>
+
+    <span class="avatar-gap"></span>
+    <div class="avatar-circle">
+      <span class="initials">SH</span>
+    </div>
+    <span class="avatar-name">Szabolcs Hubai</span>
+
+    <span class="avatar-gap"></span>
+    <div class="avatar-circle">
+      <span class="initials small">AMAH</span>
+    </div>
+    <span class="avatar-name">Al-Mothafar Al-Hasan</span>
+  </section>
+
+
+  <p class="mtx">&nbsp;</p>
+  <h2>About Ebean</h2>
+
+  <section class="grid g2 summary">
+    <aside>
+      <h3>JPA Mapping</h3>
+      <p>
+        Ebean uses JPA mapping annotations.
+      </p>
+    </aside>
+    <div>
+      <pre content="java">
         @Entity
         @Table(name="customer")
         public class Customer extends BaseModel {
@@ -195,20 +173,18 @@
           @OneToMany(mappedBy="customer")
           List<|Contact> contacts;
           ...
-          ```
-        </div>
-      </div>
+      </pre>
+    </div>
 
-      <div class="row inner mtl">
-        <div class="col-md-4 p1">
-          <h3>Simple to use</h3>
-          <p>
-            Ebean provides a simple programming model that developers can
-            understand and master quickly.
-          </p>
-        </div>
-        <div class="col-md-8 p2">
-          ```java
+    <aside>
+      <h3>Simple to use</h3>
+      <p>
+        Ebean provides a simple programming model that developers can
+        understand and master quickly.
+      </p>
+    </aside>
+    <div>
+      <pre content="java">
         // insert ...
         Customer customer = new Customer("Joe");
         customer.save();
@@ -219,112 +195,33 @@
         Customer customer = Customer.find.byId(42);
         customer.setName("Montana");
         customer.save();
+      </pre>
+    </div>
+    <aside>
+      <h3>Type safe queries</h3>
+      <p>
+        We can use Query beans to build queries in a type safe manner.
+      </p>
+    </aside>
+    <div>
+      <pre content="java">
+        List<|Customer> customers =
 
-        ```
-        </div>
-      </div>
-
-      <div class="row inner mtl">
-        <div class="col-md-4 p1">
-          <h3>Type safe queries</h3>
-          <p>
-            We can use Query beans to build queries in a type safe manner.
-          </p>
-        </div>
-        <div class="col-md-8 p2">
-          ```java
-          List<|Customer> customers =
-
-            new QCustomer()
-              .name.istartsWith("rob")
-              .billingAddress.city.equalTo("Auckland")
-              .setMaxRows(10)
-              .orderBy()
-                .name.asc()
-              .findList();
-          ```
-          <p>
-            more details on <a href="/docs/query/"> queries</a>
-          </p>
-        </div>
-      </div>
+          new QCustomer()
+            .name.istartsWith("rob")
+            .billingAddress.city.equalTo("Auckland")
+            .setMaxRows(10)
+            .orderBy()
+              .name.asc()
+            .findList();
+      </pre>
 
     </div>
 
-  </div>
-</div>
+  </section>
 
+</article>
 
-<div class="container">
-
-  <div class="highlights">
-
-    <div class="inner mtl">
-      <h2 class="erk" style="text-align: left">Getting started</h2>
-      <div class="point p1">
-        <h3>Getting started</h3>
-        <h5><a href="/docs/getting-started">Getting started</a></h5>
-        <h5><a href="/docs/getting-started/maven">Maven</a></h5>
-        <h5><a href="/docs/getting-started/gradle">Gradle</a></h5>
-      </div>
-
-      <div class="point p1">
-        <h3>Examples</h3>
-        <h5><a href="/docs/examples">Minimal</a></h5>
-        <h5><a href="/docs/examples">Maven and Gradle</a></h5>
-        <h5><a href="/docs/examples">Multi-tenancy</a></h5>
-        <h5><a href="/docs/examples">Elastic Search</a></h5>
-      </div>
-      <div class="point p1">
-        <h3>Features</h3>
-        <h5><a href="/docs/examples">Multi-tenancy</a></h5>
-        <h5><a href="/docs/examples">Elastic Search</a></h5>
-        <h5><a href="/docs/examples">SQL 2011 History</a></h5>
-        <h5><a href="/docs/examples">Draftable</a></h5>
-        <h5><a href="/docs/examples">Postgres GIS</a></h5>
-      </div>
-    </div>
-
-  </div>
-
-</div>
-
-<div class="container mtl">
-  <div class="highlights">
-    <div class="inner">
-      <h4 class="text-left">Testimonials:</h4>
-      <div class="point p1 testimonial">
-        <p>
-          After struggling with what I'd call surprising behavior of a JPA implementation,
-          I discovered Ebean. Time and time again I found that Ebean simply works the way
-          I expect it to. Love it!
-        </p>
-        <p>
-          Daryl Stultz <br/>
-          OpenTempo, Inc.
-        </p>
-
-      </div>
-      <div class="point p1">
-
-      </div>
-      <div class="point p1">
-
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-9">
-    </div>
-
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-    </div>
-  </div>
-
-</div>
 
 </body>
 </html>
