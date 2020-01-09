@@ -11,10 +11,15 @@
 <body>
 <h2>ElasticSearch</h2>
 <p>
-  To test against ElasticSearch we can set the <code>elastic version</code> property like
-  the example below which will then start Elastic as a docker container automatically.
+  To use ElasticSearch as Ebean's document store we need to add configuration
+  for <code>ebean.docstore</code> properties like the example below:
 </p>
-```yml
+<p>
+  To test using a ElasticSearch docker container we set <code>ebean.docstore.elastic.version</code>
+  property like the example below. ebean-test will then ensure that ElasticSearch is running
+  as a docker container.
+</p>
+<pre content="yml">
 ebean:
   test:
     platform: h2
@@ -27,21 +32,21 @@ ebean:
     generateMapping: true
     dropCreate: true
 
-    elastic:
+    elastic: # For testing using docker container
       version: 5.6.0
       port: 9201
-```
+</pre>
 <p>
   In terms of logging we can see:
 </p>
-```text
+<pre content="text">
 21:57:06.587 INFO  io.ebean.docker.commands.Commands - Start container ut_elastic with port:9201
-```
+</pre>
 <p>
   When using ElasticSearch by itself and not with another database leave out the <code>ebean.test.platform</code>
   section like:
 </p>
-```yml
+<pre content="yml">
 ebean:
   docstore:
     url: http://127.0.0.1:9201
@@ -52,8 +57,21 @@ ebean:
     elastic:
       version: 5.6.0
       port: 9201
-```
-<h3 id="options">Properties</h3>
+</pre>
+<h2 id="ebean-elastic">ebean-elastic dependency</h2>
+<p>
+  Add <code>ebean-elastic</code> as a dependency.
+</p>
+<pre content="xml">
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-elastic</artifactId>
+    <version>12.1.1</version>
+  </dependency>
+</pre>
+
+
+<h2 id="properties">Configuration properties</h2>
 
 <table class="w100">
   <tr>
@@ -82,7 +100,7 @@ ebean:
   For more <a href="/docs/features/elasticsearch">details on the ElasticSearch</a>.
 </p>
 
-<@next_edit "Postgres" "/docs/database/postgres" "/docs/database/elasticsearch/index.html"/>
+<@next_edit "Redis" "/docs/database/redis" "/docs/database/elasticsearch/index.html"/>
 
 </body>
 </html>

@@ -584,6 +584,22 @@
   "url":"/docs/database/elasticsearch"
 }
 ,{
+  "title":"ElasticSearch - Configuration properties",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/elasticsearch#properties"
+}
+,{
+  "title":"ElasticSearch - ebean-elastic dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/elasticsearch#ebean-elastic"
+}
+,{
   "title":"H2",
   "caption":"",
   "category":"Database platforms",
@@ -793,14 +809,6 @@
 }
 ,{
   "title":"Redis - L2 cache - @Cache",
-  "caption":"",
-  "category":"Database platforms",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/database/redis"
-}
-,{
-  "title":"Redis - L2 cache - configuration",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
