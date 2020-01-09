@@ -6,7 +6,9 @@
   --py-literal-number: #b953ed;
   --py-variable: #bb60d5;
   --py-param: #0e84b5; /* Kotlin var */
-  --py-nameattr: #6f4297;
+  --py-nameattr: #2C5F92;
+  --py-name: #555;
+  --py-nameattr-field: #6f4297;
   --py-namedec: #b88a24;
   --py-whitespace: #bbbbbb;
   --py-operator: #666666;
@@ -20,15 +22,19 @@
   --py-namex: #575757;
 }
 [data-theme="dark"] {
-  --py-keyword-type: #0e8fbf;
+  --py-keyword-type: #5ea4bd;
   --py-comment: #8d8d8d;
-  --py-keyword: #5ea4bd;
+  --py-keyword: #4a7b94;
   --py-namefun: #5ea4bd;
   --py-nametag: #5ea4bd;
+  --py-name: #ccc;
   --py-nameattr: #5ea4bd;
-  --py-param: #a38ab5; /* Kotlin var */
+  --py-nameattr-field: #a38ab5;
+  --py-variable: #a38ab5;
+  --py-param: #5ea4bd; /* Kotlin var */
   --py-literal: #10a519;
-  --py-literal-number: #b953ed
+  --py-literal-number: #b953ed;
+  --py-namex: #ccc;
 }
 
 pre .c { color: var(--py-comment); font-style: italic } /* Comment */
@@ -58,9 +64,10 @@ pre .kp { color: var(--py-keyword); } /* Keyword.Pseudo */
 pre .kr { color: var(--py-keyword); font-weight: bold } /* Keyword.Reserved */
 pre .kt { color: var(--py-keyword-type); } /* Keyword.Type */
 pre .m { color: var(--py-literal-number); } /* Literal.Number */
-pre .n.field { color: var(--py-nameattr); }
+pre .n { color: var(--py-name); }
+pre .n.field { color: var(--py-nameattr-field); }
 pre .na { color: var(--py-nameattr); } /* Name.Attribute */
-pre .na.field { color: var(--py-nameattr); } /* Name.Attribute #7D2E2D */
+pre .na.field { color: var(--py-nameattr-field); } /* Name.Attribute #7D2E2D */
 pre .nb { color: var(--py-keyword); } /* Name.Builtin */
 pre .nc { color: var(--py-nameclass); font-weight: bold } /* Name.Class */
 pre .nd { color: var(--py-namedec); font-weight: normal } /* Name.Decorator #555555 */
