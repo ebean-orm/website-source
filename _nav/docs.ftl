@@ -51,7 +51,7 @@
     </@nav0>
     <@nav0 activeCheck="${n0_support!''}" url="/support" title="Getting help"/>
     <li class="nav0 ">
-      <a target="_blank" href="/apidoc/11">API Javadoc</a>
+      <a target="_blank" href="/apidoc/12">API Javadoc</a>
     </li>
     <@nav0 activeCheck="${n0_videos!''}" url="/videos" title="Videos"/>
     <@nav0 activeCheck="${n0_upgrading!''}" url="/docs/upgrading" title="Upgrading"/>

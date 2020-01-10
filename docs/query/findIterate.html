@@ -37,7 +37,7 @@
 <b>As stated before, we must ensure the iterator is closed</b> as it holds <code>JDBC</code> resources.
 
 We should use <code>try-with-resources</code> or a <code>try-finally</code> block to make sure that the
-<a href='/apidoc/11/io/ebean/QueryIterator.html'>QueryIterator</a> is closed regardless of exceptions thrown during processing.
+<a href='/apidoc/12/io/ebean/QueryIterator.html'>QueryIterator</a> is closed regardless of exceptions thrown during processing.
 
 Note that <a href='findEach'>findEach</a> and <a href='findEachWhile'>findEachWhile</a> ensure all resources are closed
 regardless and for this reason they are recommended over <code>findIterate</code>.

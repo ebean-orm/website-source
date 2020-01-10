@@ -3,7 +3,7 @@
   --py-keyword-type: #902000;
   --py-comment: #8d8d8d;
   --py-literal: #0f7216;
-  --py-literal-number: #b953ed;
+  --py-literal-number: #0f7216;
   --py-variable: #bb60d5;
   --py-param: #0e84b5; /* Kotlin var */
   --py-nameattr: #2C5F92;
@@ -32,8 +32,8 @@
   --py-nameattr-field: #a38ab5;
   --py-variable: #a38ab5;
   --py-param: #5ea4bd; /* Kotlin var */
-  --py-literal: #10a519;
-  --py-literal-number: #b953ed;
+  --py-literal: #0f8616;
+  --py-literal-number: #0f8616;
   --py-namex: #ccc;
 }
 
