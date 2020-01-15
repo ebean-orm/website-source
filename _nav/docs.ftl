@@ -32,6 +32,14 @@
             <@smallnav activeCheck="" url="#seedSql" title="seedSql"/>
           </ul>
         </@nav1>
+        <@nav1 activeCheck="${n1_extraddl!''}" url="/docs/extra-ddl" title="Extra DDL">
+          <ul class="nav nav-scroll">
+            <@smallnav activeCheck="" url="#views" title="Views"/>
+            <@smallnav activeCheck="" url="#procedures" title="Stored procedures"/>
+            <@smallnav activeCheck="" url="#any" title="Any DDL"/>
+            <@smallnav activeCheck="" url="#platforms" title="Platform specific DDL"/>
+          </ul>
+        </@nav1>
         <@nav1 activeCheck="${n1_dbmigration!''}" url="/docs/db-migrations" title="DB Migrations">
           <ul class="nav nav-scroll">
             <@smallnav activeCheck="" url="#generate" title="Generate a Migration"/>

@@ -42,6 +42,14 @@
 ,{
   "title":"",
   "caption":"",
+  "category":"Extra DDL",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/extra-ddl"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"Getting started",
   "priority":"0",
   "keywords":"",
@@ -902,6 +910,46 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/examples"
+}
+,{
+  "title":"Any DDL",
+  "caption":"",
+  "category":"Extra DDL",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/extra-ddl#any"
+}
+,{
+  "title":"Extra DDL",
+  "caption":"",
+  "category":"Extra DDL",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/extra-ddl#overview"
+}
+,{
+  "title":"Platform specific DDL",
+  "caption":"",
+  "category":"Extra DDL",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/extra-ddl#platforms"
+}
+,{
+  "title":"Stored procedures and Triggers",
+  "caption":"",
+  "category":"Extra DDL",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/extra-ddl#procedures"
+}
+,{
+  "title":"Views",
+  "caption":"",
+  "category":"Extra DDL",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/extra-ddl#views"
 }
 ,{
   "title":"CLI tool - ebeaninit",
