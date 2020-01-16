@@ -35,27 +35,26 @@
   ```java
 
   Contact contact =
-    new QContact()                               // Contact query bean
-      .email.equalTo("rob@foo.com")              // type safe expression with IDE auto-completion
-      .findOne();
+    new QContact()                                // Contact query bean
+      .email.equalTo("rob@foo.com")               // type safe expression
+      .findOne();                                 // with IDE auto-completion
   ```
 
   ```java
 
   List<|Customer> customers =
-    new QCustomer()                              // Customer query bean
+    new QCustomer()                                // Customer query bean
       .status.equalTo(Status.NEW)
-      .billingAddress.city.equalTo("Auckland")
-      .contacts.isEmpty()
+      .billingAddress.city.equalTo("Auckland")     // joins automatically added
+      .contacts.isEmpty()                          // to support expressions
       .findList();
   ```
 
   <h2 id="apt" class="art">APT / KAPT <em>(generating query beans)</em></h2>
-
   <p>
-    To generate <code>Java</code> query beans we use the <em>io.ebean : querybean-generator</em>
+    To generate <code>Java</code> query beans we use the <em>io.ebean:querybean-generator</em>
     java annotation processor and to generate <code>Kotlin</code> query beans we use
-    <em>io.ebean : kotlin-querybean-generator</em>.
+    <em>io.ebean:kotlin-querybean-generator</em>.
   </p>
 
   <h4 id="maven" class="art">Generating with Maven</h4>
@@ -71,19 +70,13 @@
   </p>
 
   <h2 id="enhancement" class="art">Enhancement</h2>
-
   <p>
-    Query beans require enhancement to work. In the <code>src/main/resources/ebean.mf</code> manifest file
-    we need to specify via <code>querybean-packages</code> the packages that should be enhanced
-    for query beans.
+    Note that prior to version 12.1.8 we need to edit a <code>src/main/resources/ebean.mf</code>
+    manifest file to specify <code>querybean-packages</code> for the packages that should
+    be enhanced for query beans. This is no longer needed from 12.1.8 onwards.
   </p>
 
-  <p>
-    Note that for Java we additionally need to enhance the code that calls the query ebeans.
-    For Kotlin we only need to enhance the query beans themselves.
-  </p>
-
-  <h5>Example</h5>
+  <h5>Example (Pre 12.1.8)</h5>
   ```properties
   entity-packages: org.example.domain
   transactional-packages: org.example
