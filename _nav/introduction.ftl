@@ -11,7 +11,7 @@
     <@nav1 activeCheck="${n1_createDatabase!''}" url="/docs/intro/create-database" title="Creating Database">
       <ul class="nav nav-scroll">
         <@smallnav activeCheck="" url="#testing" title="For testing"/>
-        <@smallnav activeCheck="" url="#properties" title="Via Properties"/>
+        <@smallnav activeCheck="" url="#properties" title="via Properties"/>
         <@smallnav activeCheck="" url="#programmatic" title="Programmatic"/>
       </ul>
     </@nav1>

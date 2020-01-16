@@ -26,8 +26,8 @@ ebean:
 <p>
   ebean-test will hook into the Ebean startup and configure the datasource based on
   <code>ebean.test.platform</code> and configure the DDL generation and execution
-  based on <code>ebean.test.ddlMode</code>
-  (plus start, setup and wait for docker container(s) as necessary).
+  based on <code>ebean.test.ddlMode</code> (plus start, setup and wait for docker
+  container(s) as necessary when using docker test containers).
 </p>
 <p>
   Refer to <a href="/docs/testing">docs / testing</a> for more details.
@@ -40,7 +40,7 @@ ebean:
 </p>
 
 
-<h2 id="properties">Via Properties</h2>
+<h2 id="properties">via Properties</h2>
 <p>
   Database can automatically be configured via properties in <code>application.yaml</code>,
   <code>application.properties</code> etc.
@@ -151,6 +151,7 @@ val otherDatabase = DB.byName("other");
   and <a href="#config">DatabaseConfig</a>.
 </p>
 
+<#include "/_common/lang-buttons.html"/>
 <div class="code-java">
   <pre content="java">
 // datasource
@@ -170,7 +171,25 @@ config.setDataSourceConfig(dataSourceConfig);
 Database database = DatabaseFactory.create(config);
   </pre>
 </div>
+<div class="code-kt">
+  <pre content="kotlin">
+// datasource
+val dataSourceConfig = new DataSourceConfig()
+dataSourceConfig.setUsername("sa")
+dataSourceConfig.setPassword("")
+dataSourceConfig.setUrl("jdbc:h2:mem:withPCQuery;")
+dataSourceConfig.setDriver("org.h2.Driver")
 
+
+// configuration ...
+val config = new DatabaseConfig();
+config.setDataSourceConfig(dataSourceConfig)
+...
+
+// create database instance
+val database = DatabaseFactory.create(config)
+  </pre>
+</div>
 
 <@next_edit "First Entity" "/docs/intro/first-entity" "/docs/intro/create-database/index.html"/>
 

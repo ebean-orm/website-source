@@ -181,7 +181,7 @@ val hrDatabase = DB.byName("hr")
 </ul>
 <p>&nbsp;</p>
 
-<h4>Obtain default or named database instance</h4>
+<h3>Obtain default or named database instance</h3>
 <p>
   When an Database instance is created it can be registered with DB. We can then
   use <code>DB</code> to obtain those Database instances by name and we can obtain
@@ -197,7 +197,7 @@ Database hrDB = DB.byName("hr");
   </pre>
 </div>
 
-<h4>DB convenience methods</h4>
+<h3>DB convenience methods</h3>
 <p>
   DB has convenience methods that effectively proxy through to the default database.
   This is useful and convenient as many applications only use a single database.
@@ -216,7 +216,7 @@ defaultDatabase.save(customer);
   </pre>
 </div>
 
-<h4>DB is optional</h4>
+<h3>DB is optional</h3>
 <p>
   Note that you don't have to use the DB singleton in your application at all - it's use is
   completely optional. Instead we can create the Database instance(s) and <code>inject</code>
@@ -224,11 +224,10 @@ defaultDatabase.save(customer);
   or a similar DI framework.
 </p>
 <p>
-  When we do this (inject Database and don't use the DB singleton) we will likely have the application
-  code following a DI / Repository pattern.
+  We can do both and have Database instances registered with DB and the DI Context and in
+  this way access the database instance(s) either way.
 </p>
 
-<p>&nbsp;</p>
 <h2 id="ebeanserver">EbeanServer</h2>
 <p>
   Database and EbeanServer are the same thing.
@@ -240,7 +239,6 @@ defaultDatabase.save(customer);
 </p>
 
 
-<p>&nbsp;</p>
 <h2 id="ebean">Ebean</h2>
 <p>
   DB and Ebean are the same thing.
