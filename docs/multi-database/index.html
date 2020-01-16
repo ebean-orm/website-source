@@ -1,0 +1,177 @@
+<html>
+<head>
+  <title>Multiple databases | Docs | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Multiple databases" href="/docs/multi-database"/>
+  <#assign n0_docs="active">
+  <#assign n1_multiDatabase="active">
+</head>
+<body>
+  <p class="mtl">
+    When using multiple databases one database is known as the default database.
+    We need to do 4 things for entity beans that should only be used on the
+    non-default database(s).
+  </p>
+
+  <h2 id="model">Model constructor</h2>
+  <p>
+    Use the <code>io.ebean.Model</code> constructor that take the string name of
+    the database that should be used.
+  </p>
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      ...
+      @DbName("other")
+      @MappedSuperclass
+      public abstract class OtherBaseDomain extends Model {
+
+        public OtherBaseDomain() {
+          super("other");             // "other" -> database name
+        }
+        ...
+      }
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      ...
+      @DbName("other")
+      @MappedSuperclass
+      open class OtherBaseDomain : Model("other") {  // "other" -> database name
+
+       ...
+
+      }
+    </pre>
+  </div>
+  <p>
+    All entity beans that extend this model will use the named database when
+    they <code>save()</code> and <code>delete()</code>.
+  </p>
+
+
+  <h2 id="dbName">@DbName</h2>
+  <p>
+    Put <code>@DbName</code> on a mapped superclass or individual entity beans.
+    This is read by the querybean generator when generating the query beans
+    so that queries for this entity bean type will execute using the named non-default
+    database.
+  </p>
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      ...
+      @DbName("other")  // "other" -> database name
+      @MappedSuperclass
+      public abstract class OtherBaseDomain extends Model {
+
+        public OtherBaseDomain() {
+          super("other");             // "other" -> database name
+        }
+        ...
+      }
+        </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      ...
+      @DbName("other")   // "other" -> database name
+      @MappedSuperclass
+      open class OtherBaseDomain : Model("other") {  // "other" -> database name
+
+       ...
+
+      }
+    </pre>
+  </div>
+  <p>
+    For all entity beans extending <code>OtherBaseDomain</code> their query beans
+    will now default to using the named database.
+  </p>
+
+
+
+  <h2 id="finder">Finder constructor</h2>
+  <p>
+    If using <code>io.ebean.Finder</code> we similarly use the constructor that takes the
+    string name of the database that should be used.
+  </p>
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      ...
+      public class CustomerFinder extends Finder {
+
+        public CustomerFinder() {
+          super("other");             // "other" -> database name
+        }
+        ...
+      }
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      ...
+      open class CustomerFinder : Finder("other") {  // "other" -> database name
+       ...
+      }
+    </pre>
+  </div>
+  <p>
+    Now using methods on CustomerFinder will default to using the named database.
+  </p>
+
+  <h2 id="register">Register entity types</h2>
+  <p>
+    We also need to register some entity types to the default database and some
+    entity types to the other non default database(s).
+  </p>
+  <p>
+    Note that from Ebean version 12.2.1 the querybean generator will generate
+    code to register the entity bean types to the appropriate database.
+  </p>
+
+  <p>
+    Create an implementation of ServerConfigProvider that registers the
+    entity beans with the appropriate database based on the name.
+  </p>
+  <pre content="java">
+    public class RegisterDomainBeans implements ServerConfigProvider {
+
+      private static final String OTHER = "other";
+
+      private static final String DB = "db";
+
+      @Override
+      public void apply(ServerConfig serverConfig) {
+
+          log.debug("register beans for {}", serverConfig.getName());
+          if (DB.equals(serverConfig.getName())) {
+            // the default database
+            serverConfig.addClass(DCustomer.class);
+            serverConfig.addClass(DOrder.class);
+            serverConfig.addClass(DProduct.class);
+            ...
+
+          } else if (OTHER.equals(serverConfig.getName())) {
+            // second OTHER database
+            serverConfig.setDefaultServer(false);
+            serverConfig.addClass(OSales.class);
+            serverConfig.addClass(OMarket.class);
+            ...
+
+          }
+      }
+    }
+  </pre>
+  <p>
+    Add a service loader <code>src/main/resources/META-INF/services/io.ebean.config.ServerConfigProvider</code>
+    file to specify our ServerConfigProvider implementation (e.g. RegisterDomainBeans).
+  </p>
+
+
+  <@next_edit "Tuning" "/docs/tuning" "/docs/multi-database/index.html"/>
+
+</body>
+</html>

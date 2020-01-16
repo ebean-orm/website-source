@@ -106,6 +106,14 @@
 ,{
   "title":"",
   "caption":"",
+  "category":"Multiple databases",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/multi-database"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"Persist",
   "priority":"0",
   "keywords":"",
@@ -2150,6 +2158,38 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/monitoring/profile-location"
+}
+,{
+  "title":"@DbName",
+  "caption":"",
+  "category":"Multiple databases",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/multi-database#dbName"
+}
+,{
+  "title":"Finder constructor",
+  "caption":"",
+  "category":"Multiple databases",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/multi-database#finder"
+}
+,{
+  "title":"Model constructor",
+  "caption":"",
+  "category":"Multiple databases",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/multi-database#model"
+}
+,{
+  "title":"Register entity types",
+  "caption":"",
+  "category":"Multiple databases",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/multi-database#register"
 }
 ,{
   "title":"Bulk SQL updates",

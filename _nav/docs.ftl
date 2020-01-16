@@ -71,6 +71,9 @@
         <@nav1 activeCheck="${n1_platforms!''}" url="/docs/database" title="Database platforms">
             <#include "/_nav/database-platforms.ftl">
         </@nav1>
+        <@nav1 activeCheck="${n1_multiDatabase!''}" url="/docs/multi-database" title="Multiple databases">
+          <#include "/_nav/multi-database.ftl">
+        </@nav1>
         <li><a href="/docs/tuning">Tuning</a></li>
         <li><a href="/docs/features">Features</a></li>
       </ul>
