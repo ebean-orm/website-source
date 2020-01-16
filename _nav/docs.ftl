@@ -4,6 +4,17 @@
     <#include "/_nav/introduction.ftl">
     <@nav0 activeCheck="${n0_docs!''}" url="/docs" title="Documentation">
       <ul>
+        <@nav1 activeCheck="${n1_bestPractice!''}" url="/docs/best-practice" title="Best practice">
+          <ul class="nav nav-scroll">
+            <@smallnav activeCheck="" url="#identity" title="Identity"/>
+            <@smallnav activeCheck="" url="#kotlin-data-class" title="Kotlin data classes"/>
+            <@smallnav activeCheck="" url="#list" title="List vs Set"/>
+            <@smallnav activeCheck="" url="#join-column" title="@JoinColumn"/>
+            <@smallnav activeCheck="" url="#column-name" title="@Column(name=...)"/>
+            <@smallnav activeCheck="" url="#mapped-superclass" title="@MappedSuperclass"/>
+            <@smallnav activeCheck="" url="#ddl-generation" title="DDL generation"/>
+          </ul>
+        </@nav1>
         <#if n1_query_find??>
           <@nav1 activeCheck="true" url="/docs/query" title="Query">
             <#include "/_nav/query-find.ftl">

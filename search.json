@@ -2,6 +2,14 @@
 {
   "title":"",
   "caption":"",
+  "category":"Best Practice",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/best-practice"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"DB migrations",
   "priority":"0",
   "keywords":"",
@@ -264,7 +272,7 @@
   "url":"/docs/intro/create-database#programmatic"
 }
 ,{
-  "title":"Creating Database - Via Properties",
+  "title":"Creating Database - via Properties",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
@@ -400,12 +408,68 @@
   "url":"/docs/trouble-shooting#registered"
 }
 ,{
-  "title":"Trouble shooting - java.lang.IllegalStateException: Bean class ___ is not enhanced?",
+  "title":"Trouble shooting - java.lang.IllegalStateException: Bean class _ is not enhanced?",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
   "url":"/docs/trouble-shooting#not-enhanced"
+}
+,{
+  "title":"@Column(name=...)",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#column-name"
+}
+,{
+  "title":"@JoinColumn",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#join-column"
+}
+,{
+  "title":"DDL Generation",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#ddl-generation"
+}
+,{
+  "title":"Identity - equals/hashCode",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#identity"
+}
+,{
+  "title":"Kotlin data classes",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#kotlin-data-class"
+}
+,{
+  "title":"Prefer List over Set",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#list"
+}
+,{
+  "title":"Use @MappedSuperclass",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#mapped-superclass"
 }
 ,{
   "title":"DB Migrations",

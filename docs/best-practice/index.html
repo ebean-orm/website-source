@@ -1,0 +1,135 @@
+<html>
+<head>
+  <title>Best practice | Docs | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Best Practice" href="/docs/best-practice"/>
+  <#assign n0_docs="active">
+  <#assign n1_bestPractice="active">
+</head>
+<body>
+  <h2 id="identity">Identity - equals/hashCode</h2>
+  <p>
+    Do not implement <code>equals()</code> and <code>hashCode()</code> on <code>@Entity</code> beans
+     (but instead leave that to Ebean enhancement).
+  </p>
+  <p>
+    Ebean will enhance entity beans with an optimal implementation of
+    <code>equals()</code> and <code>hashCode()</code> and we should not
+    try and do better and instead just leave it to Ebean.
+  </p>
+
+  <h2 id="kotlin-data-class">Kotlin data classes</h2>
+  <p>
+    Do not use Kotlin data classes for <code>@Entity</code> beans as the equals/hashCode
+    implementation is not desirable. Instead use normal Kotlin classes for entity beans.
+  </p>
+  <p>
+    Do use Kotlin data classes for <code>@EmbeddedId</code> beans.
+  </p>
+
+  <h2 id="list">Prefer List over Set</h2>
+  <p>
+    For <code>@OneToMany</code> and <code>@ManyToMany</code> collections prefer
+    the use of List over Set.
+    The use of Set will implicitly calls <code>equals()</code> and <code>hashCode()</code>
+    and generally it's preferable to not call those methods until entity beans have Id values.
+  </p>
+
+
+  <h2 id="join-column">@JoinColumn</h2>
+  <p>
+    Don't use <code>@JoinColumn</code> or <code>@JoinTable</code> unless we have to.
+    The naming convention will provide good names of foreign key columns and join tables
+    so only use these annotations when there are existing foreign keys etc and these do
+    not match the naming convention.
+  </p>
+
+  <h2 id="column-name">@Column(name=...)</h2>
+  <p>
+    Do not use <code>@Column(name=...)</code> to map database column names but instead
+    use the naming convention. Only specify explicit <code>@Column(name=...)</code> when
+    it for some reason does not match the naming convention used.
+  </p>
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      @Column(name="when_activated")    // This is redundant, just adds "annotation noise"
+      OffsetDateTime whenActivated;
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      @Column(name="when_activated")    // This is redundant, just adds "annotation noise"
+      val whenActivated: OffsetDateTime? = null
+    </pre>
+  </div>
+
+  <h2 id="mapped-superclass">Use @MappedSuperclass</h2>
+  <p>
+    Make use of <code>@MappedSuperclass</code> to hold common properties. A common mapped
+    superclass might have:
+  </p>
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      ...
+      @MappedSuperclass
+      public abstract class BaseDomain extends Model {
+
+        @Id
+        long id;
+
+        @Version
+        long version;
+
+        @WhenCreated
+        Instant whenCreated;
+
+        @WhenModified
+        Instant whenModified;
+
+        // getters and setters
+        ...
+      }
+        </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      ...
+      @MappedSuperclass
+      open class BaseDomain : Model() {
+
+        @Id
+        var id: Long = 0
+
+        @Version
+        var version: Long = 0
+
+        @WhenModified
+        lateinit var whenModified: Instant
+
+        @WhenCreated
+        lateinit var whenCreated: Instant
+
+      }
+    </pre>
+  </div>
+
+  <h2 id="ddl-generation">DDL Generation</h2>
+  <p>
+    Use automatic forward generation of DDL - use Ebean to generate all DDL including DB migrations.
+    This keeps all the DDL "in sync" for testing and db migrations and makes it easier to support
+    multiple database platforms or migrate between database platforms (e.g. MySql to Postgres).
+  </p>
+  <p>
+    If we hand craft DDL we increase the chance of variation between the model and actual database
+    schema and can make testing harder.
+  </p>
+
+  <nav class="next">
+    <p class="next">
+      <a href="/docs/query" class="next btn">Next: Queries</a>
+    </p>
+  </nav>
+</body>
+</html>
