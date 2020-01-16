@@ -1,5 +1,20 @@
 <@nav0 activeCheck="${n0_intro!''}" url="/docs/intro" title="Introduction">
   <ul>
+    <@nav1 activeCheck="${n1_api!''}" url="/docs/intro/database" title="Database & DB">
+      <ul class="nav nav-scroll">
+        <@smallnav activeCheck="" url="#database" title="Database"/>
+        <@smallnav activeCheck="" url="#db" title="DB"/>
+        <@smallnav activeCheck="" url="#ebeanserver" title="EbeanServer"/>
+        <@smallnav activeCheck="" url="#ebean" title="Ebean"/>
+      </ul>
+    </@nav1>
+    <@nav1 activeCheck="${n1_createDatabase!''}" url="/docs/intro/create-database" title="Creating Database">
+      <ul class="nav nav-scroll">
+        <@smallnav activeCheck="" url="#testing" title="For testing"/>
+        <@smallnav activeCheck="" url="#properties" title="Via Properties"/>
+        <@smallnav activeCheck="" url="#programmatic" title="Programmatic"/>
+      </ul>
+    </@nav1>
     <@nav1 activeCheck="${n1_firstentity!''}" url="/docs/intro/first-entity" title="First entity">
       <ul>
         <@smallnav activeCheck="${model!''}" url="/docs/intro/first-entity/model" title="Model"/>
@@ -13,14 +28,6 @@
         <@smallnav activeCheck="${dtoQuery!''}" url="/docs/intro/queries/dto-query" title="DTO query"/>
         <@smallnav activeCheck="${sqlQuery!''}" url="/docs/intro/queries/sql-query" title="SQL query"/>
         <@smallnav activeCheck="${jdbcQuery!''}" url="/docs/intro/queries/jdbc-query" title="JDBC query"/>
-      </ul>
-    </@nav1>
-    <@nav1 activeCheck="${n1_api!''}" url="/docs/intro/api" title="Database & DB">
-      <ul class="nav nav-scroll">
-        <@smallnav activeCheck="" url="#database" title="Database"/>
-        <@smallnav activeCheck="" url="#db" title="DB"/>
-        <@smallnav activeCheck="" url="#config" title="DatabaseConfig"/>
-        <@smallnav activeCheck="" url="#factory" title="DatabaseFactory"/>
       </ul>
     </@nav1>
     <@nav1 activeCheck="${n1_logging!''}" url="/docs/intro/logging" title="Logging">

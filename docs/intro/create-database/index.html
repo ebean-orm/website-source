@@ -1,0 +1,178 @@
+<html>
+<head>
+  <title>Creating Database | Intro | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Introduction" href="/docs/intro/"/>
+  <meta name="bread2" content="Creating Database" href="/docs/intro/create-database"/>
+  <#assign n0_intro="active">
+  <#assign n1_createDatabase="active">
+</head>
+<body>
+<h2 id="testing">For Testing</h2>
+<p>
+  For testing we typically get <a href="/docs/testing/#ebean-test">ebean-test</a> to automatically create the Database instance
+  for us based on <code>application-test.yaml</code>.
+</p>
+<p>
+  For example with a <code>src/test/resources/application-test.yaml</code> below:
+</p>
+<pre content="yml">
+ebean:
+  test:
+    platform: postgres # h2, postgres, mysql, ...
+    ddlMode: dropCreate # none | dropCreate | migration
+    dbName: my_app
+</pre>
+<p>
+  ebean-test will hook into the Ebean startup and configure the datasource based on
+  <code>ebean.test.platform</code> and configure the DDL generation and execution
+  based on <code>ebean.test.ddlMode</code>
+  (plus start, setup and wait for docker container(s) as necessary).
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> for more details.
+</p>
+<p>
+  This is the recommended approach to creating a Database instance for testing as it
+  puts us in a position where we can easily change the database used for testing.
+  For example, changing from testing against H2 to testing against Postgres docker container
+  is as simple as changing <code>ebean.test.platform</code> to <code>postgres</code>.
+</p>
+
+
+<h2 id="properties">Via Properties</h2>
+<p>
+  Database can automatically be configured via properties in <code>application.yaml</code>,
+  <code>application.properties</code> etc.
+</p>
+<p>
+  The default database name is <code>db</code> so the minimal configuration looks like:
+</p>
+<h3>H2 - In memory</h3>
+<pre content="yml">
+## H2 setup - In memory
+datasource:
+  db:
+    username: sa
+    password: sa
+    url: jdbc:h2:mem:myapp
+    driver: org.h2.Driver
+</pre>
+
+<h3>Postgres</h3>
+<pre content="yml">
+datasource:
+  db:
+    username: my_app
+    password: my_password
+    url: jdbc:postgresql://localhost:5432/my_app
+    driver: org.postgresql.Driver
+</pre>
+
+<h3>ebean.migration.run</h3>
+<p>
+  Generally we want Ebean to run migrations on startup and we have <code>ebean.migration.run</code>
+  set to <code>true</code>.
+</p>
+<h3>Postgres - ebean.dbSchema</h3>
+<p>
+  Generally for Postgres we set <code>ebean.dbSchema</code> to match the database username when
+  we want database tables etc to be in that named schema rather than the <code>public</code> schema.
+</p>
+
+<h3>Example Postgres typical configuration</h3>
+<pre content="yml">
+ebean:
+  dbSchema: my_app  # use this schema rather than public
+  migration:
+    run: true       # run database migrations on startup
+
+datasource:
+  db:
+    username: my_app
+    password: ${myPassword}
+    url: jdbc:postgresql://${myDatabaseHost}:5432/my_app
+    driver: org.postgresql.Driver
+
+  ## Expects system properties to be set for:
+  ## myPassword and myDatabaseHost
+</pre>
+
+
+<h3 id="properties-multiple">Multiple databases</h3>
+<p>
+  When using multiple databases we set multiple datasource configurations.
+  The non-default databases have a name. For example, if we have a second
+  database called <code>"other"</code> we configure a second datasource
+  like below:
+</p>
+<pre content="yml">
+ebean:
+  dbSchema: my_app  # use this schema rather than public
+  migration:
+    run: true       # run database migrations on startup
+
+datasource:
+  db:
+    username: my_app
+    password: ${myPassword2}
+    url: jdbc:postgresql://${myDatabaseHost2}:5432/my_app
+    driver: org.postgresql.Driver
+
+  other:
+    username: other_username
+    password: ${otherPassword}
+    url: jdbc:postgresql://${otherDatabaseHost}:5432/other_dbname
+    driver: org.postgresql.Driver
+</pre>
+<p>
+  We can obtain the "other" database instance by it's name:
+</p>
+<#include "/_common/lang-buttons.html"/>
+<div class="code-java">
+  <pre content="java">
+// obtain "other" database by its name
+Database otherDatabase = DB.byName("other");
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+// obtain "other" database by its name
+val otherDatabase = DB.byName("other");
+  </pre>
+</div>
+<p>
+  TODO: Link to setup for multiple databases with <code>@DbName</code>, Model and Finder
+</p>
+
+<h2 id="programmatic">Programmatically creating database</h2>
+<p>
+  We can programmatically create a Database instance using <a href="#factory">DatabaseFactory</a>
+  and <a href="#config">DatabaseConfig</a>.
+</p>
+
+<div class="code-java">
+  <pre content="java">
+// datasource
+DataSourceConfig dataSourceConfig = new DataSourceConfig();
+dataSourceConfig.setUsername("sa");
+dataSourceConfig.setPassword("");
+dataSourceConfig.setUrl("jdbc:h2:mem:withPCQuery;");
+dataSourceConfig.setDriver("org.h2.Driver");
+
+
+// configuration ...
+DatabaseConfig config = new DatabaseConfig();
+config.setDataSourceConfig(dataSourceConfig);
+...
+
+// create database instance
+Database database = DatabaseFactory.create(config);
+  </pre>
+</div>
+
+
+<@next_edit "First Entity" "/docs/intro/first-entity" "/docs/intro/create-database/index.html"/>
+
+</body>
+</html>

@@ -1,12 +1,11 @@
 <html>
 <head>
-  <title>Logging | Intro | Ebean</title>
+  <title>Database & DB | Intro | Ebean</title>
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="Introduction" href="/docs/intro/"/>
-  <meta name="bread2" content="Database & DB" href="/docs/intro/api"/>
+  <meta name="bread2" content="Database & DB" href="/docs/intro/database"/>
   <#assign n0_intro="active">
   <#assign n1_api="active">
-  <#assign api="active">
 </head>
 <body>
 <h2 id="database">Database</h2>
@@ -14,6 +13,7 @@
   <code>io.ebean.Database</code> provides most of the functionality including
   queries, saving, deleting and transactions.
 </p>
+<#include "/_common/lang-buttons.html">
 <div class="code-java">
   <pre content="java">
 // persist ...
@@ -36,9 +36,30 @@ try (Transaction transaction = database.beginTransaction()) {
 }
   </pre>
 </div>
+<div class="code-kt">
+  <pre content="java">
+// persist ...
+val customer  = ...
+database.save(customer)
 
 
-<h4>javax.sql.DataSource</h4>
+// fetch ...
+val customers =
+  database.find(Customer::class.java)
+  .findList()
+
+
+// transactions ...
+database.beginTransaction().use { transaction ->
+
+  // fetch and persist beans etc ...
+
+  transaction.commit();
+}
+  </pre>
+</div>
+
+<h3>javax.sql.DataSource</h3>
 <p>
   A Database instance has an JDBC DataSource associating it one to one to an actual database.
 </p>
@@ -47,7 +68,7 @@ try (Transaction transaction = database.beginTransaction()) {
   performance reasons (for read only queries) and potentially connect to database read replicas.
 </p>
 
-<h4>Default database</h4>
+<h3>Default database</h3>
 <p>
   One database can be specified as the <code>default database</code>. The default Database
   instance is registered with <code>DB</code> and then can be obtained via <code>DB.getDefault()</code>.
@@ -59,21 +80,34 @@ try (Transaction transaction = database.beginTransaction()) {
 Database database = DB.getDefault();
   </pre>
 </div>
+<div class="code-kt">
+  <pre content="kotlin">
+// obtain the "default" database
+val database = DB.getDefault()
+  </pre>
+</div>
 
-<h4>Named database</h4>
+<h3>Named database</h3>
 <p>
   Each Database instance has a name and can be registered with <code>DB</code> and then obtained by
   it's name via <code>DB.byName()</code>
 </p>
 
+<#include "/_common/lang-buttons.html">
 <div class="code-java">
   <pre content="java">
 // obtain a database by it's name
 Database hrDatabase = DB.byName("hr");
   </pre>
 </div>
+<div class="code-kt">
+  <pre content="kotlin">
+// obtain a database by it's name
+val hrDatabase = DB.byName("hr")
+  </pre>
+</div>
 
-<h4>Model uses default database</h4>
+<h3>Model uses default database</h3>
 <p>
   When our entity beans extend <a href="/docs/intro/first-entity/model">Model</a> and we
   use <em>save()</em> that is actually using the default database.
@@ -96,7 +130,7 @@ Database hrDatabase = DB.byName("hr");
   </pre>
 </div>
 
-<h4>Query beans use default database</h4>
+<h3>Query beans use default database</h3>
 <p>
   When we create a Query bean and execute the query that also is actually using the default database.
 </p>
@@ -120,28 +154,22 @@ Database hrDatabase = DB.byName("hr");
   </pre>
 </div>
 
-
-<h4>Create database</h4>
-<p>
-  We can programmatically create a Database instance using <a href="#factory">DatabaseFactory</a>
-  and <a href="#config">DatabaseConfig</a> or it can be created automatically from properties
-  file configuration (for testing we often use application-test.yaml and have the database instance created automatically).
+<p class="mtm">
+  Note that in practice when using
+  <a href="/docs/intro/first-entity/model">Model</a> for persisting
+  , <a href="/docs/query/query-beans">Query beans</a> for entity queries and
+  <a href="/docs/transactions">@Transactional</a> for transactions then we tend to only
+  use database directly for <a href="/docs/query/dtoquery">DTO queries</a>,
+  <a href="/docs/query/sqlquery">SQL queries</a> and
+  <a href="/docs/query/sqlupdate">SQL updates</a>.
 </p>
-<div class="code-java">
-  <pre content="java">
-// configuration ...
-DatabaseConfig config = new DatabaseConfig();
-config.addClass(MyEntityBean.class);
-...
 
-// create database instance
-Database database = DatabaseFactory.create(config);
-  </pre>
-</div>
-
+<h3>Creating database</h3>
 <p>
-  Refer to <a href="#factory">DatabaseFactory</a> for more details.
+  Details for <a href="/docs/intro/create-database">creating database</a> instances programmatically and via properties
+  is in the next section.
 </p>
+
 
 <p>&nbsp;</p>
 
@@ -223,40 +251,8 @@ defaultDatabase.save(customer);
   to use io.ebean.DB.
 </p>
 
-<h2 id="config">DatabaseConfig</h2>
-<p>
-  <code>io.ebean.DatabaseConfig</code> has the configuration used to create a Database instance.
-</p>
 
-```java
-
-DatabaseConfig config = new DatabaseConfig();
-
-// set configuration options
-config.set...
-...
-// and/or load configuration properties file
-config.loadFromProperties();
-
-// create the Database instance
-Database database = DatabaseFactory.create(config);
-```
-
-<h2 id="factory">DatabaseFactory</h2>
-<p>
-  <code>io.ebean.DatabaseFactory</code> has the static factory method that
-  takes a DatabaseConfig creating a Database instance.
-</p>
-
-```java
-// set configuration options
-DatabaseConfig config = new DatabaseConfig();
-config.set...
-
-Database database = DatabaseFactory.create(config);
-```
-
-<@next_edit "Logging" "/docs/intro/logging" "/docs/intro/api/index.html"/>
+<@next_edit "Creating Database" "/docs/intro/create-database" "/docs/intro/database/index.html"/>
 
 </body>
 </html>

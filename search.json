@@ -248,12 +248,36 @@
   "url":"/docs/features/who"
 }
 ,{
+  "title":"Creating Database - For Testing",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/intro/create-database#testing"
+}
+,{
+  "title":"Creating Database - Programmatically creating database",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/intro/create-database#programmatic"
+}
+,{
+  "title":"Creating Database - Via Properties",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/intro/create-database#properties"
+}
+,{
   "title":"Database & DB - DB (io.ebean.DB)",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
-  "url":"/docs/intro/api#db"
+  "url":"/docs/intro/database#db"
 }
 ,{
   "title":"Database & DB - Database",
@@ -261,23 +285,7 @@
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
-  "url":"/docs/intro/api#database"
-}
-,{
-  "title":"Database & DB - DatabaseConfig",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/api#config"
-}
-,{
-  "title":"Database & DB - DatabaseFactory",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"2",
-  "keywords":"",
-  "url":"/docs/intro/api#factory"
+  "url":"/docs/intro/database#database"
 }
 ,{
   "title":"Database & DB - Ebean",
@@ -285,7 +293,7 @@
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
-  "url":"/docs/intro/api#ebean"
+  "url":"/docs/intro/database#ebean"
 }
 ,{
   "title":"Database & DB - EbeanServer",
@@ -293,7 +301,7 @@
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
-  "url":"/docs/intro/api#ebeanserver"
+  "url":"/docs/intro/database#ebeanserver"
 }
 ,{
   "title":"First entity - First Entity",
@@ -1104,12 +1112,20 @@
   "url":"/docs/getting-started/ebean-test"
 }
 ,{
+  "title":"Creating Database",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/intro/create-database"
+}
+,{
   "title":"Database & DB",
   "caption":"",
   "category":"Introduction",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/intro/api"
+  "url":"/docs/intro/database"
 }
 ,{
   "title":"First entity",
