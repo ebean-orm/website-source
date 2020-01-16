@@ -117,7 +117,7 @@
 
   <h2 id="ddl-generation">DDL Generation</h2>
   <p>
-    Use automatic forward generation of DDL - use Ebean to generate all DDL including DB migrations.
+    Use Ebean to generate all DDL including DB migrations - aka prefer forward generation of DDL.
     This keeps all the DDL "in sync" for testing and db migrations and makes it easier to support
     multiple database platforms or migrate between database platforms (e.g. MySql to Postgres).
   </p>
@@ -125,6 +125,158 @@
     If we hand craft DDL we increase the chance of variation between the model and actual database
     schema and can make testing harder.
   </p>
+
+  <h2 id="not-null">Promote use of NOT NULL constraint</h2>
+  <p>
+    Make as much of the model NOT NULL as we can - prefer DB columns to have the NOT NULL constraint
+    if possible. Reduce the amount of 3 valued logic required - have a "tighter" model.
+  </p>
+
+  <h2 id="use-constructors">Use Constructors</h2>
+  <p>
+    Use constructors to help enforce non nullable properties (Kotlin) or promote non nullable properties (Java).
+  </p>
+  <p>
+    For example, if a Customer should always have a name define a constructor that takes the name property.
+  </p>
+
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      @Entity
+      public class Customer extends BaseModel {
+
+        @NotNull @Length(100)
+        private String name;
+
+        ...
+
+        public Customer(String name) {
+          this.name = name;
+        }
+
+        // getters and setters
+
+      }
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      ...
+      @Entity
+      class Customer(name : String) : BaseModel() {
+
+        @Length(100)
+        var name: String = name    // Ebean knows this is Kotlin non-nullable type
+
+      }
+    </pre>
+  </div>
+  <p>
+    Now when we create a new Customer we must create it with a name.
+  </p>
+  <p class="code-kt">
+    For Kotlin we should make <em>name</em> a <code>non-nullable type</code>.
+    Ebean will treat Kotlin non-nullable types as <em>NOT NULL</em> from a database perspective
+    as well giving us a tighter model.
+  </p>
+
+  <h2 id="getters-setters">Getters Setters</h2>
+  <p>
+    Ebean does NOT need getters and setters as it adds it's own accessor methods via enhancement.
+  </p>
+  <p>
+    We can omit getter and setter methods as desired. We can have setter methods follow a fluid style
+    returning this if desired.
+  </p>
+
+  <h2 id="builder-pattern">Builder pattern</h2>
+  <p>
+    If we want to use the Builder pattern rather than generate an additional builder class for a given
+    entity (that then duplicates all the properties of the entity making things harder to maintain) a
+    simpler approach is to have the "setter" methods on the entity bean use the fluid style and return this.
+  </p>
+  <pre content="java">
+    @Entity
+    public class Customer extends BaseModel {
+
+      @NotNull @Length(100)
+      private String name;
+
+      private String notes;
+
+      private int level;
+      ...
+
+      public Customer(String name) {
+        this.name = name;
+      }
+
+      // accessors
+
+      public Customer setNotes(String notes) { // fluid style
+        this.notes = notes;
+        return this;
+      }
+
+      public Customer setLevel(int level) {  // fluid style
+        this.level = level;
+        return this;
+      }
+      ...
+    }
+
+    // using fluid style
+
+    Customer customer =
+      new Customer("Roberto")
+        .setNotes("An example")
+        .setLevel(42);
+
+  </pre>
+
+  <h2 id="bulk-update">Bulk update queries</h2>
+  <p>
+    Prefer the use of <a href="/docs/query/update">bulk update</a> and
+    <a href="/docs/query/delete">delete</a> statements where appropriate. Avoid fetching
+    beans just to iterate and delete them or iterate and update them all in the same way.
+  </p>
+
+  <h2 id="reference-beans">Reference beans</h2>
+  <p>
+    Use reference beans to have a bean with an <code>@Id</code> rather than execute a
+    query to find by id unless we really want to query the DB (to confirm existence typically).
+  </p>
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      // using a finder to get reference bean
+      Customer customer = Customer.find.ref(42);
+
+      // using database to get reference bean
+      Customer customer = DB.getReference(Customer.class, 42);
+
+      // reference bean populates the FK column
+      Order order = new Order(customer)
+      order. ...
+      order.save();
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      // using a finder to get reference bean
+      val customer = Customer.ref(42)
+
+      // using database to get reference bean
+      val customer = DB.getReference(Customer::class.java, 42)
+
+
+      // reference bean populates the FK column
+      val order = new Order(customer)
+      order. ...
+      order.save()
+    </pre>
+  </div>
 
   <nav class="next">
     <p class="next">

@@ -13,6 +13,13 @@
             <@smallnav activeCheck="" url="#column-name" title="@Column(name=...)"/>
             <@smallnav activeCheck="" url="#mapped-superclass" title="@MappedSuperclass"/>
             <@smallnav activeCheck="" url="#ddl-generation" title="DDL generation"/>
+            <@smallnav activeCheck="" url="#not-null" title="NOT NULL"/>
+            <@smallnav activeCheck="" url="#use-constructors" title="Use Constructors"/>
+            <@smallnav activeCheck="" url="#getters-setters" title="Getters Setters"/>
+            <@smallnav activeCheck="" url="#builder-pattern" title="Builder pattern"/>
+            <@smallnav activeCheck="" url="#bulk-update" title="Bulk update queries"/>
+            <@smallnav activeCheck="" url="#reference-beans" title="Reference beans"/>
+
           </ul>
         </@nav1>
         <#if n1_query_find??>
