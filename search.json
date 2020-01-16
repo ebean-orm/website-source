@@ -432,12 +432,36 @@
   "url":"/docs/best-practice#join-column"
 }
 ,{
+  "title":"Builder pattern",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#builder-pattern"
+}
+,{
+  "title":"Bulk update queries",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#bulk-update"
+}
+,{
   "title":"DDL Generation",
   "caption":"",
   "category":"Best Practice",
   "priority":"3",
   "keywords":"",
   "url":"/docs/best-practice#ddl-generation"
+}
+,{
+  "title":"Getters Setters",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#getters-setters"
 }
 ,{
   "title":"Identity - equals/hashCode",
@@ -464,12 +488,36 @@
   "url":"/docs/best-practice#list"
 }
 ,{
+  "title":"Promote use of NOT NULL constraint",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#not-null"
+}
+,{
+  "title":"Reference beans",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#reference-beans"
+}
+,{
   "title":"Use @MappedSuperclass",
   "caption":"",
   "category":"Best Practice",
   "priority":"3",
   "keywords":"",
   "url":"/docs/best-practice#mapped-superclass"
+}
+,{
+  "title":"Use Constructors",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#use-constructors"
 }
 ,{
   "title":"DB Migrations",
