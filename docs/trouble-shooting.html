@@ -13,6 +13,17 @@
   Post questions to the Ebean forum at: <a href="https://groups.google.com/forum/#!forum/ebean">Ebean google group</a>
 </p>
 
+<h2 id="not-enhanced">java.lang.IllegalStateException: Bean class _ is not enhanced?</h2>
+
+<h4>Actions</h4>
+<h5>1. Check that the IDE enhancement plugin for <a href="/docs/getting-started/intellij-idea">IDEA</a>
+  or <a href="/docs/getting-started/eclipse-ide">Eclipse</a> is installed</h5>
+<h5>2. Check that the enhancement plugin for <a href="/docs/getting-started/maven">maven</a> or
+  <a href="/docs/getting-started/gradle">gradle</a> is being used</h5>
+<p>
+  See <a href="/docs/getting-started">docs / getting started</a> for more details on enhancement.
+</p>
+
 <h2 id="npe-querybeans">NullPointerException using Query beans</h2>
 <h4>Example</h4>
 ```java
@@ -40,6 +51,9 @@ new QCustomer
   <b>For Kotlin:</b> For Kotlin we only need to enhance the query beans themselves (and not the calling code).
   For Kotlin the <code>querybean-packages</code> just needs to include the query beans.
 </p>
+<p>
+  Note that since 12.1.8 we no longer need ebean.mf to support query bean enhancement.
+</p>
 
 <p>&nbsp;</p>
 
@@ -58,14 +72,14 @@ new QCustomer
   be that this entity bean class needs to also be included.
 </p>
 <h5>Typically stacktrace</h5>
-<pre>
-  Caused by: java.lang.RuntimeException: Error with association to [class org.example.domain.Contact]
-  from [org.example.domain.Customer.contacts]. Is class org.example.domain.Contact registered?
-	at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.readToOne(AnnotationAssocManys.java:476)
-	at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.read(AnnotationAssocManys.java:73)
-	at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.parse(AnnotationAssocManys.java:64)
-	at io.ebeaninternal.server.deploy.parse.ReadAnnotations.readAssociations(ReadAnnotations.java:50)
-	... 37 more
+<pre content="text">
+Caused by: java.lang.RuntimeException: Error with association to [class org.example.domain.Contact]
+ from [org.example.domain.Customer.contacts]. Is class org.example.domain.Contact registered?
+ at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.readToOne(AnnotationAssocManys.java:476)
+ at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.read(AnnotationAssocManys.java:73)
+ at io.ebeaninternal.server.deploy.parse.AnnotationAssocManys.parse(AnnotationAssocManys.java:64)
+ at io.ebeaninternal.server.deploy.parse.ReadAnnotations.readAssociations(ReadAnnotations.java:50)
+ ... 37 more
 </pre>
 
 <p>&nbsp;</p>
@@ -80,28 +94,15 @@ new QCustomer
 </p>
 
 <h5>Typically stacktrace</h5>
-<pre>
+<pre content="text">
 ERROR io.ebean.Ebean - Error trying to create the default EbeanServer
-java.lang.RuntimeException: DataSource user is null?
-	at org.avaje.datasource.pool.ConnectionPool.&lt;init&gt;(ConnectionPool.java:207)
-	at org.avaje.datasource.core.Factory.createPool(Factory.java:15)
-	at io.ebeaninternal.server.core.DefaultContainer.getDataSourceFromConfig(DefaultContainer.java:273)
-	at io.ebeaninternal.server.core.DefaultContainer.setDataSource(DefaultContainer.java:217)
-	...
+ java.lang.RuntimeException: DataSource user is null?
+ at org.avaje.datasource.pool.ConnectionPool.&lt;init&gt;(ConnectionPool.java:207)
+ at org.avaje.datasource.core.Factory.createPool(Factory.java:15)
+ at io.ebeaninternal.server.core.DefaultContainer.getDataSourceFromConfig(DefaultContainer.java:273)
+ at io.ebeaninternal.server.core.DefaultContainer.setDataSource(DefaultContainer.java:217)
+ ...
 </pre>
-
-<p>&nbsp;</p>
-
-
-<h2 id="not-enhanced">java.lang.IllegalStateException: Bean class ___ is not enhanced?</h2>
-
-<h4>Actions</h4>
-<h5>1. Check that the IDE enhancement plugin for <a href="/docs/tooling/idea">IDEA</a>
-  or <a href="/docs/tooling/eclipse">Eclipse</a> is installed</h5>
-<h5>2. Check that the enhancement plugin for <a href="/docs/tooling/maven">maven</a> or <a href="/docs/tooling/gradle">gradle</a> is being used</h5>
-<p>
-  See <a href="/docs/tooling">docs / tooling</a> for more details on enhancement
-</p>
 
 
 </body>
