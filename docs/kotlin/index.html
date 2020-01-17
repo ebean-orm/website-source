@@ -1,14 +1,104 @@
 <html>
 <head>
-  <title>Introduction</title>
-  <meta name="layout" content="_layout/docs.html"/>
+  <title>Kotlin | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="Kotlin" href="/docs/kotlin/"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav.ftl"></template>
-  <#assign kotlin="active">
+  <#assign n0_docs="active">
+  <#assign n1_kotlin="active">
 </head>
 <body>
 
-<h2>TODO - Kotlin</h2>
+<h2 id="constructors">Constructors</h2>
+<p>
+  Ebean does not require a default constructor. We should use constructors
+  to supply the required / non-nullable properties when creating entity bean
+  instances.
+</p>
+<p>
+  For example, if a Customer entity bean requires a name property we can have
+  that in the constructor and use a Kotlin non-nullable type.
+</p>
+<pre content="kotlin">
+  ...
+  @Entity
+  class Customer(name : String) : BaseModel() {
+
+    @Length(100)
+    var name: String = name  // Kotlin non-nullable type
+
+  }
+</pre>
+<p>
+  The <em>suggested</em> constructor style to use with Kotlin is like the above with
+  the constructor parameter assigned to the property. The reason for this is that
+  with entity bean properties we often have mapping annotations (<code>@Length</code> etc)
+  and it can be easier / clearer to not have those as part of the constructor (where there
+  are more targets for the annotations - method, field, parameter etc).
+</p>
+
+
+<h2 id="non-nullable">Non-nullable types</h2>
+<p>
+  Ebean is aware of Kotlin non nullable types and automatically treats them
+  as <code>@NotNull</code>.  We don't need to specify <code>@NotNull</code>
+  or <code>@Column(nullable=false)</code> or <code>@ManyToOne(optional=false)</code>
+  when the property is a Kotlin non nullable type.
+</p>
+
+
+<h2 id="mapped-superclass">MappedSuperclass</h2>
+<p>
+  It is common to have a mapped superclass that extends <code>io.ebean.Model</code>
+  and has <code>@WhenCreated</code> and <code>@WhenModified</code> like below:
+</p>
+<pre content="kotlin">
+@MappedSuperclass
+abstract class BaseModel : Model() {
+
+  @Id
+  var id: Long = 0
+
+  @Version
+  var version: Long = 0
+
+  @WhenCreated
+  lateinit var whenCreated: Instant
+
+  @WhenModified
+  lateinit var whenModified: Instant
+
+}
+</pre>
+<p>
+  It is ok to use <code>lateinit</code> for the whenCreated and whenModified properties and
+  have them as nullable types.
+</p>
+<p>
+  It is good to use non nullable <code>Int = 0</code> and <code>Long = 0</code> for
+  <code>@Id</code> properties like the example above (JVM primitive int and long).
+</p>
+
+<h2 id="oneToMany">@OneToMany</h2>
+<p>
+  For collection types <code>@OneToMany</code> and <code>@ManyToMany</code> it is good
+  to use non nullable mutable lists and initialise then with <code>mutableListOf()</code>.
+  Ebean enhancement will optimise this and collection types will only be initialised
+  when needed (so it's good to model it as a Kotlin non nullable collection type).
+</p>
+<pre content="kotlin">
+
+  @Entity
+  @Table(name = "orders")
+  class Order(customer: Customer) : BaseModel() {
+
+    ...
+
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.PERSIST])
+    var details: MutableList<|OrderDetail> = mutableListOf()
+
+  }
+
+</pre>
 
 </body>
 </html>

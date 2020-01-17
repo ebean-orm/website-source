@@ -74,6 +74,14 @@
         <@nav1 activeCheck="${n1_multiDatabase!''}" url="/docs/multi-database" title="Multiple databases">
           <#include "/_nav/multi-database.ftl">
         </@nav1>
+        <@nav1 activeCheck="${n1_kotlin!''}" url="/docs/kotlin" title="Kotlin">
+          <ul class="nav nav-scroll">
+            <@smallnav activeCheck="" url="#constructors" title="Constructors"/>
+            <@smallnav activeCheck="" url="#non-nullable" title="Non-nullable types"/>
+            <@smallnav activeCheck="" url="#mapped-superclass" title="MappedSuperclass"/>
+            <@smallnav activeCheck="" url="#oneToMany" title="@OneToMany"/>
+          </ul>
+        </@nav1>
         <li><a href="/docs/tuning">Tuning</a></li>
         <li><a href="/docs/features">Features</a></li>
       </ul>

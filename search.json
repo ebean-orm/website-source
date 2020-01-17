@@ -1304,12 +1304,36 @@
   "url":"/docs/trouble-shooting"
 }
 ,{
-  "title":"TODO - Kotlin",
+  "title":"@OneToMany",
   "caption":"",
   "category":"Kotlin",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/kotlin"
+  "url":"/docs/kotlin#oneToMany"
+}
+,{
+  "title":"Constructors",
+  "caption":"",
+  "category":"Kotlin",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/kotlin#constructors"
+}
+,{
+  "title":"MappedSuperclass",
+  "caption":"",
+  "category":"Kotlin",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/kotlin#mapped-superclass"
+}
+,{
+  "title":"Non-nullable types",
+  "caption":"",
+  "category":"Kotlin",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/kotlin#non-nullable"
 }
 ,{
   "title":"Apache Ignite",
