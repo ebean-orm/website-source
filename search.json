@@ -1208,6 +1208,14 @@
   "url":"/docs/getting-started/maven"
 }
 ,{
+  "title":"Maven - Kotlin KAPT",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/maven#kotlin-kapt"
+}
+,{
   "title":"Maven / Plugin",
   "caption":"",
   "category":"Getting started",

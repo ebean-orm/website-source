@@ -7,6 +7,7 @@
       <ul class="nav nav-scroll">
         <@smallnav activeCheck="" url="#dependencies" title="Dependencies"/>
         <@smallnav activeCheck="" url="#tile" title="Tile"/>
+        <@smallnav activeCheck="" url="#kotlin-kapt" title="Kotlin KAPT"/>
       </ul>
     </@nav1>
     <@nav1 activeCheck="${n1_gradle!''}" url="/docs/getting-started/gradle" title="Gradle"/>
