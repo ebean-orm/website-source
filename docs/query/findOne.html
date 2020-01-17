@@ -28,8 +28,8 @@ Contact contact =
 ```java
 Optional<|Contact> contact =
   new QContact()
-  .email.equalTo("rob@foo.bar")
-  .findOneOrEmpty();
+    .email.equalTo("rob@foo.bar")
+    .findOneOrEmpty();
 ```
 <p>
   These methods throw <code>javax.persistence.NonUniqueResultException</code> if there is more that one matching

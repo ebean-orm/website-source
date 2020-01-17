@@ -9,6 +9,7 @@
   <@smallnav activeCheck="${findSet!''}" url="/docs/query/findSet" title="findSet"/>
   <@smallnav activeCheck="${findEach!''}" url="/docs/query/findEach" title="findEach"/>
   <@smallnav activeCheck="${findEachWhile!''}" url="/docs/query/findEachWhile" title="findEachWhile"/>
+  <@smallnav activeCheck="${findStream!''}" url="/docs/query/findStream" title="findStream"/>
   <@smallnav activeCheck="${findIterate!''}" url="/docs/query/findIterate" title="findIterate"/>
 
   <@smallnav activeCheck="${findIds!''}" url="/docs/query/findIds" title="findIds"/>

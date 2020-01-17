@@ -14,17 +14,30 @@
   Execute the query returning a map of the objects.
  </p>
  <p>
-   We use <code>setMapKey()</code> to specify the property to be used as keys
-   on the map. If one is not specified then the <code>id</code> property is used.
-   The name of the properties is the name they have on the Model, not the name of the database column.
+   We use <code>asMapKey()</code> to specify the property to be used as keys on the map.
  </p>
 
- ```java
+```java
 
- Map<|String, Product> map = database.find(Product.class)
-     .setMapKey("sku")
+// map keyed by sku
+
+Map<|String, Product> map =
+    new QProduct()
+     .sku.asMapKey()
      .findMap();
 
- ```
+```
+<p>
+  If the map key property is not specified on the query then the <code>id</code> property is used.
+</p>
+```java
+// map keyed by Id property
+// ... when map key property not defined
+
+Map<|Long, Product> map =
+    new QProduct()
+      .findMap();
+
+```
 </body>
 </html>

@@ -15,8 +15,7 @@
 </p>
 ```java
 List<|Customer> customers =
-
-  where()
+  new QCustomer()
     .email.istartsWith("rob")
     .findList();
 

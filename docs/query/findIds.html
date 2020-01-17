@@ -10,18 +10,18 @@
 </head>
 <body>
 <h2>findIds</h2>
-
-If you're only interested in the Ids of a given model, you can use the <code>findIds</code> method on the query
-
-The following code retrieves a list of Ids.
+<p>
+  If you're only interested in the Ids of a given model, you can use the <code>findIds</code> method
+  on the query. The following code retrieves a list of Ids:
+</p>
 ```java
-  List<|Long> ids = DB.find(Customer.class).where().ilike("name", "Rob%"").findIds();
-  for (Long id : ids) {
-    // Do something with the ID's
-  }
+  List<|Long> ids =
+    new QCustomer()
+      .name.ilike("Rob%")
+      .findIds();
 ```
 <p>
-The generated <code>SQL</code> only selects the id from the table (even if you use the <a href="select">select</a> clause)
+  The generated <code>SQL</code> only selects the id from the table (even if you use the <a href="select">select</a> clause)
 </p>
 ```sql
 select t0.id from Customer t0 where lower(t0.name) like 'Rob%'

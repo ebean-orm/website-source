@@ -10,6 +10,15 @@
 </head>
 <body>
 <h2>findSet</h2>
-
+<p>
+  findSet is similar to <a href="findList">findList</a> except that it returns a Set
+  rather than a List.
+</p>
+```java
+Set<|Customer> customers =
+  new QCustomer()
+    .email.istartsWith("rob")
+    .findSet();
+```
 </body>
 </html>
