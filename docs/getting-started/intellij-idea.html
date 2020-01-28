@@ -14,14 +14,13 @@
   Install Ebean's IntelliJ plugin such that entity beans and transactional methods are enhanced
   when run develop and run tests in the IDE.
 </p>
-<p>
-  Install the Plugin for IntelliJ IDEA or Eclipse IDE.
-</p>
+
 
 <div class="grid g2">
   <div>
+    <h3 class="highlight">Install the Plugin</h3>
     <p>
-      <b>File</b> > <b>Settings</b> > <b>Plugins</b> > <b>"Ebean 11"</b>
+      <em>File</em> > <em>Settings</em> > <em>Plugins</em> > <em>"Ebean 11"</em>
     </p>
     <p>Install Ebean 11 IDEA Plugin</p>
   </div>
@@ -30,12 +29,9 @@
   </div>
 </div>
 
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-
-<div class="grid g2">
+<div class="grid g2 mtl">
   <div>
-    <h4>Turn on plugin per project</h4>
+    <h3 class="highlight">Turn plugin on per project</h3>
     <p>
       The plugin is turned on and off per project. We need to turn it on for it to perform enhancement
       on the current project.
@@ -43,6 +39,75 @@
   </div>
   <div>
     <img src="/images/scn-idea-plugin-selected.png" width="450">
+  </div>
+</div>
+
+<!--<hr class="mtl"/>-->
+
+<h2 id="generated-sources">Generated Sources</h2>
+<p>
+  To confirm things are working properly we check that the <code>target/generated-sources/annotations</code> directory
+  is marked as <em>Generated Sources Root</em>. If this directory isn't recognised by the IDE as a generated
+  sources root then we won't be able to import and use query beans and the IDE will give compiler errors -
+  unknown type for the query beans.
+</p>
+<div class="grid g2">
+  <div>
+    <h3 class="highlight">Generated Sources Root</h3>
+    <p>
+      Check that <code>target/generated-sources/annotations</code> directory is marked as <em>Generated Sources
+      Root</em>
+    </p>
+  </div>
+  <div>
+    <img src="/images/scn-idea-plugin-target-generated.png" width="350">
+  </div>
+
+  <div>
+    <h3 class="highlight">Manually mark Generated Sources Root</h3>
+    <p>
+      If IntelliJ has not automatically marked the directory as <em>Generated Sources</em> we can manually do
+      so:
+    </p>
+    <p>
+      <em>Click on <code>target/generated-sources/annotations</code></em> -
+      <em>Right Mouse</em> - <em>Mark Directory as</em> - <em>Generated Sources Root</em>
+    </p>
+  </div>
+  <div>
+    <img src="/images/scn-idea-plugin-mark-generated.png" width="350">
+  </div>
+</div>
+
+<h2 id="plugin-javaagent">Plugin javaagent</h2>
+<p>
+  What this plugin does is adds <code>ebean-agent.jar</code> as a <code>javaagent</code> to the command
+  line when IDEA runs tests or main methods for the project. In the IDEA console we can click on the
+  the command line to expand it showing us the full command line used including the <code>-javaagent</code>
+  command line option specifying the ebean agent.
+</p>
+<div class="grid g2">
+  <div>
+    <h3 class="highlight">Command line</h3>
+    <p>
+      The very first line of output in the IDEA console is by default truncated with <code>...</code>. Click on
+      this first line expands to show the entire command line used.
+    </p>
+  </div>
+  <div>
+    <img src="/images/scn-idea-plugin-cmdline-0b.png" width="350">
+  </div>
+
+  <div>
+    <h3 class="highlight">Click on the command line</h3>
+    <p>
+      Clicking on the first line of the output expands to show the full command line used to run tests/main methods.
+      In the command line we see the <code>-jaavagent</code> argument specifying the ebean agent
+      used for enhancement.
+    </p>
+  </div>
+  <div>
+    <img src="/images/scn-idea-plugin-cmdline-1b.png" width="350">
   </div>
 </div>
 
