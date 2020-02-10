@@ -19,6 +19,8 @@
             <@smallnav activeCheck="" url="#builder-pattern" title="Builder pattern"/>
             <@smallnav activeCheck="" url="#bulk-update" title="Bulk update queries"/>
             <@smallnav activeCheck="" url="#reference-beans" title="Reference beans"/>
+            <@smallnav activeCheck="" url="#naming-entities" title="Naming entity beans"/>
+            <@smallnav activeCheck="" url="#database-design-mindset" title="Database design mindset"/>
 
           </ul>
         </@nav1>
