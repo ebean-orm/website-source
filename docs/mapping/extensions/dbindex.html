@@ -35,8 +35,8 @@
 </p>
 
 <pre content="java">
-@Index(unique = true, columnNames = {"name"}, platforms = Platform.H2)
-@Index(unique = true, name = "uq_printer_name", columnNames = {"lower(name)"}, platforms = Platform.POSTGRES)
+@Index(platforms = Platform.H2, unique = true, columnNames = {"name"})
+@Index(platforms = Platform.POSTGRES, unique = true, name = "uq_printer_name", columnNames = {"lower(name)"})
 @Entity
 @Table(name = "printers")
 public class DPrinter extends Model {
@@ -59,7 +59,10 @@ public class DPrinter extends Model {
   should specify the index name in order to support dropping the index.
 </p>
 <pre content="java">
-  @Index(name = "ix_detail_withdefn", platforms = Platform.POSTGRES, definition = "create index ix_detail_withdefn on t_detail using hash (lower(name)) where lower(name) like 'r%'")
+  @Index(
+    platforms = Platform.POSTGRES,
+    name = "ix_detail_lowername",
+    definition = "create index ix_detail_lowername on t_detail using hash (lower(name)) where lower(name) like 'r%'")
 </pre>
 <p>
   Often this index DDL will be platform specific and if we are testing against multiple database plaforms we specify the
