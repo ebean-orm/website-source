@@ -472,6 +472,14 @@
   "url":"/docs/best-practice#ddl-generation"
 }
 ,{
+  "title":"Database design mindset",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#database-design-mindset"
+}
+,{
   "title":"Getters Setters",
   "caption":"",
   "category":"Best Practice",
@@ -494,6 +502,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/best-practice#kotlin-data-class"
+}
+,{
+  "title":"Naming entity beans",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#naming-entities"
 }
 ,{
   "title":"Prefer List over Set",
