@@ -8,11 +8,12 @@
         <@smallnav activeCheck="" url="#ebean" title="Ebean"/>
       </ul>
     </@nav1>
-    <@nav1 activeCheck="${n1_createDatabase!''}" url="/docs/intro/create-database" title="Creating Database">
+    <@nav1 activeCheck="${n1_configuration!''}" url="/docs/intro/configuration" title="Configuration">
       <ul class="nav nav-scroll">
-        <@smallnav activeCheck="" url="#testing" title="For testing"/>
         <@smallnav activeCheck="" url="#properties" title="via Properties"/>
         <@smallnav activeCheck="" url="#programmatic" title="Programmatic"/>
+        <@smallnav activeCheck="" url="#testing-ddl" title="For Testing - ddl.generation"/>
+        <@smallnav activeCheck="" url="#testing" title="For Testing - ebean-test"/>
       </ul>
     </@nav1>
     <@nav1 activeCheck="${n1_firstentity!''}" url="/docs/intro/first-entity" title="First entity">

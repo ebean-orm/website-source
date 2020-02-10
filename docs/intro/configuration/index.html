@@ -1,48 +1,16 @@
 <html>
 <head>
-  <title>Creating Database | Intro | Ebean</title>
+  <title>Configuration | Intro | Ebean</title>
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="Introduction" href="/docs/intro/"/>
-  <meta name="bread2" content="Creating Database" href="/docs/intro/create-database"/>
+  <meta name="bread2" content="Configuration" href="/docs/intro/configuration"/>
   <#assign n0_intro="active">
-  <#assign n1_createDatabase="active">
+  <#assign n1_configuration="active">
 </head>
 <body>
-<h2 id="testing">For Testing</h2>
+<h2 id="properties">via Properties / yaml</h2>
 <p>
-  For testing we typically get <a href="/docs/testing/#ebean-test">ebean-test</a> to automatically create the Database instance
-  for us based on <code>application-test.yaml</code>.
-</p>
-<p>
-  For example with a <code>src/test/resources/application-test.yaml</code> below:
-</p>
-<pre content="yml">
-ebean:
-  test:
-    platform: postgres # h2, postgres, mysql, ...
-    ddlMode: dropCreate # none | dropCreate | migration
-    dbName: my_app
-</pre>
-<p>
-  ebean-test will hook into the Ebean startup and configure the datasource based on
-  <code>ebean.test.platform</code> and configure the DDL generation and execution
-  based on <code>ebean.test.ddlMode</code> (plus start, setup and wait for docker
-  container(s) as necessary when using docker test containers).
-</p>
-<p>
-  Refer to <a href="/docs/testing">docs / testing</a> for more details.
-</p>
-<p>
-  This is the recommended approach to creating a Database instance for testing as it
-  puts us in a position where we can easily change the database used for testing.
-  For example, changing from testing against H2 to testing against Postgres docker container
-  is as simple as changing <code>ebean.test.platform</code> to <code>postgres</code>.
-</p>
-
-
-<h2 id="properties">via Properties</h2>
-<p>
-  Database can automatically be configured via properties in <code>application.yaml</code>,
+  io.ebean.Database can automatically be configured via properties in <code>application.yaml</code>,
   <code>application.properties</code> etc.
 </p>
 <p>
@@ -142,7 +110,8 @@ val otherDatabase = DB.byName("other");
   </pre>
 </div>
 <p>
-  TODO: Link to setup for multiple databases with <code>@DbName</code>, Model and Finder
+  Goto <a href="/docs/multi-database">docs / multi-database</a> for more details on using multiple databases
+  with <code>@DbName</code>, Model and Finder.
 </p>
 
 <h2 id="programmatic">Programmatically creating database</h2>
@@ -158,7 +127,7 @@ val otherDatabase = DB.byName("other");
 DataSourceConfig dataSourceConfig = new DataSourceConfig();
 dataSourceConfig.setUsername("sa");
 dataSourceConfig.setPassword("");
-dataSourceConfig.setUrl("jdbc:h2:mem:withPCQuery;");
+dataSourceConfig.setUrl("jdbc:h2:mem:myapp;");
 dataSourceConfig.setDriver("org.h2.Driver");
 
 
@@ -177,7 +146,7 @@ Database database = DatabaseFactory.create(config);
 val dataSourceConfig = new DataSourceConfig()
 dataSourceConfig.setUsername("sa")
 dataSourceConfig.setPassword("")
-dataSourceConfig.setUrl("jdbc:h2:mem:withPCQuery;")
+dataSourceConfig.setUrl("jdbc:h2:mem:myapp;")
 dataSourceConfig.setDriver("org.h2.Driver")
 
 
@@ -191,7 +160,67 @@ val database = DatabaseFactory.create(config)
   </pre>
 </div>
 
-<@next_edit "First Entity" "/docs/intro/first-entity" "/docs/intro/create-database/index.html"/>
+<h2 id="testing-ddl">For Testing with ddl.generation</h2>
+<p>
+  We can set <em>ddl.generation</em> and <em>ddl.run</em> true for simple testing
+  against in memory H2 or a provided database instance (especially if our application is read only).
+</p>
+<pre content="yml">
+ebean:
+  ddl:
+    generate: true
+    run: true
+#   initSql: test-init.sql
+#   seedSql: test-seed.sql
+
+datasource:
+  db:
+    username: sa
+    password: sa
+    url: jdbc:h2:mem:myapp
+    driver: org.h2.Driver
+</pre>
+
+<h2 id="testing">For Testing with ebean-test</h2>
+<p>
+  <code>ebean-test</code> was built to help with testing against against the target database
+  (Postgres, MySql, MariaDB, SQLServer, Oracle ...).
+  Docker especially can be used to programmatically setup and initialise the database for testing
+  purposes.
+</p>
+<p>
+  Testing against the full featured target database(s) comes with a number of advantages
+  in terms of testing and coverage that we talk about at <a href="/docs/testing">docs / testing</a>.
+</p>
+<p>
+  <em>ebean-test</em> reads the configuration in
+  <code>src/test/resources/application-test.yaml</code>.
+  See the example below:
+</p>
+<pre content="yml">
+ebean:
+  test:
+    platform: postgres # h2, postgres, mysql, ...
+    ddlMode: dropCreate # none | dropCreate | migration
+    dbName: my_app
+</pre>
+<p>
+  ebean-test hooks into the Ebean startup and configures the datasource based on
+  <code>ebean.test.platform</code> and configures the DDL generation and execution
+  based on <code>ebean.test.ddlMode</code> (plus start, setup and wait for docker
+  container(s) as necessary when using docker test containers).
+</p>
+<p>
+  Using <a href="/docs/testing#ebean-test">ebean-test</a> is the recommended approach
+  for testing as it puts us in a position where we can easily change the database used for testing.
+  For example, changing from testing against H2 to testing against Postgres docker container
+  is as simple as changing <code>ebean.test.platform</code> to <code>postgres</code>.
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> for more details.
+</p>
+
+<@next_edit "First Entity" "/docs/intro/first-entity" "/docs/intro/configuration/index.html"/>
 
 </body>
 </html>

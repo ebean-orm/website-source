@@ -272,28 +272,36 @@
   "url":"/docs/features/who"
 }
 ,{
-  "title":"Creating Database - For Testing",
+  "title":"Configuration - For Testing with ddl.generation",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
-  "url":"/docs/intro/create-database#testing"
+  "url":"/docs/intro/configuration#testing-ddl"
 }
 ,{
-  "title":"Creating Database - Programmatically creating database",
+  "title":"Configuration - For Testing with ebean-test",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
-  "url":"/docs/intro/create-database#programmatic"
+  "url":"/docs/intro/configuration#testing"
 }
 ,{
-  "title":"Creating Database - via Properties",
+  "title":"Configuration - Programmatically creating database",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
-  "url":"/docs/intro/create-database#properties"
+  "url":"/docs/intro/configuration#programmatic"
+}
+,{
+  "title":"Configuration - via Properties / yaml",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/intro/configuration#properties"
 }
 ,{
   "title":"Database & DB - DB (io.ebean.DB)",
@@ -1288,12 +1296,12 @@
   "url":"/docs/getting-started/ebean-test"
 }
 ,{
-  "title":"Creating Database",
+  "title":"Configuration",
   "caption":"",
   "category":"Introduction",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/intro/create-database"
+  "url":"/docs/intro/configuration"
 }
 ,{
   "title":"Database & DB",
