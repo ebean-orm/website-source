@@ -10,6 +10,14 @@
 ,{
   "title":"",
   "caption":"",
+  "category":"CI Testing",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/ci-testing"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"DB migrations",
   "priority":"0",
   "keywords":"",
@@ -526,6 +534,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/best-practice#use-constructors"
+}
+,{
+  "title":"Jenkins Kubernetes Plugin",
+  "caption":"",
+  "category":"CI Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/ci-testing#jenkins-k8s"
 }
 ,{
   "title":"DB Migrations",
@@ -1168,12 +1184,28 @@
   "url":"/docs/getting-started/intellij-idea"
 }
 ,{
+  "title":"Intellij - Generated Sources",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/intellij-idea#generated-sources"
+}
+,{
   "title":"Intellij - IntelliJ IDEA Plugin",
   "caption":"",
   "category":"Getting started",
   "priority":"3",
   "keywords":"",
   "url":"/docs/getting-started/intellij-idea#idea"
+}
+,{
+  "title":"Intellij - Plugin javaagent",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/intellij-idea#plugin-javaagent"
 }
 ,{
   "title":"Maven",
