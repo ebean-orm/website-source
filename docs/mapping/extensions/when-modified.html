@@ -1,14 +1,15 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_mapping_extension.html"/>
-  <meta name="bread2" content="@WhenCreated" href="/docs/mapping/when-created"/>
-<#assign WhenCreated = "true">
+  <meta name="layout" content="_layout2/base-mapping-extn.html"/>
+  <meta name="bread3" content="@WhenModified" href="/docs/mapping/when-modified"/>
+<#assign WhenModified = "true">
 </head>
 <body>
 
-<h2>@WhenCreated</h2>
+
+<h2>@WhenModified</h2>
 <p>
-  A date time property managed by Ebean that is set on <code>insert only</code>.
+  A date time property managed by Ebean that is set on both <code>insert</code> and <code>update</code>.
 </p>
 <p>
   Typically we use both <code>@WhenCreated</code> and <code>@WhenModified</code> on a mapped superclass.

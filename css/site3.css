@@ -356,7 +356,7 @@ nav.next p.next {
   /*background: #ccc;*/
   width: 40rem;
 }
-article h2 {
+article h2, article h2 a, article h2 a:visited {
   color: var(--fg-article);
   margin-top: 4rem;
   font-size: 2rem;

@@ -21,7 +21,6 @@
             <@smallnav activeCheck="" url="#reference-beans" title="Reference beans"/>
             <@smallnav activeCheck="" url="#naming-entities" title="Naming entity beans"/>
             <@smallnav activeCheck="" url="#database-design-mindset" title="Database design mindset"/>
-
           </ul>
         </@nav1>
         <#if n1_query_find??>
@@ -41,13 +40,14 @@
         </#if>
         <@nav1 activeCheck="${sect_persist!''}" url="/docs/persist" title="Persist"/>
         <@nav1 activeCheck="${sect_transactions!''}" url="/docs/transactions" title="Transactions"/>
-        <li><a href="/docs/mapping">Mapping</a></li>
+        <@nav1 activeCheck="${n1_mapping!''}" url="/docs/mapping" title="Mapping">
+          <#include "/_nav/mapping.ftl">
+        </@nav1>
         <@nav1 activeCheck="${n1_ddlcreateall!''}" url="/docs/ddl-generation" title="DDL Generation">
           <ul class="nav nav-scroll">
             <@smallnav activeCheck="" url="#test-config" title="Using ebean-test"/>
             <@smallnav activeCheck="" url="#properties" title="Using properties"/>
             <@smallnav activeCheck="" url="#create-all" title="db-create-all.sql"/>
-
             <@smallnav activeCheck="" url="#initSql" title="initSql"/>
             <@smallnav activeCheck="" url="#seedSql" title="seedSql"/>
           </ul>

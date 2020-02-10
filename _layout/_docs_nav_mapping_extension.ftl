@@ -35,8 +35,6 @@
 </@smallnav>
 <@smallnav activeCheck="${View!''}" url="/docs/mapping/view" title="@View">
 </@smallnav>
-
-
 <@smallnav activeCheck="${History!''}" url="/docs/mapping/history" title="@History">
 </@smallnav>
 <@smallnav activeCheck="${ChangeLog!''}" url="/docs/mapping/change-log" title="@ChangeLog">

@@ -1,0 +1,70 @@
+<html>
+<head>
+  <title>@Index | Mapping | Ebean</title>
+  <meta name="layout" content="_layout2/base-mapping-extn.html"/>
+  <meta name="bread3" content="@Index" href="/docs/mapping/"/>
+  <#assign DbIndex="active">
+</head>
+<body>
+<h2 id="index">@Index</h2>
+<p>
+  With <em>@Index</em> we can specify additional indexes. We can use this to specify uniqueness,
+  function based indexes, compound indexes, platform specific indexes and if the indexes should be
+  created concurrently (Postgres only at this stage).
+</p>
+
+<h2 id="unique">@Index(unique=true)</h2>
+<p>
+  This defines if the index is <em>unique</em>. This supports simple unique indexes but also
+  function based unique indexes (e.g. unique lower name), compound uniqueness (multiple columns)
+  and platform specific syntax.
+</p>
+<p>
+  For simple cases we can alternatively use <code>@Column(unique=true)</code> or
+  <code>@UniqueConstraint</code>.
+</p>
+
+
+<h2 id="platforms">Platforms</h2>
+<p>
+  The platforms attribute limits the database platforms that the index should apply to. It is used so
+  that we can define platform specific index definitions.
+</p>
+<p>
+  We can alternatively specify platform specific DDL for indexes via extra-dll.xml.
+</p>
+
+<pre content="java">
+@Index(unique = true, columnNames = {"name"}, platforms = Platform.H2)
+@Index(unique = true, name = "uq_printer_name", columnNames = {"lower(name)"}, platforms = Platform.POSTGRES)
+@Entity
+@Table(name = "printers")
+public class DPrinter extends Model {
+  ...
+</pre>
+<p>
+  In the above example we specify multiple <code>@Index</code> with the Postgres specific one using
+  a function based index <code>lower(name)</code>.
+</p>
+
+<h2 id="concurrent">Concurrent</h2>
+<p>
+  For Postgres this indicates the index should be created concurrently.
+  For all other platforms this attribute is ignored.
+</p>
+
+<h2 id="definition">Definition</h2>
+<p>
+  The <em>definition</em> attribute allows use to specify the full DDL to create the index. When we do this we
+  should specify the index name in order to support dropping the index.
+</p>
+<pre content="java">
+  @Index(name = "ix_detail_withdefn", platforms = Platform.POSTGRES, definition = "create index ix_detail_withdefn on t_detail using hash (lower(name)) where lower(name) like 'r%'")
+</pre>
+<p>
+  Often this index DDL will be platform specific and if we are testing against multiple database plaforms we specify the
+  platforms that the index DDL applies to.
+</p>
+
+</body>
+</html>

@@ -1,109 +1,95 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_mapping.html"/>
-  <#assign overview = "true">
+  <title>Mapping | Ebean</title>
+  <meta name="layout" content="_layout2/base-mapping.html"/>
 </head>
 <body>
 
-<div class="container">
+<h5>Types</h5>
+<p style="font-size: 0.83rem;font-weight: bold;">
+  <a href="/docs/mapping/type/">All types</a>,
+  <a href="/docs/mapping/type/enum">Enum</a>,
+  <a href="/docs/mapping/type/uuid">UUID</a>,
+  <a href="/docs/mapping/type/file">File</a>,
+  <a href="/docs/mapping/type/boolean">Boolean</a>,
+  <a href="/docs/mapping/type/time">Date and Time</a>,
+  <a href="/docs/mapping/type/numeric">Numeric</a>,
+  <a href="/docs/mapping/type/db-array">DB Array</a>,
+  <a href="/docs/mapping/type/db-json">DB Json</a>,
+  <a href="/docs/mapping/type/">Other</a>
+</p>
 
-  <h5>Types</h5>
-  <div class="row">
-    <div class="col-md-9">
-      <b>
-      <a href="/docs/mapping/type/">All types</a>,
-      <a href="/docs/mapping/type/enum">Enum</a>,
-      <a href="/docs/mapping/type/uuid">UUID</a>,
-      <a href="/docs/mapping/type/file">File</a>,
-      <a href="/docs/mapping/type/boolean">Boolean</a>,
-      <a href="/docs/mapping/type/time">Date and Time</a>,
-      <a href="/docs/mapping/type/numeric">Numeric</a>,
-      <a href="/docs/mapping/type/db-array">DB Array</a>,
-      <a href="/docs/mapping/type/db-json">DB Json</a>,
-      <a href="/docs/mapping/type/">Other</a>
-      </b>
-    </div>
+<h5>JPA mapping</h5>
+<div class="grid g3">
+  <div>
+    <h5><a href="/docs/mapping/jpa/id">@Id</a></h5>
+    <h5><a href="/docs/mapping/jpa/version">@Version</a></h5>
+    <h5><a href="/docs/mapping/jpa/mapped-superclass">@MappedSuperclass</a></h5>
   </div>
-
-  <p>&nbsp;</p>
-
-  <h5>JPA mapping</h5>
-  <div class="row">
-    <div class="col-md-3">
-      <h5><a href="/docs/mapping/id">@Id</a></h5>
-      <h5><a href="/docs/mapping/version">@Version</a></h5>
-      <h5><a href="/docs/mapping/mapped-superclass">@MappedSuperclass</a></h5>
-    </div>
-    <div class="col-md-3">
-      <h5><a href="/docs/mapping/one-to-many">@OneToMany</a></h5>
-      <h5><a href="/docs/mapping/many-to-one">@ManyToOne</a></h5>
-      <h5><a href="/docs/mapping/one-to-one">@OneToOne</a></h5>
-      <h5><a href="/docs/mapping/many-to-many">@ManyToMany</a></h5>
-    </div>
-    <div class="col-md-3">
-      <h5><a href="/docs/mapping/lob">@Lob</a></h5>
-    </div>
+  <div>
+    <h5><a href="/docs/mapping/jpa/one-to-many">@OneToMany</a></h5>
+    <h5><a href="/docs/mapping/jpa/many-to-one">@ManyToOne</a></h5>
+    <h5><a href="/docs/mapping/jpa/one-to-one">@OneToOne</a></h5>
+    <h5><a href="/docs/mapping/jpa/many-to-many">@ManyToMany</a></h5>
   </div>
-
-  <h5>Ebean mapping</h5>
-  <div class="row">
-    <div class="col-md-3">
-      <h5><a href="/docs/mapping/dbjson">@DbJson</a></h5>
-      <h5><a href="/docs/mapping/dbarray">@DbArray</a></h5>
-      <h5><a href="/docs/mapping/dbarray">@DbHstore</a></h5>
-      <h5><a href="/docs/mapping/dbcomment">@DbComment</a></h5>
-      <h5><a href="/docs/mapping/dbpartition">@DbPartition</a></h5>
-    </div>
-
-    <div class="col-md-3">
-      <h5><a href="/docs/mapping/when-created">@WhenCreated</a></h5>
-      <h5><a href="/docs/mapping/when-modified">@WhenModified</a></h5>
-      <h5><a href="/docs/mapping/who-created">@WhoCreated</a></h5>
-      <h5><a href="/docs/mapping/who-modified">@WhoModified</a></h5>
-
-    </div>
-    <div class="col-md-3">
-      <h5><a href="/docs/mapping/view">@View</a></h5>
-      <h5><a href="/docs/mapping/soft-delete">@SoftDelete</a></h5>
-      <h5><a href="/docs/mapping/encrypted">@Encrypted</a></h5>
-      <h5><a href="/docs/mapping/read-audit">@ReadAudit</a></h5>
-      <h5><a href="/docs/mapping/history">@History</a></h5>
-      <h5><a href="/docs/mapping/formula">@Formula</a></h5>
-      <h5><a href="/docs/mapping/change-log">@ChangeLog</a></h5>
-    </div>
-  </div>
-
-  <div class="row">
-
-    <div class="col-md-4">
-      <h4 id="constructors"><a href="constructors">Constructors</a></h4>
-      <p>
-        Unlike JPA Ebean does <b>NOT</b> require a default constructor. You are free to create
-        entity beans that have a constructor with arguments.
-      </p>
-
-      <h4 id="collections"><a href="collections">Collections</a></h4>
-      <p>
-        Unlike Hibernate the recommendation with Ebean is to use <code>List</code> rather than <code>Set</code>
-        for mapping collections.
-      </p>
-    </div>
-
-    <div class="col-md-4">
-      <h4 id="naming-convention"><a href="naming-convention">Naming convention</a></h4>
-      <p>
-        Ebean uses a Naming convention API. This is relatively important as it typically it
-        means we only need to specify a <code>@Column name</code> when the naming convention
-        is not followed.
-      </p>
-      <p>
-        Similarly we tend to not require explicit use of <code>@JoinColumn</code> or
-        <code>@JoinTable</code> as long as the naming convention
-        is followed (which defaults to "underscore naming convention").
-      </p>
-    </div>
+  <div>
+    <h5><a href="/docs/mapping/jpa/lob">@Lob</a></h5>
   </div>
 </div>
+
+<h5>Ebean mapping extenions</h5>
+<div class="grid g3">
+  <div>
+    <h5><a href="/docs/mapping/extensions/dbjson">@DbJson</a></h5>
+    <h5><a href="/docs/mapping/extensions/dbarray">@DbArray</a></h5>
+    <h5><a href="/docs/mapping/extensions/dbarray">@DbHstore</a></h5>
+    <h5><a href="/docs/mapping/extensions/dbcomment">@DbComment</a></h5>
+    <h5><a href="/docs/mapping/extensions/dbpartition">@DbPartition</a></h5>
+  </div>
+
+  <div>
+    <h5><a href="/docs/mapping/extensions/when-created">@WhenCreated</a></h5>
+    <h5><a href="/docs/mapping/extensions/when-modified">@WhenModified</a></h5>
+    <h5><a href="/docs/mapping/extensions/who-created">@WhoCreated</a></h5>
+    <h5><a href="/docs/mapping/extensions/who-modified">@WhoModified</a></h5>
+  </div>
+
+  <div>
+    <h5><a href="/docs/mapping/extensions/view">@View</a></h5>
+    <h5><a href="/docs/mapping/extensions/soft-delete">@SoftDelete</a></h5>
+    <h5><a href="/docs/mapping/extensions/encrypted">@Encrypted</a></h5>
+    <h5><a href="/docs/mapping/extensions/read-audit">@ReadAudit</a></h5>
+    <h5><a href="/docs/mapping/extensions/history">@History</a></h5>
+    <h5><a href="/docs/mapping/extensions/formula">@Formula</a></h5>
+    <h5><a href="/docs/mapping/extensions/change-log">@ChangeLog</a></h5>
+  </div>
+
+</div>
+
+<h2 id="constructors"><a href="constructors">Constructors</a></h2>
+<p>
+  Unlike JPA Ebean does <b>NOT</b> require a default constructor. You are free to create
+  entity beans that have a constructor with arguments.
+</p>
+
+<h2 id="naming-convention"><a href="naming-convention">Naming convention</a></h2>
+<p>
+  Ebean uses a Naming convention API. This is relatively important as it typically it
+  means we only need to specify a <code>@Column name</code> when the naming convention
+  is not followed.
+</p>
+<p>
+  Similarly we tend to not require explicit use of <code>@JoinColumn</code> or
+  <code>@JoinTable</code> as long as the naming convention
+  is followed (which defaults to "underscore naming convention").
+</p>
+
+
+<h2 id="collections"><a href="collections">Collections</a></h2>
+<p>
+  Unlike Hibernate the recommendation with Ebean is to use <code>List</code> rather than <code>Set</code>
+  for mapping collections.
+</p>
 
 <h2 id="jpa-notes">JPA Notes</h2>
 <p>
