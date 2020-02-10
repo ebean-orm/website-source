@@ -278,6 +278,48 @@
     </pre>
   </div>
 
+  <h2 id="naming-entities">Naming entity beans</h2>
+  <p>
+    As a "Rob Preference" rather than strictly a "best practice" I have found that
+    I often prefer to give entity beans a <code>D</code> prefix (Hungarian notation) like:
+  </p>
+  <ul>
+    <li>DCustomer instead of Customer</li>
+    <li>DProduct instead of Product</li>
+    <li>DOrder instead of Order </li>
+  </ul>
+  <p>
+    Entity beans are generally considered <em>internal</em> and not publicly
+    exposed. Entity bean names often match/clash with types/names that we want
+    to use in the public API and we frequently want to map to/from the publicly
+    exposed API types and our internal entity beans.
+  </p>
+  <p>
+    Giving the entity beans a <em>D</em> prefix (D for Domain) generally:
+  </p>
+  <ul>
+    <li>Avoids name clashes with public API types</li>
+    <li>Avoids needing full package qualified types in mappers</li>
+    <li>Can be more obvious when code is using <em>internal</em> entity beans (persistence domain objects)</li>
+  </ul>
+  <p>
+    Generally entity beans are in a <code>domain</code> package. The beans being generally
+    related to each other via <em>@OneToMany</em>, <em>@ManyToOne</em> etc means that I prefer
+    to keep them together as a holistic model.
+  </p>
+
+  <h2 id="database-design-mindset">Database design mindset</h2>
+  <p>
+    When we are building / modelling entity beans I strongly subscribe to being in a
+    "database design mindset". What this means is that we are primarily focused on
+    normalisation and good database design principals with a resulting database design
+    that we are happy will last for the long term and be good regardless of any ORM or
+    persistence layer we are using to interact with the database.
+  </p>
+  <p>
+    Design for the long term.
+  </p>
+
   <@next_edit "Queries" "/docs/query" "/docs/best-practice/index.html"/>
 
 </body>
