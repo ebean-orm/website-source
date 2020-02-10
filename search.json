@@ -272,6 +272,14 @@
   "url":"/docs/features/who"
 }
 ,{
+  "title":"Configuration",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/intro/configuration"
+}
+,{
   "title":"Configuration - For Testing with ddl.generation",
   "caption":"",
   "category":"Introduction",
@@ -302,6 +310,14 @@
   "priority":"2",
   "keywords":"",
   "url":"/docs/intro/configuration#properties"
+}
+,{
+  "title":"Database & DB",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/intro/database"
 }
 ,{
   "title":"Database & DB - DB (io.ebean.DB)",
@@ -336,6 +352,14 @@
   "url":"/docs/intro/database#ebeanserver"
 }
 ,{
+  "title":"First entity",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/intro/first-entity"
+}
+,{
   "title":"First entity - First Entity",
   "caption":"",
   "category":"Introduction",
@@ -360,7 +384,7 @@
   "url":"/docs/intro/first-entity"
 }
 ,{
-  "title":"First entity / Constructors - Constructors",
+  "title":"First entity / Constructors",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
@@ -368,7 +392,7 @@
   "url":"/docs/intro/first-entity/constructors"
 }
 ,{
-  "title":"First entity / MappedSuperclass - MappedSuperclass",
+  "title":"First entity / MappedSuperclass",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
@@ -376,7 +400,7 @@
   "url":"/docs/intro/first-entity/mapped-superclass"
 }
 ,{
-  "title":"First entity / Model - Model",
+  "title":"First entity / Model",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
@@ -392,12 +416,28 @@
   "url":"/docs/intro/first-entity/model"
 }
 ,{
+  "title":"Limitations",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/intro/limitations"
+}
+,{
   "title":"Limitations - JPA Mapping limitations",
   "caption":"",
   "category":"Introduction",
   "priority":"2",
   "keywords":"",
   "url":"/docs/intro/limitations"
+}
+,{
+  "title":"Trouble shooting",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/trouble-shooting"
 }
 ,{
   "title":"Trouble shooting - Can't find a solution?",
@@ -952,28 +992,12 @@
   "url":"/docs/database/postgres/arraytype"
 }
 ,{
-  "title":"Postgres / Array type - Array type",
-  "caption":"",
-  "category":"Database platforms",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/database/postgres/arraytype"
-}
-,{
   "title":"Postgres / PostGIS",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/postgres/postgis"
-}
-,{
-  "title":"Postgres / PostGIS - PostGIS",
-  "caption":"",
-  "category":"Database platforms",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/database/postgres/postgis#postgis"
 }
 ,{
   "title":"Redis - L2 cache",
@@ -1296,70 +1320,6 @@
   "url":"/docs/getting-started/ebean-test"
 }
 ,{
-  "title":"Configuration",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/configuration"
-}
-,{
-  "title":"Database & DB",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/database"
-}
-,{
-  "title":"First entity",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/first-entity"
-}
-,{
-  "title":"First entity / Constructors",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/first-entity/constructors"
-}
-,{
-  "title":"First entity / MappedSuperclass",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/first-entity/mapped-superclass"
-}
-,{
-  "title":"First entity / Model",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/first-entity/model"
-}
-,{
-  "title":"Limitations",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/intro/limitations"
-}
-,{
-  "title":"Trouble shooting",
-  "caption":"",
-  "category":"Introduction",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/trouble-shooting"
-}
-,{
   "title":"@OneToMany",
   "caption":"",
   "category":"Kotlin",
@@ -1608,14 +1568,6 @@
   "url":"/docs/mapping/extensions/change-log"
 }
 ,{
-  "title":"Extension / @ChangeLog - @ChangeLog",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/change-log"
-}
-,{
   "title":"Extension / @DbArray",
   "caption":"",
   "category":"Mapping",
@@ -1688,14 +1640,6 @@
   "url":"/docs/mapping/extensions/dbcomment"
 }
 ,{
-  "title":"Extension / @DbComment - @DbComment",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/dbcomment"
-}
-,{
   "title":"Extension / @DbEnumValue",
   "caption":"",
   "category":"Mapping",
@@ -1721,14 +1665,6 @@
 }
 ,{
   "title":"Extension / @DbHstore",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/dbhstore"
-}
-,{
-  "title":"Extension / @DbHstore - @DbHstore",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
@@ -1800,14 +1736,6 @@
   "url":"/docs/mapping/extensions/dbpartition"
 }
 ,{
-  "title":"Extension / @DbPartition - @DbPartition",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/dbpartition"
-}
-,{
   "title":"Extension / @Encrypted",
   "caption":"",
   "category":"Mapping",
@@ -1848,28 +1776,12 @@
   "url":"/docs/mapping/extensions/history"
 }
 ,{
-  "title":"Extension / @History - @History",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/history"
-}
-,{
   "title":"Extension / @Index",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
   "keywords":"",
   "url":"/docs/mapping/extensions/dbindex"
-}
-,{
-  "title":"Extension / @Index - @Index",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/dbindex#index"
 }
 ,{
   "title":"Extension / @Index - @Index(unique=true)",
@@ -1912,14 +1824,6 @@
   "url":"/docs/mapping/extensions/read-audit"
 }
 ,{
-  "title":"Extension / @ReadAudit - @ReadAudit",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/read-audit"
-}
-,{
   "title":"Extension / @SoftDelete",
   "caption":"",
   "category":"Mapping",
@@ -1952,23 +1856,7 @@
   "url":"/docs/mapping/extensions/when-created"
 }
 ,{
-  "title":"Extension / @WhenCreated - @WhenCreated",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/when-created"
-}
-,{
   "title":"Extension / @WhenModified",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/when-modified"
-}
-,{
-  "title":"Extension / @WhenModified - @WhenModified",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
@@ -1984,23 +1872,7 @@
   "url":"/docs/mapping/extensions/who-created"
 }
 ,{
-  "title":"Extension / @WhoCreated - @WhoCreated",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/who-created"
-}
-,{
   "title":"Extension / @WhoModified",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/who-modified"
-}
-,{
-  "title":"Extension / @WhoModified - @WhoModified",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
@@ -2240,14 +2112,6 @@
   "url":"/docs/mapping/jpa/version"
 }
 ,{
-  "title":"JPA / @Version - @Version",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/jpa/version"
-}
-,{
   "title":"JPA Notes",
   "caption":"",
   "category":"Mapping",
@@ -2280,23 +2144,7 @@
   "url":"/docs/mapping/type/boolean"
 }
 ,{
-  "title":"Types / Boolean - Boolean",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/boolean"
-}
-,{
   "title":"Types / DB Array",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/db-array"
-}
-,{
-  "title":"Types / DB Array - DB Array",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
@@ -2312,23 +2160,7 @@
   "url":"/docs/mapping/type/db-json"
 }
 ,{
-  "title":"Types / DB Json - DB Json",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/db-json"
-}
-,{
   "title":"Types / Enum",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/enum"
-}
-,{
-  "title":"Types / Enum - Enum",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
@@ -2344,23 +2176,7 @@
   "url":"/docs/mapping/type/file"
 }
 ,{
-  "title":"Types / File - File",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/file"
-}
-,{
   "title":"Types / Numeric",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/numeric"
-}
-,{
-  "title":"Types / Numeric - Numeric",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
@@ -2377,14 +2193,6 @@
 }
 ,{
   "title":"Types / UUID",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/uuid"
-}
-,{
-  "title":"Types / UUID - UUID",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
