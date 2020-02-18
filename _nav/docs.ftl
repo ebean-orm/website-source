@@ -39,7 +39,9 @@
           <@nav1 activeCheck="${n1_query_index!''}" url="/docs/query" title="Query"/>
         </#if>
         <@nav1 activeCheck="${sect_persist!''}" url="/docs/persist" title="Persist"/>
-        <@nav1 activeCheck="${sect_transactions!''}" url="/docs/transactions" title="Transactions"/>
+        <@nav1 activeCheck="${n1_transactions!''}" url="/docs/transactions" title="Transactions">
+          <#include "/_nav/transactions.ftl">
+        </@nav1>
         <@nav1 activeCheck="${n1_mapping!''}" url="/docs/mapping" title="Mapping">
           <#include "/_nav/mapping.ftl">
         </@nav1>

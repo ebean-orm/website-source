@@ -1,15 +1,40 @@
 <html>
 <head>
-  <title>Spring transactions | Ebean</title>
-  <meta name="layout" content="_layout/docs_transactions.html"/>
+  <title>Spring Transactions | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Transactions" href="/docs/transactions"/>
   <meta name="bread2" content="Spring" href="/docs/transactions/spring"/>
-  <#assign spring="active">
+  <#assign n0_docs="active">
+  <#assign n1_transactions="active">
+  <#assign n2_spring="active">
 </head>
 <body>
-<h2>Spring</h2>
+<h2>Spring transactions</h2>
+<p>
+  The recommendation is to use Ebean's own transaction management but we can also use
+  spring transactions.
+</p>
+<p>
+  To do so include the dependency:
+</p>
+<pre content="xml">
+<dependency>
+  <groupId>io.ebean</groupId>
+  <artifactId>ebean-spring-txn</artifactId>
+  <version>12.1.1</version>
+</dependency>
+</pre>
 
-<@next "JTA Transactions" "/docs/transactions/jta"/>
-<@edit "/docs/transactions/spring" />
+<p>
+  Set <code>SpringJdbcTransactionManager</code> as an external transaction by:
+</p>
+<pre content="java">
+DatabaseConfig config = new DatabaseConfig();
+
+config.setExternalTransactionManager(new SpringJdbcTransactionManager());
+</pre>
+
+<@next_edit "JTA Transactions" "/docs/transactions/jta" "/docs/transactions/spring.html"/>
 
 </body>
 </html>

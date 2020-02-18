@@ -1,13 +1,31 @@
 <html>
 <head>
   <title>JTA Transactions | Ebean</title>
-  <meta name="layout" content="_layout/docs_transactions.html"/>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Transactions" href="/docs/transactions"/>
   <meta name="bread2" content="JTA" href="/docs/transactions/jta"/>
-  <#assign jta="active">
+  <#assign n0_docs="active">
+  <#assign n1_transactions="active">
+  <#assign n2_jta="active">
 </head>
 <body>
 <h2>JTA</h2>
-<@edit "/docs/transactions/jta" />
+<p>
+  When using Ebean in a JEE container we can specify to use the JTA transactions
+  managed by the container.
+</p>
+<p>
+  To do so set <code>JtaTransactionManager</code> as an external transaction by:
+</p>
+
+<pre content="java">
+DatabaseConfig config = new DatabaseConfig();
+
+// set SpringJdbcTransactionManager ... as the external transaction manager
+config.setExternalTransactionManager(new JtaTransactionManager());
+</pre>
+
+<@next_edit "Mapping" "/docs/mapping" "/docs/transactions/jta.html"/>
 
 </body>
 </html>

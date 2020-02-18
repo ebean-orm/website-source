@@ -1,45 +1,45 @@
 <html>
 <head>
-  <title>Savepoint | Ebean</title>
-  <meta name="layout" content="_layout/docs_transactions.html"/>
-  <meta name="bread2" content="Savepoint" href="/docs/transactions/savepoints"/>
-  <#assign savepoints="active">
+  <title>Savepoint | Transactions | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Transactions" href="/docs/transactions"/>
+  <meta name="bread2" content="Savepoints" href="/docs/transactions/savepoints"/>
+  <#assign n0_docs="active">
+  <#assign n1_transactions="active">
+  <#assign n2_savepoints="active">
 </head>
 <body>
-<h2>Savepoint</h2>
-
+<h2 id="savepoint">Savepoint</h2>
 <p>
   Ebean supports using <code>Savepoints</code> which are a feature of most Relational Databases
-  in which you can create a "Save point" inside a transaction to which you can rollback to in
-  case of an error or some other business logic.
+  in which we can create a Savepoint (nested transaction) inside a transaction which can
+  commit or rollback as a unit of work.
 </p>
-
 <p>
-  If you have part of a task that performs some operations which can fail/rollback, but we don't
-  want to loose all the work, <code>Savepoint</code> provides a mechanism to do this.
+  If we have a task that performs some operations which can fail/rollback, but don't
+  want to loose all the work for the entire transaction <code>Savepoint</code> provides a mechanism to do this.
   You can check more information on <a href='https://docs.oracle.com/javase/tutorial/jdbc/basics/transactions.html#set_roll_back_savepoints'>Oracle's JDBC tutorial</a>
 </p>
 
-<h3>Transaction.setNestedUseSavepoint()</h3>
+<h2 id="setNestedUseSavepoint">Transaction.setNestedUseSavepoint()</h2>
 <p>
-
-  For a transaction we can use <code>setNestedUseSavepoint()</code> to enable it to use
+  For a transaction we can use <code>transaction.setNestedUseSavepoint()</code> to enable it to use
   <code>Savepoint</code> for nested transactions. This means that these nested transactions
-  can be rolled back but leaving the outer transaction to continue and potentially commit.
+  can be rolled back leaving the outer transaction to continue and potentially commit.
 </p>
 
 <h5>Example</h5>
 ```java
 
 // start 'outer' transaction
-try (Transaction outerTxn = server.beginTransaction()) {
+try (Transaction outerTxn = database.beginTransaction()) {
 
   outerTxn.setNestedUseSavepoint();
 
   // do stuff with the 'outer' transaction
   bean.save();
 
-  try (Transaction nestedTransaction = server.beginTransaction()) {
+  try (Transaction nestedTransaction = database.beginTransaction()) {
     // nested transaction is a savepoint ...
 
     // do some piece of work which we might want to either commit or rollback ...
@@ -60,8 +60,41 @@ try (Transaction outerTxn = server.beginTransaction()) {
 
 ```
 
-<@next "Explicit Savepoint" "/docs/transactions/savepoints-explicit"/>
-<@edit "/docs/transactions/savepoints" />
+<h2 id="explicit">Explicit Savepoints</h2>
+<p>
+  As an alternative to using <em>transaction.setNestedUseSavepoint()</em> we can instead
+  explicitly create and use savepoints by obtaining the JDBC <code>Connection</code> from the transaction.
+</p>
+<p>
+For example:
+</p>
+
+```java
+
+  var newCustomer = new Customer();
+  newCustomer.setName("John");
+  newCustomer.save();
+
+  try (Transaction transaction = DB.beginTransaction()) {
+
+    Connection connection = transaction.getConnection();
+
+    // create a Savepoint
+    Savepoint savepoint = connection.setSavepoint();
+
+    newCustomer.setName("Doe");
+    newCustomer.save();
+
+    // Rollback to a specific save point
+    connection.rollback(savepoint);
+    transaction.commit();
+  }
+
+  var found = DB.find(Customer.class, newCustomer.getId());
+  System.out.println(found.getName()); // Prints "John"
+```
+
+<@next_edit "Spring transactions" "/docs/transactions/spring" "/docs/transactions/savepoints.html"/>
 
 </body>
 </html>

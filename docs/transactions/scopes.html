@@ -1,9 +1,12 @@
 <html>
 <head>
-  <title>Nested transactions | Ebean</title>
-  <meta name="layout" content="_layout/docs_transactions.html"/>
+  <title>Scopes | Transactions | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Transactions" href="/docs/transactions"/>
   <meta name="bread2" content="Scopes" href="/docs/transactions/scopes"/>
-  <#assign scopes="active">
+  <#assign n0_docs="active">
+  <#assign n1_transactions="active">
+  <#assign n2_scopes="active">
 </head>
 <body>
 <h2>Scopes</h2>
@@ -15,7 +18,7 @@
   </tr>
   <tr>
     <td>REQUIRED</td>
-    <td>Uses an existing transaction and if none exists will starts a new Transaction. This is the default.</td>
+    <td>Uses an existing transaction and if none exists will starts a new Transaction. This is the <b>default scope</b>.</td>
   </tr>
   <tr>
     <td>MANDATORY</td>
@@ -63,7 +66,7 @@ public void doInner() {
 
 <p>&nbsp;</p>
 
-<h2>Example with beginTransaction</h2>
+<h3>Example with beginTransaction()</h3>
 <p>
   We can specify other transaction scopes via <code>beginTransaction(TxScope)</code>.
 </p>
@@ -75,8 +78,7 @@ try (Transaction transaction = server.beginTransaction(TxScope.requiresNew())) {
 }
 ```
 
-<@next "Savepoint" "/docs/transactions/savepoints"/>
-<@edit "/docs/transactions/scopes" />
+<@next_edit "Savepoint" "/docs/transactions/savepoints" "/docs/transactions/scopes.html"/>
 
 </body>
 </html>

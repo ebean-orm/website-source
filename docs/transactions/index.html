@@ -1,17 +1,66 @@
 <html>
 <head>
-  <title>Transactions</title>
-  <meta name="layout" content="_layout/docs_transactions.html"/>
-  <#assign transactions="active">
+  <title>Transactions | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Transactions" href="/docs/transactions"/>
+  <#assign n0_docs="active">
+  <#assign n1_transactions="active">
+  <#assign n2_transactions="active">
 </head>
-
 <body>
-<h2 id="transactions">Transactions</h2>
+<h2 id="transactional">@Transactional</h2>
 <p>
-  We can use explicit transactions to wrap multiple database actions such as queries or persisting via save() etc.
+  Annotate methods with <code>@Transactional</code> and all database queries and changes
+  will occur in a single transaction.
+</p>
+<p>
+  The transaction will use the <a href="/docs/intro/database/#default">default database</a>,
+  be put into the "thread local scope" and will commit if the methods completes successfully.
 </p>
 ```java
-try (Transaction transaction = ebeanServer.beginTransaction()) {
+@Transactional
+public void process(OffsetDateTime startOffset) {
+  ...
+  customer.save();
+  contact.save();
+}
+```
+
+<h2 id="current">Transaction.current()</h2>
+<p>
+  Use <code>Transaction.current()</code> to return the current transaction from "thread local scope"
+  of the <a href="/docs/intro/database/#default">default database</a>.
+</p>
+```java
+@Transactional
+public void process(OffsetDateTime startOffset) {
+  ...
+  Transaction txn = Transaction.current();
+  ...
+}
+```
+<p>
+  use <code>database.currentTransaction()</code> to return the current transaction for a given database
+  that is typically not the default database.
+</p>
+```java
+Database otherDb = DB.byName("other");
+
+Transaction txn = otherDb.currentTransaction();
+```
+
+<h2 id="beginTransaction">beginTransaction()</h2>
+<p>
+  As an alternative to <em>@Transactional</em> we can use <code>beginTransaction()</code> to
+  start an explicit transaction. The transaction is put into the "thread local scope" and used
+  by any subsequent queries, save, delete etc.
+</p>
+<p>
+  We should use a <em>try with resources</em> block to ensure that the transaction is closed
+  if any error occurs in the block.
+</p>
+```java
+try (Transaction transaction = DB.beginTransaction()) {
 
   // do stuff...
   Customer customer = ...
@@ -23,18 +72,109 @@ try (Transaction transaction = ebeanServer.beginTransaction()) {
   transaction.commit();
 }
 ```
+<h4 id="kotlinUse">Kotlin transaction.use { }</h4>
 <p>
-  We can alternatively use Ebean's <code>@Transactional</code> annotation on methods or
-  <a href="spring">Spring Transactions</a> or <a href="jta">JTA Transactions</a>.
+  Kotlin <code>use</code> is used similarly to <em>try with resources</em> to ensure
+  the transaction is closed.
 </p>
-```java
-@Transactional
-public void process(OffsetDateTime startOffset) {
-  ...
+```kotlin
+DB.beginTransaction().use { transaction ->
+
+  // do stuff...
+  val customer = ...
+  customer.save();
+
+  val order = ...
+  order.save();
+
+  transaction.commit()
 }
 ```
 
-<h2 id="implicit" class="art">Implicit transactions</h2>
+
+<h2 id="end">commit(), rollback(), end()</h2>
+<p>
+  Often with a <em>try with resources</em> block we don't need explicit calls to
+  <code>transaction.rollback()</code> or <code>transaction.end()</code> like the
+  example for <a href="#beginTransaction">beginTransaction()</a> above.
+</p>
+<p>
+  <code>rollback()</code> will rollback the transaction and commonly we use that
+  in a catch block.
+</p>
+<p>
+  <code>end()</code> will rollback the transaction if it has not already been committed.
+  We primarily use <code>end()</code> in a finally block.
+</p>
+```java
+Transaction transaction = DB.beginTransaction()
+try {
+  // do stuff...
+  Customer customer = ...
+  customer.save();
+
+  Order order = ...
+  order.save();
+
+  transaction.commit();
+
+} catch (SomeException e) {
+  transaction.rollback();
+
+} finally {
+  transaction.end();  // rollback if not committed
+}
+```
+
+<h2 id="commitAndContinue">commitAndContinue()</h2>
+<p>
+  Occasionally in larger transactions we get to a point where we would like
+  to commit the changes to this point but then carry on processing with
+  subsequent changes potentially failing.
+  We use <code>transaction.commitAndContinue()</code> for this.
+</p>
+
+
+<h2 id="setRollbackOnly">setRollbackOnly()</h2>
+<p>
+  We use <code>transaction.setRollbackOnly()</code> such that a transaction
+  will not commit but only rollback.
+</p>
+<p>
+  We can make use of this when some processing has a sort of "preview" mode where
+  we process changes but then do not commit. This can also be useful in some
+  testing scenarios.
+</p>
+
+<h2 id="createTransaction">createTransaction()</h2>
+<p>
+  <code>database.createTransaction()</code> will create a transaction but it will
+  <em>NOT</em> be put in "thread local scope". We generally use this when we have
+  a transaction that we want to pass between threads.
+</p>
+<p>
+  For example: start a transaction, obtain a row lock, if that is successful pass the
+  transaction to a task to execute via a background thread.
+</p>
+<p>
+  When we use <code>createTransaction()</code> we must explicitly use the transaction
+  in queries and saving etc. We explicitly specify the transaction with query beans
+  via ... and <em>model.save(transaction)</em> etc.
+</p>
+```java
+try (Transaction transaction = DB.getDefault().createTransaction()) {
+
+  ...
+  var customer = new QCustomer(transaction) // explicit transaction
+    .name.eq("Rob")
+    .findOne();
+  ...
+  customer.update(transaction);  // explicit transaction
+
+}
+```
+
+<h2 id="implicit">Implicit transactions</h2>
 <p>
   When no transactions are specified explicitly Ebean will create a transaction to perform the action.
 </p>
@@ -44,64 +184,14 @@ public void process(OffsetDateTime startOffset) {
   be configured Ebean will look to use that by default.
 </p>
 
-<h4>Save, Insert, Update</h4>
+<h4>Insert, Update, Delete</h4>
 <p>
   For all persist requests like save, insert, update, delete Ebean will create a transaction and perform
   a <code>COMMIT</code> at the end of the operation.
 </p>
 
-<h2 id="programmatic" class="art">Programmatic</h2>
-<p>
-  We programmatically create transactions using <code>ebeanServer.beginTransaction()</code>.
-  When we do so we generally should use <code>try with resources</code> to ensure that the
-  transaction is closed regardless of an exception throw.
-</p>
-```java
-// use try with resources such that the transaction is
-// always closed, even if an exception is thrown
-try (Transaction transaction = ebeanServer.beginTransaction()) {
 
-  // do good stuff...
-  customer.save();
-  order.save();
-
-  transaction.commit();
-}
-```
-
-<h2 id="kotlinUse" class="art">Kotlin transaction.use { }</h2>
-<p>
-  Kotlin <code>use</code> is used similarly to <em>try with resources</em> to ensure the transaction
-  is closed.
-</p>
-```kotlin
-Country.db().beginTransaction().use { transaction ->
-
-  transaction.isBatchMode = true
-
-  Country("FJ", "Fiji").save()
-  Country("TO", "Tonga").save()
-  Country("WS", "Samoa").save()
-
-  transaction.commit()
-}
-```
-
-<h2 id="atTransactional" class="art">@Transactional</h2>
-<p>
-  We can put <code>@Transactional</code> annotation on methods (including private methods) and Ebean
-  enhancement will add transaction demarcation to those methods.
-</p>
-```java
-@Transactional
-public void process(OffsetDateTime startOffset) {
-  ...
-}
-```
-
-
-<@next "Batch" "/docs/transactions/batch"/>
-<@edit "/docs/transactions/index"/>
+<@next_edit "Batch" "/docs/transactions/batch" "/docs/transactions/index.html"/>
 
 </body>
 </html>

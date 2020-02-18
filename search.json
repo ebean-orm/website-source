@@ -3429,7 +3429,7 @@
   "category":"Transactions",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/transactions#atTransactional"
+  "url":"/docs/transactions#transactional"
 }
 ,{
   "title":"Batch",
@@ -3453,7 +3453,7 @@
   "category":"Transactions",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/transactions/batch#batchsize"
+  "url":"/docs/transactions/batch#batchSize"
 }
 ,{
   "title":"Batch - Configuration via ServerConfig",
@@ -3464,6 +3464,14 @@
   "url":"/docs/transactions/batch#serverConfig"
 }
 ,{
+  "title":"Batch - Explicit flush()",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#flushExplicit"
+}
+,{
   "title":"Batch - Flush",
   "caption":"",
   "category":"Transactions",
@@ -3472,20 +3480,36 @@
   "url":"/docs/transactions/batch#flush"
 }
 ,{
+  "title":"Batch - Flush on getter/setter",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#flushOnGetter"
+}
+,{
   "title":"Batch - GetGeneratedKeys",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/transactions/batch#getGeneratedKeys"
+  "url":"/docs/transactions/batch#generatedKeys"
 }
 ,{
-  "title":"Explicit Savepoint",
+  "title":"Batch - setBatchFlushOnMixed()",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/transactions/savepoints-explicit"
+  "url":"/docs/transactions/batch#flushOnMixed"
+}
+,{
+  "title":"Batch - setBatchFlushOnQuery()",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/batch#flushOnQuery"
 }
 ,{
   "title":"Implicit transactions",
@@ -3504,23 +3528,7 @@
   "url":"/docs/transactions/jta"
 }
 ,{
-  "title":"Kotlin transaction.use { }",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions#kotlinUse"
-}
-,{
-  "title":"Programmatic",
-  "caption":"",
-  "category":"Transactions",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/transactions#programmatic"
-}
-,{
-  "title":"Savepoint",
+  "title":"Savepoints",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
@@ -3528,15 +3536,31 @@
   "url":"/docs/transactions/savepoints"
 }
 ,{
-  "title":"Scopes",
+  "title":"Savepoints - Explicit Savepoints",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/transactions/scopes"
+  "url":"/docs/transactions/savepoints#explicit"
 }
 ,{
-  "title":"Scopes - Example with beginTransaction",
+  "title":"Savepoints - Savepoint",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/savepoints#savepoint"
+}
+,{
+  "title":"Savepoints - Transaction.setNestedUseSavepoint()",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/savepoints#setNestedUseSavepoint"
+}
+,{
+  "title":"Scopes",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
@@ -3560,12 +3584,52 @@
   "url":"/docs/transactions/spring"
 }
 ,{
-  "title":"Transactions",
+  "title":"Transaction.current()",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/transactions#transactions"
+  "url":"/docs/transactions#current"
+}
+,{
+  "title":"beginTransaction()",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#beginTransaction"
+}
+,{
+  "title":"commit(), rollback(), end()",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#end"
+}
+,{
+  "title":"commitAndContinue()",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#commitAndContinue"
+}
+,{
+  "title":"createTransaction()",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#createTransaction"
+}
+,{
+  "title":"setRollbackOnly()",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions#setRollbackOnly"
 }
 ,{
   "title":"TODO - Tuning",
