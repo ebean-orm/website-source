@@ -178,9 +178,6 @@ try (Transaction transaction = DB.beginTransaction()) {
 }
 ```
 
-<p>The <b>transaction.addModification()</b> in the code above informs Ebean that your jdbc code
-updated the shipping_details table. Ebean uses this information to automatically
-manage its "L2" cache as well as maintain Lucene text indexes.</p>
 
 <h2 id="batch_processing">JDBC Batch</h2>
 <p>
