@@ -41,11 +41,31 @@ Object key = sqlUpdate.getGeneratedKey();
 ```
 
 <p>&nbsp;</p>
-<h5>Example: binding list</h5>
+<h2 id="collections" class="art">Binding collections</h2>
+<p>
+  To bind collections/arrays of values into an IN clause we need to use
+  indexed positioned parameters like <code>?1, ?2, ?3</code> etc or
+  named parameters like <code>:ids, :names</code> etc.
+</p>
 ```java
+// using ?1 index positioned parameter
+
+String sql = "delete from customer where ref_id in (?1)";
+
+int rows = DB.sqlUpdate(sql)
+  .setParameter(asList(9991, 9992, 9993))
+  .execute();
+```
+```sql
+delete from customer where ref_id in (?,?,?)
+```
+
+```java
+// using :ids named parameter
+
 String sql = "delete from customer where ref_id in (:ids)";
 
-int rows = DB.sqlUpdate()
+int rows = DB.sqlUpdate(sql)
   .setParameter("ids", asList(9991, 9992, 9993))
   .execute();
 ```

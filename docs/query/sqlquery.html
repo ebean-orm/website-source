@@ -95,6 +95,35 @@ CustDto rob = DB.sqlQuery(sql)
   .findOne(CUST_MAPPER);
 ```
 
+<h2 id="collections" class="art">Binding collections</h2>
+<p>
+  To bind collections/arrays of values into an IN clause we need to used named parameters
+  or indexed positioned parameters.
+</p>
+<h5>Named parameter example (:names)</h5>
+
+```java
+
+String sql = "select c.id, c.name from customer c where c.name in (:names)";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+  .setParameter("names", asList("Rob", "Fiona", "Jack"))
+  .findList();
+
+```
+
+<h5>Index parameter example - ?1</h5>
+
+```java
+
+String sql = "select c.id, c.name from customer c where c.name in (?1)";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+  .setParameter(asList("Rob", "Fiona", "Jack"))
+  .findList();
+
+```
+
 <@next_edit "SqlUpdate" "/docs/query/sqlupdate" "/docs/query/sqlquery"/>
 
 </body>
