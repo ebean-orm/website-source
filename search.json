@@ -2904,6 +2904,14 @@
   "url":"/docs/query/sqlquery"
 }
 ,{
+  "title":"SqlQuery - Binding collections",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlquery#collections"
+}
+,{
   "title":"SqlQuery - RowMapper",
   "caption":"",
   "category":"Query",
@@ -2934,6 +2942,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/sqlupdate#addBatch"
+}
+,{
+  "title":"SqlUpdate - Binding collections",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlupdate#collections"
 }
 ,{
   "title":"SqlUpdate - CTE - Common table expression",
@@ -3577,6 +3593,14 @@
 }
 ,{
   "title":"Spring",
+  "caption":"",
+  "category":"Transactions",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/transactions/spring"
+}
+,{
+  "title":"Spring - Spring transactions",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
