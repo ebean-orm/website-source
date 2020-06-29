@@ -17,13 +17,13 @@
 <p>
   Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
-  platform: postgres # h2, postgres, ...
+    platform: postgres # h2, postgres, ...
     ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: my_app
-```
+</pre>
 <p>
   That is all we need to do. Running tests via IDE, maven or gradle will all automatically setup
   a docker test container for postgres including creating the database and user etc.
@@ -32,12 +32,11 @@ ebean:
   The above will use the following defaults:
 </p>
 <table class="compact w100">
-  <tr><th>username:</th><td>{databaseName}</td></tr>
+  <tr><th>username:</th><td>{dbName}</td></tr>
   <tr><th>password:</th><td>test</td></tr>
   <tr><th>port:</th><td>6432</td></tr>
-  <tr><th>url:</th><td>jdbc:postgresql://localhost:{port}/{databaseName}</td></tr>
-  <tr><th>driver:</th><td>org.postgresql.Driver</td></tr>
-  <tr><th>image:</th><td>postgres:{version}</td></tr>
+  <tr><th>url:</th><td>jdbc:postgresql://localhost:{port}/{dbName}</td></tr>
+  <tr><th>image:</th><td>postgres:{version:12}</td></tr>
 </table>
 
 
@@ -79,7 +78,13 @@ ebean:
   Postgres 10 added support for table partitioning. We use <code>@DbPartition</code> to define the
   table should have range partitioning based on DAY, WEEK, MONTH or YEAR.
 </p>
-
+<pre content="java">
+@DbPartition(mode = DAY, property = "eventTime")
+@Entity
+@Table(name = "event")
+public class DEvent extends BaseDomain {
+  ...
+</pre>
 <h2 id="extensions">Extensions</h2>
 <p>
   We may want to use extensions like <code>hstore</code> and <code>pgcrypto</code>.
