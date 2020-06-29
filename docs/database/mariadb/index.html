@@ -11,10 +11,103 @@
 <body>
 <h2>MariaDB</h2>
 <p>
-  For MariaDB we use the <a href="/docs/database/mysql">MySql</a> platform.
-  There is currently no difference.
+  Since 12.3.6 MariaDB has it's own platform with SQL2012 History support and DDL generation to support that.
+</p>
+<h3>MariaDB JDBC Driver - useLegacyDatetimeCode</h3>
+<p>
+  The expectation is that the MariaDB JDBC driver is used and that <code>useLegacyDatetimeCode=false</code>
+  is set. This ensures the JDBC driver honours the database server timezone. ebean-test will automatically
+  set the useLegacyDatetimeCode parameter for but otherwise we need to ensure that parameter is set on
+  the connection pool.
+</p>
+<pre content="properties">
+## example manually setting useLegacyDatetimeCode in properties file
+datasource.db.username=my_app
+datasource.db.password=test
+datasource.db.url=jdbc:mariadb://localhost:4306/unit?useLegacyDatetimeCode=false
+</pre>
+<p>
+  It is expected that the MariaDB JDBC Driver is used.
+</p>
+<pre content="xml">
+  <dependency>
+    <groupId>org.mariadb.jdbc</groupId>
+    <artifactId>mariadb-java-client</artifactId>
+    <version>2.6.0</version>
+  </dependency>
+</pre>
+
+<h3>Testing</h3>
+<p>
+  To test against MariaDB docker test container set the <em>platform</em> to <code>mariadb</code> in
+  <code>src/test/resources/application-test.yaml</code>
+</p>
+<p>
+  Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
+</p>
+<pre content="yml">
+ebean:
+  test:
+    platform: mariadb
+    ddlMode: dropCreate # none | dropCreate | migrations | create
+    dbName: my_app
+</pre>
+
+<p>
+  The above will use the following defaults:
+</p>
+<table class="compact w100">
+  <tr><th>username:</th><td>{dbName}</td></tr>
+  <tr><th>password:</th><td>test</td></tr>
+  <tr><th>port:</th><td>4306</td></tr>
+  <tr><th>url:</th><td>jdbc:mariadb://localhost:{port}/{dbName}?useLegacyDatetimeCode=false</td></tr>
+  <tr><th>image:</th><td>mariadb:{version:10}</td></tr>
+</table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<h2 id="types">Types</h2>
+<h5>UUID</h5>
+<p>
+  UUID is not a native MariaDB type and can be mapped to either BINARY(16) or VARCHAR(36).
 </p>
 
+<h5>JSON</h5>
+<p>
+  We can use <code>@DbJson</code> to map content.
+</p>
+
+<h2 id="history">History support</h2>
+<p>
+  MariaDB has native SQL2011 history support and Ebean will generate DDL to enable and use this
+  on entities annotated with <code>@History</code>.
+</p>
+
+<h2 id="start-docker">Programmatically start using docker</h2>
+<p>
+  We can programmatically start a MariaDB docker container using <code>ebean-test-docker</code> via:
+</p>
+<pre content="java">
+package main;
+
+import io.ebean.docker.commands.MariaDBConfig;
+import io.ebean.docker.commands.MariaDBContainer;
+
+public class StartMariaDb {
+
+  public static void main(String[] args) {
+
+    MariaDBConfig config = new MariaDBConfig("10.5");
+    config.setDbName("unit");
+    config.setUser("unit");
+    config.setPassword("unit");
+
+    MariaDBContainer container = new MariaDBContainer(config);
+    container.startWithDropCreate();
+  }
+}
+</pre>
 
 <@next_edit "SQL Server" "/docs/database/sqlserver" "/docs/database/mariadb/index.html"/>
 
