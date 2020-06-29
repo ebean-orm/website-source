@@ -848,6 +848,30 @@
   "url":"/docs/database/mariadb"
 }
 ,{
+  "title":"MariaDB - History support",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mariadb#history"
+}
+,{
+  "title":"MariaDB - Programmatically start using docker",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mariadb#start-docker"
+}
+,{
+  "title":"MariaDB - Types",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mariadb#types"
+}
+,{
   "title":"MySql",
   "caption":"",
   "category":"Database platforms",
