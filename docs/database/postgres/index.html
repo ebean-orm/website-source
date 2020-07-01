@@ -53,19 +53,25 @@ ebean:
   DNS lookup validating addresses. <em>io.ebean.types.Inet</em> is a simple value type.
 </p>
 
-<h5>Array types</h5>
+<h5>Array types - @DbArray</h5>
 <p>
-  We use <code><a href="arraytype">@DbArray</a></code> to map Lists or Sets of UUID, String, Enums, Number types.
+  We use <a href="/docs/mapping/extensions/dbarray">@DbArray</a> to map Lists or Sets of UUID, String, Enums, Number types.
   These are mapped to Postgres array types like <em>uuid[], varchar[], integer[] ...</em>
 </p>
 <p>
   For more on <a href="arraytype">Postgres Array types</a>.
 </p>
 
-<h5>JSON / JSONB</h5>
+<h5>JSON / JSONB - @DbJson</h5>
 <p>
-  We can use <code>@DbJson</code> and <code>@DbJsonB</code> to map content to Postgres JSON or JSONB
+  We can use <a href="/docs/mapping/extensions/dbjson">@DbJson</a> and <a href="/docs/mapping/extensions/dbjson">@DbJsonB</a> to map content to Postgres JSON or JSONB
   types.
+</p>
+
+<h5>HSTORE - @DbMap</h5>
+<p>
+  We can use <a href="/docs/mapping/extensions/dbmap">@DbMap</a> to map <code>Map&lt;String,String&gt;</code> properties to
+  Postgres HSTORE type.
 </p>
 
 <h2 id="history">History support</h2>

@@ -1688,14 +1688,6 @@
   "url":"/docs/mapping/extensions/dbenumvalue#use"
 }
 ,{
-  "title":"Extension / @DbHstore",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/dbhstore"
-}
-,{
   "title":"Extension / @DbJson",
   "caption":"",
   "category":"Mapping",
@@ -1752,6 +1744,14 @@
   "url":"/docs/mapping/extensions/dbjson#expressions"
 }
 ,{
+  "title":"Extension / @DbMap",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/extensions/dbmap"
+}
+,{
   "title":"Extension / @DbPartition",
   "caption":"",
   "category":"Mapping",
@@ -1798,6 +1798,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/mapping/extensions/history"
+}
+,{
+  "title":"Extension / @Identity",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/extensions/identity"
 }
 ,{
   "title":"Extension / @Index",

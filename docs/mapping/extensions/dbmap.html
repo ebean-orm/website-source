@@ -1,0 +1,33 @@
+<html>
+<head>
+  <meta name="layout" content="_layout2/base-mapping-extn.html"/>
+  <meta name="bread3" content="@DbMap" href="/docs/mapping/dbmap"/>
+<#assign DbMap = "true">
+</head>
+<body>
+
+<h2>@DbMap</h2>
+<p>
+  We can map <code>Map&lt;String,String&gt;</code> properties with <code>@DbMap</code>.
+  For Postgres these map to <code>HSTORE</code>. For other databases these map to VARCHAR.
+</p>
+<pre content="java">
+  @DbMap(length = 800)
+  Map<|String, String> map;
+</pre>
+
+<p>&nbsp;</p>
+
+<h3>Fallback varchar length</h3>
+<p>
+  We can specify a length and for non-Postgres databases this defines the length of the VARCHAR
+  column that the map is persisted to.
+</p>
+<pre content="java">
+  // fallback to varchar(800) for non-Postgres
+  @DbMap(length = 800)
+  Map<|String, String> map;
+</pre>
+
+</body>
+</html>

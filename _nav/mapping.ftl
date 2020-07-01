@@ -60,6 +60,7 @@
 
   <@nav1 activeCheck="${n2_extn!''}" url="/docs/mapping/extensions" title="Extensions">
     <ul class="nav">
+      <@smallnav activeCheck="${Identity!''}" url="/docs/mapping/extensions/identity" title="@Identity"></@smallnav>
       <@smallnav activeCheck="${DbIndex!''}" url="/docs/mapping/extensions/dbindex" title="@Index"></@smallnav>
       <@smallnav activeCheck="${DbEnumValue!''}" url="/docs/mapping/extensions/dbenumvalue" title="@DbEnumValue"></@smallnav>
       <@smallnav activeCheck="${DbJson!''}" url="/docs/mapping/extensions/dbjson" title="@DbJson">
@@ -73,7 +74,7 @@
         </ul>
       </@smallnav>
       <@smallnav activeCheck="${DbArray!''}" url="/docs/mapping/extensions/dbarray" title="@DbArray"></@smallnav>
-      <@smallnav activeCheck="${DbHstore!''}" url="/docs/mapping/extensions/dbhstore" title="@DbHstore"></@smallnav>
+      <@smallnav activeCheck="${DbMap!''}" url="/docs/mapping/extensions/dbmap" title="@DbMap"></@smallnav>
       <@smallnav activeCheck="${DbComment!''}" url="/docs/mapping/extensions/dbcomment" title="@DbComment"></@smallnav>
       <@smallnav activeCheck="${DbPartition!''}" url="/docs/mapping/extensions/dbpartition" title="@DbPartition"/>
       <@smallnav activeCheck="${WhenCreated!''}" url="/docs/mapping/extensions/when-created" title="@WhenCreated"/>
