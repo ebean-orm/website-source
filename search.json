@@ -3376,6 +3376,22 @@
   "url":"/docs/query/select#asDto"
 }
 ,{
+  "title":"CI Testing",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/ci-testing"
+}
+,{
+  "title":"CI Testing - Jenkins Kubernetes Plugin",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/ci-testing#jenkins-k8s"
+}
+,{
   "title":"Container shutdown",
   "caption":"",
   "category":"Testing",

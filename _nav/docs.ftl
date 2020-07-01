@@ -45,35 +45,12 @@
         <@nav1 activeCheck="${n1_mapping!''}" url="/docs/mapping" title="Mapping">
           <#include "/_nav/mapping.ftl">
         </@nav1>
-        <@nav1 activeCheck="${n1_ddlcreateall!''}" url="/docs/ddl-generation" title="DDL Generation">
-          <ul class="nav nav-scroll">
-            <@smallnav activeCheck="" url="#test-config" title="Using ebean-test"/>
-            <@smallnav activeCheck="" url="#properties" title="Using properties"/>
-            <@smallnav activeCheck="" url="#create-all" title="db-create-all.sql"/>
-            <@smallnav activeCheck="" url="#initSql" title="initSql"/>
-            <@smallnav activeCheck="" url="#seedSql" title="seedSql"/>
-          </ul>
-        </@nav1>
-        <@nav1 activeCheck="${n1_extraddl!''}" url="/docs/extra-ddl" title="Extra DDL">
-          <ul class="nav nav-scroll">
-            <@smallnav activeCheck="" url="#views" title="Views"/>
-            <@smallnav activeCheck="" url="#procedures" title="Stored procedures"/>
-            <@smallnav activeCheck="" url="#any" title="Any DDL"/>
-            <@smallnav activeCheck="" url="#platforms" title="Platform specific DDL"/>
-          </ul>
-        </@nav1>
-        <@nav1 activeCheck="${n1_dbmigration!''}" url="/docs/db-migrations" title="DB Migrations">
-          <ul class="nav nav-scroll">
-            <@smallnav activeCheck="" url="#generate" title="Generate a Migration"/>
-            <@smallnav activeCheck="" url="#run" title="Run migrations"/>
-          </ul>
+        <@nav1 activeCheck="${n1_dll!''}" url="/docs/ddl-generation" title="DDL & Migrations">
+          <#include "/_nav/ddl.ftl">
         </@nav1>
         <@nav1 activeCheck="${n1_logging!''}" url="/docs/logging" title="Logging"/>
         <@nav1 activeCheck="${n1_testing!''}" url="/docs/testing" title="Testing">
             <#include "/_nav/testing.ftl">
-        </@nav1>
-        <@nav1 activeCheck="${n1_ciTesting!''}" url="/docs/ci-testing" title="CI Testing">
-          <#include "/_nav/ci-testing.ftl">
         </@nav1>
         <@nav1 activeCheck="${n1_platforms!''}" url="/docs/database" title="Database platforms">
             <#include "/_nav/database-platforms.ftl">
