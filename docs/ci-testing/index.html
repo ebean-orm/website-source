@@ -8,63 +8,8 @@
   <#assign n1_ciTesting="active">
 </head>
 <body>
-<h2 id="jenkins-k8s">Jenkins Kubernetes Plugin</h2>
 <p>
-  With the Jenkins Kubernetes Plugin we can add a <code>containerTemplate()</code> for the database
-  container we want to use.
+  Moved to /docs/testing/ci-testing
 </p>
-
-<h3>containerTemplate</h3>
-<p>
-  Add a <code>containerTemplate</code> entry for postgres like below:
-</p>
-```groovy
-containerTemplate(args: '-p 6432', name: 'postgres12', image: 'postgres:12',
-  envVars: [containerEnvVar(key: 'POSTGRES_PASSWORD', value: 'admin')]
-)
-```
-<p>
-  This will add a postgres container to the pod running with port 6432 with the password for
-  the <code>postgres</code> user set to <code>admin</code>. This postgres instance
-  will then be available on <code>localhost:6432</code>.
-</p>
-
-<h3>pg_isready</h3>
-<p>
-  We add a code block that uses <code>pg_isready</code> to wait for postgres to be ready
-  before we build and run tests.
-</p>
-```groovy
-container('postgres12') {
-  print "wait for postgres ready"
-  sh('pg_isready -t 60 -h localhost -p 6432')
-  print "postgres ready now, continue"
-}
-```
-<p>
-  When ebean-test starts it will make a JDBC connection using <em>postgres:admin</em> username
-  and password and will use this to create the database, role and add extensions as needed.
-</p>
-
-<h3>Logs</h3>
-<p>
-  In the logs before the tests actually run we see ebean-test connects to <code>jdbc:postgresql://localhost:6432</code>
-  and runs sql to create the database, role and extensions necessary to run the tests.
-</p>
-```text
-INFO  ?. io.ebean.EbeanVersion - ebean version: 12.3.6
-INFO  ?. io.ebean.config.properties.LoadContext - loaded properties from [application.properties, application-test.yaml]
-INFO  ?. io.ebean.test.config.platform.Config - Using jdbc settings - username:my_app url:jdbc:postgresql://localhost:6432/my_app driver:org.postgresql.Driver
-TRACE ?. io.ebean.docker.commands.Commands - sqlRun: select 1 from pg_database where datname = 'my_app'
-TRACE ?. io.ebean.docker.commands.Commands - sqlRun: select rolname from pg_roles where rolname = 'my_app'
-DEBUG ?. io.ebean.docker.commands.Commands - sqlRun: create role my_app password 'test' login createrole
-DEBUG ?. io.ebean.docker.commands.Commands - sqlRun: create database my_app with owner my_app
-DEBUG ?. io.ebean.docker.commands.Commands - sqlRun: create extension if not exists hstore
-DEBUG ?. io.ebean.docker.commands.Commands - sqlRun: create extension if not exists pgcrypto
-DEBUG ?. io.ebean.docker.commands.Commands - Container ut_postgres ready with port 6432
-```
-
-<@next_edit "Database platforms" "/docs/database" "/docs/testing/index.html"/>
-
 </body>
 </html>
