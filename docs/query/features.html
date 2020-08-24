@@ -957,7 +957,7 @@ List<|Order> list =
 
   <p>The benefit of using PagedList over just using the normal Query with Query.setFirstRow(int) and
     Query.setMaxRows(int) is that it additionally wraps functionality that can call
-    Query.findFutureRowCount() to determine total row count, total page count etc.</p>
+    Query.findFutureCount() to determine total row count, total page count etc.</p>
 
   <p>Internally this works using Query.setFirstRow(int) and Query.setMaxRows(int) on the query. This
     translates into SQL that uses limit offset, rownum or row_number function to limit the result
@@ -1015,11 +1015,11 @@ and timeout support.
 Methods on Query for ansychronous execution
 
 ```java
-public FutureList<T> findFutureList();
+public FutureList<|T> findFutureList();
 
-public FutureIds<T> findFutureIds();
+public FutureIds<|T> findFutureIds();
 
-public FutureRowCount<T> findFutureRowCount();
+public FutureRowCount<|T> findFutureCount();
 ```
 
 

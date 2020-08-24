@@ -23,7 +23,7 @@
 <p>
   The benefit of using PagedList over just using the normal Query with Query.setFirstRow(int) and
   Query.setMaxRows(int) is that it additionally wraps functionality that can call
-  Query.findFutureRowCount() to determine total row count, total page count etc.
+  Query.findFutureCount() to determine total row count, total page count etc.
 </p>
 <p>
   Internally this works using Query.setFirstRow(int) and Query.setMaxRows(int) on the query. This
