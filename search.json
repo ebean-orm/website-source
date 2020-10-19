@@ -600,14 +600,6 @@
   "url":"/docs/best-practice#use-constructors"
 }
 ,{
-  "title":"Jenkins Kubernetes Plugin",
-  "caption":"",
-  "category":"CI Testing",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/ci-testing#jenkins-k8s"
-}
-,{
   "title":"DB Migrations",
   "caption":"",
   "category":"DB migrations",
@@ -1766,14 +1758,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/mapping/extensions/encrypted"
-}
-,{
-  "title":"Extension / @Encrypted - Overview",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/encrypted#overview"
 }
 ,{
   "title":"Extension / @Formula",
@@ -4262,6 +4246,14 @@
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/elasticsearch#why"
+}
+,{
+  "title":"Encryption",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#encryption"
 }
 ,{
   "title":"@History",
