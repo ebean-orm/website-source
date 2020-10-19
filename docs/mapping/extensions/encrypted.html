@@ -6,7 +6,36 @@
 </head>
 <body>
 
-<h2 id="overview">Overview</h2>
+<h2 id="encrypted">@Encrypted</h2>
+<p>
+  Annotate properties that will be store in encrypted form in the database.
+</p>
+<h4>Example</h4>
+<pre content="java">
+  @Entity
+  @Table(name="patient")
+  public class Patient {
 
+    ...
+    // database side encryption
+    @Encrypted
+    String name;
+
+    // database side encryption
+    @Encrypted
+    LocalDate dob;
+
+    // client side encryption
+    @Lob
+    @Encrypted(dbEncryption=false)
+    String description;
+
+  }
+</pre>
+
+<h3>Reference</h3>
+<p>
+  Goto <a href="/docs/features/encryption">docs / features / encryption</a> for more details.
+</p>
 </body>
 </html>
