@@ -70,7 +70,7 @@
   <h2 id="query-examples">Examples</h2>
   <h4>Example</h4>
   ```java
-  List<Customer> customers =
+  List<|Customer> customers =
     new QCustomer()
       .id.greaterThan(12)
       .name.startsWith("Rob")
@@ -81,7 +81,7 @@
       The following example contains an <code>or()</code> containing a nested <code>and()</code>.
     </p>
   ```java
-  List<Customer> customers
+  List<|Customer> customers
     = new QCustomer()
     .billingAddress.city.equalTo("Auckland")
     .version.between(1,100)
@@ -122,7 +122,7 @@
     .getExpressionList();
 
 
-  List<Customer> customers = new QCustomer()
+  List<|Customer> customers = new QCustomer()
     .name.ilike("Rob")
     // filter the orders (not customers)
     .orders.filterMany(recentNewOrders)
@@ -144,7 +144,7 @@
   QCustomer cus = QCustomer.alias();
   QContact con = QContact.alias();
 
-  List<Customer> customers = new QCustomer()
+  List<|Customer> customers = new QCustomer()
     // query tuning
     .select(cus.name, cus.inactive)
     .contacts.fetch(con.email, con.firstName)
@@ -173,138 +173,31 @@
       .findOne();
   ```
 
-  <h2 id="dependencies">Dependencies</h2>
-
-  <h4>querybean-generator</h4>
+  <h2 id="apt" class="art">APT / KAPT <em>(generating query beans)</em></h2>
   <p>
-    Query bean generator is a Java annotation processor so you add it as a dependency and then javac
-    will automatically register it and whenever a entity is compiled the associated query beans are
-    generated.
-  </p>
-  <p>
-    If the dependency is added with <code>provided</code> scope then the generator itself will not
-    be included in the final build artifact.
-  </p>
-<@maven "io.ebean" "querybean-generator" "auto" "1" />
-
-  <h4>ebean-querybean</h4>
-  <p>
-    We need to add <code>ebean-querybean</code> as a dependency. This provides the property
-    types for the generated <code>query beans</code>.
-  </p>
-<@maven "io.ebean" "ebean-querybean" "auto" "2" />
-
-
-  <h2 id="enhancement">Enhancement</h2>
-  <p>
-    The <code>query beans</code> have been designed so for maximum readability of the query code. That is,
-    some type safe query mechanisms achieve the type safety goal but in doing so result in query code that
-    is virtually unreadable and we specifically want to avoid that issue.
-  </p>
-  <p>
-    Ebean's type safe query mechanism results in very readable queries with the downside that it requires
-    a bit of AOP to enhance <code>query beans</code> and simulate properties. If the target JVM language
-    supported properties then we would not need to use AOP but Java does not have proper properties support
-    so we are using AOP instead.
-  </p>
-  <p>
-    The AOP enhancement is easy to incorporate with an IDE plugin available for IntelliJ IDEA (and planned
-    for Eclipse) as well as the standard javaagent and maven plugin for load time and compile time enhancement.
+    To generate <code>Java</code> query beans we use the <em>io.ebean:querybean-generator</em>
+    java annotation processor and to generate <code>Kotlin</code> query beans we use
+    <em>io.ebean:kotlin-querybean-generator</em>.
   </p>
 
-  <h3>IDEA Query bean plugin</h3>
+  <h4 id="maven" class="art">Generating with Maven</h4>
   <p>
-    In IntelliJ install the <code>Ebean ORM Query bean enhancer</code> plugin. It should then appear as an
-    extra item on the <code>Build menu</code> where it can be toggled on and off.
+    Refer to <a href="/docs/getting-started/maven">docs / getting-started / maven</a>
+    for details of how to generate query beans using maven.
   </p>
 
-  <h3>Maven tile</h3>
+  <h4 id="gradle">Generating with Gradle</h4>
   <p>
-    Ebean supplies a maven tile that brings in both the enhancer for entity beans as well
-    as the enhancement for query beans. This is simpler, cleaner less verbose than
-    defining the plugin in the traditional (non-tile) fashion and now the preferred approach.
+    Refer to <a href="/docs/getting-started/gradle">docs / getting-started / gradle</a>
+    for details of how to generate query beans using gradle.
   </p>
 
-  <h5>ebean-enhancement tile</h5>
-  ```xml
-  <plugin>
-    <groupId>io.repaint.maven</groupId>
-    <artifactId>tiles-maven-plugin</artifactId>
-    <version>2.17</version>
-    <extensions>true</extensions>
-    <configuration>
-      <tiles>
-        <tile>io.ebean.tile:enhancement:12.3.6</tile>
-      </tiles>
-    </configuration>
-  </plugin>
-  ```
+  <h2 id="enhancement" class="art">Enhancement</h2>
   <p>
-    Use <code>mvn help:effective-pom</code> to view the plugins that the tile brings in.
+    Note that prior to version 12.1.8 we need to edit a <code>src/main/resources/ebean.mf</code>
+    manifest file to specify <code>querybean-packages</code> for the packages that should
+    be enhanced for query beans. This is no longer needed from 12.1.8 onwards.
   </p>
-
-<!--
-
-  <h3>querybean-maven-plugin</h3>
-  <p>
-    If you do <b>NOT</b> wish to use maven tiles then you can define the <code>querybean-maven-plugin</code>
-    in the more traditional (non-tile) manor as shown below. This is more verbose and less clean than the
-    tile approach and as such using the tile instead is preferred.
-  </p>
-
-  ```xml
-  <plugin>
-    <groupId>org.avaje.ebean</groupId>
-    <artifactId>querybean-maven-plugin</artifactId>
-    <version>8.1.1</version>
-    <executions>
-      <!-- enhance code -->
-      <execution>
-        <id>main</id>
-        <phase>process-classes</phase>
-        <configuration>
-          <transformArgs>debug=0</transformArgs>
-        </configuration>
-        <goals>
-          <goal>enhance</goal>
-        </goals>
-      </execution>
-      <!-- enhance test code -->
-      <execution>
-        <id>test</id>
-        <phase>process-test-classes</phase>
-        <configuration>
-          <classSource>target/test-classes</classSource>
-          <transformArgs>debug=0</transformArgs>
-        </configuration>
-        <goals>
-          <goal>enhance</goal>
-        </goals>
-      </execution>
-    </executions>
-  </plugin>
- ```
-
-  <h4>querybean-agent</h4>
-  <p>
-    You use the <code>querybean-agent</code> if you want to use the standard <code>javaagent</code>
-    mechanism to enhance the <code>query beans</code>.
-  </p>
-<@maven "org.avaje.ebean" "querybean-agent" "auto" "3" />
-
--->
-
-  <h2 id="generation">Generation</h2>
-  <p>
-    Once the dependency to querybean-generator is added the query beans will be generated
-    automatically whenever javac compile occurs.
-  </p>
-<!--
-  <p>
-    Note that along with generating query beans the generator generates
-    a manifest file at: <code>META-INF/ebean-typequery.mf</code>
-  </p>
--->
 
   <hr/>
 
@@ -315,7 +208,13 @@
     re-run this process (where as with the java annotation processor it is automatically updated with each
     compile).
   </p>
-  <@maven "io.ebean.tools" "finder-generator" "auto" "4" />
+  ```xml
+  <dependency>
+    <groupId>io.ebean.tools</groupId>
+    <artifactId>finder-generator</artifactId>
+    <version>12.1.1</version>
+  </dependency>
+  ```
   <p>
     To generate the <code>query beans</code> add code similar to below to your <code>src/test</code>.
     The Generator reads compiled <code>.class</code> entity beans using the <code>ASM</code> library.
@@ -367,94 +266,6 @@ public class MainQueryBeanGenerator {
   }
 }
 ```
-
-
-
-  <h2 id="query-beans">Query bean source</h2>
-  <p>
-    For each entity bean a <code>query bean</code> is generated.
-  </p>
-
-  <h4>Example</h4>
-```java
-package org.example.domain.query;
-
-import io.ebean.EbeanServer;
-import io.ebean.typequery.PEnum;
-import io.ebean.typequery.PLong;
-import io.ebean.typequery.PSqlDate;
-import io.ebean.typequery.PTimestamp;
-import io.ebean.typequery.TQRootBean;
-import io.ebean.typequery.TypeQueryBean;
-import org.example.domain.Order;
-import org.example.domain.Order.Status;
-import org.example.domain.query.assoc.QAssocAddress;
-import org.example.domain.query.assoc.QAssocCustomer;
-import org.example.domain.query.assoc.QAssocOrderDetail;
-
-/**
- * Query bean for Order.
- */
-@TypeQueryBean
-public class QOrder extends TQRootBean<Order,QOrder> {
-
-  private static final QOrder _alias = new QOrder(true);
-
-  /**
-   * Return the shared 'Alias' instance used to provide properties to
-   * <code>select()</code> and <code>fetch()</code>
-   */
-  public static QOrder alias() {
-    return _alias;
-  }
-
-  public PLong<QOrder> id;
-  public PLong<QOrder> version;
-  public PTimestamp<QOrder> whenCreated;
-  public PTimestamp<QOrder> whenUpdated;
-  public PEnum<QOrder,Status> status;
-  public PSqlDate<QOrder> orderDate;
-  public PSqlDate<QOrder> shipDate;
-  public QAssocCustomer<QOrder> customer;
-  public QAssocAddress<QOrder> shippingAddress;
-  public QAssocOrderDetail<QOrder> details;
-
-
-  /**
-   * Construct with a given EbeanServer.
-   */
-  public QOrder(EbeanServer server) {
-    super(Order.class, server)
-  }
-
-  /**
-   * Construct using the default EbeanServer.
-   */
-  public QOrder() {
-    super(Order.class);
-  }
-
-  /**
-   * Construct for Alias.
-   */
-  private QOrder(boolean dummy) {
-    super(dummy);
-  }
-}
-```
-  <h4>Associated Query Beans</h4>
-  <p>
-    Along with <code>query beans</code> you'll see another set of generated beans that look very similar
-    to query beans in a <code>assoc</code> sub-package - these are <code>association query beans</code>
-    and represent beans when they are associated by OneToMany, ManyToOne, OneToOne and ManyToOne or are
-    Embedded.
-  </p>
-  <p>
-    When beans are associated/related they have slightly different expressions like <code>fetch()</code>,
-    <code>filterMany()</code> and <code>equalTo()</code> and need different internals to work as expected.
-    They look a little redundant but they aren't (in order to get a nice representation of the query language
-    features).
-  </p>
 
 </div>
 </body>
