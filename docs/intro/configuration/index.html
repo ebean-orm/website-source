@@ -24,7 +24,6 @@ datasource:
     username: sa
     password: sa
     url: jdbc:h2:mem:myapp
-    driver: org.h2.Driver
 </pre>
 
 <h3>Postgres</h3>
@@ -34,7 +33,6 @@ datasource:
     username: my_app
     password: my_password
     url: jdbc:postgresql://localhost:5432/my_app
-    driver: org.postgresql.Driver
 </pre>
 
 <h3>ebean.migration.run</h3>
@@ -60,7 +58,6 @@ datasource:
     username: my_app
     password: ${myPassword}
     url: jdbc:postgresql://${myDatabaseHost}:5432/my_app
-    driver: org.postgresql.Driver
 
   ## Expects system properties to be set for:
   ## myPassword and myDatabaseHost
@@ -85,13 +82,11 @@ datasource:
     username: my_app
     password: ${myPassword2}
     url: jdbc:postgresql://${myDatabaseHost2}:5432/my_app
-    driver: org.postgresql.Driver
 
   other:
     username: other_username
     password: ${otherPassword}
     url: jdbc:postgresql://${otherDatabaseHost}:5432/other_dbname
-    driver: org.postgresql.Driver
 </pre>
 <p>
   We can obtain the "other" database instance by it's name:
@@ -128,7 +123,6 @@ DataSourceConfig dataSourceConfig = new DataSourceConfig();
 dataSourceConfig.setUsername("sa");
 dataSourceConfig.setPassword("");
 dataSourceConfig.setUrl("jdbc:h2:mem:myapp;");
-dataSourceConfig.setDriver("org.h2.Driver");
 
 
 // configuration ...
@@ -147,7 +141,6 @@ val dataSourceConfig = new DataSourceConfig()
 dataSourceConfig.setUsername("sa")
 dataSourceConfig.setPassword("")
 dataSourceConfig.setUrl("jdbc:h2:mem:myapp;")
-dataSourceConfig.setDriver("org.h2.Driver")
 
 
 // configuration ...
@@ -178,7 +171,6 @@ datasource:
     username: sa
     password: sa
     url: jdbc:h2:mem:myapp
-    driver: org.h2.Driver
 </pre>
 
 <h2 id="testing">For Testing with ebean-test</h2>
