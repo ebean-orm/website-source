@@ -2,85 +2,192 @@
 <head>
   <meta name="layout" content="_layout/docs_features_l2caching.html"/>
   <meta name="bread3" content="Apache Ignite" href="/docs/features/l2cache/apache-ignite"/>
-<#assign l2caching_ignite = "true">
+  <#assign l2caching_ignite = "true">
 </head>
 <body>
-  <h2>Apache Ignite</h2>
-  <p>
-    <a href="https://ignite.apache.org/">Apache Ignite</a> provides a very nice set of features for
-    distributed caching (which is what we use it for with L2 caching) plus "Data grid" features.
-  </p>
-  <p>
-    My expectation is that most people will prefer client/server mode with use of near caches.
-  </p>
+<h2>Apache Ignite</h2>
+<p>
+  <a href="https://ignite.apache.org/">Apache Ignite</a> provides a very nice set of features for
+  distributed caching (which is what we use it for with L2 caching) plus "Data grid" features.
+</p>
+<p>
+  My expectation is that most people will prefer client/server mode with use of near caches.
+</p>
 
-  <h3 id="client-server">Client/server mode</h3>
-  <p>
-    We can use Ignite in <code>client/server</code> mode which means that our application uses a
-    <code>Ignite client</code> to talk to a Ignite cluster (of servers).
-  </p>
-  <p>
-    In this mode the bean cache data is partitioned across all the Ignite servers in the cluster
-    and not in our application. We can choose to use a <code>near cache</code> for some or all of our bean
-    types and in doing so improve performance (by having local data) but increase memory footprint in our
-    application (as it now holds some cache data).
-  </p>
+<h3 id="client-server">Client/server mode</h3>
+<p>
+  We can use Ignite in <code>client/server</code> mode which means that our application uses a
+  <code>Ignite client</code> to talk to a Ignite cluster (of servers).
+</p>
+<p>
+  In this mode the bean cache data is partitioned across all the Ignite servers in the cluster
+  and not in our application. We can choose to use a <code>near cache</code> for some or all of our bean
+  types and in doing so improve performance (by having local data) but increase memory footprint in our
+  application (as it now holds some cache data).
+</p>
 
-  <h3 id="server-mode">Server mode</h3>
-  <p>
-    In server mode our application starts a <code>Ignite server instance</code> which is a full fledged member
-    of the Ignite cluster. This means that it will hold data etc.
-  </p>
+<h3 id="server-mode">Server mode</h3>
+<p>
+  In server mode our application starts a <code>Ignite server instance</code> which is a full fledged member
+  of the Ignite cluster. This means that it will hold data etc.
+</p>
 
 
-  <h3 id="dependency">Dependency</h3>
-  <p>
-    Add a dependency to <code>ebean-ignite</code>. When Ebean starts ebean-ignite is
-    automatically registered as the L2 cache implementation.
-  </p>
+<h3 id="dependency">Dependency</h3>
+<p>
+  Add a dependency to <code>ebean-ignite</code>. Pre-built packages are located on
+  <a href="https://mvnrepository.com/artifact/io.ebean/ebean-ignite">maven</a>. The version of the <code>ebean-ignite</code>
+  artifact you seleect should match the version of ebean that you are using.
 
-  <h3 id="disable">Disable L2 cache</h3>
-  <p>
-    During development and testing it is often useful to disable the use of the l2 cache.
-  </p>
+  When Ebean starts, ebean-ignite is automatically registered as the L2 cache implementation.
+</p>
 
-  <h5>Properties</h5>
-  ```properties
-  ## disable use of L2 cache (for dev / testing etc)
-  ebean.disableL2Cache=true
-  ```
-  <p>
+<h3 id="disable">Disable L2 cache</h3>
+<p>
+  During development and testing it is often useful to disable the use of the l2 cache.
+</p>
 
-  </p>
+<h5>Properties</h5>
+```properties
+## disable use of L2 cache (for dev / testing etc)
+ebean.disableL2Cache=true
+```
+<p>
 
-  <h3 id="configuration">Configuration</h3>
+</p>
 
-  <h3>XML configuration</h3>
-  <p>
+<h3 id="configuration">Configuration</h3>
+<p>
+  Apache Ignite is configured with a <code>IgniteConfiguration</code> class. The documentation for this class
+  is available <a href="https://ignite.apache.org/releases/latest/javadoc/org/apache/ignite/configuration/IgniteConfiguration.html">here</a>.
+  This class can be delivered in two ways: with an XML configuration file (which represents a persisted version of this bean),
+  and programmatically by constructing this class and passing it into the <code>Igniter</code>.
+</p>
+<p>For more information about Ignite Configuration, start <a href="https://ignite.apache.org/docs/latest/understanding-configuration">here</a>.</p>
 
-  </p>
 
-  <h3>Programmatic configuration</h3>
-  <p>
-    You can programmatically configure Ignite by creating an instance of <code>IgniteConfiguration</code>
-    and setting it via: <code></code>
-  </p>
-  ```java
-  IgniteConfiguration configuration = ...;
-  serverConfig.setServiceObject("igniteConfiguration", configuration);
-  ```
-  <p>
-    If this configuration instance is passed in Ebean will use it to configure the Ignite instance.
-    Otherwise it will use properties and avaje IgniteConfigBuilder.
-  </p>
+<h4>XML configuration</h4>
+<p>To configure the Ignite instance via XML, you need to construct an XML file that represents the IgniteConfiguration
+  bean in a persisted state. Then you must place this file in a location that Ignite expects.</p>  According to the documentation,
+when Ignite starts it looks for a configuration file in <code>{IGNITE_HOME}/config/default-config.xml</code>. You should be
+able to export the IGNITE_HOME environment variable to point to a director that contains your configuration file.
+</p>
 
-  <h3 id="getting-started">Getting started</h3>
-  <ul>
-    <li>Annotate beans with @Cache</li>
-    <li>Add maven dependency ebean-ignite</li>
-    <li>Optionally add ebean-ignite-config.xml</li>
-    <li>For client/server mode you need a running Ignite server</li>
-  </ul>
+<p>
+  Here is an example of an IgniteConfiguration XML file.
+</p>
+
+<pre>
+    <code data-lang="xml">
+    &lt;beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:util="http://www.springframework.org/schema/util"
+           xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+    &lt;bean id="ignite.cfg" class="org.apache.ignite.configuration.IgniteConfiguration">
+
+    &lt;property name="clientMode" value="true"/>
+
+        &lt;property name="cacheConfiguration">
+            &lt;bean class="org.apache.ignite.configuration.CacheConfiguration">
+                &lt;!-- Set the cache name. -->
+                &lt;property name="name" value="myCache"/>
+              &lt;!-- Set the cache mode. -->
+                &lt;property name="cacheMode" value="PARTITIONED"/>
+              &lt;!-- Other cache parameters. -->
+            &lt;/bean>
+        &lt;/property>
+
+      &lt;!-- Explicitly configure TCP discovery SPI to provide list of initial nodes. -->
+        &lt;property name="discoverySpi">
+            &lt;bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
+                &lt;property name="ipFinder">
+                    &lt;!--
+                        Ignite provides several options for automatic discovery that can be used
+                        instead os static IP based discovery. For information on all options refer
+                        to our documentation: http://apacheignite.readme.io/docs/cluster-config
+                    -->
+                  &lt;!-- Uncomment static IP finder to enable static-based discovery of initial nodes. -->
+                  &lt;!--&lt;bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder">-->
+                    &lt;bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder">
+                        &lt;property name="addresses">
+                            &lt;list>
+                                &lt;!-- In distributed environment, replace with actual host IP address. -->
+                                &lt;value>127.0.0.1:47500..47509&lt;/value>
+                            &lt;/list>
+                        &lt;/property>
+                    &lt;/bean>
+                &lt;/property>
+            &lt;/bean>
+        &lt;/property>
+        &lt;/bean>
+&lt;/beans>
+</code>
+  </pre>
+
+
+
+</p>
+
+<h4>Programmatic configuration</h4>
+<p>
+  You can programmatically configure Ignite by creating an instance of <code>IgniteConfiguration</code>
+  and setting it via: <code></code>
+</p>
+```java
+IgniteConfiguration configuration = ...;
+serverConfig.setServiceObject("igniteConfiguration", configuration);
+```
+<p>To do this automatically at startup, you can create a class that implements <code>ServerConfigStartup</code> and place it
+  in the directory where you tell ebean to look for your models.</p>
+
+<pre>
+    <code data-lang="java">
+package models;
+
+import io.ebean.config.ServerConfig;
+import io.ebean.event.ServerConfigStartup;
+import org.apache.ignite.configuration.IgniteConfiguration;
+import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
+import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
+
+import java.util.Arrays;
+
+public class MyServerConfigStartup implements ServerConfigStartup {
+
+    @Override
+    public void onStart(ServerConfig serverConfig) {
+
+        IgniteConfiguration igniteCfg = new IgniteConfiguration();
+        igniteCfg.setClientMode(true);
+
+        TcpDiscoveryVmIpFinder finder = new TcpDiscoveryVmIpFinder();
+        finder.setAddresses(Arrays.asList("172.30.1.1"));
+
+        TcpDiscoverySpi discoverySpi = new TcpDiscoverySpi();
+        discoverySpi.setIpFinder(finder);
+
+        igniteCfg.setDiscoverySpi(discoverySpi);
+        serverConfig.putServiceObject("igniteConfiguration", igniteCfg);
+    }
+}
+    </code>
+  </pre>
+<p>
+  If this configuration instance is passed in Ebean will use it to configure the Ignite instance.
+  Otherwise it will use properties and avaje IgniteConfigBuilder.
+</p>
+
+<h3 id="getting-started">Getting started</h3>
+<ul>
+  <li>Annotate beans with @Cache</li>
+  <li>Add maven dependency ebean-ignite</li>
+  <li>Optionally add ebean-ignite-config.xml</li>
+  <li>For client/server mode you need a running Ignite server</li>
+</ul>
 
 
 </body>
