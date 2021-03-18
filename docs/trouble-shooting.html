@@ -28,8 +28,8 @@
 <h4>Example</h4>
 ```java
 new QCustomer
-  .name.istartsWith("rob")  //   <-- Getting NPE here
-  .findList()
+.name.istartsWith("rob")  //   <-- Getting NPE here
+.findList()
 ```
 <h4>Diagnosis</h4>
 <p>
@@ -54,6 +54,27 @@ new QCustomer
 <p>
   Note that since 12.1.8 we no longer need ebean.mf to support query bean enhancement.
 </p>
+
+
+<h2 id="npe-bean">NullPointerException in EntityBeanIntercept</h2>
+<h4>Example</h4>
+<pre>Caused by: java.lang.NullPointerException: null
+at io.ebean.bean.EntityBeanIntercept.isLoadedProperty(EntityBeanIntercept.java:509)
+at io.ebean.bean.EntityBeanIntercept.preGetter(EntityBeanIntercept.java:914)
+at models.Security._ebean_get_status(Security.java:6)
+</pre>
+<h4>Diagnosis</h4>
+<p>
+  <b>For Java:</b>There is probably a <code>@OnetoMany</code> or a <code>@ManyToOne</code> mapping that is faulty.
+</p>
+<p>
+  <b>For Kotlin:</b>There is probably a <code>@OnetoMany</code> or a <code>@ManyToOne</code> mapping that is faulty.
+</p>
+
+<h4>Actions</h4>
+<h5>1. Check the mappings in the model class that is throwing the exception.</h5>In our example above, it is the <code>models.Security</code>
+class. Comment out each mapping until the exception goes away, then you have identified the problem.
+
 
 <p>&nbsp;</p>
 
