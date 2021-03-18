@@ -26,11 +26,11 @@
 
 <h2 id="npe-querybeans">NullPointerException using Query beans</h2>
 <h4>Example</h4>
-```java
+<pre content="java">
 new QCustomer
-.name.istartsWith("rob")  //   <-- Getting NPE here
-.findList()
-```
+  .name.istartsWith("rob")  //   <-- Getting NPE here
+  .findList()
+</pre>
 <h4>Diagnosis</h4>
 <p>
   <b>For Java:</b> The query beans or the code using the query beans is not being enhanced.
