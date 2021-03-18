@@ -4,7 +4,7 @@
   This allows us to write type safe queries like:
 </p>
 <pre content="java">
-List<Customer> customers =
+List<|Customer> customers =
   new QCustomer()
   .name.startsWith("Rob")
   .findList();
@@ -12,16 +12,6 @@ List<Customer> customers =
 <p>
   Skip this if you don't want to use query beans.
 </p>
-
-
-<h3>Add ebean-querybean dependency</h3>
-<pre content="groovy">
-dependencies {
-  ...
-  compile 'io.ebean:ebean-querybean:12.8.0'
-
-}
-</pre>
 
 
 <h3>Java APT build.gradle</h3>
@@ -98,12 +88,11 @@ apply plugin: "org.jetbrains.kotlin.kapt"
 dependencies {
 
   compile ...
-  compile "io.ebean:ebean:12.8.0"
-  compile "io.ebean:ebean-querybean:12.8.0"
+  compile 'io.ebean:ebean:12.8.0'
 
-  kapt "io.ebean:kotlin-querybean-generator:12.8.0"
+  kapt 'io.ebean:kotlin-querybean-generator:12.8.0'
 
-  testCompile ...
+  testCompile 'io.ebean:ebean-test:12.8.0'
 }
 </pre>
 

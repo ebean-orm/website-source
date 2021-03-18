@@ -17,7 +17,6 @@ plugins {
 dependencies {
     ...
     compile 'io.ebean:ebean:12.8.0'
-    compile 'io.ebean:ebean-querybean:12.8.0'
 
     // query bean generation
     annotationProcessor 'io.ebean:querybean-generator:12.8.0'
@@ -27,7 +26,6 @@ dependencies {
 }
 </pre>
 <ul>
-  <li>ebean-querybean - is to support type safe queries using query beans</li>
   <li>querybean-generator - APT generation of the query beans</li>
   <li>ebean-test - testing including using docker containers</li>
 </ul>
@@ -43,7 +41,6 @@ dependencies {
 dependencies {
     ...
     compile 'io.ebean:ebean:12.8.0'
-    compile 'io.ebean:ebean-querybean:12.8.0'
 
     // query bean generation
     kapt 'io.ebean:kotlin-querybean-generator:12.8.0'
