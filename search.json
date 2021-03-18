@@ -456,6 +456,14 @@
   "url":"/docs/trouble-shooting#datasource"
 }
 ,{
+  "title":"Trouble shooting - NullPointerException in EntityBeanIntercept",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/trouble-shooting#npe-bean"
+}
+,{
   "title":"Trouble shooting - NullPointerException using Query beans",
   "caption":"",
   "category":"Introduction",
@@ -4808,20 +4816,20 @@
   "url":"/docs/query/background/partialobjects#videos"
 }
 ,{
+  "title":"Background / Query Beans - APT / KAPT (generating query beans)",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/typesafe#apt"
+}
+,{
   "title":"Background / Query Beans - Benefits",
   "caption":"",
   "category":"Query",
   "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/typesafe#benefits"
-}
-,{
-  "title":"Background / Query Beans - Dependencies",
-  "caption":"",
-  "category":"Query",
-  "priority":"5",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#dependencies"
 }
 ,{
   "title":"Background / Query Beans - Enhancement",
@@ -4840,14 +4848,6 @@
   "url":"/docs/query/background/typesafe#query-examples"
 }
 ,{
-  "title":"Background / Query Beans - Generation",
-  "caption":"",
-  "category":"Query",
-  "priority":"5",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#generation"
-}
-,{
   "title":"Background / Query Beans - Manual generation",
   "caption":"",
   "category":"Query",
@@ -4862,14 +4862,6 @@
   "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/typesafe#overview"
-}
-,{
-  "title":"Background / Query Beans - Query bean source",
-  "caption":"",
-  "category":"Query",
-  "priority":"5",
-  "keywords":"",
-  "url":"/docs/query/background/typesafe#query-beans"
 }
 ,{
   "title":"Background / Query Overview - Arbitrarily complex graphs",
