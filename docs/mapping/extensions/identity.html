@@ -9,7 +9,7 @@
 <h2 id="identity">@Identity</h2>
 <p>
   With <em>@Identity</em> we can specify additional attributes for database identity and sequences
-  and we can additionally apply this on the class level (or on the @Id property).
+  and we can additionally apply this on the class level or on the property level.
 </p>
 <p>
   It is useful to be able to specify <code>@Identity</code> on the class level when using
@@ -25,11 +25,22 @@
 </ul>
 
 <p>&nbsp;</p>
-<h3>Example use</h3>
+<h3>Example use on class</h3>
 <pre content="java">
 @Identity(generated = BY_DEFAULT, start = 1000, cache = 100)
 @Entity
 public class AuditLog {
+  ...
+</pre>
+
+<h3>Example use on property</h3>
+<pre content="java">
+@Entity
+public class AuditLog {
+
+  @Id
+  @Identity(generated = BY_DEFAULT, start = 10000, cache = 1000)
+  long id;
   ...
 </pre>
 
@@ -44,8 +55,9 @@ public class AuditLog {
 <h3>cache value</h3>
 <p>
   The <em>cache</em> value is an important performance optimisation available in some databases
-  including Postgres, Oracle & NuoDB. This specifies how many identity values the database should
-  generate and cache ahead of time and is useful for tables that have a lot of inserts.
+  for tables that will have a lot of inserts. This specifies how many identity values the
+  database should generate and cache ahead of time reducing the internal locking the database
+  uses. Databases supporting this include Postgres, Oracle & NuoDB.
 </p>
 
 </body>
