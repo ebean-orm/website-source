@@ -14,7 +14,7 @@
   The Raw expression lets us use any database specific function or expression
   in the where clause of a query.
 </p>
-```java
+<pre content="java">
 
 // e.g. use a database function
 .raw("add_days(orderDate, 10) < ?", someDate)
@@ -23,7 +23,7 @@
 // e.g. subquery
 .raw("customer.id in (select o.customer_id from orders o where o.id in (?1))", orderIds);
 
-```
+</pre>
 <p>&nbsp;</p>
 <hr/>
 
@@ -37,9 +37,9 @@
 <p>
   <code>property >= value1 and property < value2</code>
 </p>
-```java
+<pre content="java">
 .orderDate.inRange(today.minusDays(7), today)
-```
+</pre>
 <p>
   InRange expression is similar to BETWEEN except is "half open interval".
   The property is <code>strictly less than</code> the top value rather than
@@ -54,9 +54,9 @@
 <p>
   <code>property <= ? and ( highProperty > ? or highProperty is null) </code>
 </p>
-```java
+<pre content="java">
 .startDate.inRangeWith(endDate, asAt)
-```
+</pre>
 <p>
   This is most commonly used for "effective dating" or an "effective range" where you
   have 2 properties like startDate and endDate that form a range.
@@ -67,12 +67,12 @@
   This is a "conditional IN" where the IN expression is only added if the collection
   is not empty.
 </p>
-```java
+<pre content="java">
 List<|Long> customerIds = ...
 
 // only add the expression if the customerIds is not empty
 .customer.id.inOrEmpty(customerIds)
-```
+</pre>
 <p>
   The above will only add the IN expression if the customerIds collection is not null and not empty.
 </p>
@@ -85,13 +85,13 @@ List<|Long> customerIds = ...
   (like a raw subquery expression) and we only add the expression if the collection
   is not empty.
 </p>
-```java
+<pre content="java">
 List<|String> names = ...
 
 // only add the expression if the names is not empty
 .rawOrEmpty("customer.id in (select c.id from customer c where c.name in (?1))", names)
 
-```
+</pre>
 
 <p>&nbsp;</p>
 <hr/>
@@ -134,9 +134,8 @@ List<|String> names = ...
 
 <h2 id="in">in()</h2>
 <pre content="java">
-  List<!Order.Status> statusList = Arrays.asList(Order.Status.NEW, Order.Status.PENDING)
   new QOrder()
-    .status.in(statusList)
+    .status.in(Order.Status.NEW, Order.Status.PENDING)
     .findList();
 </pre>
 
@@ -151,7 +150,7 @@ List<|String> names = ...
   @Cache(naturalKey = {"store","code","sku"})
   @Entity
   public class ProductRange {
-
+    ...
   }
 </pre>
 <p>
@@ -160,10 +159,10 @@ List<|String> names = ...
   keys covering all of the <code>store, code and sku</code> properties.
 </p>
 <pre content="java">
-Pairs pairs = new Pairs("sku", "code")
-  .add("S2", 1000)
-  .add("S2", 1001)
-  .add("S3", 1000);
+  Pairs pairs = new Pairs("sku", "code")
+    .add("S2", 1000)
+    .add("S2", 1001)
+    .add("S3", 1000);
 
   new QProductRange()
       .store.eq("myStoreCode")
@@ -181,12 +180,10 @@ Pairs pairs = new Pairs("sku", "code")
   For example:
 </p>
 <pre content="java">
-  List<!String> skus = Arrays.asList("S2", "S3", "S4");
-
   new QProductRange()
       .store.eq("myStoreCode")
       .code.eq(1004)
-      .in(skus)
+      .in("S2", "S3", "S4")
       .setBeanCacheMode(CacheMode.ON)
       .order("sku desc")
       .findList();
@@ -201,7 +198,7 @@ Pairs pairs = new Pairs("sku", "code")
   characters to match varchar properties.
 </p>
 <pre content="java">
-List<!Contact> contacts =
+List<|Contact> contacts =
   new QContact()
     .firstName.like("Rob%")
     .findList();
@@ -209,7 +206,7 @@ List<!Contact> contacts =
 
 <h2 id="startsWith">startsWith</h2>
 <pre content="java">
-List<!Contact> contacts =
+List<|Contact> contacts =
   new QContact()
     .firstName.startsWith("Rob")
     .findList();
@@ -217,7 +214,7 @@ List<!Contact> contacts =
 
 <h2 id="endsWith">endsWith</h2>
 <pre content="java">
-List<!Contact> contacts =
+List<|Contact> contacts =
   new QContact()
     .email.endsWith("@foo.com")
     .findList();
@@ -225,7 +222,7 @@ List<!Contact> contacts =
 
 <h2 id="contains">contains</h2>
 <pre content="java">
-List<!Contact> contacts =
+List<|Contact> contacts =
   new QContact()
     .email.contains("ob")
     .findList();
@@ -234,7 +231,7 @@ List<!Contact> contacts =
 
 <h2 id="eq">eq - equal to</h2>
 <pre content="java">
-List<!Order> orders =
+List<|Order> orders =
   new QOrder()
     .status.eq(Order.Status.NEW)
     .findList();
@@ -242,7 +239,7 @@ List<!Order> orders =
 
 <h2 id="ne">ne - not equal</h2>
 <pre content="java">
-List<!Order> orders =
+List<|Order> orders =
   new QOrder()
     .status.ne(Order.Status.NEW)
     .findList();
@@ -250,7 +247,7 @@ List<!Order> orders =
 
 <h2 id="gt">gt - greater than</h2>
 <pre content="java">
-List<!Order> orders =
+List<|Order> orders =
   new QOrder()
     .whenCreated.gt(LocalDate.now().minusDays(7))
     .findList();
@@ -258,7 +255,7 @@ List<!Order> orders =
 
 <h2 id="ge">ge - greater than or equal</h2>
 <pre content="java">
-List<!Order> orders =
+List<|Order> orders =
   new QOrder()
     .whenCreated.ge(LocalDate.now().minusDays(7))
     .findList();
@@ -266,7 +263,7 @@ List<!Order> orders =
 
 <h2 id="lt">lt - less than</h2>
 <pre content="java">
-List<!Order> orders =
+List<|Order> orders =
   new QOrder()
     .lines.orderQuantity.lt(10)
     .findList();
@@ -274,7 +271,7 @@ List<!Order> orders =
 
 <h2 id="le">le - less than or equal</h2>
 <pre content="java">
-List<!Order> orders =
+List<|Order> orders =
   new QOrder()
     .lines.orderQuantity.le(10)
     .findList();
@@ -282,7 +279,7 @@ List<!Order> orders =
 
 <h2 id="between">between</h2>
 <pre content="java">
-List<!Order> orders =
+List<|Order> orders =
   new QOrder()
     .orderDate.between(firstDay, lastDay)
     .findList();

@@ -112,9 +112,11 @@ List<|Customer> customers =
 
 <h5>Example</h5>
 ```java
+QContact contact = QContact.alias();
+
 List<|Customer> customer =
   new QCustomer()
-    .contacts.fetch("firstName, lastName")
+    .contacts.fetch(contact.firstName, contact.lastName, contact.email)
     .orderBy()
       .name.asc()
       .contacts.email.asc()              // (1) automatically moved to secondary sql query
@@ -134,7 +136,7 @@ limit 10                                -- (2)
 ```
 ```sql
 -- Secondary query
-select t0.customer_id, t0.id, t0.first_name, t0.last_name
+select t0.customer_id, t0.id, t0.first_name, t0.last_name, t0.email
 from contact t0
 where (t0.customer_id) in (? )
 order by t0.email                       -- (1)
