@@ -105,32 +105,189 @@ List<|String> names = ...
 <p>
   IsNull on a associated many property translates to <code>isEmpty()</code>
 </p>
+<pre content="java">
+  new QOrder()
+    .lines.isNull()
+    .findList();
+</pre>
+<pre content="sql">
+  select ...
+  from orders t0
+  where not exists (select 1 from order_lines x where x.order_id = t0.id)
+</pre>
 
 <h2 id="isEmpty">isEmpty()</h2>
 <p>
   IsEmpty expression should be used on a ToMany property. A sql exists subquery
   is used to implement the isEmpty expression.
 </p>
-
+<pre content="java">
+  new QOrder()
+    .lines.isEmpty()
+    .findList();
+</pre>
+<pre content="sql">
+  select ...
+  from orders t0
+  where not exists (select 1 from order_lines x where x.order_id = t0.id)
+</pre>
 
 <h2 id="in">in()</h2>
+<pre content="java">
+  List<!Order.Status> statusList = Arrays.asList(Order.Status.NEW, Order.Status.PENDING)
+  new QOrder()
+    .status.in(statusList)
+    .findList();
+</pre>
 
 <h2 id="inPairs">inPairs()</h2>
+<p>
+  <code>inPairs()</code> is used when we have a compound natual key with 3 or more properties
+  and we have queries that combine <code>eq</code> and <code>in</code> expressions
+  that together provide the natural key (together cover all the properties that make up the
+  natural key).
+</p>
+<pre content="java">
+  @Cache(naturalKey = {"store","code","sku"})
+  @Entity
+  public class ProductRange {
 
+  }
+</pre>
+<p>
+  With the <code>.store.eq("myStoreCode")</code> expression combined with the
+  <code>.inPairs(pairs)</code> expression we have defined complete natural
+  keys covering all of the <code>store, code and sku</code> properties.
+</p>
+<pre content="java">
+Pairs pairs = new Pairs("sku", "code")
+  .add("S2", 1000)
+  .add("S2", 1001)
+  .add("S3", 1000);
+
+  new QProductRange()
+      .store.eq("myStoreCode")
+      .inPairs(pairs)
+      .setBeanCacheMode(CacheMode.ON)
+      .order("sku desc")
+      .findList();
+</pre>
+<p>
+  We are using inPairs when our in clause has 2 properties. If instead we have
+  the <code>eq</code> expression with 2 properties then our in clause just has
+  the usual single property.
+</p>
+<p>
+  For example:
+</p>
+<pre content="java">
+  List<!String> skus = Arrays.asList("S2", "S3", "S4");
+
+  new QProductRange()
+      .store.eq("myStoreCode")
+      .code.eq(1004)
+      .in(skus)
+      .setBeanCacheMode(CacheMode.ON)
+      .order("sku desc")
+      .findList();
+</pre>
+<p>
+  With the above query we have <code>eq</code> and <code>in</code> expressions that
+  combine to produce unique natural keys. Ebean can hit L2 natural key cache for this query.
+</p>
 <h2 id="like">like</h2>
+<p>
+  With <code>like</code> we use the SQL <code>%</code> and <code>_</code> place holder
+  characters to match varchar properties.
+</p>
+<pre content="java">
+List<!Contact> contacts =
+  new QContact()
+    .firstName.like("Rob%")
+    .findList();
+</pre>
+
 <h2 id="startsWith">startsWith</h2>
+<pre content="java">
+List<!Contact> contacts =
+  new QContact()
+    .firstName.startsWith("Rob")
+    .findList();
+</pre>
+
 <h2 id="endsWith">endsWith</h2>
+<pre content="java">
+List<!Contact> contacts =
+  new QContact()
+    .email.endsWith("@foo.com")
+    .findList();
+</pre>
+
 <h2 id="contains">contains</h2>
+<pre content="java">
+List<!Contact> contacts =
+  new QContact()
+    .email.contains("ob")
+    .findList();
+</pre>
 
 
 <h2 id="eq">eq - equal to</h2>
+<pre content="java">
+List<!Order> orders =
+  new QOrder()
+    .status.eq(Order.Status.NEW)
+    .findList();
+</pre>
+
 <h2 id="ne">ne - not equal</h2>
+<pre content="java">
+List<!Order> orders =
+  new QOrder()
+    .status.ne(Order.Status.NEW)
+    .findList();
+</pre>
+
 <h2 id="gt">gt - greater than</h2>
+<pre content="java">
+List<!Order> orders =
+  new QOrder()
+    .whenCreated.gt(LocalDate.now().minusDays(7))
+    .findList();
+</pre>
+
 <h2 id="ge">ge - greater than or equal</h2>
+<pre content="java">
+List<!Order> orders =
+  new QOrder()
+    .whenCreated.ge(LocalDate.now().minusDays(7))
+    .findList();
+</pre>
+
 <h2 id="lt">lt - less than</h2>
+<pre content="java">
+List<!Order> orders =
+  new QOrder()
+    .lines.orderQuantity.lt(10)
+    .findList();
+</pre>
+
 <h2 id="le">le - less than or equal</h2>
+<pre content="java">
+List<!Order> orders =
+  new QOrder()
+    .lines.orderQuantity.le(10)
+    .findList();
+</pre>
 
 <h2 id="between">between</h2>
+<pre content="java">
+List<!Order> orders =
+  new QOrder()
+    .orderDate.between(firstDay, lastDay)
+    .findList();
+</pre>
+
 <h2 id="betweenProperties">betweenProperties</h2>
 
 <h2 id="example">example</h2>

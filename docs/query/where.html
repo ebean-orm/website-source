@@ -52,7 +52,7 @@ where t0.name = ?
 </p>
 
 
-<h4>Paths</h4>
+<h2>Paths</h2>
 <p>
   With properties that are associated to beans (OneToOne, OneToMany, ManyToOne, ManyToMany)
   we can 'navigate' these paths adding valid expressions.
@@ -89,7 +89,7 @@ where t1.city = ?
 </p>
 <h5>e.g. path "customer.billingAddress.city" for Order</h5>
 ```java
-List<Order> orders =
+List<|Order> orders =
   new QOrder()
     .customer.billingAddress.city.equalTo("Auckland")
     .findList();
