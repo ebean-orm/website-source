@@ -8,12 +8,12 @@
   <#assign n1_maven="active">
 </head>
 <body>
-<p class="mtl">
-  We can use <a href="cli-tool">ebean-init</a> to automatically setup a Maven project.
-</p>
-<p>
-  These are the instructions to setup a maven project without using <em>ebean-init</em>.
-</p>
+<!--<p class="mtl">-->
+<!--  We can use <a href="cli-tool">ebean-init</a> to automatically setup a Maven project.-->
+<!--</p>-->
+<!--<p>-->
+<!--  These are the instructions to setup a maven project without using <em>ebean-init</em>.-->
+<!--</p>-->
 
 <h2>Examples</h2>
 <ul>
@@ -32,17 +32,7 @@
     <version>12.8.0</version>
   </dependency>
 
-  <!-- APT Query bean generation for Java -->
-  <dependency>
-    <groupId>io.ebean</groupId>
-    <artifactId>querybean-generator</artifactId>
-    <version>12.8.0</version>
-    <scope>provided</scope>
-  </dependency>
-
-
   <!-- Test dependencies -->
-  <!-- includes docker test database container support  -->
   <dependency>
     <groupId>io.ebean</groupId>
     <artifactId>ebean-test</artifactId>
@@ -61,26 +51,54 @@
   Refer to: <a href="/docs/testing">docs / testing</a>
 </p>
 
-
-<h2 id="tile">Add maven tile</h2>
+<h2>build / plugins</h2>
 <p>
-  Add the maven tile into the <code>build / plugins</code> section to perform build time enhancement
-  of the entity beans, <code>@Transactional</code> methods and query beans.
+  In the <code>build / plugins</code> section:
 </p>
+<ol>
+  <li>Add the <code>tiles-maven-plugin</code> to perform build time enhancement</li>
+  <li>Add or modify the <code>maven-compiler-plugin</code> to register the <em>querybean-generator</em> annotation processor.</li>
+</ol>
 
 <pre content="xml">
-<plugin>
-  <groupId>io.repaint.maven</groupId>
-  <artifactId>tiles-maven-plugin</artifactId>
-  <version>2.19</version>
-  <extensions>true</extensions>
-  <configuration>
-    <tiles>
-      <!-- other tiles ... -->
-      <tile>io.ebean.tile:enhancement:12.8.0</tile>
-    </tiles>
-  </configuration>
-</plugin>
+<build>
+  <plugins>
+
+
+     <plugin>
+       <groupId>io.repaint.maven</groupId>
+       <artifactId>tiles-maven-plugin</artifactId>
+       <version>2.19</version>
+       <extensions>true</extensions>
+       <configuration>
+         <tiles>
+          <!-- other tiles ... -->
+          <tile>io.ebean.tile:enhancement:12.8.0</tile>
+        </tiles>
+      </configuration>
+    </plugin>
+
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.8.1</version>
+      <configuration>
+        ...
+        <annotationProcessorPaths>
+           <path>
+              <groupId>io.ebean</groupId>
+              <artifactId>querybean-generator</artifactId>
+              <version>12.8.0</version>
+          </path>
+          <!-- other annotation processors -->
+        </annotationProcessorPaths>
+      </configuration>
+    </plugin>
+
+
+  </plugins>
+</build>
 </pre>
 
 
@@ -93,6 +111,13 @@
 <p>
   If you want to specify the maven enhancement plugin in 'normal' non-tile fashion see
   <a href="maven-plugin">maven plugin</a>.
+</p>
+
+<h3>APT - querybean generation</h3>
+<p>
+  Note that if there are no other annotation processors (e.g. mapstruct) then instead of
+  explicitly registering the <code>querybean-generator</code> with the maven-compiler-plugin
+  we can instead just add it as a dependency with provided scope.
 </p>
 
 
