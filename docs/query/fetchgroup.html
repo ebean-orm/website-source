@@ -27,10 +27,14 @@
 </p>
 
 <h4>e.g. Just top level select properties</h4>
-```java
+<pre content="java">
 // immutable and threadsafe
-static final FetchGroup<|Customer> fetch =
-    FetchGroup.of(Customer.class, "name, version, whenCreated"); // root level properties
+
+static final QCustomer CUST = QCustomer.alias();
+
+static final FetchGroup<|Customer> fetch = QCustomer.forFetchGroup()
+    .select(CUST.name, CUST.version, CUST.whenCreated)
+    .buildFetchGroup();
 
 ...
 
@@ -40,26 +44,85 @@ List<|Customer> customers =
     .name.istartsWith("Rob")
     .findList();
 
-```
+</pre>
+<p>
+  The above FetchGroup can be created without using query beans like the below:
+</p>
+<pre content="java">
+static final FetchGroup<|Customer> fetch =
+    FetchGroup.of(Customer.class, "name, version, whenCreated"); // root level properties
+</pre>
+
 <p>&nbsp;</p>
 
 <h4>e.g. select and fetch properties</h4>
-```java
+<pre content="java">
+// immutable and threadsafe
+
+static final QCustomer CUST = QCustomer.alias();
+static final QContact  CONT = QContact.alias();
+
+static final FetchGroup<|Customer> fetch = QCustomer.forFetchGroup()
+    .select(CUST.name, CUST.version, CUST,whenCreated)
+    .contacts.fetch(CONT.email)
+    .buildFetchGroup();
+
+...
+
+List<|Customer> customers =
+  new QCustomer()
+    .select(fetch)
+    .name.istartsWith("Rob")
+    .findList();
+</pre>
+<p>
+  The above FetchGroup can be created without query beans by:
+</p>
+<pre content="java">
 // immutable and threadsafe
 static final FetchGroup<|Customer> fetch =
    FetchGroup.of(Customer.class)
     .select("name, status")       // root level properties
     .fetch("contacts", "email")   // associated bean properties
     .build();
+</pre>
+
+<h3>Example</h3>
+<p>
+  This is a bigger example fetching orders with related lines, shipments, customer,
+  customer.billingAddress and customer.contacts.
+</p>
+<p>
+  Note we control which properties (or all) are fetched on each path.
+</p>
+<p>
+  In this example we have several ToMany paths and we are using <em>fetchQuery</em> to
+  explicitly control how the ORM query is broken into multiple SQL queries to build the graph.
+</p>
+
+<pre content="java">
+// immutable and threadsafe
+
+static final QOrder ORD = QOrder.alias();
+static final QCustomer CUST = QCustomer.alias();
+static final QContact CONT = QContact.alias();
+
+static final FetchGroup<|Order> fetch = QOrder.forFetchGroup()
+    .customer.fetch(CUST.name, CUST.version, CUST,whenCreated)
+    .customer.shippingAddress.fetch()
+    .customer.contacts.fetch(CONT.email)                        // a ToMany path
+    .lines.fetchQuery()                                         // a ToMany path
+    .shipments.fetchQuery()                                     // a ToMany path
+    .buildFetchGroup();
 
 ...
 
-List<|Customer> customers =
-  new QCustomer()
+List<|Order> orders =
+  new QOrder()
     .select(fetch)
-    .name.istartsWith("Rob")
+    .status.eq(Order.Status.NEW)
     .findList();
-```
+</pre>
 
 <@next_edit "FilterMany" "/docs/query/filterMany" "/docs/query/fetchgroup.html"/>
 </body>

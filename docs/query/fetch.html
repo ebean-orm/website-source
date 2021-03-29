@@ -19,92 +19,68 @@
   for that to happen as a <em>SQL JOIN</em>.
 </p>
 
-```java
-List<|Customer> customers =
-  database.find(Customer.class)
-  .select("name, version, whenCreated")    // root level properties
-  .fetch("contacts", "email")              // contacts is a OneToMany path
+<pre content="java">
+QCustomer cust = QCustomer.alias();
+QContact cont = QContact.alias();
 
-  .where()
-  .istartsWith("name", "Rob")
+List<|Customer> customers =
+  new QCustomer()
+  .select(cust.name, cust.version, cust.whenCreated)    // root level properties
+  .contacts.fetch(cont.email)                           // contacts is a OneToMany path
+
+  .name.istartsWith("Rob")
   .findList();
-```
+</pre>
 <p>
   The resulting sql is:
 </p>
-```sql
+<pre content="sql">
 select t0.id, t0.name, t0.version, t0.when_created,    -- customer columns
        t1.id, t1.email                                 -- contact columns
 from customer t0
 left join contact t1 on t1.customer_id = t0.id
 where lower(t0.name) like ? escape'|' order by t0.id
-```
+</pre>
 <p>
   The <em>contacts</em> path is a <em>OneToMany</em> so we get a <em>left join</em> to the
   contact table. We only fetch the id and email properties for the contacts.
 </p>
-
-
-<h2 id="tuning" class="art">Select + Fetch = query tuning</h2>
 <p>
-  Using <em>select</em> and <em>fetch</em> we are effectively tuning the query
-  controlling what part of the object graph is loaded.
+  The above query written using the query expression API is:
 </p>
-<p>
-  Generally we prefer a query to only load what it needs to from the database. This gives us
-  the ability to reduce the cost of the query, the amount of data fetched and pulled over
-  the network as well as the opportunity to use covering indexes etc.
-</p>
+<pre content="java">
+List<|Customer> customers =
+  database.find(Customer.class)
+    .select("name, version, whenCreated")    // root level properties
+    .fetch("contacts", "email")              // contacts is a OneToMany path
 
-<h4>select -> "<em>graph root</em> level properties"</h4>
-<p>
-  The <em>select</em> defines what to fetch at the <em>root level of the object graph</em>.
-</p>
+    .where()
+    .istartsWith("name", "Rob")
+    .findList();
+</pre>
 
-<h4>fetch -> "<em>graph leaf</em> properties"</h4>
+<h2 id="fetchVariations" class="art">Fetch variations - fetch, fetchQuery, fetchCache, fetchLazy</h2>
 <p>
-  The <em>fetch</em> defines what to fetch for the <em>leaves of the object graph</em>. This
-  translates to <em>what to fetch on the OneToOne, OneToMany, ManyToOne and ManyToMany paths</em>
-  of the object graph.
+  There are 4 variations of fetch. The summary of what they are is:
 </p>
+<ul>
+  <li>fetch - fetch eagerly preferring SQL JOIN</li>
+  <li>fetchQuery - fetch eagerly using a separate secondary SQL query</li>
+  <li>fetchCache - fetch eagerly hitting the L2 cache, cache misses fetched using a separate secondary SQL query</li>
+  <li>fetchLazy - fetch lazy</li>
+</ul>
 <p>
-  Note that <a href="fetchgroup">FetchGroup</a> provides an alternative to <em>select + fetch</em>.
-</p>
-
-
-<h2 id="rules" class="art">ORM query to SQL query rules</h2>
-<p>
-  Ebean enforces 2 rules when it converts an ORM query into SQL queries. These rules have the effect of
-  limiting the number of sql joins that it will allow when translating an ORM query into SQL queries.
-  These 2 rules are:
+  Ebean applies <a href="#rules">rules</a> when translating ORM queries to SQL queries such that:
 </p>
 <ul>
   <li>Ebean will not generate a SQL cartesian product</li>
   <li>Ebean will honor maxRows in SQL</li>
 </ul>
-
-<h3>Rule 1: No SQL Cartesian product</h3>
 <p>
-  This rule has the implication that Ebean will allow at most 1 join to a <code>OneToMany</code> path
-  or a <code>ManyToMany</code> path. If the ORM query has more than 1 of those paths then the ORM query will
-  be translated and executed as multiple SQL queries.
+  Ebean will automatically convert <em>fetch</em> paths into <em>fetchQuery</em> paths to ensure that it
+  honors these rules. In effect there is a limit on the number of OneToMany & ManyToMany paths that can
+  be included in a SQL query (as otherwise we get a SQL cartesian product which is not desirable).
 </p>
-<p>
-  We avoid sql cartesian product because it has a high risk of producing a very very bad sql query.
-</p>
-
-<h3>Rule 2: Always honor maxRows in SQL</h3>
-<p>
-  This rule has the implication that Ebean can not include any joins to a <code>OneToMany</code> path
-  or a <code>ManyToMany</code> path if there is a <code>maxRows</code>. This is because SQL max rows
-  works on rows so we can't include SQL joins to paths that have a cardinality of more than 1.
-</p>
-<p>
-  Honoring maxRows is SQL is important because the database can typically give us a much better
-  query plan and more efficient sql queries.
-</p>
-
-
 
 <h2 id="fetchQuery" class="art">FetchQuery</h2>
 <p>
@@ -115,7 +91,7 @@ where lower(t0.name) like ? escape'|' order by t0.id
   We choose to do this on specific paths because we know the relative costs of sql joins vs query joins
   based on cardinality and the relative width of the results etc.
 </p>
-```java
+<pre content="java">
 List<|Order> orders =
   new QOrder()
     .customer.fetchQuery()                // fetch customer (and children) using a "secondary query"
@@ -123,21 +99,21 @@ List<|Order> orders =
     .customer.shippingAddress.fetch()
     .findList();
 
-```
+</pre>
 <p>
   With the above query we use <code>fetchQuery</code> to explicitly fetch the customers with their billing and
   shipping addresses using a second separate sql query.
 </p>
 <h5>Primary query</h5>
-```sql
+<pre content="sql">
 -- "primary" query fetches the orders only
 select t0.id, ...
 from orders t0
-```
+</pre>
 
 <h5>Secondary query (aka "query join")</h5>
 
-```sql
+<pre content="sql">
 -- "secondary" query fetches customers with
 -- their billing and shipping addresses
 
@@ -148,7 +124,23 @@ from customer t0
 join address t1 on t1.id = t0.billing_address_id
 join address t2 on t2.id = t0.shipping_address_id
 where t0.id in (?, ?, ... )                                      -- customer ids
-```
+</pre>
+
+<h2 id="fetchCache" class="art">FetchCache</h2>
+<p>
+  <em>fetchCache</em> is like fetchQuery except we hit the L2 cache first.
+</p>
+<pre content="java">
+List<|Order> orders =
+  new QOrder()
+    .customer.fetchCache()         // Hit L2 cache for customer, for cache miss load from database
+    .findList();
+</pre>
+<p>
+  In the above the query fetches orders from the database. For Customer it will hit the L2 cache
+  for customer and for the cache misses it will load the Customers from the Database. This is performed
+  in batches of 100 customers at a time.
+</p>
 
 
 <h2 id="fetchLazy" class="art">FetchLazy</h2>
@@ -227,6 +219,73 @@ List<|Customer> customers =
 val cust = QCustomer._alias
 val con = QContact._alias
 ```
+
+
+<h2 id="tuning" class="art">Select + Fetch = projection query tuning</h2>
+<p>
+  Using <em>select</em> and <em>fetch</em> we are effectively tuning the query
+  controlling what part of the object graph is loaded.
+</p>
+<p>
+  Generally we prefer a query to only load what it needs to from the database. This gives us
+  the ability to reduce the cost of the query, the amount of data fetched and pulled over
+  the network as well as the opportunity to use covering indexes etc.
+</p>
+
+<h4>select -> "<em>graph root</em> level properties"</h4>
+<p>
+  The <em>select</em> defines what to fetch at the <em>root level of the object graph</em>.
+</p>
+
+<h4>fetch -> "<em>graph leaf</em> properties"</h4>
+<p>
+  The <em>fetch</em> defines what to fetch for the <em>leaves of the object graph</em>. This
+  translates to <em>what to fetch on the OneToOne, OneToMany, ManyToOne and ManyToMany paths</em>
+  of the object graph.
+</p>
+<p>
+  Note that <a href="fetchgroup">FetchGroup</a> provides an alternative to <em>select + fetch</em>.
+</p>
+
+
+<h2 id="rules" class="art">ORM query to SQL query rules</h2>
+<p>
+  Ebean enforces 2 rules when it converts an ORM query into SQL queries. These rules have the effect of
+  limiting the number of sql joins that it will allow when translating an ORM query into SQL queries.
+  These 2 rules are:
+</p>
+<ul>
+  <li>Ebean will not generate a SQL cartesian product</li>
+  <li>Ebean will honor maxRows in SQL</li>
+</ul>
+
+<h3>Rule 1: No SQL Cartesian product</h3>
+<p>
+  This rule has the implication that Ebean will allow at most 1 join to a <code>OneToMany</code> path
+  or a <code>ManyToMany</code> path. If the ORM query has more than 1 of those paths then the ORM query will
+  be translated and executed as multiple SQL queries.
+</p>
+<p>
+  We avoid sql cartesian product because it has a high risk of producing a very very bad sql query.
+</p>
+
+<h3>Rule 2: Always honor maxRows in SQL</h3>
+<p>
+  This rule has the implication that Ebean can not include any joins to a <code>OneToMany</code> path
+  or a <code>ManyToMany</code> path if there is a <code>maxRows</code>. This is because SQL max rows
+  works on rows so we can't include SQL joins to paths that have a cardinality of more than 1.
+</p>
+<p>
+  Honoring maxRows is SQL is important because the database can typically give us a much better
+  query plan and more efficient sql queries.
+</p>
+<p>
+  Ebean detects which paths are "ToMany" paths and determines if it needs to convert any of them
+  from <em>fetch</em> paths to <em>fetchQuery</em> paths. Ebean firstly takes into account
+  <code>@FetchPreference</code> mapping and then the order in which the paths are specified in the query.
+  That is, generally the first ToMany path stays as <em>fetch</em> and the other ToMany paths are converted
+  to <em>fetchQuery</em>.
+</p>
 
 <@next_edit "FetchGroup" "/docs/query/fetchgroup" "/docs/query/fetch.html"/>
 </body>
