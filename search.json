@@ -1288,14 +1288,6 @@
   "url":"/docs/getting-started/maven"
 }
 ,{
-  "title":"Maven - Add maven tile",
-  "caption":"",
-  "category":"Getting started",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/getting-started/maven#tile"
-}
-,{
   "title":"Maven - Dependencies",
   "caption":"",
   "category":"Getting started",
@@ -1318,6 +1310,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/getting-started/maven#kotlin-kapt"
+}
+,{
+  "title":"Maven - build / plugins",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/maven"
 }
 ,{
   "title":"Maven / Plugin",
@@ -1928,6 +1928,22 @@
   "url":"/docs/mapping/jpa/id"
 }
 ,{
+  "title":"JPA / @Id - @GeneratedValue",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/jpa/id#generated-value"
+}
+,{
+  "title":"JPA / @Id - @Identity",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/jpa/id#identity"
+}
+,{
   "title":"JPA / @Id - Custom Id Generator",
   "caption":"",
   "category":"Mapping",
@@ -1944,20 +1960,12 @@
   "url":"/docs/mapping/jpa/id#database-platform"
 }
 ,{
-  "title":"JPA / @Id - Enhancement",
+  "title":"JPA / @Id - No lazy loading",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/mapping/jpa/id#enhancement"
-}
-,{
-  "title":"JPA / @Id - Generated value",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/jpa/id#generated-value"
+  "url":"/docs/mapping/jpa/id#no-lazy-loading"
 }
 ,{
   "title":"JPA / @Id - UUID",
@@ -3032,6 +3040,14 @@
   "url":"/docs/query/where#or"
 }
 ,{
+  "title":"Where - Paths",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/where"
+}
+,{
   "title":"Where - Raw expressions",
   "caption":"",
   "category":"Query",
@@ -3080,6 +3096,22 @@
   "url":"/docs/query/fetch#fetch"
 }
 ,{
+  "title":"fetch - Fetch variations - fetch, fetchQuery, fetchCache, fetchLazy",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetchVariations"
+}
+,{
+  "title":"fetch - FetchCache",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/fetch#fetchCache"
+}
+,{
   "title":"fetch - FetchLazy",
   "caption":"",
   "category":"Query",
@@ -3104,7 +3136,7 @@
   "url":"/docs/query/fetch#rules"
 }
 ,{
-  "title":"fetch - Select + Fetch = query tuning",
+  "title":"fetch - Select + Fetch = projection query tuning",
   "caption":"",
   "category":"Query",
   "priority":"3",
@@ -3344,6 +3376,14 @@
   "url":"/docs/query/select#aggregation"
 }
 ,{
+  "title":"select - Alias for static imports",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/select#aliasField"
+}
+,{
   "title":"select - Formula",
   "caption":"",
   "category":"Query",
@@ -3358,6 +3398,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/select#select"
+}
+,{
+  "title":"select - alias() - specify properties",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/select#alias"
 }
 ,{
   "title":"select - asDto",
