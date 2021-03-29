@@ -64,7 +64,8 @@ static final QContact  CONT = QContact.alias();
 
 static final FetchGroup<|Customer> fetch = QCustomer.forFetchGroup()
     .select(CUST.name, CUST.version, CUST,whenCreated)
-    .contacts.fetch(CONT.email)
+    .contacts.fetch(CONT.email)          // fetch the contacts with just their email
+    .billingAddress.fetch()              // fetch all properties of billingAddress
     .buildFetchGroup();
 
 ...
