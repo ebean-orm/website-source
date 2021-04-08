@@ -18,6 +18,16 @@
     try and do better and instead just leave it to Ebean.
   </p>
 
+  <h2 id="toString">toString() - avoid getters</h2>
+  <p>
+    Avoid using getter methods in <code>toString()</code>. We want to avoid invoking any accidental
+    lazy loading when using the debugger. That is, using the debugger and inspecting entity beans in
+    the debugger will implicitly call toString() methods on entity beans. We don't want to have
+    different behaviour when stepping through with a debugger. Ebean does not enhance
+    toString() methods but if the toString() implementation uses getter methods then those methods
+    could invoke lazy loading and we generally want to avoid that.
+  </p>
+
   <h2 id="kotlin-data-class">Kotlin data classes</h2>
   <p>
     Do not use Kotlin data classes for <code>@Entity</code> beans as the equals/hashCode
