@@ -18,7 +18,7 @@
 <p>&nbsp;</p>
 
 <h5>Example findOne with SqlRow</h5>
-```java
+<pre content="java">
 String sql = "select id, name, when_active from customer where id = :id"
 
 SqlRow row = DB.sqlQuery(sql)
@@ -27,12 +27,12 @@ SqlRow row = DB.sqlQuery(sql)
 
 String name = row.getString("name");
 Timestamp active = row.getTimestamp("when_active");
-```
+</pre>
 
 <p>&nbsp;</p>
 <h5>Example findEachRow with ResultSet</h5>
 
-```java
+<pre content="java">
 String sql = "select id, name, status from customer order by name desc";
 
 DB.sqlQuery(sql)
@@ -43,14 +43,93 @@ DB.sqlQuery(sql)
     ...
   });
 
-```
+</pre>
+<h2 id="bind-positioned" class="art">Binding positioned parameters using ?</h2>
+<p>
+  Positioned parameters use <code>?</code> as the placeholder.
+</p>
+<pre content="java">
+String sql = "select id, name, when_active from customer where status = ? and when_created > ?";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+    .setParameter(1, "NEW")
+    .setParameter(2, lastWeek)
+    .findList();
+</pre>
+<p>
+  We can omit the index positions like the next example.
+</p>
+<pre content="java">
+String sql = "select id, name, when_active from customer where status = ? and when_created > ?";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+    .setParameter("NEW")
+    .setParameter(lastWeek)
+    .findList();
+</pre>
+<p>
+  We can alternatively set multiple positioned parameters using <code>setParameters()</code>.
+</p>
+<pre content="java">
+String sql = "select id, name, when_active from customer where status = ? and when_created > ?";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+    .setParameters("NEW", lastWeek)
+    .findList();
+</pre>
+
+
+<h2 id="bind-named" class="art">Binding named parameters using :name</h2>
+<p>
+  Named parameters use the form <code>:foo</code> as the placeholder. Named parameters have the
+  advantages that we can use them to bind collections into an <code>IN</code> expression and
+  that the same parameter can appear multiple times in the SQL.
+</p>
+<h5>Binding using named parameters</h5>
+<pre content="java">
+String sql =
+  "select id, name, when_active " +
+  "from customer " +
+  "where status = :status and when_created > :created";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+    .setParameter("status", "NEW")
+    .setParameter("created", lastWeek)
+    .findList();
+</pre>
+
+<h2 id="collections" class="art">Binding collections</h2>
+<p>
+  To bind collections of values into an IN clause we need to used named parameters
+  or indexed positioned parameters.
+</p>
+<h5>Named parameter example (:names)</h5>
+<pre content="java">
+String sql = "select c.id, c.name from customer c where c.name in (:names)";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+  .setParameter("names", asList("Rob", "Fiona", "Jack"))
+  .findList();
+</pre>
+
+<h5>Index parameter example - ?2</h5>
+<pre content="java">
+String sql = "select c.id, c.name from customer c " +
+  "where c.status = ? and c.name in (?2) and c.when_created > ?";
+
+List<|SqlRow> rows = DB.sqlQuery(sql)
+  .setParameter("NEW")
+  .setParameter(asList("Rob", "Fiona", "Jack"))
+  .setParameter(lastWeek)
+  .findList();
+</pre>
 
 <h2 id="limit" class="art">firstRow / maxRows</h2>
 <p>
   We can specify <em>firstRow</em> and <em>maxRows</em> on a SqlQuery and Ebean will modify
   the SQL based on the database platform to add the appropriate row limit clause.
 </p>
-```java
+<pre content="java">
 String sql = "select id, name, when_active from customer where status = ?";
 
 List<|SqlRow> rows = DB.sqlQuery(sql)
@@ -58,71 +137,73 @@ List<|SqlRow> rows = DB.sqlQuery(sql)
     .setFirstRow(10)
     .setMaxRows(10)
     .findList();
-```
+</pre>
 
+<h2 id="scalar" class="art">Single column scalar result - mapToScalar()</h2>
+<p>
+  Use <code>mapToScalar()</code> when the query has a single column in the <em>select clause</em>.
+  This specifies the type to use to read the result.
+</p>
+<pre content="java">
+String sql = "select mysequence.nextval";
 
+Long nextVal = DB.sqlQuery(sql)
+  .mapToScalar(Long.class)
+  .findOne();
+</pre>
+<pre content="java">
+String sql = "select max(unit_price) from order_lines where order_qty > ?";
+
+BigDecimal maxPrice = DB.sqlQuery(sql)
+  .setParameter(42)
+  .mapToScalar(BigDecimal.class)
+  .findOne();
+</pre>
+<pre content="java">
+String sql = "select max(order_date) from orders where customer_id = ?";
+
+OffsetDateTime maxDate = DB.sqlQuery(sql)
+  .setParameter(42)
+  .mapToScalar(OffsetDateTime.class)
+  .findOne();
+</pre>
+<p>
+  All scalar types that Ebean supports can be used - refer to <a href="/docs/mapping/type/">mapping types</a>.
+</p>
 
 <h2 id="rowmapper" class="art">RowMapper</h2>
 <p>
   We can implement a <em>RowMapper</em> to convert a ResultSet into a dto bean.
 </p>
-```java
-static class CustDtoMapper implements RowMapper<|CustDto> {
+<pre content="java">
+static class CustomerDtoMapper implements RowMapper<|CustomerDto> {
 
   @Override
-  public CustDto map(ResultSet resultSet, int rowNum) throws SQLException {
+  public CustomerDto map(ResultSet resultSet, int rowNum) throws SQLException {
 
     long id = resultSet.getLong(1);
     String name = resultSet.getString(2);
     String status = resultSet.getString(3);
 
-    return new CustDto(id, name, status);
+    return new CustomerDto(id, name, status);
   }
 }
 
 ...
-static final CustDtoMapper CUST_MAPPER = new CustDtoMapper()
-```
+static final CustomerDtoMapper CUSTOMER_MAPPER = new CustomerDtoMapper()
+</pre>
 <p>&nbsp;</p>
 <p>
   Then we can use it to return DTO beans.
 </p>
-```java
+<pre content="java">
 String sql = "select id, name, status from customer where name = ?";
 
-CustDto rob = DB.sqlQuery(sql)
+CustomerDto rob = DB.sqlQuery(sql)
   .setParameter(1, "Rob")
-  .findOne(CUST_MAPPER);
-```
+  .findOne(CUSTOMER_MAPPER);
+</pre>
 
-<h2 id="collections" class="art">Binding collections</h2>
-<p>
-  To bind collections/arrays of values into an IN clause we need to used named parameters
-  or indexed positioned parameters.
-</p>
-<h5>Named parameter example (:names)</h5>
-
-```java
-
-String sql = "select c.id, c.name from customer c where c.name in (:names)";
-
-List<|SqlRow> rows = DB.sqlQuery(sql)
-  .setParameter("names", asList("Rob", "Fiona", "Jack"))
-  .findList();
-
-```
-
-<h5>Index parameter example - ?1</h5>
-
-```java
-
-String sql = "select c.id, c.name from customer c where c.name in (?1)";
-
-List<|SqlRow> rows = DB.sqlQuery(sql)
-  .setParameter(asList("Rob", "Fiona", "Jack"))
-  .findList();
-
-```
 
 <@next_edit "SqlUpdate" "/docs/query/sqlupdate" "/docs/query/sqlquery.html"/>
 

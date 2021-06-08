@@ -15,7 +15,7 @@
   ordinary beans with public constructor(s) and public getters/setters.
 </p>
 
-```java
+<pre content="java">
   public static class CustomerDto {
 
     Integer id;
@@ -23,9 +23,8 @@
 
     ... // getters & setters
   }
-```
-
-```java
+</pre>
+<pre content="java">
 
 // using positioned parameters
 
@@ -33,9 +32,9 @@ List<|CustomerDto> beans =
   database.findDto(CustomerDto.class, "select id, name from customer where name = ?")
   .setParameter(1, "Rob")
   .findList();
-```
+</pre>
 
-```java
+<pre content="java">
 
 // using named parameters
 
@@ -43,7 +42,7 @@ List<|CustomerDto> beans =
   database.findDto(CustomerDto.class, "select id, name from customer where name = :name")
   .setParameter("name", "Rob")
   .findList();
-```
+</pre>
 
 <h2 id="mapping" class="art">Mapping</h2>
 <p>
@@ -73,22 +72,22 @@ List<|CustomerDto> beans =
 <p>
   We can apply firstRows/maxRows to the sql query.
 </p>
-```java
+<pre content="java">
 String sql = "select id, name from customer where name like ?";
 
 List<|CustomerDto> robs = server().findDto(CustomerDto.class, sql)
   .setParameter(1, "Rob%")
   .setMaxRows(10)
   .findList();
-```
+</pre>
 <p>
   The appropriate sql will be added to apply firstRows/maxRows for the database platform.
 </p>
 
-```sql
+<pre content="sql">
 select id, name from o_customer where name like ?
 limit 10
-```
+</pre>
 
 <h2 id="relaxedMode" class="art">RelaxedMode</h2>
 <p>
@@ -109,7 +108,7 @@ limit 10
   We use <em>findEach</em> when processing a large query where we do not wish to hold
   all the beans in a list but instead process them one at a time.
 </p>
-```java
+<pre content="java">
 
 String sql = "select id, name from o_customer where id > :id order by id desc";
 
@@ -121,7 +120,19 @@ database.findDto(CustomerDto.class, sql)
     ...
 
   });
-```
+</pre>
+<h2 id="scalar" class="art">Single column</h2>
+<p>
+  If we are looking to select a single column we look to use
+  <a href="sqlquery#scalar">SqlQuery.mapToScalar()</a> for that.
+</p>
+<pre content="java">
+String sql = "select mysequence.nextval";
+
+Long nextVal = DB.sqlQuery(sql)
+  .mapToScalar(Long.class)
+  .findOne();
+</pre>
 
 <@next_edit "Queries" "/docs/query/" "/docs/query/dtoquery.html"/>
 
