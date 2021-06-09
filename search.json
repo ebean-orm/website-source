@@ -2208,6 +2208,22 @@
   "url":"/docs/mapping/type/boolean"
 }
 ,{
+  "title":"Types / Boolean - Custom database true/false values",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/boolean"
+}
+,{
+  "title":"Types / Boolean - primitive boolean",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/boolean"
+}
+,{
   "title":"Types / Enum",
   "caption":"",
   "category":"Mapping",
@@ -2272,6 +2288,30 @@
   "url":"/docs/mapping/type/numeric"
 }
 ,{
+  "title":"Types / Numeric - BigDecimal",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/numeric"
+}
+,{
+  "title":"Types / Numeric - Decimal precision and scale",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/numeric"
+}
+,{
+  "title":"Types / Numeric - primitive types",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/numeric"
+}
+,{
   "title":"Types / Time",
   "caption":"",
   "category":"Mapping",
@@ -2281,6 +2321,38 @@
 }
 ,{
   "title":"Types / UUID",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/uuid"
+}
+,{
+  "title":"Types / UUID - Binary storage",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/uuid"
+}
+,{
+  "title":"Types / UUID - DatabaseConfig.setDbUuid()",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/uuid"
+}
+,{
+  "title":"Types / UUID - Native storage",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/uuid"
+}
+,{
+  "title":"Types / UUID - Varchar storage",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
