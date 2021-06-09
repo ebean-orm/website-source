@@ -2224,6 +2224,46 @@
   "url":"/docs/mapping/type/file"
 }
 ,{
+  "title":"Types / File - Content streamed to file",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/file"
+}
+,{
+  "title":"Types / File - Fetch",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/file"
+}
+,{
+  "title":"Types / File - Insert",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/file"
+}
+,{
+  "title":"Types / File - Lazy fetched by default",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/file"
+}
+,{
+  "title":"Types / File - Stateless update",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/type/file"
+}
+,{
   "title":"Types / Numeric",
   "caption":"",
   "category":"Mapping",

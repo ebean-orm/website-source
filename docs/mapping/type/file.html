@@ -6,6 +6,103 @@
 </head>
 <body>
 <h2>File</h2>
+<p>
+  For large binary or text content (database LOB) we can model it
+  in the entity bean as a property of type <code>java.io.File</code>
+  and with <code>@Lob</code>.
+</p>
+<pre content="java">
+@Entity
+public class SomeFileBean {
+  ...
+
+  @Lob
+  File content;
+
+</pre>
+<h2>Lazy fetched by default</h2>
+<p>
+  By default all <code>@Lob</code> properties are fetched lazy so that means
+  by default they are NOT fetched unless explicit included in the select clause.
+</p>
+<p>
+  Note that File properties (and other Lob properties) will lazy load as needed.
+</p>
+<pre content="java">
+QSomeFileBean b = QSomeFileBean.alias()
+
+SomeFileBean bean =
+  new QSomeFileBean()
+    .select(b.name, b.content)
+    .id.eq(42)
+    .findOne();
+
+File content = bean.getContent();
+
+</pre>
+
+<h2>Content streamed to file</h2>
+<p>
+  For each File returned Ebean creates a temporary file and streams the content
+  from the database Lob result into the file. As such when we fetch beans with
+  Files we are expected to process the file in some way and then potentially
+  discard, delete or move the temporary file. If we do not then this can result
+  in a build up of temporary files in the temp directory.
+</p>
+
+<h2>Insert</h2>
+<pre content="java">
+
+    // have the content as a File
+    File tempFile = ...;
+
+    UserProfile profile = new UserProfile();
+    profile.setName("Rob");
+    profile.setProfileImage(tempFile);
+
+    database.save(profile);
+
+    // typically tidy up file
+    tempFile.delete();
+</pre>
+
+<h2>Fetch</h2>
+<pre content="java">
+
+    QUserProfile u = QUserProfile.alias()
+
+    UserProfile profile =
+      new QUserProfile()
+        .select(u.name, u.profileImage)
+        .id.eq(42)
+        .findOne();
+
+    File image = profile.getProfileImage();
+    // do something with the image file
+    // maybe move it to a cache directory
+    // or tidy up by deleting the temporary file
+    image.delete();
+</pre>
+
+<h2>Stateless update</h2>
+<p>
+  It is often useful to perform a stateless update where we update the
+  File content without fetching it.
+</p>
+<pre content="java">
+    // have the content as a File
+    File updatedProfileImage = ...;
+
+    UserProfile profile = new UserProfile();
+    profile.setId(42);
+    profile.setProfileImage(updatedProfileImage);
+
+    // perform update without fetching
+    database.update(profile);
+
+    // typically tidy up file
+    updatedProfileImage.delete();
+</pre>
 
 </body>
 </html>
