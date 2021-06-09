@@ -12,8 +12,14 @@
 <h2>SqlQuery</h2>
 <p>
   With SqlQuery we can execute sql queries without any entity beans or dto beans.
-  Instead we can either read the <code>ResultSet</code> directly or get <code>SqlRow</code> objects.
+  Instead we can:
 </p>
+<ul>
+  <li>Read JDBC <code>ResultSet</code> directly</li>
+  <li>Read as <code>SqlRow</code> objects</li>
+  <li>Use <code>mapToScalar()</code> and read simple scalar values like Long, BigDecimal, OffsetDateTime etc</li>
+  <li>use <code>mapTo()</code> and <code>RowMapper</code> to map and read objects</li>
+</ul>
 
 <p>&nbsp;</p>
 
@@ -44,6 +50,16 @@ DB.sqlQuery(sql)
   });
 
 </pre>
+
+<h5>Example mapToScalar()</h5>
+<pre content="java">
+String sql = "select mysequence.nextval";
+
+Long nextVal = DB.sqlQuery(sql)
+  .mapToScalar(Long.class)
+  .findOne();
+</pre>
+
 <h2 id="bind-positioned" class="art">Binding positioned parameters using ?</h2>
 <p>
   Positioned parameters use <code>?</code> as the placeholder.
@@ -139,7 +155,7 @@ List<|SqlRow> rows = DB.sqlQuery(sql)
     .findList();
 </pre>
 
-<h2 id="scalar" class="art">Single column scalar result - mapToScalar()</h2>
+<h2 id="scalar" class="art">mapToScalar() - single column scalar result</h2>
 <p>
   Use <code>mapToScalar()</code> when the query has a single column in the <em>select clause</em>.
   This specifies the type to use to read the result.
@@ -171,9 +187,15 @@ OffsetDateTime maxDate = DB.sqlQuery(sql)
   All scalar types that Ebean supports can be used - refer to <a href="/docs/mapping/type/">mapping types</a>.
 </p>
 
-<h2 id="rowmapper" class="art">RowMapper</h2>
+<h2 id="rowmapper" class="art">mapTo() - RowMapper</h2>
 <p>
   We can implement a <em>RowMapper</em> to convert a ResultSet into a dto bean.
+</p>
+<p>
+  Note that this similar to <a href="dtoquery">DtoQuery</a> except that the mapping is here is explicit
+  and with DtoQuery the mapping is effectively automatic (no effort) based on naming convention mapping.
+  In that sense the expectation is that people will use DtoQuery first and only use this explicit
+  RowMapping when necessary.
 </p>
 <pre content="java">
 static class CustomerDtoMapper implements RowMapper<|CustomerDto> {
@@ -199,9 +221,10 @@ static final CustomerDtoMapper CUSTOMER_MAPPER = new CustomerDtoMapper()
 <pre content="java">
 String sql = "select id, name, status from customer where name = ?";
 
-CustomerDto rob = DB.sqlQuery(sql)
-  .setParameter(1, "Rob")
-  .findOne(CUSTOMER_MAPPER);
+List<|CustomerDto> rob = DB.sqlQuery(sql)
+  .setParameter("Rob")
+  .mapTo(CUSTOMER_MAPPER)
+  .findList();
 </pre>
 
 
