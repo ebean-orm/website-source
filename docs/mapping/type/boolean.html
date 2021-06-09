@@ -6,6 +6,31 @@
 </head>
 <body>
 <h2>Boolean</h2>
+<p>
+  Boolean is mapped to the appropriate database type depending on the platform.
+</p>
+<h2>primitive boolean</h2>
+<p>
+  Note that primitive boolean is deemed non-nullable and DDL generation reflects that.
+</p>
+<pre content="java">
+  @Entity
+  public class Customer {
+
+    // treated as non-nullable
+    boolean active;
+  }
+</pre>
+
+<h2>Custom database true/false values</h2>
+<p>
+  If necessary we can configure the database true/false values using <code>DatabaseConfig</code>
+  but this is expected to be very rare.
+</p>
+<pre content="java">
+  databaseConfig.setDatabaseBooleanTrue("T");
+  databaseConfig.setDatabaseBooleanFalse("F");
+</pre>
 
 
 </body>

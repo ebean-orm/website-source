@@ -6,6 +6,38 @@
 </head>
 <body>
 <h2>Numeric</h2>
+<p>
+  Numeric types are mapped to appropriate database types depending on the platform.
+</p>
+
+<h2>BigDecimal</h2>
+<p>
+  By default BigDecimal maps to database <code>decimal(16,3)</code>. This default can
+  be changed via <em>databaseConfig.addCustomMapping()</em>:
+</p>
+<pre content="java">
+  // set the default mapping for BigDecimal.class/decimal
+  databaseConfig.addCustomMapping(DbType.DECIMAL, "decimal(8,2)");
+</pre>
+
+<h2>Decimal precision and scale</h2>
+<p>
+  Explicitly specify decimal precision and scale using <code>@Column</code>.
+</p>
+<pre content="java">
+  @Column(precision = 10, scale = 4)
+  BigDecimal approvalRate;
+</pre>
+
+
+<h2>primitive types</h2>
+<p>
+  Primitive types are deemed non nullable. Ebean will generate DDL for these as not nullable.
+</p>
+<pre content="java">
+  // primitive type deemed non nullable
+  long approvalTotal;
+</pre>
 
 </body>
 </html>

@@ -5,9 +5,7 @@
   <#assign uuid="true">
 </head>
 <body>
-<h2>UUID</h2>
-
-<h3>Native storage</h3>
+<h2>Native storage</h2>
 <p>
   UUID has native support in the following database platforms:
 </p>
@@ -20,20 +18,23 @@
   When using these database platforms UUID is stored in a native manor.
 </p>
 
-<h3>Binary storage</h3>
+<h2>Binary storage</h2>
 <p>
   Stored as BINARY(16), has the option of storing in optimised manor meaning the order of bytes is changed
   to provide a better distribution in index.
 </p>
-<p>
-  See ServerConfig.platformConfig.dbUuid
-</p>
 
-<h3>Varchar storage</h3>
+
+<h2>Varchar storage</h2>
 <p>
   Stored as VARCHAR(40).
 </p>
 
+<h2>DatabaseConfig.setDbUuid()</h2>
+<p>
+  When the database platform does not support UUID natively we can configure the
+  storage option via <code>DatabaseConfig.setDbUuid(...)</code>
+</p>
 
 </body>
 </html>
