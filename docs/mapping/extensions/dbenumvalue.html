@@ -6,18 +6,24 @@
 </head>
 <body>
 
-<h2 id="use">Use</h2>
+<h2 id="use">@DbEnumValue</h2>
 <p>
-  The standard JPA mapping for Enum types is poor. The use of <code>EnumType.ORDINAL</code> values is
-  dangerous as it relies on the exact order of the Enum elements never changing (which is subtle).
-  The use of <code>EnumType.STRING</code> compromises the name of the Enum values.
+  The standard JPA mapping for Enum is somewhat dangerous. That is, the use of
+  <code>EnumType.ORDINAL</code> values relies on the exact order of the Enum values
+  not changing (which is subtle, we can only add values to the end of the Enum).
+  The use of <code>EnumType.STRING</code> is ok but either compromises the name of
+  the Enum values or the values being stored in the database.
 </p>
 <p>
-  To use <code>@DbEnumValue</code> we need to annotate a method that returns a value that is used
-  to map the Enum value into the database.
+  <code>@DbEnumValue</code> is provided to address these issues and can be used when
+  we can modify the Enum being used to add DB values for each enum value.
+</p>
+<p>
+  To use <code>@DbEnumValue</code> we need to annotate a method that returns a
+  value that is used to map the Enum value into the database.
 </p>
 
-```java
+<pre content="java">
   public enum Status {
 
     NEW("N"),
@@ -37,7 +43,7 @@
       return dbValue;
     }
   }
-```
+</pre>
 
 <h2 id="storage">Storage</h2>
 <p>
@@ -45,7 +51,7 @@
   values map to. In effect we typically use this when we want to map the Enum
   values to database INTEGER type.
 </p>
-```java
+<pre content="java">
   public enum Status {
     NEW("1"),
     ACTIVE("2"),
@@ -62,6 +68,6 @@
       return value;
     }
   }
-```
+</pre>
 </body>
 </html>

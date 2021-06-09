@@ -6,7 +6,41 @@
 </head>
 <body>
 <h2>Enum</h2>
+<p>
+  For Enum types we can use JPA standard <a href="/docs/mapping/jpa/enumerated">@Enumerated</a>
+  or use Ebean specific <a href="/docs/mapping/extensions/dbenumvalue">@DbEnumValue</a>.
+</p>
 
+<p>&nbsp;</p>
+
+<h5>Example: JPA Standard using Enum name values</h5>
+<pre content="java">
+  @Enumerated(EnumType.STRING)
+  Status status;
+</pre>
+
+<p>&nbsp;</p>
+
+<h5>Example: Using Ebean @DbEnumValue</h5>
+<pre content="java">
+public enum Status {
+  NEW("N"),
+  ACTIVE("A"),
+  INACTIVE("I");
+
+  String dbValue;
+  Status(String dbValue) {
+    this.dbValue = dbValue;
+  }
+
+  // annotate a method that returns the value
+  // in the DB that the enum element maps to
+  @DbEnumValue
+  public String getValue() {
+    return dbValue;
+  }
+}
+</pre>
 
 </body>
 </html>

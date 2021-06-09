@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta name="layout" content="_layout2/base-mapping-jpa.html"/>
+  <meta name="bread3" content="@Enumerated" href="/docs/mapping/enumerated"/>
+<#assign version = "true">
+</head>
+<body>
+
+<h2>@Enumerated</h2>
+<p>
+  Mapping for an Enum property that uses either the <code>ordinal</code> value
+  or the <code>name</code> value of the enum.
+</p>
+<p>
+  Note that there is some risk in using ORDINAL values in that the value is
+  implied by the order of the values in the enum. That is, if a value is added
+  into the middle of an Enum then that is a subtle change to the ordinal values.
+  In this sense I personally don't recommend using ordinal values.
+</p>
+
+<h5>Example: Enum ORDINAL values</h5>
+<pre content="java">
+  // defaults to using ORDINAL value
+  @Enumerated
+  Status status;
+</pre>
+
+<h5>Example: Enum NAME values</h5>
+<pre content="java">
+  @Enumerated(EnumType.STRING)
+  Status status;
+</pre>
+
+
+<h2>Alternative: Ebean @DbEnumValue</h2>
+<p>
+  An alternative to JPA standard <code>@Enumerated</code> is Ebean specific
+  <a href="/docs/mapping/extensions/dbenumvalue">@DbEnumValue</a>
+</p>
+
+</body>
+</html>
