@@ -608,6 +608,14 @@
   "url":"/docs/best-practice#use-constructors"
 }
 ,{
+  "title":"toString() - avoid getters",
+  "caption":"",
+  "category":"Best Practice",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/best-practice#toString"
+}
+,{
   "title":"DB Migrations",
   "caption":"",
   "category":"DB migrations",
@@ -1680,14 +1688,6 @@
   "url":"/docs/mapping/extensions/dbenumvalue#storage"
 }
 ,{
-  "title":"Extension / @DbEnumValue - Use",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/extensions/dbenumvalue#use"
-}
-,{
   "title":"Extension / @DbJson",
   "caption":"",
   "category":"Mapping",
@@ -1920,6 +1920,22 @@
   "url":"/docs/mapping/jpa"
 }
 ,{
+  "title":"JPA / @Enumerated",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/jpa/enumerated"
+}
+,{
+  "title":"JPA / @Enumerated - Alternative: Ebean @DbEnumValue",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/jpa/enumerated"
+}
+,{
   "title":"JPA / @Id",
   "caption":"",
   "category":"Mapping",
@@ -1960,12 +1976,28 @@
   "url":"/docs/mapping/jpa/id#database-platform"
 }
 ,{
+  "title":"JPA / @Id - Entities with no @Id property",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/jpa/id#no-id"
+}
+,{
   "title":"JPA / @Id - No lazy loading",
   "caption":"",
   "category":"Mapping",
   "priority":"3",
   "keywords":"",
   "url":"/docs/mapping/jpa/id#no-lazy-loading"
+}
+,{
+  "title":"JPA / @Id - String",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/jpa/id#string"
 }
 ,{
   "title":"JPA / @Id - UUID",
@@ -2174,22 +2206,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/mapping/type/boolean"
-}
-,{
-  "title":"Types / DB Array",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/db-array"
-}
-,{
-  "title":"Types / DB Json",
-  "caption":"",
-  "category":"Mapping",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/mapping/type/db-json"
 }
 ,{
   "title":"Types / Enum",
@@ -2464,6 +2480,14 @@
   "url":"/docs/query/dtoquery#relaxedMode"
 }
 ,{
+  "title":"DtoQuery - Single column",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/dtoquery#scalar"
+}
+,{
   "title":"DtoQuery - findEach",
   "caption":"",
   "category":"Query",
@@ -2736,6 +2760,62 @@
   "url":"/docs/query/native-sql"
 }
 ,{
+  "title":"Native SQL - Column mapping",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/native-sql"
+}
+,{
+  "title":"Native SQL - Limitations",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/native-sql"
+}
+,{
+  "title":"Native SQL - Multiple tables",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/native-sql"
+}
+,{
+  "title":"Native SQL - Native SQL - findNative",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/native-sql"
+}
+,{
+  "title":"Native SQL - RawSql",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/native-sql#rawSql"
+}
+,{
+  "title":"Native SQL - fetchQuery",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/native-sql"
+}
+,{
+  "title":"Native SQL - firstRow / maxRows",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/native-sql"
+}
+,{
   "title":"Option",
   "caption":"",
   "category":"Query",
@@ -2928,6 +3008,54 @@
   "url":"/docs/query/rawSql"
 }
 ,{
+  "title":"RawSql - Named queries",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/rawSql"
+}
+,{
+  "title":"RawSql - RawSql - parsed",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/rawSql"
+}
+,{
+  "title":"RawSql - RawSql - unparsed",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/rawSql"
+}
+,{
+  "title":"RawSql - fetch",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/rawSql"
+}
+,{
+  "title":"RawSql - findNative preferred over RawSql",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/rawSql"
+}
+,{
+  "title":"RawSql - tableAliasMapping()",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/rawSql"
+}
+,{
   "title":"SqlQuery",
   "caption":"",
   "category":"Query",
@@ -2944,12 +3072,20 @@
   "url":"/docs/query/sqlquery#collections"
 }
 ,{
-  "title":"SqlQuery - RowMapper",
+  "title":"SqlQuery - Binding named parameters using :name",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/sqlquery#rowmapper"
+  "url":"/docs/query/sqlquery#bind-named"
+}
+,{
+  "title":"SqlQuery - Binding positioned parameters using ?",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlquery#bind-positioned"
 }
 ,{
   "title":"SqlQuery - firstRow / maxRows",
@@ -2958,6 +3094,22 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/sqlquery#limit"
+}
+,{
+  "title":"SqlQuery - mapTo() - RowMapper",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlquery#rowmapper"
+}
+,{
+  "title":"SqlQuery - mapToScalar() - single column scalar result",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlquery#scalar"
 }
 ,{
   "title":"SqlUpdate",
@@ -3257,6 +3409,54 @@
 }
 ,{
   "title":"findNative",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findNative"
+}
+,{
+  "title":"findNative - Column mapping",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findNative"
+}
+,{
+  "title":"findNative - Limitations",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findNative"
+}
+,{
+  "title":"findNative - Multiple tables",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findNative"
+}
+,{
+  "title":"findNative - RawSql",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findNative#rawSql"
+}
+,{
+  "title":"findNative - fetchQuery",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findNative"
+}
+,{
+  "title":"findNative - firstRow / maxRows",
   "caption":"",
   "category":"Query",
   "priority":"3",

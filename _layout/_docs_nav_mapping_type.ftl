@@ -11,10 +11,6 @@
 </@smallnav>
 <@smallnav activeCheck="${numeric!''}" url="/docs/mapping/type/numeric" title="Numeric">
 </@smallnav>
-<@smallnav activeCheck="${dbarray!''}" url="/docs/mapping/type/db-array" title="DB Array">
-</@smallnav>
-<@smallnav activeCheck="${dbjson!''}" url="/docs/mapping/type/db-json" title="DB Json">
-</@smallnav>
 <@smallnav activeCheck="${other!''}" url="/docs/mapping/type#other" title="Other">
 </@smallnav>
 

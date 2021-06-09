@@ -6,14 +6,16 @@
 </head>
 <body>
 
+<p>&nbsp;</p>
+
 <div class="container">
 
-  <div class="row">
-    <div class="col-md-3">
+  <div class="grid g3">
+    <div>
       <h3>Date</h3>
     </div>
 
-    <div class="col-md-3">
+    <div>
       <p>&nbsp;</p>
       <h5>java.sql.Date</h5>
       <h5>java.time.LocalDate</h5>
@@ -23,13 +25,13 @@
 
   </div>
 
-  <div class="row">
+  <div class="grid g3">
 
-    <div class="col-md-3">
+    <div>
       <h3>DateTime</h3>
     </div>
 
-    <div class="col-md-3">
+    <div>
       <p>&nbsp;</p>
       <h5>java.sql.Timestamp</h5>
       <h5>java.time.Instant</h5>
@@ -44,13 +46,13 @@
 
   </div>
 
-  <div class="row">
+  <div class="grid g3">
 
-    <div class="col-md-3">
+    <div>
       <h3>Time</h3>
     </div>
 
-    <div class="col-md-3">
+    <div>
       <p>&nbsp;</p>
       <h5>java.sql.Time</h5>
       <h5>java.time.LocalTime</h5>
@@ -64,60 +66,52 @@
 
   <h3>Time related types</h3>
 
-  <div class="row">
-    <div class="col-md-6">
-      <table class="table">
-        <tr>
-          <th>Type</th>
-          <th>Default mapping</th>
-        </tr>
-
-        <tr>
-          <td>java.time.Year</td>
-          <td>INTEGER</td>
-        </tr>
-        <tr>
-          <td>java.time.YearMonth</td>
-          <td>DATE (with Day of month = 1)</td>
-        </tr>
-
-        <tr>
-          <td>java.time.MonthDay</td>
-          <td>DATE (with Year = 2000)</td>
-        </tr>
-
-        <tr>
-          <td>java.time.Duration</td>
-          <td>Decimal</td>
-        </tr>
-
-        <tr>
-          <td>java.time.Period</td>
-          <td>Varchar(20)</td>
-        </tr>
-        <tr>
-          <td>java.time.ZoneOffset</td>
-          <td>Varchar(60)</td>
-        </tr>
-        <tr>
-          <td>java.time.OffsetTime</td>
-          <td>Varchar(25)</td>
-        </tr>
-        <tr>
-          <td>java.time.ZoneId</td>
-          <td>Varchar(60)</td>
-        </tr>
-        <tr>
-          <td>java.time.TimeZone</td>
-          <td>Varchar(20)</td>
-        </tr>
-        <tr>
-          <td>org.joda.time.Period</td>
-          <td>Varchar(50)</td>
-        </tr>
-      </table>
-    </div>
-  </div>
+  <table class="compact norm w100">
+    <tr>
+      <th>Type</th>
+      <th>Default mapping</th>
+    </tr>
+    <tr>
+      <td>java.time.Year</td>
+      <td>INTEGER</td>
+    </tr>
+    <tr>
+      <td>java.time.YearMonth</td>
+      <td>DATE (with Day of month = 1)</td>
+    </tr>
+    <tr>
+      <td>java.time.MonthDay</td>
+      <td>DATE (with Year = 2000)</td>
+    </tr>
+    <tr>
+      <td>java.time.Duration</td>
+      <td>Decimal</td>
+    </tr>
+    <tr>
+      <td>java.time.Period</td>
+      <td>Varchar(20)</td>
+    </tr>
+    <tr>
+      <td>java.time.ZoneOffset</td>
+      <td>Varchar(60)</td>
+    </tr>
+    <tr>
+      <td>java.time.OffsetTime</td>
+      <td>Varchar(25)</td>
+    </tr>
+    <tr>
+      <td>java.time.ZoneId</td>
+      <td>Varchar(60)</td>
+    </tr>
+    <tr>
+      <td>java.time.TimeZone</td>
+      <td>Varchar(20)</td>
+    </tr>
+    <tr>
+      <td>org.joda.time.Period</td>
+      <td>Varchar(50)</td>
+    </tr>
+  </table>
 
 </div>
 

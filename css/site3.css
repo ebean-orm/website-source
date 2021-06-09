@@ -87,6 +87,9 @@ table.table td, table.table th {
   vertical-align: top;
   padding: 1rem;
 }
+table.compact.norm th {
+  text-align: left;
+}
 article>h2[id]::before, article>h3[id]::before, article>h4[id]::before {
   display: block;
   height: 6rem;

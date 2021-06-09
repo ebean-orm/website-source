@@ -7,8 +7,6 @@
       <@smallnav activeCheck="${boolean!''}" url="/docs/mapping/type/boolean" title="Boolean"/>
       <@smallnav activeCheck="${time!''}" url="/docs/mapping/type/time" title="Date and Time"/>
       <@smallnav activeCheck="${numeric!''}" url="/docs/mapping/type/numeric" title="Numeric"/>
-      <@smallnav activeCheck="${dbarray!''}" url="/docs/mapping/type/db-array" title="DB Array"/>
-      <@smallnav activeCheck="${dbjson!''}" url="/docs/mapping/type/db-json" title="DB Json"/>
       <@smallnav activeCheck="${other!''}" url="/docs/mapping/type#other" title="Other"/>
     </ul>
   </@nav1>
