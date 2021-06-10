@@ -2608,6 +2608,22 @@
   "url":"/docs/query/dtoquery#findEach"
 }
 ,{
+  "title":"DtoQuery - findIterate",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/dtoquery#findIterate"
+}
+,{
+  "title":"DtoQuery - findStream",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/dtoquery#findStream"
+}
+,{
   "title":"DtoQuery - firstRow / maxRows",
   "caption":"",
   "category":"Query",

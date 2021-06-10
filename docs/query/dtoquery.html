@@ -121,6 +121,47 @@ database.findDto(CustomerDto.class, sql)
 
   });
 </pre>
+
+<h2 id="findStream" class="art">findStream</h2>
+<p>
+  <em>findStream</em> is similar to findEach where we process the result one at a time.
+  We should use a <code>try with resources</code> block to ensure the underlying resources
+  are closed.
+</p>
+<pre content="java">
+
+String sql = "select id, name from o_customer where id > ? order by id desc";
+
+try (Stream<|CustomerDto> customers =
+  database.findDto(CustomerDto.class, sql)
+    .setParameter(0)
+    .findStream()) {
+
+    // use the stream of customers ...
+    ...
+}
+</pre>
+
+<h2 id="findIterate" class="art">findIterate</h2>
+<p>
+  <em>findIterate</em> is similar to findStream and findEach where we process the result one at a time.
+  We should use a <code>try with resources</code> block to ensure the underlying resources
+  are closed.
+</p>
+<pre content="java">
+
+String sql = "select id, name from o_customer where id > :id order by id desc";
+
+try (QueryIterator<|CustomerDto> customers =
+  database.findDto(CustomerDto.class, sql)
+    .setParameter(0)
+    .findIterate()) {
+
+    // iterate through the customers
+    ...
+}
+</pre>
+
 <h2 id="scalar" class="art">Single column</h2>
 <p>
   If we are looking to select a single column we look to use
