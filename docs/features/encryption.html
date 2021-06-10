@@ -12,25 +12,25 @@
   and these properties will be automatically encrypted and decrypted as needed.
 </p>
 <p>
-  Encyption/decryption can occur either on the client/application side or by
+  Encryption/decryption can occur either on the client/application side or by
   the database. When we use database encryption then we can use these properties
   in queries as part of the <code>where</code> and <code>order by</code> clause.
   Effectively the encryption of the property is fully transparent to the application.
 </p>
 <p>
-  When we use client/application side encyption/decryption then we can't use the
+  When we use client/application side encryption/decryption then we can't use the
   property in the <code>where</code> and <code>order by</code> clause.
 </p>
 
 <h3>Client/Application encryption</h3>
 <p>
-  When using client/application encyrption the properties are encrypted/decrypted by
+  When using client/application encryption the properties are encrypted/decrypted by
   a Java function - an implementation of the <code>io.ebean.config.Encryptor</code> interface.
   The default implementation uses AES 128 bit based implementation and we can also configure
   Ebean to use another implementation.
 </p>
 <p>
-  Properties encrytped with client/application encryption can <b>NOT</b> be used in <code>where</code>
+  Properties encrypted with client/application encryption can <b>NOT</b> be used in <code>where</code>
   and <code>order by</code> clause.
 </p>
 <pre content="java">
@@ -69,19 +69,20 @@ public interface Encryptor {
 <h3>Database encryption</h3>
 <p>
   When using Database side encryption/decryption we use database stored procedures to encrypt and decrypt
-  the properties. For example with Postgres Ebean uses <code>PGP_SYM_ENCRYPT()</code> and
-  <code>PGP_SYN_DECRYPT()</code>.
+  the properties. For example with Postgres Ebean uses <code>pgp_sym_encrypt()</code> and
+  <code>pgp_sym_decrypt()</code>.
 </p>
 
 <h4>Database encryption functions</h4>
 <p>
-  The default DB encryption decryption functions used for each plaform are:
+  The default DB encryption decryption functions used for each platform are:
 </p>
 <ul>
-  <li>Postgres - PGP_SYM_ENCRYPT(), PGP_SYN_DECRYPT()</li>
-  <li>MySql - AES_ENCRYPT(), AES_DECRYPT()</li>
-  <li>Oracle: requires dbms_crypto and uses custom functions for encryption and decryption</li>
-  <li>H2 -  ENCRYPT() and DECRYPT() with 'AES' option</li>
+  <li><b>Postgres</b> - pgp_sym_decrypt(), pgp_sym_encrypt()</li>
+  <li><b>MySql</b> - aes_encrypt(), aes_decrypt()</li>
+  <li><b>SQL Server</b> - DecryptByPassPhrase(), EncryptByPassPhrase()</li>
+  <li><b>Oracle</b> - requires dbms_crypto and uses custom functions for encryption and decryption</li>
+  <li><b>H2</b> -  encrypt() and decrypt() with 'AES' option</li>
 </ul>
 
 <h3>Supported types</h3>
@@ -92,7 +93,6 @@ public interface Encryptor {
 <ul>
   <li>Enum</li>
   <li>String</li>
-  <li>byte[]</li>
   <li>Date types - LocalDate, Date, Joda LocalDate</li>
   <li>Timestamp types - Timestamp, Instance, OffsetDateTime, ZonedDateTime</li>
 </ul>
