@@ -228,7 +228,7 @@
 
   <h2 id="object-scope">Object graph scope - large queries</h2>
   <p>
-    When you use a <code>findEach()</code>, <code>findEachWhile()</code> or <code>findIterate()</code>
+    When you use a <code>findEach()</code>, <code>findStream()</code> or <code>findIterate()</code>
     streaming type query then Ebean uses a special scope for the persistence context.
     These queries are expected to iterate through arbitrarily large query requests
     and as such we don't want to hold all the object graphs in memory.

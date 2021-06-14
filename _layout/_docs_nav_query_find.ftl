@@ -8,17 +8,15 @@
 <@smallnav activeCheck="${findMap!''}" url="/docs/query/findMap" title="findMap"/>
 <@smallnav activeCheck="${findSet!''}" url="/docs/query/findSet" title="findSet"/>
 <@smallnav activeCheck="${findEach!''}" url="/docs/query/findEach" title="findEach"/>
-<@smallnav activeCheck="${findEachWhile!''}" url="/docs/query/findEachWhile" title="findEachWhile"/>
-<@smallnav activeCheck="${findIterate!''}" url="/docs/query/findIterate" title="findIterate"/>
+<@smallnav activeCheck="${findIterate!''}" url="/docs/query/findEach#findIterate" title="findIterate"/>
+<@smallnav activeCheck="${findStream!''}" url="/docs/query/findEach#findStream" title="findIterate"/>
 
 <@smallnav activeCheck="${findIds!''}" url="/docs/query/findIds" title="findIds"/>
 <@smallnav activeCheck="${findSingleAttribute!''}" url="/docs/query/findSingleAttribute" title="findSingleAttribute"/>
-<@smallnav activeCheck="${findSingleAttributeList!''}" url="/docs/query/findSingleAttributeList" title="findSingleAttributeList"/>
 
 <@smallnav activeCheck="${findFutureCount!''}" url="/docs/query/findFutureCount" title="findFutureCount"/>
 <@smallnav activeCheck="${findFutureList!''}" url="/docs/query/findFutureList" title="findFutureList"/>
 <@smallnav activeCheck="${findFutureIds!''}" url="/docs/query/findFutureIds" title="findFutureIds"/>
 
 <@smallnav activeCheck="${findVersions!''}" url="/docs/query/findVersions" title="findVersions"/>
-<@smallnav activeCheck="${findVersionsBetween!''}" url="/docs/query/findVersionsBetween" title="findVersionsBetween"/>
 

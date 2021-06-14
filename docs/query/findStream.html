@@ -4,48 +4,9 @@
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="Query" href="/docs/query/"/>
   <meta name="bread2" content="findStream" href="/docs/query/findStream"/>
-  <#assign n0_docs="true">
-  <#assign n1_query_find="true">
-  <#assign findStream="true">
+  <meta http-equiv="refresh" content="0; url = findEach"/>
 </head>
 <body>
-
-<h2 id="findStream">findStream</h2>
-<p>
-  Execute the query processing the result as a stream. Use a <code>try with resources</code> block
-  to ensure the resources held by the stream are closed.
-</p>
-<p>
-  Note that this will use a single persistence context and all beans streamed will
-  be held in that persistence context so this isn't appropriate (will require too much
-  memory) when streaming a huge result set and <code>findLargeStream()</code> should be used
-  instead for that case.
-</p>
-
- ```java
-try (Stream<|Customer> stream =
-  new QCustomer()
-   .status.equalTo(Status.NEW)
-   .order().id.asc()
-   .findStream()) {
-
-  stream
-    .filter(...)
-    .map(..)
-    .collect(...);
-}
- ```
-<p>
-  <code>findStream()</code> does a similar job to <a href="findEach"><code>findEach</code></a> and
-  <a href="findIterate"><code>findIterate</code></a> with the difference largely down to style.
-</p>
-
-<h2 id="findLargeStream">findLargeStream</h2>
-<p>
-  <code>findLargeStream()</code> is similar to <code>findStream()</code> except it will use
-  multiple persistence contexts. This means it can process huge result sets.
-</p>
-
-
+<p>Redirecting</p>
 </body>
 </html>

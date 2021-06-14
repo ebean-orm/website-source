@@ -9,45 +9,108 @@
   <#assign findEach= "true">
 </head>
 <body>
-<h2>findEach</h2>
+<h2 id="streaming">Streaming queries</h2>
 <p>
-  This method is appropriate to process a potentially large query result as the
-  beans are consumed one at a time and do not need to be held in memory
-  (unlike <a href="/docs/query/findList">findList</a>,
-  <a href='/docs/query/findSet'>findSet</a>, <a href='/docs/query/findMap'>findMap</a> )
+  The following <a href="#findEach">findEach</a>, <a href="#findIterate">findIterate</a>,
+  and <a href="#findStream">findStream</a> are all streaming queries with only
+  different in terms of style.
+  With these streaming queries we can process very large results without having to hold
+  all results in memory.
 </p>
 <p>
-  Note that <code>findEach</code> (and <a href="/docs/query/findEachWhile">findEachWhile</a>
-  and <a href="/docs/query/findIterate">findIterate</a>) uses a "per graph"
-  persistence context scope and adjusts jdbc fetch buffer size for large
-  queries. As such it is better to use findList for small queries.
-</p>
-<p>
-  Note that internally Ebean can inform the JDBC driver that it is expecting larger
-  resultSet and specifically for <code>MySQL</code> this hint is required to stop it's JDBC driver
-  from buffering the entire resultSet. As such, for smaller resultSets <a href="/docs/query/findList">findList()</a> is
-  generally preferable.
-</p>
-<p>
-  Compared with <a href="/docs/query/findEachWhile">findEachWhile</a> this will always process all the beans where as
-  <a href="/docs/query/findEachWhile">findEachWhile</a> provides a way to stop processing the query result early before
-  all the beans have been read.
-</p>
-<p>
-  This method is functionally equivalent to <a href="/docs/query/findIterate">findIterate()</a> but instead of using an
-  iterator uses the <code>Consumer<T></code> interface which is better suited to use with Java8 closures.
+  From Ebean version 12.3.5 these streaming queries use an "adaptive persistence context".
+  These means that for queries processing less than 1000 beans they use a single normal
+  persistence context. After 1000 beans the persistence context adapts such that it does
+  not hold all the beans.
 </p>
 
- ```java
+<h2 id="findEach">findEach</h2>
+<p>
+  Execute the query processing the result one bean at a time.
+</p>
+<pre content="java">
+new QCustomer()
+ .status.equalTo(Status.NEW)
+ .order().id.asc()
+ .findEach((Customer customer) -> {
+
+   // do something with customer
+   System.out.println("-- visit " + customer);
+ });
+</pre>
+
+<h2 id="findEachWhile">findEachWhile</h2>
+<p>
+  Like <em>findEach</em> but takes a predicate that allows us to stop processing
+  the result early.
+</p>
+<pre content="java">
+// Returning false inside the predicate will stop the execution
 new QCustomer()
    .status.equalTo(Status.NEW)
    .order().id.asc()
-   .findEach((Customer customer) -> {
-
+   .findEachWhile((Customer customer) -> {
      // do something with customer
-     System.out.println("-- visit " + customer);
+     ...
+     // return true to continue processing or false to stop
+     return (customer.getId() < 40);
    });
- ```
+</pre>
 
+<h2 id="findEach-batch">findEach with batch consumer</h2>
+<p>
+  Similar to <em>findEach</em> but batches the beans up so that they can
+  be processed in batches - for example process in batches of 100 at a time.
+</p>
+<pre content="java">
+new QCustomer()
+ .status.equalTo(Status.NEW)
+ .order().id.asc()
+ .findEach(100, batch -> {
+   // process the customers in batches of 100 at a time
+   // where batch is List<|Customer>
+   ...
+ });
+</pre>
+
+<h2 id="findStream">findStream</h2>
+<p>
+  Execute the query processing the result as a stream.
+  Use a <code>try with resources</code> block to ensure the resources held by the stream are closed.
+</p>
+
+<pre content="java">
+try (Stream<|Customer> stream =
+  new QCustomer()
+   .status.equalTo(Status.NEW)
+   .order().id.asc()
+   .findStream()) {
+
+  stream
+    .filter(...)
+    .map(..)
+    .collect(...);
+}
+</pre>
+
+<h2 id="findIterate">findIterate</h2>
+<p>
+  Execute the query processing the result as a QueryIterator.
+  Use a <code>try with resources</code> block to ensure the resources held by the iterator are closed.
+</p>
+
+<pre content="java">
+try (QueryIterator<|Customer> it =
+  new QCustomer()
+   .status.equalTo(Status.NEW)
+   .order().id.asc()
+   .findIterate()) {
+
+   while (it.hasNext()) {
+     Customer customer = it.next();
+     ...
+   }
+}
+</pre>
 </body>
 </html>

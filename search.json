@@ -3472,12 +3472,44 @@
   "url":"/docs/query/findEach"
 }
 ,{
-  "title":"findEachWhile",
+  "title":"findEach - Streaming queries",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/findEachWhile"
+  "url":"/docs/query/findEach#streaming"
+}
+,{
+  "title":"findEach - findEach with batch consumer",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findEach#findEach-batch"
+}
+,{
+  "title":"findEach - findEachWhile",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findEach#findEachWhile"
+}
+,{
+  "title":"findEach - findIterate",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findEach#findIterate"
+}
+,{
+  "title":"findEach - findStream",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findEach#findStream"
 }
 ,{
   "title":"findFutureCount",
@@ -3632,12 +3664,12 @@
   "url":"/docs/query/findSingleAttribute"
 }
 ,{
-  "title":"findSingleAttributeList",
+  "title":"findSingleAttribute - findSingleAttributeList",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/findSingleAttributeList"
+  "url":"/docs/query/findSingleAttribute"
 }
 ,{
   "title":"findStream",
@@ -3648,14 +3680,6 @@
   "url":"/docs/query/findStream"
 }
 ,{
-  "title":"findStream - findLargeStream",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findStream#findLargeStream"
-}
-,{
   "title":"findVersions",
   "caption":"",
   "category":"Query",
@@ -3664,12 +3688,12 @@
   "url":"/docs/query/findVersions"
 }
 ,{
-  "title":"findVersionsBetween",
+  "title":"findVersions - findVersionsBetween",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/findVersionsBetween"
+  "url":"/docs/query/findVersions#between"
 }
 ,{
   "title":"having",

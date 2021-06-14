@@ -16,12 +16,38 @@
 <p>
   Note that this query will work against view based history implementations
   but not sql2011 standards based implementations and we should use
-  <a href="findVersionsBetween">findVersionsBetween</a> that requires
+  <a href="#between">findVersionsBetween</a> that requires
   a start and end timestamp to be specified.
 </p>
 <p>
   Generally this query is expected to be a find by id or unique predicates query.
   It will execute the query against the history returning the versions of the bean.
 </p>
+
+<h2 id="between">findVersionsBetween</h2>
+<p>
+  Return versions of a @History entity bean between the 2 timestamps.
+</p>
+<p>
+  Generally this query is expected to be a find by id or unique predicates query.
+  It will execute the query against the history returning the versions of the bean
+  between the start and end timestamps.
+</p>
+<pre content="java">
+Timestamp start = ...;
+Timestamp end = ...;
+
+List<|Version<|Customer>> customerVersions =
+  new QCustomer()
+    .id.eq(42)
+    .findVersionsBetween(start, end);
+
+for (Version<|Customer> customerVersion : customerVersions) {
+  Customer bean = customerVersion.getBean();
+  Map<|String, ValuePair> diff = customerVersion.getDiff();
+  Timestamp effectiveStart = customerVersion.getStart();
+  Timestamp effectiveEnd = customerVersion.getEnd();
+}
+</pre>
 </body>
 </html>

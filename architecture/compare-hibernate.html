@@ -130,7 +130,7 @@
   JPA does not have a standard approach for large query support but Hibernate has a <code>scroll</code> query.
 </p>
 <p>
-  Ebean's findEach()/findEachWhile() work using a per object graph scope for the persistence context and also
+  Ebean's findEach() work using a per object graph scope for the persistence context and also
   automatically adjust the JDBC fetchSize for cursor/scrolling use such that the JDBC driver (Especially MySql
   and Postgres) don't pull all the results to the client and for MySql runs the findEach() query in a separate
   transaction (such that we can perform query joins and iterate complex object graphs).
