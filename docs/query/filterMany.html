@@ -21,7 +21,26 @@
 <p>
   We use <code>filterMany()</code> to apply the filter to the orders fetched for each customer.
 </p>
- ```java
+<h5>filterMany with simple string expression</h5>
+<pre content="java">
+// query customers fetching 'new orders since last week' ...
+List<|Customer> customers
+  = new QCustomer()
+  .name.istartsWith("Rob")
+  .orders.filterMany("status = ? and orderDate > ?", Order.Status.COMPLETE, lastWeek)
+  .findList();
+</pre>
+<p>
+  In the above example are using a string expression with <code>?</code> as bind parameter
+  placeholders. This is a relatively easy way to add a simple expression.
+</p>
+<p>
+  Below is the same query where instead of using a string expression we create
+  an <code>ExpressionList</code> to use for the <code>filterMany</code>.
+</p>
+
+<h5>filterMany with ExpressionList expression</h5>
+<pre content="java">
 
   // filter orders - status COMPLETE since last week
   ExpressionList<|Order> filterOrders = new QOrder()
@@ -32,31 +51,25 @@
 
   // query customers fetching 'new orders since last week' ...
   List<|Customer> customers
-
     = new QCustomer()
     .name.istartsWith("Rob")                   // (1) filter customers
     .orders.filterMany(filterOrders)           // (2) filter the orders for those customers
     .findList();
 
- ```
-<p>
-  The above ORM query uses 2 sql queries to build the graph.
-</p>
-<h5></h5>
-```sql
--- Primary query - customers ...
-select t0.id, t0.inactive, t0.name, ...
-from customer t0
-where lower(t0.name) like ? escape'|'          -- (1) filter customers
-```
+</pre>
 
-```sql
--- Secondary query - orders for those customers ...
-select t0.customer_id, t0.id, t0.status, t0.order_date, t0.ship_date, ...
-from orders t0
-where (t0.customer_id) in (? )
-  and t0.order_date > ?  and t0.status = ?    -- (2) filter the orders for those customers
-```
+<h5>Example</h5>
+<p>
+  Find customers and their contacts. Filter the contacts to only the contacts
+  whose first name starts with 'Rob'.
+</p>
+<pre content="java">
+  List<|Customer> customers =
+      new QCustomer()
+      .status.eq(Status.NEW)
+      .contacts.filterMany("firstName istartsWith ?", "Rob")
+      .findList();
+</pre>
 
 <@next_edit "Aggregation" "/docs/query/aggregation" "/docs/query/filterMany.html"/>
 </body>
