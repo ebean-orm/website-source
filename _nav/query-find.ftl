@@ -7,9 +7,9 @@
   <@smallnav activeCheck="${findPagedList!''}" url="/docs/query/findPagedList" title="findPagedList"/>
   <@smallnav activeCheck="${findMap!''}" url="/docs/query/findMap" title="findMap"/>
   <@smallnav activeCheck="${findSet!''}" url="/docs/query/findSet" title="findSet"/>
-  <@smallnav activeCheck="${findEach!''}" url="/docs/query/findEach" title="findEach"/>
-  <@smallnav activeCheck="${findStream!''}" url="/docs/query/findEach#findStream" title="findStream"/>
-  <@smallnav activeCheck="${findIterate!''}" url="/docs/query/findEach#findIterate" title="findIterate"/>
+  <@smallnav activeCheck="${streaming!''}" url="/docs/streaming#findEach" title="findEach"/>
+  <@smallnav activeCheck="${streaming!''}" url="/docs/query/streaming#findStream" title="findStream"/>
+  <@smallnav activeCheck="${streaming!''}" url="/docs/query/streaming#findIterate" title="findIterate"/>
   <@smallnav activeCheck="${findIds!''}" url="/docs/query/findIds" title="findIds"/>
   <@smallnav activeCheck="${findSingleAttribute!''}" url="/docs/query/findSingleAttribute" title="findSingleAttribute"/>
   <@smallnav activeCheck="${findFuture!''}" url="/docs/query/findFuture" title="findFuture"/>

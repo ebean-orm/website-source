@@ -3464,54 +3464,6 @@
   "url":"/docs/query/findCount"
 }
 ,{
-  "title":"findEach",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findEach"
-}
-,{
-  "title":"findEach - Streaming queries",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findEach#streaming"
-}
-,{
-  "title":"findEach - findEach with batch consumer",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findEach#findEach-batch"
-}
-,{
-  "title":"findEach - findEachWhile",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findEach#findEachWhile"
-}
-,{
-  "title":"findEach - findIterate",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findEach#findIterate"
-}
-,{
-  "title":"findEach - findStream",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findEach#findStream"
-}
-,{
   "title":"findFuture",
   "caption":"",
   "category":"Query",
@@ -3550,14 +3502,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/findIds"
-}
-,{
-  "title":"findIterate",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findIterate"
 }
 ,{
   "title":"findList",
@@ -3680,14 +3624,6 @@
   "url":"/docs/query/findSingleAttribute"
 }
 ,{
-  "title":"findStream",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/findStream"
-}
-,{
   "title":"findVersions",
   "caption":"",
   "category":"Query",
@@ -3774,6 +3710,62 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/select#asDto"
+}
+,{
+  "title":"streaming",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/streaming"
+}
+,{
+  "title":"streaming - Streaming queries",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/streaming#streaming"
+}
+,{
+  "title":"streaming - findEach",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/streaming#findEach"
+}
+,{
+  "title":"streaming - findEach with batch consumer",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/streaming#findEach-batch"
+}
+,{
+  "title":"streaming - findEachWhile",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/streaming#findEachWhile"
+}
+,{
+  "title":"streaming - findIterate",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/streaming#findIterate"
+}
+,{
+  "title":"streaming - findStream",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/streaming#findStream"
 }
 ,{
   "title":"CI Testing",
