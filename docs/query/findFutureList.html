@@ -3,38 +3,8 @@
   <title>findFutureList | Query | Ebean</title>
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="Query" href="/docs/query/"/>
-  <meta name="bread2" content="findFutureList" href="/docs/query/findFutureList"/>
-  <#assign n0_docs="true">
-  <#assign n1_query_find="true">
-  <#assign findFutureList= "true">
+  <meta http-equiv = "refresh" content = "0; url = findFuture" />
 </head>
 <body>
-<h2>findFutureList</h2>
-<p>
-  findFutureList allows for the background execution of a query which we can wait for and cancel if desired.
-</p>
-```java
-
-// find list using a background thread
-FutureList<Order> futureList =
-  Order.find.where()
-    .status.equalTo(Order.Status.NEW)
-    .findFutureList();
-
-  // do something else ...
-
-if (!futureList.isDone()){
-  // you can cancel the query. If supported by the JDBC
-  // driver and database this will actually cancel the
-  // sql query execution on the database
-  futureList.cancel(true);
-}
-
-// wait for the query to finish ... no timeout
-List<|Order> list = futureList.get();
-
-// wait for the query to finish ... with a 30sec timeout
-List<|Order> list2 = futureList.get(30, TimeUnit.SECONDS);
-```
 </body>
 </html>

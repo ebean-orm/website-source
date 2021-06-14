@@ -10,13 +10,8 @@
 <@smallnav activeCheck="${findEach!''}" url="/docs/query/findEach" title="findEach"/>
 <@smallnav activeCheck="${findIterate!''}" url="/docs/query/findEach#findIterate" title="findIterate"/>
 <@smallnav activeCheck="${findStream!''}" url="/docs/query/findEach#findStream" title="findIterate"/>
-
 <@smallnav activeCheck="${findIds!''}" url="/docs/query/findIds" title="findIds"/>
 <@smallnav activeCheck="${findSingleAttribute!''}" url="/docs/query/findSingleAttribute" title="findSingleAttribute"/>
-
-<@smallnav activeCheck="${findFutureCount!''}" url="/docs/query/findFutureCount" title="findFutureCount"/>
-<@smallnav activeCheck="${findFutureList!''}" url="/docs/query/findFutureList" title="findFutureList"/>
-<@smallnav activeCheck="${findFutureIds!''}" url="/docs/query/findFutureIds" title="findFutureIds"/>
-
+<@smallnav activeCheck="${findFuture!''}" url="/docs/query/findFuture" title="findFuture"/>
 <@smallnav activeCheck="${findVersions!''}" url="/docs/query/findVersions" title="findVersions"/>
 

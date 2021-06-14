@@ -3512,28 +3512,36 @@
   "url":"/docs/query/findEach#findStream"
 }
 ,{
-  "title":"findFutureCount",
+  "title":"findFuture",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/findFutureCount"
+  "url":"/docs/query/findFuture"
 }
 ,{
-  "title":"findFutureIds",
+  "title":"findFuture - findFutureCount",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/findFutureIds"
+  "url":"/docs/query/findFuture#findFutureCount"
 }
 ,{
-  "title":"findFutureList",
+  "title":"findFuture - findFutureIds",
   "caption":"",
   "category":"Query",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/query/findFutureList"
+  "url":"/docs/query/findFuture#findFutureIds"
+}
+,{
+  "title":"findFuture - findFutureList",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findFuture"
 }
 ,{
   "title":"findIds",
