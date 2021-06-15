@@ -18,48 +18,77 @@
   We need to use the <code>select()</code> method to select which column to retrieve the value for.
 </p>
 
+<h4>Example: single property</h4>
 <pre content="java">
+ var cust = QCustomer.alias();
+
  String name = new QCustomer()
-     .select("name")
+     .select(cust.name)
      .id.equalTo(42)
      .findSingleAttribute();
 </pre>
-
 <p>
   This translates to an <code>SQL</code> query that only has the single property in the
   select clause, like the following:
 </p>
 <pre content="sql">
-    select t0.name from customers t0 where t0.id = 42
+  select t0.name from customers t0 where t0.id = 42
+</pre>
+
+<h4>Example: sql function</h4>
+<pre content="java">
+List<|String> names =
+  new QContact()
+    .select("concat(lastName,', ',firstName)")
+    .lastName.startsWith("A")
+    .findSingleAttributeList();
+</pre>
+
+<h2>Casting result type</h2>
+<p>
+  When using sql functions sometimes we need to use a <code>::type</code> to denote
+  what logical type we are going to get back via JDBC. In the example below we
+  cast the sql function result via <code>::BigDecimal</code> such that Ebean will
+  read the result of the function via JDBC as a BigDecimal.
+</p>
+<p>
+  The <em>type</em> is the short name of any scalar type that Ebean supports. Most
+  commonly this would be <em>BigDecimal, Long, String</em> but any scalar type that
+  Ebean supports can be used.
+</p>
+<h4>Example: sql function</h4>
+<pre content="java">
+// given route is a Postgis geometry(linestring,4326)
+// return the distance between the start and end points
+
+BigDecimal routeDistance =
+  new QTrip()
+    .select("ST_Distance(ST_StartPoint(route), ST_EndPoint(route))::BigDecimal")
+    .id.eq(tripId)
+    .findSingleAttribute();
 </pre>
 <p>
-  If we use more than one value in the <code>select</code> clause (like <code>select("name,email")</code>
-  only the first will be returned.
+  The above uses <code>::BigDecimal</code> such that the result of the sql function
+  is read as a BigDecimal.
 </p>
 
 <h2>findSingleAttributeList</h2>
 <p>
-  Execute the query returning a list of values for a single property.
-  We need to use the <code>select()</code> method to select which column you want to retrieve the value
+  The same as findSingleAttribute but returning a list of results.
 </p>
 
-<h3>Example 1:</h3>
+<h3>Example</h3>
 <pre content="java">
-List<|String> names = new QCustomer()
-    .select("name")
-    .order().name.asc()
-    .findSingleAttributeList();
-</pre>
-<h3>Example 2:</h3>
+var cust = QCustomer.alias();
 
-<pre content="java">
-List<|String> names = new QCustomer()
+List<|String> names
+  = new QCustomer()
     .setDistinct(true)
-    .select("name")
-    .status.equalTo(Customer.Status.NEW)
-    .orderBy().name.asc()
-    .setMaxRows(100)
+    .select(cust.name)
+    .order()
+      .name.asc()
     .findSingleAttributeList();
 </pre>
+
 </body>
 </html>
