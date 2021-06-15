@@ -3616,6 +3616,14 @@
   "url":"/docs/query/findSingleAttribute"
 }
 ,{
+  "title":"findSingleAttribute - Casting result type",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/findSingleAttribute"
+}
+,{
   "title":"findSingleAttribute - findSingleAttributeList",
   "caption":"",
   "category":"Query",
