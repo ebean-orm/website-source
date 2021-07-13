@@ -11,7 +11,7 @@
 <body>
 <h2>JPA Mapping limitations</h2>
 <p>
-  There are 2 known JPA mappings that Ebean does not support.
+  There are 3 known JPA mappings that Ebean does not support.
 </p>
 
 <table class="table">
@@ -38,6 +38,18 @@
         a type to be mapped consistently for all properties that it is used.
         For example, we can't have to Converters mapping Boolean two different ways
         in the same Ebean database instance.
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/ebean-orm/ebean/issues/2242">2242</a></td>
+    <td>
+      <p>
+        @Embeddable class does not support @OneToMany / @ElementCollection.
+      </p>
+      <p>
+        As @Embeddable does not have identity the case of supporting collections
+        gets ugly. At this stage there is no planned support for this.
       </p>
     </td>
   </tr>
