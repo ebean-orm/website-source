@@ -3128,6 +3128,14 @@
   "url":"/docs/query/query-beans#enhancement"
 }
 ,{
+  "title":"Query beans - Groovy Spock",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/query-beans#groovy"
+}
+,{
   "title":"RawSql",
   "caption":"",
   "category":"Query",

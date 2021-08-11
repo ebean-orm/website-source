@@ -32,15 +32,14 @@
 
   <h5>Examples:</h5>
 
-  ```java
-
+  <pre content="java">
   Contact contact =
     new QContact()                                // Contact query bean
       .email.equalTo("rob@foo.com")               // type safe expression
       .findOne();                                 // with IDE auto-completion
-  ```
+  </pre>
 
-  ```java
+  <pre content="java">
 
   List<|Customer> customers =
     new QCustomer()                                // Customer query bean
@@ -48,7 +47,7 @@
       .billingAddress.city.equalTo("Auckland")     // joins automatically added
       .contacts.isEmpty()                          // to support expressions
       .findList();
-  ```
+  </pre>
 
   <h2 id="apt" class="art">APT / KAPT <em>(generating query beans)</em></h2>
   <p>
@@ -77,11 +76,12 @@
   </p>
 
   <h5>Example (Pre 12.1.8)</h5>
-  ```properties
+  <pre content="properties">
   entity-packages: org.example.domain
   transactional-packages: org.example
   querybean-packages: org.example
-  ```
+
+  </pre>
 
   <h2 id="caveats" class="art">Caveats</h2>
 
@@ -94,6 +94,27 @@
     Once we do a <code>build all</code> this will effectively delete the old query beans and generate the new ones.
     At this point we get compiler errors for the queries that we need to adjust (use the new query bean names).
   </p>
+
+  <h2 id="groovy">Groovy Spock</h2>
+  <p>
+    When using query beans with Groovy perhaps in Spock tests we need to use them inside a <code>@CompileStatic</code>
+    block.
+  </p>
+  <pre content="groovy">
+  @CompileStatic
+  static def findCount(String name) {
+    return new QDbSample().name.eq(name).findCount()
+  }
+  </pre>
+  <p>
+    Then we can use the helper method in our spock test like:
+  </p>
+  <pre content="groovy">
+  ...
+  then:
+    // this line NPEs
+    findCount('fred') == 1
+  </pre>
 
   <@next_edit "Where" "/docs/query/where" "/docs/query/query-beans.html"/>
 </body>
