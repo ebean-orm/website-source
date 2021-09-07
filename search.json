@@ -2744,14 +2744,6 @@
   "url":"/docs/query/expressions#eq"
 }
 ,{
-  "title":"Expressions - example",
-  "caption":"",
-  "category":"Query",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/query/expressions#example"
-}
-,{
   "title":"Expressions - ge - greater than or equal",
   "caption":"",
   "category":"Query",
@@ -2766,6 +2758,30 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/expressions#gt"
+}
+,{
+  "title":"Expressions - iendsWith - case-insensitive endsWith",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/expressions#iendsWith"
+}
+,{
+  "title":"Expressions - ieq - case-insensitive equal to",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/expressions#ieq"
+}
+,{
+  "title":"Expressions - ilike - case-insensitive like",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/expressions#ilike"
 }
 ,{
   "title":"Expressions - in()",
@@ -2822,6 +2838,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/expressions#isNull"
+}
+,{
+  "title":"Expressions - istartsWith - case-insensitive startsWith",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/expressions#istartsWith"
 }
 ,{
   "title":"Expressions - le - less than or equal",

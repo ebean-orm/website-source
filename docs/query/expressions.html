@@ -204,11 +204,31 @@ List<|Contact> contacts =
     .findList();
 </pre>
 
+<h2 id="ilike">ilike - case-insensitive like</h2>
+<p>
+  With <code>ilike</code> we use the SQL <code>%</code> and <code>_</code> place holder
+  characters to match varchar properties.
+</p>
+<pre content="java">
+List<|Contact> contacts =
+  new QContact()
+    .firstName.ilike("Rob%")
+    .findList();
+</pre>
+
 <h2 id="startsWith">startsWith</h2>
 <pre content="java">
 List<|Contact> contacts =
   new QContact()
     .firstName.startsWith("Rob")
+    .findList();
+</pre>
+
+<h2 id="istartsWith">istartsWith - case-insensitive startsWith</h2>
+<pre content="java">
+List<|Contact> contacts =
+  new QContact()
+    .firstName.istartsWith("Rob")
     .findList();
 </pre>
 
@@ -220,6 +240,14 @@ List<|Contact> contacts =
     .findList();
 </pre>
 
+<h2 id="iendsWith">iendsWith - case-insensitive endsWith</h2>
+<pre content="java">
+List<|Contact> contacts =
+  new QContact()
+    .email.iendsWith("@foo.com")
+    .findList();
+</pre>
+
 <h2 id="contains">contains</h2>
 <pre content="java">
 List<|Contact> contacts =
@@ -228,12 +256,19 @@ List<|Contact> contacts =
     .findList();
 </pre>
 
-
 <h2 id="eq">eq - equal to</h2>
 <pre content="java">
 List<|Order> orders =
   new QOrder()
     .status.eq(Order.Status.NEW)
+    .findList();
+</pre>
+
+<h2 id="ieq">ieq - case-insensitive equal to</h2>
+<pre content="java">
+List<|Customer> orders =
+  new QCustomer()
+    .name.ieq("rob")
     .findList();
 </pre>
 
@@ -286,28 +321,70 @@ List<|Order> orders =
 </pre>
 
 <h2 id="betweenProperties">betweenProperties</h2>
-
-<h2 id="example">example</h2>
+<p>
+  When a value is between 2 properties.
+</p>
+<pre content="java">
+Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+ ...
+ .where().betweenProperties("effectiveStart", "effectiveEnd", timestamp)
+</pre>
 
 <span id="bitwise"></span>
 <h2 id="bitwiseAny">bitwiseAny</h2>
+<pre content="java">
+ flags.bitwiseAny(BwFlags.HAS_BULK + BwFlags.HAS_SIZE)
+</pre>
 
 <h2 id="bitwiseAnd">bitwiseAnd</h2>
+<pre content="java">
+ int selectedFlags = BwFlags.HAS_BULK + BwFlags.HAS_SIZE;
+ int mask = BwFlags.HAS_SIZE; // Only Size flag set
+
+ bitwiseAnd(selectedFlags, mask)
+</pre>
 
 <h2 id="bitwiseAll">bitwiseAll</h2>
+<pre content="java">
+ flags.bitwiseAll(BwFlags.HAS_BULK + BwFlags.HAS_COLOUR)
+</pre>
 
 <h2 id="bitwiseNot">bitwiseNot</h2>
+<pre content="java">
+ flags.bitwiseNot(BwFlags.HAS_COLOUR)
+</pre>
 
 
 <span id="array"></span>
+<p>
+  The following expressions are for <code>@DbArray</code>.
+  In these examples contact phoneNumbers is a <code>@DbArray</code>.
+</p>
 <h2 id="arrayContains">arrayContains</h2>
 
+<pre content="java">
+   new QContact()
+    .phoneNumbers.contains("4321")
+    .findList();
+</pre>
 <h2 id="arrayNotContains">arrayNotContains</h2>
-
+<pre content="java">
+   new QContact()
+    .phoneNumbers.notContains("4321")
+    .findList();
+</pre>
 <h2 id="arrayIsEmpty">arrayIsEmpty</h2>
-
+<pre content="java">
+   new QContact()
+    .phoneNumbers.isEmpty()
+    .findList();
+</pre>
 <h2 id="arrayIsNotEmpty">arrayIsNotEmpty</h2>
-
+<pre content="java">
+   new QContact()
+    .phoneNumbers.isNotEmpty()
+    .findList();
+</pre>
 
 <@next "OrderBy" "/docs/query/orderBy"/>
 </body>
