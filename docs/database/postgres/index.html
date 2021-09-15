@@ -100,7 +100,7 @@ public class DEvent extends BaseDomain {
 <p>
   We can specify extensions that should be installed automatically via:
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     platform: postgres #, h2, postgres, mysql, oracle, sqlserver
@@ -108,7 +108,7 @@ ebean:
     dbName: myapp
     postgres:
       extensions: pgcrypto, hstore
-```
+</pre>
 
 <h2 id="schema">Schema</h2>
 <p>
@@ -122,15 +122,54 @@ ebean:
   <code>myapp</code> it is advisable to have the DB user/role match and be <code>myapp</code>.
 </p>
 <h5>application.yaml</h5>
-```yml
+<pre content="yml">
 ebean:
   dbSchema: myapp  ## use this database schema
-```
+</pre>
 
 <h5>DatabaseConfig</h5>
-```java
+<pre content="java">
 databaseConfig.setDbSchema("myapp");
-```
+</pre>
+
+<h2 id="starting">Starting docker postgres programmatically</h2>
+<p>
+  We can programmatically start a docker container version of Postgres. This can be a useful way to run an
+  application locally.
+</p>
+<p>
+  The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
+  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:4.2</code>
+  as a dependency.
+</p>
+
+<pre content="java">
+package main;
+
+import io.ebean.docker.commands.PostgresConfig;
+import io.ebean.docker.commands.PostgresContainer;
+
+public class StartPostgres {
+
+  public static void main(String[] args) {
+
+    PostgresConfig config = new PostgresConfig("13");
+    config.setPort(5432);
+    config.setDbName("unit");
+    config.setUser("unit");
+    config.setPassword("unit");
+    config.setContainerName("pg13x");
+    config.setExtensions("hstore,pgcrypto");
+
+    PostgresContainer container = new PostgresContainer(config);
+    container.startWithDropCreate();
+  }
+}
+</pre>
+<p>
+  The above will programmatically start a Postgres 13 docker container on port 5432. It will create a database
+  and user with container name <em>pg13x</em>. It will drop and re-create the container if the container already exists.
+</p>
 
 <h2 id="postgis">PostGIS</h2>
 <p>
