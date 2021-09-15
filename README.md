@@ -18,9 +18,9 @@ Source for the website for Ebean ORM.
 mkdir website-dest
 ```
 
-### 2. Download avaje-website-generator-2.1.2.jar
+### 2. Download avaje-website-generator-2.2.2.jar
 
-- download https://repo1.maven.org/maven2/org/avaje/avaje-website-generator/2.1.2/avaje-website-generator-2.1.2.jar
+- download https://repo1.maven.org/maven2/org/avaje/avaje-website-generator/2.2.2/avaje-website-generator-2.2.2.jar
 
 
 
@@ -28,7 +28,7 @@ mkdir website-dest
 ### 3. run the website generator
 
 ```bash
-java -jar avaje-website-generator-2.1.2.jar -s website-source/ -d website-dest/
+java -jar avaje-website-generator-2.2.2.jar -s website-source/ -d website-dest/
 ```
 
 This website generator will:
