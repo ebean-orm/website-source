@@ -896,6 +896,14 @@
   "url":"/docs/database/mysql#history"
 }
 ,{
+  "title":"MySql - Starting docker mysql programmatically",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mysql#starting"
+}
+,{
   "title":"MySql - Types",
   "caption":"",
   "category":"Database platforms",

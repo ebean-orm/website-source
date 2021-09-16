@@ -93,6 +93,63 @@ ebean:
   History support for MySQL is provided by generating triggers and history table.
 </p>
 
+<h2 id="starting">Starting docker mysql programmatically</h2>
+<p>
+  We can programmatically start a docker container version of mysql. This can be a useful way to run an
+  application locally.
+</p>
+<p>
+  The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
+  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:4.2</code>
+  as a dependency.
+</p>
+
+<pre content="java">
+package main;
+
+import io.ebean.docker.commands.MySqlConfig;
+import io.ebean.docker.commands.MySqlContainer;
+
+public class StartMySql {
+
+  public static void main(String[] args) {
+
+    MySqlConfig config = new MySqlConfig("8.0");
+    config.setDbName("my_db");
+    config.setUser("my_user");
+    config.setPassword("my_pass");
+
+    // by default this mysql docker collation is case sensitive using utf8mb4_bin
+    // config.setCollation("default");
+    // config.setCollation("utf8mb4_unicode_ci");
+    // config.setCharacterSet("utf8mb4");
+
+    MySqlContainer container = new MySqlContainer(config);
+    container.startWithDropCreate();
+  }
+}
+</pre>
+<p>
+  The above will programmatically start a MySql 8 docker container on <b>port 4306</b>. It will create a database
+  and user with container name <em>ut_mysql</em>. It will drop and re-create the container if the container already exists.
+</p>
+
+<h3>Docker trace logging</h3>
+<p>
+  Set the logging level for <code>io.ebean.docker</code> to <code>trace</code> to help trouble shoot any issues or
+  understand what ebean-test-docker is doing.
+</p>
+<pre content="console">
+15:59:48.965 [main] TRACE i.e.d.c.Commands - sqlRun: select User from user where User = 'my_user'
+15:59:48.980 [main] TRACE i.e.d.c.Commands - sqlRun: show databases like 'my_db'
+15:59:48.982 [main] DEBUG i.e.d.c.Commands - sqlRun: drop database my_db
+15:59:48.987 [main] TRACE i.e.d.c.Commands - sqlRun: show databases like 'my_db'
+15:59:48.989 [main] DEBUG i.e.d.c.Commands - sqlRun: create database my_db
+15:59:48.995 [main] DEBUG i.e.d.c.Commands - sqlRun: set global log_bin_trust_function_creators=1
+15:59:48.996 [main] TRACE i.e.d.c.Commands - sqlRun: select User from user where User = 'my_user'
+15:59:48.997 [main] DEBUG i.e.d.c.Commands - sqlRun: create user 'my_user'@'%' identified by 'my_pass'
+15:59:49.001 [main] DEBUG i.e.d.c.Commands - sqlRun: grant all on my_db.* to 'my_use
+</pre>
 
 <@next_edit "MariaDB" "/docs/database/mariadb" "/docs/database/mysql/index.html"/>
 
