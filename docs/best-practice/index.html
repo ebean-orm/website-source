@@ -263,22 +263,22 @@
     query against the database.
   </p>
 
-  <h4>Do <b>NOT</b> do this - uses an extra database query</h4>
+  <h4>Do <b>NOT</b> do this - as it executes an extra database query</h4>
   <#include "/_common/lang-buttons.html">
   <div class="code-java">
     <pre content="java">
       Order order = new Order()
-      order.setCustomer(DB.find(Customer.class, 42)); // extra db query for customer
+      order.setCustomer(database.find(Customer.class, 42)); // extra db query for customer
       ...
-      order.save();
+      database.save(order);
     </pre>
   </div>
   <div class="code-kt">
     <pre content="kotlin">
       val order = new Order()
-      order.setCustomer(DB.find(Customer.class, 42));
+      order.setCustomer(database.find(Customer.class, 42));
       ...
-      order.save()
+      database.save(order)
     </pre>
   </div>
 
@@ -287,17 +287,17 @@
   <div class="code-java">
     <pre content="java">
       Order order = new Order()
-      order.setCustomer(DB.getReference(Customer.class, 42)); // no extra db query
+      order.setCustomer(database.getReference(Customer.class, 42)); // no extra db query
       ...
-      order.save();
+      database.save(order);
     </pre>
   </div>
   <div class="code-kt">
     <pre content="kotlin">
       val order = new Order()
-      order.setCustomer(DB.getReference(Customer.class, 42));
+      order.setCustomer(database.getReference(Customer.class, 42));
       ...
-      order.save()
+      database.save(order)
     </pre>
   </div>
 
