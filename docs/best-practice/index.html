@@ -254,36 +254,49 @@
 
   <h2 id="reference-beans">Reference beans</h2>
   <p>
-    Use reference beans to have a bean with an <code>@Id</code> rather than execute a
-    query to find by id unless we really want to query the DB (to confirm existence typically).
+    When we have the id value, use a reference bean rather than execute a
+    query to find by id - unless we really want to query the database of course.
   </p>
+  <p>
+    That is, for inserts and updates when we have the <code>@Id</code> value we can
+    use reference bean for the <em>foreign key value</em>> rather than execute an extra
+    query against the database.
+  </p>
+
+  <h4>Do <b>NOT</b> do this - uses an extra database query</h4>
   <#include "/_common/lang-buttons.html">
   <div class="code-java">
     <pre content="java">
-      // using a finder to get reference bean
-      Customer customer = Customer.find.ref(42);
-
-      // using database to get reference bean
-      Customer customer = DB.getReference(Customer.class, 42);
-
-      // reference bean populates the FK column
-      Order order = new Order(customer)
-      order. ...
+      Order order = new Order()
+      order.setCustomer(DB.find(Customer.class, 42)); // extra db query for customer
+      ...
       order.save();
     </pre>
   </div>
   <div class="code-kt">
     <pre content="kotlin">
-      // using a finder to get reference bean
-      val customer = Customer.ref(42)
+      val order = new Order()
+      order.setCustomer(DB.find(Customer.class, 42));
+      ...
+      order.save()
+    </pre>
+  </div>
 
-      // using database to get reference bean
-      val customer = DB.getReference(Customer::class.java, 42)
-
-
-      // reference bean populates the FK column
-      val order = new Order(customer)
-      order. ...
+  <h4>Do <b>THIS</b> - use reference bean instead</h4>
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      Order order = new Order()
+      order.setCustomer(DB.getReference(Customer.class, 42)); // no extra db query
+      ...
+      order.save();
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      val order = new Order()
+      order.setCustomer(DB.getReference(Customer.class, 42));
+      ...
       order.save()
     </pre>
   </div>
