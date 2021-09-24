@@ -37,7 +37,7 @@
 <p>&nbsp;</p>
 <div class="grid g2">
   <div>
-    <h4>Add -javaagent</h4>
+    <h3>Add -javaagent</h3>
     <p>
       Add the ebean-agent as a VM -javaagent argument to the JRE.
       Use this JRE for your project.
@@ -47,6 +47,47 @@
     <img src="/images/eclipse-jre-agent.png" width="450">
   </div>
 </div>
+
+<h2 id="eclipse-maven">Eclipse maven and annotation processing</h2>
+<p>
+  With Ebean we can use <a href="/docs/query/query-beans">query beans</a> to create strongly typed
+  queries. To do this we use annotation processing to generate the query beans.
+</p>
+<p>
+  To get Eclipse IDE to easily use annotation processing we should install the <code>m2e apt</code>
+  plugin and enable it on the project.
+</p>
+<div class="grid g2">
+  <div>
+    <h3>Install m2e-apt plugin</h3>
+    <p>
+      <b>Help</b> > <b>Eclipse Marketplace</b>
+    </p>
+    <p>
+      Install the m2e-apt plugin from the eclipse marketplace.
+    </p>
+  </div>
+  <div>
+    <img src="/images/eclipse-m2e-apt.png" width="450">
+  </div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="grid g2">
+  <div>
+    <h3>Enable m2e-apt plugin</h3>
+    <p>
+      <b>Properties</b> > <b>Java Compiler</b> > <b>Annotation processing</b>
+    </p>
+    <p>
+      Enable the m2e-apt plugin on the project.
+    </p>
+  </div>
+  <div>
+    <img src="/images/eclipse-m2e-apt-enable.png" width="450">
+  </div>
+</div>
+
 
 <nav class="next">
   <p class="next">

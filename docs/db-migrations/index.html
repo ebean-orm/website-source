@@ -25,22 +25,22 @@
 
 <h2 id="generate">Generate a Migration</h2>
 <p>
-  In <code>src/test/java</code> add code to generate migrations.
+  In <code>src/test/java</code> add code to generate migrations. This first example generates
+  database migrations for a single database platform - Postgres in this example.
 </p>
-  ```java
+<pre content="java">
 package main;
 
 import io.ebean.annotation.Platform;
 import io.ebean.dbmigration.DbMigration;
 import java.io.IOException;
 
-public class GenerateDbMigration {
+public class MigrationGenerator {
 
   /**
    * Generate the next "DB schema DIFF" migration.
    */
   public static void main(String[] args) throws IOException {
-
 
     DbMigration dbMigration = DbMigration.create();
     dbMigration.setPlatform(Platform.POSTGRES);
@@ -48,31 +48,68 @@ public class GenerateDbMigration {
     dbMigration.generateMigration();
   }
 }
-```
+</pre>
+
+<h3 id="multi-generation">Multi-platform migration generation</h3>
 <p>
-  To generate a migration we run this main method.
+  To generate migrations for multiple different database platforms we use <code>addPlatform()</code>
+  for each platform we want to generate migrations for. In the below example we generate migrations
+  for Postgres, SqlServer and MySql.
+</p>
+<pre content="java">
+...
+public class MigrationGenerator {
+
+  /**
+   * Generate the next "DB schema DIFF" migration.
+   */
+  public static void main(String[] args) throws IOException {
+
+    DbMigration dbMigration = DbMigration.create();
+
+    dbMigration.addPlatform(Platform.POSTGRES);
+    dbMigration.addPlatform(Platform.SQLSERVER17);
+    dbMigration.addPlatform(Platform.MYSQL);
+
+    dbMigration.generateMigration();
+  }
+}
+</pre>
+<p>
+  Run the main method to generate the database migration. If nothing has changed then no
+  migration will be generated. If the model has changed then the database migration is
+  generated for the DIFF to the model.
 </p>
 <p>
-  We run this manually when we have completed some work and consider it ready to be released.
-  Running the generation starts the EbeanServer in offline mode, performs a DIFF of the
-  model and generates the migration DDL script.
+  Running the generation starts Ebean in offline mode (we do not need a database running
+  to generate the migration). Ebean performs a DIFF to the model and generates the migration
+  DDL script(s) for the platforms that we specified.
+</p>
+<p>
+  By default the generated migrations go into <code>src/main/resources/dbmigration</code>.
 </p>
 
 <h2 id="run">Running migrations</h2>
 <p>
   To get Ebean to run the DB migrations on startup set <code>ebean.migration.run</code> to true.
 </p>
-<h5>In application.yml</h5>
-```yml
-## run migrations when the EbeanServer starts
+<h5>Via properties - e.g. application.properties</h5>
+<pre content="properties">
+## run migrations when the Ebean starts
+ebean.migration.run=true
+</pre>
+
+<h5>Via yaml - e.g. application.yaml</h5>
+<pre content="yml">
+## run migrations when the Ebean starts
 ebean:
   migration:
     run: true
-```
+</pre>
 <p>
   With <code>ebean.migration.run=true</code> then when Ebean starts it will look at the
   migrations and run any that need to be run.  The migration runner will by default create a table
-  called <code>db_migration</code> that holds the meta data about the migrations that have been run
+  called <code>db_migration</code> that holds the metadata about the migrations that have been run
   and inserts into this table when migrations are successfully executed.
 </p>
 
