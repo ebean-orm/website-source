@@ -131,7 +131,7 @@
   new Country("NZ", "New Zealand").save();
 
   // reference bean (only has @Id property loaded)
-  Country nzRefBean = ebeanServer.getReference(Country.class, "NZ");
+  Country nzRefBean = database.getReference(Country.class, "NZ");
 
   // reference bean using a "finder"
   Country nzRefBean = Country.find.ref("NZ");

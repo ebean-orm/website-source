@@ -46,7 +46,7 @@
   <h2 id="l2-l3">L2/local and L3/remote</h2>
   <p>
     L2 cache can thought of as having <code>Near Caches</code> and <code>Remote Caches</code> where
-    a "Near cache" is in the same process as the EbeanServer instance (and does not require a network
+    a "Near cache" is in the same process as the Ebean instance (and does not require a network
     access) and a "Remote cache" that requires a network access.
   </p>
 
@@ -218,14 +218,14 @@
 
   ```java
   // clearAll() caches via the ServerCacheManager ...
-  ServerCacheManager serverCacheManager = ebeanServer.getServerCacheManager();
+  ServerCacheManager cacheManager = database.cacheManager();
 
   // Clear all the caches on the default/primary EbeanServer
-  serverCacheManager.clearAll();
+  cacheManager.clearAll();
 
   // clear both the bean and query cache
   // for Country beans ...
-  serverCacheManager.clear(Country.class);
+  cacheManager.clear(Country.class);
   ```
 
 </body>

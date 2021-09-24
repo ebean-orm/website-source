@@ -196,7 +196,7 @@ try (Transaction transaction = DB.beginTransaction()) {
 </p>
 
 ```java
-Transaction transaction = ebeanServer.beginTransaction();
+Transaction transaction = database.beginTransaction();
 try {
   // turn of cascade persist
   transaction.setCascadePersist(false);

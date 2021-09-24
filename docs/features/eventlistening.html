@@ -90,13 +90,13 @@ public class Customer {
 
 <p>Note that if want to totally change the finding, you need to use a BeanQueryAdapter rather than using postLoad().</p>
 
-<p>Note that getTransaction() on the PersistRequest returns the transaction used for the insert, update, delete or fetch. To explicitly use this same transaction you should use this transaction via methods on EbeanServer.</p>
+<p>Note that getTransaction() on the PersistRequest returns the transaction used for the insert, update, delete or fetch. To explicitly use this same transaction you should use this transaction via methods on database.</p>
 
 ```java
 Object extaBeanToSave = ...;
 Transaction t = request.getTransaction();
-EbeanServer server = request.getEbeanServer();
-server.save(extraBeanToSave, t);
+Database database = request.database();
+database.save(extraBeanToSave, t);
 ```
 
 <p>It is worth noting that BeanPersistListener is different in three main ways from BeanPersistController postXXX methods.</p>

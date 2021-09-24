@@ -140,13 +140,13 @@
 
   MyChangeLogPrepare changeLogPrepare = ...;
 
-  ServerConfig config = new ServerConfig();
+  DatabaseConfig config = new DatabaseConfig();
   ...
   // register explicitly here
   config.setChangeLogPrepare(changeLogPrepare);
 
 
-  EbeanServer server = EbeanServerFactory.create(config);
+  Database database = DatabaseFactory.create(config);
   ...
 
   ```

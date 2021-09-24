@@ -196,7 +196,7 @@
     In <code>src/test/java</code> add the following code with a <code>main method</code>.
   </p>
   <p>
-    Running this main method will generate the next migration and starts the EbeanServer
+    Running this main method will generate the next migration and starts Ebean
     in <code>offline mode</code>. This offline mode means we don't need to start the application
     or need a database to generate the migration.
   </p>
@@ -232,7 +232,7 @@ public class GenerateDbMigration {
   <h4>Ebean's migration runner</h4>
   ```properties
 
-  ## run migrations when the EbeanServer starts
+  ## run migrations when Ebean starts
   ebean.migration.run=true
 
   ## optionally specify different DB credentials

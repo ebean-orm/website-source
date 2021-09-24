@@ -42,7 +42,7 @@ public class BaseSoftDelete {
 ```java
 
   // delete becomes an update if the bean has soft delete property
-  ebeanServer.delete(bean);
+  database.delete(bean);
 
 ```
 
@@ -59,7 +59,7 @@ public class BaseSoftDelete {
 ```java
 
   // delete becomes an update if the bean has soft delete property
-  ebeanServer.deletePermanent(bean);
+  database.deletePermanent(bean);
 
 ```
 
@@ -123,7 +123,7 @@ public class BaseSoftDelete {
 
   // find a bean that could be soft deleted
   List<MyBean> beans =
-    ebeanServer.find(MyBean.class)
+    database.find(MyBean.class)
     .includeSoftDeletes()
     .where().icontains("name", "rob")
     .findList();
@@ -131,7 +131,7 @@ public class BaseSoftDelete {
 
   // find a bean that could be soft deleted
   MyBean bean =
-    ebeanServer.find(MyBean.class)
+    database.find(MyBean.class)
       .includeSoftDeletes()
       .setId(idValue)
       .findOne();

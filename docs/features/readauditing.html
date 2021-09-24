@@ -83,7 +83,7 @@
   <p>
     If scanning is not used or the ReadAuditPrepare implementation has dependencies and its
     instantiation should be performed externally to Ebean then you can register it explicitly
-    with the ServerConfig.
+    with the DatabaseConfig.
   </p>
 
   ```java
@@ -92,7 +92,7 @@
 
   MyReadAuditPrepare readAuditPrepare = ...;
 
-  ServerConfig config = new ServerConfig();
+  DatabaseConfig config = new DatabaseConfig();
   ...
 
   // register explicitly here
@@ -100,7 +100,7 @@
 
 
   ...
-  EbeanServer server = EbeanServerFactory.create(config);
+  Database database = DatabaseFactory.create(config);
 
   ```
 

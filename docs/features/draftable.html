@@ -132,20 +132,20 @@
 
 ```java
 
-  EbeanServer server = Ebean.getDefaultServer();
+  Database database = DB.getDefault();
 
   // publish a single bean (from draft to live)
   // returning the 'live' bean
-  Document liveDoc = server.publish(Document.class, docId);
+  Document liveDoc = database.publish(Document.class, docId);
 
 
   // publish using a query
-  Query<Link> pubQuery = server.find(Link.class)
+  Query<Link> pubQuery = database.find(Link.class)
     .where().idIn(ids)
     .order().asc("id");
 
   // publish returning the resulting 'live' beans
-  List<Link> pubList = server.publish(pubQuery);
+  List<Link> pubList = database.publish(pubQuery);
 
 ```
   <h2 id="draft-restore">Draft Restore</h2>
@@ -156,19 +156,18 @@
 
 ```java
 
-  EbeanServer server = Ebean.getDefaultServer();
+  Database database = DB.getDefault();
 
   // Restore a single draft bean
-  server.draftRestore(Document.class, docId);
+  database.draftRestore(Document.class, docId);
 
 
-
-  Query<Document> restoreQuery = server.find(Document.class)
+  Query<Document> restoreQuery = database.find(Document.class)
     .where().idIn(ids)
     .order().asc("id");
 
   // Restore all the beans matching a query
-  server.draftRestore(restoreQuery);
+  database.draftRestore(restoreQuery);
 
   ```
 

@@ -205,7 +205,7 @@
 
   <h2 id="on-startup">Generating migration on startup</h2>
   <p>
-    The DB migration can be generated when the EbeanServer instance is started by setting <code>ddl.migration.generate</code>
+    The DB migration can be generated when the Ebean instance is started by setting <code>ddl.migration.generate</code>
     system property or environment variable to true.
   </p>
 
@@ -218,9 +218,9 @@
     System.setProperty("ddl.migration.version", "1.1");
     System.setProperty("ddl.migration.name", "support end dating");
 
-    // migration will be generated when EbeanServer instance starts
+    // migration will be generated when Ebean starts
     // ... typically by running your application.
-    Ebean.getDefaultServer();
+    DB.getDefault();
   }
   ```
 
@@ -230,7 +230,7 @@
     In <code>src/test/java</code> add the following code with a <code>main method</code>.
   </p>
   <p>
-    Running this main method will generate the next migration and starts the EbeanServer
+    Running this main method will generate the next migration and starts Ebean
     in <code>offline mode</code>. This offline mode means we don't need to start the application
     or need a database to generate the migration.
   </p>
@@ -267,7 +267,7 @@
       DbMigration dbMigration = new DbMigration();
       dbMigration.setPlatform(Platform.POSTGRES);
       // generate the migration ddl and xml
-      // ... with EbeanServer in "offline" mode
+      // ... start in "offline" mode
       dbMigration.generateMigration();
     }
   }
@@ -282,7 +282,7 @@
   <h4>Ebean's migration runner</h4>
   ```properties
 
-  ## run migrations when the EbeanServer starts
+  ## run migrations when the Ebean starts
   ebean.migration.run=true
 
   ## optionally specify different DB credentials
@@ -291,7 +291,7 @@
   datasource.db.adminpassword=secret
   ```
   <p>
-    With <code>ebean.migration.run=true</code> then when the EbeanServer starts it will look at the
+    With <code>ebean.migration.run=true</code> then when the Ebean starts it will look at the
     migrations and run any that need to be run.  The migration runner will by default create a table
     called <code>db_migration</code> that holds the meta data about the migrations that have been run
     and inserts into this table when migrations are successfully executed.

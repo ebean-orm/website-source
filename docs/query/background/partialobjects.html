@@ -40,7 +40,7 @@
 
 ```java
 
-ebeanServer.find(Customer.class)
+  database.find(Customer.class)
 
   // only fetch the customer id and name
   // ... if there is an index covering id and name the database has the ability
@@ -67,7 +67,7 @@ ebeanServer.find(Customer.class)
   </blockquote>
 
 ```java
-ebeanServer.find(Order.class)
+  database.find(Order.class)
   ...
   // only fetch the customer id and name
   // ... if there is an index on the customer table that is covering the customer id and name

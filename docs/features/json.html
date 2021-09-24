@@ -21,14 +21,14 @@
 
   <h2 id="json-context">JsonContext</h2>
   <p>
-    Obtain a <code>JsonContext</code> from EbeanServer via the <code>json()</code> method.
+    Obtain a <code>JsonContext</code> from Database via the <code>json()</code> method.
     This JsonContext then provides various methods for marshalling/unmarshalling JSON to and from
     entity beans.
   </p>
 ```java
 String jsonWithUnknown = "{\"id\":42, \"unknownProp\":\"foo\", \"name\":\"rob\", \"version\":1}";
 
-Customer customer = Ebean.json().toBean(Customer.class, jsonWithUnknown);
+Customer customer = DB.json().toBean(Customer.class, jsonWithUnknown);
 assertEquals(Integer.valueOf(42), customer.getId());
 assertEquals("rob", customer.getName());
 ```

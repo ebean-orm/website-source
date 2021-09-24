@@ -1232,6 +1232,14 @@
   "url":"/docs/getting-started/eclipse-ide"
 }
 ,{
+  "title":"Eclipse IDE - Eclipse maven and annotation processing",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started/eclipse-ide#eclipse-maven"
+}
+,{
   "title":"Gradle",
   "caption":"",
   "category":"Getting started",
@@ -3968,12 +3976,12 @@
   "url":"/docs/transactions/batch#batchSize"
 }
 ,{
-  "title":"Batch - Configuration via ServerConfig",
+  "title":"Batch - Configuration via DatabaseConfig",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/transactions/batch#serverConfig"
+  "url":"/docs/transactions/batch#databaseConfig"
 }
 ,{
   "title":"Batch - Explicit flush()",

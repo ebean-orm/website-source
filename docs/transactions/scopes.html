@@ -72,7 +72,7 @@ public void doInner() {
 </p>
 
 ```java
-try (Transaction transaction = server.beginTransaction(TxScope.requiresNew())) {
+try (Transaction transaction = database.beginTransaction(TxScope.requiresNew())) {
   // using a new transaction ...
   transaction.commit();
 }
