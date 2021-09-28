@@ -28,27 +28,42 @@
   In <code>src/test/java</code> add code to generate migrations. This first example generates
   database migrations for a single database platform - Postgres in this example.
 </p>
-<pre content="java">
-package main;
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+    <pre content="java">
+        package main;
 
-import io.ebean.annotation.Platform;
-import io.ebean.dbmigration.DbMigration;
-import java.io.IOException;
+        import io.ebean.annotation.Platform;
+        import io.ebean.dbmigration.DbMigration;
+        import java.io.IOException;
 
-public class MigrationGenerator {
+        public class MigrationGenerator {
 
-  /**
-   * Generate the next "DB schema DIFF" migration.
-   */
-  public static void main(String[] args) throws IOException {
+          /**
+           * Generate the next "DB schema DIFF" migration.
+           */
+          public static void main(String[] args) throws IOException {
 
-    DbMigration dbMigration = DbMigration.create();
-    dbMigration.setPlatform(Platform.POSTGRES);
+            DbMigration dbMigration = DbMigration.create();
+            dbMigration.setPlatform(Platform.POSTGRES);
 
-    dbMigration.generateMigration();
-  }
-}
-</pre>
+            dbMigration.generateMigration();
+          }
+        }
+    </pre>
+</div>
+<div class="code-kt">
+    <pre content="kotlin">
+        import io.ebean.annotation.Platform
+        import io.ebean.dbmigration.DbMigration
+
+        fun main() {
+          DbMigration.create().apply {
+            setPlatform(Platform.POSTGRES)
+          }.generateMigration()
+        }
+    </pre>
+</div>
 
 <h3 id="multi-generation">Multi-platform migration generation</h3>
 <p>
@@ -56,25 +71,40 @@ public class MigrationGenerator {
   for each platform we want to generate migrations for. In the below example we generate migrations
   for Postgres, SqlServer and MySql.
 </p>
-<pre content="java">
-...
-public class MigrationGenerator {
+<#include "/_common/lang-buttons.html">
+<div class="code-java">
+    <pre content="java">
+        ...
+        public class MigrationGenerator {
 
-  /**
-   * Generate the next "DB schema DIFF" migration.
-   */
-  public static void main(String[] args) throws IOException {
+          /**
+           * Generate the next "DB schema DIFF" migration.
+           */
+          public static void main(String[] args) throws IOException {
 
-    DbMigration dbMigration = DbMigration.create();
+            DbMigration dbMigration = DbMigration.create();
 
-    dbMigration.addPlatform(Platform.POSTGRES);
-    dbMigration.addPlatform(Platform.SQLSERVER17);
-    dbMigration.addPlatform(Platform.MYSQL);
+            dbMigration.addPlatform(Platform.POSTGRES);
+            dbMigration.addPlatform(Platform.SQLSERVER17);
+            dbMigration.addPlatform(Platform.MYSQL);
 
-    dbMigration.generateMigration();
-  }
-}
-</pre>
+            dbMigration.generateMigration();
+          }
+        }
+    </pre>
+</div>
+<div class="code-kt">
+    <pre content="kotlin">
+        ...
+        fun main() {
+          DbMigration.create().apply {
+            addPlatform(Platform.POSTGRES)
+            addPlatform(Platform.SQLSERVER17)
+            addPlatform(Platform.MYSQL)
+          }.generateMigration()
+        }
+    </pre>
+</div>
 <p>
   Run the main method to generate the database migration. If nothing has changed then no
   migration will be generated. If the model has changed then the database migration is

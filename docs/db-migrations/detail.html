@@ -8,7 +8,7 @@
   <meta name="bread2" content="Details" href="/docs/db-migrations/detail"/>
   <#assign n0_docs="active">
   <#assign n1_dll="active">
-  <#assign n2_dbmigration="active">
+  <#assign n1_dbmigrationdetails="active">
   <#assign migrationdetail = "true">
 </head>
 <body>
@@ -81,30 +81,30 @@
     If the customer table has @History support this could also add columns to the history table and
     update the associated db triggers.
   </p>
-```xml
-  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-  <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
-    <changeSet type="apply">
-      <addColumn tableName="customer">
-        <column name="registered" type="date"/>
-        <column name="comments" type="varchar(1000)"/>
-      </addColumn>
-    </changeSet>
-  </migration>
-```
+  <pre content="xml">
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+      <changeSet type="apply">
+        <addColumn tableName="customer">
+          <column name="registered" type="date"/>
+          <column name="comments" type="varchar(1000)"/>
+        </addColumn>
+      </changeSet>
+    </migration>
+  </pre>
 
   <h4>Example migration with pendingDrops</h4>
   <p>
     Below is an example migration xml generated with <code>pendingDrops</code> changes.
   </p>
-  ```xml
-  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-  <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
-    <changeSet type="pendingDrops">
-      <dropColumn columnName="shortTitle" tableName="document" withHistory="true"/>
-    </changeSet>
-  </migration>
-  ```
+  <pre content="xml">
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+      <changeSet type="pendingDrops">
+        <dropColumn columnName="shortTitle" tableName="document" withHistory="true"/>
+      </changeSet>
+    </migration>
+  </pre>
   <p>
     Pending drop changes are not incorporated into the apply DDL script unless they are explicitly selected.
     Once pending drops are applied they drop off the 'pending drops' list.
@@ -116,38 +116,52 @@
     This is the DDL script that you get FlywayDB or similar to run.
   </p>
 
-  <h2>Applying pending drops</h2>
-  ```text
+  <h2 id="apply-drops">Applying pending drops</h2>
+  <pre content="text">
   INFO  c.a.ebean.dbmigration.DbMigration - Pending un-applied drops in versions [1.2]
-  ```
+  </pre>
   <p>
     The DB migration will log <code>INFO</code> level messages saying which migrations contain
     pending drops that have not yet been applied.  At some point it is decided to apply one of
     the pending drops as the next migration.
   </p>
 
-  ```java
-  // generate a migration as the drops from migration version "1.2"
-  System.setProperty("ddl.migration.pendingDropsFor", "1.2");
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      // generate a migration as the drops from migration version "1.2"
+      System.setProperty("ddl.migration.pendingDropsFor", "1.2");
 
-  DbMigration dbMigration = new DbMigration();
-  dbMigration.setPlatform(DbPlatformName.POSTGRES);
-  dbMigration.generateMigration();
-  ```
+      DbMigration dbMigration = DbMigration.create();
+      dbMigration.setPlatform(Platform.POSTGRES);
+      dbMigration.generateMigration();
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      // generate a migration as the drops from migration version "1.2"
+      System.setProperty("ddl.migration.pendingDropsFor", "1.2")
+
+      DbMigration.create().apply {
+        setPlatform(Platform.POSTGRES)
+      }.generateMigration()
+    </pre>
+  </div>
+
   <p>
     A migration is then generated with <code>dropsFor</code> set to the version of the migration that
     had the pending drops that we want to apply.  Additionally the migration apply ddl contains the
     various drop statements that will be executed.
   </p>
 
-  ```xml
+  <pre content="xml">
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
     <changeSet type="apply" dropsFor="1.2">
       <dropColumn columnName="shortTitle" tableName="document" withHistory="true"/>
     </changeSet>
   </migration>
-  ```
+  </pre>
 
   <h2 id="version-format">Version format</h2>
   <p>
@@ -185,10 +199,19 @@
     For a migration the developer needs to provide the <code>version</code> and <code>name</code>
     and these can be set via environment variables, system properties or ebean.properties or programmatically.
   </p>
-  ```java
-  System.setProperty("ddl.migration.version", "1.1");
-  System.setProperty("ddl.migration.name", "support end dating");
-  ```
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      System.setProperty("ddl.migration.version", "1.1");
+      System.setProperty("ddl.migration.name", "support end dating");
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      System.setProperty("ddl.migration.version", "1.1")
+      System.setProperty("ddl.migration.name", "support end dating")
+    </pre>
+  </div>
 
   <h2 id="programmatic">Generate offline</h2>
   <p>
@@ -200,28 +223,42 @@
     in <code>offline mode</code>. This offline mode means we don't need to start the application
     or need a database to generate the migration.
   </p>
-```java
-package main;
+  <#include "/_common/lang-buttons.html">
+  <div class="code-java">
+    <pre content="java">
+      package main;
 
-import io.ebean.annotation.Platform;
-import io.ebean.dbmigration.DbMigration;
-import java.io.IOException;
+      import io.ebean.annotation.Platform;
+      import io.ebean.dbmigration.DbMigration;
+      import java.io.IOException;
 
 public class GenerateDbMigration {
 
-  /**
-   * Generate the next "DB schema DIFF" migration.
-   */
-  public static void main(String[] args) throws IOException {
+        /**
+         * Generate the next "DB schema DIFF" migration.
+         */
+        public static void main(String[] args) throws IOException {
 
+          DbMigration dbMigration = DbMigration.create();
+          dbMigration.setPlatform(Platform.POSTGRES);
 
-    DbMigration dbMigration = DbMigration.create();
-    dbMigration.setPlatform(Platform.POSTGRES);
+          dbMigration.generateMigration();
+        }
+      }
+    </pre>
+  </div>
+  <div class="code-kt">
+    <pre content="kotlin">
+      import io.ebean.annotation.Platform
+      import io.ebean.dbmigration.DbMigration
 
-    dbMigration.generateMigration();
-  }
-}
-```
+      fun main() {
+        DbMigration.create().apply {
+          setPlatform(Platform.POSTGRES)
+        }.generateMigration()
+      }
+    </pre>
+  </div>
 
   <h2 id="running">Running migration</h2>
   <p>
@@ -230,8 +267,7 @@ public class GenerateDbMigration {
   </p>
 
   <h4>Ebean's migration runner</h4>
-  ```properties
-
+  <pre content="properties">
   ## run migrations when Ebean starts
   ebean.migration.run=true
 
@@ -239,7 +275,7 @@ public class GenerateDbMigration {
   ## to run the migration (own the tables)
   datasource.db.adminusername=myDbTableOwner
   datasource.db.adminpassword=secret
-  ```
+  </pre>
   <p>
     With <code>ebean.migration.run=true</code> then when the EbeanServer starts it will look at the
     migrations and run any that need to be run.  The migration runner will by default create a table
@@ -267,11 +303,11 @@ public class GenerateDbMigration {
     For use with FlywayDB currently we need to prefix "version migrations" with <code>V</code> in order to
     support both "version migrations" and "repeatable migrations".  To do this:
   </p>
-  ```properties
+  <pre content="properties">
   ## must use V prefix on "version migrations" when using FlywayDB
   ## with both "version" and "repeatable" migrations
   ebean.migration.applyPrefix=V
-  ```
+  </pre>
 
 <!--<nav class="next">-->
 <!--  <p class="next">-->
