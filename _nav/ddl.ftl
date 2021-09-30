@@ -21,5 +21,16 @@
       <@smallnav activeCheck="" url="#generate" title="Generate a Migration"/>
       <@smallnav activeCheck="" url="#run" title="Run migrations"/>
     </ul>
+  </@nav1><@nav1 activeCheck="${n1_dbmigrationdetails!''}" url="/docs/db-migrations/detail.html" title="DB Migrations details">
+    <ul class="nav nav-scroll">
+      <@smallnav activeCheck="" url="#migration-xml" title="Migration xml"/>
+      <@smallnav activeCheck="" url="#apply-ddl" title="Apply DDL"/>
+      <@smallnav activeCheck="" url="#apply-drops" title="Applying pending drops"/>
+      <@smallnav activeCheck="" url="#version-format" title="Version format"/>
+      <@smallnav activeCheck="" url="#version" title="Migration version and name"/>
+      <@smallnav activeCheck="" url="#programmatic" title="Generate offline"/>
+      <@smallnav activeCheck="" url="#running" title="Running migration"/>
+      <@smallnav activeCheck="" url="#repeatable" title="Repeatable migrations"/>
+    </ul>
   </@nav1>
 </ul>
