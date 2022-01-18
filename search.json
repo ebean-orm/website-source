@@ -3944,6 +3944,14 @@
   "url":"/docs/testing#ebean-test"
 }
 ,{
+  "title":"ebean.test.platform - application-test.yaml",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing#test-platform"
+}
+,{
   "title":"@Transactional",
   "caption":"",
   "category":"Transactions",
