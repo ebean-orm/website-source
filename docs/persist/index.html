@@ -9,24 +9,24 @@
 <p>
 Save will either insert or update the bean depending on its state.
 </p>
-```java
+<pre content="java">
 Order order = new Order();
 order.setOrderDate(new Date());
 ...
 // insert the order
 order.save();
-```
+</pre>
 <p>
 If the bean was fetched it will be updated...
 </p>
 
-```java
+<pre content="java">
 Order order = DB.find(Order.class, 42);
 order.setStatus(SHIPPED);
 ...
 // update the order
 order.save();
-```
+</pre>
 <p>
 Save and Delete will CASCADE based on the CascadeType
 specificed on the associated @OneToMany, @OneToOne etc annotation.
@@ -36,7 +36,7 @@ By default save and delete will not cascade so you need to
 specify a cascade type (such as the one on details below) for
 save() or delete() to cascade.
 </p>
-```java
+<pre content="java">
 ...
 @Entity
 @Table(name="orders")
@@ -49,7 +49,7 @@ public class Order {
   @OneToMany(cascade=CascadeType.ALL) // save and delete cascaded
   List<|OrderDetail> details;
 	...
-```
+</pre>
 
 <p>
 Note the <em>@OneToMany(cascade=CascadeType.ALL)</em> on
@@ -57,11 +57,11 @@ the details property. This means save() and delete() will
 both casade from order to its order details.
 </p>
 
-```java
+<pre content="java">
 ...
 // save the order ...  will cascade also saving the order details
 DB.save(order);
-```
+</pre>
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="deletes">Delete</h2>
@@ -69,7 +69,7 @@ DB.save(order);
 Delete is very similar to save. Just call DB.delete();
 </p>
 
-```java
+<pre content="java">
 ...
 Order order = DB.find(Order.class, 12);
 
@@ -77,7 +77,7 @@ Order order = DB.find(Order.class, 12);
 // ... this will cascade also deleting the order details
 // ... with either CascadeType.ALL or CascadeType.REMOVE
 DB.delete(order);
-```
+</pre>
 
 <#-------------------------------------------------------------------------------------------------->
 <h2 id="cascading">Cascading</h2>
@@ -92,7 +92,7 @@ deletes are cascaded.</p>
 an Order the details will be saved as well but the associated customer will not be saved as
 there is no cascade atttribute and the default is to not cascade.</p>
 
-```java
+<pre content="java">
 ...
 @Entity
 @Table(name="orders")
@@ -104,7 +104,7 @@ public class Order {
 
   @OneToMany(cascade=CascadeType.ALL)  // save and delete cascaded
   List<|OrderDetail> details;
-```
+</pre>
 
 <h2 id="bulkupdate">Bulk updates</h2>
 <p>Update provides a way on issuing a insert, update or delete statement.</p>
@@ -118,31 +118,31 @@ application.</p>
 in a 'logical' form where entity name is used in place of the table name and property
 names are used in place of column names.</p>
 
-```java
+<pre content="java">
 // orm bulk delete use bean name and bean properties
 DB.createUpdate(OrderDetail.class, "delete from orderDetail").execute();
 
 // sql bulk update uses table and column names
 DB.sqlUpdate("delete from country").execute();
-````
+</pre>`
 
 <h2 id="bulksqlupdate">Bulk SQL updates</h2>
 
 <p>In similar fashion to <a href="#sqlquery">SqlQuery</a> you can specify a SQL INSERT, UPDATE or DELETE statement with named or positioned parameters.</p>
 
-```java
+<pre content="java">
 String dml = "update b_bug set title=:title where id = :id";
 int rows = DB.sqlUpdate(dml)
   .setParameter("title", "Updated Again")
   .setParameter("id", 1)
   .execute();
-```
+</pre>
 
 <h2 id="callablesql">CallableSql</h2>
 
 <p>CallableSql provides a way to call a database stored procedure.</p>
 
-```java
+<pre content="java">
 String sql = "{call sp_order_mod(?,?)}";
 CallableSql cs = DB.createCallableSql(sql);
 cs.setParameter(1, "turbo");
@@ -151,7 +151,7 @@ DB.execute(cs);
 
 // read the out parameter
 Integer returnValue = (Integer) cs.getObject(2);
-```
+</pre>
 
 <p>You can extend CallableSql and you can also get the java.sql.Connection from a Transaction and use raw JDBC API to call a stored procedure.</p>
 
@@ -167,7 +167,7 @@ perform any raw JDBC calls you like.</p>
 <p>This may be useful for Savepoints, advanced Clob/Blob use or advanced stored
 procedure calls (if CallableSql doesn't do the business for you).</p>
 
-```java
+<pre content="java">
 try (Transaction transaction = DB.beginTransaction()) {
 
   Connection connection = transaction.getConnection();
@@ -176,7 +176,7 @@ try (Transaction transaction = DB.beginTransaction()) {
 
   transaction.commit();
 }
-```
+</pre>
 
 
 <h2 id="batch_processing">JDBC Batch</h2>
@@ -195,7 +195,7 @@ try (Transaction transaction = DB.beginTransaction()) {
   ...(under construction)... need to provide better guidance on how to determine batch mode, child batch mode, and batch size
 </p>
 
-```java
+<pre content="java">
 Transaction transaction = database.beginTransaction();
 try {
   // turn of cascade persist
@@ -227,17 +227,17 @@ try {
   transaction.end();
 }
 
-```
+</pre>
 
 example using @Transactional
-```java
+<pre content="java">
 @Transactional(batchSize = 50)
 public void goodStuff() {
 
     order.save()
     customer.save()
 }
-```
+</pre>
   <div class="next pull-right">
     <a href="/docs/transactions" class="btn btn-info">Next: Transactions</a>
   </div>

@@ -14,11 +14,11 @@
     clause of a query.
 </p>
 
-```java
+<pre content="java">
 Order.find.where()
   .raw("add_days(orderDate, 10) < ?", someDate)
   .findList();
-```
+</pre>
 <p>
     See <a href="/docs/query/features#whereraw">more detail and examples</a>.
 </p>
@@ -28,15 +28,15 @@ Order.find.where()
     With <code>findNative()</code> we give Ebean <code>SQL</code>. Ebean will automatically map the columns
     in the result back to the bean(s).
 </p>
-```java
+<pre content="java">
 
 String nativeSql = "select id, name from customer where name like :some";
 
-List<Customer> customers =
+List<|Customer> customers =
     ebeanServer.findNative(Customer.class, nativeSql);
       .setParameter("some", "Rob%")
       .findList();
-```
+</pre>
 <p>
     See <a href="/docs/query/features#findnative">more detail and examples</a>.
 </p>
@@ -46,7 +46,7 @@ List<Customer> customers =
         <code>RawSql</code> is like findNative except instead of the mapping being automatic we explicitly
         define the mapping of how the result columns map to the entity beans.
     </p>
-```java
+<pre content="java">
 
 String rs = "select o.id, o.status, c.id, c.name, " +
     " d.id, d.order_qty, p.id, p.name " +
@@ -63,12 +63,12 @@ RawSql rawSql = RawSqlBuilder.parse(rs)
     .tableAliasMapping("p", "details.product")
     .create();
 
-List<Order> ordersFromRaw = Ebean.find(Order.class)
+List<|Order> ordersFromRaw = Ebean.find(Order.class)
     .setRawSql(rawSql)
     .setParameter("maxOrderId", 2)
     .setParameter("productId", 1)
     .findList();
-```
+</pre>
         <p>
             See <a href="/docs/query/features#rawsql">more detail and examples</a>.
         </p>

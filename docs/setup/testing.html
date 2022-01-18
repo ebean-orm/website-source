@@ -22,7 +22,7 @@
     there is a method <code>serverConfig.loadTestProperties()</code> which will similarly look for a test-ebean.properties
     file if present.
   </p>
-  ```java
+  <pre content="java">
   @Override
   public EbeanServer getObject() throws Exception {
 
@@ -42,10 +42,10 @@
 
     return EbeanServerFactory.create(config);
   }
-  ```
+  </pre>
 
   <h3>Example test-ebean.properties</h3>
-```properties
+  <pre content="properties">
   ebean.db.ddl.generate=true
   ebean.db.ddl.run=true
 
@@ -53,7 +53,7 @@
   datasource.db.password=
   datasource.db.databaseUrl=jdbc:h2:mem:tests
   datasource.db.databaseDriver=org.h2.Driver
-```
+  </pre>
 
 
 <h2 id="mockibean">MockiEbean</h2>
@@ -67,7 +67,7 @@ Mocking with Ebean singleton
 replacing the default EbeanServer instance with a mock.
 </p>
 
-```java
+  <pre content="java">
 ...
 import io.ebeaninternal.server.core.DefaultServer;
 ...
@@ -113,16 +113,16 @@ import io.ebeaninternal.server.core.DefaultServer;
     assertTrue("is a real EbeanServer", restoredServer instanceof DefaultServer);
   }
 
-```
+  </pre>
 <h4>MockiEbean Maven dependency</h4>
-```xml
-<dependency>
-  <groupId>io.ebean</groupId>
-  <artifactId>ebean-mocker</artifactId>
-  <version>12.12.1</version>
-  <scope>test</scope>
-</dependency>
-```
+  <pre content="xml">
+    <dependency>
+      <groupId>io.ebean</groupId>
+      <artifactId>ebean-mocker</artifactId>
+      <version>12.12.1</version>
+      <scope>test</scope>
+    </dependency>
+  </pre>
 </div>
 </body>
 </html>

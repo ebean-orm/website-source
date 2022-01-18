@@ -13,7 +13,7 @@
 <p>
   We can explicitly turn on the use of JDBC batch via <em>transaction.setBatchMode(true)</em>
 </p>
-```java
+<pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
 
   // use JDBC batch
@@ -31,21 +31,20 @@ try (Transaction transaction = database.beginTransaction()) {
   transaction.commit();
 }
 
-```
+</pre>
 
 <h2 id="transactionalBatchSize">@Transactional(batchSize)</h2>
 <p>
   When using <em>@Transactional</em> setting the <code>batchSize</code> attribute will turn on JDBC batch.
 </p>
 
-```java
+<pre content="java">
 @Transactional(batchSize = 50)
 public void doGoodStuff() {
 
   ...
 }
-
-```
+</pre>
 
 <h2 id="batchSize">Batch size</h2>
 <p>
@@ -65,7 +64,7 @@ public void doGoodStuff() {
   The batch buffer size default value is set via <em>databaseConfig.persistBatchSize</em> which defaults to <code>20</code>.
   We can set the buffer size on the transaction via <code>transaction.setBatchSize()</code> or <code>@Transactional(batchSize)</code>.
 </p>
-```java
+<pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
 
   // use JDBC batch
@@ -79,7 +78,7 @@ try (Transaction transaction = database.beginTransaction()) {
   // flush batch and commit
   transaction.commit();
 }
-```
+</pre>
 
 <h2 id="generatedKeys">GetGeneratedKeys</h2>
 <p>
@@ -87,17 +86,17 @@ try (Transaction transaction = database.beginTransaction()) {
   is inserting a large number of rows/beans and we don't actually need the keys after the insert we
   can turn off getting the generated keys for a performance benefit.
 </p>
-```java
+<pre content="java">
 
   // don't bother getting back the generated keys
   transaction.setBatchGetGeneratedKeys(false);
 
-```
+</pre>
 <p>
   When we are performing a large bulk insert it is common to turn off <em>getGeneratedKeys</em>.
 </p>
 
-```java
+<pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
   transaction.setBatchMode(true);
   transaction.setBatchSize(100);
@@ -115,7 +114,7 @@ try (Transaction transaction = database.beginTransaction()) {
   transaction.commit();
 }
 
-```
+</pre>
 
 <h2 id="flush">Flush</h2>
 <p>
@@ -134,7 +133,7 @@ try (Transaction transaction = database.beginTransaction()) {
   Set <code>setBatchFlushOnQuery(false)</code> on a transaction when we want to execute a query
   but don't want that to trigger a flush.
 </p>
-```java
+<pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
   transaction.setBatchMode(true);
   transaction.setBatchFlushOnQuery(false);
@@ -152,14 +151,14 @@ try (Transaction transaction = database.beginTransaction()) {
   transaction.commit();
 }
 
-```
+</pre>
 
 <h2 id="flushOnMixed">setBatchFlushOnMixed()</h2>
 <p>
   We set <em>setBatchFlushOnMixed(false)</em> on a transaction when we want to execute a SqlUpdate
   or CallableSql mixed with bean save(), delete() etc and don't want that to trigger a flush.
 </p>
-```java
+<pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
   transaction.setBatchMode(true);
   transaction.setBatchFlushOnMixed(false);
@@ -178,14 +177,14 @@ try (Transaction transaction = database.beginTransaction()) {
   transaction.commit();
 }
 
-```
+</pre>
 
 <h2 id="flushOnGetter">Flush on getter/setter</h2>
 <p>
   For beans that are in the batch buffer, if we call getters/setters on a generated property
   or "unloaded" Id property this will trigger a flush.
 </p>
-```java
+<pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
   transaction.setBatchMode(true);
 
@@ -205,7 +204,7 @@ try (Transaction transaction = database.beginTransaction()) {
   transaction.commit();
 }
 
-```
+</pre>
 
 <h2 id="flushExplicit">Explicit flush()</h2>
 <p>
@@ -213,7 +212,7 @@ try (Transaction transaction = database.beginTransaction()) {
   batched statements have been executed. This typically means that we know that all SQL statements have
   been executed and that all the DB constraints are tested at that point in the application logic.
 </p>
-```java
+<pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
   transaction.setBatchMode(true);
 
@@ -233,32 +232,32 @@ try (Transaction transaction = database.beginTransaction()) {
   transaction.commit();
 }
 
-```
+</pre>
 
 <h2 id="databaseConfig">Configuration via DatabaseConfig</h2>
 
-```java
+<pre content="java">
 // use JDBC batch by default
 databaseConfig.setPersistBatch(PersistBatch.ALL);
-```
+</pre>
 <p>
   We can set <em>databaseConfig.setPersistBatch(PersistBatch.ALL)</em> so that JDBC batch mode is the default
   being used for all transactions.
 </p>
 
-```java
+<pre content="java">
 // default batch size
 databaseConfig.setPersistBatchSize(50);
-```
+</pre>
 <p>
   We can change the global default batch size via <em>databaseConfig.setPersistBatchSize()</em>. The default is
   otherwise set at 20.
 </p>
 
-```java
+<pre content="java">
 // update all loaded properties or just dirty properties
 databaseConfig.setUpdateAllPropertiesInBatch(true);
-```
+</pre>
 <p>
   When using batch update we have the option to include the dirty properties or all loaded properties in the
   update. If we choose dirty properties we will include less properties in the update statement but we may

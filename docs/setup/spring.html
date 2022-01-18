@@ -10,7 +10,7 @@
   <h2 id="spring-boot">Spring boot</h2>
   <p>
     Ebean is now aware of Spring boot runnable jar structure (for scanning the classpath). There is an
-    <a href="https://github.com/ebean-orm/example-springboot">example application<a/> showing:
+    <a href="https://github.com/ebean-orm/example-springboot">example application</a> showing:
   </p>
   <ul>
     <li><a href="https://github.com/ebean-orm/example-springboot/blob/master/src/main/java/org/example/sboot/service/EbeanFactoryBean.java">Factory Bean (programmatic configuration of EbeanServer)</a></li>
@@ -55,11 +55,11 @@
     own Spring FactoryBean like the code below (or the spring boot EbeanFactoryBean example
     <a href="https://github.com/ebean-orm/example-springboot/blob/master/src/main/java/org/example/sboot/service/EbeanFactoryBean.java">Factory Bean (programmatic configuration of EbeanServer)</a>).
   </p>
-  ```java
+  <pre content="java">
   /**
    * Simple Spring bean factory for creating the EbeanServer.
    */
-  public class MyEbeanServerFactory implements FactoryBean<EbeanServer> {
+  public class MyEbeanServerFactory implements FactoryBean<|EbeanServer> {
 
     public EbeanServer getObject() throws Exception {
 
@@ -92,7 +92,7 @@
     }
   }
 
-  ```
+  </pre>
 
 </div>
 </body>

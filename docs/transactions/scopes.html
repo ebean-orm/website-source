@@ -56,13 +56,13 @@
 <p>
   We can specify other transaction scopes on methods annotated with <code>@Transactional</code>.
 </p>
-```java
+<pre content="java">
 @Transactional(type = TxType.REQUIRES_NEW)
 public void doInner() {
   // execute using a new transaction ...
 
 }
-```
+</pre>
 
 <p>&nbsp;</p>
 
@@ -71,12 +71,12 @@ public void doInner() {
   We can specify other transaction scopes via <code>beginTransaction(TxScope)</code>.
 </p>
 
-```java
+<pre content="java">
 try (Transaction transaction = database.beginTransaction(TxScope.requiresNew())) {
   // using a new transaction ...
   transaction.commit();
 }
-```
+</pre>
 
 <@next_edit "Savepoint" "/docs/transactions/savepoints" "/docs/transactions/scopes.html"/>
 

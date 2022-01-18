@@ -17,7 +17,7 @@
     Example provider implementation using <code>DatabaseConfig</code> and <code>DatabaseFactory</code>.
   </p>
 
-```java
+  <pre content="java">
 
   import io.ebean.Ebean;
   import io.ebean.EbeanServer;
@@ -41,20 +41,20 @@
   }
 
 
-```
+</pre>
 
   <h4>Example 2</h4>
   <p>
     Example provider implementation using <code>Ebean</code> that implicitly creates the
     <code>default</code> EbeanServer using ebean.properties.
   </p>
-```java
+  <pre content="java">
 
   import io.ebean.Ebean;
   import io.ebean.EbeanServer;
   import com.google.inject.Provider;
 
-  public class EbeanServerProvider implements Provider<EbeanServer> {
+  public class EbeanServerProvider implements Provider<|EbeanServer> {
 
     @Override
     public EbeanServer get() {
@@ -63,19 +63,16 @@
       return Ebean.getDefaultServer();
     }
   }
-
-```
+  </pre>
   <h2 id="module">Module bind</h2>
     <p>
       In the Guice module bind the provider using eager singleton so that the EbeanServer is
       created eagerly at startup.
     </p>
-```java
-
+  <pre content="java">
     // bind the provider as eager singleton
     bind(EbeanServer.class).toProvider(EbeanServerProvider.class).asEagerSingleton()
-
-```
+  </pre>
 
   <h2 id="activerecord">Inject and ActiveRecord</h2>
     <p>

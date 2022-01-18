@@ -175,32 +175,32 @@
 </p>
 
 <h5>Ebean "Query beans"</h5>
-```java
+<pre content="java">
 LocalDate today = new LocalDate();
 
-List<Customer> customers =
+List<|Customer> customers =
   new QCustomer()
     .birthday.equalTo(today)
     .createdAt.before(today.minusYears(2))
     .findList();
-```
+</pre>
 
 <h5>JPA Criteria</h5>
-```java
+<pre content="java">
 LocalDate today = new LocalDate();
 
 EntityManager em = ...;
 
 CriteriaBuilder builder = em.getCriteriaBuilder();
-CriteriaQuery<Customer> query = builder.createQuery(Customer.class);
-Root<Customer> root = query.from(Customer.class);
+CriteriaQuery<|Customer> query = builder.createQuery(Customer.class);
+Root<|Customer> root = query.from(Customer.class);
 
 Predicate hasBirthday = builder.equal(root.get(Customer_.birthday), today);
 Predicate isLongTermCustomer = builder.lessThan(root.get(Customer_.createdAt), today.minusYears(2);
 query.where(builder.and(hasBirthday, isLongTermCustomer));
 
-List<Customer> customers = em.createQuery(query.select(root)).getResultList();
-```
+List<|Customer> customers = em.createQuery(query.select(root)).getResultList();
+</pre>
 <p>
   Java annotation processing is used by both Ebean (to generate "Query beans") and JPA
   (to generate

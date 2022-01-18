@@ -17,37 +17,37 @@
   The transaction will use the <a href="/docs/intro/database/#default">default database</a>,
   be put into the "thread local scope" and will commit if the methods completes successfully.
 </p>
-```java
+<pre content="java">
 @Transactional
 public void process(OffsetDateTime startOffset) {
   ...
   customer.save();
   contact.save();
 }
-```
+</pre>
 
 <h2 id="current">Transaction.current()</h2>
 <p>
   Use <code>Transaction.current()</code> to return the current transaction from "thread local scope"
   of the <a href="/docs/intro/database/#default">default database</a>.
 </p>
-```java
+<pre content="java">
 @Transactional
 public void process(OffsetDateTime startOffset) {
   ...
   Transaction txn = Transaction.current();
   ...
 }
-```
+</pre>
 <p>
   use <code>database.currentTransaction()</code> to return the current transaction for a given database
   that is typically not the default database.
 </p>
-```java
+<pre content="java">
 Database otherDb = DB.byName("other");
 
 Transaction txn = otherDb.currentTransaction();
-```
+</pre>
 
 <h2 id="beginTransaction">beginTransaction()</h2>
 <p>
@@ -59,7 +59,7 @@ Transaction txn = otherDb.currentTransaction();
   We should use a <em>try with resources</em> block to ensure that the transaction is closed
   if any error occurs in the block.
 </p>
-```java
+<pre content="java">
 try (Transaction transaction = DB.beginTransaction()) {
 
   // do stuff...
@@ -71,13 +71,13 @@ try (Transaction transaction = DB.beginTransaction()) {
 
   transaction.commit();
 }
-```
+</pre>
 <h4 id="kotlinUse">Kotlin transaction.use { }</h4>
 <p>
   Kotlin <code>use</code> is used similarly to <em>try with resources</em> to ensure
   the transaction is closed.
 </p>
-```kotlin
+<pre content="kotlin">
 DB.beginTransaction().use { transaction ->
 
   // do stuff...
@@ -89,7 +89,7 @@ DB.beginTransaction().use { transaction ->
 
   transaction.commit()
 }
-```
+</pre>
 
 
 <h2 id="end">commit(), rollback(), end()</h2>
@@ -106,7 +106,7 @@ DB.beginTransaction().use { transaction ->
   <code>end()</code> will rollback the transaction if it has not already been committed.
   We primarily use <code>end()</code> in a finally block.
 </p>
-```java
+<pre content="java">
 Transaction transaction = DB.beginTransaction()
 try {
   // do stuff...
@@ -124,7 +124,7 @@ try {
 } finally {
   transaction.end();  // rollback if not committed
 }
-```
+</pre>
 
 <h2 id="commitAndContinue">commitAndContinue()</h2>
 <p>
@@ -161,7 +161,7 @@ try {
   in queries and saving etc. We explicitly specify the transaction with query beans
   via ... and <em>model.save(transaction)</em> etc.
 </p>
-```java
+<pre content="java">
 try (Transaction transaction = DB.getDefault().createTransaction()) {
 
   ...
@@ -172,7 +172,7 @@ try (Transaction transaction = DB.getDefault().createTransaction()) {
   customer.update(transaction);  // explicit transaction
 
 }
-```
+</pre>
 
 <h2 id="implicit">Implicit transactions</h2>
 <p>

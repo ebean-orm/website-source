@@ -139,7 +139,7 @@
 
 
   <h4>Example: extend Model</h4>
-```java
+  <pre content="java">
 /**
  * Extend Model to get the save(), delete() etc
  * methods on the bean itself (active record style).
@@ -159,15 +159,15 @@ public class Customer extends Model {
 
   ...
 
-```
+  </pre>
 
   <h4>Example: save()</h4>
-  ```java
+  <pre content="java">
   Customer customer = new Customer();
   customer.setName("Rob");
 
   customer.save();
-  ```
+  </pre>
 
   <h2 id="finder">Finder</h2>
   <p>
@@ -180,27 +180,27 @@ public class Customer extends Model {
 
 
   <h4>Example: find by id</h4>
-  ```java
+  <pre content="java">
   Customer customer = Customer.find.byId(42);
-  ```
+  </pre>
 
   <h4>Example: get reference</h4>
-  ```java
+  <pre content="java">
   Customer customer = Customer.find.ref(42);
-  ```
+  </pre>
 
   <h4>Example: delete by id</h4>
-  ```java
+  <pre content="java">
   Customer.find.deleteById(42);
-  ```
+  </pre>
 
   <h4>Example: find where</h4>
-  ```java
-  List<Customer> customers =
+  <pre content="java">
+  List<|Customer> customers =
       Customer.find
           .where().ilike("name", "rob%")
           .findList();
-  ```
+  </pre>
 
 </div>
 </body>

@@ -129,7 +129,7 @@
   <p>The persistence context is sometimes described as the "first level cache" or L1 cache. I have also seen
     it described as the "transactional cache" in that it is most frequently scoped to a transaction.</p>
 
-  ```java
+  <pre content="java">
   // a new persistence context started with the transaction
   Ebean.beginTransaction();
   try {
@@ -148,7 +148,7 @@
   } finally {
     Ebean.endTransaction();
   }
-  ```
+  </pre>
   <p>
     The code above shows that there is only 1 instance of "Order 72". As we try to fetch it
     again (during the scope of a single persistence context) we end up getting back the same
@@ -163,7 +163,7 @@
   <p>
     A more realistic example would be when the persistence context is used:
   </p>
-    ```java
+  <pre content="java">
     // a new persistence context started with the transaction
     Ebean.beginTransaction();
 
@@ -185,7 +185,7 @@
     } finally {
       Ebean.endTransaction();
     }
-    ```
+  </pre>
 
 
   <p>
@@ -211,7 +211,7 @@
     a particular query hits the database to get fresh data. In doing so we want to avoid using the
     current transaction scoped persistence context.
   </p>
-  ```java
+  <pre content="java">
 
   // transaction with a persistence context
   Transaction transaction = ...
@@ -224,7 +224,7 @@
         .setPersistenceContextScope(QUERY)
         .findOne();
 
-  ```
+  </pre>
 
   <h2 id="object-scope">Object graph scope - large queries</h2>
   <p>

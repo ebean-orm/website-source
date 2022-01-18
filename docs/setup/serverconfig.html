@@ -25,7 +25,7 @@
     and some from ebean.properties.
   </p>
 
-  ```java
+  <pre content="java">
 
   ServerConfig config = new ServerConfig();
   config.setName("pg");
@@ -36,7 +36,7 @@
   ...
 
   EbeanServer server = EbeanServerFactory.create(config);
-  ```
+  </pre>
 
   <h2 id="external-properties">External properties</h2>
   <p>
@@ -45,7 +45,7 @@
     via the externally loaded properties and some is set via code (calling setter methods on ServerConfig).
   </p>
 
-  ```java
+  <pre content="java">
 
   // load properties externally
   Properties externalProps = ...;
@@ -59,7 +59,7 @@
   ...
 
   EbeanServer server = EbeanServerFactory.create(config);
-  ```
+  </pre>
   <h2 id="register">Register</h2>
   <p>
     By default ServerConfig has register=true and this means that the EbeanServer instance is registered with
@@ -69,7 +69,7 @@
     You need to explicitly ServerConfig.setRegister(false) if you don't this feature.
   </p>
 
-  ```java
+  <pre content="java">
   ServerConfig config = new ServerConfig();
   config.setName("pg");
   ...
@@ -82,7 +82,7 @@
   // using it's name via Ebean
   EbeanServer server = Ebean.getServer("pg");
 
-  ```
+  </pre>
 
   <h2 id="default">Default server</h2>
   <p>
@@ -90,7 +90,7 @@
     be the 'default' EbeanServer and can be later accessed via <code>Ebean.getDefaultServer()</code>
   </p>
 
-  ```java
+  <pre content="java">
   ServerConfig config = new ServerConfig();
   config.setName("pg");
   config.setDefaultServer(true);
@@ -106,7 +106,7 @@
   // Note: serverName of null is the same as getting the default server
   EbeanServer server = Ebean.getServer(null);
 
-  ```
+  </pre>
 
 
   <h2 id="di">Dependency injection</h2>

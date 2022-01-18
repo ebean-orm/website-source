@@ -29,7 +29,7 @@
 </p>
 
 <h5>Example</h5>
-```java
+<pre content="java">
 
 // start 'outer' transaction
 try (Transaction outerTxn = database.beginTransaction()) {
@@ -58,7 +58,7 @@ try (Transaction outerTxn = database.beginTransaction()) {
   outerTxn.commit();
 }
 
-```
+</pre>
 
 <h2 id="explicit">Explicit Savepoints</h2>
 <p>
@@ -69,7 +69,7 @@ try (Transaction outerTxn = database.beginTransaction()) {
 For example:
 </p>
 
-```java
+<pre content="java">
 
   var newCustomer = new Customer();
   newCustomer.setName("John");
@@ -92,7 +92,7 @@ For example:
 
   var found = DB.find(Customer.class, newCustomer.getId());
   System.out.println(found.getName()); // Prints "John"
-```
+</pre>
 
 <@next_edit "Spring transactions" "/docs/transactions/spring" "/docs/transactions/savepoints.html"/>
 

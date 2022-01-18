@@ -4,22 +4,22 @@
 </p>
 
 <h5>Example - positioned parameters</h5>
-```java
+<pre content="java">
     String sql = "select id, name from customer where name like ?";
 
     Customer customer = DB.findNative(Customer.class, sql)
         .setParameter("Jo%")
         .findOne();
-```
+</pre>
 
 <h5>Example - named parameters</h5>
-```java
+<pre content="java">
   String sql = "select id, name from customer where name like :name order by name desc";
 
   List<|Customer> customers = DB.findNative(Customer.class, sql)
       .setParameter("name", "Jo%")
       .findList();
-```
+</pre>
 <p>
   With <em>findNative</em> the columns are automatically mapped to bean properties.
 </p>
@@ -32,14 +32,14 @@
   We can use <code>select *</code> if we desire all the columns but this is not generally recommended.
 </p>
 <h5>Example - select *</h5>
-```java
+<pre content="java">
 
   String sql = "select * from customer where name like :name order by name desc";
 
   List<|Customer> customers = DB.findNative(Customer.class, sql)
       .setParameter("name", "Jo%")
       .findList();
-```
+</pre>
 
 
 <h2>Column mapping</h2>
@@ -56,7 +56,7 @@
   For columns that do not conform to the naming convention we use sql column alias.
 </p>
 <h5>Example - column alias</h5>
-```java
+<pre content="java">
   // using sql column alias
   String sql = "select id, fname as first_name, lname as last_name " +
                "from contact where lname like ?";
@@ -64,7 +64,7 @@
   List<|Contact> contacts = DB.findNative(Contact.class, sql)
     .setParameter(1, "B%")
     .findList();
-```
+</pre>
 <h3>Unmapped columns</h3>
 <p>
   Sometimes we want to specify columns in the resultSet for the <code>order by</code>
@@ -72,7 +72,7 @@
   ignored.
 </p>
 <h5>Example - an unmapped column for order by</h5>
-```java
+<pre content="java">
     String sql = "select id, name, " +
       "case when anniversary >= ? then 1 when anniversary < ? then 2 end as order_column_1 " +
       "from o_customer " +
@@ -82,7 +82,7 @@
       .setParameter(LocalDate.now())
       .setParameter(LocalDate.now())
       .findList();
-```
+</pre>
 
 <h2>firstRow / maxRows</h2>
 <p>
@@ -90,13 +90,13 @@
   appropriately using <em>limit/offset</em> or equivalent clause.
 </p>
 <h5>Example - using maxRows</h5>
-```java
+<pre content="java">
     String sql = "select id, name from o_customer order by name, id";
 
     List<|Customer> result = DB.findNative(Customer.class, sql)
       .setMaxRows(50)
       .findList();
-```
+</pre>
 <h2>fetchQuery</h2>
 <p>
   When using findNative we can think of it as  effectively supplying the SQL for "root" or "origin"
@@ -107,12 +107,12 @@
   using <code>fetchQuery</code> to fetch the related orders and contacts for those customers.
 </p>
 <h5>Example - using fetchQuery</h5>
-```java
+<pre content="java">
   List<|Customer> result = DB.findNative(Customer.class, sql)
     .fetchQuery("orders")
     .fetchQuery("contacts")
     .findList();
-```
+</pre>
 <h2>Multiple tables</h2>
 <p>
   Excluding Oracle (see oracle limitation below) our SQL can select from multiple tables and these
@@ -123,7 +123,7 @@
   entity beans returned will include customer beans with the customer id and name populated.
 </p>
 <h5>Example - contacts and their associated customer</h5>
-```java
+<pre content="java">
   // Contacts + Customer
   String sql
     = "select con.id, con.first_name, con.last_name, cust.id, cust.name " +
@@ -133,9 +133,9 @@
 
   List<|Contact> contacts = DB.findNative(Contact.class, sql)
       .findList();
-```
+</pre>
 <h5>Example - order lines and their associated product</h5>
-```java
+<pre content="java">
     String sql = "select line.*, p.* " +
       " from order_line line " +
       " join product p on p.id = line.product_id " +
@@ -144,7 +144,7 @@
     List<|OrderLine> lines = DB.findNative(OrderLine.class, sql)
       .setParameter(order.getId())
       .findList();
-```
+</pre>
 
 <h2>Limitations</h2>
 <p>

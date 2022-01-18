@@ -41,7 +41,7 @@ ebean:
   <li>sql - include the sql for queries</li>
 </ul>
 
-```text
+<pre content="text">
 -- Dumping metrics for db --
 txn.main                                        count:10       total:117459   mean:11745    max:32894
 
@@ -59,7 +59,7 @@ loc:ProductFinder.findMapBySku(ProductFinder.kt:12)
 sql:select t0.id, t0.sku, t0.name, t0.version, t0.when_created, t0.when_modified from product t0
 
 ...
-```
+</pre>
 
 <h2>Metrics</h2>
 <p>
@@ -68,7 +68,7 @@ sql:select t0.id, t0.sku, t0.name, t0.version, t0.when_created, t0.when_modified
 </p>
 
 
-```java
+<pre content="java">
 
 // Collect the metrics
 ServerMetrics serverMetrics = database.getMetaInfoManager().collectMetrics();
@@ -83,7 +83,7 @@ List<|MetaOrmQueryMetric> ormQueryMetrics = serverMetrics.getOrmQueryMetrics();
 List<|MetaQueryMetric> dtoQueryMetrics = serverMetrics.getDtoQueryMetrics();
 
 
-```
+</pre>
 
 <@next_edit "Labels" "labels" "/docs/monitoring/index.html"/>
 

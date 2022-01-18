@@ -92,7 +92,7 @@
 
 
   <h5>ebean enhancement tile</h5>
-  ```xml
+  <pre content="xml">
   <plugin>
     <groupId>io.repaint.maven</groupId>
     <artifactId>tiles-maven-plugin</artifactId>
@@ -105,7 +105,7 @@
       </tiles>
     </configuration>
   </plugin>
-  ```
+  </pre>
   <p>
     Use <code>mvn help:effective-pom</code> to view the plugins that the tile brings in.
   </p>
@@ -118,7 +118,7 @@
   </p>
 
 <@maven_replace_version "::version::" "ebean-maven-plugin">
-  ```xml
+  <pre content="xml">
   <plugin>
     <groupId>io.ebean</groupId>
     <artifactId>ebean-maven-plugin</artifactId>
@@ -136,7 +136,7 @@
       </execution>
     </executions>
   </plugin>
-  ```
+  </pre>
   </@maven_replace_version>
 
 
@@ -147,7 +147,7 @@
     <p>Eclipse can be configured to enhance the classes during build using maven configuration</p>
 
   <@maven_replace_version "::version::" "ebean-maven-plugin">
-      ```xml
+    <pre content="xml">
       <build>
         <plugins>
           <!-- plugins here -->
@@ -185,7 +185,7 @@
           </plugins>
         </pluginManagement>
       </build>
-      ```
+    </pre>
     </@maven_replace_version>
   </div>
 
@@ -203,10 +203,10 @@
   </p>
 
 <@maven_replace_version "::version::" "ebean-maven-plugin">
-```xml
+<pre content="xml">
 java -javaagent:ebean-agent-::version::.jar MyApplication
 java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
-```
+</pre>
 </@maven_replace_version>
 
   <p>
@@ -235,7 +235,7 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
     The code below loads the enhancer agent programmatically onto the running JVM.
   </p>
 
-  ```java
+<pre content="java">
   import org.avaje.agentloader;
   ...
   public void someApplicationBootupMethod() {
@@ -244,7 +244,7 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
       logger.info("ebean-agent not found in classpath - not dynamically loaded");
     }
   }
-  ```
+</pre>
 
 
 <#-------------------------------------------------------------------------------------------------->
@@ -257,7 +257,7 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
     <li>Create a target that uses the AntEnhanceTask to enhance the entity classes.</li>
   </ol>
 
-  ```xml
+<pre content="xml">
   <taskdef
       name="ebeanEnhance"
       classname="io.ebean.enhance.ant.AntEnhanceTask"
@@ -274,7 +274,7 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
         packages="app.domain.*"
         transformArgs="debug=1"/>
   </target>
-  ```
+</pre>
 
 <div style="display: none">
   <h2>Programmatic enhancement</h2>
@@ -283,7 +283,7 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
     You can run the enhancement yourself programmatically using the Transformer class from the agent.
   </p>
 
-  ```java
+  <pre content="java">
   Transformer transformer = new Transformer("", "debug=1");
   InputStreamTransform streamTransform = new InputStreamTransform(transformer, Ebean.class.getClassLoader());
 
@@ -301,7 +301,7 @@ java -javaagent:ebean-agent-::version::.jar=debug=3 MyApplication
     throw new CannotCompileException("ebean enhance model fail!");
   }
   defineClass("your.class.name", result, 0, result.length);
-  ```
+  </pre>
 
 </div>
 </div>

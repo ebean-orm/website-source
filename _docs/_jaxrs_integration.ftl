@@ -18,7 +18,7 @@ Typically developers will extend the AbstractEntityResource object which has bui
 
 <p>
 Example:
-```java
+<pre content="java">
 ...
 // Extend AbstractEntityResource to get:
 //   Insert, Update, Delete, Delete Many, Find by Id and Find all
@@ -35,7 +35,7 @@ public class CustomerJsonResource extends AbstractEntityResource {
         super(Customer.class);
     }
 }
-```
+</pre>
 </p>
 
 <h4>AbstractEntityResource provides:</h4>
@@ -45,7 +45,7 @@ AbstractEntityResource provides an implementation for
 It makes use of UriOptions if defined.
 </p>
 
-```java
+<pre content="java">
     /**
      * Insert a bean.
      *
@@ -109,7 +109,7 @@ It makes use of UriOptions if defined.
      */
     @GET
     public List&lt;T&gt; findAll(@Context UriInfo ui, @PathParam("uriOptions") String uriOptions) {
-```
+</pre>
 
 <h4>UriOptions</h4>
 <p>
@@ -133,7 +133,7 @@ The UriOptions can contain 3 segments to specify:<br/>
 - A sort clause <br/>
 </p>
 
-```java
+<pre content="java">
  Example URL:
  .../v1/customer::(34,35):(name,id,contacts(firstName,lastName)):sort(id desc)
 
@@ -148,4 +148,4 @@ The UriOptions can contain 3 segments to specify:<br/>
 
  :sort(id desc)
  // sort the customers by descending order of their Id values
-```
+</pre>

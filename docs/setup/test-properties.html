@@ -23,7 +23,7 @@
   </p>
 
   <h3>Example test-ebean.properties</h3>
-```properties
+  <pre content="properties">
   ## Create DB from scratch prior to running tests
   ebean.db.ddl.generate=true
   ebean.db.ddl.run=true
@@ -33,7 +33,7 @@
   datasource.db.password=
   datasource.db.databaseUrl=jdbc:h2:mem:tests
   datasource.db.databaseDriver=org.h2.Driver
-```
+  </pre>
 
   <h3>Programmatic - loadTestProperties()</h3>
   <p>
@@ -42,7 +42,7 @@
     file if present.
   </p>
 
-  ```java
+  <pre content="java">
   @Override
   public EbeanServer getObject() throws Exception {
 
@@ -62,7 +62,7 @@
 
     return EbeanServerFactory.create(config);
   }
-  ```
+  </pre>
 
 </div>
 </body>

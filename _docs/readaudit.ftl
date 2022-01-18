@@ -27,7 +27,7 @@ An implementation of the ReadAuditPrepare interface is typically required. The r
   <p>
     Add @ReadAudit annotation to all the entity beans that should have read auditing.
   </p>
-```java
+  <pre content="java">
 
   @ReadAudit
   @Entity
@@ -35,14 +35,14 @@ An implementation of the ReadAuditPrepare interface is typically required. The r
   public class Customer {
     ...
 
-```
+  </pre>
   <h4>Step 2: Implement ReadAuditPrepare</h4>
   <p>
     If you skip this step and don't supply a ReadAuditPrepare implementation a 'no op' implementation
     is used and the user context information (user id, user ip address etc) is left unpopulated.
   </p>
 
-```java
+  <pre content="java">
   class MyReadAuditPrepare implements ReadAuditPrepare {
 
     @Override
@@ -64,7 +64,7 @@ An implementation of the ReadAuditPrepare interface is typically required. The r
       event.getUserContext().put("some", "thing");
     }
   }
-```
+  </pre>
 
   <h4>Step 3: Register ReadAuditPrepare implementation</h4>
   <p>
@@ -79,7 +79,7 @@ An implementation of the ReadAuditPrepare interface is typically required. The r
     with the ServerConfig.
   </p>
 
-```java
+  <pre content="java">
 
   // example code explicitly registering the ReadAuditPrepare implementation
 
@@ -95,6 +95,6 @@ An implementation of the ReadAuditPrepare interface is typically required. The r
   EbeanServer server = EbeanServerFactory.create(config);
   ...
 
-```
+  </pre>
 
 </div>
