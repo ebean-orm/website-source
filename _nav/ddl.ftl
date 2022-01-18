@@ -21,7 +21,7 @@
       <@smallnav activeCheck="" url="#generate" title="Generate a Migration"/>
       <@smallnav activeCheck="" url="#run" title="Run migrations"/>
     </ul>
-  </@nav1><@nav1 activeCheck="${n1_dbmigrationdetails!''}" url="/docs/db-migrations/detail.html" title="DB Migrations details">
+  </@nav1><@nav1 activeCheck="${n1_dbmigrationdetails!''}" url="/docs/db-migrations/detail" title="DB Migrations details">
     <ul class="nav nav-scroll">
       <@smallnav activeCheck="" url="#migration-xml" title="Migration xml"/>
       <@smallnav activeCheck="" url="#apply-ddl" title="Apply DDL"/>

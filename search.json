@@ -645,7 +645,7 @@
   "category":"DB migrations",
   "priority":"3",
   "keywords":"",
-  "url":"/docs/db-migrations/detail"
+  "url":"/docs/db-migrations/detail#apply-drops"
 }
 ,{
   "title":"Details - Generate offline",
