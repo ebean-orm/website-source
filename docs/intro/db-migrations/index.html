@@ -94,12 +94,12 @@ fun main(args : Array<!String>) {
 </p>
 
 <h5>In application.yaml</h5>
-```yml
+<pre content="yml">
 ## run migrations when the Ebean starts
 ebean:
   migration:
     run: true
-```
+</pre>
 <p>
   With <code>ebean.migration.run=true</code> then when the Ebean starts it will look at the
   migrations and run any that need to be run.  The migration runner will by default create a table

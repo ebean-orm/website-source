@@ -20,7 +20,7 @@
   This will automatically download and run the container making live a little easier.
   Note the use of the Postgis specfic driver and url.
 </p>
-```yml
+<pre content="yml">
 ebean:
   geometrySRID: 4674  # If we don't want the default geometrySRID of 4326
 
@@ -29,7 +29,7 @@ ebean:
     platform: postgis
     ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: my_gisapp
-```
+</pre>
 <p>
   The above <code>postgis</code> platform is equivalent to the setup below which uses:
 </p>
@@ -43,7 +43,7 @@ ebean:
 </table>
 
 
-```yml
+<pre content="yml">
 ebean:
   geometrySRID: 4674
 
@@ -59,7 +59,7 @@ ebean:
       url: jdbc:postgresql_lwgis://127.0.0.1:7432/my_gisapp
       driver: org.postgis.DriverWrapperLW
 
-```
+</pre>
 
 <@next_edit "MySql" "/docs/database/mysql" "/docs/database/postgres/postgis.html"/>
 

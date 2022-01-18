@@ -20,13 +20,13 @@
   Refer to <a href="/docs/testing">docs / testing</a> if application-test.yaml doesn't exist yet.
 </p>
 
-```yml
+<pre content="yml">
 ebean:
   test:
     platform: clickhouse #, h2, postgres, mysql, oracle, sqlserver
     ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: test
-```
+</pre>
 
 <p>
   The above will use the following defaults:

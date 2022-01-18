@@ -18,7 +18,7 @@
   To setup to use sqlserver17 we should set the <code>databasePlatformName</code> to sqlserver17 at either the
   <code>ebean.databasePlatformName</code>> level or at <code>ebean.test.sqlserver.databasePlatformName</code>> level.
 </p>
-```yml
+<pre content="yml">
 ebean:
   databasePlatformName: sqlserver17  ## only using sql server
   test:
@@ -29,12 +29,12 @@ ebean:
       #collation: SQL_Latin1_General_CP1_CS_AS  ## use an explicit collation
       #collation: default                       ## use the sql server default
 
-```
+</pre>
 <p>
   When testing against multiple database platforms put <code>databasePlatformName: sqlserver17</code>
   under <code>sqlserver</code> like the example below:
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     platform: sqlserver # h2, postgres, mysql, oracle, sqlserver
@@ -46,7 +46,7 @@ ebean:
       #collation: SQL_Latin1_General_CP1_CS_AS  ## use an explicit collation
       #collation: default                       ## use the sql server default
 
-```
+</pre>
 <p>
   The above will use the following defaults:
 </p>

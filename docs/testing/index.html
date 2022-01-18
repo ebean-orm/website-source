@@ -74,37 +74,37 @@
 <h2 id="ebean-test">ebean-test dependency</h2>
 
 <h3>1. Add ebean-test as a test dependency</h3>
-```xml
-<dependency>
-  <groupId>io.ebean</groupId>
-  <artifactId>ebean-test</artifactId>
-  <version>12.12.1</version>
-  <scope>test</scope>
-</dependency>
-```
+<pre content="xml">
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-test</artifactId>
+    <version>12.12.1</version>
+    <scope>test</scope>
+  </dependency>
+</pre>
 
 <h3 id="application-test">2. Add application-test.yaml</h3>
 <p>
   Add into <code>src/test/resources</code> a <code>application-test.yaml</code> configuration file
   that we use for testing.
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     platform: h2 #, h2, postgres, mysql, oracle, sqlserver, hana, clickhouse, sqlite
     ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: my_app
-```
+</pre>
 <p>
   We can modify this test configuration to control what DDL is executed (create-all.sql or migrations)
   and the database platform we want to test against (potentially using docker).
 </p>
 
 <h3>3. Add ~/.ebean/ignore-docker-shutdown</h3>
-```sh
+<pre content="sh">
 mkdir ~/.ebean
 touch ~/.ebean/ignore-docker-shutdown
-```
+</pre>
 <p>
   For running tests on CI servers we typically want to stop and remove the docker containers
   when the tests have completed. However, for local development we want to keep the docker containers
@@ -182,7 +182,7 @@ touch ~/.ebean/ignore-docker-shutdown
   We can see/review what is occurring by increasing the logging for <code>io.ebean.docker</code>
   to <code>TRACE</code>. When we do that we can see log messages like:
 </p>
-```text
+<pre content="text">
 
 ... Docker test container start and setup
 
@@ -218,7 +218,7 @@ touch ~/.ebean/ignore-docker-shutdown
 ...
 15:15:03.841 [main] INFO  io.ebean.DDL - Executing extra-dll - 1 statements
 15:15:03.842 [main] DEBUG io.ebean.DDL - executing 1 of 1 create or replace view order_agg_vw as select d.order_id as id, d.order_id as or...
-```
+</pre>
 
 <h2 id="container-startup">Container startup</h2>
 <p>
@@ -253,14 +253,14 @@ touch ~/.ebean/ignore-docker-shutdown
   set <code>shutdown</code> to either <code>remove</code> (to stop and remove the container) or <code>stop</code>
   (to just stop the container).
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     shutdown: remove  # stop | remove
     platform: postgres # h2, postgres, mysql, oracle, sqlserver
     ddlMode: dropCreate # none | dropCreate | migrations
     dbName: my_app
-```
+</pre>
 
 <h2 id="not-docker">Not using Docker</h2>
 <p>
@@ -274,7 +274,7 @@ ebean:
 <p>
   When we are using  <code>useDocker: false</code> the database and user are expected to already exist.
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     useDocker: false  ## DO NOT USE DOCKER
@@ -285,7 +285,7 @@ ebean:
       username: test
       password: test
       url: jdbc:postgresql://localhost:5432/test
-```
+</pre>
 
 <h2 id="current-user">Current User and Tenant</h2>
 <p>
@@ -296,12 +296,12 @@ ebean:
   This means is that without doing anything we can use <code>@WhoCreated / @WhoModified</code>
   in tests and via <code>io.ebean.test.UserContext</code> we can set current user and tenant in tests.
 </p>
-```java
+<pre content="java">
 // set the current userId which will be put
 // into 'WhoCreated' and 'WhoModified' properties
 
 UserContext.setUserId("U1");
-```
+</pre>
 
 <h2 id="ddl-generation-properties">DDL generation properties</h2>
 <p>
@@ -350,7 +350,7 @@ UserContext.setUserId("U1");
 
 
 <h3>Example application-test.properties</h3>
-```properties
+<pre content="properties">
 ebean.db.ddl.generate=true
 ebean.db.ddl.run=true
 ebean.db.ddl.initSql=initialise-test-db.sql
@@ -360,7 +360,7 @@ datasource.db.username=sa
 datasource.db.password=
 datasource.db.databaseUrl=jdbc:h2:mem:tests
 datasource.db.databaseDriver=org.h2.Driver
-```
+</pre>
 
 <h2 id="scriptRunner">DDL/SQL Script Runner</h2>
 <p>
@@ -374,14 +374,14 @@ datasource.db.databaseDriver=org.h2.Driver
 
 <h4>Example of simple use</h4>
 
-```java
+<pre content="java">
 Database database = DB.getDefault();
 database.script().run("/scripts/test-script.sql");
-```
+</pre>
 
 <h4>Example using place holders in the script</h4>
 
-```java
+<pre content="java">
 
 Map<|String,String> placeholders = new HashMap();
 placeholders.put("tableName", "e_basic");
@@ -389,7 +389,7 @@ placeholders.put("tableName", "e_basic");
 Database database = DB.getDefault();
 database.script().run("/scripts/test-script.sql", placeholders);
 
-```
+</pre>
 
 <p>
   In our SQL scripts the way to reference the placeholder is:
@@ -413,7 +413,7 @@ database.script().run("/scripts/test-script.sql", placeholders);
   To automatically start ElasticSearch as a docker container set <code>ebean.docstore</code>
   properties like those below in application-test.yaml:
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     platform: h2
@@ -429,7 +429,7 @@ ebean:
     elastic:
       version: 5.6.0
       port: 9201
-```
+</pre>
 <p>
   Goto <a href="/docs/database/elasticsearch">database / elasticsearch</a> for more details.
 </p>
@@ -440,14 +440,14 @@ ebean:
   start a redis docker test container. To do this add <code>ebean.test.redis=latest</code>
   property like the example below:
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     redis: latest
     platform: h2 # h2, postgres, mysql, oracle, sqlserver, sqlite
     ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: my_app
-```
+</pre>
 <p>
   Goto <a href="/docs/database/redis">database / redis</a> for more details.
 </p>

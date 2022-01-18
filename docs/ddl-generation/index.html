@@ -24,13 +24,13 @@
     create-all and drop-all is generated and run.
   </p>
   <h5>In application-test.yml</h5>
-```yml
-ebean:
-  test:
-    platform: h2 # h2, postgres, mysql, oracle, sqlserver
-    ddlMode: dropCreate # none | dropCreate | migrations | create
-    dbName: myapp
-```
+  <pre content="yml">
+  ebean:
+    test:
+      platform: h2 # h2, postgres, mysql, oracle, sqlserver
+      ddlMode: dropCreate # none | dropCreate | migrations | create
+      dbName: myapp
+  </pre>
 
   <h2 id="properties">Using properties</h2>
   <p>
@@ -41,18 +41,18 @@ ebean:
   </p>
 
   <h5>In application-test.yml</h5>
-  ```yml
-ebean:
-  ddl:
-    generate: true
-    run: true
-```
+  <pre content="yml">
+  ebean:
+    ddl:
+      generate: true
+      run: true
+  </pre>
 
   <h5>Or application-test.properties</h5>
-```properties
-ebean.ddl.generate=true
-ebean.ddl.run=true
-```
+  <pre content="properties">
+    ebean.ddl.generate=true
+    ebean.ddl.run=true
+  </pre>
 
   <h2 id="create-all">db-create-all.sql</h2>
   <p>
@@ -69,18 +69,18 @@ ebean.ddl.run=true
     We can additionally specify DDL to execute prior to running the "create-all" DDL via the
     <code>initSql</code> property.
   </p>
-  ```properties
+  <pre content="properties">
   ebean.ddl.initSql=testInitialDdl.sql
-  ```
+  </pre>
 
   <h2 id="seedSql">Seed DDL</h2>
   <p>
     We can additionally specify DDL to execute after running the "create-all" DDL which we typically
     use to seed the database via the <code>seedSql</code> property.
   </p>
-  ```properties
+  <pre content="properties">
   ebean.ddl.seedSql=testSeedData.sql
-  ```
+  </pre>
 
   <p>&nbsp;</p>
   <h4>Compared to DB Migrations</h4>

@@ -25,7 +25,7 @@
   With MySql can (and probably should) specify the collation and character set we want the
   database to use. In the example below we specify the collation as <code>utf8mb4_unicode_ci</code>.
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     platform: mysql #, h2, postgres, mysql, oracle, sqlserver
@@ -34,7 +34,7 @@ ebean:
     mysql:
       collation: utf8mb4_unicode_ci
       characterSet: utf8mb4
-```
+</pre>
 
 <p>
   The above will use the following defaults:
@@ -55,7 +55,7 @@ ebean:
   We can specify the collation to be <code>default</code> and with that the collection will be left up
   to the default that MySql would use.
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     platform: mysql #, h2, postgres, mysql, oracle, sqlserver
@@ -65,16 +65,16 @@ ebean:
       version: 8.0
       collation: default
 
-```
+</pre>
 <p>
   In the logs with logging DEBUG level for <code>io.ebean.docker</code> we can see:
   <code>--character-set-server</code> and <code>--collation-server</code>
 </p>
-```text
+<pre content="text">
 ... INFO  io.ebean.docker.commands.Commands - Run container ut_mysql with port:4306 db:my_app user:my_app mode:Create shutdown:
 ... DEBUG io.ebean.docker.commands.Commands - docker run -d --name ut_mysql -p 4306:3306 -e MYSQL_ROOT_PASSWORD=admin mysql:5.6
 
-```
+</pre>
 
 
 <h2 id="types">Types</h2>

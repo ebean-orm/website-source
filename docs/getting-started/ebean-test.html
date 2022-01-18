@@ -40,13 +40,13 @@
   In <code>src/test/resources</code> add <code>application-test.yaml</code> configuration file
   like the one below.
 </p>
-```yml
+<pre content="yml">
 ebean:
   test:
     platform: h2 # h2, postgres, mysql, mariadb, oracle, sqlserver, hana, clickhouse, sqlite
     ddlMode: dropCreate # none | dropCreate | migration
     dbName: my_app
-```
+</pre>
 <p>
   We can change the <code>platform</code> to any of the supported platforms.
   Ebean test will automatically manage a docker test container setting it up to run tests.
