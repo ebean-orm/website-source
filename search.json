@@ -3160,7 +3160,7 @@
   "url":"/docs/query/query-beans#apt"
 }
 ,{
-  "title":"Query beans - Caveats",
+  "title":"Query beans - Caveat - refactor rename",
   "caption":"",
   "category":"Query",
   "priority":"3",
