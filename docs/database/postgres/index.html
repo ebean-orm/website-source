@@ -74,6 +74,23 @@ ebean:
   Postgres HSTORE type.
 </p>
 
+<h2 id="any">Postgres ANY</h2>
+<p>
+  Postgres has an <code>ANY</code> operator which allows binding an Array of values. This can provide a very big
+  benefit when using <code> = ANY(?)</code> rather than the usual <code> IN (?,?,? ...)</code> when the number of
+  bind values for an IN clause is variable. Effectively no matter the number of bind values with Postgres <code>= ANY</code>
+  we get to use the exact same SQL. This means we need only use a single Ebean query plan, a single JDBC PreparedStatement
+  and the database server also only see the one sql statement and typically means that it only needs to parse that once to
+  determine the query plan ("the database has to do less hard parsing").
+</p>
+<p>
+  For these reasons Ebean will use Postgres <code>= ANY</code> whenever it can rather than use a <code>IN</code> clause.
+</p>
+<p>
+  Additionally you often want to use <code>= ANY</code> in SQL statements for <a href="/docs/query/dtoquery#any">DtoQuery</a>
+  and <a href="/docs/query/sqlquery#any">SqlQuery</a>.
+</p>
+
 <h2 id="history">History support</h2>
 <p>
   History support for Postgres is provided by generating triggers and history table.

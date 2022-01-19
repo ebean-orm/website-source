@@ -103,6 +103,44 @@ limit 10
   is a desire to only map some of the columns into bean properties.
 </p>
 
+<h2 id="any" class="art">Postgres ANY</h2>
+<p>
+  When using Postgres we can use Postgres <code>ANY</code> in DtoQuery using positioned parameters
+  or by using <code>setArrayParameter()</code>.
+</p>
+<p>
+  The benefit of using Postgres <code>ANY</code> is that we end up using a single SQL query regardless of the number
+  of parameters - a single JDBC PreparedStatement and the database has a single SQL query to parse. This results in
+  the database doing less hard parsing and better use of PreparedStatement cache, less query plans to cache, less memory consumed.
+</p>
+
+<h5>Example: Positioned parameter</h5>
+<p>
+  When using index positioned parameters and binding a collection that will bind as a JDBC ARRAY.
+</p>
+<pre content="java">
+  List<|Integer> ids = List.of(1, 2);
+  String sql = "select id, name from customer where id = any(?)"
+
+  List<|CustomerDto> list = DB.findDto(CustomerDto.class, sql)
+    .setParameter(ids) // bind as JDBC ARRAY
+    .findList();
+</pre>
+<h5>Example: Using setArrayParameter() for named parameters</h5>
+<p>
+  When using named parameters by default Ebean expects use of an <code>IN</code> clause and collections are "expanded".
+  For example, a collection of 3 values is expanded into 3 separate JDBC bind values <code>?,?,?</code> rather than JDBC binding a single ARRAY.
+  To bind collections as a Postgres ARRAY for an <code>ANY</code> clause we need to use <code>setArrayParameter()</code>.
+</p>
+<pre content="java">
+  List<|Integer> ids = List.of(1, 2);
+  String sql = "select id, name from o_customer where id = any(:idList)"
+
+  List<|CustomerDto> list2 = DB.findDto(CustomerDto.class, sql)
+    .setArrayParameter("idList", ids) // bind as JDBC ARRAY
+    .findList();
+</pre>
+
 <h2 id="findEach" class="art">findEach</h2>
 <p>
   We use <em>findEach</em> when processing a large query where we do not wish to hold

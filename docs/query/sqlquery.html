@@ -140,6 +140,50 @@ List<|SqlRow> rows = DB.sqlQuery(sql)
   .findList();
 </pre>
 
+<h2 id="any" class="art">Postgres ANY</h2>
+<p>
+  When using Postgres we can use Postgres <code>ANY</code> in SqlQuery with positioned parameters.
+</p>
+<p>
+  The benefit of using Postgres <code>ANY</code> is that we end up using a single SQL query regardless of the number
+  of parameters - a single JDBC PreparedStatement and the database has a single SQL query to parse. This results in
+  the database doing less hard parsing and better use of PreparedStatement cache, less query plans to cache, less memory consumed.
+</p>
+
+<h5>Example</h5>
+<p>
+  When using index positioned parameters and binding a collection that will bind as a JDBC ARRAY.
+</p>
+<pre content="java">
+  List<|Integer> ids = List.of(1, 2);
+
+  List<|SqlRow> list = DB.sqlQuery("select id, name from o_customer where id = any(?)")
+      .setParameter(1, ids) // bind as JDBC ARRAY
+      .findList();
+</pre>
+<p>
+  When using Postgres we would often prefer to use that over using an <code>IN</code> clause
+  like the example below. The reason we prefer <code>ANY</code> is that it does not matter how
+  many elements we have in the ARRAY we end up with a single SQL statement. This gives us a single
+  query plan, single PrepareStatement and on the database end a single query statement to parse regardless
+  of the number of id values we are binding.
+</p>
+<p>
+  In comparison to using an <code>IN</code> clause, if we have 3 ids that is a different SQL query to one
+  that has 4 ids for example - we end up with more distinct PreparedStatements, potentially a lot more depending
+  on the number of id values we have.
+</p>
+<pre content="java">
+  List<|SqlRow> list = DB.sqlQuery("select id, name from o_customer where id in (:idList)")
+      .setParameter("idList", ids) // bind parameter expansion
+      .findList();
+</pre>
+<p>
+  Using the <code>IN</code> clause will result in a different SQL query when we have different numbers of
+  id values. With 4 id values supplied then <code>in (:idList)</code> is turned into SQL <code>in (?, ?, ?, ?)</code>.
+</p>
+
+
 <h2 id="limit" class="art">firstRow / maxRows</h2>
 <p>
   We can specify <em>firstRow</em> and <em>maxRows</em> on a SqlQuery and Ebean will modify

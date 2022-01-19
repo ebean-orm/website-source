@@ -1000,6 +1000,14 @@
   "url":"/docs/database/postgres#postgis"
 }
 ,{
+  "title":"Postgres - Postgres ANY",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#any"
+}
+,{
   "title":"Postgres - Postgres types",
   "caption":"",
   "category":"Database platforms",
@@ -2608,6 +2616,14 @@
   "url":"/docs/query/dtoquery#mapping"
 }
 ,{
+  "title":"DtoQuery - Postgres ANY",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/dtoquery#any"
+}
+,{
   "title":"DtoQuery - RelaxedMode",
   "caption":"",
   "category":"Query",
@@ -3270,6 +3286,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/query/sqlquery#bind-positioned"
+}
+,{
+  "title":"SqlQuery - Postgres ANY",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/sqlquery#any"
 }
 ,{
   "title":"SqlQuery - firstRow / maxRows",
