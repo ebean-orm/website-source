@@ -30,8 +30,8 @@
   Ebean to use another implementation.
 </p>
 <p>
-  Properties encrypted with client/application encryption can <b>NOT</b> be used in <code>where</code>
-  and <code>order by</code> clause.
+  Properties encrypted with client/application encryption should <b>ONLY</b> be used with <b>EQ (equal to)</b> operator
+  in <code>where</code> clauses - other operators should not be used with client side encrypted properties.
 </p>
 <pre content="java">
 package io.ebean.config;
