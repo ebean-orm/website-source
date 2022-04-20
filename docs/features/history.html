@@ -55,7 +55,6 @@
     <li>The "history" table does not have constraints by default (no primary key, foreign key or indexes)</li>
     <li>2 extra columns added to the base table and history table for "effective start" and "effective end" timestamp range.
       Postgres has a timestamp range type so that is preferred to 2 separate columns for the Postgres implementation.
-      Note another approach uses 4 extra columns instead of 2 but we are not doing that.
     </li>
     <li>A view is used to <code>union all</code> combine the "base table" and the "history table" to simplify history queries</li>
     <li>Triggers are used on update and delete to copy the existing row data from the "base table" to the associated
@@ -85,7 +84,7 @@
     With @History the database handles all changes. If other frameworks (not Ebean) or stored procedures or raw JDBC
     is used to update the database all these changes are captured by the database triggers. Although Ebean makes it
     easier to query and generate the appropriate DDL the capturing of changes is a database function and not strictly
-    tied to Ebean or the application.
+    tied to Ebean or application code.
   </p>
 
   <h4>Easy to query</h4>

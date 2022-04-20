@@ -21,8 +21,8 @@
   Effectively the encryption of the property is fully transparent to the application.
 </p>
 <p>
-  When we use client/application side encryption/decryption then we can't use the
-  property in the <code>where</code> and <code>order by</code> clause.
+  When we use client/application side encryption/decryption then we should only use the
+  <b>EQ</b> (equal to) operator in the <code>where</code> clause.
 </p>
 
 <h2 id="client-encryption">Client/Application encryption</h2>
@@ -81,8 +81,8 @@ public interface Encryptor {
   The default DB encryption decryption functions used for each platform are:
 </p>
 <ul>
-  <li><b>Postgres</b> - pgp_sym_decrypt(), pgp_sym_encrypt()</li>
-  <li><b>MySql</b> - aes_encrypt(), aes_decrypt()</li>
+  <li><b>Postgres, Yugabyte</b> - pgp_sym_decrypt(), pgp_sym_encrypt()</li>
+  <li><b>MySql, MariaDB</b> - aes_encrypt(), aes_decrypt()</li>
   <li><b>SQL Server</b> - DecryptByPassPhrase(), EncryptByPassPhrase()</li>
   <li><b>Oracle</b> - requires dbms_crypto and uses custom functions for encryption and decryption</li>
   <li><b>H2</b> -  encrypt() and decrypt() with 'AES' option</li>
@@ -181,10 +181,10 @@ public interface EncryptKeyManager {
     Properties using Java client encryption should only use <b>EQ</b> (equal to) operator in WHERE clauses
   </li>
   <li>
-    Only DB Encryption support built in for H2, Postgres, MySql and Oracle.
+    DB Encryption support built in for H2, Postgres, Yugabyte, MySql, MariaDB, Sql Server and Oracle.
   </li>
   <li>
-    You can not use Encryption with positioned (1,2,3...) parameters. You must
+    We can not use Encryption with positioned (1,2,3...) parameters. We must
     use named parameters or the criteria api to define queries.
   </li>
 </ul>
