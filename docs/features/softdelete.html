@@ -1,12 +1,14 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_features.html"/>
+  <title>SoftDelete | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Features" href="/docs/features/"/>
   <meta name="bread2" content="SoftDelete" href="/docs/features/softdelete"/>
-  <#assign subtitle = "Soft Delete">
-<#assign softdelete = "true">
+  <#assign n0_docs="active">
+  <#assign n1_features="active">
+  <#assign softdelete="active">
 </head>
 <body>
-<div class="bs-docs-section">
 
   <h2 id="softdelete">@SoftDelete</h2>
   <p>
@@ -18,55 +20,54 @@
   </p>
 
 
+  <pre content="java">
 
-```java
+  @MappedSuperclass
+  public class BaseSoftDelete {
 
-@MappedSuperclass
-public class BaseSoftDelete {
+    @Id
+    Long id;
 
-  @Id
-  Long id;
+    @Version
+    Long version;
 
-  @Version
-  Long version;
+    @SoftDelete
+    boolean deleted;
 
-  @SoftDelete
-  boolean deleted;
-
-```
+  </pre>
 
   <h2 id="delete">Delete</h2>
   <p>
     A delete of an entity bean that has SoftDelete becomes a SQL update.
   </p>
-```java
+  <pre content="java">
 
   // delete becomes an update if the bean has soft delete property
   database.delete(bean);
 
-```
+  </pre>
 
-```sql
+  <pre content="sql">
   -- soft delete  ... sets deleted = true
   update mybean set version=?, deleted=? where id=? and version=?; --bind(2,true,1,1,)
-```
+  </pre>
 
 
   <h2 id="deletepermanent">Delete Permanent</h2>
   <p>
     Delete permanent is used to perform a SQL delete (hard delete).
   </p>
-```java
+  <pre content="java">
 
   // delete becomes an update if the bean has soft delete property
   database.deletePermanent(bean);
 
-```
+  </pre>
 
-```sql
+  <pre content="sql">
   -- delete permanent
   delete from mybean where id=? and version=?; --bind(1,2,)
-```
+  </pre>
 
   <h2 id="cascade">Cascading behavior</h2>
   <p>
@@ -98,7 +99,7 @@ public class BaseSoftDelete {
     and t0.deleted=false and t1.deleted=false    ... additional predicates
   </blockquote>
 
-```sql
+  <pre content="sql">
   select t0.id c0, t0.name ...
   from ebasic_soft_delete t0
   left outer join ebasic_sdchild t1 on t1.owner_id = t0.id
@@ -106,7 +107,7 @@ public class BaseSoftDelete {
     -- Additional predicates for soft delete
     and t0.deleted=false and t1.deleted=false
   order by t0.id; --bind(1)
-```
+  </pre>
 
   <h2 id="includeSoftDeletes">Query - includeSoftDeletes</h2>
   <p>
@@ -119,10 +120,10 @@ public class BaseSoftDelete {
     Query.includeSoftDeletes()
   </blockquote>
 
-```java
+  <pre content="java">
 
   // find a bean that could be soft deleted
-  List<MyBean> beans =
+  List<|MyBean> beans =
     database.find(MyBean.class)
     .includeSoftDeletes()
     .where().icontains("name", "rob")
@@ -136,7 +137,7 @@ public class BaseSoftDelete {
       .setId(idValue)
       .findOne();
 
-```
+  </pre>
 
   <h2 id="notifications">Notifications</h2>
   <p>
@@ -149,6 +150,5 @@ public class BaseSoftDelete {
     For ChangeLog soft deletes are treated as updates as this reflects the actual change that occured.
   </p>
 
-</div>
 </body>
 </html>

@@ -50,14 +50,6 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"Encryption",
-  "priority":"0",
-  "keywords":"",
-  "url":"/docs/encryption"
-}
-,{
-  "title":"",
-  "caption":"",
   "category":"Examples",
   "priority":"0",
   "keywords":"",
@@ -186,7 +178,7 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"Change log",
+  "category":"ChangeLog",
   "priority":"1",
   "keywords":"",
   "url":"/docs/features/changelog"
@@ -206,6 +198,22 @@
   "priority":"1",
   "keywords":"",
   "url":"/docs/features/elasticsearch"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/features/encryption"
+}
+,{
+  "title":"",
+  "caption":"",
+  "category":"Event listening",
+  "priority":"1",
+  "keywords":"",
+  "url":"/docs/features/eventlistening"
 }
 ,{
   "title":"",
@@ -266,7 +274,7 @@
 ,{
   "title":"",
   "caption":"",
-  "category":"Who Created Modified",
+  "category":"Who",
   "priority":"1",
   "keywords":"",
   "url":"/docs/features/who"
@@ -1150,78 +1158,6 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch/syncing"
-}
-,{
-  "title":"@Encrypted",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#encrypted"
-}
-,{
-  "title":"Client/Application encryption",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#client-encryption"
-}
-,{
-  "title":"Configuration",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#configuration"
-}
-,{
-  "title":"Database encryption",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#db-encryption"
-}
-,{
-  "title":"EncryptKeyManager",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#encryptKeyManager"
-}
-,{
-  "title":"Encryption",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#encryption"
-}
-,{
-  "title":"Internals",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#internals"
-}
-,{
-  "title":"Limitations",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#limitations"
-}
-,{
-  "title":"Supported types",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/encryption#types"
 }
 ,{
   "title":"Example projects",
@@ -4330,7 +4266,7 @@
 ,{
   "title":"Caveats",
   "caption":"",
-  "category":"Change log",
+  "category":"ChangeLog",
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/changelog#caveats"
@@ -4338,7 +4274,7 @@
 ,{
   "title":"Getting started",
   "caption":"",
-  "category":"Change log",
+  "category":"ChangeLog",
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/changelog#getting-started"
@@ -4346,7 +4282,7 @@
 ,{
   "title":"Overview",
   "caption":"",
-  "category":"Change log",
+  "category":"ChangeLog",
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/changelog#overview"
@@ -4824,6 +4760,110 @@
   "url":"/docs/features/elasticsearch#why"
 }
 ,{
+  "title":"@Encrypted",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#encrypted"
+}
+,{
+  "title":"Client/Application encryption",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#client-encryption"
+}
+,{
+  "title":"Configuration",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#configuration"
+}
+,{
+  "title":"Database encryption",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#db-encryption"
+}
+,{
+  "title":"EncryptKeyManager",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#encryptKeyManager"
+}
+,{
+  "title":"Encryption",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#encryption"
+}
+,{
+  "title":"Internals",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#internals"
+}
+,{
+  "title":"Limitations",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#limitations"
+}
+,{
+  "title":"Supported types",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/encryption#types"
+}
+,{
+  "title":"BeanPersistController",
+  "caption":"",
+  "category":"Event listening",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/eventlistening#beanPersistController"
+}
+,{
+  "title":"BeanPersistListener",
+  "caption":"",
+  "category":"Event listening",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/eventlistening#beanPersistListener"
+}
+,{
+  "title":"BeanQueryAdapter",
+  "caption":"",
+  "category":"Event listening",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/eventlistening#beanQueryAdapter"
+}
+,{
+  "title":"JPA annotations, @PostUpdate etc",
+  "caption":"",
+  "category":"Event listening",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/eventlistening#jpa"
+}
+,{
   "title":"@History",
   "caption":"",
   "category":"History",
@@ -4854,14 +4894,6 @@
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/history"
-}
-,{
-  "title":"H2",
-  "caption":"",
-  "category":"History",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/features/history#h2"
 }
 ,{
   "title":"History tables",
@@ -5112,20 +5144,28 @@
   "url":"/docs/query/background/overview"
 }
 ,{
-  "title":"Caveats",
-  "caption":"",
-  "category":"Read Auditing",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/features/readauditing#caveats"
-}
-,{
   "title":"Getting started",
   "caption":"",
   "category":"Read Auditing",
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/readauditing#getting-started"
+}
+,{
+  "title":"Limitations",
+  "caption":"",
+  "category":"Read Auditing",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/readauditing#limitations"
+}
+,{
+  "title":"Optional: ReadAuditLogger implementation",
+  "caption":"",
+  "category":"Read Auditing",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/readauditing#readAuditLogger"
 }
 ,{
   "title":"Overview",
@@ -5141,7 +5181,7 @@
   "category":"Read Auditing",
   "priority":"4",
   "keywords":"",
-  "url":"/docs/features/readauditing#query"
+  "url":"/docs/features/readauditing#setDisableReadAuditing"
 }
 ,{
   "title":"@SoftDelete",
@@ -5210,7 +5250,7 @@
 ,{
   "title":"Who Created/Who Modified",
   "caption":"",
-  "category":"Who Created Modified",
+  "category":"Who",
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/who#overview"

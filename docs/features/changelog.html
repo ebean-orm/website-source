@@ -1,13 +1,14 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_features.html"/>
-  <meta name="bread2" content="Change log" href="/docs/features/changelog"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_features_who.ftl"></template>
-  <#assign changelog = "true">
+  <title>ChangeLog | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Features" href="/docs/features/"/>
+  <meta name="bread2" content="ChangeLog" href="/docs/changelog/"/>
+  <#assign n0_docs="active">
+  <#assign n1_features="active">
+  <#assign changelog="active">
 </head>
 <body>
-
-<div class="bs-docs-section">
   <h2 id="overview">Overview</h2>
   <p>
     Change log provides a built-in mechanism for logging changes (insert, update and delete events).
@@ -27,7 +28,7 @@
 
   <h2 id="getting-started">Getting started</h2>
 
-  <h4>Step 1: Decide default for inserts</h4>
+  <h3>Step 1: Decide default for inserts</h3>
   <p>
     Inserts can default to being included in the change log or not and this will depend on the application.
     It is good to think about this up front as when we annotate the entity beans with @ChangeLog
@@ -37,16 +38,16 @@
     By default inserts are included. <code>DatabaseConfig.setChangeLogIncludeInserts(boolean)</code> can be used
     to control the default behaviour.  This can also be set via application.properties.
   </p>
-```properties
-  ebean.changeLogIncludeInserts=false
-```
+  <pre content="properties">
+    ebean.changeLogIncludeInserts=false
+  </pre>
 
-  <h4>Step 2: Add @ChangeLog</h4>
+  <h3>Step 2: Add @ChangeLog</h3>
 
   <p>
     Add <code>@ChangeLog</code> annotation to all the entity beans that should have change logging on.
   </p>
-  ```java
+  <pre content="java">
 
   @ChangeLog
   @Entity
@@ -72,8 +73,8 @@
   ...
 
 
-  ```
-  <h4>Step 3: Implement ChangeLogPrepare</h4>
+  </pre>
+  <h3>Step 3: Implement ChangeLogPrepare</h3>
   <p>
     If we skip this step and don't supply a ChangeLogPrepare implementation a 'no op' implementation
     is used and the user context information (user id, user ip address etc) is left unpopulated.
@@ -88,7 +89,7 @@
     return false (and this means the change set is not passed to the ChangeLogListener in a background thread).
   </p>
 
-  ```java
+  <pre content="java">
   class MyChangeLogPrepare implements ChangeLogPrepare {
 
     @Override
@@ -112,9 +113,9 @@
       return true;
     }
   }
-  ```
+  </pre>
 
-  <h4>Step 4: Register ChangeLogPrepare implementation</h4>
+  <h3>Step 4: Register ChangeLogPrepare implementation</h3>
   <p>
     The implementation of ChangeLogPrepare can be automatically detected
     if classpath scanning is on (just like entity beans are found). That is,
@@ -127,8 +128,7 @@
     with DatabaseConfig.
   </p>
 
-  ```java
-
+  <pre content="java">
   // example code explicitly registering the ChangeLogPrepare implementation
 
   MyChangeLogPrepare changeLogPrepare = ...;
@@ -142,11 +142,10 @@
   Database database = DatabaseFactory.create(config);
   ...
 
-  ```
+  </pre>
 
 
-
-  <h4>Step 5: Configure logging</h4>
+  <h3>Step 5: Configure logging</h3>
   <p>
     The default implementation of ChangeLogListener logs events to <code>io.ebean.ChangeLog</code>.
     Typically, we would look to configure logging such that these logs go to a separate log.
@@ -155,27 +154,23 @@
     Below in logback xml configuration an appender <code>CHANGE_LOG</code> for logging the change events
     to this separate log.
   </p>
-  ```xml
+  <pre content="xml">
 
-  <!-- LOGBACK configuration: separate logger for the change log -->
+    <appender name="CHANGE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <File>log/changeLog.log</File>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <FileNamePattern>log/changeLog.log.%d{yyyy-MM-dd}</FileNamePattern>
+        <MaxHistory>90</MaxHistory>
+      </rollingPolicy>
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>%d{HH:mm:ss.SSS} %msg%n</pattern>
+      </encoder>
+    </appender>
 
-  <appender name="CHANGE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <File>log/changeLog.log</File>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <FileNamePattern>log/changeLog.log.%d{yyyy-MM-dd}</FileNamePattern>
-      <MaxHistory>90</MaxHistory>
-    </rollingPolicy>
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>%d{HH:mm:ss.SSS} %msg%n</pattern>
-    </encoder>
-  </appender>
+    <logger name="io.ebean.ChangeLog" level="TRACE" additivity="false">
+      <appender-ref ref="CHANGE_LOG"/>
+    </logger>
+  </pre>
 
-  <logger name="io.ebean.ChangeLog" level="TRACE" additivity="false">
-    <appender-ref ref="CHANGE_LOG"/>
-  </logger>
-
-  ```
-
-</div>
 </body>
 </html>

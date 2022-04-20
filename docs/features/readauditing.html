@@ -1,37 +1,36 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_features.html"/>
+  <title>Read Auditing | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Features" href="/docs/features/"/>
   <meta name="bread2" content="Read Auditing" href="/docs/features/readauditing"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_features_who.ftl"></template>
-  <#assign readaudit = "true">
+  <#assign n0_docs="active">
+  <#assign n1_features="active">
+  <#assign readaudit="active">
 </head>
 <body>
-<div class="bs-docs-section">
   <h2 id="overview">Overview</h2>
   <p>
     ReadAudit is a feature where read access is logged for auditing purposes. You can annotation entity
     beans with @ReadAudit and then read events on these beans (queries and hits in L2 cache) are logged.
   </p>
-
   <p>
     An implementation of the ReadAuditPrepare interface is typically required. The readAuditPrepare.prepare()
     method is expected to populate the ReadEvent with user context information (user id, user ip address etc).
   </p>
 
-  <h2 id="caveats">Caveats</h2>
-
+  <h2 id="limitations">Limitations</h2>
   <p>
     SqlQuery queries are currently not logged to the read audit log (RawSql queries are included in read auditing).
   </p>
 
   <h2 id="getting-started">Getting started</h2>
 
-  <h4>Step 1: Add @ReadAudit</h4>
-
+  <h3>Step 1: Add @ReadAudit</h3>
   <p>
     Add @ReadAudit annotation to all the entity beans that should have read auditing.
   </p>
-  ```java
+  <pre content="java">
 
   @ReadAudit
   @Entity
@@ -39,15 +38,15 @@
   public class Customer {
   ...
 
-  ```
-  <h4>Step 2: Implement ReadAuditPrepare</h4>
+  </pre>
 
+  <h3>Step 2: Implement ReadAuditPrepare</h3>
   <p>
     If you skip this step and don't supply a ReadAuditPrepare implementation a 'no op' implementation
     is used and the user context information (user id, user ip address etc) is left unpopulated.
   </p>
 
-  ```java
+  <pre content="java">
   class MyReadAuditPrepare implements ReadAuditPrepare {
 
     @Override
@@ -69,24 +68,22 @@
       event.getUserContext().put("some", "thing");
     }
   }
-  ```
+  </pre>
 
-  <h4>Step 3: Register ReadAuditPrepare implementation</h4>
-
+  <h3>Step 3: Register ReadAuditPrepare implementation</h3>
   <p>
     The implementation of ReadAuditPrepare can be automatically detected
     if classpath scanning is on (just like entity beans are found etc). That is,
     if scanning is on you don't need to explicitly register the ReadAuditPrepare implementation
     and instead it will be found and instantiated.
   </p>
-
   <p>
     If scanning is not used or the ReadAuditPrepare implementation has dependencies and its
     instantiation should be performed externally to Ebean then you can register it explicitly
     with the DatabaseConfig.
   </p>
 
-  ```java
+  <pre content="java">
 
   // example code explicitly registering the ReadAuditPrepare implementation
 
@@ -102,21 +99,20 @@
   ...
   Database database = DatabaseFactory.create(config);
 
-  ```
+  </pre>
 
-  <h4>Step 4: Configure logging</h4>
+  <h3>Step 4: Configure logging</h3>
   <p>
     The default implementation of ReadAuditLogger logs query plan entries to <code>io.ebean.ReadAuditQuery</code>
     and read events to <code>io.ebean.ReadAudit</code>.  The query plans contain the full SQL and having these
     logged separately means that the read events don't need to include the full SQL executed and instead the bean type
     and query key can be used to reference/lookup the associated SQL. This reduces the bulk/size of the read event logs.
   </p>
-
   <p>
     Below in logback xml configuration is 2 appenders. <code>READAUDIT_QUERY_LOG</code> for logging
     the query plans and <code>READAUDIT_LOG</code> for logging the read bean events.
   </p>
-  ```xml
+  <pre content="xml">
 
   <!-- LOGBACK configuration: separate loggers for the read auditing -->
 
@@ -143,7 +139,6 @@
   </appender>
 
 
-
   <logger name="io.ebean.ReadAuditQuery" level="TRACE" additivity="false">
     <appender-ref ref="READAUDIT_QUERY_LOG"/>
   </logger>
@@ -152,23 +147,20 @@
     <appender-ref ref="READAUDIT_LOG"/>
   </logger>
 
+  </pre>
 
-  ```
-
-  <h4>Optional: ReadAuditLogger implementation</h4>
+  <h2 id="readAuditLogger">Optional: ReadAuditLogger implementation</h2>
   <p>
     If the default logging does not suit you can implement ReadAuditLogger to control how the
     events are logged. Log to a message queue, direct to a data store etc.
   </p>
 
-  <h2 id="query">Query.setDisableReadAuditing()</h2>
+  <h2 id="setDisableReadAuditing">Query.setDisableReadAuditing()</h2>
   <p>
-    For a specific query you can explicitly exclude it from the read auditing. The typically
+    For a specific query you can explicitly exclude it from the read auditing. The typical
     use case for this is where the query is used internally in the application to populate a
     cache or process bulk data and where you don't want that to go into the read audit log.
   </p>
 
-
-</div>
 </body>
 </html>

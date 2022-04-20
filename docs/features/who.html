@@ -1,13 +1,14 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_features.html"/>
-  <meta name="bread2" content="Who Created Modified" href="/docs/features/who"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_features_who.ftl"></template>
-  <#assign who = "true">
+  <title>Who | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Features" href="/docs/features/"/>
+  <meta name="bread2" content="Who" href="/docs/features/who/"/>
+  <#assign n0_docs="active">
+  <#assign n1_features="active">
+  <#assign who="active">
 </head>
 <body>
-<div class="bs-docs-section">
-
   <h2 id="overview">Who Created/Who Modified</h2>
   <p>
     A common scenario in application is to mark entities with the Id of the user who created
@@ -19,11 +20,15 @@
   <p>The interface only specifies a single method <code>Object currentUser();</code> which will return your typical
     entity identifier: <code>Long, String or UUID</code>
   </p>
-  <p>Notice that Ebean instantiates the <code>CurrentUserProvider</code> by means of creating a new instance</p>
+  <p>
+    Notice that Ebean instantiates the <code>CurrentUserProvider</code> by means of creating a new instance.
+  </p>
 
   <h4>Example Implementation</h4>
-  <p>This implementation does not work, it's just to provide an idea</p>
-  ```java
+  <p>
+    This implementation does not work, it's just to provide an idea
+  </p>
+  <pre content="java">
     /**
      * Returns the current user typically from a Thread local or similar context.
      */
@@ -31,17 +36,18 @@
 
       @Override
       public Object currentUser() {
-        // Here you get the user id, from some kind of static context access (session information, thread local, etc..)
+        // Here you get the user id, from some kind of static
+        // context access (session information, thread local, etc..)
         return someContext.getId();
       }
     }
-  ```
+  </pre>
 
-  <h4>Activation</h4>
-  <p>In order to tell ebean which class imeplements the interface in your <code>ebean.properties</code> file you need to set the following property:
-    <code>ebean.currentUserProvider=path.to.my.implementation.MyCurrentUserProvider</code>
+  <h3>Activation</h3>
+  <p>
+    In order to tell ebean which class implements the interface in your <code>application.properties</code> file we
+    need to set the following property: <code>ebean.currentUserProvider=org.app.MyCurrentUserProvider</code>
   </p>
 
-</div>
 </body>
 </html>

@@ -1,23 +1,23 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_features.html"/>
+  <title>History | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Features" href="/docs/features/"/>
   <meta name="bread2" content="History" href="/docs/features/history"/>
-  <template id="menuNav"><#include "/_layout/_docs_nav_features_who.ftl"></template>
-  <#assign history = "true">
+  <#assign n0_docs="active">
+  <#assign n1_features="active">
+  <#assign history="active">
 </head>
 <body>
-<div class="bs-docs-section">
-
   <h2 id="videos">Videos</h2>
-  <div class="row">
-    <div class="col-md-6">
+  <div class="grid g3">
+    <div>
     <@video_item "WxBDGQJelb0" "Introduction" "Walk through the @History / SQL2011 support with Oracle and Postgres"/>
     </div>
 
-    <div class="col-md-6">
+    <div>
     <@video_item "YOuElXoidxk" "Comparison to Hibernate Envers" "Comparison with the approach taken by Hibernate Envers"/>
     </div>
-
   </div>
 
   <h2 id="overview">Overview</h2>
@@ -148,7 +148,7 @@
     other tables included in the query the rows returned represent 'current values'.
   </p>
 
-  ```java
+  <pre content="java">
 
   // asOf some time in the past like 1 hour ago, 1 week ago, 1 month ago etc
   Timestamp asOf = ...;
@@ -160,7 +160,7 @@
           .where().eq("name", "jim")
           .findOne();
 
-  ```
+  </pre>
 
   <h4>Scenario: Customer and Address both have history</h4>
   <p>
@@ -189,31 +189,31 @@
     effective start and effective end timestamps.
   </p>
 
-  ```java
+  <pre content="java">
   Timestamp start = ...;
   Timestamp end = ...;
 
-  List<Version<Customer>> customerVersions =
+  List<|Version<|Customer>> customerVersions =
       Customer.find.query()
         .where()
         .idEq(42)
         .findVersionsBetween(start, end);
 
-  for (Version<Customer> customerVersion : customerVersions) {
+  for (Version<|Customer> customerVersion : customerVersions) {
     Customer bean = customerVersion.getBean();
-    Map<String, ValuePair> diff = customerVersion.getDiff();
+    Map<|String, ValuePair> diff = customerVersion.getDiff();
     Timestamp effectiveStart = customerVersion.getStart();
     Timestamp effectiveEnd = customerVersion.getEnd();
   }
 
-  ```
+  </pre>
 
   <h2 id="who-when">Who and When</h2>
   <p>
     It is generally expected that the entity beans should contain <code>@WhoCreated</code>, <code>@WhoModified</code>,
     <code>@WhenCreated</code> and <code>@WhenModified</code> properties.
   </p>
-```java
+  <pre content="java">
 
   /**
    * Common properties used by many entity beans.
@@ -240,9 +240,9 @@
     String whoModified;
     ...
 
-```
+  </pre>
 
-```java
+  <pre content="java">
   @History
   @Entity
   @Table(name="customer")
@@ -252,7 +252,7 @@
     String name;
     ...
 
-```
+  </pre>
 
 
   <h2 id="postgres">Postgres</h2>
@@ -294,11 +294,5 @@
     </li>
   </ul>
 
-  <h2 id="h2">H2</h2>
-  <p>
-
-  </p>
-
-</div>
 </body>
 </html>

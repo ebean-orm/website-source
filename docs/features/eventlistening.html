@@ -1,26 +1,23 @@
 <html>
 <head>
-  <meta name="layout" content="_layout/docs_features.html"/>
-  <meta name="bread2" content="Event listening" href="/docs/features/eventlistening"/>
-<#assign eventlistening = "true">
+  <title>Event listening | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Features" href="/docs/features/"/>
+  <meta name="bread2" content="Event listening" href="/docs/features/eventlistening/"/>
+  <#assign n0_docs="active">
+  <#assign n1_features="active">
+  <#assign eventlistening="active">
 </head>
 <body>
-<div class="bs-docs-section">
-<h1 id="event_listeners">Event listening</h1>
-...(under construction)...
 
-<p>Since version 4.0.1, Ebean supports JPA EntityListener Annotations:
-  <ul>
-    <li>@PostLoad</li>
-    <li>@PostPersist</li>
-    <li>@PostRemove</li>
-    <li>@PostUpdate</li>
-    <li>@PrePersist</li>
-    <li>@PreRemove</li>
-    <li>@PreUpdate</li>
-  </ul>
+<h2 id="jpa">JPA annotations, @PostUpdate etc</h2>
+<p>
+  Ebean supports JPA annotations - <code>@PostLoad, @PostPersist, @PostRemove, @PostUpdate, @PrePersist, @PreRemove, @PreUpdate</code>
+</p>
 
-```java
+<h4>Example:</h4>
+<pre content="java">
+
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -45,71 +42,89 @@ public class Customer {
 
   @PrePersist
   public void prePersist1() {
-      ...
+  ...
   }
 
 
   @PostPersist
   public void postPersist1() {
-    ...
+  ...
   }
 
 
   @PreUpdate
   public void preUpdate1() {
-    ...
+  ...
   }
 
   @PostUpdate
   public void postUpdate1() {
-    ...
+  ...
   }
 
 
   @PreRemove
   public void preRemove1() {
-    ...
+  ...
   }
 
   @PostRemove
   public void postRemove1() {
-    ...
+  ...
   }
 
   @PostLoad
   public void postLoad1() {
-    ...
+  ...
   }
 
-```
-
-<h4>BeanPersistController</h4>
-<p>To listen for events on entity, you can also use the BeanPersistController</p>
-
-<p>BeanPersistController is used to enhance or override the default bean persistence mechanism.</p>
-
-<p>Note that if want to totally change the finding, you need to use a BeanQueryAdapter rather than using postLoad().</p>
-
-<p>Note that getTransaction() on the PersistRequest returns the transaction used for the insert, update, delete or fetch. To explicitly use this same transaction you should use this transaction via methods on database.</p>
-
-```java
-Object extaBeanToSave = ...;
-Transaction t = request.getTransaction();
-Database database = request.database();
-database.save(extraBeanToSave, t);
-```
-
-<p>It is worth noting that BeanPersistListener is different in three main ways from BeanPersistController postXXX methods.</p>
-
-<p>BeanPersistListener only sees successfully committed events. BeanController pre and post methods occur before the commit or a rollback and will see events that are later rolled back</p>
-
-<p>BeanPersistListener runs in a background thread and will not effect the response time of the actual persist where as BeanController code will
-BeanPersistListener can be notified of events from other servers in a cluster.</p>
-
-<p>A BeanPersistController is either found automatically via class path search or can be added programmatically via ServerConfiguration.addEntity().</p>
+</pre>
+<p>
+  Using the JPA annotations has some limitations such as it doesn't tell us which properties actually changed in an update
+  and access to the underlying transaction etc.
+</p>
+<p>
+  When we hit these limitations we look to use <code>BeanPersistController</code>.
+</p>
 
 
+<h2 id="beanPersistController">BeanPersistController</h2>
+<p>
+  To listen for events on entity, we can also use the BeanPersistController and this gives us access to the underlying
+  transaction as well as the specific properties changed in an update etc.
+</p>
+<p>
+  BeanPersistController is used to enhance or override the default bean persistence mechanism.
+</p>
 
-</div>
+<pre content="java">
+  Object extraBeanToSave = ...;
+  Transaction t = request.getTransaction();
+  Database database = request.database();
+  database.save(extraBeanToSave, t);
+</pre>
+
+
+<h2 id="beanPersistListener">BeanPersistListener</h2>
+<p>
+  <code>BeanPersistListener</code> is different in two main ways from BeanPersistController postXXX methods.
+</p>
+<p>
+  BeanPersistListener only sees successfully committed events. BeanController pre and post methods occur before the
+  commit or a rollback and as such these methods will see events that are later rolled back.
+</p>
+<p>
+  BeanPersistListener runs in a background thread and will not affect the response time of the actual persist where as
+  BeanController methods will.
+</p>
+
+
+<h2 id="beanQueryAdapter">BeanQueryAdapter</h2>
+<p>
+  Use a BeanQueryAdapter to modify queries prior their execution. Typically, we add expressions to a query,
+  for example to enable query partitioning based on the user executing the query.
+</p>
+
+
 </body>
 </html>
