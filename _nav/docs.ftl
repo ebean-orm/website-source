@@ -66,6 +66,16 @@
             <@smallnav activeCheck="" url="#oneToMany" title="@OneToMany"/>
           </ul>
         </@nav1>
+          <@nav1 activeCheck="${n1_encryption!''}" url="/docs/encryption" title="Encryption">
+            <ul class="nav nav-scroll">
+                <@smallnav activeCheck="" url="#client-encryption" title="Client side"/>
+                <@smallnav activeCheck="" url="#db-encryption" title="Database side"/>
+                <@smallnav activeCheck="" url="#types" title="Supported types"/>
+                <@smallnav activeCheck="" url="#limitations" title="Limitations"/>
+                <@smallnav activeCheck="" url="#configuration" title="Configuration"/>
+                <@smallnav activeCheck="" url="#internals" title="Internals"/>
+            </ul>
+          </@nav1>
         <li><a href="/docs/tuning">Tuning</a></li>
         <li><a href="/docs/features">Features</a></li>
       </ul>

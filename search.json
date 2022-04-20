@@ -50,6 +50,14 @@
 ,{
   "title":"",
   "caption":"",
+  "category":"Encryption",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/encryption"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"Examples",
   "priority":"0",
   "keywords":"",
@@ -198,14 +206,6 @@
   "priority":"1",
   "keywords":"",
   "url":"/docs/features/elasticsearch"
-}
-,{
-  "title":"",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"1",
-  "keywords":"",
-  "url":"/docs/features/encryption"
 }
 ,{
   "title":"",
@@ -1150,6 +1150,78 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/features/elasticsearch/syncing"
+}
+,{
+  "title":"@Encrypted",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#encrypted"
+}
+,{
+  "title":"Client/Application encryption",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#client-encryption"
+}
+,{
+  "title":"Configuration",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#configuration"
+}
+,{
+  "title":"Database encryption",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#db-encryption"
+}
+,{
+  "title":"EncryptKeyManager",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#encryptKeyManager"
+}
+,{
+  "title":"Encryption",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#encryption"
+}
+,{
+  "title":"Internals",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#internals"
+}
+,{
+  "title":"Limitations",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#limitations"
+}
+,{
+  "title":"Supported types",
+  "caption":"",
+  "category":"Encryption",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/encryption#types"
 }
 ,{
   "title":"Example projects",
@@ -4750,14 +4822,6 @@
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/elasticsearch#why"
-}
-,{
-  "title":"Encryption",
-  "caption":"",
-  "category":"Encryption",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/features/encryption#encryption"
 }
 ,{
   "title":"@History",
