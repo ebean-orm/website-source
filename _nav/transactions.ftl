@@ -26,7 +26,7 @@
     </ul>
   </@nav1>
 
-  <@nav1 activeCheck="${n2_scopes!''}" url="/docs/transactions/batch" title="Scopes"/>
+  <@nav1 activeCheck="${n2_scopes!''}" url="/docs/transactions/scopes" title="Scopes"/>
   <@nav1 activeCheck="${n2_savepoints!''}" url="/docs/transactions/savepoints" title="Savepoints"/>
   <@nav1 activeCheck="${n2_spring!''}" url="/docs/transactions/spring" title="Spring"/>
   <@nav1 activeCheck="${n2_jta!''}" url="/docs/transactions/jta" title="JTA"/>
