@@ -4056,7 +4056,7 @@
   "url":"/docs/transactions/batch#generatedKeys"
 }
 ,{
-  "title":"Batch - setBatchFlushOnMixed()",
+  "title":"Batch - setFlushOnMixed()",
   "caption":"",
   "category":"Transactions",
   "priority":"3",
@@ -4064,7 +4064,7 @@
   "url":"/docs/transactions/batch#flushOnMixed"
 }
 ,{
-  "title":"Batch - setBatchFlushOnQuery()",
+  "title":"Batch - setFlushOnQuery()",
   "caption":"",
   "category":"Transactions",
   "priority":"3",

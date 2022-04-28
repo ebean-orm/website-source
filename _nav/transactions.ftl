@@ -18,8 +18,8 @@
       <li><a href="#batchSize">Batch size</a></li>
       <li><a href="#generatedKeys">GetGeneratedKeys()</a></li>
       <li><a href="#flush">Flush</a></li>
-      <li><a href="#flushOnQuery">setBatchFlushOnQuery()</a></li>
-      <li><a href="#flushOnMixed">setBatchFlushOnMixed()</a></li>
+      <li><a href="#flushOnQuery">setFlushOnQuery()</a></li>
+      <li><a href="#flushOnMixed">setFlushOnMixed()</a></li>
       <li><a href="#flushOnGetter">Flush on getter/setter</a></li>
       <li><a href="#flushExplicit">Explicit flush()</a></li>
       <li><a href="#serverConfig">Configuration via ServerConfig</a></li>

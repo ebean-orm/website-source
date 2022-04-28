@@ -89,7 +89,7 @@ try (Transaction transaction = database.beginTransaction()) {
 <pre content="java">
 
   // don't bother getting back the generated keys
-  transaction.setBatchGetGeneratedKeys(false);
+  transaction.setGetGeneratedKeys(false);
 
 </pre>
 <p>
@@ -102,7 +102,7 @@ try (Transaction transaction = database.beginTransaction()) {
   transaction.setBatchSize(100);
 
   // turn off GetGeneratedKeys as we don't need the keys
-  transaction.setBatchGetGeneratedKeys(false);
+  transaction.setGetGeneratedKeys(false);
 
   // maybe even turn off persist cascade ...
   transaction.setPersistCascade(false)
@@ -122,21 +122,21 @@ try (Transaction transaction = database.beginTransaction()) {
 </p>
 <ul>
   <li>A buffer hits the batch size</li>
-  <li>We execute a query - depending on setBatchFlushOnQuery()</li>
-  <li>We mix SqlUpdate, CallableSql with bean persisting - depending on setBatchFlushOnMixed()</li>
+  <li>We execute a query - depending on setFlushOnQuery()</li>
+  <li>We mix SqlUpdate, CallableSql with bean persisting - depending on setFlushOnMixed()</li>
   <li>We call a getter or setter on a bean property that is already batched e.g. bean.getId()</li>
   <li>We explicitly call flush()</li>
 </ul>
 
-<h2 id="flushOnQuery">setBatchFlushOnQuery()</h2>
+<h2 id="flushOnQuery">setFlushOnQuery()</h2>
 <p>
-  Set <code>setBatchFlushOnQuery(false)</code> on a transaction when we want to execute a query
+  Set <code>setFlushOnQuery(false)</code> on a transaction when we want to execute a query
   but don't want that to trigger a flush.
 </p>
 <pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
   transaction.setBatchMode(true);
-  transaction.setBatchFlushOnQuery(false);
+  transaction.setFlushOnQuery(false);
 
   // these go to batch buffer
   aBean.save();
@@ -153,15 +153,15 @@ try (Transaction transaction = database.beginTransaction()) {
 
 </pre>
 
-<h2 id="flushOnMixed">setBatchFlushOnMixed()</h2>
+<h2 id="flushOnMixed">setFlushOnMixed()</h2>
 <p>
-  We set <em>setBatchFlushOnMixed(false)</em> on a transaction when we want to execute a SqlUpdate
+  We set <em>setFlushOnMixed(false)</em> on a transaction when we want to execute a SqlUpdate
   or CallableSql mixed with bean save(), delete() etc and don't want that to trigger a flush.
 </p>
 <pre content="java">
 try (Transaction transaction = database.beginTransaction()) {
   transaction.setBatchMode(true);
-  transaction.setBatchFlushOnMixed(false);
+  transaction.setFlushOnMixed(false);
 
   // these go to batch buffer
   aBean.save();

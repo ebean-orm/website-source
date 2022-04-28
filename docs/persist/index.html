@@ -211,7 +211,7 @@ try {
 
   // for a large batch insert if you want to skip
   // getting the generated keys
-  transaction.setBatchGetGeneratedKeys(false);
+  transaction.setGetGeneratedKeys(false);
 
   // for batch processing via raw SQL you can inform
   // Ebean what tables were modified so that it can
