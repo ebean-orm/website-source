@@ -1576,7 +1576,7 @@
   "url":"/docs/getting-started/maven-plugin"
 }
 ,{
-  "title":"Prerequisite - Java 8",
+  "title":"Prerequisite - Java 11",
   "caption":"",
   "category":"Getting started",
   "priority":"3",
