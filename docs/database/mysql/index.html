@@ -76,6 +76,12 @@ ebean:
 
 </pre>
 
+<h2 id="ebean-mysql">ebean-mysql dependency</h2>
+<p>
+  We can use the <code>io.ebean:ebean-mysql</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
+  bring in the MySql specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
+</p>
+
 
 <h2 id="types">Types</h2>
 <h5>UUID</h5>
@@ -93,7 +99,7 @@ ebean:
   History support for MySQL is provided by generating triggers and history table.
 </p>
 
-<h2 id="starting">Starting docker mysql programmatically</h2>
+<h2 id="starting">Docker container</h2>
 <p>
   We can programmatically start a docker container version of mysql. This can be a useful way to run an
   application locally.
@@ -107,10 +113,9 @@ ebean:
 <pre content="java">
 package main;
 
-import io.ebean.docker.commands.MySqlConfig;
 import io.ebean.docker.commands.MySqlContainer;
 
-public class StartMySql {
+public class Main {
 
   public static void main(String[] args) {
 

@@ -28,6 +28,42 @@ ebean:
     dbName: test
 </pre>
 
+<h2 id="ebean-db2">ebean-db2 dependency</h2>
+<p>
+  We can use the <code>io.ebean:ebean-db2</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
+  bring in the DB2 specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
+</p>
+
+
+<h2 id="starting">Docker container</h2>
+<p>
+  We can programmatically start a docker container version of CockroachDB.
+</p>
+<p>
+  The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
+  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:5.0</code>
+  as a dependency.
+</p>
+
+<pre content="java">
+package main;
+
+import io.ebean.docker.commands.Db2Container;
+
+public class Main {
+
+  public static void main(String[] args) {
+
+    Db2Container container = Db2Container.newBuilder("11.5.4.0")
+      .dbName("my_app")
+      .port(50050)
+      .build();
+
+    container.start();
+  }
+}
+</pre>
+
 <@next_edit "SAP Hana" "/docs/database/hana" "/docs/database/db2/index.html"/>
 
 </body>

@@ -100,6 +100,33 @@ ebean:
   For more <a href="/docs/features/elasticsearch">details on the ElasticSearch</a>.
 </p>
 
+<h2 id="starting">Docker container</h2>
+<p>
+  We can programmatically start a docker container version of ElasticContainer.
+</p>
+<p>
+  The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
+  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:5.0</code>
+  as a dependency.
+</p>
+
+<pre content="java">
+package main;
+
+import io.ebean.docker.commands.ElasticContainer;
+
+public class Main {
+
+  public static void main(String[] args) {
+
+    ElasticContainer container = ElasticContainer.newBuilder("5.6.0")
+      .build();
+
+      container.start();
+  }
+}
+</pre>
+
 <@next_edit "Redis" "/docs/database/redis" "/docs/database/elasticsearch/index.html"/>
 
 </body>

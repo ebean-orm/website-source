@@ -41,6 +41,49 @@ ebean:
   <tr><th>image:</th><td>store/saplabs/hanaexpress:{version}</td></tr>
 </table>
 
+<h2 id="ebean-hana">ebean-hana dependency</h2>
+<p>
+  We can use the <code>io.ebean:ebean-hana</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
+  bring in the Hana specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
+</p>
+
+
+<h2 id="starting">Docker container</h2>
+<p>
+  We can programmatically start a docker container version of Hana.
+</p>
+<p>
+  The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
+  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:5.0</code>
+  as a dependency.
+</p>
+
+<pre content="java">
+package main;
+
+import io.ebean.docker.commands.HanaContainer;
+
+public class Main {
+
+  public static void main(String[] args) {
+
+    HanaContainer.Builder builder = HanaContainer.newBuilder("2.00.033.00.20180925.2");
+    builder.port(39117);
+    builder.instanceNumber("91");
+    try {
+      builder.passwordsUrl(new URL("file:///hana/mounts/" + this.passwordsFile.getFileName()));
+    } catch (MalformedURLException e) {
+      fail(e.getMessage());
+    }
+    builder.mountsDirectory(this.tempDir.toString());
+    builder.agreeToSapLicense(false);
+
+    HanaContainer container = builder.build();
+
+    container.start();
+  }
+}
+</pre>
 
 <@next_edit "Sqlite" "/docs/database/sqlite" "/docs/database/hana/index.html"/>
 

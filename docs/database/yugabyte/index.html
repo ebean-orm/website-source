@@ -1,19 +1,19 @@
 <html>
 <head>
-  <title>Cockroach | Ebean ORM</title>
+  <title>Yugabyte | Ebean ORM</title>
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="Database platforms" href="/docs/database"/>
-  <meta name="bread2" content="Cockroach" href="/docs/database/cockroach"/>
+  <meta name="bread2" content="Yugabyte" href="/docs/database/yugabyte"/>
   <#assign n0_docs="active">
   <#assign n1_platforms="active">
-  <#assign n2_cockroach="active">
+  <#assign n2_yugabyte="active">
 </head>
 <body>
-<h2>Cockroach</h2>
+<h2>Yugabyte</h2>
 
 <h3>Testing</h3>
 <p>
-  To test against Cockroach docker test container set the <em>platform</em> to <code>cockroach</code> in
+  To test against Yugabyte docker test container set the <em>platform</em> to <code>yugabyte</code> in
   <code>src/test/resources/application-test.yaml</code>
 </p>
 <p>
@@ -23,20 +23,21 @@
 <pre content="yml">
 ebean:
   test:
-    platform: cockroach #, h2, postgres, mysql, oracle, sqlserver
+    platform: yugabyte #, h2, postgres, mysql, oracle, sqlserver
     ddlMode: dropCreate # none | dropCreate | migrations | create
     dbName: test
 </pre>
 
-<h2 id="ebean-cockroach">ebean-cockroach dependency</h2>
+<h2 id="ebean-yugabyte">ebean-yugabyte dependency</h2>
 <p>
-  We can use the <code>io.ebean:ebean-cockroach</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
-  bring in the CockroachDB specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
+  We can use the <code>io.ebean:ebean-yugabyte</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
+  bring in the Yugabyte specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
 </p>
+
 
 <h2 id="starting">Docker container</h2>
 <p>
-  We can programmatically start a docker container version of CockroachDB.
+  We can programmatically start a docker container version of Yugabyte.
 </p>
 <p>
   The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
@@ -47,15 +48,16 @@ ebean:
 <pre content="java">
 package main;
 
-import io.ebean.docker.commands.CockroachContainer;
+import io.ebean.docker.commands.YugabyteContainer;
 
 public class Main {
 
   public static void main(String[] args) {
 
-    CockroachContainer container = CockroachContainer.newBuilder("v21.2.9")
-      .dbName("unit")
-      //.user("test_roach");
+    YugabyteContainer container = YugabyteContainer.newBuilder("2.11.2.0-b89")
+      //.port(6433)
+      .dbName("my_app")
+      .extensions("pgcrypto")
       .build();
 
     container.start();
@@ -63,7 +65,7 @@ public class Main {
 }
 </pre>
 
-<@next_edit "Yugabyte" "/docs/database/yugabyte" "/docs/database/cockroach/index.html"/>
+<@next_edit "NuoDB" "/docs/database/nuodb" "/docs/database/yugabyte/index.html"/>
 
 </body>
 </html>

@@ -67,6 +67,12 @@ ebean:
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
+<h2 id="ebean-mariadb">ebean-mariadb dependency</h2>
+<p>
+  We can use the <code>io.ebean:ebean-mariadb</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
+  bring in the MariaDB specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
+</p>
+
 <h2 id="types">Types</h2>
 <h5>UUID</h5>
 <p>
@@ -84,17 +90,16 @@ ebean:
   on entities annotated with <code>@History</code>.
 </p>
 
-<h2 id="start-docker">Programmatically start using docker</h2>
+<h2 id="start-docker">Docker container</h2>
 <p>
   We can programmatically start a MariaDB docker container using <code>ebean-test-docker</code> via:
 </p>
 <pre content="java">
 package main;
 
-import io.ebean.docker.commands.MariaDBConfig;
 import io.ebean.docker.commands.MariaDBContainer;
 
-public class StartMariaDb {
+public class Main {
 
   public static void main(String[] args) {
 

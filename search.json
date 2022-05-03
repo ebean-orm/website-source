@@ -784,6 +784,14 @@
   "url":"/docs/database/clickhouse"
 }
 ,{
+  "title":"ClickHouse - ebean-clickhouse dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/clickhouse#ebean-clickhouse"
+}
+,{
   "title":"Cockroach",
   "caption":"",
   "category":"Database platforms",
@@ -792,12 +800,44 @@
   "url":"/docs/database/cockroach"
 }
 ,{
+  "title":"Cockroach - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/cockroach#starting"
+}
+,{
+  "title":"Cockroach - ebean-cockroach dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/cockroach#ebean-cockroach"
+}
+,{
   "title":"DB2",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/db2"
+}
+,{
+  "title":"DB2 - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/db2#starting"
+}
+,{
+  "title":"DB2 - ebean-db2 dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/db2#ebean-db2"
 }
 ,{
   "title":"Database Platforms",
@@ -822,6 +862,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/elasticsearch#properties"
+}
+,{
+  "title":"ElasticSearch - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/elasticsearch#starting"
 }
 ,{
   "title":"ElasticSearch - ebean-elastic dependency",
@@ -856,12 +904,28 @@
   "url":"/docs/database/h2#types"
 }
 ,{
+  "title":"H2 - ebean-h2 dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/h2#ebean-h2"
+}
+,{
   "title":"MariaDB",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/mariadb"
+}
+,{
+  "title":"MariaDB - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mariadb#start-docker"
 }
 ,{
   "title":"MariaDB - History support",
@@ -872,20 +936,20 @@
   "url":"/docs/database/mariadb#history"
 }
 ,{
-  "title":"MariaDB - Programmatically start using docker",
-  "caption":"",
-  "category":"Database platforms",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/database/mariadb#start-docker"
-}
-,{
   "title":"MariaDB - Types",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/mariadb#types"
+}
+,{
+  "title":"MariaDB - ebean-mariadb dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mariadb#ebean-mariadb"
 }
 ,{
   "title":"MySql",
@@ -896,20 +960,20 @@
   "url":"/docs/database/mysql"
 }
 ,{
+  "title":"MySql - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mysql#starting"
+}
+,{
   "title":"MySql - History support",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/mysql#history"
-}
-,{
-  "title":"MySql - Starting docker mysql programmatically",
-  "caption":"",
-  "category":"Database platforms",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/database/mysql#starting"
 }
 ,{
   "title":"MySql - Types",
@@ -920,12 +984,28 @@
   "url":"/docs/database/mysql#types"
 }
 ,{
+  "title":"MySql - ebean-mysql dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/mysql#ebean-mysql"
+}
+,{
   "title":"NuoDB",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/nuodb"
+}
+,{
+  "title":"NuoDB - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/nuodb#starting"
 }
 ,{
   "title":"NuoDB - History support",
@@ -952,12 +1032,28 @@
   "url":"/docs/database/nuodb#types"
 }
 ,{
+  "title":"NuoDB - ebean-nuodb dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/nuodb#ebean-nuodb"
+}
+,{
   "title":"Oracle",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/oracle"
+}
+,{
+  "title":"Oracle - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/oracle#starting"
 }
 ,{
   "title":"Oracle - History support",
@@ -976,12 +1072,28 @@
   "url":"/docs/database/oracle#types"
 }
 ,{
+  "title":"Oracle - ebean-oracle dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/oracle#ebean-oracle"
+}
+,{
   "title":"Postgres",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/postgres"
+}
+,{
+  "title":"Postgres - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#starting"
 }
 ,{
   "title":"Postgres - Extensions",
@@ -1032,20 +1144,20 @@
   "url":"/docs/database/postgres#schema"
 }
 ,{
-  "title":"Postgres - Starting docker postgres programmatically",
-  "caption":"",
-  "category":"Database platforms",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/database/postgres#starting"
-}
-,{
   "title":"Postgres - Table Partitioning",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/postgres#partitioning"
+}
+,{
+  "title":"Postgres - ebean-postgres dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/postgres#ebean-postgres"
 }
 ,{
   "title":"Postgres / Array type",
@@ -1080,6 +1192,14 @@
   "url":"/docs/database/redis"
 }
 ,{
+  "title":"Redis - L2 cache - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/redis#starting"
+}
+,{
   "title":"Redis - L2 cache - ebean-redis dependency",
   "caption":"",
   "category":"Database platforms",
@@ -1096,6 +1216,22 @@
   "url":"/docs/database/hana"
 }
 ,{
+  "title":"SAP Hana - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/hana#starting"
+}
+,{
+  "title":"SAP Hana - ebean-hana dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/hana#ebean-hana"
+}
+,{
   "title":"SQL Server",
   "caption":"",
   "category":"Database platforms",
@@ -1104,12 +1240,60 @@
   "url":"/docs/database/sqlserver"
 }
 ,{
+  "title":"SQL Server - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/sqlserver#starting"
+}
+,{
+  "title":"SQL Server - ebean-sqlserver dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/sqlserver#ebean-sqlserver"
+}
+,{
   "title":"Sqlite",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/sqlite"
+}
+,{
+  "title":"Sqlite - ebean-sqlite dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/sqlite#ebean-sqlite"
+}
+,{
+  "title":"Yugabyte",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/yugabyte"
+}
+,{
+  "title":"Yugabyte - Docker container",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/yugabyte#starting"
+}
+,{
+  "title":"Yugabyte - ebean-yugabyte dependency",
+  "caption":"",
+  "category":"Database platforms",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/database/yugabyte#ebean-yugabyte"
 }
 ,{
   "title":"Getting started",
@@ -1206,6 +1390,22 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/extra-ddl#views"
+}
+,{
+  "title":"Features",
+  "caption":"",
+  "category":"Features",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features"
+}
+,{
+  "title":"Topics",
+  "caption":"",
+  "category":"Features",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/features"
 }
 ,{
   "title":"CLI tool - ebeaninit",

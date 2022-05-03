@@ -39,6 +39,12 @@ ebean:
   <tr><th>image:</th><td>postgres:{version:12}</td></tr>
 </table>
 
+<h2 id="ebean-postgres">ebean-postgres dependency</h2>
+<p>
+  We can use the <code>io.ebean:ebean-postgres</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
+  bring in the Postgres specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
+</p>
+
 
 <h2 id="types">Postgres types</h2>
 <h5>UUID</h5>
@@ -149,7 +155,7 @@ ebean:
 databaseConfig.setDbSchema("myapp");
 </pre>
 
-<h2 id="starting">Starting docker postgres programmatically</h2>
+<h2 id="starting">Docker container</h2>
 <p>
   We can programmatically start a docker container version of Postgres. This can be a useful way to run an
   application locally.
@@ -163,7 +169,6 @@ databaseConfig.setDbSchema("myapp");
 <pre content="java">
 package main;
 
-import io.ebean.docker.commands.PostgresConfig;
 import io.ebean.docker.commands.PostgresContainer;
 
 public class StartPostgres {

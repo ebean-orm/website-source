@@ -43,6 +43,11 @@ ebean:
   <tr><th>image:</th><td>oracleinanutshell/oracle-xe-11g:{version}</td></tr>
 </table>
 
+<h2 id="ebean-oracle">ebean-oracle dependency</h2>
+<p>
+  We can use the <code>io.ebean:ebean-oracle</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
+  bring in the Oracle database specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
+</p>
 
 <h2 id="types">Types</h2>
 <h5>UUID</h5>
@@ -54,6 +59,34 @@ ebean:
 <p>
   Oracle has native SQL2011 History support.
 </p>
+
+<h2 id="starting">Docker container</h2>
+<p>
+  We can programmatically start a docker container version of Oracle.
+</p>
+<p>
+  The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
+  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:5.0</code>
+  as a dependency.
+</p>
+
+<pre content="java">
+package main;
+
+import io.ebean.docker.commands.OracleContainer;
+
+public class Main {
+
+  public static void main(String[] args) {
+
+    OracleContainer container = OracleContainer.newBuilder("latest")
+      .user("my_user")
+      .build();
+
+    container.start();
+  }
+}
+</pre>
 
 <@next_edit "DB2" "/docs/database/db2" "/docs/database/oracle/index.html"/>
 
