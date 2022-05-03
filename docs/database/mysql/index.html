@@ -100,7 +100,7 @@ ebean:
 </p>
 <p>
   The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
-  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:4.2</code>
+  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:5.0</code>
   as a dependency.
 </p>
 
@@ -114,18 +114,18 @@ public class StartMySql {
 
   public static void main(String[] args) {
 
-    MySqlConfig config = new MySqlConfig("8.0");
-    config.setDbName("my_db");
-    config.setUser("my_user");
-    config.setPassword("my_pass");
+    MySqlContainer container = MySqlContainer.newBuilder("8.0")
+      .dbName("my_db")
+      .user("my_user")
+      .password("my_pass")
+      .build();
 
     // by default this mysql docker collation is case sensitive using utf8mb4_bin
-    // config.setCollation("default");
-    // config.setCollation("utf8mb4_unicode_ci");
-    // config.setCharacterSet("utf8mb4");
+    // builder.collation("default");
+    // builder.collation("utf8mb4_unicode_ci");
+    // builder.characterSet("utf8mb4");
 
-    MySqlContainer container = new MySqlContainer(config);
-    container.startWithDropCreate();
+    container.start();
   }
 }
 </pre>
