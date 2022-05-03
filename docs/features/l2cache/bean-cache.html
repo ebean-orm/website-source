@@ -43,8 +43,7 @@
 <pre content="java">
   @Cache
   @Entity
-  @Table(name="country")
-  public class Country {
+  public class Country
 </pre>
 
 <pre content="java">
@@ -76,5 +75,19 @@
     .findOne();
 </pre>
 
+<h3 id="near-cache">Near cache</h3>
+<p>
+  To enable near caching when using ebean-redis set <code>nearCache=true</code>. To enable near caching with
+  Hazelcast or Ignite we instead use their Hazelcast | Ignite specific configuration.
+</p>
+<pre content="java">
+  @Cache(nearCache=true)
+  @Entity
+  public class Country
+</pre>
+<p>
+  With the above, when using ebean-redis a query hitting the bean cache will first try the in-process near cache
+  and only hit Redis when the data isn't in the local near cache.
+</p>
 </body>
 </html>

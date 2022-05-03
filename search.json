@@ -5248,6 +5248,14 @@
   "url":"/docs/features/l2cache/invalidation#bean"
 }
 ,{
+  "title":"Configuration",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#configuration"
+}
+,{
   "title":"Eventual consistency",
   "caption":"",
   "category":"L2 Cache",
@@ -5270,6 +5278,14 @@
   "priority":"4",
   "keywords":"",
   "url":"/docs/features/l2cache#invalidation"
+}
+,{
+  "title":"Near cache",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#near-cache"
 }
 ,{
   "title":"Overview",
