@@ -5296,6 +5296,14 @@
   "url":"/docs/features/l2cache#overview"
 }
 ,{
+  "title":"Regions",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#regions"
+}
+,{
   "title":"Table IUD invalidation (Bulk updates)",
   "caption":"",
   "category":"L2 Cache",

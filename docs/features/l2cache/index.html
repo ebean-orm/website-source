@@ -109,6 +109,30 @@
     Note that all Query caches are implemented as near cache only.
   </p>
 
+  <h2 id="regions">Regions</h2>
+  <p>
+    We use "Regions" to group caches so that we can enable and disable L2 caching by "region groups".
+  </p>
+  <p>
+    This provides a mechanism where we can "feature toggle" / enable L2 caching by named regions.
+  </p>
+  <p>
+    Let's say our application rolls out, and it uses L2 caching for Product (and we call that region "product-region").
+    Now, we develop further and as part of that want to use L2 caching for Price but, we don't yet want to enable that
+    in all environments (e.g. we don't want it enabled in production). In dev and test we might enable the l2 cache
+    regions "product-region,price-region" but in production only enable "product-region".
+  </p>
+  <pre content="java">
+    @Entity
+    @Cache(region = "product-region")
+    public class Product
+  </pre>
+
+  <h4>enabledL2Regions</h4>
+  <pre content="properties">
+    ebean.enabledL2Regions=product-region,price-region
+  </pre>
+
   <h2 id="configuration">Configuration</h2>
   <p>
     Configuration options that can be set via <code>DatabaseConfig</code>.
@@ -128,7 +152,7 @@
     <tr>
       <td>enabledL2Regions</td>
       <td></td>
-      <td>Set the enabled L2 cache regions (comma delimited)</td>
+      <td>Set the enabled L2 cache regions (comma delimited). By default all regions are enabled.</td>
     </tr>
     <tr>
       <td>localOnlyL2Cache</td>

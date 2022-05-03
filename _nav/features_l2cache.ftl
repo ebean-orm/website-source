@@ -5,6 +5,7 @@
   <li><a href="#read-consistency">Eventual consistency</a></li>
   <li><a href="#invalidation">Invalidation</a></li>
   <li><a href="#near-cache">Near cache</a></li>
+  <li><a href="#regions">Regions</a></li>
   <li><a href="#configuration">Configuration</a></li>
 </ul>
 </@smallnav>
