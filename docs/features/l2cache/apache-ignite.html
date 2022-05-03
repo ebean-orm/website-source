@@ -2,7 +2,7 @@
 <head>
   <meta name="layout" content="_layout/docs_features_l2caching.html"/>
   <meta name="bread3" content="Apache Ignite" href="/docs/features/l2cache/apache-ignite"/>
-  <#assign l2caching_ignite = "true">
+  <#assign l2caching_ignite="true">
 </head>
 <body>
 <h2>Apache Ignite</h2>
@@ -48,10 +48,10 @@
 </p>
 
 <h5>Properties</h5>
-```properties
+<pre content="properties">
 ## disable use of L2 cache (for dev / testing etc)
 ebean.disableL2Cache=true
-```
+</pre>
 <p>
 
 </p>
@@ -73,79 +73,19 @@ when Ignite starts it looks for a configuration file in <code>{IGNITE_HOME}/conf
 able to export the IGNITE_HOME environment variable to point to a director that contains your configuration file.
 </p>
 
-<p>
-  Here is an example of an IgniteConfiguration XML file.
-</p>
-
-<pre>
-    <code data-lang="xml">
-    &lt;beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:util="http://www.springframework.org/schema/util"
-           xsi:schemaLocation="
-        http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util
-        http://www.springframework.org/schema/util/spring-util.xsd">
-    &lt;bean id="ignite.cfg" class="org.apache.ignite.configuration.IgniteConfiguration">
-
-    &lt;property name="clientMode" value="true"/>
-
-        &lt;property name="cacheConfiguration">
-            &lt;bean class="org.apache.ignite.configuration.CacheConfiguration">
-                &lt;!-- Set the cache name. -->
-                &lt;property name="name" value="myCache"/>
-              &lt;!-- Set the cache mode. -->
-                &lt;property name="cacheMode" value="PARTITIONED"/>
-              &lt;!-- Other cache parameters. -->
-            &lt;/bean>
-        &lt;/property>
-
-      &lt;!-- Explicitly configure TCP discovery SPI to provide list of initial nodes. -->
-        &lt;property name="discoverySpi">
-            &lt;bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
-                &lt;property name="ipFinder">
-                    &lt;!--
-                        Ignite provides several options for automatic discovery that can be used
-                        instead os static IP based discovery. For information on all options refer
-                        to our documentation: http://apacheignite.readme.io/docs/cluster-config
-                    -->
-                  &lt;!-- Uncomment static IP finder to enable static-based discovery of initial nodes. -->
-                  &lt;!--&lt;bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder">-->
-                    &lt;bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder">
-                        &lt;property name="addresses">
-                            &lt;list>
-                                &lt;!-- In distributed environment, replace with actual host IP address. -->
-                                &lt;value>127.0.0.1:47500..47509&lt;/value>
-                            &lt;/list>
-                        &lt;/property>
-                    &lt;/bean>
-                &lt;/property>
-            &lt;/bean>
-        &lt;/property>
-        &lt;/bean>
-&lt;/beans>
-</code>
-  </pre>
-
-
-
-</p>
-
 <h4>Programmatic configuration</h4>
 <p>
   You can programmatically configure Ignite by creating an instance of <code>IgniteConfiguration</code>
   and setting it via: <code></code>
 </p>
-```java
+<pre content="java">
 IgniteConfiguration configuration = ...;
 serverConfig.setServiceObject("igniteConfiguration", configuration);
-```
+</pre>
 <p>To do this automatically at startup, you can create a class that implements <code>ServerConfigStartup</code> and place it
   in the directory where you tell ebean to look for your models.</p>
 
-<pre>
-    <code data-lang="java">
+<pre content="java">
 package models;
 
 import io.ebean.config.ServerConfig;
@@ -174,8 +114,7 @@ public class MyServerConfigStartup implements ServerConfigStartup {
         serverConfig.putServiceObject("igniteConfiguration", igniteCfg);
     }
 }
-    </code>
-  </pre>
+</pre>
 <p>
   If this configuration instance is passed in Ebean will use it to configure the Ignite instance.
   Otherwise it will use properties and avaje IgniteConfigBuilder.

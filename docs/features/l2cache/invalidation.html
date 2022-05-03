@@ -1,0 +1,97 @@
+<html>
+<head>
+  <meta name="layout" content="_layout/docs_features_l2caching.html"/>
+  <#assign l2caching_invalidation="active">
+</head>
+<body>
+  <h2 id="bean">Bean IUD invalidation</h2>
+  <p>
+    Cache invalidation is automatically provided for persisted beans. The cache invalidation is processed by bean
+    type and id value.
+  </p>
+  <h4>Cluster message</h4>
+  <p>
+    The message sent around the cluster contains the bean type and 3 lists of ids - a list of id values for inserted,
+    updated and deleted beans.
+  </p>
+
+  <h4>L2 query cache</h4>
+  <ul>
+    <li><code>Inserts, updates or deletes:</code> Invalidate the entire L2 query cache for the bean type</li>
+  </ul>
+  <p>
+    For any bean persist event invalidates the entire related L2 query cache for the associated bean type.
+    For example, saving a customer bean invalidates the entire L2 query cache for the Customer bean type.
+  </p>
+
+  <h4>L2 bean cache</h4>
+  <ul>
+    <li><code>Inserts:</code> Do not effect the L2 bean cache</li>
+    <li><code>Updates:</code> An entry is updated with changes</li>
+    <li><code>Deletes:</code> An entry is removed from the L2 bean cache based on the id value</li>
+  </ul>
+
+
+  <h2 id="table">Table IUD invalidation (Bulk updates)</h2>
+  <p>
+    Bulk insert, update or delete events are processed by table. For a given table the bean types
+    that depend on that table are determined and then for each bean type the L2 bean cache and L2 query cache
+    are invalidated as necessary.
+  </p>
+  <h4>Cluster message</h4>
+  <p>
+    The message sent around the cluster contains the table name and boolean flags for insert, update and delete.
+  </p>
+  <h4>L2 query cache</h4>
+  <ul>
+    <li><code>Inserts, updates or deletes:</code> Invalidate the entire L2 query cache for the related bean type</li>
+  </ul>
+  <p>
+    For any bulk statements (bulk table insert, update or delete statement) the entire L2 query cache is invalidated
+    for the associated bean type.
+    For example, a bulk update of the customer table invalidates the entire L2 query cache for the Customer bean type.
+  </p>
+  <h4>L2 bean cache</h4>
+  <ul>
+    <li><code>Inserts:</code> Do not effect the L2 bean cache</li>
+    <li><code>Updates:</code> Invalidate the entire L2 bean cache for the related bean type</li>
+    <li><code>Deletes:</code> Invalidate the entire L2 bean cache for the related bean type</li>
+  </ul>
+
+
+  <h2 id="explicit">Explicit invalidation</h2>
+  <p>
+    We can perform explicit invalidation using application code. We want to do this when data is modified
+    externally to Ebean. For example, data is updated by other frameworks, JDBC code etc. For this case we want to
+    explicitly invalidate parts of the L2 cache.
+  </p>
+
+  <h4>Using externalModification()</h4>
+  <pre content="java">
+    // inform Ebean that some rows have been inserted and updated
+    // on the country table.
+    // ... Ebean will invalidate the appropriate caches
+    boolean inserts = true;
+    boolean updates = true;
+    boolean deletes = false;
+    DB.externalModification("country", inserts, updates, deletes);
+  </pre>
+
+  <h4>Using ServerCacheManager</h4>
+  <p>
+    ServerCacheManager also provides explicit API for clearing caches.
+  </p>
+  <pre content="java">
+    // clearAll() caches via the ServerCacheManager ...
+    ServerCacheManager cacheManager = database.cacheManager();
+
+    // Clear all the caches on the default/primary EbeanServer
+    cacheManager.clearAll();
+
+    // clear both the bean and query cache
+    // for Country beans ...
+    cacheManager.clear(Country.class);
+  </pre>
+
+</body>
+</html>

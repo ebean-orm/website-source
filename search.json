@@ -5245,34 +5245,10 @@
   "category":"L2 Cache",
   "priority":"4",
   "keywords":"",
-  "url":"/docs/features/l2cache#bean-iud-invalidation"
+  "url":"/docs/features/l2cache/invalidation#bean"
 }
 ,{
-  "title":"External invalidation",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/features/l2cache#external-invalidation"
-}
-,{
-  "title":"L2 Cache",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/features/l2cache#overview"
-}
-,{
-  "title":"L2/local and L3/remote",
-  "caption":"",
-  "category":"L2 Cache",
-  "priority":"4",
-  "keywords":"",
-  "url":"/docs/features/l2cache#l2-l3"
-}
-,{
-  "title":"Read consistency",
+  "title":"Eventual consistency",
   "caption":"",
   "category":"L2 Cache",
   "priority":"4",
@@ -5280,12 +5256,28 @@
   "url":"/docs/features/l2cache#read-consistency"
 }
 ,{
-  "title":"TODO",
+  "title":"Explicit invalidation",
   "caption":"",
   "category":"L2 Cache",
   "priority":"4",
   "keywords":"",
-  "url":"/docs/features/l2cache/elasticsearch"
+  "url":"/docs/features/l2cache/invalidation#explicit"
+}
+,{
+  "title":"Invalidation",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#invalidation"
+}
+,{
+  "title":"Overview",
+  "caption":"",
+  "category":"L2 Cache",
+  "priority":"4",
+  "keywords":"",
+  "url":"/docs/features/l2cache#overview"
 }
 ,{
   "title":"Table IUD invalidation (Bulk updates)",
@@ -5293,7 +5285,7 @@
   "category":"L2 Cache",
   "priority":"4",
   "keywords":"",
-  "url":"/docs/features/l2cache#table-iud-invalidation"
+  "url":"/docs/features/l2cache/invalidation#table"
 }
 ,{
   "title":"Examples",

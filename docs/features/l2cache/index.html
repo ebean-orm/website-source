@@ -1,39 +1,46 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_features_l2caching.html"/>
-<#assign subtitle = "Overview">
-<#assign l2caching_overview = "true">
+  <#assign l2caching_overview="active">
 </head>
 <body>
-  <h2 id="overview">L2 Cache</h2>
+  <h2 id="overview">Overview</h2>
   <p>
-    When we want to talk about caching for performance we are talking about the "Level 2"
-    cache or the "server cache". It is called the "Level 2 cache" because the persistence
-    context is often referred to as the "Level 1 cache".
+    The goal of the L2 cache is to gain very significant performance improvement by
+    not having to hit the database to read some information.
   </p>
   <p>
-    The goal of the L2 server cache is to gain very significant performance improvement by
-    not having to hit the database. Ebean has 2 types of caches – Bean caches and Query caches.
+    For example, instead of performing a "find by id" or "find by unique key" query we
+    can get Ebean to effectively lookup the result in the L2 cache. If we are using <em>near caching</em>
+    then this might often result in an in-memory lookup into a local Map and not even require a
+    remote call so be very fast.
+  </p>
+  <p>
+    It is called the "Level 2 cache" because the persistence context is often referred to as the "Level 1 cache".
+  </p>
+  <p>
+    The "L2 cache" has 2 main caches – "Bean caches" and "Query caches".
   </p>
 
-  <h4>Bean Caches</h4>
+  <h3>Bean Caches</h3>
   <p>
-    Bean caches hold entity beans and are keyed by their Id values. The bean cache can be used with:
+    Bean caches hold entity beans and are keyed by their <em>Id</em> values and optionally also
+    by their <em>natural key</em>. The bean cache can be used with:
   </p>
   <ul>
-    <li>Find by id</li>
-    <li>Find one by "natural key"</li>
-    <li>Find many by "natural keys"</li>
-
+    <li>Find by id(s)</li>
+    <li>Find by natural key(s)</li>
   </ul>
 
-  <h4>Query Caches</h4>
+  <h3>Query Caches</h3>
   <p>
     Query caches hold the results of queries (Lists, Sets, Maps of entity beans and Count) and are keyed
-    by the query hash value (effectively a hash of the query and its bind values).
+    by a hash of the query and its bind values.
+  </p>
+  <p>
     The entries in a query cache are invalidated by ANY change to the underlying table –
-    insert, update or delete. This means that the query cache is only useful on entities that are
-    infrequently modified (typically "lookup tables" such as countries, currencies, status codes
+    insert, update or delete. This means that the query cache is generally only useful on entities that are
+    relatively infrequently modified (typically "lookup tables" such as countries, currencies, status codes
     etc).
   </p>
   <p>
@@ -43,190 +50,30 @@
     <li>Find list/set/map queries</li>
   </ul>
 
-  <h2 id="l2-l3">L2/local and L3/remote</h2>
+  <h2 id="read-consistency">Eventual consistency</h2>
   <p>
-    L2 cache can thought of as having <code>Near Caches</code> and <code>Remote Caches</code> where
-    a "Near cache" is in the same process as the Ebean instance (and does not require a network
-    access) and a "Remote cache" that requires a network access.
+    Ebean L2 caching uses <em>eventual consistency</em>.
+  </p>
+  <p>
+    This means it operates a bit like "replication lag". Data returned from the L2 cache can be (milliseconds) out
+    of date. Changes will be made to the cache in a relatively short time (milliseconds) but there isn't the
+    gauruntee of read consistency that our transactional database provides.
+  </p>
+  <p>
+    With Ebean L2 caching there is no attempt to provide transactional read consistency.
+    If part of an application needs transactional read consistency then we should <em>use the database</em> to do that.
   </p>
 
-  <h4>L3 bean cache options</h4>
+  <h2 id="invalidation">Invalidation</h2>
   <p>
-    The following are the 3 main approaches when we get a miss on the a local L2 bean cache.
-  </p>
-  <ul>
-    <li>Use nothing and hit the database</li>
-    <li>Use <a href="https://hazelcast.com/">Hazelcast</a>, <a href="https://ignite.apache.org/">Apache Ignite</a> or similar data grid/key value store</li>
-    <li>Use <a href="">ElasticSearch</a></li>
-  </ul>
-  <p>
-    The L2 bean cache is keyed by id value so really anything resembling a key value store (distributed map)
-    works well for bean caching.
+    Ebean will automatically invalidate the cache when <a href="/docs/features/l2cache/invalidation#bean">beans are persisted</a>
+    or <a href="/docs/features/l2cache/invalidation#table">update queries</a> are executed.
   </p>
   <p>
-    Note that ElasticSearch has the advantage that we update it with changes (as deltas to documents) rather than
-    remove/invalidate an entry in a map so with ElasticSearch we are always going to get a hit (and hence always
-    avoid hitting the database). There is also the potential benefit that ElasticSearch documents will often contain
-    denormalisation (embedded documents) so a hit against ElasticSearch will populate more of the graph and avoid
-    extra hits.  For example, a hit of an order can populate customer details like customer name.
+    In addition we can explicitly <a href="/docs/features/l2cache/invalidation#explicit">invalidate parts of the cache</a>
+    programmatically.
   </p>
 
-  <h4>L3 query cache options</h4>
-  <p>
-    The following are the 2 main approaches when we get a miss on the local L2 query cache.
-  </p>
-  <ul>
-    <li>Use nothing and hit the database</li>
-    <li>Use <a href="">ElasticSearch</a></li>
-  </ul>
-  <p>
-    The significant benefit of using <code>ElasticSearch</code> is that it can address both parts of the L2 cache
-    meaning that we can use it for <code>L2 query cache</code> (by translating ORM queries into ElasticSearch queries)
-    as well as the <code>L2 bean cache</code>.
-  </p>
-  <p>
-    We can update ElasticSearch as changes occur and use the performance of inverted indexes to perform very fast
-    queries (avoiding the database hit like L2 query cache but not having the issue of frequent invalidation that
-    L2 query cache suffers from).
-  </p>
-
-  <h4>ElasticSearch</h4>
-  <p>
-    The current emphasis for Ebean ORM is to utilise ElasticSearch as the best L3 cache option.
-    This means that
-  </p>
-
-  <h2 id="read-consistency">Read consistency</h2>
-  <blockquote>
-    With Ebean L2 caching there is no attempt to provide transactional read consistency
-  </blockquote>
-  <p>
-    ACID/Transactional databases do a lot of things for us and this includes providing "read consistency"
-    based on transaction isolation levels (MVCC databases like Postgres and Oracle emphasis this more).
-  </p>
-  <p>
-    With Ebean L2 caching there is <code>no attempt to provide transactional read consistency</code>.
-    What that means is that if part of your application needs transactional read consistency then
-    <code>use the database</code> to do that.
-  </p>
-  <blockquote>
-    L2 cache works to eventual consistency
-  </blockquote>
-  <p>
-    Instead with Ebean L2 caching the view is that eventual consistency is good enough, much simpler
-    and a more natural approach when using ElasticSearch.  Given what ElasticSearch is doing for us
-    behind the scenes (flush, merge, optimise etc) in order to provide inverted index awesomeness
-    we happily go with eventual consistency and the associated simplicity.
-  </p>
-
-  <h5>Near cache</h5>
-  <p>
-    With Ebean the view is that the cost of trying to make L2 caching read consistent is not worth it.
-    Instead we treat the L2 cache as <code>reasonably up to date</code>. In practical terms this means that
-    cache invalidation occurs in the background after successful commits. L2 near caches are invalidated across
-    the cluster very quickly (millisecond) but this is not strictly transactional (there is a delay after the commit).
-  </p>
-
-  <h5>ElasticSearch</h5>
-  <p>
-    When we use ElasticSearch the delay of a change (insert, update, delete) being visible in ElasticSearch
-    is going to be longer with a default of <code>1 second delay</code> but for various bean types
-    and use cases we may choose to increase that delay to support more throughput or be more efficient overall.
-    This is similar to decisions on how frequently <code>database materialised views</code> should be updated.
-  </p>
-
-  <h2 id="table-iud-invalidation">Table IUD invalidation (Bulk updates)</h2>
-  <p>
-    Bulk insert, update or delete events are processed by table. For a given table the bean types
-    that depend on that table are determined and then for each bean type the L2 bean cache and L2 query cache
-    are invalidated as necessary.
-  </p>
-  <h4>Cluster message</h4>
-  <p>
-    The message sent around the cluster contains the table name and boolean flags for insert, update and delete.
-  </p>
-  <h4>L2 query cache</h4>
-  <ul>
-    <li><code>Inserts, updates or deletes:</code> Invalidate the entire L2 query cache for the related bean type</li>
-  </ul>
-  <p>
-    For any bulk statements (bulk table insert, update or delete statement) the entire L2 query cache is invalidated
-    for the associated bean type.
-    For example, a bulk update of the customer table invalidates the entire L2 query cache for the Customer bean type.
-  </p>
-  <h4>L2 bean cache</h4>
-  <ul>
-    <li><code>Inserts:</code> Do not effect the L2 bean cache</li>
-    <li><code>Updates:</code> Invalidate the entire L2 bean cache for the related bean type</li>
-    <li><code>Deletes:</code> Invalidate the entire L2 bean cache for the related bean type</li>
-  </ul>
-
-  <h2 id="bean-iud-invalidation">Bean IUD invalidation</h2>
-  <p>
-    Persisted beans are processed by bean type and id value.
-  </p>
-  <h4>Cluster message</h4>
-  <p>
-    The message sent around the cluster contains the bean type and 3 lists of ids - a list of id values for inserted, updated and deleted beans.
-  </p>
-
-  <h4>L2 query cache</h4>
-  <ul>
-    <li><code>Inserts, updates or deletes:</code> Invalidate the entire L2 query cache for the bean type</li>
-  </ul>
-  <p>
-    For any bean persist event invalidates the entire related L2 query cache for the associated bean type.
-    For example, saving a customer bean invalidates the entire L2 query cache for the Customer bean type.
-  </p>
-
-  <h4>L2 bean cache</h4>
-  <ul>
-    <li><code>Inserts:</code> Do not effect the L2 bean cache</li>
-    <li><code>Updates:</code> An entry is updated with changes</li>
-    <li><code>Deletes:</code> An entry is removed from the L2 bean cache based on the id value</li>
-  </ul>
-
-  <h2 id="external-invalidation">External invalidation</h2>
-
-  <p>
-    When you save/delete beans via Ebean.save() and Ebean.delete() etc Ebean will
-    automatically maintain its cache (removing cached beans and cached queries as
-    appropriate). However, you may often find yourself modifying the database outside of
-    Ebean. (via stored procedures etc)
-  </p>
-
-  <p>
-    For example, you could be using other frameworks, your own JDBC code, stored
-    procedures, batch systems etc. When you do so (and you are using Ebean caching) then
-    you can inform Ebean so that it invalidates appropriate parts of its cache.
-  </p>
-
-  ```java
-  // inform Ebean that some rows have been inserted and updated
-  // on the country table.
-  // ... Ebean will invalidate the appropriate caches
-  boolean inserts = true;
-  boolean updates = true;
-  boolean deletes = false;
-  Ebean.externalModification("country", inserts, updates, deletes);
-  ```
-
-  <h5>Alternative:</h5>
-  <p>
-    ServerCacheManager also provides explicit API for clearing caches.
-  </p>
-
-  ```java
-  // clearAll() caches via the ServerCacheManager ...
-  ServerCacheManager cacheManager = database.cacheManager();
-
-  // Clear all the caches on the default/primary EbeanServer
-  cacheManager.clearAll();
-
-  // clear both the bean and query cache
-  // for Country beans ...
-  cacheManager.clear(Country.class);
-  ```
 
 </body>
 </html>

@@ -2,23 +2,21 @@
 <head>
   <meta name="layout" content="_layout/docs_features_l2caching.html"/>
   <meta name="bread3" content="Bean cache" href="/docs/features/l2cache/bean-cache"/>
-  <#assign l2caching_using_bean = "true">
+  <#assign l2caching_using_bean="active">
 </head>
 <body>
-
 <h2>Bean cache</h2>
 <p>
   To enable bean caching we add the <code>@Cache</code> annotation to the entity bean
   type.
 </p>
-```java
-@Cache
-@Entity
-public class Customer {
- ...
-}
-
-```
+<pre content="java">
+  @Cache
+  @Entity
+  public class Customer {
+   ...
+  }
+</pre>
 <h3 id="natural-key">Natural key</h3>
 <p>
   We use the <code>naturalKey</code> attribute to define a <code>natural unique key</code> that can be used.
@@ -27,14 +25,14 @@ public class Customer {
   Ebean will then automatically maintain a natural key lookup cache and use this with queries that use
   the natural key properties in where expressions.
 </p>
-```java
-@Cache(naturalKey = "email")
-```
+<pre content="java">
+  @Cache(naturalKey = "email")
+</pre>
 
-```java
-// Multiple properties make up the unique natural key
-@Cache(naturalKey = {"store","sku"})
-````
+<pre content="java">
+  // Multiple properties make up the unique natural key
+  @Cache(naturalKey = {"store","sku"})
+</pre>
 
 <h3 id="implicitly">Used implicitly</h3>
 <p>
@@ -42,26 +40,26 @@ public class Customer {
   use the L2 bean cache.
 </p>
 
-```java
-@Cache
-@Entity
-@Table(name="country")
-public class Country {
-```
+<pre content="java">
+  @Cache
+  @Entity
+  @Table(name="country")
+  public class Country {
+</pre>
 
-```java
-// automatically use the cache
-Country country = Ebean.find(Country.class,"NZ");
+<pre content="java">
+  // automatically use the cache
+  Country country = DB.find(Country.class,"NZ");
 
-// references automatically use the cache too
-Country countryRef = Ebean.getReference(Country.class,"NZ");
+  // references automatically use the cache too
+  Country countryRef = DB.reference(Country.class,"NZ");
 
-// hit the country cache automatically via navigation
-// ... and lazy loading
-Customer customer = Ebean.find(Customer.class, 1);
-Address billingAddress = customer.getBillingAddress();
-Country c2 = billingAddress.getCountry();
-```
+  // hit the country cache automatically via navigation
+  // ... and lazy loading
+  Customer customer = DB.find(Customer.class, 1);
+  Address billingAddress = customer.getBillingAddress();
+  Country c2 = billingAddress.getCountry();
+</pre>
 
 
 <h3 id="explicit">Explicitly</h3>
@@ -70,13 +68,13 @@ Country c2 = billingAddress.getCountry();
   bean cache we can say when we do not want to use the cache.
 </p>
 
-```java
-// explicitly state we do not want to use the bean cache
-Customer customer = Ebean.find(Customer.class)
-  .setUseCache(false)
-  .setId(7)
-  .findOne();
-```
+<pre content="java">
+  // explicitly state we do not want to use the bean cache
+  Customer customer = DB.find(Customer.class)
+    .setUseCache(false)
+    .setId(7)
+    .findOne();
+</pre>
 
 </body>
 </html>

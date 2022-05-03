@@ -1,5 +1,9 @@
 <ul class="nav">
-  <@smallnav activeCheck="" url="/docs/features/l2cache" title="L2 Cache"/>
+  <@smallnav activeCheck="${n2_l2cache!''}" url="/docs/features/l2cache" title="L2 Cache">
+  <ul class="nav">
+      <#include "/_nav/features_l2cache.ftl">
+  </ul>
+  </@smallnav>
   <@smallnav activeCheck="" url="/docs/features/elasticsearch" title="Elasticsearch"/>
 
   <@smallnav activeCheck="${jsonindb!''}" url="/docs/features/json-in-db" title="@DbJson"/>

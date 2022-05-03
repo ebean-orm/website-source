@@ -2,7 +2,7 @@
 <head>
   <meta name="layout" content="_layout/docs_features_l2caching.html"/>
   <meta name="bread3" content="Hazelcast" href="/docs/features/l2cache/hazelcast"/>
-<#assign l2caching_hazelcast = "true">
+  <#assign l2caching_hazelcast="true">
 </head>
 <body>
   <h2>Hazelcast</h2>
@@ -56,10 +56,10 @@
   </p>
 
   <h5>Properties</h5>
-  ```properties
-  ## disable use of L2 cache (for dev / testing etc)
-  ebean.disableL2Cache=true
-  ```
+  <pre content="properties">
+    ## disable use of L2 cache (for dev / testing etc)
+    ebean.disableL2Cache=true
+  </pre>
   <p>
 
   </p>
@@ -80,10 +80,10 @@
     You can programmatically configure Hazelcast by creating an instance of Hazelcast <code>ClientConfig</code> or
     <code>Config</code> and setting it via: <code></code>
   </p>
-  ```java
+  <pre content="java">
   ClientConfig configuration = ...;
   serverConfig.setServiceObject("hazelcastConfiguration", configuration);
-  ```
+  </pre>
   <p>
     If this configuration instance is passed in Ebean will use it to configure a Hazelcast client or server instance.
     Otherwise it will use default configuration and Hazelcast will automatically search for and use the xml configuration

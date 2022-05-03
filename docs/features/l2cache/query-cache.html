@@ -2,10 +2,9 @@
 <head>
   <meta name="layout" content="_layout/docs_features_l2caching.html"/>
   <meta name="bread3" content="Query cache" href="/docs/features/l2cache/query-cache"/>
-<#assign l2caching_using_query = "true">
+  <#assign l2caching_using_query="true">
 </head>
 <body>
-
 <h2>Query cache</h2>
 <p>
   Query caching is not enabled by default. To use Query caching we need to explicitly enable it
@@ -16,27 +15,27 @@
 <p>
   The example below enables query caching on the Customer entity bean.
 </p>
-```java
-@Cache(enableQueryCache=true)
-@Entity
-public class Customer {
-  ...
-}
-
-```
+<pre content="java">
+  @Cache(enableQueryCache=true)
+  @Entity
+  public class Customer {
+    ...
+  }
+</pre>
 
 <h3 id="setUseQueryCache">setUseQueryCache(true)</h3>
 <p>
   To use the query cache you have to <code>explicitly</code> specify its use on a query.
 </p>
 
-```java
-// use the query cache
-List<Country> list = Ebean.find(Country.class)
-  .setUseQueryCache(true)
-  .where().ilike("name", "New%")
-  .findList();
-```
+<pre content="java">
+  // use the query cache
+  List<|Country> list = DB.find(Country.class)
+    .setUseQueryCache(true)
+    .where().ilike("name", "New%")
+    .findList();
+</pre>
+
 <p>
   The query cache is generally useful for returning lists that are very infrequently changed.
   These lists would often be used to populate drop down lists / combo boxes in user interfaces.
@@ -57,12 +56,12 @@ List<Country> list = Ebean.find(Country.class)
   and can be tuned using <code>@CacheQueryTuning</code>.
 </p>
 
-```java
-@Cache(enableQueryCache=true)
-@CacheQueryTuning(maxSecsToLive = 30)
-@Entity
-public class Product  {
-```
+<pre content="java">
+  @Cache(enableQueryCache=true)
+  @CacheQueryTuning(maxSecsToLive = 30)
+  @Entity
+  public class Product  {
+</pre>
 
 </body>
 </html>
