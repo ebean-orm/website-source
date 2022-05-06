@@ -1,19 +1,19 @@
 <html>
 <head>
-  <title>Yugabyte | Ebean ORM</title>
+  <title>YugabyteDB | Ebean ORM</title>
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="Database platforms" href="/docs/database"/>
-  <meta name="bread2" content="Yugabyte" href="/docs/database/yugabyte"/>
+  <meta name="bread2" content="YugabyteDB" href="/docs/database/yugabyte"/>
   <#assign n0_docs="active">
   <#assign n1_platforms="active">
   <#assign n2_yugabyte="active">
 </head>
 <body>
-<h2>Yugabyte</h2>
+<h2>YugabyteDB</h2>
 
 <h3>Testing</h3>
 <p>
-  To test against Yugabyte docker test container set the <em>platform</em> to <code>yugabyte</code> in
+  To test against YugabyteDB docker test container set the <em>platform</em> to <code>yugabyte</code> in
   <code>src/test/resources/application-test.yaml</code>
 </p>
 <p>
@@ -31,13 +31,13 @@ ebean:
 <h2 id="ebean-yugabyte">ebean-yugabyte dependency</h2>
 <p>
   We can use the <code>io.ebean:ebean-yugabyte</code> dependency rather than <code>io.ebean:ebean</code> if we want to only
-  bring in the Yugabyte specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
+  bring in the YugabyteDB specific platform code. Depending on <code>io.ebean:ebean</code> will bring in all platforms.
 </p>
 
 
 <h2 id="starting">Docker container</h2>
 <p>
-  We can programmatically start a docker container version of Yugabyte.
+  We can programmatically start a docker container version of YugabyteDB.
 </p>
 <p>
   The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.

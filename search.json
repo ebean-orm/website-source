@@ -1272,7 +1272,7 @@
   "url":"/docs/database/sqlite#ebean-sqlite"
 }
 ,{
-  "title":"Yugabyte",
+  "title":"YugabyteDB",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
@@ -1280,7 +1280,7 @@
   "url":"/docs/database/yugabyte"
 }
 ,{
-  "title":"Yugabyte - Docker container",
+  "title":"YugabyteDB - Docker container",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",
@@ -1288,7 +1288,7 @@
   "url":"/docs/database/yugabyte#starting"
 }
 ,{
-  "title":"Yugabyte - ebean-yugabyte dependency",
+  "title":"YugabyteDB - ebean-yugabyte dependency",
   "caption":"",
   "category":"Database platforms",
   "priority":"3",

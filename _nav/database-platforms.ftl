@@ -10,7 +10,7 @@
   <@smallnav activeCheck="${n2_sqlite!''}" url="/docs/database/sqlite" title="Sqlite"/>
   <@smallnav activeCheck="${n2_clickhouse!''}" url="/docs/database/clickhouse" title="ClickHouse"/>
   <@smallnav activeCheck="${n2_cockroach!''}" url="/docs/database/cockroach" title="Cockroach"/>
-  <@smallnav activeCheck="${n2_yugabyte!''}" url="/docs/database/yugabyte" title="Yugabyte"/>
+  <@smallnav activeCheck="${n2_yugabyte!''}" url="/docs/database/yugabyte" title="YugabyteDB"/>
   <@smallnav activeCheck="${n2_nuodb!''}" url="/docs/database/nuodb" title="NuoDB"/>
   <@smallnav activeCheck="${n2_elasticsearch!''}" url="/docs/database/elasticsearch" title="ElasticSearch"/>
   <@smallnav activeCheck="${n2_redis!''}" url="/docs/database/redis" title="Redis"/>
