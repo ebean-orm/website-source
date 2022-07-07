@@ -121,8 +121,11 @@
 
 <h2 id="run">Running migrations</h2>
 <p>
-  To get Ebean to run the DB migrations on startup set <code>ebean.migration.run</code> to true.
+  To get Ebean to run the DB migrations on startup:
 </p>
+
+<h4>1. Set <code>ebean.migration.run</code> to true</h4>
+
 <h5>Via properties - e.g. application.properties</h5>
 <pre content="properties">
 ## run migrations when the Ebean starts
@@ -136,6 +139,18 @@ ebean:
   migration:
     run: true
 </pre>
+<h4>2. Add ebean-migration dependency</h4>
+<p>
+  Add <code>io.ebean:ebean-migration</code> as a dependency if it is not already.
+</p>
+<pre content="xml">
+<dependency>
+  <groupId>io.ebean</groupId>
+  <artifactId>ebean-migration</artifactId>
+  <version>13.6.0</version>
+</dependency>
+</pre>
+
 <p>
   With <code>ebean.migration.run=true</code> then when Ebean starts it will look at the
   migrations and run any that need to be run.  The migration runner will by default create a table
