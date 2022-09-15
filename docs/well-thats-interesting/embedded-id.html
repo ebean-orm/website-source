@@ -1,0 +1,199 @@
+<html>
+<head>
+  <title>EmbeddedId | Interesting ... | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Interesting ..." href="/docs/well-thats-interesting/"/>
+  <meta name="bread2" content="EmbeddedId and record type" href="/docs/well-thats-interesting/embedded-id"/>
+  <#assign n0_well="active">
+  <#assign embeddedId="active">
+</head>
+<body>
+<h2>Mapping concatenated primary keys</h2>
+<p>
+  JPA and Ebean use <code>@EmbeddedId</code> or <code>@IdClass</code> to map concatenated primary keys.
+  For both these cases the Primary key is modeled as an <code>@Embeddable</code>.
+</p>
+<p>
+  In the example below, the primary key is made up of <code>partId</code> and <code>brandId</code>.
+</p>
+<pre content="java">
+@Embeddable
+public final class PartBrandKey {
+
+  private final long partId;
+  private final long brandId;
+
+  public PartBrandKey(long partId, long brandId) {
+    this.partId = partId;
+    this.brandId = brandId;
+  }
+
+  public long partId() {
+    return partId;
+  }
+
+  public long brandId() {
+    return brandId;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    PartBrandKey that = (PartBrandKey) o;
+    return partId == that.partId && brandId == that.brandId;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(partId, brandId);
+  }
+}
+</pre>
+<p>
+  The semantics of an <code>@Embeddable</code> that maps a primary key is that the <code>equals</code> and
+  <code>hashCode</code> <em><b>must include all the components</b></em> - in this case both partId and brandId <em>MUST</em>
+  be part of the equals and hashCode implementation.
+</p>
+<p>
+  We see semantics that match an immutable type.
+</p>
+<p>
+  Note that the ORM requires developers to provide the correct implementation of equals and hashCode. It is on
+  the <em>developer</em> to do this correctly - not the ORM (most will get the IDE to generate these).
+  If the developer stuffs this up things will go bang!!! but this is NOT on the ORM.
+</p>
+<p>
+  Now the above works for Ebean but if we consider 3 JPA implementations then we note that 2 of those
+  currently require a default constructor (which can be private). The above does not exactly work for
+  those ORMs and we instead for those ORMs we need to add a [private] default constructor.
+</p>
+
+<h2>Adding a default constructor</h2>
+<p>
+  Adding a [private] default constructor is required by some ORMs. What we <em>then</em> see is:
+</p>
+<ul>
+  <li>The fields are no longer final</li>
+  <li>We have a private constructor that doesn't look like its used - it will be used by the ORM</li>
+  <li>The class is now 'effectively immutable' rather than strictly immutable (internally the ORM is going to use
+    that private constructor, set the values, then hand off the fully populated effective immutable instance)</li>
+</ul>
+
+<pre content="java">
+@Embeddable
+public final class PartBrandKey {
+
+  private long partId;         /** no longer final */
+  private long brandId;        /** no longer final */
+
+  private PartBrandKey() { }   /** for ORM use only */
+
+  public PartBrandKey(long partId, long brandId) {
+    this.partId = partId;
+    this.brandId = brandId;
+  }
+
+  public long partId() {
+    return partId;
+  }
+
+  public long brandId() {
+    return brandId;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    PartBrandKey that = (PartBrandKey) o;
+    return partId == that.partId && brandId == that.brandId;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(partId, brandId);
+  }
+}
+</pre>
+
+
+
+<h2>Enter Record type ...</h2>
+<p>
+  What ORMs want to do for this case is:
+</p>
+<pre content="java">
+  @Embeddable
+  public record PartBrandKey(long partId, long brandId) { }
+</pre>
+<p>
+  When we look at the semantics of <code>record</code> type we see it's a match for what we are trying to
+  do for this case of mapping a concatenated primary key with <code>@Embeddable</code>. We see an immutable
+  type and the semantics of <code>Record::equals()</code> is an exact match.
+</p>
+<p>
+  From an ORM perspective the above looks perfect and we have an exact match in semantics.
+</p>
+
+<h2>Enter Kotlin data class ...</h2>
+<p>
+  The Kotlin folks are going to point out this is also a match to a <code>data class</code>.
+</p>
+<pre content="kotlin">
+  @Embeddable
+  data class PartBrandKey(val partId: Long, val brandId: Long)
+</pre>
+
+
+
+<h2>The world between javac and the jvm</h2>
+<p>
+  Bytecode transformation lives in that world between javac and the jvm. Generally we have an
+  annotation like <em>@Embeddable</em> or <em>@Transactional</em> as a marker for the bytecode
+  transformation to be applied to that class or method.
+</p>
+<p>
+  Bytecode transformation reads and transforms bytecode so in this sense it doesn't necessarily
+  even see "language features" per say. For example, ebean bytecode transformation applies equally
+  to other JVM languages like Kotlin, Scala, Groovy.
+</p>
+<p>
+  In this way the bytecode created by record type presented nothing new to ebean-agent (the ebean bytecode
+  transformer) in much the same way a kotlin data class didn't look new.
+</p>
+<p>
+  Yes Java records are different in that they extend <code>java.lang.Record</code>, yes they are different in
+  how they provide a default implementation of hashCode and equals using <code>java.lang.runtime.ObjectMethods</code>
+  and method handles (which is actually pretty cool) but for ebean-agent in terms of the transforms it
+  is expected to make, the bytecode presented by record types isn't really new or different when compared to
+  the plain old non-record cases or indeed kotlin data classes.
+</p>
+<p>
+  From an ebean perspective that is expected because - record type is a <em>language</em> feature and the
+  ebean-agent reads bytecode and is really not <em>expected</em> to see <em>language</em> features.
+</p>
+
+
+<!--
+<h2>Side note on Meta Programming</h2>
+<p>
+  Meta programming is hugely important to ORM in general and for ORMs on the JVM bytecode transformation
+  (aka javaagent / java.lang.instrument / instrumentation / enhancement / AOP) is a key tool we use to apply
+  ORM semantics onto classes annotated with <code>@Entity</code> and <code>@Embeddable</code> etc.
+</p>
+<p>
+  The value proposition around ORM bytecode transformation is that the semantics that are applied to support
+  features like dirty state, dirty checking, lazy loading, partial objects is worth it relative to the "magical-ness"
+  of it.
+</p>
+<p>
+  To a large extent we need to do a much better job at explaining what these ORM semantics are and why we deem
+  them important (TLDR: to optimise our interaction with the database) and why we use bytecode transformation
+  in particular to do this job.
+</p>
+-->
+
+
+</body>
+</html>
