@@ -189,6 +189,10 @@ header, footer {
 #sponsors {
   margin-top: 4rem;
 }
+a.sponsor {
+  display: inline-block;
+  padding: 15px;
+}
 body {
   color: var(--body-color);
   background-color: var(--body-bg-color);

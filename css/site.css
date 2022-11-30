@@ -565,6 +565,10 @@ pre.console {
 span.sponsor-space {
   margin-right: 20px;
 }
+a.sponsor {
+  display: inline-block;
+  padding: 15px;
+}
 #hero h1 {
   font-size: 65px;
 }
