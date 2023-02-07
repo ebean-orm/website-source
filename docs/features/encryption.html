@@ -96,12 +96,19 @@ public interface Encryptor {
   database encryption will use client/application encryption.
 </p>
 <ul>
-  <li>Enum</li>
-  <li>String</li>
+  <li>Enum (if based on VARCHAR)</li>
+  <li>String (VARCHAR, CHAR, CLOB, LONGVARCHAR)</li>
   <li>Date types - LocalDate, Date, Joda LocalDate</li>
   <li>Timestamp types - Timestamp, Instant, OffsetDateTime, ZonedDateTime</li>
 </ul>
-
+<p> 
+  Important: The following types are currently not supported:
+</p>
+<ul>
+  <li>primitive types</li>
+  <li>Timestamps</li>
+</ul>
+  
 <h2 id="encryptKeyManager">EncryptKeyManager</h2>
 <p>
   Whenever a property is encrypted or decrypted a "Key" must be used. Ebean will
