@@ -11,7 +11,7 @@
         <a class="nav-logo" href="/"><img src="/images/logo-200.png" height="35"></a>&nbsp;&nbsp;$breadcrumb
       </h1>
       <ul>
-        <li><a href="https://github.com/ebean-orm/ebean" title="github source"><i class="fab fa-github"></i></a></li>
+        <#if page_edit_href?has_content><li><@pgedit page_edit_href/></li></#if>
         <li><a onclick="toggleTheme();" title="switch dark light theme"><i class="fas fa-adjust"></i></a></li>
       </ul>
     </nav>

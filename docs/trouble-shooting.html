@@ -4,13 +4,16 @@
   <meta name="layout" content="_layout2/base-docs.html"/>
   <meta name="bread1" content="Introduction" href="/docs/intro/"/>
   <meta name="bread2" content="Trouble shooting" href="/docs/trouble-shooting"/>
+  <#assign page_edit_href="/docs/trouble-shooting.html">
   <#assign n0_intro="active">
   <#assign n1_trouble="active">
 </head>
 <body>
+
 <h2>Can't find a solution?</h2>
 <p>
   Post questions to the Ebean forum at: <a href="https://groups.google.com/forum/#!forum/ebean">Ebean google group</a>
+  or at: <a href="https://github.com/ebean-orm/ebean/discussions">Ebean github discussions</a>
 </p>
 
 <h2 id="not-enhanced">java.lang.IllegalStateException: Bean class _ is not enhanced?</h2>
@@ -125,6 +128,68 @@ ERROR io.ebean.Ebean - Error trying to create the default EbeanServer
  ...
 </pre>
 
+<h2 id="transient-initialisation">Transient Initialisation</h2>
+<h4>Actions</h4>
+<h5>1. Explicitly add a default constructor to the entity bean that has the error. This constructor will initialise
+  all the fields including the transient fields and ebean will use this constructor instead of adding a default constructor.
+</h5>
+<h5>2. OR (NOT RECOMMENDED) add <code>src/resources/ebean.mf</code> with <code>transient-init-error: false</code> to turn off this error.
+ This is not recommended but can be used to support old behavior if desired. In this case the transient fields will be left
+ uninitialised when an instance is created by ebean.
+</h5>
 
+<h4>Diagnosis</h4>
+<p>
+  This is an error thrown by <em>ebean-agent</em> when it is enhancing an entity bean
+  that does not have a default constructor and the code in the constructor contains
+  code that initialises transient (non-persistent) fields in a way that the ebean-agent
+  is unable to support.
+</p>
+<p>
+  If a transient field is initialised in a constructor it must use a simple &lt;init&gt; using
+  a no argument default constructor of a type. Initialisation via any other means is
+  not supported (using a method or non-default constructors are not supported).
+</p>
+<p>
+  When this limitation is hit we can opt to add a default constructor ourselves.
+  In this way we get full control and ebean-agent does not need to add a default constructor.
+</p>
+<p>
+  Note that "Not Supported" in effect means that ebean-agent is not be able to
+  initialise those transient fields in the default constructor that it is adding.
+  Those fields will be uninitialised so null, 0, false etc when ebean creates
+  the instance [using this default constructor, when we use <code>transient-init-error: false</code>].
+</p>
+
+<h5>Typically stacktrace</h5>
+<pre content="text">
+ebean-enhance> cls: test/model/BeanWithInvalidTransientInit  msg: Error during transform java.lang.RuntimeException:
+  ERROR: Entity class without default constructor has unsupported initialisation of transient fields.
+  Entity class: test/model/BeanWithInvalidTransientInit - Unsupported initialisation of transient fields - [invalidTransientInitWithoutDefaultConstructor, invalidTransientInitViaMethod]
+  Refer: https://ebean.io/docs/trouble-shooting#transient-initialisation
+java.lang.RuntimeException: ERROR: Entity class without default constructor has unsupported initialisation of transient fields. Entity class: test/model/BeanWithInvalidTransientInit - Unsupported initialisation of transient fields - [invalidTransientInitWithoutDefaultConstructor, invalidTransientInitViaMethod] Refer: https://ebean.io/docs/trouble-shooting#transient-initialisation
+        at io.ebean.enhance.entity.DefaultConstructor.add(DefaultConstructor.java:26)
+        at io.ebean.enhance.entity.ClassAdapterEntity.visitEnd(ClassAdapterEntity.java:214)
+        at io.ebean.enhance.asm.ClassReader.accept(ClassReader.java:748)
+        at io.ebean.enhance.asm.ClassReader.accept(ClassReader.java:424)
+        at io.ebean.enhance.Transformer.entityEnhancement(Transformer.java:266)
+        at io.ebean.enhance.Transformer.enhanceEntityAndTransactional(Transformer.java:223)
+        at io.ebean.enhance.Transformer.transform(Transformer.java:178)
+        at io.ebean.enhance.common.InputStreamTransform.transform(InputStreamTransform.java:53)
+        at io.ebean.enhance.common.InputStreamTransform.transform(InputStreamTransform.java:41)
+        at io.ebean.enhance.ant.OfflineFileTransform.transformFile(OfflineFileTransform.java:148)
+        at io.ebean.enhance.ant.OfflineFileTransform.processPackage(OfflineFileTransform.java:132)
+        at io.ebean.enhance.ant.OfflineFileTransform.processPackage(OfflineFileTransform.java:124)
+        at io.ebean.enhance.ant.OfflineFileTransform.processPackage(OfflineFileTransform.java:124)
+        at io.ebean.enhance.ant.OfflineFileTransform.process(OfflineFileTransform.java:66)
+        at io.ebean.enhance.maven.AbstractEnhance.executeFor(AbstractEnhance.java:77)
+        at io.ebean.enhance.maven.TestEnhanceMojo.execute(TestEnhanceMojo.java:27)
+        at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:137)
+</pre>
+<p>
+  Note that Ebean version <code>13.12.0</code> enabled this error by default.
+</p>
+
+<@edit "/docs/trouble-shooting.html"/>
 </body>
 </html>

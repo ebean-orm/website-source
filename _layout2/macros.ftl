@@ -72,6 +72,10 @@
   </nav>
 </#macro>
 
+<#macro pgedit editHref>
+  <#if editHref?has_content><a href="https://github.com/ebean-orm/website-source/blob/master${editHref}"><i class="fab fa-github"></i> edit page</a></#if>
+</#macro>
+
 <#macro edit editHref>
   <nav class="next">
     <p class="edit-page">
