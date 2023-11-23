@@ -18,6 +18,7 @@
   </@nav1>
   <@nav1 activeCheck="${n1_dbmigration!''}" url="/docs/db-migrations" title="DB Migrations">
     <ul class="nav nav-scroll">
+      <@smallnav activeCheck="" url="#dependencies" title="Dependencies"/>
       <@smallnav activeCheck="" url="#generate" title="Generate a Migration"/>
       <@smallnav activeCheck="" url="#run" title="Run migrations"/>
     </ul>
