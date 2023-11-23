@@ -22,6 +22,30 @@
   in migration runner rather than <code>FlywayDb</code> or <code>LiquiBase</code>.
 </p>
 
+<h2 id="dependencies">Dependencies</h2>
+<p>
+  Add either ebean-test as a test scope dependency (which includes ebean-ddl-generator and other dependencies).
+</p>
+<pre content="xml">
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-test</artifactId>
+    <version>13.6.5</version>
+    <scope>test</scope>
+  </dependency>
+</pre>
+
+<p>
+  OR add ebean-ddl-generator as a test scope dependency.
+</p>
+<pre content="xml">
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-test</artifactId>
+    <version>13.6.5</version>
+    <scope>test</scope>
+  </dependency>
+</pre>
 
 <h2 id="generate">Generate a Migration</h2>
 <p>
