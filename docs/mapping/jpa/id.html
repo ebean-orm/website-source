@@ -74,7 +74,7 @@ public class Contact {
 
 <h2 id="uuid">UUID</h2>
 <p>
-  If the @Id type is <code>UUID</code> then Ebean will automatically assign an appropriate Id generator
+  If the <em>@Id</em> type is <code>UUID</code> then Ebean will automatically assign an appropriate Id generator
   to that property.
 </p>
 <pre content="java">
@@ -82,6 +82,21 @@ public class Contact {
 // is automatically assigned
 @Id
 UUID id;
+</pre>
+
+<h2 id="uuid-generatedValue">UUID and @GeneratedValue</h2>
+<p>
+  If we have a <code>UUID</code> that is <b>NOT</b> the <em>@Id</em> we can add <code>@GeneratedValue</code> and
+  then Ebean will assign a appropriate UUID generator to it.
+</p>
+<pre content="java">
+  /** The Id property using DB Identity or Sequence */
+  @Id @GeneratedValue
+  private long id;
+
+  /** Alternate unique UUID property */
+  @GeneratedValue @Column(unique = true)
+  private UUID uid;
 </pre>
 
 <h2 id="string">String</h2>

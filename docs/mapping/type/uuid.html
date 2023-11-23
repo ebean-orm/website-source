@@ -5,6 +5,23 @@
   <#assign uuid="true">
 </head>
 <body>
+<h2 id="generatedValue">@GeneratedValue</h2>
+<p>
+  If we have a <code>UUID</code> that is not the <em>@Id</em> we 
+  can add <code>@GeneratedValue</code> and
+  then Ebean will assign a appropriate UUID generator to it.
+</p>
+<pre content="java">
+  /** The Id property using DB Identity or Sequence */
+  @Id @GeneratedValue
+  private long id;
+
+  /** Alternate unique UUID property */
+  @GeneratedValue @Column(unique = true)
+  private UUID uid;
+</pre>
+
+
 <h2>Native storage</h2>
 <p>
   UUID has native support in the following database platforms:
