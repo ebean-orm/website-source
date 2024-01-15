@@ -74,6 +74,7 @@
       </@smallnav>
       <@smallnav activeCheck="${DbArray!''}" url="/docs/mapping/extensions/dbarray" title="@DbArray"></@smallnav>
       <@smallnav activeCheck="${DbMap!''}" url="/docs/mapping/extensions/dbmap" title="@DbMap"></@smallnav>
+      <@smallnav activeCheck="${DbForeignKey!''}" url="/docs/mapping/extensions/dbforeignkey" title="@DbForeignKey"></@smallnav>
       <@smallnav activeCheck="${DbComment!''}" url="/docs/mapping/extensions/dbcomment" title="@DbComment"></@smallnav>
       <@smallnav activeCheck="${DbPartition!''}" url="/docs/mapping/extensions/dbpartition" title="@DbPartition"/>
       <@smallnav activeCheck="${WhenCreated!''}" url="/docs/mapping/extensions/when-created" title="@WhenCreated"/>
