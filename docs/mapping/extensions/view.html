@@ -7,7 +7,57 @@
 <body>
 
 <h2>View</h2>
+<p>
+  We use <code>@View</code> to have an entity map to a database view.
+</p>
 
+<pre type="java">
+@Entity
+@View(name = "order_vw", dependentTables = {"o_order", "o_order_detail"})
+public class MyOrderView {
+  // fields, accessors etc
+}
+</pre>
+<p>
+  Note that we do not need to map a <code>@Id</code> property (actually we don't
+  need to map one for a normal entity either).
+</p>
+
+<h2>Dependent Tables</h2>
+<p>
+  If we enable L2 caching on the entity that is based on a view then we should
+  specify via <code>dependentTables</code> the underlying tables that the view
+  uses. When data for these tables is modified that will automatically invalidate
+  the L2 cache for that view.
+</p>
+
+<h2>Extra DDL to define the view</h2>
+<p>
+  For ebean to execute DDL to create the database view we need to additional have a
+  <code>extra-ddl.xml</code>.  Refer to <a href="/docs/extra-ddl/">docs / extra-ddl</a>
+  for more details.
+</p>
+
+<pre type="xml">
+
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <extra-ddl xmlns="http://ebean-orm.github.io/xml/ns/extraddl">
+
+  <ddl-script name="order views" platforms="h2" drop="true">
+      drop view order_agg_vw if exists;
+  </ddl-script>
+
+  <ddl-script name="order views" platforms="postgres,oracle">
+    create or replace view order_agg_vw as
+    select d.order_id, sum(d.order_qty * d.unit_price) as order_total,
+           sum(d.ship_qty * d.unit_price) as ship_total
+    from o_order_detail d
+    group by d.order_id
+  </ddl-script>
+
+  </ddl-script>
+  </extra-ddl>
+</pre>
 
 </body>
 </html>
