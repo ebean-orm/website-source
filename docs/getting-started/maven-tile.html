@@ -1,0 +1,202 @@
+<html>
+<head>
+  <title>Maven tile | Getting started | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Getting started" href="/docs/getting-started/"/>
+  <meta name="bread2" content="Maven" href="/docs/getting-started/maven"/>
+  <#assign page_edit_href="/docs/getting-started/maven.html">
+  <#assign n0_start="active">
+  <#assign n1_maven="active">
+</head>
+<body>
+
+<h2 id="dependencies">Main dependency</h2>
+<p>
+  Ebean provides a dependency per database platform. We include one
+  or more of these dependencies for each database that our application
+  is going to use.
+</p>
+<ul>
+  <li>io.ebean:ebean-clickhouse</li>
+  <li>io.ebean:ebean-cockroach</li>
+  <li>io.ebean:ebean-db2</li>
+  <li>io.ebean:ebean-hana</li>
+  <li>io.ebean:ebean-h2</li>
+  <li>io.ebean:ebean-mysql</li>
+  <li>io.ebean:ebean-mariadb</li>
+  <li>io.ebean:ebean-oracle</li>
+  <li>io.ebean:ebean-postgres</li>
+  <li>io.ebean:ebean-sqlanywhere</li>
+  <li>io.ebean:ebean-sqlite</li>
+  <li>io.ebean:ebean-sqlserver</li>
+  <li>io.ebean:ebean-yugabyte</li>
+</ul>
+<p>
+  For example, if our application is only going to use Postgres then
+  we add the <code>io.ebean:ebean-postgres</code> dependency.
+</p>
+
+<pre content="xml">
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-postgres</artifactId>
+    <version>14.1.0</version>
+  </dependency>
+</pre>
+
+
+<h2 id="testDependencies">Test Dependencies</h2>
+<p>
+  Add <code>io.ebean:ebean-test</code> as a test dependency.
+</p>
+<p>
+  This configures Ebean for running tests including automatic use of docker
+  containers for Postgres, MySql, Oracle, SqlServer, Hana + support for H2 and SqlLite.
+</p>
+<p>
+  Refer to: <a href="/docs/testing">docs / testing</a>
+</p>
+<pre content="xml">
+  <!-- Test dependencies -->
+  <dependency>
+    <groupId>io.ebean</groupId>
+    <artifactId>ebean-test</artifactId>
+    <version>14.1.0</version>
+    <scope>test</scope>
+  </dependency>
+</pre>
+
+
+<h2>build / plugins</h2>
+<p>
+  In the <code>build / plugins</code> section:
+</p>
+<ol>
+  <li>Add the <code>tiles-maven-plugin</code> to perform build time enhancement</li>
+  <li>Add or modify the <code>maven-compiler-plugin</code> to register the <em>querybean-generator</em> annotation processor.</li>
+</ol>
+
+<pre content="xml">
+<build>
+  <plugins>
+
+     <plugin>
+       <groupId>io.repaint.maven</groupId>
+       <artifactId>tiles-maven-plugin</artifactId>
+       <version>2.40</version>
+       <extensions>true</extensions>
+       <configuration>
+         <tiles>
+          <!-- other tiles ... -->
+          <tile>io.ebean.tile:enhancement:14.1.0</tile>
+        </tiles>
+      </configuration>
+    </plugin>
+
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.10.1</version>
+      <configuration>
+        ...
+        <annotationProcessorPaths>
+           <path>
+              <groupId>io.ebean</groupId>
+              <artifactId>querybean-generator</artifactId>
+              <version>14.1.0</version>
+          </path>
+          <!-- other annotation processors -->
+        </annotationProcessorPaths>
+      </configuration>
+    </plugin>
+
+
+  </plugins>
+</build>
+</pre>
+
+
+<h3>Maven enhancement tile</h3>
+<p>
+  The maven tile above will enhance the code at build time for both <code>src/main</code>
+  and <code>src/test</code>. This is simpler than defining the plugin in the traditional (non-tile)
+  fashion and is the preferred approach.
+</p>
+<p>
+  If you want to specify the maven enhancement plugin in 'normal' non-tile fashion see
+  <a href="maven-plugin">maven plugin</a>.
+</p>
+
+<h3>APT - querybean generation</h3>
+<p>
+  Note that if there are no other annotation processors (e.g. mapstruct) then instead of
+  explicitly registering the <code>querybean-generator</code> with the maven-compiler-plugin
+  we can instead just add it as a dependency with provided scope.
+</p>
+
+
+<h3 id="jdbc-dep">JDBC Driver(s)</h3>
+<p>
+  Add the dependency for the JDBC Driver(s) you want to use.
+</p>
+
+<h2 id="kotlin-kapt">Kotlin KAPT</h2>
+<p>
+  When using Kotlin we need to use KAPT (Kotlin annotation processing) to
+  generate Kotlin query beans.
+</p>
+<p>
+  The recommended way to do this is via the <a href="https://avaje.io/kotlin-kapt"><code>io.avaje.kapt</code></a>
+  maven tiles as this makes it easier to add additional annotation processors
+  (like <a href="https://dinject">DInject</a> for dependency injection for example).
+</p>
+<p>
+  Add the maven tiles plugin into the <code>build / plugins</code> section of the pom.xml
+  with the tiles for:
+</p>
+<pre content="xml">
+<plugin>
+  <groupId>io.repaint.maven</groupId>
+  <artifactId>tiles-maven-plugin</artifactId>
+  <version>2.40</version>
+  <extensions>true</extensions>
+  <configuration>
+    <tiles>
+      <tile>io.ebean.tile:enhancement:14.1.0</tile> <!-- ebean enhancement -->
+
+      <!-- Kotlin + Java compilers with KAPT support -->
+      <tile>io.avaje.kapt:compile:1.1</tile>
+
+      <!-- KAPT query bean generator -->
+      <tile>io.avaje.kapt:querybean-generator:1.1</tile>
+
+      <!-- other annotation processors ... -->
+      <!-- <tile>io.avaje.kapt:dinject-generator:1.1</tile> -->
+      <!-- <tile>io.avaje.kapt:javalin-generator:1.1</tile> -->
+
+      <!-- other tiles ... -->
+
+    </tiles>
+  </configuration>
+</plugin>
+</pre>
+<p>
+  We can add other additional annotation processors by adding tiles, for example:
+</p>
+<ul>
+  <li>io.avaje.kapt:dinject-generator:1.1 - for DInject Dependency injection generation</li>
+  <li>io.avaje.kapt:javalin-generator:1.1 - for Javalin controller generation</li>
+</ul>
+
+<h3>Example project</h3>
+<p>
+  <a href="https://github.com/ebean-orm-examples/example-kotlin/blob/master/pom.xml">Full example pom for Kotlin query bean generation</a>
+</p>
+
+
+
+<@next "Test setup" "ebean-test"/>
+
+</body>
+</html>

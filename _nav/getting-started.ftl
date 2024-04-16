@@ -4,11 +4,6 @@
     <@nav1 activeCheck="${n1_eclipse!''}" url="/docs/getting-started/eclipse-ide" title="Eclipse"/>
 <#--    <@nav1 activeCheck="${n1_cli!''}" url="/docs/getting-started/cli-tool" title="CLI Tool"/>-->
     <@nav1 activeCheck="${n1_maven!''}" url="/docs/getting-started/maven" title="Maven">
-      <ul class="nav nav-scroll">
-        <@smallnav activeCheck="" url="#dependencies" title="Dependencies"/>
-        <@smallnav activeCheck="" url="#tile" title="Tile"/>
-        <@smallnav activeCheck="" url="#kotlin-kapt" title="Kotlin KAPT"/>
-      </ul>
     </@nav1>
     <@nav1 activeCheck="${n1_gradle!''}" url="/docs/getting-started/gradle" title="Gradle"/>
     <@nav1 activeCheck="${n1_test!''}" url="/docs/getting-started/ebean-test" title="Test setup"/>
