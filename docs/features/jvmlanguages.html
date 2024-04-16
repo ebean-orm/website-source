@@ -17,7 +17,7 @@ annotate your groovy beans with the JPA annotations.
 ```groovy
 //GROOVY CODE (generates the getters and setters etc)
 package test
-import javax.persistence.*;
+import jakarata.persistence.*;
 
 @Entity
 @Table(name="f_forum")
@@ -73,7 +73,7 @@ would like to see.</p>
 <h2 id="scala">Scala</h2>
 <p>You can use Ebean with Scala as well. Again, annotate your scala “bean” with the JPA
 annotations as you would normally.</p>
-  
+
 <p>In May 2010 Ebean 2.6.0 was released which included support for Scala 2.8.  That meant you could use Scala Option and mutable collection types
 (Scala 2.8 mutable Buffer, Set and Map) in your entity beans rather than the java collection types (so pretty much have your entity beans written in Scala).</p>
 

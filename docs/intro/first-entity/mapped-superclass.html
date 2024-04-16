@@ -29,9 +29,9 @@ import io.ebean.Model;
 import io.ebean.annotation.WhenCreated;
 import io.ebean.annotation.WhenModified;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import jakarata.persistence.Id;
+import jakarata.persistence.MappedSuperclass;
+import jakarata.persistence.Version;
 import java.time.Instant;
 
 /**
@@ -66,9 +66,9 @@ package org.example.domain
 import io.ebean.annotation.WhenCreated
 import io.ebean.annotation.WhenModified
 import java.time.Instant
-import javax.persistence.Id
-import javax.persistence.MappedSuperclass
-import javax.persistence.Version
+import jakarata.persistence.Id
+import jakarata.persistence.MappedSuperclass
+import jakarata.persistence.Version
 
 @MappedSuperclass
 open class BaseDomain : Model() {
@@ -113,7 +113,7 @@ public class Customer extends BaseDomain {
   <pre content="kotlin">
 package org.example.domain
 
-import javax.persistence.Entity
+import jakarata.persistence.Entity
 
 @Entity
 class Customer : BaseDomain() {

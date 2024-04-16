@@ -1,8 +1,8 @@
 
 import io.ebean.annotation.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarata.persistence.Entity;
+import jakarata.persistence.Table;
 import java.time.LocalDate;
 
 /**

@@ -3,9 +3,9 @@ import io.ebean.Model
 import io.ebean.annotation.WhenCreated
 import io.ebean.annotation.WhenModified
 import java.time.Instant
-import javax.persistence.Id
-import javax.persistence.MappedSuperclass
-import javax.persistence.Version
+import jakarata.persistence.Id
+import jakarata.persistence.MappedSuperclass
+import jakarata.persistence.Version
 
 @MappedSuperclass
 open class BaseModel : Model() {

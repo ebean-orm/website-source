@@ -1,6 +1,6 @@
 
 import io.ebean.annotation.Length
-import javax.persistence.Entity
+import jakarata.persistence.Entity
 
 @Entity
 class Customer(name: String) : BaseModel() {
