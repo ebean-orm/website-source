@@ -69,7 +69,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath "io.ebean:ebean-gradle-plugin:13.25.0"
+    classpath "io.ebean:ebean-gradle-plugin:14.1.0"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.11"
   }
 }
@@ -88,11 +88,11 @@ apply plugin: "org.jetbrains.kotlin.kapt"
 dependencies {
 
   compile ...
-  compile 'io.ebean:ebean:13.25.0'
+  compile 'io.ebean:ebean:14.1.0'
 
-  kapt 'io.ebean:kotlin-querybean-generator:13.25.0'
+  kapt 'io.ebean:kotlin-querybean-generator:14.1.0'
 
-  testCompile 'io.ebean:ebean-test:13.25.0'
+  testCompile 'io.ebean:ebean-test:14.1.0'
 }
 </pre>
 
