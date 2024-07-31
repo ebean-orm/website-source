@@ -52,6 +52,7 @@
         <@nav1 activeCheck="${n1_testing!''}" url="/docs/testing" title="Testing">
             <#include "/_nav/testing.ftl">
         </@nav1>
+        <@nav1 activeCheck="${n1_readreplicas!''}" url="/docs/read-replicas" title="Read Replicas"/>
         <@nav1 activeCheck="${n1_platforms!''}" url="/docs/database" title="Database platforms">
             <#include "/_nav/database-platforms.ftl">
         </@nav1>

@@ -1,0 +1,90 @@
+<html>
+<head>
+  <title>Read Replicas | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Read Replicas" href="/docs/read-replicas"/>
+  <#assign n0_docs="active">
+  <#assign n1_readreplicas="active">
+</head>
+<body>
+<h2 id="transactional">Read Replicas</h2>
+<p>
+  Ebean supports configuring a second DataSource [connect pool] that points to
+  a "Read replica". The DataSource is <em>readOnly = true</em> and <em>autoCommit=true</em>.
+</p>
+<pre content="java">
+
+</pre>
+
+<h2 id="aurora">Amazon AWS Aurora</h2>
+<p>
+  Amazon AWS Aurora provides 2 connection endpoints with one endpoint for the "Master" [writer] and
+  a second endpoint for the "Read replica" [read only] instance(s).
+</p>
+<pre content="java">
+
+</pre>
+
+
+<h2 id="usingMaster">Using the "Master"</h2>
+<p>
+  When we have an explicit transaction via <em>@Transactional</em> on a method or using
+  explicitly <code>database.beginTransaction()</code> - then this transaction will use
+  the "Master".
+</p>
+<p>
+  When we use database.save() without an explicit transaction, then a transaction will be
+  used implicitly and this will use the "Master".
+</p>
+
+<h2 id="queryUseMaster">Query.useMaster()</h2>
+<p>
+  If we have a query that is executed outside any explicit transaction, and it will fetch data
+  (not a bulk update query or bulk delete query) then by default it will use the "Read Replica".
+</p>
+<p>
+  To force a query to use the "Master" we use <code>Query.useMaster()</code> like:
+</p>
+<pre content="java">
+  var customers =
+    new QCustomer()
+      .status.eq(Status.NEW)
+      .useMaster() // Use the "Master" database
+      .findList();
+</pre>
+
+<h2 id="queryUseReadReplica">Using the Read Replica</h2>
+<p>
+  If we have a query that is executed outside any explicit transaction, and it will fetch data
+  (it is not a bulk update query or bulk delete query) then by default it will use the "Read Replica".
+</p>
+<pre content="java">
+  // a query executed outside of any explicit transaction
+  // ... will use the replica
+  var customers =
+    new QCustomer()
+      .status.eq(Status.NEW)
+      .findList();
+</pre>
+
+
+<h2 id="transactionReadOnly">@Transaction(readOnly=true)</h2>
+<p>
+  When a method is annotated with <code>@Transaction(readOnly=true)</code>, then this
+  will create a read only transaction using the "Read Replica".
+</p>
+
+<pre content="java">
+  @Transaction(readOnly=true)
+  void myMethod() {
+
+    // do stuff with a transaction using the Read replica
+
+  }
+</pre>
+
+
+<@next_edit "Batch" "/docs/monitoring" "/docs/read-replicas/index.html"/>
+
+</body>
+</html>
