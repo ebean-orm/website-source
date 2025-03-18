@@ -9,21 +9,67 @@
 <body>
 <h2 id="transactional">Read Replicas</h2>
 <p>
-  Ebean supports configuring a second DataSource [connect pool] that points to
+  Ebean supports configuring a second DataSource [connection pool] that points to
   a "Read replica". The DataSource is <em>readOnly = true</em> and <em>autoCommit=true</em>.
 </p>
-<pre content="java">
 
+<h2>DataSourceBuilder readOnlyUrl</h2>
+<p>
+  When using DataSourceBuilder we can specify an additional <code>readOnlyUrl</code> which
+  can point to a read replica (e.g. AWS Aurora reader endpoint).
+</p>
+<p>
+  Ebean DataSourceBuilder can support configuration for both a "Master/Writer" DataSource and a
+  "Read Only" DataSource where the difference between these is the connection url. This is
+  the case for AWS Aurora where there are 2 endpoints available (Writer and Reader endpoints).
+</p>
+<pre content="java">
+var dataSourceBuilder =
+  DataSourceBuilder.create()
+    .username(...)
+    .password(...)
+    .url(configuration.getJdbcUrl())                 // Writer Endpoint
+    .readOnlyUrl(configuration.getReadOnlyJdbcUrl()) // Reader Endpoint
+    .applicationName("myAppName");
 </pre>
+
+<h2>DatabaseBuilder readOnlyDataSource</h2>
+<p>
+  If we are not using DataSourceBuilder, we can instead specify a "Read Only" DataSource
+  to use. We can create a DataSource (using say Hikari) and specify it as the <em>readOnlyDataSource</em>.
+</p>
+<pre content="java">
+DataSource writerDataSource = ...;
+// should be readOnly=true autoCommit=true
+DataSource readOnlyDataSource = ...;
+
+Database.builder()
+  ...
+  .dataSource(writerDataSource)            // Writer Endpoint
+  .readOnlyDataSource(readOnlyDataSource)  // Reader Endpoint
+  .build()
+</pre>
+
 
 <h2 id="aurora">Amazon AWS Aurora</h2>
 <p>
-  Amazon AWS Aurora provides 2 connection endpoints with one endpoint for the "Master" [writer] and
-  a second endpoint for the "Read replica" [read only] instance(s).
+  Amazon AWS Aurora provides 2 connection endpoints, a <em>Writer</em> and
+  a <em>Reader</em>
 </p>
-<pre content="java">
+<p>
+  The Writer (also known as "Master") endpoint is used for making changes to the
+  database (DML and DDL). The Reader endpoint points to "Read Replica" instances
+  that only support reading data.
+</p>
+<ul>
+  <li><b>Writer</b>: Use the writer endpoint for <b><code>url</code></b></li>
+  <li><b>Reader</b>: Use the reader endpoint for <b><code>readOnlyUrl</code></b></li>
+</ul>
+<img alt="AWS Aurora Endpoints" src="/images/aws-aurora-endpoints.png" class="img-responsive" style="max-width: 700px">
 
-</pre>
+<p>
+
+</p>
 
 
 <h2 id="usingMaster">Using the "Master"</h2>
@@ -37,19 +83,19 @@
   used implicitly and this will use the "Master".
 </p>
 
-<h2 id="queryUseMaster">Query.useMaster()</h2>
+<h2 id="queryUseMaster">Query.usingMaster()</h2>
 <p>
   If we have a query that is executed outside any explicit transaction, and it will fetch data
   (not a bulk update query or bulk delete query) then by default it will use the "Read Replica".
 </p>
 <p>
-  To force a query to use the "Master" we use <code>Query.useMaster()</code> like:
+  To force a query to use the "Master/Writer" we use <code>Query.usingMaster()</code> like:
 </p>
 <pre content="java">
   var customers =
     new QCustomer()
       .status.eq(Status.NEW)
-      .useMaster() // Use the "Master" database
+      .usingMaster() // Use the "Master/Writer" database
       .findList();
 </pre>
 
