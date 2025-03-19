@@ -52,7 +52,18 @@
         <@nav1 activeCheck="${n1_testing!''}" url="/docs/testing" title="Testing">
             <#include "/_nav/testing.ftl">
         </@nav1>
-        <@nav1 activeCheck="${n1_readreplicas!''}" url="/docs/read-replicas" title="Read Replicas"/>
+        <@nav1 activeCheck="${n1_readreplicas!''}" url="/docs/read-replicas" title="Read Replicas">
+          <ul class="nav nav-scroll">
+            <@smallnav activeCheck="" url="#overview" title="Overview"/>
+            <@smallnav activeCheck="" url="#readOnlyUrl" title="ReadOnlyUrl"/>
+            <@smallnav activeCheck="" url="#readOnlyDataSource" title="ReadOnlyDataSource"/>
+            <@smallnav activeCheck="" url="#aurora" title="AWS Aurora"/>
+            <@smallnav activeCheck="" url="#usingMaster" title="Using Master"/>
+            <@smallnav activeCheck="" url="#queryUseReadReplica" title="Using Replica"/>
+            <@smallnav activeCheck="" url="#transactionReadOnly" title="@Transaction(readOnly=true)"/>
+            <@smallnav activeCheck="" url="#readOnlyDatabase" title="ReadOnly Database"/>
+          </ul>
+        </@nav1>
         <@nav1 activeCheck="${n1_platforms!''}" url="/docs/database" title="Database platforms">
             <#include "/_nav/database-platforms.ftl">
         </@nav1>

@@ -7,21 +7,26 @@
   <#assign n1_readreplicas="active">
 </head>
 <body>
-<h2 id="transactional">Read Replicas</h2>
+<h2 id="overview">Overview</h2>
 <p>
-  Ebean supports configuring a second DataSource [connection pool] that points to
-  a "Read replica". The DataSource is <em>readOnly = true</em> and <em>autoCommit=true</em>.
+  Ebean supports configuring a second DataSource (connection pool) that points to
+  a "Read replica". The "Read Replica" DataSource is set to be <em>readOnly = true</em>
+  and <em>autoCommit=true</em>.
+</p>
+<p>
+  When Ebean is configured with 2 DataSources it will use the "Main" DataSource for explicit
+  transactions and writing data, and will use the "Read Only" DataSource for
+  queries that are executed without an explicit transaction - see
+  <a href="#queryUseReadReplica">Using the Read Replica.</a>
 </p>
 
-<h2>DataSourceBuilder readOnlyUrl</h2>
+<h2 id="readOnlyUrl">DataSourceBuilder readOnlyUrl</h2>
 <p>
-  When using DataSourceBuilder we can specify an additional <code>readOnlyUrl</code> which
-  can point to a read replica (e.g. AWS Aurora reader endpoint).
-</p>
-<p>
-  Ebean DataSourceBuilder can support configuration for both a "Master/Writer" DataSource and a
-  "Read Only" DataSource where the difference between these is the connection url. This is
-  the case for AWS Aurora where there are 2 endpoints available (Writer and Reader endpoints).
+  Using DataSourceBuilder we can specify an additional <code>readOnlyUrl</code> which
+  can point to a read replica (e.g. AWS Aurora reader endpoint). When readOnlyUrl is set,
+  the DataSourceBuilder can effectively build 2 DataSources. The difference between these
+  DataSources is the connection url and that the ReadOnly DataSource will have
+  <em>readOnly=true</em> and <em>autoCommit=true</em>.
 </p>
 <pre content="java">
 var dataSourceBuilder =
@@ -33,7 +38,7 @@ var dataSourceBuilder =
     .applicationName("myAppName");
 </pre>
 
-<h2>DatabaseBuilder readOnlyDataSource</h2>
+<h2 id="readOnlyDataSource">DatabaseBuilder readOnlyDataSource</h2>
 <p>
   If we are not using DataSourceBuilder, we can instead specify a "Read Only" DataSource
   to use. We can create a DataSource (using say Hikari) and specify it as the <em>readOnlyDataSource</em>.
@@ -67,21 +72,18 @@ Database.builder()
 </ul>
 <img alt="AWS Aurora Endpoints" src="/images/aws-aurora-endpoints.png" class="img-responsive" style="max-width: 700px">
 
-<p>
-
-</p>
-
 
 <h2 id="usingMaster">Using the "Master"</h2>
 <p>
   When we have an explicit transaction via <em>@Transactional</em> on a method or using
   explicitly <code>database.beginTransaction()</code> - then this transaction will use
-  the "Master".
+  the "Master" DataSource.
 </p>
 <p>
   When we use database.save() without an explicit transaction, then a transaction will be
-  used implicitly and this will use the "Master".
+  used implicitly and this will use the "Master" DataSource.
 </p>
+
 
 <h2 id="queryUseMaster">Query.usingMaster()</h2>
 <p>
@@ -95,7 +97,7 @@ Database.builder()
   var customers =
     new QCustomer()
       .status.eq(Status.NEW)
-      .usingMaster() // Use the "Master/Writer" database
+      .usingMaster() // Use the "Master/Writer" dataSource
       .findList();
 </pre>
 
@@ -117,16 +119,36 @@ Database.builder()
 <h2 id="transactionReadOnly">@Transaction(readOnly=true)</h2>
 <p>
   When a method is annotated with <code>@Transaction(readOnly=true)</code>, then this
-  will create a read only transaction using the "Read Replica".
+  will create a read only transaction using the read only DataSource (which will be
+  pointing to the "Read Replica" instance).
 </p>
 
 <pre content="java">
   @Transaction(readOnly=true)
   void myMethod() {
 
-    // do stuff with a transaction using the Read replica
+    // do stuff with a transaction using the
+    // Read replica / read only dataSource
 
   }
+</pre>
+
+<h2 id="readOnlyDatabase">ReadOnly Database</h2>
+<p>
+  An Ebean Database can be specified as <em>read-only</em> using
+  <code>DatabaseBuilder.readOnlyDatabase(true)</code> to indicate that
+  this Database can only be used in a read only way.
+</p>
+<p>
+  This means that the DataSource and read-only DataSource are expected to be the
+  same and use <em>readOnly=true</em> and <em>autoCommit=true</em>.
+</p>
+<pre content="java">
+  var database = Database.builder()
+    .name("mydb")
+    .readOnlyDatabase(true)
+    ...
+    .build();
 </pre>
 
 
