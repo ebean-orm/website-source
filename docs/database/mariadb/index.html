@@ -11,13 +11,13 @@
 <body>
 <h2>MariaDB</h2>
 <p>
-  Since 12.3.6 MariaDB has it's own platform with SQL2012 History support and DDL generation to support that.
+  Since 12.3.6, MariaDB has its own platform with SQL2012 History support and DDL generation.
 </p>
 <h3>MariaDB JDBC Driver - useLegacyDatetimeCode</h3>
 <p>
-  The expectation is that the MariaDB JDBC driver is used and that <code>useLegacyDatetimeCode=false</code>
-  is set. This ensures the JDBC driver honours the database server timezone. ebean-test will automatically
-  set the useLegacyDatetimeCode parameter for but otherwise we need to ensure that parameter is set on
+  The MariaDB JDBC driver should be used, and <code>useLegacyDatetimeCode=false</code>
+  should be set. This ensures the JDBC driver honours the database server timezone. ebean-test will automatically
+  try to set the <code>useLegacyDatetimeCode</code> parameter for us, but we should ensure that parameter is set on
   the connection pool.
 </p>
 <pre content="properties">

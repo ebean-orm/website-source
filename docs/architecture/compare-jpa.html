@@ -14,8 +14,8 @@
     </div>
 </div>
 <p>
-  JPA is architecture such that the entity beans must be <code>attached</code> to the <code>PersistenceContext</code>
-  in order for the entity beans to be <code>persisted</code>.
+  JPA is architected such that entity beans must be <code>attached</code> to the <code>PersistenceContext</code>
+  in order to be <code>persisted</code>.
 </p>
 <p>
   That is, JPA mandates <code>attach/detach</code> semantics. This has a number of consequences including:
@@ -32,9 +32,9 @@
 <ul>
   <li>No Entity manager, only manage transactions</li>
   <li>Dirty state on each entity bean</li>
-  <li>Persisting (save,delete) does not require the PersistenceContext</li>
+  <li>Persisting (save, delete) does not require the PersistenceContext</li>
   <li>PersistenceContext attached to the Transaction</li>
-  <li>Partially populated beans always expected</li>
+  <li>Partially populated beans are always expected</li>
 </ul>
 
 <hr/>
@@ -50,19 +50,19 @@
   <li>No ability to turn off cascade behavior (to take full control)</li>
 </ul>
 <p>
-  Using JDBC batch is important so that Ebean can get optimal performance when persisting. With Ebean
-  there is a JDBC batch buffer attached to the transaction and can seamlessly batch up persistence
+  Using JDBC batch is important so that we can get optimal performance when persisting. With Ebean
+  there is a JDBC batch buffer attached to the transaction that can seamlessly batch up persistence
   calls using JDBC batch.
 </p>
 <p>
-  Ebean provides full control over JDBC batch via the transaction including the
+  Ebean provides full control over JDBC batch via the transaction, including the
   <code>batch size</code>, <code>getGeneratedKeys</code>, and <code>cascade behavior</code>.
-  Unlike JPA with Ebean it is easy to fully control and optimise batch processing.
+  In contrast to JPA, it is easy to fully control and optimise batch processing with Ebean.
 </p>
 
 <h3>Transaction</h3>
 <p>
-  Additional to full control over JDBC batch Ebean provides the ability on a transaction to:
+  Ebean provides the ability on a transaction to:
 </p>
 <ul>
   <li>Register transaction callbacks (Post commit callback etc)</li>
@@ -73,7 +73,7 @@
 <h3>Raw JDBC</h3>
 <p>
   Ebean provides access to the underlying <code>java.sql.Connection</code> for performing
-  raw JDBC if needed along with <code>transaction.addModification(table, ...)</code> method to
+  raw JDBC if needed along with a <code>transaction.addModification(table, ...)</code> method to
   tell Ebean what tables were modified for L2 cache invalidation.
 </p>
 <p>
@@ -83,16 +83,15 @@
 
 <h3>Transaction Isolation level</h3>
 <p>
-  Ebean lets you start a transaction at a higher Isolation level. JPA does not support this.
+  Ebean lets you start a transaction at a higher isolation level. JPA does not support this.
 </p>
 
 <h3>Stateless updates</h3>
 <p>
   Ebean allows us to populate a bean (or object graph) and <code>update()</code> without loading
-  the object object. This is useful in Rest like API's where we want to populate an entity object graph
+  the object object. This is useful in REST-like API's where we want to populate an entity object graph
   from JSON and perform an update.
 </p>
-
 
 <hr/>
 <h2 id="query-features">Query features</h2>
@@ -113,8 +112,8 @@
 <h3>findEach</h3>
 <p>
   JPA has no support for executing large queries. Ebean has <code>findEach</code>
-  for executing large queries (cursors / streaming) that takes into account the scope of the persistence context
-  , JDBC driver fetchSize and MySql specific treatment (because MySql has specific issues to deal with).
+  for executing large queries (cursors / streaming) that takes into account the scope of the persistence context,
+  JDBC driver, fetchSize, and MySql specific treatment (because MySql has specific issues to deal with).
 </p>
 
 <h3>findMap</h3>
@@ -163,14 +162,14 @@
   some important features for controlling object graph construction from mixed sources (L2, L3 and DB).
 </p>
 <p>
-  In JPA the emphasis on annotations <code>FetchType.Eager</code> and <code>FetchType.Lazy</code>
-  and limitations in JPQL has put JPA in a bad position for optimising ORM queries and it will be
+  The emphasis on annotations <code>FetchType.Eager</code> and <code>FetchType.Lazy</code>
+  and limitations in JPQL has put JPA in a bad position for optimising ORM queries. It will be
   interesting if they can get to the level of control over object graph construction that Ebean supports.
 </p>
 
 <h3 id="type-safe-query">Type safe queries</h3>
 <p>
-  You could argue there is a bit more "ceremony" with JPA Criteria queries which makes the
+  One could argue there is a bit more "ceremony" with JPA Criteria queries that make the
   query more verbose and harder to read.
 </p>
 
@@ -207,11 +206,6 @@ List<|Customer> customers = em.createQuery(query.select(root)).getResultList();
   <a href="https://docs.jboss.org/hibernate/orm/5.0/topical/html/metamodelgen/MetamodelGenerator.html">JPA Query Meta model classes</a>
   in order to provide type safe query construction and execution.
 </p>
-<h5>QueryDSL</h5>
-<p>
-  I suspect many JPA users look to use <a href="http://www.querydsl.com/">QueryDSL</a> as a preference
-  over the standard JPA Criteria meta model objects.
-</p>
 
 <hr/>
 <h2 id="mapping">Mapping</h2>
@@ -229,7 +223,7 @@ List<|Customer> customers = em.createQuery(query.select(root)).getResultList();
 <h3>Entities without @Id</h3>
 <p>
   Ebean does not require entities to have an @Id property. These entities are considered "read only" and
-  automatically bypass the persistence context. This entities are typically used for reporting purposes.
+  automatically bypass the persistence context. These entities are typically used for reporting purposes.
 </p>
 
 <h3>Naming convention</h3>

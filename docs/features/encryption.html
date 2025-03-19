@@ -101,14 +101,14 @@ public interface Encryptor {
   <li>Date types - LocalDate, Date, Joda LocalDate</li>
   <li>Timestamp types - Timestamp, Instant, OffsetDateTime, ZonedDateTime</li>
 </ul>
-<p> 
+<p>
   Important: The following types are currently not supported:
 </p>
 <ul>
   <li>primitive types</li>
   <li>Timestamps</li>
 </ul>
-  
+
 <h2 id="encryptKeyManager">EncryptKeyManager</h2>
 <p>
   Whenever a property is encrypted or decrypted a "Key" must be used. Ebean will
@@ -263,12 +263,12 @@ public class BasicEncyptKeyManager implements EncryptKeyManager {
 
 <h2 id="internals">Internals</h2>
 <p>
-  Ebean is detecting when an encrypted property is being used. It will call the
+  Ebean detects when an encrypted property is being used. It will call the
   EncryptKeyManager with the table and column of the property to get the encryption key.
   This key is then added as a bind variable to the prepared statement.
 </p>
 <p>
-  As the key is added as a bind variable into the statement we can not use encryption
+  As the key is added as a bind variable into the statement we cannot use encryption
   with 'positioned' parameters because it can effectively change the position of
   other parameters. We can use named parameters or the criteria api for building queries
   but, we can't use positioned (1,2,3,4..) parameters.

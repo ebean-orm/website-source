@@ -8,5 +8,42 @@
 
 <h2 id="">Lob</h2>
 
+<p>
+  For large binary or text content (database LOB) we can model it
+  in the entity bean as a property of type <code>java.io.File</code> or <code>byte[]</code>
+  and with <code>@Lob</code>.
+</p>
+<pre content="java">
+@Entity
+public class SomeFileBean {
+  ...
+
+  @Lob
+  File content;
+
+  @Lob
+  byte[] content2;
+
+</pre>
+<h2>Lazy fetched by default</h2>
+<p>
+  By default all <code>@Lob</code> properties are fetched lazily, they are NOT fetched unless explicitly included in the select clause.
+</p>
+<p>
+  Note that File properties (and other Lob properties) will lazy load as needed.
+</p>
+<pre content="java">
+QSomeFileBean b = QSomeFileBean.alias()
+
+SomeFileBean bean =
+  new QSomeFileBean()
+    .select(b.name, b.content)
+    .id.eq(42)
+    .findOne();
+
+File content = bean.getContent();
+
+</pre>
+
 </body>
 </html>

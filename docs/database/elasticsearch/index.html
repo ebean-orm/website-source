@@ -11,12 +11,12 @@
 <body>
 <h2>ElasticSearch</h2>
 <p>
-  To use ElasticSearch as Ebean's document store we need to add configuration
+  To use ElasticSearch as Ebean's document store, we need to add configuration
   for <code>ebean.docstore</code> properties like the example below:
 </p>
 <p>
-  To test using a ElasticSearch docker container we set <code>ebean.docstore.elastic.version</code>
-  property like the example below. ebean-test will then ensure that ElasticSearch is running
+  To test using an ElasticSearch docker container, we set <code>ebean.docstore.elastic.version</code>
+  property. ebean-test will then ensure that ElasticSearch is running
   as a docker container.
 </p>
 <pre content="yml">
@@ -84,7 +84,7 @@ ebean:
   </tr>
   <tr>
     <td>ebean.docstore.url</td>
-    <td>URL that ElasticSearch is expected to be using</td>
+    <td>URL that ElasticSearch is using</td>
   </tr>
   <tr>
     <td>ebean.docstore.generateMapping</td>
@@ -105,8 +105,8 @@ ebean:
   We can programmatically start a docker container version of ElasticContainer.
 </p>
 <p>
-  The below uses <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
-  If we do not have a dependency on <code>ebean-test</code> then add <code>io.ebean:ebean-test-docker:5.0</code>
+  The following example uses the <code>ebean-test-docker</code> dependency which already comes with <code>ebean-test</code>.
+  If we do not have a dependency on <code>ebean-test</code>, then add <code>io.ebean:ebean-test-docker:5.0</code>
   as a dependency.
 </p>
 
