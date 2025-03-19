@@ -14,15 +14,15 @@
   to the secondary queries.
 </p>
 
-<h2 id="batch-loading">Batch loading</h2>
+<h2 id="batch-loading">Batch Loading</h2>
 <p>
-  The Load context provides the batch loading mechanism. This solves the <a href="/docs/query/nplus1">N + 1</a> issue
-  for Ebean. As such it is one of the most important internal features of Ebean ORM.
+  The load context provides the batch loading mechanism, solving the <a href="/docs/query/nplus1">N + 1</a> issue
+  for Ebean. As such, it is one of the most important internal features of Ebean ORM.
 </p>
 
 <h2 id="propagate">Propagate query context</h2>
 <p>
-  When secondary queries load additional parts of the object graph Ebean propagates key query execution context
+  When secondary queries load additional parts of the object graph, Ebean propagates key query execution context
   from the <code>origin query</code> to the secondary queries including:
 </p>
 <ul>

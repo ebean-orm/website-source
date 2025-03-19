@@ -18,8 +18,7 @@
   </div>
 
   <h2 id="definition">Definition</h2>
-  <p>Although Ebean doesn't have a JPA Entity Manager it does have a Persistence context. In
-    fact, you could go as far to say that any ORM worth using needs a persistence context in order
+  <p>Although Ebean doesn't have a JPA Entity Manager, it does have a persistence context. Any ORM worth using needs a persistence context in order
     to build consistent object graphs.</p>
 
   <h4>JPA v1.0 specification - section 5.1</h4>
@@ -28,19 +27,16 @@
     lifecycle are managed by the entity manager."
   </blockquote>
 
-  <p>Ebean has a Persistence Context to ensure unique entity instances but Ebean has a
-    different approach to lifecycle management compared to JPA.</p>
-
-  <p>That is, Ebean has a persistence context to ensure <code>unique entity instance.</code>
+  <p>Ebean has a persistence context to ensure <code>unique entity instance.</code>
     but has a different approach to the lifecycle management
     compared with JPA. Ebean has no entity manager and no persist/merge/flush lifecycle
-    methods and the persistence context is not involved in persisting.</p>
+    methods and the persistence context is not actually involved in persisting.</p>
 
 
   <h2 id="unique-instances">Unique Entity Instances</h2>
 
-  <p>Ebean uses the Persistence context for queries and lazy loading (when it is building object
-    graphs). The purpose of this is to ensure that <code>consistent object graphs</code> are constructed
+  <p>Ebean uses the persistence context for queries and lazy loading (when it is building object
+    graphs). This is to ensure that <code>consistent object graphs</code> are constructed
     (1 unique instance per identity).</p>
   <blockquote>
     Ensuring unique instances equates to building a consistent object graph
@@ -50,28 +46,26 @@
     ensures that you only get 1 customer instance for it's given id (e.g. you are NOT allowed to
     have 2 or more instances of "customer id=7".</p>
 
-  <p>You could even say that any ORM worth using needs a persistence context when it builds
-    object graphs from relational result sets due to the nature of relational result sets.</p>
+  <p> The "persistence context" ensures the user/application code works with unique entity instances.</p>
 
   <p>For example, if you didn't have a persistence context and did allow 2 or more instances of
-    "customer 7" … and modified one instance but not the other … things get very ugly. The
-    "persistence context" ensures the user/application code works with unique entity instances.</p>
+    "customer 7" … and modified one instance but not the other … things get very ugly.</p>
 
   <h2 id="persisting">Persisting</h2>
 
-  <p>Ebean has a different approach to lifecycle management. The core difference is that with
-    Ebean each bean itself has it's own dirty checking (detects when it has been modified and
+  <p>Ebean has a different approach to lifecycle management. With
+    Ebean each bean has it's own dirty checking (detects when it has been modified and
     holds it's old/original values for optimistic concurrency checking).
   </p>
 
   <p>
-    This means that for Ebean is does not need or use the persistence context when persisting beans.
+    This means that Ebean does not need or use the persistence context when persisting beans.
   </p>
   <blockquote>
     Ebean's persistence context is not involved in persisting.
   </blockquote>
 
-  <p>With JPA implementations generally the dirty checking is performed by the entity manager.
+  <p>With JPA implementations the dirty checking is performed by the entity manager.
     The entity manager generally holds the old/original values for optimistic concurrency
     checking and the beans need to be 'attached' to an entity manager to be 'flushed' (as an
     insert/update/delete). [Note: JDO based JPA implementations do this a bit differently].
@@ -90,8 +84,8 @@
   </p>
   <ul>
     <li>Ebean makes an assumption that scalar types are immutable. Most scalar types (String, Integer, Double, Float,
-      BigDecimal etc) are immutable, however, some such as java.util.Date are not. What this means is that with Ebean if
-      you mutate a java.util.Date Ebean will NOT detect the change – instead you have to set a different java.util.Date
+      BigDecimal etc) are immutable, but some like <code>java.util.Date</code> are not. If you mutate a mutable scalar like <code>java.util.Date</code>,
+      Ebean will NOT detect the change – instead you have to set a different <code>java.util.Date</code>
       instance.
     </li>
   </ul>
@@ -105,11 +99,11 @@
 
   <h2 id="transaction-scope">Transaction scope</h2>
 
-  <p>With Ebean the persistence context is by default transaction scoped. This means that when you begin
+  <p>With Ebean, the persistence context is transaction scoped by default. When you begin
     a new transaction (implicitly or explicitly) Ebean will start a new persistence context.</p>
 
   <p>The persistence context lives beyond the end of a transaction. This enables any lazy
-    loading occurring after the transaction ends to use the same persistence context that the instance
+    loading done after the transaction ends to use the same persistence context that the instance
     was created with.
   </p>
 
@@ -151,13 +145,13 @@
   </pre>
   <p>
     The code above shows that there is only 1 instance of "Order 72". As we try to fetch it
-    again (during the scope of a single persistence context) we end up getting back the same
+    again, (during the scope of a single persistence context) we end up getting back the same
     instance.
   </p>
 
   <p>
-    However, typically you don't write code that fetches the same Order multiple times in a
-    single transaction. The code above is not something you would typically write.
+    However, typically we don't write code that fetches the same Order multiple times in a
+    single transaction. The code above is not something we would typically write.
   </p>
 
   <p>
@@ -189,27 +183,26 @@
 
 
   <p>
-    From these examples you should hopefully see that the persistence context acts as a
+    From these examples you should see that the persistence context acts as a
     cache to some degree. It can sometimes reduce the number of database queries required
     when you get object graphs and navigate them.
   </p>
 
   <p>
-    However, the primary function of the persistence context is to ensure ... unique instances
-    for a given identity (so that the object graphs are constructed in a consistent manor). The
-    fact that it sometimes looks/acts like a cache is more of a side effect.
+    The primary function of the persistence context is to ensure unique instances
+    for a given identity (so that the object graphs are constructed in a consistent manner). That it sometimes looks/acts like a cache is a side effect.
   </p>
 
 
   <h2 id="query-scope">Query Scope</h2>
   <p>
     The purpose of the query scope is to effectively bypass a transaction scoped persistence context
-    (l1 cache) in order to read fresh data from the database.
+    (L1 cache) in order to read fresh data from the database.
   </p>
   <p>
     The general scenario is that you are in the middle of a transaction and you want to make sure that
-    a particular query hits the database to get fresh data. In doing so we want to avoid using the
-    current transaction scoped persistence context.
+    a particular query hits the database to get fresh data. In doing so, we want to avoid using the
+    current transaction-scoped persistence context.
   </p>
   <pre content="java">
 
@@ -230,12 +223,11 @@
   <p>
     When you use a <code>findEach()</code>, <code>findStream()</code> or <code>findIterate()</code>
     streaming type query then Ebean uses a special scope for the persistence context.
-    These queries are expected to iterate through arbitrarily large query requests
-    and as such we don't want to hold all the object graphs in memory.
+    These queries are expected to iterate through arbitrarily large query requests, so we don't want to hold all the object graphs in memory.
   </p>
   <p>
-    For these streaming queries Ebean creates a new <code>PersistenceContext</code> when iteration
-    occurs and effectively the scope becomes per object graph.
+    For these streaming queries, Ebean creates a new <code>PersistenceContext</code> when iteration
+    occurs and the scope effectively becomes per object graph.
   </p>
 
 

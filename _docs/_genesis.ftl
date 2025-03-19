@@ -8,7 +8,7 @@
 
 <h2>DB Design</h2>
 <p>
-  The Courses at the University of Auckland cover SQL, DB Design, Normalisation, Structured Analysis and Design.
+  The courses at the University of Auckland cover SQL, DB Design, Normalisation, Structured Analysis and Design.
 </p>
 <p>
   Some 20 years later and much of this
@@ -22,8 +22,8 @@
    Oracle RDBMS Internals, Client/Server
 </p>
 <p>
-  I was lucky enough to work for Oracle in the early part of my career.  This certainly provides a lot of
-    bias as to how I see ORM. To put a caveat on this my knowledge of Oracle internals dates back to
+  I was lucky enough to work for Oracle in the early part of my career. This certainly provides a lot of
+    bias as to how I see ORM. To put a caveat on this, my knowledge of Oracle internals dates back to
     Oracle 8 and when I look at Oracle Exadata its obvious that all assumptions need to be questioned.
 </p>
 <ul>

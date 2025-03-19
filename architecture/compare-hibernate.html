@@ -9,23 +9,22 @@
 
 <h2 id="jpa">JPA</h2>
 <p>
-  The issues discussed in the <a href="/architecture/compare-jpa">comparison with JPA</a> also apply to Hibernate.
-  The comparison here apply more specifically to Hibernate.
+  The issues discussed in this <a href="/architecture/compare-jpa">comparison with JPA</a> also apply to Hibernate.
 </p>
 
 <h2 id="max-rows">Honoring maxRows in SQL</h2>
 <p>
   Ebean ORM will always honor firstRows / maxRows in generated SQL. Once you include a join fetch
-  to a @OneToMany Hibernate stops implementing maxRows in SQL and instead brings all the rows back
+  to a @OneToMany, Hibernate stops implementing maxRows in SQL and instead brings all the rows back
   to the client (application server) and filters the results there.
 </p>
 <p>
   This means the database does not get the opportunity to optimise that query using maxRows
-  (via limit offset clause or similar) and so the DB query execution plan can be very different
-  by reducing the ability of the DB to use indexes and increasing the chances of full table scans.
+  (via limit offset clause or similar) so the DB query execution plan can be very different
+  by reducing the ability to use indexes and increasing the chance of a full table scan.
 </p>
 <p>
-  This also means significantly more data is pulled back from the DB to the client.
+  Significantly more data is pulled back from the DB to the client in this way.
 </p>
 <div class="row">
   <div class="col-md-6">
@@ -52,49 +51,47 @@
 </div>
 
 <p>
-  Hibernate does not allow lazy loading beyond the end of it's Session scope and instead
-  throws <code>LazyInitialisationException</code>.
+  Hibernate does not allow lazy loading beyond the end of its' Session scope throwing <code>LazyInitialisationException</code>.
 </p>
 <h4>Ebean allows lazy loading beyond the initial scope</h4>
 <ul>
   <li>
-    The transaction isolation level of read committed is used as per the JPA spec. This means
-    there is no effective difference when we lazy load with using another JDBC transaction relative
+    The transaction isolation level of read committed is used as per the JPA spec. There is no effective difference when we lazy load with using another JDBC transaction relative
     to holding open a transaction (as typically required by Hibernate via "Open session in view").
   </li>
   <li>
     Ebean's entity beans have a reference back to their load context which enables subsequent
-    lazy loading to execute with the same PersistenceContext and also enables batch lazy loading.
+    lazy loading with the same PersistenceContext. (also enables batch lazy loading)
     This means the lazy loading still produces a consistent object graph (just as if it was loaded
     eagerly).
   </li>
   <li>
-    If you want to prevent lazy loading with Ebean you can do <code>query.setDisableLazyLoading(true)</code>.
+    To prevent lazy loading with Ebean, set <code>query.setDisableLazyLoading(true)</code>.
     This is useful when you want to use a partially populated bean and give it to a reflection based tool
     that converts it to JSON or DTO's etc.
   </li>
 </ul>
 <blockquote>
-  With Ebean lazy loading just works without any drama
+  With Ebean, lazy loading "just works" without any drama
 </blockquote>
 
 <p>&nbsp;</p>
 <h4 id="open-session-in-view">Open session in view</h4>
 <p>
   As a byproduct of Ebean supporting lazy loading (beyond transaction scope) Ebean does not require
-  the <code>"Open session in view"</code> pattern which is sometimes used with Hibernate.
+  the <code>"Open session in view"</code> pattern sometimes seen with Hibernate.
 </p>
 <p>
-  The "Open session in view" used with Hibernate has the effect of holding a transaction open for a
-  longer time relative to Ebean. This pattern is considered an anti-pattern by many and instead the
-  focus is on making sure service layer code has loaded everything that is needed on the entities
+  "Open session in view" has the effect of holding a transaction open for a
+  longer time relative to Ebean. This is considered an anti-pattern by many, with the
+  focus now being on ensuring the service layer has loaded everything needed on the entities
   (and this is code we don't need to write with Ebean).
 </p>
 
 <p>&nbsp;</p>
 <h2 id="history">SQL2011 @History vs Hibernate Envers</h2>
 <p>
-  Ebean's @History is a database centric approach mapping to SQL2011. Hibernate Envers is an application centric approach
+  Ebean's @History is a database-centric approach mapping to SQL2011. Hibernate Envers is an application centric approach
   which means that unlike @History bulk updates and external updates don't get included in auditing with Envers.
 </p>
 <div class="row">

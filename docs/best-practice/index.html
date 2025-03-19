@@ -9,23 +9,19 @@
 <body>
   <h2 id="identity">Identity - equals/hashCode</h2>
   <p>
-    Do not implement <code>equals()</code> and <code>hashCode()</code> on <code>@Entity</code> beans
-     (but instead leave that to Ebean enhancement).
+    Do not implement <code>equals()</code> and <code>hashCode()</code> on <code>@Entity</code> beans.
+    Instead, leave this to Ebean enhancement.
   </p>
   <p>
-    Ebean will enhance entity beans with an optimal implementation of
-    <code>equals()</code> and <code>hashCode()</code> and we should not
-    try and do better and instead just leave it to Ebean.
+    Ebean will automatically enhance entity beans with an optimal implementation of
+    <code>equals()</code> and <code>hashCode()</code>. Ebean does not enhance <code>toString()</code>.
   </p>
 
   <h2 id="toString">toString() - avoid getters</h2>
   <p>
     Avoid using getter methods in <code>toString()</code>. We want to avoid invoking any accidental
-    lazy loading when using the debugger. That is, using the debugger and inspecting entity beans in
-    the debugger will implicitly call toString() methods on entity beans. We don't want to have
-    different behaviour when stepping through with a debugger. Ebean does not enhance
-    toString() methods but if the toString() implementation uses getter methods then those methods
-    could invoke lazy loading and we generally want to avoid that.
+    lazy loading when using a debugger. Using the debugger and inspecting entity beans will implicitly call toString() methods on entity beans.
+    If the toString() implementation uses getter methods, this may cause different behavior when debugging.
   </p>
 
   <h2 id="kotlin-data-class">Kotlin data classes</h2>
@@ -36,21 +32,20 @@
   <p>
     Do use Kotlin data classes for <code>@EmbeddedId</code> beans.
   </p>
-
+  <!-- TODO: Specify what the "naming convention" is -->
   <h2 id="list">Prefer List over Set</h2>
   <p>
     For <code>@OneToMany</code> and <code>@ManyToMany</code> collections prefer
     the use of List over Set.
     The use of Set will implicitly calls <code>equals()</code> and <code>hashCode()</code>
-    and generally it's preferable to not call those methods until entity beans have Id values.
+    and it's preferable to not call those methods until entity beans have Id values.
   </p>
-
 
   <h2 id="join-column">@JoinColumn</h2>
   <p>
     Don't use <code>@JoinColumn</code> or <code>@JoinTable</code> unless we have to.
-    The naming convention will provide good names of foreign key columns and join tables
-    so only use these annotations when there are existing foreign keys etc and these do
+    The naming convention will provide good names of foreign key columns and join tables.
+    Only use these annotations when there are existing foreign keys, and they do
     not match the naming convention.
   </p>
 
@@ -127,13 +122,13 @@
 
   <h2 id="ddl-generation">DDL Generation</h2>
   <p>
-    Use Ebean to generate all DDL including DB migrations - aka prefer forward generation of DDL.
-    This keeps all the DDL "in sync" for testing and db migrations and makes it easier to support
-    multiple database platforms or migrate between database platforms (e.g. MySql to Postgres).
+    Use Ebean to generate all DDL including DB migrations (a.k.a prefer forward generation of DDL).
+    This keeps all the DDL "in sync" for testing and db migrations. It eases support of
+    multiple database platforms or migration between database platforms (e.g. MySql to Postgres).
   </p>
   <p>
-    If we hand craft DDL we increase the chance of variation between the model and actual database
-    schema and can make testing harder.
+    Hand-crafting DDL increases the chance of variation between the model and actual database
+    schema which can make testing harder.
   </p>
 
   <h2 id="not-null">Promote use of NOT NULL constraint</h2>
@@ -147,7 +142,7 @@
     Use constructors to help enforce non nullable properties (Kotlin) or promote non nullable properties (Java).
   </p>
   <p>
-    For example, if a Customer should always have a name define a constructor that takes the name property.
+    For example, if a Customer should always have a name, define a constructor that takes the name property.
   </p>
 
   <#include "/_common/lang-buttons.html">
@@ -197,14 +192,14 @@
   </p>
   <p>
     We can omit getter and setter methods as desired. We can have setter methods follow a fluid style
-    returning this if desired.
+    returning <em>this</em> if desired.
   </p>
 
   <h2 id="builder-pattern">Builder pattern</h2>
   <p>
-    If we want to use the Builder pattern rather than generate an additional builder class for a given
-    entity (that then duplicates all the properties of the entity making things harder to maintain) a
-    simpler approach is to have the "setter" methods on the entity bean use the fluid style and return this.
+    Rather than generate an additional builder class for a given
+    entity (that duplicates all the properties of the entity and reduces maintainability) a
+    simpler approach is to have the "setter" methods on the entity bean use the fluid style and return <em>this</em>.
   </p>
   <pre content="java">
     @Entity
@@ -249,16 +244,16 @@
   <p>
     Prefer the use of <a href="/docs/query/update">bulk update</a> and
     <a href="/docs/query/delete">delete</a> statements where appropriate. Avoid fetching
-    beans just to iterate and delete them or iterate and update them all in the same way.
+    beans just to iterate and delete, or iterate and update all in the same way.
   </p>
 
   <h2 id="reference-beans">Reference beans</h2>
   <p>
     When we have the id value, use a reference bean rather than execute a
-    query to find by id - unless we really want to query the database of course.
+    query to find by id (unless we actually need to query the database).
   </p>
   <p>
-    That is, for inserts and updates when we have the <code>@Id</code> value we can
+    For inserts and updates when we have the <code>@Id</code> value we can
     use reference bean for the <em>foreign key value</em>> rather than execute an extra
     query against the database.
   </p>
@@ -334,10 +329,8 @@
   <h2 id="database-design-mindset">Database design mindset</h2>
   <p>
     When we are building / modelling entity beans I strongly subscribe to being in a
-    "database design mindset". What this means is that we are primarily focused on
-    normalisation and good database design principals with a resulting database design
-    that we are happy will last for the long term and be good regardless of any ORM or
-    persistence layer we are using to interact with the database.
+    "database design mindset". We should be primarily focused on
+    normalization and good database design principals that will last for the long term, regardless of any ORM or persistence layer we use to interact with the database.
   </p>
   <p>
     Design for the long term.
