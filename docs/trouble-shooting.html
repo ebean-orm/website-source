@@ -108,6 +108,28 @@ Caused by: java.lang.RuntimeException: Error with association to [class org.exam
 
 <p>&nbsp;</p>
 
+<h2 id="initialisation-error">Initialisation Error</h2>
+<p>
+  ERROR: Unsupported initialisation of @OneToMany or @ManyToMany on: <em>&lt;className&gt;</em>
+  fields: <em>&lt;field names&gt;</em>
+  Refer: https://ebean.io/docs/trouble-shooting#initialisation-error
+</p>
+<p>
+  This error is telling us that the ebean-agent is looking at some initialisation code for
+  one of the OneToMany, ManyToMany or DbArray collections and that it is initialising an
+  unsupported collection or in some way isn't supported.
+</p>
+<p>
+  The supported initialisation for OneToMany, ManyToMany, DbArray collections are:
+</p>
+<ul>
+  <li><b>List</b> - new ArrayList<>(), List.of(), Collections.emptyList()</li>
+  <li><b>Set</b> - new LinkedHashSet<>(), Set.of(), Collections.emptySet()</li>
+  <li><b>Map</b> - new LinkedHashMap<>(), Map.of(), Collections.emptyMap()</li>
+</ul>
+<h4>Actions</h4>
+<h5>1. Change the OneToMany, ManyToMany, DbArray fields to initialise to a supported collection type.</h5>
+
 <h2 id="datasource">DataSource user is null?</h2>
 
 <h4>Actions</h4>
