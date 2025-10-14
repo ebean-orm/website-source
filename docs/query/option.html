@@ -216,10 +216,34 @@ try (Transaction txn = database.beginTransaction()) {
 }
 ```
 
-<h2 id="readOnly" class="art">readOnly</h2>
+<h2 id="readOnly" class="art">readOnly [Removed]</h2>
+<p>
+  This option has been REMOVED and replaced by <a href="#unmodifiable">Unmodifiable</a>
+</p>
 <p>
   Query returns beans that are deemed to be <code>READ ONLY</code> and calling setter methods will
   throw an exception.
+</p>
+
+<h2 id="unmodifiable" class="art">Unmodifiable</h2>
+<p>
+  When set to true the query returns beans that are unmodifiable read only.
+  When a <code>Query.setUseQueryCache()</code> is enabled the query will
+  automatically use Unmodifiable mode (and return unmodifiable beans).
+</p>
+<p>
+  This means that the returning graph can't be mutated via setters, all the collections
+  are unmodifiable collections, lazy loading is disabled and that the query uses
+  <code>PersistenceContextScope#QUERY</code>.
+</p>
+<p>
+  Attempting to mutate an unmodifiable bean will throw a <code>UnmodifiableEntityException</code>.
+  Attempting to load an unloaded property will throw a <code>LazyInitialisationException</code>.
+</p>
+<p>
+  Use this when we want to ensure that the returned object graph can't be mutated in any way,
+  such as if we want to hold the result in an application cache or otherwise want to ensure
+  that no lazy loading is performed.
 </p>
 
 
