@@ -90,6 +90,7 @@
     </li>
     <@nav0 activeCheck="${n0_videos!''}" url="/videos" title="Videos"/>
     <@nav0 activeCheck="${n0_upgrading!''}" url="/docs/upgrading" title="Upgrading"/>
+    <@nav0 activeCheck="${n0_deprecated!''}" url="/docs/deprecated" title="Deprecated"/>
     <@nav0 activeCheck="${n0_releases!''}" url="/releases" title="Releases"/>
 
   </ul>

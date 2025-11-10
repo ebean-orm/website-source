@@ -1,0 +1,26 @@
+<html>
+<head>
+  <title>Best practice | Docs | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Deprecated" href="/docs/deprecated"/>
+  <#assign n0_deprecated="active">
+</head>
+<body>
+  <h2 id="class-mapping">Class mapping</h2>
+  <p>
+    Mapping a column to a <code>Class<?></code> type is deprecated. This is because there there is some
+    security aspects around initialising a Class from a string value.
+  </p>
+  <pre content="java">
+    @Column
+    Class<?> clazz;
+  </pre>
+  <p>
+    Please migrate to just mapping to a String and using application code to map that to a Class.
+  </p>
+
+
+  <@next_edit "Documentation" "/docs" "/docs/deprecated/index.html"/>
+
+</body>
+</html>
