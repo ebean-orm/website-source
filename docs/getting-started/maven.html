@@ -15,12 +15,16 @@
   Add the dependency for the JDBC Driver(s) you want to use.
   For example, with Postgres we could add:
 </p>
+<p>
+  <a href="https://github.com/postgres/postgres">
+    <img src="https://img.shields.io/maven-central/v/org.postgresql/postgresql.svg?label=postgresql.version"></a>
+</p>
 <pre content="xml">
   <!-- JDBC Driver(s) -->
   <dependency>
     <groupId>org.postgresql</groupId>
     <artifactId>postgresql</artifactId>
-    <version>42.7.2</version>
+    <version>42.7.8</version>
   </dependency>
 </pre>
 
@@ -49,12 +53,17 @@
   For example, if our application is only going to use Postgres then
   we add the <code>io.ebean:ebean-postgres</code> dependency.
 </p>
+<p>
+  <a href="https://github.com/ebean-orm/ebean/releases">
+    <img src="https://img.shields.io/maven-central/v/io.ebean/ebean.svg?label=ebean.version"></a>
+</p>
+
 
 <pre content="xml">
   <dependency>
     <groupId>io.ebean</groupId>
     <artifactId>ebean-postgres</artifactId>
-    <version>14.1.0</version>
+    <version>17.2.0</version>
   </dependency>
 </pre>
 
@@ -66,12 +75,12 @@
   <dependency>
     <groupId>io.ebean</groupId>
     <artifactId>ebean-yugabyte</artifactId>
-    <version>14.1.0</version>
+    <version>17.2.0</version>
   </dependency>
   <dependency>
     <groupId>io.ebean</groupId>
     <artifactId>ebean-clickhouse</artifactId>
-    <version>14.1.0</version>
+    <version>17.2.0</version>
   </dependency>
 </pre>
 
@@ -83,7 +92,7 @@
   <dependency>
     <groupId>io.ebean</groupId>
     <artifactId>ebean</artifactId> <!-- All database platforms -->
-    <version>14.1.0</version>
+    <version>17.2.0</version>
   </dependency>
 </pre>
 
@@ -104,7 +113,7 @@
   <dependency>
     <groupId>io.ebean</groupId>
     <artifactId>ebean-test</artifactId>
-    <version>14.1.0</version>
+    <version>17.2.0</version>
     <scope>test</scope>
   </dependency>
 </pre>
@@ -126,20 +135,20 @@
      <plugin> <!-- perform ebean enhancement -->
        <groupId>io.ebean</groupId>
        <artifactId>ebean-maven-plugin</artifactId>
-       <version>14.1.0</version>
+       <version>17.2.0</version>
        <extensions>true</extensions>
      </plugin>
 
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-compiler-plugin</artifactId>
-      <version>3.10.1</version>
+      <version>3.14.1</version>
       <configuration>
         <annotationProcessorPaths>
            <path> <!-- generate ebean query beans -->
               <groupId>io.ebean</groupId>
               <artifactId>querybean-generator</artifactId>
-              <version>14.1.0</version>
+              <version>17.2.0</version>
           </path>
         </annotationProcessorPaths>
       </configuration>
@@ -168,9 +177,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-      <maven.compiler.release>21</maven.compiler.release> <!-- Prefer release -->
-      <maven.compiler.source>21</maven.compiler.source> <!-- fallback -->
-      <maven.compiler.target>21</maven.compiler.target> <!-- fallback -->
+      <maven.compiler.release>25</maven.compiler.release> <!-- Prefer release -->
+      <maven.compiler.source>25</maven.compiler.source> <!-- fallback -->
+      <maven.compiler.target>25</maven.compiler.target> <!-- fallback -->
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -178,27 +187,27 @@
       <dependency> <!-- JDBC Driver(s) -->
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
-        <version>42.7.1</version>
+        <version>42.7.8</version>
       </dependency>
 
       <dependency> <!-- ebean postgres, add more platforms as needed -->
         <groupId>io.ebean</groupId>
         <artifactId>ebean-postgres</artifactId>
-        <version>14.1.0</version>
+        <version>17.2.0</version>
       </dependency>
 
       <!-- test dependencies -->
       <dependency>
         <groupId>io.ebean</groupId>
         <artifactId>ebean-test</artifactId>
-        <version>14.1.0</version>
+        <version>17.2.0</version>
         <scope>test</scope>
       </dependency>
 
       <dependency> <!-- Optional extra: JUnit5 + AssertJ + Mockito -->
         <groupId>io.avaje</groupId>
         <artifactId>junit</artifactId>
-        <version>1.5</version>
+        <version>1.7</version>
         <scope>test</scope>
       </dependency>
 
@@ -210,20 +219,20 @@
         <plugin> <!-- perform ebean enhancement -->
           <groupId>io.ebean</groupId>
           <artifactId>ebean-maven-plugin</artifactId>
-          <version>14.1.0</version>
+          <version>17.2.0</version>
           <extensions>true</extensions>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.10.1</version>
+          <version>3.14.1</version>
           <configuration>
             <annotationProcessorPaths>
                <path> <!-- generate ebean query beans -->
                   <groupId>io.ebean</groupId>
                   <artifactId>querybean-generator</artifactId>
-                  <version>14.1.0</version>
+                  <version>17.2.0</version>
               </path>
             </annotationProcessorPaths>
           </configuration>
