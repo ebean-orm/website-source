@@ -120,6 +120,36 @@ Caused by: java.lang.RuntimeException: Error with association to [class org.exam
   unsupported collection or in some way isn't supported.
 </p>
 <p>
+  For example, if an entity has a copy constructor and is initialising a OneToMany
+  in that constructor it instead should change to use a setter method or addAll().
+</p>
+<pre content="java">
+  @OneToMany
+  List<|Bar> bars;
+
+  /** A copy constructor */
+  public Foo(Foo source) {
+    // NOT Allowed - initialising to an unknown underlying collection
+    this.bars = source.getBars();
+  }
+</pre>
+<p>Instead use a setter like:</p>
+<pre content="java">
+  /** A copy constructor */
+  public Foo(Foo source) {
+    // Allowed - Use of setters is allowed
+    setBars(source.getBars());
+  }
+</pre>
+<p>Or instead use addAll() like:</p>
+<pre content="java">
+  /** A copy constructor */
+  public Foo(Foo source) {
+    // Allowed - Use of addAll is allowed
+    this.bars.addAll(source.getBars());
+  }
+</pre>
+<p>
   The supported initialisation for OneToMany, ManyToMany, DbArray collections are:
 </p>
 <ul>
