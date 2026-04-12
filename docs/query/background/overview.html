@@ -6,6 +6,70 @@
 </head>
 <body>
 <div class="bs-docs-section">
+
+  <h2 id="query-methods-by-version">Query Methods by Version</h2>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Query Method</th>
+        <th>Ebean 16.x</th>
+        <th>Ebean 17.x</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Query Beans</strong> (e.g., <code>new QCustomer()...</code>)</td>
+        <td>✓</td>
+        <td>✓ Recommended</td>
+        <td>Type-safe, compile-time checking, IDE auto-completion</td>
+      </tr>
+      <tr>
+        <td><strong>Standard Query API</strong> (e.g., <code>DB.find(Class).where()...</code>)</td>
+        <td>✓</td>
+        <td>✓</td>
+        <td>Fluent API with string property names</td>
+      </tr>
+      <tr>
+        <td><strong>DB.createQuery(Class)</strong></td>
+        <td>✓</td>
+        <td>✓</td>
+        <td>Creates Query object (equivalent to DB.find)</td>
+      </tr>
+      <tr>
+        <td><strong>DB.createQuery(Class, eqlString)</strong></td>
+        <td>✓</td>
+        <td>✗ Removed</td>
+        <td>EQL (Ebean Query Language) support removed in 17.x</td>
+      </tr>
+      <tr>
+        <td><strong>Named Queries</strong> (@NamedQuery with EQL)</td>
+        <td>✓</td>
+        <td>Deprecated</td>
+        <td>EQL syntax no longer actively developed in 17.x</td>
+      </tr>
+      <tr>
+        <td><strong>Raw SQL / SqlQuery</strong> (e.g., <code>DB.sqlQuery("select...")</code>)</td>
+        <td>✓</td>
+        <td>✓</td>
+        <td>For complex database-specific queries</td>
+      </tr>
+      <tr>
+        <td><strong>Native SQL</strong> (e.g., <code>DB.findNative(Class, sql)</code>)</td>
+        <td>✓</td>
+        <td>✓</td>
+        <td>For raw SQL queries with entity mapping</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-info">
+    <strong>Migration note:</strong> If you are upgrading from Ebean 16.x to 17.x and using EQL queries,
+    see the <a href="/docs/query/eql">EQL documentation</a> and <a href="/docs/upgrading">upgrading guide</a>
+    for migration examples using Query Beans or standard Query API.
+  </div>
+
   <h2 id="notsqlreplacement">Not a SQL replacement</h2>
 
   <div class="row mvm">

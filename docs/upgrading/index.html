@@ -12,6 +12,169 @@
   A summary of changes needed in migrating to a later version of Ebean.
 </p>
 
+<h2>Upgrading to 17.x from 16.x</h2>
+
+<h3 id="query-changes">Query Changes</h3>
+
+<p>
+  The most significant change in Ebean 17.x is the removal of <strong>EQL (Ebean Query Language)</strong>.
+  EQL was a string-based SQL-like query language. This has been removed in favor of more type-safe approaches.
+</p>
+
+<h4>Breaking Change: DB.createQuery(Class, eqlString)</h4>
+
+<p><strong>16.x (old way - no longer works in 17.x):</strong></p>
+<pre><code class="language-java">
+// This NO LONGER WORKS in Ebean 17.x
+String eql = "where customer.name like :custName and orderDate > :minOrderDate " +
+             "order by id desc limit 50";
+
+List&lt;Order&gt; orders = DB.createQuery(Order.class, eql)
+  .setParameter("custName", "Rob%")
+  .setParameter("minOrderDate", lastWeek)
+  .findList();
+</code></pre>
+
+<p><strong>17.x Solution 1: Query Beans (Recommended)</strong></p>
+<pre><code class="language-java">
+// Type-safe, IDE auto-completion, compile-time checking
+List&lt;Order&gt; orders = new QOrder()
+  .customer.name.contains("Rob")
+  .orderDate.greaterThan(lastWeek)
+  .orderBy().id.desc()
+  .setMaxRows(50)
+  .findList();
+</code></pre>
+
+<p><strong>17.x Solution 2: Standard Query API</strong></p>
+<pre><code class="language-java">
+// Fluent API with string property names
+List&lt;Order&gt; orders = DB.find(Order.class)
+  .where()
+    .contains("customer.name", "Rob")
+    .gt("orderDate", lastWeek)
+  .order().desc("id")
+  .setMaxRows(50)
+  .findList();
+</code></pre>
+
+<p><strong>17.x Solution 3: Raw SQL (for complex queries)</strong></p>
+<pre><code class="language-java">
+// For complex database-specific SQL
+List&lt;Order&gt; orders = DB.findNative(Order.class,
+  "select * from or_order o join customer c on c.id = o.customer_id " +
+  "where c.name like ? and o.order_date > ? " +
+  "order by o.id desc limit 50")
+  .setParameter(1, "Rob%")
+  .setParameter(2, lastWeek)
+  .findList();
+</code></pre>
+
+<h4>Migration Decision Tree</h4>
+
+<div class="card" style="margin: 20px 0;">
+  <div class="card-body">
+    <p><strong>Do you have an EQL query to migrate?</strong></p>
+    <ul>
+      <li><strong>Simple predicates (where, order by, limit)?</strong><br/>
+        → Use <strong>Query Beans</strong> (recommended) or Standard Query API
+      </li>
+      <li><strong>Complex SQL (joins, subqueries, functions)?</strong><br/>
+        → Use <strong>Raw SQL / SqlQuery</strong> or <strong>DtoQuery</strong>
+      </li>
+      <li><strong>Named Queries (@NamedQuery)?</strong><br/>
+        → Migrate to Query Beans or Standard Query API called directly
+      </li>
+    </ul>
+  </div>
+</div>
+
+<h4>EQL Feature Mapping</h4>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>EQL Feature</th>
+      <th>17.x Replacement</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>where customer.name like :name</code></td>
+      <td>Query Bean: <code>.name.contains("Rob")</code><br/>Query API: <code>.contains("name", "Rob")</code></td>
+      <td>String pattern matching</td>
+    </tr>
+    <tr>
+      <td><code>where status = :status</code></td>
+      <td>Query Bean: <code>.status.eq(Status.NEW)</code><br/>Query API: <code>.eq("status", Status.NEW)</code></td>
+      <td>Equality check</td>
+    </tr>
+    <tr>
+      <td><code>order by id desc, name asc</code></td>
+      <td>Query Bean: <code>.orderBy().id.desc().name.asc()</code><br/>Query API: <code>.order().desc("id").asc("name")</code></td>
+      <td>Result ordering</td>
+    </tr>
+    <tr>
+      <td><code>limit 50</code></td>
+      <td>Query Bean: <code>.setMaxRows(50)</code><br/>Query API: <code>.setMaxRows(50)</code></td>
+      <td>Limit results</td>
+    </tr>
+    <tr>
+      <td><code>fetch customer (name, email)</code></td>
+      <td>Query Bean: <code>.fetch("customer", "name, email")</code><br/>Query API: <code>.fetch("customer", "name, email")</code></td>
+      <td>Eager load specific properties</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Complete EQL to Query Bean Migration Example</h4>
+
+<p><strong>EQL (16.x):</strong></p>
+<pre><code class="language-java">
+String eql = "select (id, name, email) " +
+             "fetch customer (id, name) " +
+             "where status = :status and " +
+             "customer.billingAddress.city like :city " +
+             "order by id desc " +
+             "limit 100";
+
+List&lt;Contact&gt; contacts = DB.createQuery(Contact.class, eql)
+  .setParameter("status", Status.ACTIVE)
+  .setParameter("city", "Auckland%")
+  .findList();
+</code></pre>
+
+<p><strong>Query Beans (17.x - Recommended):</strong></p>
+<pre><code class="language-java">
+List&lt;Contact&gt; contacts = new QContact()
+  .select("id, name, email")
+  .fetch("customer", "id, name")
+  .status.eq(Status.ACTIVE)
+  .customer.billingAddress.city.contains("Auckland")
+  .orderBy().id.desc()
+  .setMaxRows(100)
+  .findList();
+</code></pre>
+
+<h3>Other Changes in 17.x</h3>
+
+<ul>
+  <li>Named Queries: EQL syntax no longer actively developed (migrate to Query Beans)</li>
+  <li>Query Beans: Continue to be the recommended approach for type-safe queries</li>
+  <li>Standard Query API: Continues to be supported</li>
+  <li>SQL/SqlQuery: Continues to be the best option for complex database-specific queries</li>
+</ul>
+
+<h3>Additional Resources</h3>
+
+<ul>
+  <li><a href="/docs/query/eql">EQL Documentation</a> - Reference documentation for EQL (16.x)</li>
+  <li><a href="/docs/query/query-beans">Query Beans Documentation</a> - Type-safe query builder</li>
+  <li><a href="/docs/query/where">Where Clause Documentation</a> - Standard Query API predicates</li>
+  <li><a href="https://github.com/ebean-orm/ebean/releases">Release Notes</a> - Detailed changes per version</li>
+</ul>
+
 <h2>Upgrading to 12.x from 11.x</h2>
 <ul>
   <li>

@@ -32,6 +32,12 @@
       exist is because the createQuery() style is consistent with JPA and could be argued is a
       better more accurate name. And find() is more consistent with the fluid API style.
 
+  <div class="alert alert-info">
+    <strong>Note:</strong> In Ebean 16.x, <code>DB.createQuery(Class, eqlString)</code> was supported for EQL queries.
+    This has been removed in Ebean 17.x. See <a href="/docs/query/eql">EQL documentation</a> and 
+    <a href="/docs/upgrading">upgrading guide</a> for alternatives.
+  </div>
+
   ```java
   // fluid API style with find()
   List<|Order> list =
@@ -797,6 +803,13 @@ List<|Order> list =
 
 <#-------------------------------------------------------------------------------------------------->
   <h2 id="named_queries">Named Queries</h2>
+
+  <div class="alert alert-warning">
+    <strong>⚠️ Ebean 16.x primarily:</strong> Named Queries using EQL syntax were a feature of Ebean 16.x. 
+    The EQL syntax within <code>@NamedQuery</code> annotations is no longer actively developed in Ebean 17.x.
+    For new code, use <a href="/docs/query/query-beans">Query Beans</a> or <a href="/docs/query/where">standard Query API</a> directly.
+    See <a href="/docs/query/eql">EQL documentation</a> and <a href="/docs/upgrading">upgrading guide</a>.
+  </div>
 
   ```java
   import jakarata.persistence.NamedQueries;

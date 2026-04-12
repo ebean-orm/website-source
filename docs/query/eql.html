@@ -1,0 +1,228 @@
+<html>
+<head>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="Query" href="/docs/query/"/>
+  <meta name="bread2" content="EQL" href="/docs/query/eql"/>
+  <#assign n0_docs="active">
+  <#assign n1_query="active">
+</head>
+<body>
+
+<div class="bs-docs-section">
+
+  <h2 id="eql">Ebean Query Language (EQL)</h2>
+
+  <div class="alert alert-danger">
+    <strong>⚠️ Ebean 16.x only:</strong> Ebean Query Language (EQL) was removed in Ebean 17.x.
+    If you are using Ebean 17.x, use <a href="/docs/query/query-beans">Query Beans</a> (recommended) or the 
+    <a href="/docs/query/where">standard Query API</a> instead.
+    See <a href="/docs/upgrading">Upgrading from 16.x to 17.x</a> for migration examples.
+  </div>
+
+  <h3 id="overview">Overview</h3>
+
+  <p>
+    Ebean Query Language (EQL) was a SQL-like query language available in Ebean 16.x releases that allowed 
+    you to write queries using a string-based syntax similar to SQL. EQL queries were parsed early and 
+    converted to type-safe Query objects that could be further modified before execution.
+  </p>
+
+  <p>
+    EQL has been removed in Ebean 17.x in favor of more type-safe approaches using 
+    <a href="/docs/query/query-beans">Query Beans</a> (recommended) and the 
+    <a href="/docs/query/where">standard Query API</a>.
+  </p>
+
+  <h3 id="syntax">EQL Syntax (16.x reference)</h3>
+
+  <p>
+    This section documents EQL syntax for reference if you are maintaining an Ebean 16.x application.
+  </p>
+
+  <h4>Basic Structure</h4>
+
+  <p>EQL queries followed this basic pattern:</p>
+
+  <pre><code>
+find [selected-properties]
+[fetch property-paths]
+where [predicates]
+order by [order-by-clause]
+limit [limit-clause]
+</code></pre>
+
+  <h4>Complete Example (16.x)</h4>
+
+  <pre><code class="language-java">
+String eql = " where customer.name like :custName " +
+             " and orderDate > :minOrderDate " +
+             " order by id desc " +
+             " limit 50 ";
+
+List&lt;Order&gt; orders = DB.createQuery(Order.class, eql)
+  .setParameter("custName", "Rob%")
+  .setParameter("minOrderDate", lastWeek)
+  .findList();
+  </code></pre>
+
+  <h4>WHERE Clause</h4>
+
+  <p>The where clause contained predicates using property paths:</p>
+
+  <pre><code class="language-java">
+"where customer.name like :custName"           // string comparison
+"where status = :status"                       // property equals
+"where orderDate > :date"                      // date comparison
+"where amount between :min and :max"           // range check
+"where customer.id in :customerIds"            // IN clause
+"where items.size > 0"                         // collection check
+  </code></pre>
+
+  <h4>ORDER BY Clause</h4>
+
+  <pre><code class="language-java">
+"order by id"                    // ascending
+"order by id desc"               // descending
+"order by customer.id, id desc"  // multiple properties
+  </code></pre>
+
+  <h4>SELECT and FETCH</h4>
+
+  <pre><code class="language-java">
+// Select specific properties from root entity
+"select (name, email) where status = :status"
+
+// Fetch properties from related entities
+"fetch customer (id, name) where status = :status"
+"fetch customer.address (city, country) fetch items where ..."
+
+// Named query definition
+@NamedQuery(
+  name="bugStatus",
+  query="fetch loggedBugs where loggedBugs.status = :bugStatus order by name"
+)
+  </code></pre>
+
+  <h3 id="limitations">Why EQL Was Removed</h3>
+
+  <ul>
+    <li><strong>Lack of type safety:</strong> Query strings are error-prone and can only be validated at runtime</li>
+    <li><strong>No IDE support:</strong> String-based syntax does not benefit from IDE auto-completion or refactoring</li>
+    <li><strong>Maintenance burden:</strong> Maintaining a custom query parser was resource-intensive</li>
+    <li><strong>Better alternatives:</strong> Query Beans provide the same functionality with compile-time safety</li>
+    <li><strong>Industry trend:</strong> Modern ORMs favor type-safe query builders</li>
+  </ul>
+
+  <h3 id="migration">Migrating from EQL to 17.x</h3>
+
+  <p>See <a href="/docs/upgrading">Upgrading from 16.x to 17.x</a> for detailed migration examples converting EQL queries to:</p>
+  <ul>
+    <li><strong>Query Beans (Recommended)</strong> - Type-safe, compile-time checking, IDE auto-completion</li>
+    <li><strong>Standard Query API</strong> - Fluent API using method calls</li>
+    <li><strong>Raw SQL / SqlQuery</strong> - For complex database-specific queries</li>
+  </ul>
+
+  <h4>Quick Migration Example</h4>
+
+  <p><strong>EQL (16.x):</strong></p>
+  <pre><code class="language-java">
+String eql = "where customer.name like :custName and orderDate > :minOrderDate " +
+             "order by id desc limit 50";
+
+List&lt;Order&gt; orders = DB.createQuery(Order.class, eql)
+  .setParameter("custName", "Rob%")
+  .setParameter("minOrderDate", lastWeek)
+  .findList();
+  </code></pre>
+
+  <p><strong>Query Beans (17.x - Recommended):</strong></p>
+  <pre><code class="language-java">
+List&lt;Order&gt; orders = new QOrder()
+  .customer.name.contains("Rob")
+  .orderDate.greaterThan(lastWeek)
+  .orderBy().id.desc()
+  .setMaxRows(50)
+  .findList();
+  </code></pre>
+
+  <p><strong>Standard Query API (17.x - Alternative):</strong></p>
+  <pre><code class="language-java">
+List&lt;Order&gt; orders = DB.find(Order.class)
+  .where()
+    .contains("customer.name", "Rob")
+    .gt("orderDate", lastWeek)
+  .order().desc("id")
+  .setMaxRows(50)
+  .findList();
+  </code></pre>
+
+  <h3 id="named-queries">Named Queries (16.x)</h3>
+
+  <p>
+    Named Queries in Ebean 16.x used EQL syntax defined in <code>@NamedQuery</code> annotations.
+    In Ebean 17.x, Named Queries still exist but the EQL syntax within them is no longer actively used.
+  </p>
+
+  <p><strong>16.x Named Query Definition:</strong></p>
+  <pre><code class="language-java">
+@NamedQueries(value={
+  @NamedQuery(
+    name="bugsSummary",
+    query="find (name, email) fetch loggedBugs (title, status) where id=:id "),
+  @NamedQuery(
+    name="bugStatus",
+    query="fetch loggedBugs where loggedBugs.status = :bugStatus order by name")
+})
+@Entity
+public class User {
+  ...
+}
+  </code></pre>
+
+  <p><strong>16.x Named Query Execution:</strong></p>
+  <pre><code class="language-java">
+User user = DB.createNamedQuery(User.class, "bugsSummary")
+  .setParameter("id", 1)
+  .findOne();
+  </code></pre>
+
+  <p><strong>17.x Alternative:</strong> Use Query Beans or standard Query API directly instead of Named Queries.</p>
+
+  <h3 id="resources">Resources</h3>
+
+  <ul>
+    <li><a href="/docs/query/query-beans">Query Beans Documentation</a> - Type-safe query alternative</li>
+    <li><a href="/docs/query/where">Where Clause Documentation</a> - Standard Query API for predicates</li>
+    <li><a href="/docs/upgrading">Upgrading from 16.x to 17.x</a> - Detailed migration guide</li>
+    <li><a href="/docs/query">Query Documentation Index</a> - All query methods and options</li>
+  </ul>
+
+  <h3 id="troubleshooting">Troubleshooting</h3>
+
+  <h4>Q: I see "DB.createQuery() no longer accepts an EQL query string" error</h4>
+  <p>
+    <strong>A:</strong> You are using Ebean 17.x which removed EQL support. The method <code>DB.createQuery(Class, eqlString)</code> 
+    no longer exists. Use one of these alternatives:
+  </p>
+  <ol>
+    <li><strong>Query Beans (recommended):</strong> <code>new QCustomer().name.eq("Rob").findOne()</code></li>
+    <li><strong>Standard Query API:</strong> <code>DB.find(Customer.class).where().eq("name", "Rob").findOne()</code></li>
+    <li><strong>Raw SQL:</strong> <code>DB.findNative(Customer.class, sqlString)</code></li>
+  </ol>
+
+  <h4>Q: Can I still use Ebean 16.x with EQL?</h4>
+  <p>
+    <strong>A:</strong> Yes, Ebean 16.x continues to receive maintenance updates. See 
+    <a href="https://github.com/ebean-orm/ebean/releases">releases</a> for available 16.x versions.
+  </p>
+
+  <h4>Q: Where can I find more migration help?</h4>
+  <p>
+    <strong>A:</strong> See the <a href="/docs/upgrading">Upgrading from 16.x to 17.x</a> guide for detailed examples 
+    and migration strategies.
+  </p>
+
+</div>
+
+</body>
+</html>
