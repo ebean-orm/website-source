@@ -51,6 +51,12 @@ Product product = builder.build(Product.class);
 // All fields automatically populated with realistic random values
 </pre>
 
+<p style="border-left: 4px solid #e0e0e0; padding-left: 15px; margin: 20px 0; color: #666;">
+  <strong>Note for AI Agents:</strong> Step-by-step guides for implementing TestEntityBuilder are available at
+  <a href="https://github.com/ebean-orm/ebean/tree/master/docs/guides/testing-with-testentitybuilder.md">docs/guides/testing-with-testentitybuilder.md</a>
+  in the Ebean repository.
+</p>
+
 <h2 id="setup">Setup & Dependencies</h2>
 
 <h3>Add ebean-test to Your Project</h3>
@@ -382,7 +388,7 @@ Person person = builder.build(Person.class);
 
 <pre content="java">
 class CompanyTestDataGenerator extends RandomValueGenerator {
-  
+
   @Override
   protected String randomString(String propName, int maxLength) {
     if (propName != null && propName.toLowerCase().contains("email")) {
@@ -417,7 +423,7 @@ assert user.getEmail().endsWith("@mycompany.com");
 
 <pre content="java">
 public class MoneyValueGenerator extends RandomValueGenerator {
-  
+
   @Override
   protected BigDecimal randomBigDecimal(int precision, int scale) {
     // Generate prices in realistic range: $5.00 to $999.99
@@ -470,7 +476,7 @@ void whenNameIsBlank_thenThrowException() {
 void whenStockIsLow_thenShowWarning() {
   Product product = builder.build(Product.class);
   product.setQuantity(2);  // Specific value for this test
-  
+
   boolean shouldWarn = product.shouldShowLowStockWarning();
   assertThat(shouldWarn).isTrue();
 }
@@ -484,16 +490,16 @@ void whenStockIsLow_thenShowWarning() {
 
 <pre content="java">
 public class TestDataFactory {
-  
-  private static final TestEntityBuilder builder = 
+
+  private static final TestEntityBuilder builder =
     TestEntityBuilder.builder(DB.getDefault()).build();
-  
+
   public static Order createPendingOrder() {
     Order order = builder.build(Order.class);
     order.setStatus(OrderStatus.PENDING);
     return order;
   }
-  
+
   public static Order savePendingOrder() {
     Order order = createPendingOrder();
     DB.save(order);
@@ -516,31 +522,31 @@ void whenOrderPending_thenCanUpdate() {
 <pre content="java">
 @SpringBootTest
 class OrderRepositoryTest {
-  
+
   @Autowired
   private OrderRepository orderRepository;
-  
+
   private TestEntityBuilder builder;
-  
+
   @BeforeEach
   void setup() {
     builder = TestEntityBuilder.builder(DB.getDefault()).build();
   }
-  
+
   @Test
   void whenFindingOrdersByStatus_thenReturnsMatching() {
     // Create test data quickly
     Order pending1 = builder.build(Order.class);
     pending1.setStatus(OrderStatus.PENDING);
-    
+
     Order pending2 = builder.build(Order.class);
     pending2.setStatus(OrderStatus.PENDING);
-    
+
     Order shipped = builder.build(Order.class);
     shipped.setStatus(OrderStatus.SHIPPED);
-    
+
     DB.saveAll(pending1, pending2, shipped);
-    
+
     // Test the query
     List<Order> pending = orderRepository.findByStatus(OrderStatus.PENDING);
     assertThat(pending).hasSize(2);
@@ -554,12 +560,12 @@ class OrderRepositoryTest {
 @Test
 void whenBuildingOrderWithCustomer_thenBothPopulated() {
   Order order = builder.build(Order.class);
-  
+
   // Customer is recursively built due to @ManyToOne(cascade=PERSIST)
   assertThat(order.getCustomer()).isNotNull();
   assertThat(order.getCustomer().getId()).isNull();  // not persisted yet
   assertThat(order.getCustomer().getName()).isNotNull();
-  
+
   // Saving cascades to customer:
   Order saved = builder.save(Order.class);
   assertThat(saved.getId()).isNotNull();
@@ -585,7 +591,7 @@ void usingCustomGenerator() {
   TestEntityBuilder builder = TestEntityBuilder.builder(DB.getDefault())
       .valueGenerator(new ECommerceTestDataGenerator())
       .build();
-  
+
   Product product = builder.build(Product.class);
   assertThat(product.getPrice())
       .isBetween(BigDecimal.TEN, BigDecimal.valueOf(500.0));
@@ -663,7 +669,7 @@ person.getOrganization().setFounder(null);  // Break cycle
 <pre content="java">
 class DeterministicTestDataGenerator extends RandomValueGenerator {
   private int counter = 0;
-  
+
   @Override
   protected String randomString(String propName, int maxLength) {
     return "test_" + (counter++);
