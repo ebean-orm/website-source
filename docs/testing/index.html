@@ -124,6 +124,45 @@ touch ~/.ebean/ignore-docker-shutdown
   <li>Current user and tenant provider if not already specified (to ease testing with @Who properties etc)</li>
 </ul>
 
+<h2 id="testEntityBuilder">Test Entity Builder</h2>
+
+<p>
+  The <code>TestEntityBuilder</code> class is a utility for rapidly creating test entity instances 
+  with auto-populated random values. This is particularly useful for integration tests where you need 
+  representative data without manually setting each field.
+</p>
+
+<p>
+  Key features:
+</p>
+
+<ul>
+  <li>Auto-generates appropriate random values for all supported types</li>
+  <li>Respects column length and decimal precision constraints</li>
+  <li>Handles entity relationships with cascade persist</li>
+  <li>Cycle detection prevents infinite recursion</li>
+  <li>Customizable via subclassing <code>RandomValueGenerator</code></li>
+</ul>
+
+<p>
+  Example usage:
+</p>
+
+<pre content="java">
+TestEntityBuilder builder = TestEntityBuilder.builder(DB.getDefault()).build();
+
+// Build in-memory (not persisted)
+Product product = builder.build(Product.class);
+
+// Build and save to database
+Product saved = builder.save(Product.class);
+</pre>
+
+<p>
+  <a href="/docs/testing/test-entity-builder">See the full Test Entity Builder guide</a> for detailed setup, 
+  usage, examples, and best practices.
+</p>
+
 <h2 id="test-platform">ebean.test.platform - application-test.yaml</h2>
 <p>
   We use <code>ebean.test.platform</code> to specify the database platform we want to use when running tests.

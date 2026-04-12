@@ -9,5 +9,6 @@
   <@smallnav activeCheck="${currentUser!''}" url="/docs/testing/#current-user" title="Current User & Tenant"/>
   <@smallnav activeCheck="${testproperties!''}" url="/docs/testing/#ddl-generation-properties" title="DDL generation properties"/>
   <@smallnav activeCheck="${runner!''}" url="/docs/testing/#scriptRunner" title="DDL/SQL Script runner"/>
+  <@smallnav activeCheck="${n2_testEntityBuilder!''}" url="/docs/testing/test-entity-builder" title="Test Entity Builder"/>
   <@smallnav activeCheck="${n2_ci!''}" url="/docs/testing/ci-testing" title="CI - Jenkins etc"/>
 </ul>
