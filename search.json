@@ -42,6 +42,14 @@
 ,{
   "title":"",
   "caption":"",
+  "category":"Deprecated",
+  "priority":"0",
+  "keywords":"",
+  "url":"/docs/deprecated"
+}
+,{
+  "title":"",
+  "caption":"",
   "category":"Documentation",
   "priority":"0",
   "keywords":"",
@@ -141,7 +149,7 @@
   "category":"Query",
   "priority":"0",
   "keywords":"",
-  "url":"/docs/query"
+  "url":"/docs/query/"
 }
 ,{
   "title":"",
@@ -470,6 +478,14 @@
   "priority":"2",
   "keywords":"",
   "url":"/docs/trouble-shooting#datasource"
+}
+,{
+  "title":"Trouble shooting - Initialisation Error",
+  "caption":"",
+  "category":"Introduction",
+  "priority":"2",
+  "keywords":"",
+  "url":"/docs/trouble-shooting#initialisation-error"
 }
 ,{
   "title":"Trouble shooting - NullPointerException in EntityBeanIntercept",
@@ -1184,22 +1200,6 @@
   "url":"/docs/database/postgres#ebean-postgres"
 }
 ,{
-  "title":"Postgres / Array type",
-  "caption":"",
-  "category":"Database platforms",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/database/postgres/arraytype"
-}
-,{
-  "title":"Postgres / PostGIS",
-  "caption":"",
-  "category":"Database platforms",
-  "priority":"3",
-  "keywords":"",
-  "url":"/docs/database/postgres/postgis"
-}
-,{
   "title":"Redis - L2 cache",
   "caption":"",
   "category":"Database platforms",
@@ -1318,6 +1318,14 @@
   "priority":"3",
   "keywords":"",
   "url":"/docs/database/yugabyte#ebean-yugabyte"
+}
+,{
+  "title":"Class mapping",
+  "caption":"",
+  "category":"Deprecated",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/deprecated#class-mapping"
 }
 ,{
   "title":"Getting started",
@@ -1576,6 +1584,14 @@
   "url":"/docs/getting-started#prerequisites"
 }
 ,{
+  "title":"Step-by-step guides (for AI agents and developers)",
+  "caption":"",
+  "category":"Getting started",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/getting-started#ai-guides"
+}
+,{
   "title":"Test setup",
   "caption":"",
   "category":"Getting started",
@@ -1584,7 +1600,7 @@
   "url":"/docs/getting-started/ebean-test"
 }
 ,{
-  "title":"jakarata and javax persisence",
+  "title":"jakarta and javax persistence",
   "caption":"",
   "category":"Getting started",
   "priority":"3",
@@ -2304,6 +2320,14 @@
   "url":"/docs/mapping/jpa/lob"
 }
 ,{
+  "title":"JPA / @Lob - Lazy fetched by default",
+  "caption":"",
+  "category":"Mapping",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/mapping/jpa/lob"
+}
+,{
   "title":"JPA / @Lob - Lob",
   "caption":"",
   "category":"Mapping",
@@ -2936,6 +2960,22 @@
   "url":"/docs/query/dtoquery#maxRows"
 }
 ,{
+  "title":"EQL",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/eql"
+}
+,{
+  "title":"EQL - Ebean Query Language (EQL)",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/eql#eql"
+}
+,{
   "title":"Expressions",
   "caption":"",
   "category":"Query",
@@ -3304,6 +3344,14 @@
   "url":"/docs/query/option#autotune"
 }
 ,{
+  "title":"Option - Unmodifiable",
+  "caption":"",
+  "category":"Query",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/query/option#unmodifiable"
+}
+,{
   "title":"Option - asDraft",
   "caption":"",
   "category":"Query",
@@ -3376,7 +3424,7 @@
   "url":"/docs/query/option#persistenceContextScope"
 }
 ,{
-  "title":"Option - readOnly",
+  "title":"Option - readOnly [Removed]",
   "caption":"",
   "category":"Query",
   "priority":"3",
@@ -4288,6 +4336,86 @@
   "url":"/docs/testing#redis"
 }
 ,{
+  "title":"Test Entity Builder",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing#testEntityBuilder"
+}
+,{
+  "title":"Test Entity Builder - Basic Usage",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#basic-usage"
+}
+,{
+  "title":"Test Entity Builder - Best Practices",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#best-practices"
+}
+,{
+  "title":"Test Entity Builder - Complete Examples",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#examples"
+}
+,{
+  "title":"Test Entity Builder - Customization via RandomValueGenerator",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#customization"
+}
+,{
+  "title":"Test Entity Builder - Entity Relationships",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#relationships"
+}
+,{
+  "title":"Test Entity Builder - Purpose & Benefits",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#purpose"
+}
+,{
+  "title":"Test Entity Builder - Setup & Dependencies",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#setup"
+}
+,{
+  "title":"Test Entity Builder - Troubleshooting",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#troubleshooting"
+}
+,{
+  "title":"Test Entity Builder - Type-Specific Value Generation",
+  "caption":"",
+  "category":"Testing",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/testing/test-entity-builder#type-generation"
+}
+,{
   "title":"Third age of testing",
   "caption":"",
   "category":"Testing",
@@ -4561,6 +4689,14 @@
 }
 ,{
   "title":"Upgrading to 12.x from 11.x",
+  "caption":"",
+  "category":"Upgrading",
+  "priority":"3",
+  "keywords":"",
+  "url":"/docs/upgrading"
+}
+,{
+  "title":"Upgrading to 17.x from 16.x",
   "caption":"",
   "category":"Upgrading",
   "priority":"3",
@@ -5886,6 +6022,14 @@
   "priority":"5",
   "keywords":"",
   "url":"/docs/query/background/overview#predicates"
+}
+,{
+  "title":"Background / Query Overview - Query Methods by Version",
+  "caption":"",
+  "category":"Query",
+  "priority":"5",
+  "keywords":"",
+  "url":"/docs/query/background/overview#query-methods-by-version"
 }
 ,{
   "title":"Background / Query Overview - Secondary queries",
