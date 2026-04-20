@@ -4,6 +4,7 @@
     <#include "/_nav/introduction.ftl">
     <@nav0 activeCheck="${n0_docs!''}" url="/docs" title="Documentation">
       <ul>
+        <@nav1 activeCheck="${n1_agents!''}" url="/docs/agents" title="AI Agents"/>
         <@nav1 activeCheck="${n1_bestPractice!''}" url="/docs/best-practice" title="Best practice">
           <ul class="nav nav-scroll">
             <@smallnav activeCheck="" url="#identity" title="Identity"/>
