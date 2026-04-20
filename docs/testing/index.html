@@ -145,22 +145,24 @@ touch ~/.ebean/ignore-docker-shutdown
 </ul>
 
 <p>
-  Example usage:
+  The recommended way to use <code>TestEntityBuilder</code> in a DI-managed test context (Spring or Avaje Inject)
+  is to register it as a bean so it can be injected directly — no <code>@BeforeEach</code> setup required:
 </p>
 
 <pre content="java">
-TestEntityBuilder builder = TestEntityBuilder.builder(DB.getDefault()).build();
+// Spring Boot — add to a @TestConfiguration class
+@Bean
+TestEntityBuilder testEntityBuilder(Database database) {
+  return TestEntityBuilder.builder(database).build();
+}
 
-// Build in-memory (not persisted)
-Product product = builder.build(Product.class);
-
-// Build and save to database
-Product saved = builder.save(Product.class);
+// Then inject in test classes:
+@Autowired TestEntityBuilder builder;
 </pre>
 
 <p>
   <a href="/docs/testing/test-entity-builder">See the full Test Entity Builder guide</a> for detailed setup,
-  usage, examples, and best practices.
+  DI integration patterns (Spring and Avaje Inject), examples, and best practices.
 </p>
 
 <p>
