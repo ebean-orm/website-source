@@ -1,0 +1,128 @@
+<html>
+<head>
+  <title>Agent Skills for Ebean Projects | Ebean</title>
+  <meta name="layout" content="_layout2/base-docs.html"/>
+  <meta name="bread1" content="AI Agents" href="/docs/agents"/>
+  <meta name="bread2" content="Agent Skills" href="/docs/agents/skills"/>
+  <#assign n0_docs="active">
+  <#assign n1_agentSkills="active">
+  <#assign page_edit_href="/docs/agents/skills.html">
+</head>
+<body>
+
+<h2 id="overview">Ebean Agent Skills</h2>
+<p>
+  Ebean Agent Skills are structured knowledge packages that compatible coding agents can load on demand
+  when working with <a href="https://ebean.io">Ebean ORM</a>.
+</p>
+<p>
+  They follow the <a href="https://agentskills.io/specification">Agent Skills specification</a>
+  and work with skill-aware tools including
+  <a href="https://github.com/mariozechner/pi-coding-agent">pi</a> and
+  <a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code</a>.
+</p>
+
+<h2 id="available">Available skill</h2>
+<table class="table">
+  <tr>
+    <th>Skill</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>ebean-orm</code></td>
+    <td>Entity modeling, querying, persistence, testing, project setup, and database migrations.</td>
+  </tr>
+</table>
+<p>
+  The <code>ebean-orm</code> skill gives the agent Ebean-specific guidance for entity beans, query beans,
+  transactions, testing, project setup, and migration generation.
+</p>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="clone-symlink">Option A - Clone and symlink (recommended)</h3>
+<pre class="code">
+ git clone https://github.com/ebean-orm/skills.git ~/.agents/ebean-skills
+ mkdir -p ~/.agents/skills
+ ln -sf ~/.agents/ebean-skills/ebean-orm ~/.agents/skills/ebean-orm
+</pre>
+<p>To update:</p>
+<pre class="code">
+ cd ~/.agents/ebean-skills && git pull
+</pre>
+
+<h3 id="copy-install">Option B - Clone and copy into the skills directory</h3>
+<pre class="code">
+ git clone https://github.com/ebean-orm/skills.git /tmp/ebean-skills
+ mkdir -p ~/.agents/skills
+ cp -r /tmp/ebean-skills/ebean-orm ~/.agents/skills/ebean-orm
+ rm -rf /tmp/ebean-skills
+</pre>
+
+<h3 id="project-level">Option C - Project-level installation</h3>
+<p>
+  To make the skill available to everyone working on a specific project, copy it into a checked-in
+  <code>.agents/skills</code> directory.
+</p>
+<pre class="code">
+ # from your project root
+ git clone https://github.com/ebean-orm/skills.git /tmp/ebean-skills
+ mkdir -p .agents/skills
+ cp -r /tmp/ebean-skills/ebean-orm .agents/skills/ebean-orm
+ rm -rf /tmp/ebean-skills
+ git add .agents/skills/ebean-orm
+</pre>
+
+<h2 id="verification">Verification</h2>
+<p>
+  After installation, verify that the skill is visible to your coding tool. In pi:
+</p>
+<pre class="code">
+ /skills
+</pre>
+<p>
+  You should see <code>ebean-orm</code> listed.
+</p>
+
+<h2 id="how-it-works">How it works</h2>
+<p>
+  The skill uses <strong>progressive disclosure</strong>.
+</p>
+<ol>
+  <li>The tool initially sees only the skill name and description.</li>
+  <li>When a task matches Ebean work, it loads <code>SKILL.md</code>.</li>
+  <li><code>SKILL.md</code> provides key principles, a quick reference, and links to the detailed guides.</li>
+  <li>The tool then loads only the guide needed for the task at hand.</li>
+</ol>
+<p>
+  This keeps the default instruction set small while still giving the tool detailed Ebean guidance when needed.
+</p>
+
+<h2 id="structure">Skill structure</h2>
+<pre class="code">
+ ebean-orm/
+ ├── SKILL.md
+ └── references/
+     ├── setup.md
+     ├── modeling.md
+     ├── querying.md
+     ├── write-transactions.md
+     ├── testing.md
+     └── db-migrations.md
+</pre>
+<ul>
+  <li><code>setup.md</code> - project setup, dependencies, and configuration</li>
+  <li><code>modeling.md</code> - entity modeling and relationships</li>
+  <li><code>querying.md</code> - query beans, fetch tuning, and DTO queries</li>
+  <li><code>write-transactions.md</code> - save, update, delete, and transactions</li>
+  <li><code>testing.md</code> - testing patterns and tools</li>
+  <li><code>db-migrations.md</code> - migration generation and execution</li>
+</ul>
+
+<h2 id="repository">Repository</h2>
+<p>
+  Source repository: <a href="https://github.com/ebean-orm/skills">github.com/ebean-orm/skills</a>
+</p>
+
+</body>
+</html>

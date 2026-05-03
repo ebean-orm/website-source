@@ -4,7 +4,16 @@
     <#include "/_nav/introduction.ftl">
     <@nav0 activeCheck="${n0_docs!''}" url="/docs" title="Documentation">
       <ul>
-        <@nav1 activeCheck="${n1_agents!''}" url="/docs/agents" title="AI Agents"/>
+        <#if n1_agents?? || n1_agentSkills??>
+          <@nav1 activeCheck="true" url="/docs/agents" title="AI Agents">
+            <ul class="nav nav-scroll">
+              <@smallnav activeCheck="${n1_agents!''}" url="/docs/agents" title="Overview"/>
+              <@smallnav activeCheck="${n1_agentSkills!''}" url="/docs/agents/skills" title="Agent Skills"/>
+            </ul>
+          </@nav1>
+        <#else>
+          <@nav1 activeCheck="${n1_agents!''}" url="/docs/agents" title="AI Agents"/>
+        </#if>
         <@nav1 activeCheck="${n1_bestPractice!''}" url="/docs/best-practice" title="Best practice">
           <ul class="nav nav-scroll">
             <@smallnav activeCheck="" url="#identity" title="Identity"/>

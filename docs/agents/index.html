@@ -5,23 +5,38 @@
   <meta name="bread1" content="AI Agents" href="/docs/agents"/>
   <#assign n0_docs="active">
   <#assign n1_agents="active">
+  <#assign page_edit_href="/docs/agents/index.html">
 </head>
 <body>
 
+<h2 id="recommended">Recommended: install the Ebean agent skill</h2>
+<p>
+  If your development workflow uses a skill-aware coding agent, install the <code>ebean-orm</code> skill first.
+  This is the preferred way to give the agent Ebean-specific guidance.
+</p>
+<ul>
+  <li>Keeps Ebean instructions out of your normal prompts</li>
+  <li>Covers setup, entity modeling, querying, persistence, testing, and migrations</li>
+  <li>Works with skill-aware tools such as pi and Claude Code</li>
+</ul>
+<p>
+  See <a href="/docs/agents/skills">Agent Skills</a> for installation and setup details.
+</p>
+
 <h2 id="overview">AI Agent Instructions</h2>
 <p>
-  This page is the entry point for AI coding agents (GitHub Copilot, Cursor, Claude Code,
-  OpenAI Codex, etc.) working in projects that use Ebean ORM.
+  This page collects the Ebean resources that coding agents can use when working in an Ebean project.
 </p>
 <p>
-  The fastest way to bootstrap Ebean knowledge is to fetch <a href="/llms.txt">https://ebean.io/llms.txt</a> —
-  it contains a concise capability reference and links to all step-by-step guides.
+  If Agent Skills are not available, the fastest option is to fetch
+  <a href="/llms.txt">https://ebean.io/llms.txt</a>. It provides a concise capability reference and
+  links to the relevant step-by-step guides.
 </p>
 
 <h2 id="guides">Step-by-step guides</h2>
 <p>
-  Prescriptive guides written for AI agents and developers. Fetch and follow the relevant
-  guide before performing Ebean-related tasks.
+  These are prescriptive guides for common Ebean tasks. Fetch and follow the relevant guide before
+  making Ebean-related changes.
 </p>
 <p>
   Full guide index: <a href="https://github.com/ebean-orm/ebean/tree/HEAD/docs/guides/">https://github.com/ebean-orm/ebean/tree/HEAD/docs/guides/</a>
@@ -72,7 +87,7 @@
 
 <h2 id="project-config">Add to your project</h2>
 <p>
-  Copy the relevant snippet into your project so AI agents working in your codebase
+  Add the relevant snippet to your project so coding agents working in your codebase can
   automatically discover these guides.
 </p>
 
