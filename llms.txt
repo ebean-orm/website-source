@@ -4,6 +4,7 @@
 
 ## Start Here (Agent Onboarding)
 
+- If your tool supports Agent Skills, prefer installing the [ebean-orm skill](https://ebean.io/docs/agents/skills).
 - [AGENTS.md template](https://raw.githubusercontent.com/ebean-orm/ebean/HEAD/docs/guides/AGENTS.md): Minimal onboarding template for AI coding agents.
 - [Guide index](https://raw.githubusercontent.com/ebean-orm/ebean/HEAD/docs/guides/README.md): Canonical index of Ebean markdown guides for agents.
 
