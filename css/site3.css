@@ -375,6 +375,9 @@ article h3, article h4 {
   color: var(--body-color2);
   font-weight: normal;
 }
+article h3.install-option {
+  font-weight: 700;
+}
 ::placeholder {
   color: var(--fg-placeholder);
   opacity: 1;

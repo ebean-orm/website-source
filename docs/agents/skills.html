@@ -40,31 +40,31 @@
 
 <h2 id="installation">Installation</h2>
 
-<h3 id="clone-symlink">Option A - Clone and symlink (recommended)</h3>
-<pre class="code">
+<h3 class="install-option" id="clone-symlink">Option A - Clone and symlink (recommended)</h3>
+<pre class="sh">
  git clone https://github.com/ebean-orm/skills.git ~/.agents/ebean-skills
  mkdir -p ~/.agents/skills
  ln -sf ~/.agents/ebean-skills/ebean-orm ~/.agents/skills/ebean-orm
 </pre>
 <p>To update:</p>
-<pre class="code">
+<pre class="sh">
  cd ~/.agents/ebean-skills && git pull
 </pre>
 
-<h3 id="copy-install">Option B - Clone and copy into the skills directory</h3>
-<pre class="code">
+<h3 class="install-option" id="copy-install">Option B - Clone and copy into the skills directory</h3>
+<pre class="sh">
  git clone https://github.com/ebean-orm/skills.git /tmp/ebean-skills
  mkdir -p ~/.agents/skills
  cp -r /tmp/ebean-skills/ebean-orm ~/.agents/skills/ebean-orm
  rm -rf /tmp/ebean-skills
 </pre>
 
-<h3 id="project-level">Option C - Project-level installation</h3>
+<h3 class="install-option" id="project-level">Option C - Project-level installation</h3>
 <p>
   To make the skill available to everyone working on a specific project, copy it into a checked-in
   <code>.agents/skills</code> directory.
 </p>
-<pre class="code">
+<pre class="sh">
  # from your project root
  git clone https://github.com/ebean-orm/skills.git /tmp/ebean-skills
  mkdir -p .agents/skills
@@ -77,7 +77,7 @@
 <p>
   After installation, verify that the skill is visible to your coding tool. In pi:
 </p>
-<pre class="code">
+<pre class="sh">
  /skills
 </pre>
 <p>
