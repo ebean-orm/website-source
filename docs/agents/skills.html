@@ -41,29 +41,35 @@
 <h2 id="installation">Installation</h2>
 
 <h3 class="install-option" id="clone-symlink">Option A - Clone and symlink (recommended)</h3>
+<div class="syntax">
 <pre class="sh">
  git clone https://github.com/ebean-orm/skills.git ~/.agents/ebean-skills
  mkdir -p ~/.agents/skills
  ln -sf ~/.agents/ebean-skills/ebean-orm ~/.agents/skills/ebean-orm
 </pre>
+</div>
 <p>To update:</p>
+<div class="syntax">
 <pre class="sh">
  cd ~/.agents/ebean-skills && git pull
 </pre>
+</div>
 
 <h3 class="install-option" id="copy-install">Option B - Clone and copy into the skills directory</h3>
+<div class="syntax">
 <pre class="sh">
  git clone https://github.com/ebean-orm/skills.git /tmp/ebean-skills
  mkdir -p ~/.agents/skills
  cp -r /tmp/ebean-skills/ebean-orm ~/.agents/skills/ebean-orm
  rm -rf /tmp/ebean-skills
 </pre>
-
+</div>
 <h3 class="install-option" id="project-level">Option C - Project-level installation</h3>
 <p>
   To make the skill available to everyone working on a specific project, copy it into a checked-in
   <code>.agents/skills</code> directory.
 </p>
+<div class="syntax">
 <pre class="sh">
  # from your project root
  git clone https://github.com/ebean-orm/skills.git /tmp/ebean-skills
@@ -72,14 +78,17 @@
  rm -rf /tmp/ebean-skills
  git add .agents/skills/ebean-orm
 </pre>
+</div>
 
 <h2 id="verification">Verification</h2>
 <p>
   After installation, verify that the skill is visible to your coding tool. In pi:
 </p>
+<div class="syntax">
 <pre class="sh">
  /skills
 </pre>
+</div>
 <p>
   You should see <code>ebean-orm</code> listed.
 </p>
@@ -99,6 +108,7 @@
 </p>
 
 <h2 id="structure">Skill structure</h2>
+<div class="syntax">
 <pre class="code">
  ebean-orm/
  ├── SKILL.md
@@ -110,6 +120,7 @@
      ├── testing.md
      └── db-migrations.md
 </pre>
+</div>
 <ul>
   <li><code>setup.md</code> - project setup, dependencies, and configuration</li>
   <li><code>modeling.md</code> - entity modeling and relationships</li>
