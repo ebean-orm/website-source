@@ -220,7 +220,7 @@
 
     // migration will be generated when Ebean starts
     // ... typically by running your application.
-    DB.getDefault();
+    Database.builder().loadFromProperties().build();
   }
   </pre>
 

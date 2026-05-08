@@ -10,8 +10,8 @@
 <body>
 <h2 id="database">Database</h2>
 <p>
-  <code>io.ebean.Database</code> provides most of the functionality including
-  queries, saving, deleting and transactions.
+  <code>io.ebean.Database</code> is the main API and the preferred type to use in
+  application code. It provides queries, persisting, deleting and transaction management.
 </p>
 <#include "/_common/lang-buttons.html">
 <div class="code-java">
@@ -59,193 +59,102 @@ database.beginTransaction().use { transaction ->
   </pre>
 </div>
 
+<h3 id="builder">Programmatic startup</h3>
+<p>
+  Prefer explicit programmatic startup via <code>Database.builder()</code>. Create the
+  <code>Database</code> once during application startup and inject or otherwise pass the
+  resulting instance where it is needed.
+</p>
+<pre content="java">
+Database database = Database.builder()
+  .name("db")
+  .loadFromProperties()
+  .build();
+</pre>
+
 <h3>javax.sql.DataSource</h3>
 <p>
-  A Database instance has an JDBC DataSource associating it one to one to an actual database.
+  A <code>Database</code> instance has a JDBC <code>DataSource</code> associating it one to one
+  to an actual database.
 </p>
 <p>
-  Note that a Database can have a second read only DataSource that can be used for
-  performance reasons (for read only queries) and potentially connect to database read replicas.
+  Note that a Database can have a second read-only DataSource that can be used for
+  performance reasons (for read-only queries) and potentially connect to database read replicas.
 </p>
 
-<h3 id="default">Default database</h3>
+<h3>Model and query beans</h3>
 <p>
-  One database can be specified as the <code>default database</code>. The default Database
-  instance is registered with <code>DB</code> and then can be obtained via <code>DB.getDefault()</code>.
-</p>
-
-<div class="code-java">
-  <pre content="java">
-// obtain the "default" database
-Database database = DB.getDefault();
-  </pre>
-</div>
-<div class="code-kt">
-  <pre content="kotlin">
-// obtain the "default" database
-val database = DB.getDefault()
-  </pre>
-</div>
-
-<h3>Named database</h3>
-<p>
-  Each Database instance has a name and can be registered with <code>DB</code> and then obtained by
-  it's name via <code>DB.byName()</code>
-</p>
-
-<#include "/_common/lang-buttons.html">
-<div class="code-java">
-  <pre content="java">
-// obtain a database by it's name
-Database hrDatabase = DB.byName("hr");
-  </pre>
-</div>
-<div class="code-kt">
-  <pre content="kotlin">
-// obtain a database by it's name
-val hrDatabase = DB.byName("hr")
-  </pre>
-</div>
-
-<h3>Model uses default database</h3>
-<p>
-  When our entity beans extend <a href="/docs/intro/first-entity/model">Model</a> and we
-  use <em>save()</em> that is actually using the default database.
+  Model and query bean APIs often operate against the <em>default</em> registered
+  database. If you use those APIs, register a default database at startup.
+  Even then, for service and repository code prefer injecting and using the
+  <code>Database</code> instance directly.
 </p>
 <#include "/_common/lang-buttons.html">
 <div class="code-java">
   <pre content="java">
-    Customer customer = new Customer("Roberto")
-
-    // use the default database
-    customer.save()
+  // explicit Database usage remains the preferred style
+  List<|Customer> customers = database.find(Customer.class)
+    .where().eq("status", Status.NEW)
+    .findList();
   </pre>
 </div>
 <div class="code-kt">
   <pre content="kotlin">
-    val customer = Customer("Roberto")
-
-    // use the default database
-    customer.save()
+  // explicit Database usage remains the preferred style
+  val customers = database.find(Customer::class.java)
+    .where().eq("status", Status.NEW)
+    .findList()
   </pre>
 </div>
-
-<h3>Query beans use default database</h3>
-<p>
-  When we create a Query bean and execute the query that also is actually using the default database.
-</p>
-<#include "/_common/lang-buttons.html">
-<div class="code-java">
-  <pre content="java">
-  // use the default database
-  List<|Customer> customers = new QCustomer()
-      .status.equalTo(Status.NEW)
-      .billingAddress.city.equalTo("Auckland")
-      .findList();
-  </pre>
-</div>
-<div class="code-kt">
-  <pre content="kotlin">
-  // use the default database
-  val customers = QCustomer()
-      .status.equalTo(Status.NEW)
-      .billingAddress.city.equalTo("Auckland")
-      .findList()
-  </pre>
-</div>
-
-<p class="mtm">
-  Note that in practice when using
-  <a href="/docs/intro/first-entity/model">Model</a> for persisting
-  , <a href="/docs/query/query-beans">Query beans</a> for entity queries and
-  <a href="/docs/transactions">@Transactional</a> for transactions then we tend to only
-  use database directly for <a href="/docs/query/dtoquery">DTO queries</a>,
-  <a href="/docs/query/sqlquery">SQL queries</a> and
-  <a href="/docs/query/sqlupdate">SQL updates</a>.
-</p>
 
 <h3>Configuration</h3>
 <p>
-  Details for <a href="/docs/intro/configuration">configuration</a> of database instances programmatically
-  and via properties is in the next section.
+  Details for <a href="/docs/intro/configuration">configuration</a> of Database instances
+  using <code>Database.builder()</code> and explicit startup are in the next section.
 </p>
 
 <p>&nbsp;</p>
 
-<h2 id="db" class="tg">DB (io.ebean.DB)</h2>
+<h3 id="default">Default database</h3>
+<p>
+  A Database can be registered as the default database for compatibility with APIs that
+  expect a default registered instance.
+</p>
+
+<h2 id="db" class="tg">DB (optional / compatibility)</h2>
 <ul>
   <li>DB holds a <b>registry</b> of database instances (keyed by name)</li>
-  <li>DB holds one Database instance known as the <b>default database</b></li>
-  <li>DB has <b>convenience</b> methods to operate on the default database</li>
+  <li>DB can hold one Database instance known as the <b>default database</b></li>
+  <li>DB has <b>convenience</b> methods that operate on the default database</li>
 </ul>
-<p>&nbsp;</p>
-
-<h3>Obtain default or named database instance</h3>
 <p>
-  When an Database instance is created it can be registered with DB. We can then
-  use <code>DB</code> to obtain those Database instances by name and we can obtain
-  the default database via <code>DB.getDefault()</code>.
-</p>
-<div class="code-java">
-  <pre content="java">
-// obtain the "default" database
-Database server = DB.getDefault();
-
-// obtain the HR database by name
-Database hrDB = DB.byName("hr");
-  </pre>
-</div>
-
-<h3>DB convenience methods</h3>
-<p>
-  DB has convenience methods that effectively proxy through to the default database.
-  This is useful and convenient as many applications only use a single database.
-</p>
-
-<div class="code-java">
-  <pre content="java">
-Customer customer  = ...
-
-// save using the 'default' database
-DB.save(customer);
-
-// which is the same as
-Database defaultDatabase = DB.getDefault()
-defaultDatabase.save(customer);
-  </pre>
-</div>
-
-<h3>DB is optional</h3>
-<p>
-  Note that you don't have to use the DB singleton in your application at all - it's use is
-  completely optional. Instead we can create the Database instance(s) and <code>inject</code>
-  them where needed. We typically do this using <code>Spring</code> or <code>Guice</code>
-  or a similar DI framework.
+  DB remains available for convenience and backwards compatibility, but the recommended
+  approach for new applications is to keep and inject the <code>Database</code> instance
+  returned from <code>Database.builder()</code> and call methods on that instance directly.
 </p>
 <p>
-  We can do both and have Database instances registered with DB and the DI Context and in
-  this way access the database instance(s) either way.
+  In practice it is still common to register databases when building them, because query beans,
+  Model, and older convenience APIs resolve through the registry under the hood. The key point is
+  that application code should prefer injected <code>Database</code> instances over direct use of
+  <code>DB</code> convenience methods.
 </p>
 
 <h2 id="ebeanserver">EbeanServer</h2>
 <p>
-  Database and EbeanServer are the same thing.
+  <code>io.ebean.EbeanServer</code> is the older original name for <code>io.ebean.Database</code>.
 </p>
 <p>
-  <code>io.ebean.EbeanServer</code> is the older original name for <code>io.ebean.Database</code>.
-  They can be used interchangably. In time EbeanServer will be deprecated and code should migrate
-  to use io.ebean.Database.
+  For new code, prefer <code>io.ebean.Database</code>.
 </p>
 
 
 <h2 id="ebean">Ebean</h2>
 <p>
-  DB and Ebean are the same thing.
+  <code>io.ebean.Ebean</code> is the older original name for <code>io.ebean.DB</code>.
 </p>
 <p>
-  <code>io.ebean.Ebean</code> is the older original name for <code>io.ebean.DB</code>.
-  They can be used interchangeably. In time use of Ebean will be deprecated and code should migrate
-  to use io.ebean.DB.
+  For new code, prefer explicit <code>Database</code> usage and only use <code>DB</code>
+  when you intentionally want global lookup or convenience methods.
 </p>
 
 

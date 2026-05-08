@@ -132,7 +132,7 @@
 
 ```java
 
-  Database database = DB.getDefault();
+  Database database = ...; // injected or created with Database.builder()
 
   // publish a single bean (from draft to live)
   // returning the 'live' bean
@@ -156,13 +156,13 @@
 
 ```java
 
-  Database database = DB.getDefault();
+  Database database = ...; // injected or created with Database.builder()
 
   // Restore a single draft bean
   database.draftRestore(Document.class, docId);
 
 
-  Query<Document> restoreQuery = database.find(Document.class)
+  Query<|Document> restoreQuery = database.find(Document.class)
     .where().idIn(ids)
     .order().asc("id");
 

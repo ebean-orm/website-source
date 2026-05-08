@@ -72,11 +72,11 @@ List<String> contents;
   included in the update).
 </p>
 
-<h4>ServerConfig</h4>
+<h4>DatabaseBuilder</h4>
 <p>
-  An ObjectMapper instance can be configured on ServerConfig via <code>setObjectMapper()</code>. If an ObjectMapper is
-  not specified in this way an instance will be created for use by Ebean (If Jackson ObjectMapper is
-  detected in the classpath).
+  An ObjectMapper instance can be configured on the <code>DatabaseBuilder</code> via <code>objectMapper()</code>.
+  If an ObjectMapper is not specified in this way an instance will be created for use by Ebean
+  (if Jackson ObjectMapper is detected in the classpath).
 </p>
 
 <h2 id="fallback">Fallback mapping</h2>

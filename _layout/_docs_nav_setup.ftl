@@ -23,13 +23,13 @@
   <li><a href="#l2cache">L2 Cache logging</a></li>
 </ul>
 </@smallnav>
-<@smallnav activeCheck="${serverconfig!''}" url="/docs/setup/serverconfig" title="ServerConfig">
+<@smallnav activeCheck="${serverconfig!''}" url="/docs/setup/serverconfig" title="DatabaseBuilder">
 <ul class="nav">
   <li><a href="#overview">Overview</a></li>
-  <li><a href="#ebean-properties">ebean.properties</a></li>
-  <li><a href="#external-properties">External properties</a></li>
-  <li><a href="#server">Register</a></li>
-  <li><a href="#default">Default server</a></li>
+  <li><a href="#builder">Database.builder()</a></li>
+  <li><a href="#properties">Load from properties</a></li>
+  <li><a href="#register">Register</a></li>
+  <li><a href="#default">Default database</a></li>
   <li><a href="#di">Dependency injection</a></li>
 </ul>
 </@smallnav>
@@ -43,8 +43,8 @@
 <@smallnav activeCheck="${spring!''}" url="/docs/setup/spring" title="Spring">
 <ul class="nav">
   <li><a href="#spring-boot">Spring boot</a></li>
-  <li><a href="#ebean-spring">ebean-spring</a></li>
-  <li><a href="#factory">FactoryBean</a></li>
+  <li><a href="#external-txn">External transactions</a></li>
+  <li><a href="#bean">Inject Database</a></li>
 </ul>
 </@smallnav>
 <@smallnav activeCheck="${activerecord!''}" url="/docs/setup/activerecord" title="Active Record">

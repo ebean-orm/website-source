@@ -12,7 +12,7 @@
 <h2>Spring transactions</h2>
 <p>
   The recommendation is to use Ebean's own transaction management but we can also use
-  spring transactions.
+  Spring transactions.
 </p>
 <p>
   To do so include the dependency:
@@ -26,12 +26,14 @@
 </pre>
 
 <p>
-  Set <code>SpringJdbcTransactionManager</code> as an external transaction by:
+  Register <code>SpringJdbcTransactionManager</code> as the external transaction manager
+  on the builder:
 </p>
 <pre content="java">
-DatabaseConfig config = new DatabaseConfig();
-
-config.setExternalTransactionManager(new SpringJdbcTransactionManager());
+Database database = Database.builder()
+  .loadFromProperties()
+  .externalTransactionManager(new SpringJdbcTransactionManager())
+  .build();
 </pre>
 
 <@next_edit "JTA Transactions" "/docs/transactions/jta" "/docs/transactions/spring.html"/>

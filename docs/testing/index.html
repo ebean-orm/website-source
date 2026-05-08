@@ -433,7 +433,7 @@ UserContext.setUserId("U1");
   </tr>
   <tr>
     <td>ebean.migraton.run</td>
-    <td>Set to true or false to run the migrations when the EbeanServer starts</td>
+    <td>Set to true or false to run the migrations when the Database starts</td>
   </tr>
 </table>
 
@@ -464,7 +464,7 @@ datasource.db.databaseDriver=org.h2.Driver
 <h4>Example of simple use</h4>
 
 <pre content="java">
-Database database = DB.getDefault();
+Database database = ...; // injected or created with Database.builder()
 database.script().run("/scripts/test-script.sql");
 </pre>
 
@@ -475,7 +475,7 @@ database.script().run("/scripts/test-script.sql");
 Map<|String,String> placeholders = new HashMap();
 placeholders.put("tableName", "e_basic");
 
-Database database = DB.getDefault();
+Database database = ...; // injected or created with Database.builder()
 database.script().run("/scripts/test-script.sql", placeholders);
 
 </pre>

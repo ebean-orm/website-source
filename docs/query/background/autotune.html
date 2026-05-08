@@ -64,10 +64,10 @@
 ebean.autotune.profiling=true
   ```
   ```java
-  ServerConfig serverConfig = ...
+  DatabaseBuilder databaseBuilder = ...
 
   // turn on profiling
-  serverConfig.getAutoTuneConfig().setProfiling(true);
+  databaseBuilder.settings().getAutoTuneConfig().setProfiling(true);
   ```
 
   <h3 id="profiling-file">Profiling file: ebean-profiling.xml</h3>
@@ -162,9 +162,9 @@ ebean.autotune.queryTuning=true
 #ebean.autotune.queryTuningFile=ebean-autotune.xml
   ```
   ```java
-ServerConfig serverConfig = ...
+DatabaseBuilder databaseBuilder = ...
 
-AutoTuneConfig autoTuneConfig = serverConfig.getAutoTuneConfig();
+AutoTuneConfig autoTuneConfig = databaseBuilder.settings().getAutoTuneConfig();
 
 // turn on query tuning
 autoTuneConfig.setQueryTuning(true);

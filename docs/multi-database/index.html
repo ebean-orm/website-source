@@ -133,32 +133,33 @@
   </p>
 
   <p>
-    Create an implementation of ServerConfigProvider that registers the
-    entity beans with the appropriate database based on the name.
+    Create an implementation of <code>DatabaseConfigProvider</code> that registers the
+    entity beans with the appropriate database based on the configured name.
   </p>
   <pre content="java">
-    public class RegisterDomainBeans implements ServerConfigProvider {
+    public class RegisterDomainBeans implements DatabaseConfigProvider {
 
       private static final String OTHER = "other";
 
       private static final String DB = "db";
 
       @Override
-      public void apply(ServerConfig serverConfig) {
+      public void apply(DatabaseBuilder config) {
 
-          log.debug("register beans for {}", serverConfig.getName());
-          if (DB.equals(serverConfig.getName())) {
+          String name = config.settings().getName();
+          log.debug("register beans for {}", name);
+          if (DB.equals(name)) {
             // the default database
-            serverConfig.addClass(DCustomer.class);
-            serverConfig.addClass(DOrder.class);
-            serverConfig.addClass(DProduct.class);
+            config.addClass(DCustomer.class);
+            config.addClass(DOrder.class);
+            config.addClass(DProduct.class);
             ...
 
-          } else if (OTHER.equals(serverConfig.getName())) {
+          } else if (OTHER.equals(name)) {
             // second OTHER database
-            serverConfig.setDefaultServer(false);
-            serverConfig.addClass(OSales.class);
-            serverConfig.addClass(OMarket.class);
+            config.defaultDatabase(false);
+            config.addClass(OSales.class);
+            config.addClass(OMarket.class);
             ...
 
           }
@@ -166,8 +167,8 @@
     }
   </pre>
   <p>
-    Add a service loader <code>src/main/resources/META-INF/services/io.ebean.config.ServerConfigProvider</code>
-    file to specify our ServerConfigProvider implementation (e.g. RegisterDomainBeans).
+    Add a service loader <code>src/main/resources/META-INF/services/io.ebean.config.DatabaseConfigProvider</code>
+    file to specify our <code>DatabaseConfigProvider</code> implementation (e.g. RegisterDomainBeans).
   </p>
 
 

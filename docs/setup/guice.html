@@ -9,77 +9,44 @@
 
   <h2 id="provider">Provider</h2>
   <p>
-    Create a Guice Provider that programmatically creates an Ebean database instance.
-  </p>
-
-  <h4>Example 1</h4>
-  <p>
-    Example provider implementation using <code>DatabaseConfig</code> and <code>DatabaseFactory</code>.
+    Create a Guice provider that programmatically creates a <code>Database</code>
+    using <code>Database.builder()</code>.
   </p>
 
   <pre content="java">
-
-  import io.ebean.Ebean;
-  import io.ebean.EbeanServer;
+  import io.ebean.Database;
   import com.google.inject.Provider;
 
-  public class EbeanServerProvider implements Provider<EbeanServer> {
+  public class DatabaseProvider implements Provider<Database> {
 
     @Override
-    public EbeanServer get() {
-
-      ServerConfig config = new ServerConfig();
-      config.setName("pg");
-      // load configuration from ebean.properties
-      config.loadFromProperties();
-      config.setDefaultServer(true);
-      ...
-      // other programmatic configuration
-
-      return EbeanServerFactory.create(config);
-    }
-  }
-
-
-</pre>
-
-  <h4>Example 2</h4>
-  <p>
-    Example provider implementation using <code>Ebean</code> that implicitly creates the
-    <code>default</code> EbeanServer using ebean.properties.
-  </p>
-  <pre content="java">
-
-  import io.ebean.Ebean;
-  import io.ebean.EbeanServer;
-  import com.google.inject.Provider;
-
-  public class EbeanServerProvider implements Provider<|EbeanServer> {
-
-    @Override
-    public EbeanServer get() {
-
-      // EbeanServer configured by ebean.properties
-      return Ebean.getDefaultServer();
+    public Database get() {
+      return Database.builder()
+        .name("pg")
+        .loadFromProperties()
+        .defaultDatabase(true)
+        .build();
     }
   }
   </pre>
+
   <h2 id="module">Module bind</h2>
-    <p>
-      In the Guice module bind the provider using eager singleton so that the EbeanServer is
-      created eagerly at startup.
-    </p>
+  <p>
+    In the Guice module bind the provider using eager singleton so that the
+    <code>Database</code> is created eagerly at startup.
+  </p>
   <pre content="java">
     // bind the provider as eager singleton
-    bind(EbeanServer.class).toProvider(EbeanServerProvider.class).asEagerSingleton()
+    bind(Database.class).toProvider(DatabaseProvider.class).asEagerSingleton()
   </pre>
 
   <h2 id="activerecord">Inject and ActiveRecord</h2>
-    <p>
-      As long as  <code>ServerConfig.setRegister(true)</code> and <code>ServerConfig.setDefaultServer(true)</code>
-      are used in the Guice provider then the EbeanServer instance created is also available via the Ebean
-      singleton and that means both <code>@Inject</code> and the <code>active record</code> style can be used.
-    </p>
+  <p>
+    Prefer injecting <code>Database</code> into application code. In practice most applications
+    still keep <code>register(true)</code> and <code>defaultDatabase(true)</code> so that query beans,
+    Model and other default-database-based APIs can resolve the database, while application code
+    itself continues to use the injected <code>Database</code> instance.
+  </p>
 
 </div>
 </body>

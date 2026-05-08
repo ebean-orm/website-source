@@ -58,7 +58,7 @@ public class Contact {
   configure via code:
 </p>
 <pre content="java">
-  DatabaseConfig.setIdGeneratorAutomatic(false)
+  databaseBuilder.idGeneratorAutomatic(false)
 </pre>
 <p>
   With idGeneratorAutomatic disabled then we need to explicitly add the
@@ -235,15 +235,15 @@ public class ModUuidGenerator implements IdGenerator {
   }
 }
 ```
-<h4>2. Register with ServerConfig</h4>
+<h4>2. Register with DatabaseBuilder</h4>
 <p>
-  We register the IdGenerator with ServerConfig by using <code>addClass()</code>
-  or <code>add(IdGenerator idGenerator)</code> or <code>setIdGenerators(List<IdGenerator> idGenerators)</code>.
+  We register the IdGenerator with the <code>DatabaseBuilder</code> by using <code>addClass()</code>,
+  <code>add(IdGenerator idGenerator)</code> or <code>setIdGenerators(List&lt;IdGenerator&gt; idGenerators)</code>.
 </p>
 <p>
   Note that if you are using classpath scanning to find entity beans that this will also automatically
   find implementations of IdGenerator and automatically register them so in this case you don't need to
-  register the IdGenerator manually with ServerConfig.
+  register the IdGenerator manually with the <code>DatabaseBuilder</code>.
 </p>
 
 <h4>3. @GeneratedValue</h4>

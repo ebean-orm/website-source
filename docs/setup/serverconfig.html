@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta name="layout" content="_layout/docs_setup.html"/>
-<#assign subtitle = "ServerConfig">
+<#assign subtitle = "DatabaseBuilder">
 <#assign serverconfig = "true">
 </head>
 <body>
@@ -9,120 +9,108 @@
 <div class="bs-docs-section">
   <h2 id="overview">Overview</h2>
   <p>
-    Configuration of EbeanServer instances is defined by the <code>ServerConfig</code> bean. It has a series of
-    getters and setters for all the configuration options available.
+    The preferred way to programmatically configure Ebean is via <code>Database.builder()</code>
+    and <code>DatabaseBuilder</code>.
   </p>
   <p>
-    In code terms a new ServerConfig instance is created and configured by either caller setter methods or
-    loading configuration from ebean.properties or external properties. Finally <code>EbeanServerFactory</code>
-    is used to take the ServerConfig and create an <code>EbeanServer</code> instance.
+    This keeps database creation explicit, works naturally with dependency injection,
+    and avoids relying on implicit bootstrap through the <code>DB</code> singleton.
+    For new applications, prefer injecting <code>Database</code> and calling methods on
+    that instance directly.
   </p>
 
-  <h2 id="ebean-properties">ebean.properties</h2>
+  <h2 id="builder">Database.builder()</h2>
   <p>
-    The <code>ServerConfig.loadFromProperties()</code> loads configuration from <code>ebean.properties</code> file.
-    This is can be used where some properties are set via code (calling setter methods on ServerConfig)
-    and some from ebean.properties.
+    Build the <code>Database</code> explicitly and keep the instance returned from
+    <code>build()</code>.
   </p>
 
   <pre content="java">
+  var dataSource = DataSourceBuilder.create()
+    .username("my_app")
+    .password("secret")
+    .url("jdbc:postgresql://localhost:5432/my_app");
 
-  ServerConfig config = new ServerConfig();
-  config.setName("pg");
-  ...
-  // load configuration from ebean.properties
-  // using "pg" as the server name
-  config.loadFromProperties();
-  ...
-
-  EbeanServer server = EbeanServerFactory.create(config);
+  Database database = Database.builder()
+    .name("db")
+    .dataSourceBuilder(dataSource)
+    .build();
   </pre>
 
-  <h2 id="external-properties">External properties</h2>
+  <h2 id="properties">Load from properties</h2>
   <p>
-    You can have an external mechanism for loading <code>Properties</code> and supply this to ServerConfig via:
-    <code>ServerConfig.loadFromProperties(Properties)</code>. This is can be used where some configuration is set
-    via the externally loaded properties and some is set via code (calling setter methods on ServerConfig).
+    If some configuration lives in <code>application.yaml</code> or <code>application.properties</code>,
+    load it explicitly with the builder rather than relying on automatic bootstrap.
   </p>
 
   <pre content="java">
-
-  // load properties externally
-  Properties externalProps = ...;
-
-  ServerConfig config = new ServerConfig();
-  config.setName("pg");
-  ...
-  // load configuration from external properties
-  // using "pg" as the server name
-  config.loadFromProperties(externalProps);
-  ...
-
-  EbeanServer server = EbeanServerFactory.create(config);
+  Database database = Database.builder()
+    .name("pg")
+    .loadFromProperties()
+    .build();
   </pre>
+
+  <p>
+    For named databases, set the name before <code>loadFromProperties()</code> so the
+    matching datasource configuration is loaded.
+  </p>
+
   <h2 id="register">Register</h2>
   <p>
-    By default ServerConfig has register=true and this means that the EbeanServer instance is registered with
-    the Ebean singleton and can be later accessed via <code>Ebean.getServer(serverName)</code>
+    By default a built <code>Database</code> is registered with the <code>DB</code> registry,
+    and that is generally the right choice. Query beans, Model and other default-database-based
+    APIs resolve the database through that registry under the hood.
   </p>
   <p>
-    You need to explicitly ServerConfig.setRegister(false) if you don't this feature.
+    Only disable registration for isolated or one-off databases that are never referenced that way.
   </p>
 
   <pre content="java">
-  ServerConfig config = new ServerConfig();
-  config.setName("pg");
-  ...
-
-  EbeanServer server = EbeanServerFactory.create(config);
-
-  ...
-
-  // Later on we can get the server instance
-  // using it's name via Ebean
-  EbeanServer server = Ebean.getServer("pg");
-
+  Database database = Database.builder()
+    .name("reporting")
+    .loadFromProperties()
+    .register(false)
+    .defaultDatabase(false)
+    .build();
   </pre>
 
-  <h2 id="default">Default server</h2>
+  <h2 id="default">Default database</h2>
   <p>
-    You can set ServerConfig.setDefaultServer(true) to indicate that the EbeanServer instance created should
-    be the 'default' EbeanServer and can be later accessed via <code>Ebean.getDefaultServer()</code>
+    One registered <code>Database</code> is typically left as the default database. Query beans,
+    Model and older convenience APIs commonly resolve against that default registration.
+    Even so, for new code prefer using the injected <code>Database</code> directly rather than
+    calling <code>DB</code> convenience methods in application code.
   </p>
 
   <pre content="java">
-  ServerConfig config = new ServerConfig();
-  config.setName("pg");
-  config.setDefaultServer(true);
-  ...
-
-  EbeanServer server = EbeanServerFactory.create(config);
-
-  ...
-
-  // Later on we can get the server instance ...
-  EbeanServer server = Ebean.getDefaultServer();
-
-  // Note: serverName of null is the same as getting the default server
-  EbeanServer server = Ebean.getServer(null);
-
+  Database database = Database.builder()
+    .name("db")
+    .loadFromProperties()
+    .defaultDatabase(true)
+    .build();
   </pre>
-
 
   <h2 id="di">Dependency injection</h2>
   <p>
-    For dependency injection with Guice, Spring and similar DI frameworks typically a "provider" or "factory"
-    is required that creates a ServerConfig, configures it as required perhaps using ebean.properties or
-    external properties and then uses <code>EbeanServerFactory</code> to create the EbeanServer instance.
-  </p>
-  <h4>Inject and ActiveRecord</h4>
-  <p>
-    It is common and expected that you want to be able to both <code>@Inject</code> <code>EbeanServer</code>
-    instances in the traditional DI coding style <em>and also</em> use the active record style.  This can be done
-    when the EbeanServer instances are created with <code>register</code> as true and one instance marked
-    as the <code>default server</code>.
+    With Guice, Spring, Avaje Inject and similar DI frameworks, create the
+    <code>Database</code> in a provider or bean factory and inject the resulting
+    instance where needed.
   </p>
 
+  <pre content="java">
+  @Bean
+  Database database() {
+    return Database.builder()
+      .name("db")
+      .loadFromProperties()
+      .build();
+  }
+  </pre>
+
+  <p>
+    Older versions referred to <code>ServerConfig</code> / <code>EbeanServerFactory</code>.
+    If you are migrating older setup code, see <a href="/docs/upgrading">docs / upgrading</a>.
+  </p>
 </div>
 </body>
 </html>

@@ -6,123 +6,43 @@
 </head>
 <body>
 <div class="bs-docs-section">
-<h2 id="test-properties">test-ebean.properties</h2>
+<h2 id="test-properties">application-test.properties / application-test.yaml</h2>
 <p>
-  When you want to run all tests against <code>H2</code> in memory database a simple way to do this is to add a
-  <code>src/test/resources/test-ebean.properties</code> to your project. In the <code>test-ebean.properties</code>
-  you can effectively override the properties of the datasource and specify to use <code>H2</code>.
+  For new applications, prefer explicit test startup using <code>Database.builder()</code>
+  and regular test configuration files such as
+  <code>src/test/resources/application-test.properties</code> or
+  <code>src/test/resources/application-test.yaml</code>.
 </p>
-  <p>
-    When an EbeanServer is created automatically via <code>Ebean.getDefaultServer()</code> or <code>Ebean.getServer(name)</code>
-    then Ebean will look for the existence of test-ebean.properties in the classpath. If found this then typically
-    specifies to use an in memory <code>H2</code> datasource.
-  </p>
-  <p>
-    When programmatically creating an EbeanServer using <code>ServerConfig</code> and <code>EbeanServerFactory</code>
-    there is a method <code>serverConfig.loadTestProperties()</code> which will similarly look for a test-ebean.properties
-    file if present.
-  </p>
-  <pre content="java">
-  @Override
-  public EbeanServer getObject() throws Exception {
+<p>
+  Keep the test datasource configuration in those files and create the
+  <code>Database</code> explicitly in your test wiring.
+</p>
+<pre content="java">
+Database database = Database.builder()
+  .name("db")
+  .loadFromProperties()
+  .defaultDatabase(true)
+  .build();
+</pre>
 
-    ServerConfig config = new ServerConfig();
-    config.setName("db");
-    config.loadFromProperties(properties);
-    ...
-
-    // load test-ebean.properties if present for running tests
-    // typically using H2 in memory database
-    config.loadTestProperties();
-
-    // set as default and register so that Model can be
-    // used if desired for save() and update() etc
-    config.setDefaultServer(true);
-    config.setRegister(true);
-
-    return EbeanServerFactory.create(config);
-  }
-  </pre>
-
-  <h3>Example test-ebean.properties</h3>
-  <pre content="properties">
-  ebean.db.ddl.generate=true
-  ebean.db.ddl.run=true
-
-  datasource.db.username=sa
-  datasource.db.password=
-  datasource.db.databaseUrl=jdbc:h2:mem:tests
-  datasource.db.databaseDriver=org.h2.Driver
-  </pre>
-
-
-<h2 id="mockibean">MockiEbean</h2>
-
-<code>MockiEbean</code> from <code>ebean-mocker</code> project provides a helper object to support mocking the EbeanServer using tools like
-<a href="//code.google.com/p/mockito/">Mockito</a>. If you like the Play/Active record style or Ebean singleton style you can add a test
-dependency on ebean-mocker and use MockiEbean to enable use of Mockito and similar tools.
-
-Mocking with Ebean singleton
-<code>MockiEbean</code> from ebean-mocker provides a mechanism for using a tool like Mockito and
-replacing the default EbeanServer instance with a mock.
+<h2 id="ebean-test">ebean-test</h2>
+<p>
+  For integration tests, prefer <a href="/docs/testing">docs / testing</a> and
+  <code>ebean-test</code>. It provides Docker-backed databases, test-specific platform
+  configuration, and a much better path than older implicit bootstrap approaches.
 </p>
 
-  <pre content="java">
-...
-import io.ebeaninternal.server.core.DefaultServer;
-...
+<h2 id="mocking">Mocking</h2>
+<p>
+  If your application code depends on injected <code>Database</code> instances then testing is
+  straightforward: replace the injected dependency with a test double or alternative test wiring.
+</p>
+<p>
+  Older applications that rely on Model, active-record style APIs, or the global registry may still
+  need to register a default database for compatibility. For new code, prefer explicit
+  <code>Database</code> injection over singleton-based access.
+</p>
 
-  @Test
-  public void testWithMockito() {
-
-    EbeanServer defaultServer = Ebean.getServer(null);
-    assertTrue("is a real EbeanServer", defaultServer instanceof DefaultServer);
-
-    Long someBeanId = Long.valueOf(47L);
-
-    // Use Mockito to create a mock for the EbeanServer interface
-    EbeanServer mock = Mockito.mock(EbeanServer.class);
-
-    // setup some required behaviour
-    when(mock.getBeanId(null)).thenReturn(someBeanId);
-
-    // ---------------
-    // 'register' the mock instance into Ebean
-    // this becomes the 'default EbeanServer' until
-    // mockiEbean.restoreOriginal() is called
-    // ---------------
-    MockiEbean mockiEbean = MockiEbean.start(mock);
-    try {
-
-      // Ebean singleton 'default server' now returns the mock instance
-      EbeanServer server = Ebean.getDefaultServer();
-
-      // always returns the someBeanId setup by Mockito
-      Object beanId = server.getBeanId(null);
-
-      assertEquals(someBeanId, beanId);
-
-    } finally {
-      // ---------------
-      // restore the original defaultServer instance
-      // ---------------
-      mockiEbean.restoreOriginal();
-    }
-
-    EbeanServer restoredServer = Ebean.getDefaultServer();
-    assertTrue("is a real EbeanServer", restoredServer instanceof DefaultServer);
-  }
-
-  </pre>
-<h4>MockiEbean Maven dependency</h4>
-  <pre content="xml">
-    <dependency>
-      <groupId>io.ebean</groupId>
-      <artifactId>ebean-mocker</artifactId>
-      <version>13.6.0</version>
-      <scope>test</scope>
-    </dependency>
-  </pre>
 </div>
 </body>
 </html>

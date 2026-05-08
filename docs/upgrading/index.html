@@ -166,6 +166,34 @@ List&lt;Contact&gt; contacts = new QContact()
   <li>SQL/SqlQuery: Continues to be the best option for complex database-specific queries</li>
 </ul>
 
+<h3>Programmatic Database configuration</h3>
+
+<p>
+  Prefer explicit programmatic configuration via <code>Database.builder()</code> and injected
+  <code>Database</code> instances. Older code may still use <code>DatabaseConfig</code>,
+  <code>DatabaseFactory</code>, <code>ServerConfig</code>, <code>EbeanServerFactory</code>
+  or rely on implicit bootstrap through <code>DB</code>.
+</p>
+
+<p><strong>Legacy style:</strong></p>
+<pre><code class="language-java">
+DatabaseConfig config = new DatabaseConfig();
+config.loadFromProperties();
+Database database = DatabaseFactory.create(config);
+</code></pre>
+
+<p><strong>Preferred style:</strong></p>
+<pre><code class="language-java">
+Database database = Database.builder()
+  .loadFromProperties()
+  .build();
+</code></pre>
+
+<p>
+  For named databases, call <code>.name("mydb")</code> before <code>.loadFromProperties()</code>.
+  Prefer injecting the resulting <code>Database</code> rather than calling <code>DB.byName("...")</code>.
+</p>
+
 <h3>Additional Resources</h3>
 
 <ul>

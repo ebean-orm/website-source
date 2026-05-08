@@ -8,10 +8,48 @@
   <#assign n1_configuration="active">
 </head>
 <body>
-<h2 id="properties">via Properties / yaml</h2>
+<h2 id="programmatic">Programmatic configuration (recommended)</h2>
 <p>
-  io.ebean.Database can automatically be configured via properties in <code>application.yaml</code>,
-  <code>application.properties</code> etc.
+  The preferred approach is to programmatically create a <code>Database</code> using
+  <code>Database.builder()</code> and then inject or otherwise pass that instance where it is needed.
+</p>
+<p>
+  This makes startup explicit and avoids relying on global lookup via <code>DB</code>.
+</p>
+
+<#include "/_common/lang-buttons.html"/>
+<div class="code-java">
+  <pre content="java">
+var dataSource = DataSourceBuilder.create()
+  .username("sa")
+  .password("")
+  .url("jdbc:h2:mem:myapp");
+
+Database database = Database.builder()
+  .name("db")
+  .dataSourceBuilder(dataSource)
+  .build();
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+val dataSource = DataSourceBuilder.create()
+  .username("sa")
+  .password("")
+  .url("jdbc:h2:mem:myapp")
+
+val database = Database.builder()
+  .name("db")
+  .dataSourceBuilder(dataSource)
+  .build()
+  </pre>
+</div>
+
+<h2 id="properties">Load configuration from application.yaml / properties</h2>
+<p>
+  If the datasource settings live in <code>application.yaml</code>, <code>application.properties</code>
+  and similar configuration sources, still create the <code>Database</code> explicitly and call
+  <code>loadFromProperties()</code>.
 </p>
 <p>
   The default database name is <code>db</code> so the minimal configuration looks like:
@@ -34,6 +72,24 @@ datasource:
     password: my_password
     url: jdbc:postgresql://localhost:5432/my_app
 </pre>
+
+<#include "/_common/lang-buttons.html"/>
+<div class="code-java">
+  <pre content="java">
+Database database = Database.builder()
+  .name("db")
+  .loadFromProperties()
+  .build();
+  </pre>
+</div>
+<div class="code-kt">
+  <pre content="kotlin">
+val database = Database.builder()
+  .name("db")
+  .loadFromProperties()
+  .build()
+  </pre>
+</div>
 
 <h3>ebean.migration.run</h3>
 <p>
@@ -63,13 +119,10 @@ datasource:
   ## myPassword and myDatabaseHost
 </pre>
 
-
 <h3 id="properties-multiple">Multiple databases</h3>
 <p>
-  When using multiple databases we set multiple datasource configurations.
-  The non-default databases have a name. For example, if we have a second
-  database called <code>"other"</code> we configure a second datasource
-  like below:
+  When using multiple databases, keep the startup explicit and create each <code>Database</code>
+  using its configured name.
 </p>
 <pre content="yml">
 ebean:
@@ -89,69 +142,28 @@ datasource:
     url: jdbc:postgresql://${otherDatabaseHost}:5432/other_dbname
 </pre>
 <p>
-  We can obtain the "other" database instance by it's name:
+  Create the named database explicitly:
 </p>
-<#include "/_common/lang-buttons.html"/>
 <div class="code-java">
   <pre content="java">
-// obtain "other" database by its name
-Database otherDatabase = DB.byName("other");
+Database otherDatabase = Database.builder()
+  .name("other")
+  .loadFromProperties()
+  .build();
   </pre>
 </div>
 <div class="code-kt">
   <pre content="kotlin">
-// obtain "other" database by its name
-val otherDatabase = DB.byName("other");
+val otherDatabase = Database.builder()
+  .name("other")
+  .loadFromProperties()
+  .build()
   </pre>
 </div>
 <p>
-  Goto <a href="/docs/multi-database">docs / multi-database</a> for more details on using multiple databases
-  with <code>@DbName</code>, Model and Finder.
+  Goto <a href="/docs/multi-database">docs / multi-database</a> for more details on working
+  with multiple databases.
 </p>
-
-<h2 id="programmatic">Programmatically creating database</h2>
-<p>
-  We can programmatically create a Database instance using <a href="#factory">DatabaseFactory</a>
-  and <a href="#config">DatabaseConfig</a>.
-</p>
-
-<#include "/_common/lang-buttons.html"/>
-<div class="code-java">
-  <pre content="java">
-// datasource
-DataSourceConfig dataSourceConfig = new DataSourceConfig();
-dataSourceConfig.setUsername("sa");
-dataSourceConfig.setPassword("");
-dataSourceConfig.setUrl("jdbc:h2:mem:myapp;");
-
-
-// configuration ...
-DatabaseConfig config = new DatabaseConfig();
-config.setDataSourceConfig(dataSourceConfig);
-...
-
-// create database instance
-Database database = DatabaseFactory.create(config);
-  </pre>
-</div>
-<div class="code-kt">
-  <pre content="kotlin">
-// datasource
-val dataSourceConfig = new DataSourceConfig()
-dataSourceConfig.setUsername("sa")
-dataSourceConfig.setPassword("")
-dataSourceConfig.setUrl("jdbc:h2:mem:myapp;")
-
-
-// configuration ...
-val config = new DatabaseConfig();
-config.setDataSourceConfig(dataSourceConfig)
-...
-
-// create database instance
-val database = DatabaseFactory.create(config)
-  </pre>
-</div>
 
 <h2 id="testing-ddl">For Testing with ddl.generation</h2>
 <p>

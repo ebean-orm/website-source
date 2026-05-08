@@ -88,7 +88,7 @@ serverConfig.setServiceObject("igniteConfiguration", configuration);
 <pre content="java">
 package models;
 
-import io.ebean.config.ServerConfig;
+import io.ebean.DatabaseBuilder;
 import io.ebean.event.ServerConfigStartup;
 import org.apache.ignite.configuration.IgniteConfiguration;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
@@ -99,7 +99,7 @@ import java.util.Arrays;
 public class MyServerConfigStartup implements ServerConfigStartup {
 
     @Override
-    public void onStart(ServerConfig serverConfig) {
+    public void onStart(DatabaseBuilder serverConfig) {
 
         IgniteConfiguration igniteCfg = new IgniteConfiguration();
         igniteCfg.setClientMode(true);

@@ -79,8 +79,8 @@
   </p>
   <p>
     If scanning is not used or the ReadAuditPrepare implementation has dependencies and its
-    instantiation should be performed externally to Ebean then you can register it explicitly
-    with the DatabaseConfig.
+    instantiation should be performed externally to Ebean then register it explicitly on the
+    <code>DatabaseBuilder</code>.
   </p>
 
   <pre content="java">
@@ -89,15 +89,10 @@
 
   MyReadAuditPrepare readAuditPrepare = ...;
 
-  DatabaseConfig config = new DatabaseConfig();
-  ...
-
-  // register explicitly here
-  config.setReadAuditPrepare(readAuditPrepare);
-
-
-  ...
-  Database database = DatabaseFactory.create(config);
+  Database database = Database.builder()
+    .loadFromProperties()
+    .readAuditPrepare(readAuditPrepare)
+    .build();
 
   </pre>
 

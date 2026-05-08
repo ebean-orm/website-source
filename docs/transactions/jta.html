@@ -15,14 +15,15 @@
   managed by the container.
 </p>
 <p>
-  To do so set <code>JtaTransactionManager</code> as an external transaction by:
+  To do so register <code>JtaTransactionManager</code> as the external transaction manager
+  on the builder:
 </p>
 
 <pre content="java">
-DatabaseConfig config = new DatabaseConfig();
-
-// set JtaTransactionManager as the external transaction manager
-config.setExternalTransactionManager(new JtaTransactionManager());
+Database database = Database.builder()
+  .loadFromProperties()
+  .externalTransactionManager(new JtaTransactionManager())
+  .build();
 </pre>
 
 <@next_edit "Mapping" "/docs/mapping" "/docs/transactions/jta.html"/>

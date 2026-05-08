@@ -40,11 +40,11 @@ public void process(OffsetDateTime startOffset) {
 }
 </pre>
 <p>
-  use <code>database.currentTransaction()</code> to return the current transaction for a given database
-  that is typically not the default database.
+  Use <code>database.currentTransaction()</code> to return the current transaction for a given database
+  that is typically injected or created explicitly during startup.
 </p>
 <pre content="java">
-Database otherDb = DB.byName("other");
+Database otherDb = ...; // injected or created with Database.builder()
 
 Transaction txn = otherDb.currentTransaction();
 </pre>
@@ -60,7 +60,7 @@ Transaction txn = otherDb.currentTransaction();
   if any error occurs in the block.
 </p>
 <pre content="java">
-try (Transaction transaction = DB.beginTransaction()) {
+try (Transaction transaction = database.beginTransaction()) {
 
   // do stuff...
   Customer customer = ...
@@ -78,7 +78,7 @@ try (Transaction transaction = DB.beginTransaction()) {
   the transaction is closed.
 </p>
 <pre content="kotlin">
-DB.beginTransaction().use { transaction ->
+database.beginTransaction().use { transaction ->
 
   // do stuff...
   val customer = ...
@@ -107,7 +107,7 @@ DB.beginTransaction().use { transaction ->
   We primarily use <code>end()</code> in a finally block.
 </p>
 <pre content="java">
-Transaction transaction = DB.beginTransaction()
+Transaction transaction = database.beginTransaction()
 try {
   // do stuff...
   Customer customer = ...
@@ -162,7 +162,7 @@ try {
   via ... and <em>model.save(transaction)</em> etc.
 </p>
 <pre content="java">
-try (Transaction transaction = DB.getDefault().createTransaction()) {
+try (Transaction transaction = database.createTransaction()) {
 
   ...
   var customer = new QCustomer(transaction) // explicit transaction

@@ -226,15 +226,15 @@ ebean.encryptKeyManager=org.example.BasicEncyptKeyManager
 </pre>
 
 <p>
-  Programmatically configure using DatabaseConfig.
+  Programmatically configure using <code>Database.builder()</code>.
 </p>
 <pre content="java">
-DatabaseConfig config = DatabaseConfig();
-...
 EncryptKeyManager keyManager = ...;
-config.setEncryptKeyManager(keyManager);
-...
-Database database = DatabaseFactory.create(config);
+
+Database database = Database.builder()
+  .loadFromProperties()
+  .encryptKeyManager(keyManager)
+  .build();
 </pre>
 
 <p>

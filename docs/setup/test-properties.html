@@ -8,18 +8,17 @@
 <div class="bs-docs-section">
 <h2 id="test-properties">application-test.properties</h2>
   <p>
-    It is common to want to run all tests against <code>H2</code> in memory database.
-    A simple way to do this is to add a
-    <code>src/test/resources/application-test.properties</code> to your project. In the <code>application-test.properties</code>
-    you can effectively override the properties of the datasource and specify to use <code>H2</code>.
+    It is common to want to run all tests against an in-memory <code>H2</code> database.
+    A simple way to do this is to add
+    <code>src/test/resources/application-test.properties</code> (or <code>application-test.yaml</code>)
+    and point the datasource at H2.
   </p>
   <blockquote>
-    Run all tests against H2 in memory database.
+    Run all tests against H2 in-memory.
   </blockquote>
   <p>
-    When a Database instance is created automatically via <code>DB.getDefault()</code>
-    then Ebean will look for the existence of application-test.properties in the classpath. If found this then typically
-    specifies to use an in memory H2 datasource.
+    For new applications, prefer explicit test wiring using <code>Database.builder()</code>
+    and <code>loadFromProperties()</code> rather than relying on implicit bootstrap.
   </p>
 
   <h3>Example application-test.properties</h3>
@@ -35,34 +34,27 @@
   datasource.db.databaseDriver=org.h2.Driver
   </pre>
 
-  <h3>Programmatic - loadTestProperties()</h3>
+  <h3>Programmatic builder</h3>
   <p>
-    When programmatically creating a Database instance using <code>DatabaseConfig</code> and <code>DatabaseFactory</code>
-    there is a method <code>databaseConfig.loadTestProperties()</code> which will similarly look for a application-test.properties
-    file if present.
+    Keep test startup explicit and load the test configuration via the builder:
   </p>
 
   <pre content="java">
   @Override
-  public Database getObject() throws Exception {
+  public Database getObject() {
 
-    DatabaseConfig config = new DatabaseConfig();
-    config.setName("db");
-    config.loadFromProperties(properties);
-    ...
-
-    // load application-test.properties if present for running tests
-    // typically using H2 in memory database
-    config.loadTestProperties();
-
-    // set as default and register so that Model can be
-    // used if desired for save() and update() etc
-    config.setDefaultServer(true);
-    config.setRegister(true);
-
-    return DatabaseFactory.create(config);
+    return Database.builder()
+      .name("db")
+      .loadFromProperties()
+      .defaultDatabase(true)
+      .build();
   }
   </pre>
+
+  <p>
+    For broader integration testing support, including Docker-backed databases,
+    see <a href="/docs/testing">docs / testing</a>.
+  </p>
 
 </div>
 </body>

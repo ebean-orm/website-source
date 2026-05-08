@@ -234,29 +234,29 @@ try (Transaction transaction = database.beginTransaction()) {
 
 </pre>
 
-<h2 id="databaseConfig">Configuration via DatabaseConfig</h2>
+<h2 id="databaseConfig">Configuration via DatabaseBuilder</h2>
 
 <pre content="java">
 // use JDBC batch by default
-databaseConfig.setPersistBatch(PersistBatch.ALL);
+databaseBuilder.persistBatch(PersistBatch.ALL);
 </pre>
 <p>
-  We can set <em>databaseConfig.setPersistBatch(PersistBatch.ALL)</em> so that JDBC batch mode is the default
+  We can set <em>databaseBuilder.persistBatch(PersistBatch.ALL)</em> so that JDBC batch mode is the default
   being used for all transactions.
 </p>
 
 <pre content="java">
 // default batch size
-databaseConfig.setPersistBatchSize(50);
+databaseBuilder.persistBatchSize(50);
 </pre>
 <p>
-  We can change the global default batch size via <em>databaseConfig.setPersistBatchSize()</em>. The default is
+  We can change the global default batch size via <em>databaseBuilder.persistBatchSize()</em>. The default is
   otherwise set at 20.
 </p>
 
 <pre content="java">
 // update all loaded properties or just dirty properties
-databaseConfig.setUpdateAllPropertiesInBatch(true);
+databaseBuilder.updateAllPropertiesInBatch(true);
 </pre>
 <p>
   When using batch update we have the option to include the dirty properties or all loaded properties in the
