@@ -164,7 +164,9 @@ database.findDto(CustomerDto.class, sql)
 <p>
   <em>findStream</em> is similar to findEach where we process the result one at a time.
   We should use a <code>try with resources</code> block to ensure the underlying resources
-  are closed.
+  are closed. As with entity queries, the connection is held open for the lifetime of the
+  stream - for small/bounded results that you collect anyway prefer <code>findList().stream()</code>
+  (see <a href="streaming#findStream-vs-findList">findStream() vs findList().stream()</a>).
 </p>
 <pre content="java">
 
