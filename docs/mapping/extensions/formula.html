@@ -7,9 +7,170 @@
 <body>
 
 <h2 id="overview">Overview</h2>
-Assign to a property to be based on a SQL formula.
-This is typically a SQL Literal value, SQL case statement, SQL function or similar.
+<p>
+  A formula property is a read only entity property whose value is computed by a SQL
+  expression at query time rather than stored in its own column. This is typically a
+  SQL literal value, SQL case statement, SQL function or similar. Ebean provides two
+  annotations for this:
+</p>
+<ul>
+  <li>
+    <code>@Formula</code> - we write the physical SQL for the <code>select</code> (and
+    any <code>join</code>), using a <code>${r"${ta}"}</code> placeholder for the base
+    table alias. This gives maximum control but is more verbose.
+  </li>
+  <li>
+    <code>@Formula2</code> - we write a logical expression using dot-notation property
+    paths (e.g. <code>parent.familyName</code>). Ebean translates the paths to the
+    correct table aliases and adds the required joins automatically.
+  </li>
+</ul>
+<p>
+  Both annotations produce read only properties and are included in queries by default
+  (see <a href="#default-inclusion">Default inclusion and @Transient</a> below to make
+  them opt-in instead).
+</p>
 
-Any property based on a formula becomes a read only property.
+<h2 id="formula">@Formula</h2>
+<p>
+  With <code>@Formula</code> we supply the SQL <code>select</code> fragment, and an
+  optional <code>join</code>. We use <code>${r"${ta}"}</code> wherever we need the base
+  table alias of the entity.
+</p>
+
+<pre type="java">
+@Entity
+public class ParentPerson {
+
+  // aggregation via a derived join, ${r"${ta}"} is the base table alias
+  @Formula(select = "coalesce(f2.child_count, 0)",
+           join = "left join (select parent_id, count(*) as child_count"
+                + " from child group by parent_id) f2 on f2.parent_id = ${r"${ta}"}.id")
+  Integer childCount;
+
+  // coalesce across a joined table using an explicit join alias (j1)
+  @Formula(select = "coalesce(${r"${ta}"}.family_name, j1.family_name)",
+           join = "join parent_person j1 on j1.id = ${r"${ta}"}.parent_id")
+  String effectiveFamilyName;
+}
+</pre>
+<p>
+  Notes on <code>@Formula</code>:
+</p>
+<ul>
+  <li>The <code>join</code> string must start with <code>join</code> or <code>left join</code>.</li>
+  <li>We manage the join aliases (<code>j1</code>, <code>f2</code>, etc) ourselves and reference them in <code>select</code>.</li>
+  <li><code>@Formula</code> is <code>@Repeatable</code> and supports a <code>platforms()</code> restriction.</li>
+</ul>
+
+<h2 id="formula2">@Formula2</h2>
+<p>
+  <code>@Formula2</code> is the easier, path based replacement for <code>@Formula</code>.
+  We write the expression using property paths and Ebean resolves each path to the
+  correct table alias, adding the joins it needs automatically.
+</p>
+
+<pre type="java">
+@Entity
+public class ParentPerson {
+
+  @ManyToOne
+  GrandParentPerson parent;
+
+  String familyName;
+
+  // Ebean automatically left joins 'parent' and resolves the aliases
+  @Formula2("coalesce(familyName, parent.familyName)")
+  String derivedFamilyName;
+}
+</pre>
+
+<p>
+  A query selecting <code>derivedFamilyName</code> produces (roughly):
+</p>
+<pre type="sql">
+select t0.id, coalesce(t0.family_name, t1.family_name)
+from parent_person t0
+left join grand_parent_person t1 on t1.id = t0.parent_id
+</pre>
+
+<p>
+  Multi-level paths join through each step:
+</p>
+<pre type="java">
+// joins parent and parent.parent automatically
+@Formula2("coalesce(familyName, parent.familyName, parent.parent.familyName)")
+String deepFamilyName;
+</pre>
+
+<p>
+  <code>@Formula2</code> works wherever a normal property does - the required joins are
+  added automatically in each case:
+</p>
+<pre type="java">
+// selected explicitly
+DB.find(ParentPerson.class).select("derivedFamilyName").findList();
+
+// used in where (auto-joins even when not selected)
+DB.find(ParentPerson.class).where().eq("derivedFamilyName", "Smith").findList();
+
+// used in order by
+DB.find(ParentPerson.class).orderBy("derivedFamilyName").findList();
+
+// referenced via a path from another bean
+DB.find(ChildPerson.class).where().eq("parent.derivedFamilyName", "Smith").findList();
+</pre>
+<p>
+  It also resolves correctly inside nested <code>fetch()</code> joins, so a
+  <code>@Formula2</code> on a fetched association is computed with its own joins
+  relative to that association.
+</p>
+<p>
+  Notes on <code>@Formula2</code>:
+</p>
+<ul>
+  <li>The expression supports any SQL function whose arguments are logical property paths.</li>
+  <li><code>@Formula2</code> supports a <code>platforms()</code> restriction.</li>
+  <li>No <code>${r"${ta}"}</code> and no hand written join - that is the point of <code>@Formula2</code>.</li>
+</ul>
+
+<h2 id="default-inclusion">Default inclusion and @Transient</h2>
+<p>
+  Both annotations are included in queries by default (just like a normal mapped
+  property). When no explicit <code>select()</code>/<code>fetch()</code> is given, the
+  formula - and for <code>@Formula2</code> the joins it requires - are added to the
+  query.
+</p>
+<p>
+  Add <code>@Transient</code> to make the formula opt-in: it is then not selected by
+  default and must be requested explicitly via <code>select()</code> or
+  <code>fetch()</code>. Do this when the formula (or the joins it needs) is relatively
+  expensive.
+</p>
+
+<pre type="java">
+// not selected by default, must be requested explicitly
+@Transient
+@Formula2("coalesce(familyName, parent.familyName)")
+String lazyDerivedFamilyName;
+</pre>
+<pre type="java">
+DB.find(ParentPerson.class)
+  .select("lazyDerivedFamilyName")   // explicitly included, join auto-added
+  .findList();
+</pre>
+
+<h2 id="which">Which should we use?</h2>
+<p>
+  Prefer <code>@Formula2</code> for expressions over property paths (coalesce/case/functions
+  across associations). It is shorter, refactor-friendly, and the joins stay correct as
+  the model changes.
+</p>
+<p>
+  Use <code>@Formula</code> when we need raw SQL that does not map cleanly to property
+  paths - for example a derived aggregate sub-select / dynamic view, or vendor-specific
+  SQL.
+</p>
+
 </body>
 </html>
